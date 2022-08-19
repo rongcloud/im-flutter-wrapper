@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="cn.rongcloud.im.wrapper.flutter">
+          <application>
+              <meta-data
+                  android:name="rc.imwrapperflutter"
+                  android:value="cn.rongcloud.im.wrapper.flutter.RCIMWrapperVersion" />
+          </application>
+</manifest>

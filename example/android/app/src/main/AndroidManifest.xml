@@ -1,0 +1,241 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.rongcloud.im.wrapper.flutter.example">
+
+    <!--网络访问-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- Permissions options for the `camera` group -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Permissions options for the `storage` group -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Permissions options for the `microphone` or `speech` group -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--录音    -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"></uses-permission>
+    <!--小米推送-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <permission
+        android:name="cn.rongcloud.im.wrapper.flutter.example.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="cn.rongcloud.im.wrapper.flutter.example.permission.MIPUSH_RECEIVE" />
+    <!--meizu    -->
+    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
+    <permission
+        android:name="cn.rongcloud.im.wrapper.flutter.example.push.permission.MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="cn.rongcloud.im.wrapper.flutter.example.push.permission.MESSAGE" />
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
+    <!--旧 oppo 推送权限相关-->
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE" />
+    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE" />
+
+    <!--    vivo-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:label="IM Test Demo"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <!-- Specifies an Android theme to apply to this Activity as soon as
+                 the Android process has started. This theme is visible to the user
+                 while the Flutter UI initializes. After that, this theme continues
+                 to determine the Window background behind the Flutter UI. -->
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- Don't delete the meta-data below.
+             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+
+        <!--小米推送-->
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+
+
+        <activity
+            android:name="com.xiaomi.mipush.sdk.NotificationClickedActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:launchMode="singleInstance"
+            android:exported="true"
+            android:enabled="true"></activity>
+
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.PingReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.xiaomi.push.PING_TIMER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="io.rong.push.platform.mi.MiMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+
+        <!--华为推送-->
+        <!-- HW 推送配置 -->
+        <service
+            android:name="io.rong.push.platform.hms.HMSPushService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.huawei.hms.support.api.push.PushMsgReceiver"
+            android:directBootAware="true"
+            android:exported="true"
+            android:permission="cn.rongcloud.im.wrapper.flutter.example.permission.PROCESS_PUSH_MSG">
+            <intent-filter>
+
+                <!-- Mandatory, be used to receive notification bar message click event. -->
+                <action android:name="com.huawei.intent.action.PUSH_DELAY_NOTIFY" />
+                <!-- Optional, compatible with old huawei phones. -->
+                <action android:name="com.huawei.intent.action.PUSH" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.huawei.hms.support.api.push.PushReceiver"
+            android:directBootAware="true"
+            android:exported="true"
+            android:permission="cn.rongcloud.im.wrapper.flutter.example.permission.PROCESS_PUSH_MSG">
+            <intent-filter>
+
+                <!-- Mandatory, be used to receive tokens. -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- Mandatory, be used to receive messages. -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+<!--        <meta-data-->
+<!--            android:name="com.huawei.hms.client.appid"-->
+<!--            android:value="106590439" />-->
+<!--        <meta-data-->
+<!--            android:name="com.huawei.hms.client.cpid"-->
+<!--            android:value="926041594065342336" />-->
+        <!-- HW 推送配置 END -->
+
+        <!--魅族 -->
+        <receiver
+            android:name="io.rong.push.platform.meizu.MeiZuReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
+                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
+                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
+                <action android:name="com.meizu.c2dm.intent.RECEIVE" />
+
+                <category android:name="cn.rongcloud.im.wrapper.flutter.example" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.meizu.cloud.pushsdk.MzPushSystemReceiver"
+            android:exported="false"
+            android:permission="com.meizu.flyme.permission.PUSH">
+            <intent-filter>
+                <action android:name="com.meizu.flyme.push.intent.PUSH_SYSTEM" />
+            </intent-filter>
+        </receiver>
+        <!--       oppo-->
+        <service
+            android:name="com.heytap.msp.push.service.CompatibleDataMessageCallbackService"
+            android:exported="true"
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.heytap.msp.push.service.DataMessageCallbackService"
+            android:exported="true"
+            android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE">
+            <intent-filter>
+                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE" />
+                <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+        <!--        vivo-->
+        <service
+            android:name="com.vivo.push.sdk.service.CommandClientService"
+            android:exported="true" />
+        <activity
+            android:name="com.vivo.push.sdk.LinkProxyClientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <receiver
+            android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+
+                <action android:name="com.vivo.pushclient.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="bd0aea9dd5804d3c70cf787ccef42073" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="105572280" />
+    </application>
+
+
+</manifest>
