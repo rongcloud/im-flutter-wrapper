@@ -23,7 +23,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-rongcloud_im_wrapper_plugin: 5.2.4
+rongcloud_im_wrapper_plugin: 5.2.4+1
 ```
 
 
