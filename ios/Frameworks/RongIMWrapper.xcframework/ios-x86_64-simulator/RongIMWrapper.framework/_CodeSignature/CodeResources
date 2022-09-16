@@ -6,27 +6,27 @@
 	<dict>
 		<key>Frameworks/RongChatRoom.framework/Info.plist</key>
 		<data>
-		/xsZ0sArDOsW59zQqs2MV4obRUI=
+		qghAnXsMl+VQQ6CCrN44ImlFl0A=
 		</data>
 		<key>Frameworks/RongChatRoom.framework/RongChatRoom</key>
 		<data>
-		TmH6RyO2D+H/GxXdxCDmLaCeAPg=
+		gynp2Q2JGm2FdjBNMI3J/fS/uh0=
 		</data>
 		<key>Frameworks/RongChatRoom.framework/_CodeSignature/CodeResources</key>
 		<data>
-		qf3uRQCH5igXbvZfHMKo4mgSjgw=
+		GtIJ0guzVjB7+vdms5NlJujXo6E=
 		</data>
 		<key>Frameworks/RongIMLibCore.framework/Info.plist</key>
 		<data>
-		kteQvpDvSGrUvzszbYbzDGYUsD8=
+		xIvB2s1Xg5MkqsRV7wLIP5agQAg=
 		</data>
 		<key>Frameworks/RongIMLibCore.framework/RongIMLibCore</key>
 		<data>
-		DqePCEtTi74G2/Tbh+EcwhkcUUY=
+		6Gy/qyv7jPW9nCzf4BArnXLFqEc=
 		</data>
 		<key>Frameworks/RongIMLibCore.framework/_CodeSignature/CodeResources</key>
 		<data>
-		YRepRKowQy7o7xE1n7QID1ws7UY=
+		TjwTKrHa3tpT4yg2+k8rsE6mO78=
 		</data>
 		<key>Headers/RCIMIWBlockedMessageInfo.h</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Headers/RCIMIWConversation.h</key>
 		<data>
-		ZH6ABdEk03s6PcOCXWSbqLofwlE=
+		5HmJNKO+mJeVymn0CSsPWVKq/jA=
 		</data>
 		<key>Headers/RCIMIWConversationTagInfo.h</key>
 		<data>
@@ -66,7 +66,7 @@
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		K70t1Bg4N53pNVcFi9OEQgXlysI=
+		k8IEgSApwg+z+Y3d6O3rL+mj16s=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
@@ -166,7 +166,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		D2BnlWAspvABRwzR3Tvilenv6HI=
+		XQygxr5OQY1UqeLrW8/Twfb3TUk=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -179,66 +179,66 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/xsZ0sArDOsW59zQqs2MV4obRUI=
+			qghAnXsMl+VQQ6CCrN44ImlFl0A=
 			</data>
 			<key>hash2</key>
 			<data>
-			85M+LBzG1vsZznC7HjFbSq5rA3w+LQANdkQrm4b9ZY8=
+			XOv6coz+Sb3vrdzhNHnvhbH5xkwwPFN7RN2C2uX9lxQ=
 			</data>
 		</dict>
 		<key>Frameworks/RongChatRoom.framework/RongChatRoom</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TmH6RyO2D+H/GxXdxCDmLaCeAPg=
+			gynp2Q2JGm2FdjBNMI3J/fS/uh0=
 			</data>
 			<key>hash2</key>
 			<data>
-			QTMPatFsl46+qNjBDFkHahlm2I3sVYmuWLvRjq2ob+M=
+			ePpIJYjP8xfe1jn4+uIlvqlk3rsXea5bLmTfHuCJFeE=
 			</data>
 		</dict>
 		<key>Frameworks/RongChatRoom.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			qf3uRQCH5igXbvZfHMKo4mgSjgw=
+			GtIJ0guzVjB7+vdms5NlJujXo6E=
 			</data>
 			<key>hash2</key>
 			<data>
-			f4C7TRyGWRW4K2C9csvZDySl3gM2THk9j8BKyKBn1Gs=
+			Th3IBAfOZBg3YDGG+GVlAJLUK8J0mQGBv6YrCT1CBVE=
 			</data>
 		</dict>
 		<key>Frameworks/RongIMLibCore.framework/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			kteQvpDvSGrUvzszbYbzDGYUsD8=
+			xIvB2s1Xg5MkqsRV7wLIP5agQAg=
 			</data>
 			<key>hash2</key>
 			<data>
-			tnpRsUfe73W6n1cF29ASswBS1vZYJNKC6erSDAiAcTU=
+			nFD6ci9IZPyxyZfXD0olW4P5F1uGBgEu9a0ic9r1HdQ=
 			</data>
 		</dict>
 		<key>Frameworks/RongIMLibCore.framework/RongIMLibCore</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			DqePCEtTi74G2/Tbh+EcwhkcUUY=
+			6Gy/qyv7jPW9nCzf4BArnXLFqEc=
 			</data>
 			<key>hash2</key>
 			<data>
-			wl89tVbfUoPAR9XAiV6cD2qUOwWg0SMOG7cVs9a2sIM=
+			QbzH8o4Im1gSlnBSNPHz4j1hzOamYQA40U7CP/jKGro=
 			</data>
 		</dict>
 		<key>Frameworks/RongIMLibCore.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			YRepRKowQy7o7xE1n7QID1ws7UY=
+			TjwTKrHa3tpT4yg2+k8rsE6mO78=
 			</data>
 			<key>hash2</key>
 			<data>
-			kaIsPCO4Ov5Yu+YWaQT3TQHI3TsS9bou0QJBw8HL1Y4=
+			KAaOccR2pzRJ7KppToCnUr1pziUse1/jVj+js8J/Afk=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWBlockedMessageInfo.h</key>
@@ -300,11 +300,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZH6ABdEk03s6PcOCXWSbqLofwlE=
+			5HmJNKO+mJeVymn0CSsPWVKq/jA=
 			</data>
 			<key>hash2</key>
 			<data>
-			dAwxj/xnVQ96GA8fi7uqptlRgFfHHeBLM7PzegNbcPw=
+			C0B+BE0eUEJb+nOTgprfelymk2lwfe5EsU/Er2ArWyg=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWConversationTagInfo.h</key>
@@ -344,11 +344,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			K70t1Bg4N53pNVcFi9OEQgXlysI=
+			k8IEgSApwg+z+Y3d6O3rL+mj16s=
 			</data>
 			<key>hash2</key>
 			<data>
-			9Nwvs3lyonZxPAL7ZmRRjw9t2CH3otvRk1XZIYE7pew=
+			UU2y9EeFOQnbySBIjfqRSDh4HjvSRrZZKUicuLmk5S8=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>

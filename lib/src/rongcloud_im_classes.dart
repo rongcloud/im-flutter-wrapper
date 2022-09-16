@@ -241,8 +241,14 @@ class RCIMIWCompressOptions {
 
   /// 小视频压缩高度，建议使用16的倍数
   int? sightCompressHeight;
+
+  /// 位置消息缩略图压缩比例
   int? locationThumbnailQuality;
+
+  /// 位置消息压缩的宽度
   int? locationThumbnailWidth;
+
+  /// 位置消息压缩的高度
   int? locationThumbnailHeight;
 
   RCIMIWCompressOptions.create({
@@ -944,7 +950,7 @@ class RCIMIWTypingStatus {
   /// 当前正在输入的用户 ID
   String? userId;
 
-  /// 当前正在输入的消息类型名
+  /// 当前正在输入的消息类型名，为发送方调用发送接口时传入的 currentType
   String? contentType;
 
   /// 输入时间
@@ -1105,6 +1111,9 @@ class RCIMIWConversation {
   /// 会话的通知级别
   RCIMIWPushNotificationLevel? notificationLevel;
 
+  /// 获取会话第一条未读消息的时间戳，仅对超级群生效
+  int? firstUnreadMsgSendTime;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     json['conversationType'] = conversationType?.index;
@@ -1116,6 +1125,7 @@ class RCIMIWConversation {
     json['draft'] = draft;
     json['lastMessage'] = lastMessage?.toJson();
     json['notificationLevel'] = notificationLevel?.index;
+    json['firstUnreadMsgSendTime'] = firstUnreadMsgSendTime;
     return json;
   }
 
@@ -1136,6 +1146,7 @@ class RCIMIWConversation {
     notificationLevel = json['notificationLevel'] == null
         ? null
         : RCIMIWPushNotificationLevel.values[json['notificationLevel']];
+    firstUnreadMsgSendTime = json['firstUnreadMsgSendTime'];
   }
 }
 

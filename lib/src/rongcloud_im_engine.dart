@@ -346,7 +346,7 @@ class RCIMIWEngine {
   /// 发送媒体消息
   /// - [message] 发送的媒体消息实体
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] 接口回调可以监听 [onMediaMessageSending],[onMediaMessageAttached],[onMediaMessageAttached],[onMediaMessageSent]
+  /// - [接口回调] 接口回调可以监听 [onMediaMessageSending],[onMediaMessageAttached],[onMediaMessageSent]
   Future<int> sendMediaMessage(
     RCIMIWMediaMessage message,
   ) async {
@@ -668,7 +668,7 @@ class RCIMIWEngine {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [timestamp] 该会话已阅读的最后一条消息的发送时间戳
+  /// - [timestamp] 该会话已阅读的最后一条消息的发送时间戳，传 0 代表清除所有未读。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountCleared]
   Future<int> clearUnreadCount(

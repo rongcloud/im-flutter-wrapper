@@ -316,4 +316,7 @@ enum RCIMIWConnectionStatus {
 
   /// 自动连接超时，SDK将不会继续连接，用户需要做超时处理，再自行调用connectWithToken接口进行连接
   timeout,
+
+  /// 异常情况
+  unknown,
 }

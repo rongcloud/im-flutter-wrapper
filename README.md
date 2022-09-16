@@ -1,5 +1,3 @@
-# im_interface_wrapper_flutter
-
 本教程是为了让新手快速了解融云 Flutter 即时通讯能力库。在本教程中，您可以体验集成 SDK 的基本流程和基础通信能力。
 
 ## 融云开发者账户
@@ -23,7 +21,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-rongcloud_im_wrapper_plugin: 5.2.4+1
+rongcloud_im_wrapper_plugin: 5.2.5
 ```
 
 
@@ -104,13 +102,13 @@ RCIMIWTextMessage? textMessage = await engine.createTextMessage(
         channelId,
         text,
       );
-engine.sendMessage(message);
+engine.sendMessage(textMessage);
 ```
 
 ### 监听消息发送结果 {#msgreceiver}
 
 ```dart
-engine.onMessageSavedDB = (
+engine.onMessageAttached = (
   RCIMIWMessage? message,
 ) {};
 

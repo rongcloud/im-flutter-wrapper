@@ -36,6 +36,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
-    implementation 'cn.rongcloud.sdk:im_libcore:5.2.4'
-    implementation 'cn.rongcloud.sdk:im_chatroom:5.2.4'
+    implementation 'cn.rongcloud.sdk:im_libcore:5.2.5'
+    implementation 'cn.rongcloud.sdk:im_chatroom:5.2.5'
 }

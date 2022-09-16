@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     // 修复 Android release 包启动后 界面数据异常问题
-    Future.delayed(const Duration(seconds: 0)).then((value) {
+    Future.delayed(const Duration(milliseconds: 300)).then((value) {
       showContent = true;
       setState(() {});
     });
@@ -66,8 +66,7 @@ class _MyAppState extends State<MyApp> {
                   itemBuilder: (BuildContext context, int index) {
                     var param = params[index];
                     // 文本框
-                    if (param['type'] == "String" ||
-                        param['type'] == "number") {
+                    if (param['type'] == "String" || param['type'] == "number") {
                       return SizedBox(
                           child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,9 +82,7 @@ class _MyAppState extends State<MyApp> {
                             ),
                           ),
                           TextField(
-                            keyboardType: param['type'] == "String"
-                                ? TextInputType.text
-                                : TextInputType.number,
+                            keyboardType: param['type'] == "String" ? TextInputType.text : TextInputType.number,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(left: 10),
                               hintText: param["hint"],
@@ -185,8 +182,7 @@ class _MyAppState extends State<MyApp> {
                             itemBuilder: (BuildContext context, int index) {
                               return ExpansionTile(
                                 title: Text(titleList[index]),
-                                children:
-                                    _buildExpansionSubWidget(titleList[index]),
+                                children: _buildExpansionSubWidget(titleList[index]),
                               );
                             })),
                     Container(

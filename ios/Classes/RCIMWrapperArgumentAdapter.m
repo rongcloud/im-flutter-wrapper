@@ -517,6 +517,7 @@
     @(RCIMIWConnectionStatusSignOut),
     @(RCIMIWConnectionStatusSuspend),
     @(RCIMIWConnectionStatusTimeout),
+    @(RCIMIWConnectionStatusUnknown),
   ];
   RCIMIWConnectionStatus ConnectionStatus =
       [[ConnectionStatusArray objectAtIndex:integer] integerValue];
@@ -535,6 +536,7 @@
     @(RCIMIWConnectionStatusSignOut),
     @(RCIMIWConnectionStatusSuspend),
     @(RCIMIWConnectionStatusTimeout),
+    @(RCIMIWConnectionStatusUnknown),
   ];
   NSInteger index = [ConnectionStatusArray indexOfObject:@(ConnectionStatus)];
   return index;
