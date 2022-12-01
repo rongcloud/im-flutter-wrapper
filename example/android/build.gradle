@@ -1,7 +1,8 @@
 buildscript {
     repositories {
+        maven {url  "https://maven.rongcloud.cn/repository/maven-releases/"}
         // 华为推送
-        maven { url 'http://developer.huawei.com/repo/' }
+        maven { url 'https://developer.huawei.com/repo/' }
         google()
         mavenCentral()
     }
@@ -15,10 +16,12 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {url  "https://maven.rongcloud.cn/repository/maven-releases/"}
+
         google()
         mavenCentral()
         // 华为推送
-        maven {url 'http://developer.huawei.com/repo/'}
+        maven {url 'https://developer.huawei.com/repo/'}
     }
 }
 

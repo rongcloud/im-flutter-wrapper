@@ -396,6 +396,32 @@ const sendLocationMessage = {
   "action": engine_fun.sendLocationMessage,
 };
 
+const sendUserCustomMessage = {
+  "title": "给 sealtalk 发送自定义消息",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": HintString.channelIdString,
+      "lable": LableString.editChannelIdString,
+    },
+    {"key": "content", "type": "String", "hint": "", "lable": "备注内容 "}
+  ],
+  "action": engine_fun.sendUserCustomMessage,
+};
+
 const sendCustomMessage = {
   "title": "发送自定义消息",
   "params": [
@@ -576,7 +602,7 @@ const loadMessages = {
       "lable": "请输入获取数量",
     },
   ],
-  "action": engine_auto_fun.loadMessages,
+  "action": engine_auto_fun.getMessages,
 };
 
 const getMessageById = {
@@ -627,7 +653,7 @@ const loadFirstUnreadMessage = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_auto_fun.loadFirstUnreadMessage,
+  "action": engine_auto_fun.getFirstUnreadMessage,
 };
 
 const loadUnreadMentionedMessages = {
@@ -652,7 +678,7 @@ const loadUnreadMentionedMessages = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_auto_fun.loadUnreadMentionedMessages,
+  "action": engine_auto_fun.getUnreadMentionedMessages,
 };
 
 const insertMessage = {

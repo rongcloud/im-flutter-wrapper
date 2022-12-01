@@ -1,6 +1,9 @@
 #import "AppDelegate.h"
 #import "GeneratedPluginRegistrant.h"
 #import <UserNotifications/UserNotifications.h>
+#import "RCDPokeMessage.h"
+#import <rongcloud_im_wrapper_plugin/RCIMWrapperEngine.h>
+#import <RongIMLibCore/RongIMLibCore.h>
 
 
 @implementation AppDelegate
@@ -8,6 +11,9 @@
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [GeneratedPluginRegistrant registerWithRegistry:self];
+    NSMutableArray *marr = [NSMutableArray arrayWithObject:[RCDPokeMessage class]];
+    [RCIMWrapperEngine sharedInstance].messageContentClassList = marr.copy;
+
   // Override point for customization after application launch.
     
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {

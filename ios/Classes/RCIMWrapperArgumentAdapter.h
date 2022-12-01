@@ -12,92 +12,95 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RCIMWrapperArgumentAdapter : NSObject
 
+
 + (RCIMIWImportanceHW)convertImportanceHWFromInteger:(NSInteger)integer;
 + (NSInteger)convertImportanceHWToInteger:(RCIMIWImportanceHW)ImportanceHW;
 
-+ (RCIMIWMessageOperationPolicy)convertMessageOperationPolicyFromInteger:
-    (NSInteger)integer;
-+ (NSInteger)convertMessageOperationPolicyToInteger:
-    (RCIMIWMessageOperationPolicy)MessageOperationPolicy;
+
++ (RCIMIWMessageOperationPolicy)convertMessageOperationPolicyFromInteger:(NSInteger)integer;
++ (NSInteger)convertMessageOperationPolicyToInteger:(RCIMIWMessageOperationPolicy)MessageOperationPolicy;
+
 
 + (RCIMIWVIVOPushType)convertVIVOPushTypeFromInteger:(NSInteger)integer;
 + (NSInteger)convertVIVOPushTypeToInteger:(RCIMIWVIVOPushType)VIVOPushType;
 
+
 + (RCIMIWSentStatus)convertSentStatusFromInteger:(NSInteger)integer;
 + (NSInteger)convertSentStatusToInteger:(RCIMIWSentStatus)SentStatus;
 
-+ (RCIMIWPushNotificationQuietHoursLevel)
-    convertPushNotificationQuietHoursLevelFromInteger:(NSInteger)integer;
-+ (NSInteger)convertPushNotificationQuietHoursLevelToInteger:
-    (RCIMIWPushNotificationQuietHoursLevel)PushNotificationQuietHoursLevel;
+
++ (RCIMIWPushNotificationQuietHoursLevel)convertPushNotificationQuietHoursLevelFromInteger:(NSInteger)integer;
++ (NSInteger)convertPushNotificationQuietHoursLevelToInteger:(RCIMIWPushNotificationQuietHoursLevel)PushNotificationQuietHoursLevel;
+
 
 + (RCIMIWMessageDirection)convertMessageDirectionFromInteger:(NSInteger)integer;
-+ (NSInteger)convertMessageDirectionToInteger:
-    (RCIMIWMessageDirection)MessageDirection;
++ (NSInteger)convertMessageDirectionToInteger:(RCIMIWMessageDirection)MessageDirection;
+
 
 + (RCIMIWReceivedStatus)convertReceivedStatusFromInteger:(NSInteger)integer;
-+ (NSInteger)convertReceivedStatusToInteger:
-    (RCIMIWReceivedStatus)ReceivedStatus;
++ (NSInteger)convertReceivedStatusToInteger:(RCIMIWReceivedStatus)ReceivedStatus;
 
-+ (RCIMIWChatRoomMemberActionType)convertChatRoomMemberActionTypeFromInteger:
-    (NSInteger)integer;
-+ (NSInteger)convertChatRoomMemberActionTypeToInteger:
-    (RCIMIWChatRoomMemberActionType)ChatRoomMemberActionType;
 
-+ (RCIMIWPushNotificationLevel)convertPushNotificationLevelFromInteger:
-    (NSInteger)integer;
-+ (NSInteger)convertPushNotificationLevelToInteger:
-    (RCIMIWPushNotificationLevel)PushNotificationLevel;
++ (RCIMIWChatRoomMemberActionType)convertChatRoomMemberActionTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertChatRoomMemberActionTypeToInteger:(RCIMIWChatRoomMemberActionType)ChatRoomMemberActionType;
+
+
++ (RCIMIWPushNotificationLevel)convertPushNotificationLevelFromInteger:(NSInteger)integer;
++ (NSInteger)convertPushNotificationLevelToInteger:(RCIMIWPushNotificationLevel)PushNotificationLevel;
+
 
 + (RCIMIWMessageType)convertMessageTypeFromInteger:(NSInteger)integer;
 + (NSInteger)convertMessageTypeToInteger:(RCIMIWMessageType)MessageType;
 
+
 + (RCIMIWMessageBlockType)convertMessageBlockTypeFromInteger:(NSInteger)integer;
-+ (NSInteger)convertMessageBlockTypeToInteger:
-    (RCIMIWMessageBlockType)MessageBlockType;
++ (NSInteger)convertMessageBlockTypeToInteger:(RCIMIWMessageBlockType)MessageBlockType;
+
 
 + (RCIMIWTimeOrder)convertTimeOrderFromInteger:(NSInteger)integer;
 + (NSInteger)convertTimeOrderToInteger:(RCIMIWTimeOrder)TimeOrder;
 
-+ (RCIMIWCustomMessagePolicy)convertCustomMessagePolicyFromInteger:
-    (NSInteger)integer;
-+ (NSInteger)convertCustomMessagePolicyToInteger:
-    (RCIMIWCustomMessagePolicy)CustomMessagePolicy;
+
++ (RCIMIWCustomMessagePolicy)convertCustomMessagePolicyFromInteger:(NSInteger)integer;
++ (NSInteger)convertCustomMessagePolicyToInteger:(RCIMIWCustomMessagePolicy)CustomMessagePolicy;
+
 
 + (RCIMIWChatRoomStatus)convertChatRoomStatusFromInteger:(NSInteger)integer;
-+ (NSInteger)convertChatRoomStatusToInteger:
-    (RCIMIWChatRoomStatus)ChatRoomStatus;
++ (NSInteger)convertChatRoomStatusToInteger:(RCIMIWChatRoomStatus)ChatRoomStatus;
+
 
 + (RCIMIWConversationType)convertConversationTypeFromInteger:(NSInteger)integer;
-+ (NSInteger)convertConversationTypeToInteger:
-    (RCIMIWConversationType)ConversationType;
++ (NSInteger)convertConversationTypeToInteger:(RCIMIWConversationType)ConversationType;
+
 
 + (RCIMIWErrorCode)convertErrorCodeFromInteger:(NSInteger)integer;
 + (NSInteger)convertErrorCodeToInteger:(RCIMIWErrorCode)ErrorCode;
 
-+ (RCIMIWUltraGroupTypingStatus)convertUltraGroupTypingStatusFromInteger:
-    (NSInteger)integer;
-+ (NSInteger)convertUltraGroupTypingStatusToInteger:
-    (RCIMIWUltraGroupTypingStatus)UltraGroupTypingStatus;
+
++ (RCIMIWUltraGroupTypingStatus)convertUltraGroupTypingStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertUltraGroupTypingStatusToInteger:(RCIMIWUltraGroupTypingStatus)UltraGroupTypingStatus;
+
 
 + (RCIMIWMentionedType)convertMentionedTypeFromInteger:(NSInteger)integer;
 + (NSInteger)convertMentionedTypeToInteger:(RCIMIWMentionedType)MentionedType;
 
-+ (RCIMIWChatRoomEntriesOperationType)
-    convertChatRoomEntriesOperationTypeFromInteger:(NSInteger)integer;
-+ (NSInteger)convertChatRoomEntriesOperationTypeToInteger:
-    (RCIMIWChatRoomEntriesOperationType)ChatRoomEntriesOperationType;
+
++ (RCIMIWChatRoomEntriesOperationType)convertChatRoomEntriesOperationTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertChatRoomEntriesOperationTypeToInteger:(RCIMIWChatRoomEntriesOperationType)ChatRoomEntriesOperationType;
+
 
 + (RCIMIWLogLevel)convertLogLevelFromInteger:(NSInteger)integer;
 + (NSInteger)convertLogLevelToInteger:(RCIMIWLogLevel)LogLevel;
 
+
 + (RCIMIWBlacklistStatus)convertBlacklistStatusFromInteger:(NSInteger)integer;
-+ (NSInteger)convertBlacklistStatusToInteger:
-    (RCIMIWBlacklistStatus)BlacklistStatus;
++ (NSInteger)convertBlacklistStatusToInteger:(RCIMIWBlacklistStatus)BlacklistStatus;
+
 
 + (RCIMIWConnectionStatus)convertConnectionStatusFromInteger:(NSInteger)integer;
-+ (NSInteger)convertConnectionStatusToInteger:
-    (RCIMIWConnectionStatus)ConnectionStatus;
++ (NSInteger)convertConnectionStatusToInteger:(RCIMIWConnectionStatus)ConnectionStatus;
+
+
 
 @end
 

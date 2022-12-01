@@ -36,12 +36,12 @@ const loadBlacklistStatus = {
       "lable": "请输入用户 ID",
     },
   ],
-  "action": engine_fun.loadBlacklistStatus,
+  "action": engine_fun.getBlacklistStatus,
 };
 
 const loadBlacklist = {
   "title": "获取当前用户设置的黑名单列表",
-  "action": engine_fun.loadBlacklist,
+  "action": engine_fun.getBlacklist,
 };
 
 const changeNotificationQuietHours = {
@@ -54,9 +54,9 @@ const changeNotificationQuietHours = {
       "lable": "请输入开始时间",
     },
     {
-      "key": "spanMins",
+      "key": "spanMinutes",
       "type": "String",
-      "hint": "0 < spanMins < 1440",
+      "hint": "0 < spanMinutes < 1440",
       "lable": "请输入需要消息免打扰分钟数",
     },
     {
@@ -76,7 +76,7 @@ const removeNotificationQuietHours = {
 
 const loadNotificationQuietHours = {
   "title": "查询已设置的时间段消息提醒屏蔽",
-  "action": engine_fun.loadNotificationQuietHours,
+  "action": engine_fun.getNotificationQuietHours,
 };
 
 const changePushContentShowStatus = {

@@ -54,8 +54,8 @@ class RCIWMediaUlits {
         ),
         onTap: () async {
           Navigator.pop(context);
-          _onImageButtonPressed(ImageSource.gallery, (path) async {
-            callback.call(path);
+          _onImageButtonPressed(ImageSource.gallery, (XFile? file) async {
+            callback.call(file?.path ?? '');
           }, context: context, isVideo: true);
         },
       ),
@@ -68,8 +68,8 @@ class RCIWMediaUlits {
         ),
         onTap: () async {
           Navigator.pop(context);
-          _onImageButtonPressed(ImageSource.camera, (path) async {
-            callback.call(path);
+          _onImageButtonPressed(ImageSource.camera, (XFile? file) async {
+            callback.call(file?.path ?? '');
           }, context: context, isVideo: true);
         },
       ),
@@ -78,7 +78,7 @@ class RCIWMediaUlits {
     RCIWBottomSheet.showSheet(widgets, context);
   }
 
-  static showImagePicker(BuildContext context, Function(String path) callback) {
+  static showImagePicker(BuildContext context, Function(XFile? file) callback) {
     List<Widget> widgets = [
       ListTile(
         title: const Center(
@@ -90,8 +90,8 @@ class RCIWMediaUlits {
         onTap: () async {
           Navigator.pop(context);
 
-          _onImageButtonPressed(ImageSource.camera, (path) async {
-            callback.call(path);
+          _onImageButtonPressed(ImageSource.camera, (XFile? file) async {
+            callback.call(file);
           }, context: context);
         },
       ),
@@ -104,8 +104,9 @@ class RCIWMediaUlits {
         ),
         onTap: () async {
           Navigator.pop(context);
-          _onImageButtonPressed(ImageSource.gallery, (path) async {
-            callback.call(path);
+
+          _onImageButtonPressed(ImageSource.gallery, (XFile? file) async {
+            callback.call(file);
           }, context: context);
         },
       ),
@@ -166,22 +167,30 @@ Future<void> _onImageButtonPressed(
   bool isMultiImage = false,
   bool isVideo = false,
 }) async {
-  var status = await Permission.camera.request();
-  if (status.isGranted) {
+  bool agree = false;
+  if (kIsWeb) {
+    agree = true;
+  } else if (Platform.isIOS || Platform.isAndroid) {
+    PermissionStatus status = await Permission.camera.request();
+    agree = status.isGranted;
+    if (status.isPermanentlyDenied) {
+      openAppSettings();
+      return;
+    }
+  }
+  if (agree) {
     // Either the permission was already granted before or the user just granted it.
     if (isVideo) {
       final XFile? file = await _picker.pickVideo(
           source: source, maxDuration: const Duration(seconds: 10));
-      callback(file?.path);
+      callback(file);
     } else {
       try {
-        final XFile? pickedFile = await _picker.pickImage(
+        final pickedFile = await _picker.pickImage(
           source: source,
         );
-        callback(pickedFile?.path);
+        callback(pickedFile);
       } catch (e) {}
     }
-  } else if (status.isPermanentlyDenied) {
-    openAppSettings();
   }
 }

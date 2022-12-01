@@ -14,8 +14,7 @@
     @(RCIMIWImportanceHWNormal),
     @(RCIMIWImportanceHWLow),
   ];
-  RCIMIWImportanceHW ImportanceHW =
-      [[ImportanceHWArray objectAtIndex:integer] integerValue];
+  RCIMIWImportanceHW ImportanceHW = [[ImportanceHWArray objectAtIndex:integer] integerValue];
   return ImportanceHW;
 }
 + (NSInteger)convertImportanceHWToInteger:(RCIMIWImportanceHW)ImportanceHW {
@@ -27,26 +26,22 @@
   return index;
 }
 
-+ (RCIMIWMessageOperationPolicy)convertMessageOperationPolicyFromInteger:
-    (NSInteger)integer {
++ (RCIMIWMessageOperationPolicy)convertMessageOperationPolicyFromInteger:(NSInteger)integer {
   NSArray *MessageOperationPolicyArray = @[
     @(RCIMIWMessageOperationPolicyLocal),
     @(RCIMIWMessageOperationPolicyRemote),
     @(RCIMIWMessageOperationPolicyLocalRemote),
   ];
-  RCIMIWMessageOperationPolicy MessageOperationPolicy =
-      [[MessageOperationPolicyArray objectAtIndex:integer] integerValue];
+  RCIMIWMessageOperationPolicy MessageOperationPolicy = [[MessageOperationPolicyArray objectAtIndex:integer] integerValue];
   return MessageOperationPolicy;
 }
-+ (NSInteger)convertMessageOperationPolicyToInteger:
-    (RCIMIWMessageOperationPolicy)MessageOperationPolicy {
++ (NSInteger)convertMessageOperationPolicyToInteger:(RCIMIWMessageOperationPolicy)MessageOperationPolicy {
   NSArray *MessageOperationPolicyArray = @[
     @(RCIMIWMessageOperationPolicyLocal),
     @(RCIMIWMessageOperationPolicyRemote),
     @(RCIMIWMessageOperationPolicyLocalRemote),
   ];
-  NSInteger index =
-      [MessageOperationPolicyArray indexOfObject:@(MessageOperationPolicy)];
+  NSInteger index = [MessageOperationPolicyArray indexOfObject:@(MessageOperationPolicy)];
   return index;
 }
 
@@ -55,8 +50,7 @@
     @(RCIMIWVIVOPushTypeOperate),
     @(RCIMIWVIVOPushTypeSystem),
   ];
-  RCIMIWVIVOPushType VIVOPushType =
-      [[VIVOPushTypeArray objectAtIndex:integer] integerValue];
+  RCIMIWVIVOPushType VIVOPushType = [[VIVOPushTypeArray objectAtIndex:integer] integerValue];
   return VIVOPushType;
 }
 + (NSInteger)convertVIVOPushTypeToInteger:(RCIMIWVIVOPushType)VIVOPushType {
@@ -78,8 +72,7 @@
     @(RCIMIWSentStatusDestroyed),
     @(RCIMIWSentStatusCanceled),
   ];
-  RCIMIWSentStatus SentStatus =
-      [[SentStatusArray objectAtIndex:integer] integerValue];
+  RCIMIWSentStatus SentStatus = [[SentStatusArray objectAtIndex:integer] integerValue];
   return SentStatus;
 }
 + (NSInteger)convertSentStatusToInteger:(RCIMIWSentStatus)SentStatus {
@@ -96,42 +89,34 @@
   return index;
 }
 
-+ (RCIMIWPushNotificationQuietHoursLevel)
-    convertPushNotificationQuietHoursLevelFromInteger:(NSInteger)integer {
++ (RCIMIWPushNotificationQuietHoursLevel)convertPushNotificationQuietHoursLevelFromInteger:(NSInteger)integer {
   NSArray *PushNotificationQuietHoursLevelArray = @[
     @(RCIMIWPushNotificationQuietHoursLevelNone),
     @(RCIMIWPushNotificationQuietHoursLevelMention),
     @(RCIMIWPushNotificationQuietHoursLevelBlocked),
   ];
-  RCIMIWPushNotificationQuietHoursLevel PushNotificationQuietHoursLevel =
-      [[PushNotificationQuietHoursLevelArray objectAtIndex:integer]
-          integerValue];
+  RCIMIWPushNotificationQuietHoursLevel PushNotificationQuietHoursLevel = [[PushNotificationQuietHoursLevelArray objectAtIndex:integer] integerValue];
   return PushNotificationQuietHoursLevel;
 }
-+ (NSInteger)convertPushNotificationQuietHoursLevelToInteger:
-    (RCIMIWPushNotificationQuietHoursLevel)PushNotificationQuietHoursLevel {
++ (NSInteger)convertPushNotificationQuietHoursLevelToInteger:(RCIMIWPushNotificationQuietHoursLevel)PushNotificationQuietHoursLevel {
   NSArray *PushNotificationQuietHoursLevelArray = @[
     @(RCIMIWPushNotificationQuietHoursLevelNone),
     @(RCIMIWPushNotificationQuietHoursLevelMention),
     @(RCIMIWPushNotificationQuietHoursLevelBlocked),
   ];
-  NSInteger index = [PushNotificationQuietHoursLevelArray
-      indexOfObject:@(PushNotificationQuietHoursLevel)];
+  NSInteger index = [PushNotificationQuietHoursLevelArray indexOfObject:@(PushNotificationQuietHoursLevel)];
   return index;
 }
 
-+ (RCIMIWMessageDirection)convertMessageDirectionFromInteger:
-    (NSInteger)integer {
++ (RCIMIWMessageDirection)convertMessageDirectionFromInteger:(NSInteger)integer {
   NSArray *MessageDirectionArray = @[
     @(RCIMIWMessageDirectionSend),
     @(RCIMIWMessageDirectionReceive),
   ];
-  RCIMIWMessageDirection MessageDirection =
-      [[MessageDirectionArray objectAtIndex:integer] integerValue];
+  RCIMIWMessageDirection MessageDirection = [[MessageDirectionArray objectAtIndex:integer] integerValue];
   return MessageDirection;
 }
-+ (NSInteger)convertMessageDirectionToInteger:
-    (RCIMIWMessageDirection)MessageDirection {
++ (NSInteger)convertMessageDirectionToInteger:(RCIMIWMessageDirection)MessageDirection {
   NSArray *MessageDirectionArray = @[
     @(RCIMIWMessageDirectionSend),
     @(RCIMIWMessageDirectionReceive),
@@ -149,12 +134,10 @@
     @(RCIMIWReceivedStatusRetrieved),
     @(RCIMIWReceivedStatusMultipleReceive),
   ];
-  RCIMIWReceivedStatus ReceivedStatus =
-      [[ReceivedStatusArray objectAtIndex:integer] integerValue];
+  RCIMIWReceivedStatus ReceivedStatus = [[ReceivedStatusArray objectAtIndex:integer] integerValue];
   return ReceivedStatus;
 }
-+ (NSInteger)convertReceivedStatusToInteger:
-    (RCIMIWReceivedStatus)ReceivedStatus {
++ (NSInteger)convertReceivedStatusToInteger:(RCIMIWReceivedStatus)ReceivedStatus {
   NSArray *ReceivedStatusArray = @[
     @(RCIMIWReceivedStatusUnread),
     @(RCIMIWReceivedStatusRead),
@@ -167,31 +150,26 @@
   return index;
 }
 
-+ (RCIMIWChatRoomMemberActionType)convertChatRoomMemberActionTypeFromInteger:
-    (NSInteger)integer {
++ (RCIMIWChatRoomMemberActionType)convertChatRoomMemberActionTypeFromInteger:(NSInteger)integer {
   NSArray *ChatRoomMemberActionTypeArray = @[
     @(RCIMIWChatRoomMemberActionTypeUnknown),
     @(RCIMIWChatRoomMemberActionTypeJoin),
     @(RCIMIWChatRoomMemberActionTypeLeave),
   ];
-  RCIMIWChatRoomMemberActionType ChatRoomMemberActionType =
-      [[ChatRoomMemberActionTypeArray objectAtIndex:integer] integerValue];
+  RCIMIWChatRoomMemberActionType ChatRoomMemberActionType = [[ChatRoomMemberActionTypeArray objectAtIndex:integer] integerValue];
   return ChatRoomMemberActionType;
 }
-+ (NSInteger)convertChatRoomMemberActionTypeToInteger:
-    (RCIMIWChatRoomMemberActionType)ChatRoomMemberActionType {
++ (NSInteger)convertChatRoomMemberActionTypeToInteger:(RCIMIWChatRoomMemberActionType)ChatRoomMemberActionType {
   NSArray *ChatRoomMemberActionTypeArray = @[
     @(RCIMIWChatRoomMemberActionTypeUnknown),
     @(RCIMIWChatRoomMemberActionTypeJoin),
     @(RCIMIWChatRoomMemberActionTypeLeave),
   ];
-  NSInteger index =
-      [ChatRoomMemberActionTypeArray indexOfObject:@(ChatRoomMemberActionType)];
+  NSInteger index = [ChatRoomMemberActionTypeArray indexOfObject:@(ChatRoomMemberActionType)];
   return index;
 }
 
-+ (RCIMIWPushNotificationLevel)convertPushNotificationLevelFromInteger:
-    (NSInteger)integer {
++ (RCIMIWPushNotificationLevel)convertPushNotificationLevelFromInteger:(NSInteger)integer {
   NSArray *PushNotificationLevelArray = @[
     @(RCIMIWPushNotificationLevelAllMessage),
     @(RCIMIWPushNotificationLevelNone),
@@ -200,12 +178,10 @@
     @(RCIMIWPushNotificationLevelMentionAll),
     @(RCIMIWPushNotificationLevelBlocked),
   ];
-  RCIMIWPushNotificationLevel PushNotificationLevel =
-      [[PushNotificationLevelArray objectAtIndex:integer] integerValue];
+  RCIMIWPushNotificationLevel PushNotificationLevel = [[PushNotificationLevelArray objectAtIndex:integer] integerValue];
   return PushNotificationLevel;
 }
-+ (NSInteger)convertPushNotificationLevelToInteger:
-    (RCIMIWPushNotificationLevel)PushNotificationLevel {
++ (NSInteger)convertPushNotificationLevelToInteger:(RCIMIWPushNotificationLevel)PushNotificationLevel {
   NSArray *PushNotificationLevelArray = @[
     @(RCIMIWPushNotificationLevelAllMessage),
     @(RCIMIWPushNotificationLevelNone),
@@ -214,8 +190,7 @@
     @(RCIMIWPushNotificationLevelMentionAll),
     @(RCIMIWPushNotificationLevelBlocked),
   ];
-  NSInteger index =
-      [PushNotificationLevelArray indexOfObject:@(PushNotificationLevel)];
+  NSInteger index = [PushNotificationLevelArray indexOfObject:@(PushNotificationLevel)];
   return index;
 }
 
@@ -234,9 +209,9 @@
     @(RCIMIWMessageTypeCommand),
     @(RCIMIWMessageTypeCommandNotification),
     @(RCIMIWMessageTypeLocation),
+    @(RCIMIWMessageTypeUserCustom),
   ];
-  RCIMIWMessageType MessageType =
-      [[MessageTypeArray objectAtIndex:integer] integerValue];
+  RCIMIWMessageType MessageType = [[MessageTypeArray objectAtIndex:integer] integerValue];
   return MessageType;
 }
 + (NSInteger)convertMessageTypeToInteger:(RCIMIWMessageType)MessageType {
@@ -254,25 +229,23 @@
     @(RCIMIWMessageTypeCommand),
     @(RCIMIWMessageTypeCommandNotification),
     @(RCIMIWMessageTypeLocation),
+    @(RCIMIWMessageTypeUserCustom),
   ];
   NSInteger index = [MessageTypeArray indexOfObject:@(MessageType)];
   return index;
 }
 
-+ (RCIMIWMessageBlockType)convertMessageBlockTypeFromInteger:
-    (NSInteger)integer {
++ (RCIMIWMessageBlockType)convertMessageBlockTypeFromInteger:(NSInteger)integer {
   NSArray *MessageBlockTypeArray = @[
     @(RCIMIWMessageBlockTypeUnknown),
     @(RCIMIWMessageBlockTypeGlobal),
     @(RCIMIWMessageBlockTypeCustom),
     @(RCIMIWMessageBlockTypeThirdParty),
   ];
-  RCIMIWMessageBlockType MessageBlockType =
-      [[MessageBlockTypeArray objectAtIndex:integer] integerValue];
+  RCIMIWMessageBlockType MessageBlockType = [[MessageBlockTypeArray objectAtIndex:integer] integerValue];
   return MessageBlockType;
 }
-+ (NSInteger)convertMessageBlockTypeToInteger:
-    (RCIMIWMessageBlockType)MessageBlockType {
++ (NSInteger)convertMessageBlockTypeToInteger:(RCIMIWMessageBlockType)MessageBlockType {
   NSArray *MessageBlockTypeArray = @[
     @(RCIMIWMessageBlockTypeUnknown),
     @(RCIMIWMessageBlockTypeGlobal),
@@ -288,8 +261,7 @@
     @(RCIMIWTimeOrderBefore),
     @(RCIMIWTimeOrderAfter),
   ];
-  RCIMIWTimeOrder TimeOrder =
-      [[TimeOrderArray objectAtIndex:integer] integerValue];
+  RCIMIWTimeOrder TimeOrder = [[TimeOrderArray objectAtIndex:integer] integerValue];
   return TimeOrder;
 }
 + (NSInteger)convertTimeOrderToInteger:(RCIMIWTimeOrder)TimeOrder {
@@ -301,28 +273,24 @@
   return index;
 }
 
-+ (RCIMIWCustomMessagePolicy)convertCustomMessagePolicyFromInteger:
-    (NSInteger)integer {
++ (RCIMIWCustomMessagePolicy)convertCustomMessagePolicyFromInteger:(NSInteger)integer {
   NSArray *CustomMessagePolicyArray = @[
     @(RCIMIWCustomMessagePolicyCommand),
     @(RCIMIWCustomMessagePolicyNormal),
     @(RCIMIWCustomMessagePolicyStatus),
     @(RCIMIWCustomMessagePolicyStorage),
   ];
-  RCIMIWCustomMessagePolicy CustomMessagePolicy =
-      [[CustomMessagePolicyArray objectAtIndex:integer] integerValue];
+  RCIMIWCustomMessagePolicy CustomMessagePolicy = [[CustomMessagePolicyArray objectAtIndex:integer] integerValue];
   return CustomMessagePolicy;
 }
-+ (NSInteger)convertCustomMessagePolicyToInteger:
-    (RCIMIWCustomMessagePolicy)CustomMessagePolicy {
++ (NSInteger)convertCustomMessagePolicyToInteger:(RCIMIWCustomMessagePolicy)CustomMessagePolicy {
   NSArray *CustomMessagePolicyArray = @[
     @(RCIMIWCustomMessagePolicyCommand),
     @(RCIMIWCustomMessagePolicyNormal),
     @(RCIMIWCustomMessagePolicyStatus),
     @(RCIMIWCustomMessagePolicyStorage),
   ];
-  NSInteger index =
-      [CustomMessagePolicyArray indexOfObject:@(CustomMessagePolicy)];
+  NSInteger index = [CustomMessagePolicyArray indexOfObject:@(CustomMessagePolicy)];
   return index;
 }
 
@@ -332,12 +300,10 @@
     @(RCIMIWChatRoomStatusDestroyManual),
     @(RCIMIWChatRoomStatusDestroyAuto),
   ];
-  RCIMIWChatRoomStatus ChatRoomStatus =
-      [[ChatRoomStatusArray objectAtIndex:integer] integerValue];
+  RCIMIWChatRoomStatus ChatRoomStatus = [[ChatRoomStatusArray objectAtIndex:integer] integerValue];
   return ChatRoomStatus;
 }
-+ (NSInteger)convertChatRoomStatusToInteger:
-    (RCIMIWChatRoomStatus)ChatRoomStatus {
++ (NSInteger)convertChatRoomStatusToInteger:(RCIMIWChatRoomStatus)ChatRoomStatus {
   NSArray *ChatRoomStatusArray = @[
     @(RCIMIWChatRoomStatusReset),
     @(RCIMIWChatRoomStatusDestroyManual),
@@ -347,8 +313,7 @@
   return index;
 }
 
-+ (RCIMIWConversationType)convertConversationTypeFromInteger:
-    (NSInteger)integer {
++ (RCIMIWConversationType)convertConversationTypeFromInteger:(NSInteger)integer {
   NSArray *ConversationTypeArray = @[
     @(RCIMIWConversationTypeInvalid),
     @(RCIMIWConversationTypePrivate),
@@ -357,12 +322,10 @@
     @(RCIMIWConversationTypeSystem),
     @(RCIMIWConversationTypeUltraGroup),
   ];
-  RCIMIWConversationType ConversationType =
-      [[ConversationTypeArray objectAtIndex:integer] integerValue];
+  RCIMIWConversationType ConversationType = [[ConversationTypeArray objectAtIndex:integer] integerValue];
   return ConversationType;
 }
-+ (NSInteger)convertConversationTypeToInteger:
-    (RCIMIWConversationType)ConversationType {
++ (NSInteger)convertConversationTypeToInteger:(RCIMIWConversationType)ConversationType {
   NSArray *ConversationTypeArray = @[
     @(RCIMIWConversationTypeInvalid),
     @(RCIMIWConversationTypePrivate),
@@ -383,8 +346,7 @@
     @(RCIMIWErrorCodeNativeOperationError),
     @(RCIMIWErrorCodeResultUnknown),
   ];
-  RCIMIWErrorCode ErrorCode =
-      [[ErrorCodeArray objectAtIndex:integer] integerValue];
+  RCIMIWErrorCode ErrorCode = [[ErrorCodeArray objectAtIndex:integer] integerValue];
   return ErrorCode;
 }
 + (NSInteger)convertErrorCodeToInteger:(RCIMIWErrorCode)ErrorCode {
@@ -399,22 +361,18 @@
   return index;
 }
 
-+ (RCIMIWUltraGroupTypingStatus)convertUltraGroupTypingStatusFromInteger:
-    (NSInteger)integer {
++ (RCIMIWUltraGroupTypingStatus)convertUltraGroupTypingStatusFromInteger:(NSInteger)integer {
   NSArray *UltraGroupTypingStatusArray = @[
     @(RCIMIWUltraGroupTypingStatusText),
   ];
-  RCIMIWUltraGroupTypingStatus UltraGroupTypingStatus =
-      [[UltraGroupTypingStatusArray objectAtIndex:integer] integerValue];
+  RCIMIWUltraGroupTypingStatus UltraGroupTypingStatus = [[UltraGroupTypingStatusArray objectAtIndex:integer] integerValue];
   return UltraGroupTypingStatus;
 }
-+ (NSInteger)convertUltraGroupTypingStatusToInteger:
-    (RCIMIWUltraGroupTypingStatus)UltraGroupTypingStatus {
++ (NSInteger)convertUltraGroupTypingStatusToInteger:(RCIMIWUltraGroupTypingStatus)UltraGroupTypingStatus {
   NSArray *UltraGroupTypingStatusArray = @[
     @(RCIMIWUltraGroupTypingStatusText),
   ];
-  NSInteger index =
-      [UltraGroupTypingStatusArray indexOfObject:@(UltraGroupTypingStatus)];
+  NSInteger index = [UltraGroupTypingStatusArray indexOfObject:@(UltraGroupTypingStatus)];
   return index;
 }
 
@@ -423,8 +381,7 @@
     @(RCIMIWMentionedTypeAll),
     @(RCIMIWMentionedTypePart),
   ];
-  RCIMIWMentionedType MentionedType =
-      [[MentionedTypeArray objectAtIndex:integer] integerValue];
+  RCIMIWMentionedType MentionedType = [[MentionedTypeArray objectAtIndex:integer] integerValue];
   return MentionedType;
 }
 + (NSInteger)convertMentionedTypeToInteger:(RCIMIWMentionedType)MentionedType {
@@ -436,24 +393,20 @@
   return index;
 }
 
-+ (RCIMIWChatRoomEntriesOperationType)
-    convertChatRoomEntriesOperationTypeFromInteger:(NSInteger)integer {
++ (RCIMIWChatRoomEntriesOperationType)convertChatRoomEntriesOperationTypeFromInteger:(NSInteger)integer {
   NSArray *ChatRoomEntriesOperationTypeArray = @[
     @(RCIMIWChatRoomEntriesOperationTypeUpdate),
     @(RCIMIWChatRoomEntriesOperationTypeRemove),
   ];
-  RCIMIWChatRoomEntriesOperationType ChatRoomEntriesOperationType =
-      [[ChatRoomEntriesOperationTypeArray objectAtIndex:integer] integerValue];
+  RCIMIWChatRoomEntriesOperationType ChatRoomEntriesOperationType = [[ChatRoomEntriesOperationTypeArray objectAtIndex:integer] integerValue];
   return ChatRoomEntriesOperationType;
 }
-+ (NSInteger)convertChatRoomEntriesOperationTypeToInteger:
-    (RCIMIWChatRoomEntriesOperationType)ChatRoomEntriesOperationType {
++ (NSInteger)convertChatRoomEntriesOperationTypeToInteger:(RCIMIWChatRoomEntriesOperationType)ChatRoomEntriesOperationType {
   NSArray *ChatRoomEntriesOperationTypeArray = @[
     @(RCIMIWChatRoomEntriesOperationTypeUpdate),
     @(RCIMIWChatRoomEntriesOperationTypeRemove),
   ];
-  NSInteger index = [ChatRoomEntriesOperationTypeArray
-      indexOfObject:@(ChatRoomEntriesOperationType)];
+  NSInteger index = [ChatRoomEntriesOperationTypeArray indexOfObject:@(ChatRoomEntriesOperationType)];
   return index;
 }
 
@@ -466,8 +419,7 @@
     @(RCIMIWLogLevelDebug),
     @(RCIMIWLogLevelVerbose),
   ];
-  RCIMIWLogLevel LogLevel =
-      [[LogLevelArray objectAtIndex:integer] integerValue];
+  RCIMIWLogLevel LogLevel = [[LogLevelArray objectAtIndex:integer] integerValue];
   return LogLevel;
 }
 + (NSInteger)convertLogLevelToInteger:(RCIMIWLogLevel)LogLevel {
@@ -489,12 +441,10 @@
     @(RCIMIWBlacklistStatusInBlacklist),
     @(RCIMIWBlacklistStatusNotInBlacklist),
   ];
-  RCIMIWBlacklistStatus BlacklistStatus =
-      [[BlacklistStatusArray objectAtIndex:integer] integerValue];
+  RCIMIWBlacklistStatus BlacklistStatus = [[BlacklistStatusArray objectAtIndex:integer] integerValue];
   return BlacklistStatus;
 }
-+ (NSInteger)convertBlacklistStatusToInteger:
-    (RCIMIWBlacklistStatus)BlacklistStatus {
++ (NSInteger)convertBlacklistStatusToInteger:(RCIMIWBlacklistStatus)BlacklistStatus {
   NSArray *BlacklistStatusArray = @[
     @(RCIMIWBlacklistStatusUnknown),
     @(RCIMIWBlacklistStatusInBlacklist),
@@ -504,8 +454,7 @@
   return index;
 }
 
-+ (RCIMIWConnectionStatus)convertConnectionStatusFromInteger:
-    (NSInteger)integer {
++ (RCIMIWConnectionStatus)convertConnectionStatusFromInteger:(NSInteger)integer {
   NSArray *ConnectionStatusArray = @[
     @(RCIMIWConnectionStatusNetworkUnavailable),
     @(RCIMIWConnectionStatusConnected),
@@ -519,12 +468,10 @@
     @(RCIMIWConnectionStatusTimeout),
     @(RCIMIWConnectionStatusUnknown),
   ];
-  RCIMIWConnectionStatus ConnectionStatus =
-      [[ConnectionStatusArray objectAtIndex:integer] integerValue];
+  RCIMIWConnectionStatus ConnectionStatus = [[ConnectionStatusArray objectAtIndex:integer] integerValue];
   return ConnectionStatus;
 }
-+ (NSInteger)convertConnectionStatusToInteger:
-    (RCIMIWConnectionStatus)ConnectionStatus {
++ (NSInteger)convertConnectionStatusToInteger:(RCIMIWConnectionStatus)ConnectionStatus {
   NSArray *ConnectionStatusArray = @[
     @(RCIMIWConnectionStatusNetworkUnavailable),
     @(RCIMIWConnectionStatusConnected),

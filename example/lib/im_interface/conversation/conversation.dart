@@ -30,7 +30,7 @@ const loadConversations = {
       "hint": "0: 查询所有",
     },
   ],
-  "action": engine_fun.loadConversations,
+  "action": engine_fun.getConversations,
 };
 
 const loadConversation = {
@@ -55,7 +55,7 @@ const loadConversation = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadConversation,
+  "action": engine_fun.getConversation,
 };
 
 const removeConversation = {
@@ -155,7 +155,7 @@ const loadDraftMessage = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadDraftMessage,
+  "action": engine_fun.getDraftMessage,
 };
 
 const clearDraftMessage = {
@@ -242,7 +242,7 @@ const loadConversationNotificationLevel = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadConversationNotificationLevel,
+  "action": engine_fun.getConversationNotificationLevel,
 };
 
 const loadBlockedConversations = {
@@ -261,7 +261,7 @@ const loadBlockedConversations = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadBlockedConversations,
+  "action": engine_fun.getBlockedConversations,
 };
 
 const changeConversationTopStatus = {
@@ -317,7 +317,7 @@ const loadConversationTopStatus = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadConversationTopStatus,
+  "action": engine_fun.getConversationTopStatus,
 };
 
 const syncConversationReadStatus = {
@@ -404,7 +404,7 @@ const loadMessageCount = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadMessageCount,
+  "action": engine_fun.getMessageCount,
 };
 
 const loadTopConversations = {
@@ -423,7 +423,7 @@ const loadTopConversations = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadTopConversations,
+  "action": engine_fun.getTopConversations,
 };
 
 const changeConversationTypeNotificationLevel = {
@@ -460,5 +460,5 @@ const loadConversationTypeNotificationLevel = {
       "lable": "请输入会话类型",
     },
   ],
-  "action": engine_fun.loadConversationTypeNotificationLevel,
+  "action": engine_fun.getConversationTypeNotificationLevel,
 };

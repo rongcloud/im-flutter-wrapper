@@ -157,6 +157,9 @@ enum RCIMIWMessageType {
 
   /// 位置消息
   location,
+
+  /// 用户自定义消息
+  userCustom,
 }
 
 enum RCIMIWMessageBlockType {

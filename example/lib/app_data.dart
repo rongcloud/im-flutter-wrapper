@@ -6,3 +6,8 @@ class AndroidPushInfo {
   static const appKeyOPPO = '';
   static const appSecretOPPO = '';
 }
+
+class AccountInfo {
+  static const appKey = '';
+  static const token = '';
+}

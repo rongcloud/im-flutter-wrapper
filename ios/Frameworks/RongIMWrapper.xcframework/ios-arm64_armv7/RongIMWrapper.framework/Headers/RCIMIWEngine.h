@@ -44,11 +44,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - 连接
 
-- (NSInteger)connect:(NSString *)token timeout:(int)timeout;
+- (NSInteger)connect:(NSString *)token
+__deprecated_msg("Use [RCIMIWEngine connect:databaseOpened:connected:] instead");
+
+- (NSInteger)connect:(NSString *)token
+      databaseOpened:(nullable void (^)(NSInteger code))databaseOpenedBlock
+           connected:(nullable void (^)(NSInteger code, NSString *userId))connectedBlock;
+
+- (NSInteger)connect:(NSString *)token
+             timeout:(int)timeout
+__deprecated_msg("Use [RCIMIWEngine connect:timeout:databaseOpened:connected:] instead");
+
+- (NSInteger)connect:(NSString *)token
+             timeout:(int)timeout
+      databaseOpened:(nullable void (^)(NSInteger code))databaseOpenedBlock
+           connected:(nullable void (^)(NSInteger code, NSString *userId))connectedBlock;
+
+- (NSInteger)disconnect;
 
 - (NSInteger)disconnect:(BOOL)receivePush;
 
-#pragma mark - 消息创建
+#pragma mark - 消息创建/注册
+
+- (NSInteger)registerCustomMessage:(NSArray<Class> *)messageContentClassList;
 
 - (RCIMIWTextMessage *)createTextMessage:(RCIMIWConversationType)type
                                 targetId:(NSString *)targetId
@@ -105,11 +123,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - 发送消息
 
-- (NSInteger)sendMessage:(RCIMIWMessage *)message;
+- (NSInteger)sendMessage:(RCIMIWMessage *)message
+__deprecated_msg("Use [RCIMIWEngine sendMessage:messageSaved:messageSent:] instead");
 
-- (NSInteger)sendMediaMessage:(RCIMIWMediaMessage *)message;
+- (NSInteger)sendMessage:(RCIMIWMessage *)message
+            messageSaved:(nullable void (^)(RCIMIWMessage *message))messageSavedBlock
+             messageSent:(nullable void (^)(NSInteger code, RCIMIWMessage *message))messageSentBlock;
 
-- (NSInteger)cancelSendingMediaMessage:(RCIMIWMediaMessage *)message;
+- (NSInteger)sendMediaMessage:(RCIMIWMediaMessage *)message
+__deprecated_msg("Use [RCIMIWEngine sendMediaMessage:messageSaved:messageSending:sendingMediaMessageCanceled:messageSent:] instead");
+
+- (NSInteger)sendMediaMessage:(RCIMIWMediaMessage *)message
+                 messageSaved:(nullable void (^)(RCIMIWMediaMessage *message))messageSavedBlock
+               messageSending:(nullable void (^)(RCIMIWMediaMessage *message, NSInteger progress))messageSendingBlock
+  sendingMediaMessageCanceled:(nullable void (^)(RCIMIWMediaMessage *message))sendingMediaMessageCanceledBlock
+                  messageSent:(nullable void (^)(NSInteger code, RCIMIWMediaMessage *message))messageSentBlock;
+
+- (NSInteger)cancelSendingMediaMessage:(RCIMIWMediaMessage *)message
+__deprecated_msg("Use [RCIMIWEngine cancelSendingMediaMessage:cancelSendingMediaMessageCalled:] instead");
+
+- (NSInteger)cancelSendingMediaMessage:(RCIMIWMediaMessage *)message
+       cancelSendingMediaMessageCalled:(nullable void (^)(NSInteger code, RCIMIWMediaMessage *message))cancelSendingMediaMessageCalledBlock;
+
+- (NSInteger)sendTypingStatus:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+                  currentType:(NSString *)currentType;
 
 - (NSInteger)sendTypingStatus:(RCIMIWConversationType)type
                      targetId:(NSString *)targetId
@@ -130,13 +168,28 @@ NS_ASSUME_NONNULL_BEGIN
  
  @remarks 消息操作
  */
-- (NSInteger)sendGroupMessageToDesignatedUsers:(RCIMIWMessage *)message userIds:(NSArray<NSString *> *)userIds;
+- (NSInteger)sendGroupMessageToDesignatedUsers:(RCIMIWMessage *)message userIds:(NSArray<NSString *> *)userIds
+__deprecated_msg("Use [RCIMIWEngine sendGroupMessageToDesignatedUsers:messageSaved:messageSent:] instead");
+
+- (NSInteger)sendGroupMessageToDesignatedUsers:(RCIMIWMessage *)message userIds:(NSArray<NSString *> *)userIds
+                                  messageSaved:(nullable void (^)(RCIMIWMessage *message))messageSavedBlock
+                                   messageSent:(nullable void (^)(NSInteger code, RCIMIWMessage *message))messageSentBlock;
 
 #pragma mark - 下载媒体消息
 
-- (NSInteger)downloadMediaMessage:(RCIMIWMediaMessage *)message;
+- (NSInteger)downloadMediaMessage:(RCIMIWMediaMessage *)message
+__deprecated_msg("Use [RCIMIWEngine downloadMediaMessage:mediaMessageDownloading:downloadingMediaMessageCanceled:mediaMessageDownloaded:] instead");
 
-- (NSInteger)cancelDownloadingMediaMessage:(RCIMIWMediaMessage *)message;
+- (NSInteger)downloadMediaMessage:(RCIMIWMediaMessage *)message
+          mediaMessageDownloading:(nullable void (^)(RCIMIWMediaMessage *message, NSInteger progress))mediaMessageDownloadingBlock
+  downloadingMediaMessageCanceled:(nullable void (^)(RCIMIWMediaMessage *message))downloadingMediaMessageCanceledBlock
+           mediaMessageDownloaded:(nullable void (^)(NSInteger code, RCIMIWMediaMessage *message))mediaMessageDownloadedBlock;
+
+- (NSInteger)cancelDownloadingMediaMessage:(RCIMIWMediaMessage *)message
+__deprecated_msg("Use [RCIMIWEngine cancelDownloadingMediaMessage:cancelDownloadingMediaMessageCalled:] instead");
+
+- (NSInteger)cancelDownloadingMediaMessage:(RCIMIWMediaMessage *)message
+       cancelDownloadingMediaMessageCalled:(nullable void (^)(NSInteger code, RCIMIWMediaMessage *message))cancelDownloadingMediaMessageCalledBlock;
 
 #pragma mark - 获取历史消息
 
@@ -152,10 +205,35 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)loadMessages:(RCIMIWConversationType)type
                  targetId:(NSString *)targetId
+                 sentTime:(long long)sentTime
+                    order:(RCIMIWTimeOrder)order
+                    count:(int)count
+__deprecated_msg("Use [RCIMIWEngine getMessages:targetId:sentTime:order:count:success:error:] instead");
+
+- (NSInteger)getMessages:(RCIMIWConversationType)type
+                targetId:(NSString *)targetId
+                sentTime:(long long)sentTime
+                   order:(RCIMIWTimeOrder)order
+                   count:(int)count
+                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                   error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadMessages:(RCIMIWConversationType)type
+                 targetId:(NSString *)targetId
                 channelId:(nullable NSString *)channelId
                  sentTime:(long long)sentTime
                     order:(RCIMIWTimeOrder)order
-                    count:(int)count;
+                    count:(int)count
+__deprecated_msg("Use [RCIMIWEngine getMessages:targetId:channelId:sentTime:order:count:success:error:] instead");
+
+- (NSInteger)getMessages:(RCIMIWConversationType)type
+                targetId:(NSString *)targetId
+               channelId:(nullable NSString *)channelId
+                sentTime:(long long)sentTime
+                   order:(RCIMIWTimeOrder)order
+                   count:(int)count
+                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                   error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
  获取指定 policy 类型的消息
@@ -174,23 +252,87 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)loadMessages:(RCIMIWConversationType)type
                  targetId:(NSString *)targetId
+                 sentTime:(long long)sentTime
+                    order:(RCIMIWTimeOrder)order
+                   policy:(RCIMIWMessageOperationPolicy)policy
+                    count:(int)count
+__deprecated_msg("Use [RCIMIWEngine getMessages:targetId:sentTime:order:policy:count:success:error:] instead");
+
+- (NSInteger)getMessages:(RCIMIWConversationType)type
+                targetId:(NSString *)targetId
+                sentTime:(long long)sentTime
+                   order:(RCIMIWTimeOrder)order
+                  policy:(RCIMIWMessageOperationPolicy)policy
+                   count:(int)count
+                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                   error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadMessages:(RCIMIWConversationType)type
+                 targetId:(NSString *)targetId
                 channelId:(nullable NSString *)channelId
                  sentTime:(long long)sentTime
                     order:(RCIMIWTimeOrder)order
                    policy:(RCIMIWMessageOperationPolicy)policy
-                    count:(int)count;
+                    count:(int)count
+__deprecated_msg("Use [RCIMIWEngine getMessages:targetId:channelId:sentTime:order:policy:count:success:error:] instead");
 
-- (NSInteger)loadUnreadMentionedMessages:(RCIMIWConversationType)type targetId:(NSString *)targetId channelId:(nullable NSString *)channelId;
+- (NSInteger)getMessages:(RCIMIWConversationType)type
+                targetId:(NSString *)targetId
+               channelId:(nullable NSString *)channelId
+                sentTime:(long long)sentTime
+                   order:(RCIMIWTimeOrder)order
+                  policy:(RCIMIWMessageOperationPolicy)policy
+                   count:(int)count
+                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                   error:(nullable void (^)(NSInteger code))errorBlock;
 
-- (NSInteger)loadFirstUnreadMessage:(RCIMIWConversationType)type targetId:(NSString *)targetId channelId:(nullable NSString *)channelId;
+- (NSInteger)loadUnreadMentionedMessages:(RCIMIWConversationType)type
+                                targetId:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getUnreadMentionedMessages:targetId:success:error:] instead");
 
-- (void)getMessageById:(long)messageId
-               success:(void (^)(RCIMIWMessage *message))success
-                 error:(void (^)(NSInteger code))error;
+- (NSInteger)getUnreadMentionedMessages:(RCIMIWConversationType)type
+                               targetId:(NSString *)targetId
+                                success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                                  error:(nullable void (^)(NSInteger code))errorBlock;
 
-- (void)getMessageByUId:(NSString *)messageUId
-                success:(void (^)(RCIMIWMessage *message))success
-                  error:(void (^)(NSInteger code))error;
+- (NSInteger)loadUnreadMentionedMessages:(RCIMIWConversationType)type
+                                targetId:(NSString *)targetId
+                               channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getUnreadMentionedMessages:targetId:channelId:success:error:] instead");
+
+- (NSInteger)getUnreadMentionedMessages:(RCIMIWConversationType)type
+                               targetId:(NSString *)targetId
+                              channelId:(nullable NSString *)channelId
+                                success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                                  error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadFirstUnreadMessage:(RCIMIWConversationType)type
+                           targetId:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getFirstUnreadMessage:targetId:success:error:] instead");
+
+- (NSInteger)getFirstUnreadMessage:(RCIMIWConversationType)type
+                          targetId:(NSString *)targetId
+                           success:(nullable void (^)(RCIMIWMessage *))successBlock
+                             error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadFirstUnreadMessage:(RCIMIWConversationType)type
+                           targetId:(NSString *)targetId
+                          channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getFirstUnreadMessage:targetId:channelId:success:error:] instead");
+
+- (NSInteger)getFirstUnreadMessage:(RCIMIWConversationType)type
+                          targetId:(NSString *)targetId
+                         channelId:(nullable NSString *)channelId
+                           success:(nullable void (^)(RCIMIWMessage *))successBlock
+                             error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)getMessageById:(long)messageId
+                    success:(nullable void (^)(RCIMIWMessage *message))successBlock
+                      error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)getMessageByUId:(NSString *)messageUId
+                     success:(nullable void (^)(RCIMIWMessage *message))successBlock
+                       error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 插入消息
 
@@ -202,11 +344,30 @@ NS_ASSUME_NONNULL_BEGIN
  @param message 默认创建出来 message 的 messageDirection 是 RCIMIWMessageDirectionSend
  @return 接口调用状态
  */
-- (NSInteger)insertMessage:(RCIMIWMessage *)message;
+- (NSInteger)insertMessage:(RCIMIWMessage *)message
+__deprecated_msg("Use [RCIMIWEngine insertMessage:messageInserted:] instead");
 
-- (NSInteger)insertMessages:(NSArray<RCIMIWMessage *> *)messages;
+- (NSInteger)insertMessage:(RCIMIWMessage *)message
+           messageInserted:(nullable void (^)(NSInteger code, RCIMIWMessage *message))messageInsertedBlock;
+
+- (NSInteger)insertMessages:(NSArray<RCIMIWMessage *> *)messages
+__deprecated_msg("Use [RCIMIWEngine insertMessages:messagesInserted:] instead");
+
+- (NSInteger)insertMessages:(NSArray<RCIMIWMessage *> *)messages
+           messagesInserted:(nullable void (^)(NSInteger code, NSArray<RCIMIWMessage *> *messages))messagesInsertedBlock;
 
 #pragma mark - 删除消息
+
+- (NSInteger)clearMessages:(RCIMIWConversationType)type
+                  targetId:(NSString *)targetId
+                 timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine clearMessages:targetId:timestamp:messagesCleared:] instead");
+
+- (NSInteger)clearMessages:(RCIMIWConversationType)type
+                  targetId:(NSString *)targetId
+                 timestamp:(long long)timestamp
+           messagesCleared:(nullable void (^)(NSInteger code))messagesClearedBlock;
+
 /*!
  清除历史消息
  
@@ -224,7 +385,26 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)clearMessages:(RCIMIWConversationType)type
                   targetId:(NSString *)targetId
                  channelId:(nullable NSString *)channelId
-                 timestamp:(long long)timestamp;
+                 timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine clearMessages:targetId:channelId:timestamp:messagesCleared:] instead");
+
+- (NSInteger)clearMessages:(RCIMIWConversationType)type
+                  targetId:(NSString *)targetId
+                 channelId:(nullable NSString *)channelId
+                 timestamp:(long long)timestamp
+           messagesCleared:(nullable void (^)(NSInteger code))messagesClearedBlock;
+
+- (NSInteger)clearMessages:(RCIMIWConversationType)type
+                  targetId:(NSString *)targetId
+                 timestamp:(long long)timestamp
+                    policy:(RCIMIWMessageOperationPolicy)policy
+__deprecated_msg("Use [RCIMIWEngine clearMessages:targetId:timestamp:policy:messagesCleared:] instead");
+
+- (NSInteger)clearMessages:(RCIMIWConversationType)type
+                  targetId:(NSString *)targetId
+                 timestamp:(long long)timestamp
+                    policy:(RCIMIWMessageOperationPolicy)policy
+           messagesCleared:(nullable void (^)(NSInteger code))messagesClearedBlock;
 
 /*!
  清除历史消息
@@ -250,9 +430,31 @@ NS_ASSUME_NONNULL_BEGIN
                   targetId:(NSString *)targetId
                  channelId:(nullable NSString *)channelId
                  timestamp:(long long)timestamp
-                    policy:(RCIMIWMessageOperationPolicy)policy;
+                    policy:(RCIMIWMessageOperationPolicy)policy
+__deprecated_msg("Use [RCIMIWEngine clearMessages:targetId:channelId:timestamp:policy:messagesCleared:] instead");
 
-- (NSInteger)deleteLocalMessages:(NSArray<RCIMIWMessage *> *)messages;
+- (NSInteger)clearMessages:(RCIMIWConversationType)type
+                  targetId:(NSString *)targetId
+                 channelId:(nullable NSString *)channelId
+                 timestamp:(long long)timestamp
+                    policy:(RCIMIWMessageOperationPolicy)policy
+           messagesCleared:(nullable void (^)(NSInteger code))messagesClearedBlock;
+
+- (NSInteger)deleteLocalMessages:(NSArray<RCIMIWMessage *> *)messages
+__deprecated_msg("Use [RCIMIWEngine deleteLocalMessages:localMessagesDeleted:] instead");
+
+- (NSInteger)deleteLocalMessages:(NSArray<RCIMIWMessage *> *)messages
+            localMessagesDeleted:(nullable void (^)(NSInteger code, NSArray<RCIMIWMessage *> *messages))localMessagesDeletedBlock;
+
+- (NSInteger)deleteMessages:(RCIMIWConversationType)type
+                   targetId:(NSString *)targetId
+                   messages:(NSArray<RCIMIWMessage *> *)messages
+__deprecated_msg("Use [RCIMIWEngine deleteMessages:targetId:messages:messagesDeleted:] instead");
+
+- (NSInteger)deleteMessages:(RCIMIWConversationType)type
+                   targetId:(NSString *)targetId
+                   messages:(NSArray<RCIMIWMessage *> *)messages
+            messagesDeleted:(nullable void (^)(NSInteger code, NSArray<RCIMIWMessage *> *messages))messagesDeletedBlock;
 
 /*!
  批量删除某个会话中的指定消息（同时删除本地和远端消息）
@@ -269,11 +471,30 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)deleteMessages:(RCIMIWConversationType)type
                    targetId:(NSString *)targetId
                   channelId:(nullable NSString *)channelId
-                   messages:(NSArray<RCIMIWMessage *> *)messages;
+                   messages:(NSArray<RCIMIWMessage *> *)messages
+__deprecated_msg("Use [RCIMIWEngine deleteMessages:targetId:channelId:messages:messagesDeleted:] instead");
+
+- (NSInteger)deleteMessages:(RCIMIWConversationType)type
+                   targetId:(NSString *)targetId
+                  channelId:(nullable NSString *)channelId
+                   messages:(NSArray<RCIMIWMessage *> *)messages
+            messagesDeleted:(nullable void (^)(NSInteger code, NSArray<RCIMIWMessage *> *messages))messagesDeletedBlock;
 
 #pragma mark - 撤回消息
 
-- (NSInteger)recallMessage:(RCIMIWMessage *)message;
+- (NSInteger)recallMessage:(RCIMIWMessage *)message
+__deprecated_msg("Use [RCIMIWEngine recallMessage:messageRecalled:] instead");
+
+- (NSInteger)recallMessage:(RCIMIWMessage *)message
+           messageRecalled:(nullable void (^)(NSInteger code, RCIMIWMessage *message))messageRecalledBlock;
+
+- (NSInteger)sendPrivateReadReceiptMessage:(NSString *)targetId
+                                 timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine sendPrivateReadReceiptMessage:timestamp:privateReadReceiptMessageSent:] instead");
+
+- (NSInteger)sendPrivateReadReceiptMessage:(NSString *)targetId
+                                 timestamp:(long long)timestamp
+             privateReadReceiptMessageSent:(nullable void (^)(NSInteger code))privateReadReceiptMessageSentBlock;
 
 /*!
  发送某个单聊会话中消息阅读的回执
@@ -282,22 +503,60 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)sendPrivateReadReceiptMessage:(NSString *)targetId
                                  channelId:(nullable NSString *)channelId
-                                 timestamp:(long long)timestamp;
+                                 timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine sendPrivateReadReceiptMessage:channelId:timestamp:privateReadReceiptMessageSent:] instead");
+
+- (NSInteger)sendPrivateReadReceiptMessage:(NSString *)targetId
+                                 channelId:(nullable NSString *)channelId
+                                 timestamp:(long long)timestamp
+             privateReadReceiptMessageSent:(nullable void (^)(NSInteger code))privateReadReceiptMessageSentBlock;
 
 #pragma mark - 消息扩展
 
 - (NSInteger)updateMessageExpansion:(NSString *)messageUId
-                          expansion:(NSDictionary<NSString *, NSString *> *)expansion;
+                          expansion:(NSDictionary<NSString *, NSString *> *)expansion
+__deprecated_msg("Use [RCIMIWEngine updateMessageExpansion:expansion:messageExpansionUpdated:] instead");
 
-- (NSInteger)removeMessageExpansionForKeys:(NSString *)messageUId keys:(NSArray<NSString *> *)keys;
+- (NSInteger)updateMessageExpansion:(NSString *)messageUId
+                          expansion:(NSDictionary<NSString *, NSString *> *)expansion
+            messageExpansionUpdated:(nullable void (^)(NSInteger code))messageExpansionUpdatedBlock;
+
+- (NSInteger)removeMessageExpansionForKeys:(NSString *)messageUId
+                                      keys:(NSArray<NSString *> *)keys
+__deprecated_msg("Use [RCIMIWEngine removeMessageExpansionForKeys:keys:messageExpansionForKeysRemoved:] instead");
+
+- (NSInteger)removeMessageExpansionForKeys:(NSString *)messageUId
+                                      keys:(NSArray<NSString *> *)keys
+            messageExpansionForKeysRemoved:(nullable void (^)(NSInteger code))messageExpansionForKeysRemovedBlock;
 
 #pragma mark - 修改消息接收、发送状态
 
-- (NSInteger)changeMessageReceiveStatus:(long)messageId receivedStatus:(RCIMIWReceivedStatus)receivedStatus;
+- (NSInteger)changeMessageReceiveStatus:(long)messageId
+                         receivedStatus:(RCIMIWReceivedStatus)receivedStatus
+__deprecated_msg("Use [RCIMIWEngine changeMessageReceiveStatus:receivedStatus:messageReceiveStatusChanged:] instead");
 
-- (NSInteger)changeMessageSentStatus:(long)messageId sentStatus:(RCIMIWSentStatus)sentStatus;
+- (NSInteger)changeMessageReceiveStatus:(long)messageId
+                         receivedStatus:(RCIMIWReceivedStatus)receivedStatus
+            messageReceiveStatusChanged:(nullable void (^)(NSInteger code))messageReceiveStatusChangedBlock;
+
+- (NSInteger)changeMessageSentStatus:(long)messageId
+                          sentStatus:(RCIMIWSentStatus)sentStatus
+__deprecated_msg("Use [RCIMIWEngine changeMessageSentStatus:sentStatus:messageSentStatusChanged:] instead");
+
+- (NSInteger)changeMessageSentStatus:(long)messageId
+                          sentStatus:(RCIMIWSentStatus)sentStatus
+            messageSentStatusChanged:(nullable void (^)(NSInteger code))messageSentStatusChangedBlock;
 
 #pragma mark - 会话
+
+- (NSInteger)loadConversation:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getConversation:targetId:success:error:] instead");
+
+- (NSInteger)getConversation:(RCIMIWConversationType)type
+                    targetId:(NSString *)targetId
+                     success:(nullable void (^)(RCIMIWConversation *))successBlock
+                       error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
  获取单个会话数据
@@ -305,7 +564,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)loadConversation:(RCIMIWConversationType)type
                      targetId:(NSString *)targetId
-                    channelId:(nullable NSString *)channelId;
+                    channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getConversation:targetId:channelId:success:error:] instead");
+
+- (NSInteger)getConversation:(RCIMIWConversationType)type
+                    targetId:(NSString *)targetId
+                   channelId:(nullable NSString *)channelId
+                     success:(nullable void (^)(RCIMIWConversation *))successBlock
+                       error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadConversations:(NSArray<NSNumber *> *)conversationTypes
+                     startTime:(long long)startTime
+                         count:(int)count
+__deprecated_msg("Use [RCIMIWEngine getConversations:startTime:count:success:error:] instead");
+
+- (NSInteger)getConversations:(NSArray<NSNumber *> *)conversationTypes
+                    startTime:(long long)startTime
+                        count:(int)count
+                      success:(nullable void (^)(NSArray<RCIMIWConversation *> *))successBlock
+                        error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
  分页获取会话列表
@@ -323,7 +600,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)loadConversations:(NSArray<NSNumber *> *)conversationTypes
                      channelId:(nullable NSString *)channelId
                      startTime:(long long)startTime
-                         count:(int)count;
+                         count:(int)count
+__deprecated_msg("Use [RCIMIWEngine getConversations:channelId:startTime:count:success:error:] instead");
+
+- (NSInteger)getConversations:(NSArray<NSNumber *> *)conversationTypes
+                    channelId:(nullable NSString *)channelId
+                    startTime:(long long)startTime
+                        count:(int)count
+                      success:(nullable void (^)(NSArray<RCIMIWConversation *> *))successBlock
+                        error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)removeConversation:(RCIMIWConversationType)type
+                       targetId:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine removeConversation:targetId:conversationRemoved:] instead");
+
+- (NSInteger)removeConversation:(RCIMIWConversationType)type
+                       targetId:(NSString *)targetId
+            conversationRemoved:(nullable void (^)(NSInteger code))conversationRemovedBlock;
 
 /*!
  从本地存储中删除会话
@@ -340,7 +633,19 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)removeConversation:(RCIMIWConversationType)type
                        targetId:(NSString *)targetId
-                      channelId:(nullable NSString *)channelId;
+                      channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine removeConversation:targetId:channelId:conversationRemoved:] instead");
+
+- (NSInteger)removeConversation:(RCIMIWConversationType)type
+                       targetId:(NSString *)targetId
+                      channelId:(nullable NSString *)channelId
+            conversationRemoved:(nullable void (^)(NSInteger code))conversationRemovedBlock;
+
+- (NSInteger)removeConversations:(NSArray<NSNumber *> *)conversationTypes
+__deprecated_msg("Use [RCIMIWEngine removeConversations:conversationsRemoved:] instead");
+
+- (NSInteger)removeConversations:(NSArray<NSNumber *> *)conversationTypes
+            conversationsRemoved:(nullable void (^)(NSInteger code))conversationsRemovedBlock;
 
 /*!
  删除指定类型的会话
@@ -355,7 +660,22 @@ NS_ASSUME_NONNULL_BEGIN
  
  @remarks 会话
  */
-- (NSInteger)removeConversations:(NSArray<NSNumber *> *)conversationTypes channelId:(nullable NSString *)channelId;
+- (NSInteger)removeConversations:(NSArray<NSNumber *> *)conversationTypes
+                       channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine removeConversations:channelId:conversationsRemoved:] instead");
+
+- (NSInteger)removeConversations:(NSArray<NSNumber *> *)conversationTypes
+                       channelId:(nullable NSString *)channelId
+            conversationsRemoved:(nullable void (^)(NSInteger code))conversationsRemovedBlock;
+
+- (NSInteger)loadMessageCount:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getMessageCount:targetId:success:error:] instead");
+
+- (NSInteger)getMessageCount:(RCIMIWConversationType)type
+                    targetId:(NSString *)targetId
+                     success:(nullable void (^)(NSInteger count))successBlock
+                       error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
  获取会话中的消息数量
@@ -369,15 +689,58 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)loadMessageCount:(RCIMIWConversationType)type
                      targetId:(NSString *)targetId
-                    channelId:(nullable NSString *)channelId;
+                    channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getMessageCount:targetId:channelId:success:error:] instead");
+
+- (NSInteger)getMessageCount:(RCIMIWConversationType)type
+                    targetId:(NSString *)targetId
+                   channelId:(nullable NSString *)channelId
+                     success:(nullable void (^)(NSInteger count))successBlock
+                       error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 会话未读数
 
-- (NSInteger)loadTotalUnreadCount:(NSString *)channelId;
+- (NSInteger)loadTotalUnreadCount
+__deprecated_msg("Use [RCIMIWEngine getTotalUnreadCount:error:] instead");
+
+- (NSInteger)getTotalUnreadCount:(nullable void (^)(NSInteger count))successBlock
+                           error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadTotalUnreadCount:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getTotalUnreadCount:success:error:] instead");
+
+- (NSInteger)getTotalUnreadCount:(nullable NSString *)channelId
+                         success:(nullable void (^)(NSInteger count))successBlock
+                           error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)loadUnreadCount:(RCIMIWConversationType)type
                     targetId:(NSString *)targetId
-                   channelId:(nullable NSString *)channelId;
+__deprecated_msg("Use [RCIMIWEngine getUnreadCount:targetId:success:error:] instead");
+
+- (NSInteger)getUnreadCount:(RCIMIWConversationType)type
+                   targetId:(NSString *)targetId
+                    success:(nullable void (^)(NSInteger count))successBlock
+                      error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadUnreadCount:(RCIMIWConversationType)type
+                    targetId:(NSString *)targetId
+                   channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getUnreadCount:targetId:channelId:success:error:] instead");
+
+- (NSInteger)getUnreadCount:(RCIMIWConversationType)type
+                   targetId:(NSString *)targetId
+                  channelId:(nullable NSString *)channelId
+                    success:(nullable void (^)(NSInteger count))successBlock
+                      error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadUnreadCountByConversationTypes:(NSArray<NSNumber *> *)conversationTypes
+                                        contain:(BOOL)contain
+__deprecated_msg("Use [RCIMIWEngine getUnreadCountByConversationTypes:contain:success:error:] instead");
+
+- (NSInteger)getUnreadCountByConversationTypes:(NSArray<NSNumber *> *)conversationTypes
+                                       contain:(BOOL)contain
+                                       success:(nullable void (^)(NSInteger count))successBlock
+                                         error:(nullable void (^)(NSInteger code))errorBlock;
 
 /**
  获取某些类型的会话中所有的未读消息数 （聊天室会话除外）
@@ -391,7 +754,24 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)loadUnreadCountByConversationTypes:(NSArray<NSNumber *> *)conversationTypes
                                       channelId:(nullable NSString *)channelId
-                                        contain:(BOOL)contain;
+                                        contain:(BOOL)contain
+__deprecated_msg("Use [RCIMIWEngine getUnreadCountByConversationTypes:channelId:contain:success:error:] instead");
+
+- (NSInteger)getUnreadCountByConversationTypes:(NSArray<NSNumber *> *)conversationTypes
+                                     channelId:(nullable NSString *)channelId
+                                       contain:(BOOL)contain
+                                       success:(nullable void (^)(NSInteger count))successBlock
+                                         error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadUnreadMentionedCount:(RCIMIWConversationType)type
+                             targetId:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getUnreadMentionedCount:targetId:success:error:] instead");
+
+- (NSInteger)getUnreadMentionedCount:(RCIMIWConversationType)type
+                            targetId:(NSString *)targetId
+                             success:(nullable void (^)(NSInteger count))successBlock
+                               error:(nullable void (^)(NSInteger code))errorBlock;
+
 /*!
  获取会话中@提醒自己的消息
  
@@ -399,7 +779,24 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)loadUnreadMentionedCount:(RCIMIWConversationType)type
                              targetId:(NSString *)targetId
-                            channelId:(nullable NSString *)channelId;
+                            channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getUnreadMentionedCount:targetId:channelId:success:error:] instead");
+
+- (NSInteger)getUnreadMentionedCount:(RCIMIWConversationType)type
+                            targetId:(NSString *)targetId
+                           channelId:(nullable NSString *)channelId
+                             success:(nullable void (^)(NSInteger count))successBlock
+                               error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)clearUnreadCount:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+                    timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine clearUnreadCount:targetId:timestamp:unreadCountCleared:] instead");
+
+- (NSInteger)clearUnreadCount:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+                    timestamp:(long long)timestamp
+           unreadCountCleared:(nullable void (^)(NSInteger code))unreadCountClearedBlock;
 
 /*!
  清除某个会话中的未读消息数
@@ -411,9 +808,26 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)clearUnreadCount:(RCIMIWConversationType)type
                      targetId:(NSString *)targetId
                     channelId:(nullable NSString *)channelId
-                    timestamp:(long long)timestamp;
+                    timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine clearUnreadCount:targetId:channelId:timestamp:unreadCountCleared:] instead");
+
+- (NSInteger)clearUnreadCount:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+                    channelId:(nullable NSString *)channelId
+                    timestamp:(long long)timestamp
+           unreadCountCleared:(nullable void (^)(NSInteger code))unreadCountClearedBlock;
 
 #pragma mark - 会话草稿
+
+- (NSInteger)saveDraftMessage:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+                        draft:(NSString *)draft
+__deprecated_msg("Use [RCIMIWEngine saveDraftMessage:targetId:draft:draftMessageSaved:] instead");
+
+- (NSInteger)saveDraftMessage:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+                        draft:(NSString *)draft
+            draftMessageSaved:(nullable void (^)(NSInteger code))draftMessageSavedBlock;
 
 /*!
  保存草稿信息（用户输入但未发送的暂存消息）
@@ -425,17 +839,64 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)saveDraftMessage:(RCIMIWConversationType)type
                      targetId:(NSString *)targetId
                     channelId:(nullable NSString *)channelId
-                        draft:(NSString *)draft;
+                        draft:(NSString *)draft
+__deprecated_msg("Use [RCIMIWEngine saveDraftMessage:targetId:channelId:draft:draftMessageSaved:] instead");
+
+- (NSInteger)saveDraftMessage:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+                    channelId:(nullable NSString *)channelId
+                        draft:(NSString *)draft
+            draftMessageSaved:(nullable void (^)(NSInteger code))draftMessageSavedBlock;
 
 - (NSInteger)loadDraftMessage:(RCIMIWConversationType)type
                      targetId:(NSString *)targetId
-                    channelId:(nullable NSString *)channelId;
+__deprecated_msg("Use [RCIMIWEngine getDraftMessage:targetId:success:error:] instead");
+
+- (NSInteger)getDraftMessage:(RCIMIWConversationType)type
+                    targetId:(NSString *)targetId
+                     success:(nullable void (^)(NSString * _Nullable draft))successBlock
+                       error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadDraftMessage:(RCIMIWConversationType)type
+                     targetId:(NSString *)targetId
+                    channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getDraftMessage:targetId:channelId:success:error:] instead");
+
+- (NSInteger)getDraftMessage:(RCIMIWConversationType)type
+                    targetId:(NSString *)targetId
+                   channelId:(nullable NSString *)channelId
+                     success:(nullable void (^)(NSString * _Nullable draft))successBlock
+                       error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)clearDraftMessage:(RCIMIWConversationType)type
                       targetId:(NSString *)targetId
-                     channelId:(nullable NSString *)channelId;
+__deprecated_msg("Use [RCIMIWEngine clearDraftMessage:targetId:draftMessageCleared:] instead");
+
+- (NSInteger)clearDraftMessage:(RCIMIWConversationType)type
+                      targetId:(NSString *)targetId
+           draftMessageCleared:(nullable void (^)(NSInteger code))draftMessageClearedBlock;
+
+- (NSInteger)clearDraftMessage:(RCIMIWConversationType)type
+                      targetId:(NSString *)targetId
+                     channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine clearDraftMessage:targetId:channelId:draftMessageCleared:] instead");
+
+- (NSInteger)clearDraftMessage:(RCIMIWConversationType)type
+                      targetId:(NSString *)targetId
+                     channelId:(nullable NSString *)channelId
+           draftMessageCleared:(nullable void (^)(NSInteger code))draftMessageClearedBlock;
 
 #pragma mark - 会话免打扰
+
+- (NSInteger)changeConversationNotificationLevel:(RCIMIWConversationType)type
+                                        targetId:(NSString *)targetId
+                                           level:(RCIMIWPushNotificationLevel)level
+__deprecated_msg("Use [RCIMIWEngine changeConversationNotificationLevel:targetId:level:conversationNotificationLevelChanged:] instead");
+
+- (NSInteger)changeConversationNotificationLevel:(RCIMIWConversationType)type
+                                        targetId:(NSString *)targetId
+                                           level:(RCIMIWPushNotificationLevel)level
+            conversationNotificationLevelChanged:(nullable void (^)(NSInteger code))conversationNotificationLevelChangedBlock;
 
 /**
  * @param type           会话类型
@@ -447,14 +908,50 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)changeConversationNotificationLevel:(RCIMIWConversationType)type
                                         targetId:(NSString *)targetId
                                        channelId:(nullable NSString *)channelId
-                                           level:(RCIMIWPushNotificationLevel)level;
+                                           level:(RCIMIWPushNotificationLevel)level
+__deprecated_msg("Use [RCIMIWEngine changeConversationNotificationLevel:targetId:channelId:level:conversationNotificationLevelChanged:] instead");
+
+- (NSInteger)changeConversationNotificationLevel:(RCIMIWConversationType)type
+                                        targetId:(NSString *)targetId
+                                       channelId:(nullable NSString *)channelId
+                                           level:(RCIMIWPushNotificationLevel)level
+            conversationNotificationLevelChanged:(nullable void (^)(NSInteger code))conversationNotificationLevelChangedBlock;
 
 - (NSInteger)loadConversationNotificationLevel:(RCIMIWConversationType)type
                                       targetId:(NSString *)targetId
-                                     channelId:(nullable NSString *)channelId;
+__deprecated_msg("Use [RCIMIWEngine getConversationNotificationLevel:targetId:success:error:] instead");
+
+- (NSInteger)getConversationNotificationLevel:(RCIMIWConversationType)type
+                                     targetId:(NSString *)targetId
+                                      success:(nullable void (^)(RCIMIWPushNotificationLevel level))successBlock
+                                        error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadConversationNotificationLevel:(RCIMIWConversationType)type
+                                      targetId:(NSString *)targetId
+                                     channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getConversationNotificationLevel:targetId:channelId:success:error:] instead");
+
+- (NSInteger)getConversationNotificationLevel:(RCIMIWConversationType)type
+                                     targetId:(NSString *)targetId
+                                    channelId:(nullable NSString *)channelId
+                                      success:(nullable void (^)(RCIMIWPushNotificationLevel level))successBlock
+                                        error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)loadBlockedConversations:(NSArray<NSNumber *> *)conversationTypes
-                            channelId:(nullable NSString *)channelId;
+__deprecated_msg("Use [RCIMIWEngine getBlockedConversations:success:error:] instead");
+
+- (NSInteger)getBlockedConversations:(NSArray<NSNumber *> *)conversationTypes
+                             success:(nullable void (^)(NSArray<RCIMIWConversation *> *conversations))successBlock
+                               error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadBlockedConversations:(NSArray<NSNumber *> *)conversationTypes
+                            channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getBlockedConversations:channelId:success:error:] instead");
+
+- (NSInteger)getBlockedConversations:(NSArray<NSNumber *> *)conversationTypes
+                           channelId:(nullable NSString *)channelId
+                             success:(nullable void (^)(NSArray<RCIMIWConversation *> *conversations))successBlock
+                               error:(nullable void (^)(NSInteger code))errorBlock;
 
 /**
  * 设置会话类型免打扰
@@ -462,16 +959,36 @@ NS_ASSUME_NONNULL_BEGIN
  * @param level    消息通知级别
  * @discussion 如要移除消息提醒状态，设置 level 为 RCIMIWPushNotificationLevelDefault
  */
+- (NSInteger)changeConversationTypeNotificationLevel:(RCIMIWConversationType)type
+                                               level:(RCIMIWPushNotificationLevel)level
+__deprecated_msg("Use [RCIMIWEngine changeConversationTypeNotificationLevel:level:conversationTypeNotificationLevelChanged:] instead");
 
 - (NSInteger)changeConversationTypeNotificationLevel:(RCIMIWConversationType)type
-                                               level:(RCIMIWPushNotificationLevel)level;
+                                               level:(RCIMIWPushNotificationLevel)level
+            conversationTypeNotificationLevelChanged:(nullable void (^)(NSInteger code))conversationTypeNotificationLevelChangedBlock;
+
 /**
  * 获取会话类型的消息提醒状态
  * @param type            会话类型
  */
-- (NSInteger)loadConversationTypeNotificationLevel:(RCIMIWConversationType)type;
+- (NSInteger)loadConversationTypeNotificationLevel:(RCIMIWConversationType)type
+__deprecated_msg("Use [RCIMIWEngine getConversationTypeNotificationLevel:success:error:] instead");
+
+- (NSInteger)getConversationTypeNotificationLevel:(RCIMIWConversationType)type
+                                          success:(nullable void (^)(RCIMIWPushNotificationLevel level))successBlock
+                                            error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 会话置顶
+
+- (NSInteger)changeConversationTopStatus:(RCIMIWConversationType)type
+                                targetId:(NSString *)targetId
+                                     top:(BOOL)top
+__deprecated_msg("Use [RCIMIWEngine changeConversationTopStatus:targetId:top:conversationTopStatusChanged:] instead");
+
+- (NSInteger)changeConversationTopStatus:(RCIMIWConversationType)type
+                                targetId:(NSString *)targetId
+                                     top:(BOOL)top
+            conversationTopStatusChanged:(nullable void (^)(NSInteger code))conversationTopStatusChangedBlock;
 
 /**
  *
@@ -484,7 +1001,24 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)changeConversationTopStatus:(RCIMIWConversationType)type
                                 targetId:(NSString *)targetId
                                channelId:(nullable NSString *)channelId
-                                     top:(BOOL)top;
+                                     top:(BOOL)top
+__deprecated_msg("Use [RCIMIWEngine changeConversationTopStatus:targetId:channelId:top:conversationTopStatusChanged:] instead");
+
+- (NSInteger)changeConversationTopStatus:(RCIMIWConversationType)type
+                                targetId:(NSString *)targetId
+                               channelId:(nullable NSString *)channelId
+                                     top:(BOOL)top
+            conversationTopStatusChanged:(nullable void (^)(NSInteger code))conversationTopStatusChangedBlock;
+
+- (NSInteger)loadConversationTopStatus:(RCIMIWConversationType)type
+                              targetId:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getConversationTopStatus:targetId:success:error:] instead");
+
+- (NSInteger)getConversationTopStatus:(RCIMIWConversationType)type
+                             targetId:(NSString *)targetId
+                              success:(nullable void (^)(Boolean top))successBlock
+                                error:(nullable void (^)(NSInteger code))errorBlock;
+
 /**
  *
  * @param type           会话类型
@@ -493,7 +1027,21 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)loadConversationTopStatus:(RCIMIWConversationType)type
                               targetId:(NSString *)targetId
-                             channelId:(nullable NSString *)channelId;
+                             channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getConversationTopStatus:targetId:channelId:success:error:] instead");
+
+- (NSInteger)getConversationTopStatus:(RCIMIWConversationType)type
+                             targetId:(NSString *)targetId
+                            channelId:(nullable NSString *)channelId
+                              success:(nullable void (^)(Boolean top))successBlock
+                                error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadTopConversations:(NSArray<NSNumber *> *)conversationTypes
+__deprecated_msg("Use [RCIMIWEngine getTopConversations:success:error:] instead");
+
+- (NSInteger)getTopConversations:(NSArray<NSNumber *> *)conversationTypes
+                         success:(nullable void (^)(NSArray<RCIMIWConversation *> *conversations))successBlock
+                           error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
  获取置顶的会话列表
@@ -506,9 +1054,26 @@ NS_ASSUME_NONNULL_BEGIN
  @remarks 会话列表
  */
 - (NSInteger)loadTopConversations:(NSArray<NSNumber *> *)conversationTypes
-                        channelId:(nullable NSString *)channelId;
+                        channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getTopConversations:channelId:success:error:] instead");
+
+- (NSInteger)getTopConversations:(NSArray<NSNumber *> *)conversationTypes
+                       channelId:(nullable NSString *)channelId
+                         success:(nullable void (^)(NSArray<RCIMIWConversation *> *conversations))successBlock
+                           error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 多端状态同步
+
+- (NSInteger)syncConversationReadStatus:(RCIMIWConversationType)type
+                               targetId:(NSString *)targetId
+                              timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine syncConversationReadStatus:targetId:timestamp:conversationReadStatusSynced:] instead");
+
+- (NSInteger)syncConversationReadStatus:(RCIMIWConversationType)type
+                               targetId:(NSString *)targetId
+                              timestamp:(long long)timestamp
+           conversationReadStatusSynced:(nullable void (^)(NSInteger code))conversationReadStatusSyncedBlock;
+
 /*!
  同步会话阅读状态（把指定会话里所有发送时间早于 timestamp 的消息置为已读）
  
@@ -524,9 +1089,38 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)syncConversationReadStatus:(RCIMIWConversationType)type
                                targetId:(NSString *)targetId
                               channelId:(nullable NSString *)channelId
-                              timestamp:(long long)timestamp;
+                              timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine syncConversationReadStatus:targetId:channelId:timestamp:conversationReadStatusSynced:] instead");
+
+- (NSInteger)syncConversationReadStatus:(RCIMIWConversationType)type
+                               targetId:(NSString *)targetId
+                              channelId:(nullable NSString *)channelId
+                              timestamp:(long long)timestamp
+           conversationReadStatusSynced:(nullable void (^)(NSInteger code))conversationReadStatusSyncedBlock;
 
 #pragma mark - 聊天室
+
+- (NSInteger)joinChatRoom:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine joinChatRoom:chatRoomJoined:] instead");
+
+- (NSInteger)joinChatRoom:(NSString *)targetId
+           chatRoomJoined:(nullable void (^)(NSInteger code, NSString *targetId))chatRoomJoinedBlock;
+
+- (NSInteger)joinChatRoom:(NSString *)targetId
+             messageCount:(int)messageCount
+__deprecated_msg("Use [RCIMIWEngine joinChatRoom:messageCount:chatRoomJoined:] instead");
+
+- (NSInteger)joinChatRoom:(NSString *)targetId
+             messageCount:(int)messageCount
+           chatRoomJoined:(nullable void (^)(NSInteger code, NSString *targetId))chatRoomJoinedBlock;
+
+- (NSInteger)joinChatRoom:(NSString *)targetId
+               autoCreate:(BOOL)autoCreate
+__deprecated_msg("Use [RCIMIWEngine joinChatRoom:autoCreate:chatRoomJoined:] instead");
+
+- (NSInteger)joinChatRoom:(NSString *)targetId
+               autoCreate:(BOOL)autoCreate
+           chatRoomJoined:(nullable void (^)(NSInteger code, NSString *targetId))chatRoomJoinedBlock;
 
 /*!
  加入聊天室
@@ -547,9 +1141,19 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)joinChatRoom:(NSString *)targetId
              messageCount:(int)messageCount
-               autoCreate:(BOOL)autoCreate;
+               autoCreate:(BOOL)autoCreate
+__deprecated_msg("Use [RCIMIWEngine joinChatRoom:messageCount:autoCreate:chatRoomJoined:] instead");
 
-- (NSInteger)leaveChatRoom:(NSString *)targetId;
+- (NSInteger)joinChatRoom:(NSString *)targetId
+             messageCount:(int)messageCount
+               autoCreate:(BOOL)autoCreate
+           chatRoomJoined:(nullable void (^)(NSInteger code, NSString *targetId))chatRoomJoinedBlock;
+
+- (NSInteger)leaveChatRoom:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine leaveChatRoom:chatRoomLeft:] instead");
+
+- (NSInteger)leaveChatRoom:(NSString *)targetId
+              chatRoomLeft:(nullable void (^)(NSInteger code, NSString *targetId))chatRoomLeftBlock;
 
 /*!
  获取聊天室的历史消息
@@ -563,7 +1167,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)loadChatRoomMessages:(NSString *)targetId
                         timestamp:(long long)timestamp
                             order:(RCIMIWTimeOrder)order
-                            count:(int)count;
+                            count:(int)count
+__deprecated_msg("Use [RCIMIWEngine getChatRoomMessages:timestamp:order:count:success:error:] instead");
+
+- (NSInteger)getChatRoomMessages:(NSString *)targetId
+                       timestamp:(long long)timestamp
+                           order:(RCIMIWTimeOrder)order
+                           count:(int)count
+                         success:(nullable void (^)(NSArray<RCIMIWMessage *> *messages))successBlock
+                           error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 聊天室 KV
 
@@ -587,36 +1199,107 @@ NS_ASSUME_NONNULL_BEGIN
                           key:(NSString *)key
                         value:(NSString *)value
                deleteWhenLeft:(BOOL)deleteWhenLeft
-                    overwrite:(BOOL)overwrite;
+                    overwrite:(BOOL)overwrite
+__deprecated_msg("Use [RCIMIWEngine addChatRoomEntry:key:value:deleteWhenLeft:overwrite:chatRoomEntryAdded:] instead");
+
+- (NSInteger)addChatRoomEntry:(NSString *)targetId
+                          key:(NSString *)key
+                        value:(NSString *)value
+               deleteWhenLeft:(BOOL)deleteWhenLeft
+                    overwrite:(BOOL)overwrite
+           chatRoomEntryAdded:(nullable void (^)(NSInteger code))chatRoomEntryAddedBlock;
 
 - (NSInteger)addChatRoomEntries:(NSString *)targetId
                         entries:(NSDictionary<NSString *, NSString *> *)entries
                  deleteWhenLeft:(BOOL)deleteWhenLeft
-                      overwrite:(BOOL)overwrite;
+                      overwrite:(BOOL)overwrite
+__deprecated_msg("Use [RCIMIWEngine addChatRoomEntries:entries:deleteWhenLeft:overwrite:chatRoomEntriesAdded:] instead");
 
-- (NSInteger)loadChatRoomEntry:(NSString *)targetId key:(NSString *)key;
+- (NSInteger)addChatRoomEntries:(NSString *)targetId
+                        entries:(NSDictionary<NSString *, NSString *> *)entries
+                 deleteWhenLeft:(BOOL)deleteWhenLeft
+                      overwrite:(BOOL)overwrite
+           chatRoomEntriesAdded:(nullable void (^)(NSInteger code, NSDictionary<NSString *, NSNumber *> * _Nullable errors))chatRoomEntriesAddedBlock;
 
-- (NSInteger)loadAllChatRoomEntries:(NSString *)targetId;
+- (NSInteger)loadChatRoomEntry:(NSString *)targetId
+                           key:(NSString *)key
+__deprecated_msg("Use [RCIMIWEngine getChatRoomEntry:key:success:error:] instead");
+
+- (NSInteger)getChatRoomEntry:(NSString *)targetId
+                          key:(NSString *)key
+                      success:(nullable void (^)(NSDictionary<NSString *, NSString *> *entry))successBlock
+                        error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadChatRoomAllEntries:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getChatRoomAllEntries:success:error:] instead");
+
+- (NSInteger)getChatRoomAllEntries:(NSString *)targetId
+                           success:(nullable void (^)(NSDictionary<NSString *, NSString *> *entries))successBlock
+                             error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)removeChatRoomEntry:(NSString *)targetId
                              key:(NSString *)key
-                           force:(BOOL)force;
+                           force:(BOOL)force
+__deprecated_msg("Use [RCIMIWEngine removeChatRoomEntry:key:force:chatRoomEntryRemoved:] instead");
+
+- (NSInteger)removeChatRoomEntry:(NSString *)targetId
+                             key:(NSString *)key
+                           force:(BOOL)force
+            chatRoomEntryRemoved:(nullable void (^)(NSInteger code))chatRoomEntryRemovedBlock;
 
 - (NSInteger)removeChatRoomEntries:(NSString *)targetId
                               keys:(NSArray<NSString *> *)keys
-                             force:(BOOL)force;
+                             force:(BOOL)force
+__deprecated_msg("Use [RCIMIWEngine removeChatRoomEntries:key:force:chatRoomEntriesRemoved:] instead");
+
+- (NSInteger)removeChatRoomEntries:(NSString *)targetId
+                              keys:(NSArray<NSString *> *)keys
+                             force:(BOOL)force
+            chatRoomEntriesRemoved:(nullable void (^)(NSInteger code))chatRoomEntriesRemovedBlock;
 
 #pragma mark - 用户管理
 
-- (NSInteger)addToBlacklist:(NSString *)userId;
+- (NSInteger)addToBlacklist:(NSString *)userId
+__deprecated_msg("Use [RCIMIWEngine addToBlacklist:blacklistAdded:] instead");
 
-- (NSInteger)removeFromBlacklist:(NSString *)userId;
+- (NSInteger)addToBlacklist:(NSString *)userId
+             blacklistAdded:(nullable void (^)(NSInteger code, NSString *userId))blacklistAddedBlock;
 
-- (NSInteger)loadBlacklist;
+- (NSInteger)removeFromBlacklist:(NSString *)userId
+__deprecated_msg("Use [RCIMIWEngine removeFromBlacklist:blacklistRemoved:] instead");
 
-- (NSInteger)loadBlacklistStatus:(NSString *)userId;
+- (NSInteger)removeFromBlacklist:(NSString *)userId
+                blacklistRemoved:(nullable void (^)(NSInteger code, NSString *userId))blacklistRemovedBlock;
+
+- (NSInteger)loadBlacklist
+__deprecated_msg("Use [RCIMIWEngine getBlacklist:error:] instead");
+
+- (NSInteger)getBlacklist:(nullable void (^)(NSArray<NSString *> *userIds))successBlock
+                    error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)loadBlacklistStatus:(NSString *)userId
+__deprecated_msg("Use [RCIMIWEngine getBlacklistStatus:success:error:] instead");
+
+- (NSInteger)getBlacklistStatus:(NSString *)userId
+                        success:(nullable void (^)(RCIMIWBlacklistStatus status))successBlock
+                          error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 搜索消息
+
+- (NSInteger)searchMessages:(RCIMIWConversationType)type
+                   targetId:(NSString *)targetId
+                    keyword:(NSString *)keyword
+                  startTime:(long long)startTime
+                      count:(int)count
+__deprecated_msg("Use [RCIMIWEngine searchMessages:targetId:keyword:startTime:count:success:error:] instead");
+
+- (NSInteger)searchMessages:(RCIMIWConversationType)type
+                   targetId:(NSString *)targetId
+                    keyword:(NSString *)keyword
+                  startTime:(long long)startTime
+                      count:(int)count
+                    success:(nullable void (^)(NSArray<RCIMIWMessage *> *messages))successBlock
+                      error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
  根据关键字搜索指定会话中的消息
@@ -638,7 +1321,36 @@ NS_ASSUME_NONNULL_BEGIN
                   channelId:(nullable NSString *)channelId
                     keyword:(NSString *)keyword
                   startTime:(long long)startTime
-                      count:(int)count;
+                      count:(int)count
+__deprecated_msg("Use [RCIMIWEngine searchMessages:targetId:channelId:keyword:startTime:count:success:error:] instead");
+
+- (NSInteger)searchMessages:(RCIMIWConversationType)type
+                   targetId:(NSString *)targetId
+                  channelId:(nullable NSString *)channelId
+                    keyword:(NSString *)keyword
+                  startTime:(long long)startTime
+                      count:(int)count
+                    success:(nullable void (^)(NSArray<RCIMIWMessage *> *messages))successBlock
+                      error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)searchMessagesByTimeRange:(RCIMIWConversationType)type
+                              targetId:(NSString *)targetId
+                               keyword:(NSString *)keyword
+                             startTime:(long long)startTime
+                               endTime:(long long)endTime
+                                offset:(int)offset
+                                 count:(int)count
+__deprecated_msg("Use [RCIMIWEngine searchMessagesByTimeRange:targetId:keyword:startTime:endTime:offset:count:success:error:] instead");
+
+- (NSInteger)searchMessagesByTimeRange:(RCIMIWConversationType)type
+                              targetId:(NSString *)targetId
+                               keyword:(NSString *)keyword
+                             startTime:(long long)startTime
+                               endTime:(long long)endTime
+                                offset:(int)offset
+                                 count:(int)count
+                               success:(nullable void (^)(NSArray<RCIMIWMessage *> *messages))successBlock
+                                 error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
  根据时间，偏移量和个数搜索指定会话中的消息
@@ -664,7 +1376,34 @@ NS_ASSUME_NONNULL_BEGIN
                              startTime:(long long)startTime
                                endTime:(long long)endTime
                                 offset:(int)offset
-                                 count:(int)count;
+                                 count:(int)count
+__deprecated_msg("Use [RCIMIWEngine searchMessagesByTimeRange:targetId:channelId:keyword:startTime:endTime:offset:count:success:error:] instead");
+
+- (NSInteger)searchMessagesByTimeRange:(RCIMIWConversationType)type
+                              targetId:(NSString *)targetId
+                             channelId:(nullable NSString *)channelId
+                               keyword:(NSString *)keyword
+                             startTime:(long long)startTime
+                               endTime:(long long)endTime
+                                offset:(int)offset
+                                 count:(int)count
+                               success:(nullable void (^)(NSArray<RCIMIWMessage *> *messages))successBlock
+                                 error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)searchMessagesByUserId:(NSString *)userId
+                               type:(RCIMIWConversationType)type
+                           targetId:(NSString *)targetId
+                          startTime:(long long)startTime
+                              count:(int)count
+__deprecated_msg("Use [RCIMIWEngine searchMessagesByUserId:type:targetId:startTime:count:success:error:] instead");
+
+- (NSInteger)searchMessagesByUserId:(NSString *)userId
+                               type:(RCIMIWConversationType)type
+                           targetId:(NSString *)targetId
+                          startTime:(long long)startTime
+                              count:(int)count
+                            success:(nullable void (^)(NSArray<RCIMIWMessage *> *messages))successBlock
+                              error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
  按用户 ID 搜索指定会话中的消息
@@ -686,20 +1425,67 @@ NS_ASSUME_NONNULL_BEGIN
                            targetId:(NSString *)targetId
                           channelId:(nullable NSString *)channelId
                           startTime:(long long)startTime
-                              count:(int)count;
+                              count:(int)count
+__deprecated_msg("Use [RCIMIWEngine searchMessagesByUserId:type:targetId:channelId:startTime:count:success:error:] instead");
+
+- (NSInteger)searchMessagesByUserId:(NSString *)userId
+                               type:(RCIMIWConversationType)type
+                           targetId:(NSString *)targetId
+                          channelId:(nullable NSString *)channelId
+                          startTime:(long long)startTime
+                              count:(int)count
+                            success:(nullable void (^)(NSArray<RCIMIWMessage *> *messages))successBlock
+                              error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 群聊回执
 
-- (NSInteger)sendGroupReadReceiptRequest:(RCIMIWMessage *)message;
+- (NSInteger)sendGroupReadReceiptRequest:(RCIMIWMessage *)message
+__deprecated_msg("Use [RCIMIWEngine sendGroupReadReceiptRequest:groupReadReceiptRequestSent:] instead");
+
+- (NSInteger)sendGroupReadReceiptRequest:(RCIMIWMessage *)message
+             groupReadReceiptRequestSent:(nullable void (^)(NSInteger code, RCIMIWMessage *message))groupReadReceiptRequestSentBlock;
+
+- (NSInteger)sendGroupReadReceiptResponse:(NSString *)targetId
+                                 messages:(NSArray<RCIMIWMessage *> *)messages
+__deprecated_msg("Use [RCIMIWEngine sendGroupReadReceiptResponse:messages:groupReadReceiptResponseSent:] instead");
+
+- (NSInteger)sendGroupReadReceiptResponse:(NSString *)targetId
+                                 messages:(NSArray<RCIMIWMessage *> *)messages
+             groupReadReceiptResponseSent:(nullable void (^)(NSInteger code, NSArray<RCIMIWMessage *> *messages))groupReadReceiptResponseSentBlock;
 
 - (NSInteger)sendGroupReadReceiptResponse:(NSString *)targetId
                                 channelId:(nullable NSString *)channelId
-                                 messages:(NSArray<RCIMIWMessage *> *)messages;
+                                 messages:(NSArray<RCIMIWMessage *> *)messages
+__deprecated_msg("Use [RCIMIWEngine sendGroupReadReceiptResponse:channelId:messages:groupReadReceiptResponseSent:] instead");
+
+- (NSInteger)sendGroupReadReceiptResponse:(NSString *)targetId
+                                channelId:(nullable NSString *)channelId
+                                 messages:(NSArray<RCIMIWMessage *> *)messages
+             groupReadReceiptResponseSent:(nullable void (^)(NSInteger code, NSArray<RCIMIWMessage *> *messages))groupReadReceiptResponseSentBlock;
+
+- (NSInteger)searchConversations:(NSArray<NSNumber *> *)conversationTypes
+                    messageTypes:(NSArray<NSNumber *> *)messageTypes
+                         keyword:(NSString *)keyword
+__deprecated_msg("Use [RCIMIWEngine searchConversations:messageTypes:keyword:success:error:] instead");
+
+- (NSInteger)searchConversations:(NSArray<NSNumber *> *)conversationTypes
+                    messageTypes:(NSArray<NSNumber *> *)messageTypes
+                         keyword:(NSString *)keyword
+                         success:(nullable void (^)(NSArray<RCIMIWSearchConversationResult *> *results))successBlock
+                           error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)searchConversations:(NSArray<NSNumber *> *)conversationTypes
                        channelId:(nullable NSString *)channelId
                     messageTypes:(NSArray<NSNumber *> *)messageTypes
-                         keyword:(NSString *)keyword;
+                         keyword:(NSString *)keyword
+__deprecated_msg("Use [RCIMIWEngine searchConversations:channelId:messageTypes:keyword:success:error:] instead");
+
+- (NSInteger)searchConversations:(NSArray<NSNumber *> *)conversationTypes
+                       channelId:(nullable NSString *)channelId
+                    messageTypes:(NSArray<NSNumber *> *)messageTypes
+                         keyword:(NSString *)keyword
+                         success:(nullable void (^)(NSArray<RCIMIWSearchConversationResult *> *results))successBlock
+                           error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 会话标签
 //
@@ -754,17 +1540,30 @@ NS_ASSUME_NONNULL_BEGIN
  全局屏蔽某个时间段的消息提醒
  
  @param startTime       开始消息免打扰时间，格式为 HH:MM:SS
- @param spanMins        需要消息免打扰分钟数，0 < spanMins < 1440（ 比如，您设置的起始时间是 00：00， 结束时间为
+ @param spanMinutes        需要消息免打扰分钟数，0 < spanMins < 1440（ 比如，您设置的起始时间是 00：00， 结束时间为
  23：59，则 spanMins 为 23 * 60 + 59 = 1439 分钟。）
  @param level  传递 RCPushNotificationQuietHoursLevelDefault 表示移除免打扰
  */
 - (NSInteger)changeNotificationQuietHours:(NSString *)startTime
-                                 spanMins:(int)spanMins
-                                    level:(RCIMIWPushNotificationQuietHoursLevel)level;
+                              spanMinutes:(int)spanMinutes
+                                    level:(RCIMIWPushNotificationQuietHoursLevel)level
+__deprecated_msg("Use [RCIMIWEngine changeNotificationQuietHours:spanMinutes:level:notificationQuietHoursChanged:] instead");
 
-- (NSInteger)loadNotificationQuietHours;
+- (NSInteger)changeNotificationQuietHours:(NSString *)startTime
+                              spanMinutes:(int)spanMinutes
+                                    level:(RCIMIWPushNotificationQuietHoursLevel)level
+            notificationQuietHoursChanged:(nullable void (^)(NSInteger code))notificationQuietHoursChangedBlock;
 
-- (NSInteger)removeNotificationQuietHours;
+- (NSInteger)loadNotificationQuietHours
+__deprecated_msg("Use [RCIMIWEngine getNotificationQuietHours:error:] instead");
+
+- (NSInteger)getNotificationQuietHours:(nullable void (^)(NSString *startTime, int spanMinutes, RCIMIWPushNotificationQuietHoursLevel level))successBlock
+                                 error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)removeNotificationQuietHours
+__deprecated_msg("Use [RCIMIWEngine removeNotificationQuietHours:] instead");
+
+- (NSInteger)removeNotificationQuietHours:(nullable void (^)(NSInteger code))notificationQuietHoursRemovedBlock;
 
 #pragma mark - 推送配置
 
@@ -791,30 +1590,59 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param showContent 是否显示推送的具体内容（ YES 显示 NO 不显示）
  */
-- (NSInteger)changePushContentShowStatus:(BOOL)showContent;
+- (NSInteger)changePushContentShowStatus:(BOOL)showContent
+__deprecated_msg("Use [RCIMIWEngine changePushContentShowStatus:pushContentShowStatusChanged:] instead");
+
+- (NSInteger)changePushContentShowStatus:(BOOL)showContent
+            pushContentShowStatusChanged:(nullable void (^)(NSInteger code))pushContentShowStatusChangedBlock;
 
 /**
  设置推送内容的自然语言
  
  @param language             通过 SDK 设置的语言环境，语言缩写内容格式为 (ISO-639 Language Code)_(ISO-3166 Country Codes)，如：zh_CN。目前融云支持的内置推送语言为 zh_CN、en_US、ar_SA
  */
-- (NSInteger)changePushLanguage:(NSString *)language;
+- (NSInteger)changePushLanguage:(NSString *)language
+__deprecated_msg("Use [RCIMIWEngine changePushLanguage:pushLanguageChanged:] instead");
+
+- (NSInteger)changePushLanguage:(NSString *)language
+            pushLanguageChanged:(nullable void (^)(NSInteger code))pushLanguageChangedBlock;
 
 /*!
  设置 Web 端在线时，手机端是否接收推送
  
  @param receive     是否接收推送（ YES 接收 NO 不接收）
  */
-- (NSInteger)changePushReceiveStatus:(BOOL)receive;
+- (NSInteger)changePushReceiveStatus:(BOOL)receive
+__deprecated_msg("Use [RCIMIWEngine changePushReceiveStatus:pushReceiveStatusChanged:] instead");
+
+- (NSInteger)changePushReceiveStatus:(BOOL)receive
+            pushReceiveStatusChanged:(nullable void (^)(NSInteger code))pushReceiveStatusChangedBlock;
 
 #pragma mark - 超级群
+- (NSInteger)syncUltraGroupReadStatus:(NSString *)targetId
+                            channelId:(nullable NSString *)channelId
+                            timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine syncUltraGroupReadStatus:channelId:timestamp:ultraGroupReadStatusSynced:] instead");
 
 - (NSInteger)syncUltraGroupReadStatus:(NSString *)targetId
                             channelId:(nullable NSString *)channelId
-                            timestamp:(long long)timestamp;
+                            timestamp:(long long)timestamp
+           ultraGroupReadStatusSynced:(nullable void (^)(NSInteger code))ultraGroupReadStatusSyncedBlock;
 
 - (NSInteger)loadConversationsForAllChannel:(RCIMIWConversationType)type
-                                   targetId:(NSString *) targetId;
+                                   targetId:(NSString *) targetId
+__deprecated_msg("Use [RCIMIWEngine getConversationsForAllChannel:targetId:success:error:] instead");
+
+- (NSInteger)getConversationsForAllChannel:(RCIMIWConversationType)type
+                                  targetId:(NSString *) targetId
+                                   success:(nullable void (^)(NSArray<RCIMIWConversation *> *conversations))successBlock
+                                     error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)modifyUltraGroupMessage:(RCIMIWMessage *)message
+__deprecated_msg("Use [RCIMIWEngine modifyUltraGroupMessage:ultraGroupMessageModified:] instead");
+
+- (NSInteger)modifyUltraGroupMessage:(RCIMIWMessage *)message
+           ultraGroupMessageModified:(nullable void (^)(NSInteger code))ultraGroupMessageModifiedBlock;
 
 /**
  消息修改
@@ -825,7 +1653,13 @@ NS_ASSUME_NONNULL_BEGIN
  @discussion
  此方法只能修改相同频道的同类型消息，仅能修改自己发送的消息
  */
-- (NSInteger)modifyUltraGroupMessage:(NSString *)messageUId message:(RCIMIWMessage *)message;
+- (NSInteger)modifyUltraGroupMessage:(NSString *)messageUId
+                             message:(RCIMIWMessage *)message
+__deprecated_msg("Use [RCIMIWEngine modifyUltraGroupMessage:message:ultraGroupMessageModified:] instead");
+
+- (NSInteger)modifyUltraGroupMessage:(NSString *)messageUId
+                             message:(RCIMIWMessage *)message
+           ultraGroupMessageModified:(nullable void (^)(NSInteger code))ultraGroupMessageModifiedBlock;
 
 /*!
  撤回消息
@@ -833,19 +1667,43 @@ NS_ASSUME_NONNULL_BEGIN
  @param message                 需要撤回的消息
  @param deleteRemote     是否移除远端消息记录，YES: 移除远端消息记录， NO：不移除远端消息记录
  */
-- (NSInteger)recallUltraGroupMessage:(RCIMIWMessage *)message deleteRemote:(BOOL)deleteRemote;
+- (NSInteger)recallUltraGroupMessage:(RCIMIWMessage *)message
+                        deleteRemote:(BOOL)deleteRemote
+__deprecated_msg("Use [RCIMIWEngine recallUltraGroupMessage:deleteRemote:ultraGroupMessageRecalled:] instead");
+
+- (NSInteger)recallUltraGroupMessage:(RCIMIWMessage *)message
+                        deleteRemote:(BOOL)deleteRemote
+           ultraGroupMessageRecalled:(nullable void (^)(NSInteger code))ultraGroupMessageRecalledBlock;
 
 - (NSInteger)clearUltraGroupMessages:(NSString *)targetId
                            channelId:(nullable NSString *)channelId
                            timestamp:(long long)timestamp
-                              policy:(RCIMIWMessageOperationPolicy)policy;
+                              policy:(RCIMIWMessageOperationPolicy)policy
+__deprecated_msg("Use [RCIMIWEngine clearUltraGroupMessages:channelId:timestamp:policy:ultraGroupMessagesCleared:] instead");
+
+- (NSInteger)clearUltraGroupMessages:(NSString *)targetId
+                           channelId:(nullable NSString *)channelId
+                           timestamp:(long long)timestamp
+                              policy:(RCIMIWMessageOperationPolicy)policy
+           ultraGroupMessagesCleared:(nullable void (^)(NSInteger code))ultraGroupMessagesClearedBlock;
+
+- (NSInteger)clearUltraGroupMessagesForAllChannel:(NSString *)targetId
+                                        timestamp:(long long)timestamp
+__deprecated_msg("Use [RCIMIWEngine clearUltraGroupMessagesForAllChannel:timestamp:ultraGroupMessagesClearedForAllChannel:] instead");
+
+- (NSInteger)clearUltraGroupMessagesForAllChannel:(NSString *)targetId
+                                        timestamp:(long long)timestamp
+           ultraGroupMessagesClearedForAllChannel:(nullable void (^)(NSInteger code))ultraGroupMessagesClearedForAllChannelBlock;
 
 - (NSInteger)sendUltraGroupTypingStatus:(NSString *)targetId
                               channelId:(nullable NSString *)channelId
-                           typingStatus:(RCIMIWUltraGroupTypingStatus)typingStatus;
+                           typingStatus:(RCIMIWUltraGroupTypingStatus)typingStatus
+__deprecated_msg("Use [RCIMIWEngine sendUltraGroupTypingStatus:channelId:typingStatus:ultraGroupTypingStatusSent:] instead");
 
-- (NSInteger)clearUltraGroupMessagesForAllChannel:(NSString *)targetId
-                                        timestamp:(long long)timestamp;
+- (NSInteger)sendUltraGroupTypingStatus:(NSString *)targetId
+                              channelId:(nullable NSString *)channelId
+                           typingStatus:(RCIMIWUltraGroupTypingStatus)typingStatus
+             ultraGroupTypingStatusSent:(nullable void (^)(NSInteger code))ultraGroupTypingStatusSentBlock;
 
 /*!
  获取同一个超级群下的批量服务消息（含所有频道）
@@ -853,12 +1711,28 @@ NS_ASSUME_NONNULL_BEGIN
  @param messages      消息列表
  @remarks 高级功能
  */
-- (NSInteger)loadBatchRemoteUltraGroupMessages:(NSArray<RCIMIWMessage *> *)messages;
+- (NSInteger)loadBatchRemoteUltraGroupMessages:(NSArray<RCIMIWMessage *> *)messages
+__deprecated_msg("Use [RCIMIWEngine getBatchRemoteUltraGroupMessages:success:error:] instead");
 
-- (NSInteger)updateUltraGroupMessageExpansion:(NSString *)messageUId expansion:(NSDictionary<NSString *, NSString *> *)expansion;
+- (NSInteger)getBatchRemoteUltraGroupMessages:(NSArray<RCIMIWMessage *> *)messages
+                                      success:(nullable void (^)(NSArray<RCIMIWMessage *> * _Nullable matchedMessages, NSArray<RCIMIWMessage *> * _Nullable notMatchedMessages))successBlock
+                                        error:(nullable void (^)(NSInteger code))errorBlock;
 
-- (NSInteger)removeUltraGroupMessageExpansion:(NSString *)messageUId
-                                         keys:(NSArray<NSString *> *)keys;
+- (NSInteger)updateUltraGroupMessageExpansion:(NSString *)messageUId
+                                    expansion:(NSDictionary<NSString *, NSString *> *)expansion
+__deprecated_msg("Use [RCIMIWEngine updateUltraGroupMessageExpansion:expansion:ultraGroupMessageExpansionUpdated:] instead");
+
+- (NSInteger)updateUltraGroupMessageExpansion:(NSString *)messageUId
+                                    expansion:(NSDictionary<NSString *, NSString *> *)expansion
+            ultraGroupMessageExpansionUpdated:(nullable void (^)(NSInteger code))ultraGroupMessageExpansionUpdatedBlock;
+
+- (NSInteger)removeUltraGroupMessageExpansionForKeys:(NSString *)messageUId
+                                                keys:(NSArray<NSString *> *)keys
+__deprecated_msg("Use [RCIMIWEngine removeUltraGroupMessageExpansionForKeys:keys:ultraGroupMessageExpansionForKeysRemoved:] instead");
+
+- (NSInteger)removeUltraGroupMessageExpansionForKeys:(NSString *)messageUId
+                                                keys:(NSArray<NSString *> *)keys
+            ultraGroupMessageExpansionForKeysRemoved:(nullable void (^)(NSInteger code))ultraGroupMessageExpansionForKeysRemovedBlock;
 
 /*!
  设置超级群的默认消息状态
@@ -867,14 +1741,24 @@ NS_ASSUME_NONNULL_BEGIN
  @param level                       消息通知级别
  */
 - (NSInteger)changeUltraGroupDefaultNotificationLevel:(NSString *)targetId
-                                                level:(RCIMIWPushNotificationLevel)level;
+                                                level:(RCIMIWPushNotificationLevel)level
+__deprecated_msg("Use [RCIMIWEngine changeUltraGroupDefaultNotificationLevel:level:ultraGroupDefaultNotificationLevelChanged:] instead");
+
+- (NSInteger)changeUltraGroupDefaultNotificationLevel:(NSString *)targetId
+                                                level:(RCIMIWPushNotificationLevel)level
+            ultraGroupDefaultNotificationLevelChanged:(nullable void (^)(NSInteger code))ultraGroupDefaultNotificationLevelChangedBlock;
 
 /*!
  获取超级群的默认消息状态
  
  @param targetId                    会话 ID
  */
-- (NSInteger)loadUltraGroupDefaultNotificationLevel:(NSString *)targetId;
+- (NSInteger)loadUltraGroupDefaultNotificationLevel:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getUltraGroupDefaultNotificationLevel:success:error:] instead");
+
+- (NSInteger)getUltraGroupDefaultNotificationLevel:(NSString *)targetId
+                                           success:(nullable void (^)(RCIMIWPushNotificationLevel level))successBlock
+                                             error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
  设置超级群频道的默认消息状态
@@ -885,7 +1769,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)changeUltraGroupChannelDefaultNotificationLevel:(NSString *)targetId
                                                    channelId:(nullable NSString *)channelId
-                                                       level:(RCIMIWPushNotificationLevel)level;
+                                                       level:(RCIMIWPushNotificationLevel)level
+__deprecated_msg("Use [RCIMIWEngine changeUltraGroupChannelDefaultNotificationLevel:channelId:level:ultraGroupChannelDefaultNotificationLevelChanged:] instead");
+
+- (NSInteger)changeUltraGroupChannelDefaultNotificationLevel:(NSString *)targetId
+                                                   channelId:(nullable NSString *)channelId
+                                                       level:(RCIMIWPushNotificationLevel)level
+            ultraGroupChannelDefaultNotificationLevelChanged:(nullable void (^)(NSInteger code))ultraGroupChannelDefaultNotificationLevelChangedBlock;
 
 /*!
  获取超级群频道的默认消息状态
@@ -894,15 +1784,43 @@ NS_ASSUME_NONNULL_BEGIN
  @param channelId                   频道 ID
  */
 - (NSInteger)loadUltraGroupChannelDefaultNotificationLevel:(NSString *)targetId
-                                                 channelId:(nullable NSString *)channelId;
+                                                 channelId:(nullable NSString *)channelId
+__deprecated_msg("Use [RCIMIWEngine getUltraGroupChannelDefaultNotificationLevel:channelId:success:error:] instead");
+
+- (NSInteger)getUltraGroupChannelDefaultNotificationLevel:(NSString *)targetId
+                                                channelId:(nullable NSString *)channelId
+                                                  success:(nullable void (^)(RCIMIWPushNotificationLevel level))successBlock
+                                                    error:(nullable void (^)(NSInteger code))errorBlock;
+
 // 获取所有会话的未读消息数
-- (NSInteger)loadUltraGroupAllUnreadCount;
+- (NSInteger)loadUltraGroupAllUnreadCount
+__deprecated_msg("Use [RCIMIWEngine getUltraGroupAllUnreadCount:error:] instead");
+
+- (NSInteger)getUltraGroupAllUnreadCount:(nullable void (^)(NSInteger count))successBlock
+                                   error:(nullable void (^)(NSInteger code))errorBlock;
+
 // 获取所有会话的未读 @ 消息数
-- (NSInteger)loadUltraGroupAllUnreadMentionedCount;
+- (NSInteger)loadUltraGroupAllUnreadMentionedCount
+__deprecated_msg("Use [RCIMIWEngine getUltraGroupAllUnreadMentionedCount:error:] instead");
+
+- (NSInteger)getUltraGroupAllUnreadMentionedCount:(nullable void (^)(NSInteger count))successBlock
+                                            error:(nullable void (^)(NSInteger code))errorBlock;
+
 // 获取指定会话的未读消息数
-- (NSInteger)loadUltraGroupUnreadCount:(NSString *)targetId;
+- (NSInteger)loadUltraGroupUnreadCount:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadCount:success:error:] instead");
+
+- (NSInteger)getUltraGroupUnreadCount:(NSString *)targetId
+                              success:(nullable void (^)(NSInteger count))successBlock
+                                error:(nullable void (^)(NSInteger code))errorBlock;
+
 // 获取指定会话的未读 @ 消息数
-- (NSInteger)loadUltraGroupUnreadMentionedCount:(NSString *)targetId;
+- (NSInteger)loadUltraGroupUnreadMentionedCount:(NSString *)targetId
+__deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:error:] instead");
+
+- (NSInteger)getUltraGroupUnreadMentionedCount:(NSString *)targetId
+                                       success:(nullable void (^)(NSInteger count))successBlock
+                                         error:(nullable void (^)(NSInteger code))errorBlock;
 
 @end
 

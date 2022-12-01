@@ -24,7 +24,7 @@ const loadUnreadCount = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadUnreadCount,
+  "action": engine_fun.getUnreadCount,
 };
 
 const loadTotalUnreadCount = {
@@ -37,7 +37,7 @@ const loadTotalUnreadCount = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadTotalUnreadCount,
+  "action": engine_fun.getTotalUnreadCount,
 };
 
 const loadUnreadMentionedCount = {
@@ -62,7 +62,7 @@ const loadUnreadMentionedCount = {
       "lable": LableString.editChannelIdString,
     },
   ],
-  "action": engine_fun.loadUnreadMentionedCount,
+  "action": engine_fun.getUnreadMentionedCount,
 };
 
 const loadUnreadCountByConversationTypes = {
@@ -87,7 +87,7 @@ const loadUnreadCountByConversationTypes = {
       "lable": "是否包含免打扰消息的未读消息数",
     },
   ],
-  "action": engine_fun.loadUnreadCountByConversationTypes,
+  "action": engine_fun.getUnreadCountByConversationTypes,
 };
 
 const clearUnreadCount = {

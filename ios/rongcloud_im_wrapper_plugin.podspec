@@ -22,6 +22,6 @@ Pod::Spec.new do |s|
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' }
-  s.dependency 'RongCloudIM/IMLibCore', '5.2.5'
-  s.dependency 'RongCloudIM/ChatRoom', '5.2.5'
+  s.dependency 'RongCloudIM/IMLibCore', '5.3.1'
+  s.dependency 'RongCloudIM/ChatRoom', '5.3.1'
 end

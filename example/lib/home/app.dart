@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/im_interface/options.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/route.dart';
@@ -51,8 +52,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   showListDialog(Map map) async {
-    List params = map['params'];
+    if (map['params'] == null) {
+      return;
+    }
+    List params = List.from(map['params']);
     Map result = {};
+    String action = map["action"].toString();
+    String method = getMethodName(action);
+    if (cbList.contains(method)) {
+      params.add(cbParam);
+    }
     showDialog<int>(
       context: context,
       builder: (BuildContext context) {
@@ -143,12 +152,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   getFun(Map title) {
-    if (title["params"] != null) {
+    String action = title["action"].toString();
+    String method = getMethodName(action);
+    if (title["params"] != null || cbList.contains(method)) {
       return () {
         showListDialog(title);
       };
     } else {
       return title["action"];
+    }
+  }
+
+  getMethodName(String text) {
+    try {
+      if (kIsWeb) {
+        var sub = text.substring(text.indexOf('function'));
+        var result = sub.substring(0, sub.indexOf('('));
+        return result.split(' ')[1];
+      }
+      return text.split('\'')[1];
+    } catch (e) {
+      print(text);
     }
   }
 

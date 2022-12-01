@@ -67,7 +67,7 @@ const loadChatRoomMessages = {
       "lable": "请输入count",
     },
   ],
-  "action": engine_fun.loadChatRoomMessages,
+  "action": engine_fun.getChatRoomMessages,
 };
 
 const addChatRoomEntry = {
@@ -160,7 +160,7 @@ const loadChatRoomEntry = {
       "lable": "请输入key",
     },
   ],
-  "action": engine_fun.loadChatRoomEntry,
+  "action": engine_fun.getChatRoomEntry,
 };
 
 const loadAllChatRoomEntries = {
@@ -173,7 +173,7 @@ const loadAllChatRoomEntries = {
       "lable": LableString.editTargetIdString,
     },
   ],
-  "action": engine_fun.loadAllChatRoomEntries,
+  "action": engine_fun.getChatRoomAllEntries,
 };
 
 const removeChatRoomEntry = {

@@ -3,6 +3,7 @@ version '1.0'
 
 buildscript {
     repositories {
+        maven {url  "https://maven.rongcloud.cn/repository/maven-releases/"}
         google()
         mavenCentral()
     }
@@ -36,6 +37,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
-    implementation 'cn.rongcloud.sdk:im_libcore:5.2.5'
-    implementation 'cn.rongcloud.sdk:im_chatroom:5.2.5'
+    implementation 'cn.rongcloud.sdk:im_libcore:5.3.1.1'
+    implementation 'cn.rongcloud.sdk:im_chatroom:5.3.1.1'
 }

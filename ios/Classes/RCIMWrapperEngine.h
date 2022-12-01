@@ -13,9 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RCIMWrapperEngine : NSObject <FlutterPlugin, RCIMIWEngineDelegate>
 
+@property (nonatomic, strong) NSArray<Class> *messageContentClassList;
+
 + (instancetype)sharedInstance;
 - (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar;
-
+- (void)registerCustomMessage:(NSArray<Class> *)messageContentClassList;
 @end
 
 NS_ASSUME_NONNULL_END

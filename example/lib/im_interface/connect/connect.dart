@@ -35,6 +35,18 @@ const initEngine = {
       "lable": "是否踢出其他重连设备",
     },
     {
+      "key": "enablePush",
+      "type": "number",
+      "hint": "非必填 0:不开启 1:开启",
+      "lable": "是否开启推送",
+    },
+    {
+      "key": "enableIPC",
+      "type": "number",
+      "hint": "非必填 0:不开启 1:开启",
+      "lable": "是否开启单进程模式",
+    },
+    {
       "key": "originalImageQuality",
       "type": "number",
       "hint": "非必填",

@@ -1,12 +1,18 @@
 import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
 
 class RCIMConverter {
+
+    static Map<String, Function> decodeMap = {};
   static RCIMIWMessage convertMessage(Map<String, dynamic> json) {
     RCIMIWMessageType messageType =
         RCIMIWMessageType.values[json['messageType']];
 
     switch (messageType) {
       case RCIMIWMessageType.unknown:
+      case RCIMIWMessageType.userCustom:
+        if (json['rawData'] != "" && decodeMap.containsKey(json['objectName'])) {
+          return decodeMap[json['objectName']!]!(json);
+        }
         return RCIMIWUnknownMessage.fromJson(json);
       case RCIMIWMessageType.custom:
         return RCIMIWCustomMessage.fromJson(json);

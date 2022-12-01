@@ -44,7 +44,7 @@ const loadConversationsForAllChannel = {
       "lable": LableString.editTargetIdString,
     },
   ],
-  "action": engine_auto_fun.loadConversationsForAllChannel,
+  "action": engine_auto_fun.getConversationsForAllChannel,
 };
 
 const loadUltraGroupUnreadMentionedCount = {
@@ -57,7 +57,7 @@ const loadUltraGroupUnreadMentionedCount = {
       "lable": LableString.editTargetIdString,
     },
   ],
-  "action": engine_auto_fun.loadUltraGroupUnreadMentionedCount,
+  "action": engine_auto_fun.getUltraGroupUnreadMentionedCount,
 };
 
 const modifyUltraGroupMessage = {
@@ -221,7 +221,7 @@ const removeUltraGroupMessageExpansion = {
       "lable": "请输入keys",
     },
   ],
-  "action": engine_auto_fun.removeUltraGroupMessageExpansion,
+  "action": engine_auto_fun.removeUltraGroupMessageExpansionForKeys,
 };
 
 const changeUltraGroupDefaultNotificationLevel = {
@@ -258,7 +258,7 @@ const loadUltraGroupDefaultNotificationLevel = {
       "lable": "请输入targetId",
     },
   ],
-  "action": engine_auto_fun.loadUltraGroupDefaultNotificationLevel,
+  "action": engine_auto_fun.getUltraGroupDefaultNotificationLevel,
 };
 
 const changeUltraGroupChannelDefaultNotificationLevel = {
@@ -307,17 +307,17 @@ const loadUltraGroupChannelDefaultNotificationLevel = {
       "lable": "请输入channelId",
     },
   ],
-  "action": engine_auto_fun.loadUltraGroupChannelDefaultNotificationLevel,
+  "action": engine_auto_fun.getUltraGroupChannelDefaultNotificationLevel,
 };
 
 const loadUltraGroupAllUnreadCount = {
   "title": "所有超级群会话的未读消息数的总和",
-  "action": engine_auto_fun.loadUltraGroupAllUnreadCount,
+  "action": engine_auto_fun.getUltraGroupAllUnreadCount,
 };
 
 const loadUltraGroupAllUnreadMentionedCount = {
   "title": "所有超级群会话中的未读 @ 消息数的总和",
-  "action": engine_auto_fun.loadUltraGroupAllUnreadMentionedCount,
+  "action": engine_auto_fun.getUltraGroupAllUnreadMentionedCount,
 };
 
 const loadUltraGroupUnreadCount = {
@@ -330,5 +330,5 @@ const loadUltraGroupUnreadCount = {
       "lable": "请输入targetId",
     },
   ],
-  "action": engine_auto_fun.loadUltraGroupUnreadCount,
+  "action": engine_auto_fun.getUltraGroupUnreadCount,
 };

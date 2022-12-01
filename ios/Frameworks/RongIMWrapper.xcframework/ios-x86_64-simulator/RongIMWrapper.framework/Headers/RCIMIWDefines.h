@@ -191,6 +191,11 @@ typedef NS_ENUM(NSInteger, RCIMIWMessageType)  {
      位置消息
      */
     RCIMIWMessageTypeLocation = 12,
+    
+    /*!
+     用户自定义消息
+     */
+    RCIMIWMessageTypeUserCustom = 13,
 };
 
 #pragma mark 自定义消息的类别
