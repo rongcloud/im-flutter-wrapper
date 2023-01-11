@@ -17,7 +17,7 @@ import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/auto/im_engine.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/toast/record_view.dart';
 
-initEngine(Map arg) async {
+Future initEngine(Map arg) async {
   if (IMEngineManager().engine == null) {
     arg['appkey'] = arg['appkey'] ?? AccountInfo.appKey;
     if (arg['appkey'] == null) {
@@ -126,6 +126,11 @@ initEngine(Map arg) async {
   }
 }
 
+/*
+//fun_destroy_call
+await engine?.destroy();
+//fun_destroy_call
+ */
 destroy() {
   if (IMEngineManager().engine != null) {
     IMEngineManager().engine?.destroy();
@@ -163,7 +168,7 @@ setListener() {
   }
 }
 
-sendTextMessage(Map arg) async {
+Future sendTextMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -248,7 +253,7 @@ sendTextMessage(Map arg) async {
   _sendMessage(textMessage, useCallback);
 }
 
-sendImageMessage(Map arg) async {
+Future sendImageMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -284,7 +289,7 @@ sendImageMessage(Map arg) async {
   });
 }
 
-sendFileMessage(Map arg) async {
+Future sendFileMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -307,7 +312,7 @@ sendFileMessage(Map arg) async {
   }
 }
 
-sendSightMessage(Map arg) async {
+Future sendSightMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -330,7 +335,7 @@ sendSightMessage(Map arg) async {
   });
 }
 
-sendVoiceMessage(Map arg) async {
+Future sendVoiceMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -379,7 +384,7 @@ sendVoiceMessage(Map arg) async {
   }
 }
 
-sendReferenceMessage(Map arg) async {
+Future sendReferenceMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -420,7 +425,7 @@ sendReferenceMessage(Map arg) async {
   _sendMessage(referenceMsg, useCallback);
 }
 
-sendGIFMessage(Map arg) async {
+Future sendGIFMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -444,7 +449,7 @@ sendGIFMessage(Map arg) async {
   }
 }
 
-sendLocationMessage(Map arg) async {
+Future sendLocationMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -493,7 +498,7 @@ sendLocationMessage(Map arg) async {
   });
 }
 
-sendUserCustomMessage(Map arg) async {
+Future sendUserCustomMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -514,7 +519,7 @@ sendUserCustomMessage(Map arg) async {
   _sendMessage(msg, useCallback);
 }
 
-sendCustomMessage(Map arg) async {
+Future sendCustomMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -621,7 +626,7 @@ _sendMessage(RCIMIWMessage? message, int useCallback) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-cancelSendingMediaMessage(Map arg) async {
+Future cancelSendingMediaMessage(Map arg) async {
   if (arg['messageId'] == null) {
     RCIWToast.showToast("messageId 为空");
     return;
@@ -656,7 +661,7 @@ cancelSendingMediaMessage(Map arg) async {
       ?.cancelSendingMediaMessage(message, callback: callback);
 }
 
-downloadMediaMessage(Map arg) async {
+Future downloadMediaMessage(Map arg) async {
   if (arg['messageId'] == null) {
     RCIWToast.showToast("messageId 为空");
     return;
@@ -707,7 +712,7 @@ downloadMediaMessage(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-cancelDownloadingMediaMessage(Map arg) async {
+Future cancelDownloadingMediaMessage(Map arg) async {
   if (arg['messageId'] == null) {
     RCIWToast.showToast("messageId 为空");
     return;
@@ -746,7 +751,7 @@ cancelDownloadingMediaMessage(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-insertMessage(Map arg) async {
+Future insertMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -793,7 +798,7 @@ insertMessage(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-insertMessages(Map arg) async {
+Future insertMessages(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -852,7 +857,7 @@ insertMessages(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-deleteLocalMessages(Map arg) async {
+Future deleteLocalMessages(Map arg) async {
   if (arg['messageIds'] == null) {
     RCIWToast.showToast("messageIds 为空");
     return;
@@ -897,7 +902,7 @@ deleteLocalMessages(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-deleteMessages(Map arg) async {
+Future deleteMessages(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
@@ -953,7 +958,7 @@ deleteMessages(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-recallMessage(Map arg) async {
+Future recallMessage(Map arg) async {
   if (arg['messageId'] == null) {
     RCIWToast.showToast("messageId 为空");
     return;
@@ -986,7 +991,7 @@ recallMessage(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-sendGroupReadReceiptRequest(Map arg) async {
+Future sendGroupReadReceiptRequest(Map arg) async {
   if (arg['messageId'] == null) {
     RCIWToast.showToast("messageId 为空");
     return;
@@ -1021,7 +1026,7 @@ sendGroupReadReceiptRequest(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-sendGroupReadReceiptResponse(Map arg) async {
+Future sendGroupReadReceiptResponse(Map arg) async {
   if (arg['targetId'] == null) {
     RCIWToast.showToast("targetId 为空");
     return;
@@ -1072,7 +1077,7 @@ sendGroupReadReceiptResponse(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-sendGroupMessageToDesignatedUsers(Map arg) async {
+Future sendGroupMessageToDesignatedUsers(Map arg) async {
   if (arg['targetId'] == null) {
     RCIWToast.showToast("targetId 为空");
     return;
@@ -1122,7 +1127,7 @@ sendGroupMessageToDesignatedUsers(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-modifyUltraGroupMessage(Map arg) async {
+Future modifyUltraGroupMessage(Map arg) async {
   if (arg['messageUId'] == null) {
     RCIWToast.showToast("messageUId 为空");
     return;
@@ -1172,7 +1177,7 @@ modifyUltraGroupMessage(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-loadBatchRemoteUltraGroupMessages(Map arg) async {
+Future loadBatchRemoteUltraGroupMessages(Map arg) async {
   if (arg['messageIds'] == null) {
     RCIWToast.showToast("messageIds 为空");
     return;
@@ -1229,7 +1234,7 @@ loadBatchRemoteUltraGroupMessages(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-recallUltraGroupMessage(Map arg) async {
+Future recallUltraGroupMessage(Map arg) async {
   if (arg['messageId'] == null) {
     RCIWToast.showToast("messageId 为空");
     return;
@@ -1280,7 +1285,7 @@ String formatJson(jsonObject) {
   return encoder.convert(jsonObject);
 }
 
-getMessageById(Map arg) async {
+Future getMessageById(Map arg) async {
   if (arg['messageId'] == null) {
     RCIWToast.showToast("messageId 为空");
     return;
@@ -1294,7 +1299,7 @@ getMessageById(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
-getMessageByUId(Map arg) async {
+Future getMessageByUId(Map arg) async {
   if (arg['messageUId'] == null) {
     RCIWToast.showToast("messageUId 为空");
     return;

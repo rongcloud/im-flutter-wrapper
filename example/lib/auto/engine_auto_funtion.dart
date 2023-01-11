@@ -7,12 +7,13 @@ import '../im_interface/function/engine_function.dart';
 // auto
 /*
 //fun_connect_call
-RCIMIWConnectCallback? callback = RCIMIWConnectCallback(onDatabaseOpened: (int? onDatabaseOpened) {
+RCIMIWConnectCallback? callback = RCIMIWConnectCallback(onDatabaseOpened: (int? code) {
     //...
-},onConnected: (int? onConnected,String? onConnected) {
+}, onConnected: (int? code, String? userId) {
     //...
 });
-int? ret = engine?.connect(token,timeout,callback:callback,);
+
+int? ret = await engine?.connect(token, timeout, callback:callback);
 //fun_connect_call
 */
 
@@ -48,11 +49,7 @@ connect(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.connect(
-        token,
-        timeout,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.connect(token, timeout, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "connect";
   resultCode["code"] = (code ?? -1).toString();
@@ -64,7 +61,7 @@ connect(Map arg) async {
 
 /*
 //fun_disconnect_call
-int? ret = engine?.disconnect(receivePush,);
+int? ret = await engine?.disconnect(receivePush);
 //fun_disconnect_call
 */
 
@@ -76,9 +73,7 @@ disconnect(Map arg) async {
 
   int receivePushInt = int.parse(arg['receivePush']);
   bool receivePush = receivePushInt == 0 ? false : true;
-  int? code = await IMEngineManager().engine?.disconnect(
-        receivePush,
-      );
+  int? code = await IMEngineManager().engine?.disconnect(receivePush);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "disconnect";
   resultCode["code"] = (code ?? -1).toString();
@@ -90,104 +85,109 @@ disconnect(Map arg) async {
 
 /*
 //fun_createTextMessage_call
-RCIMIWTextMessage? ret = engine?.createTextMessage(type,targetId,channelId,text,);
+RCIMIWTextMessage? ret = await engine?.createTextMessage(type, targetId, channelId, text);
 //fun_createTextMessage_call
 */
 /*
 //fun_createImageMessage_call
-RCIMIWImageMessage? ret = engine?.createImageMessage(type,targetId,channelId,path,);
+RCIMIWImageMessage? ret = await engine?.createImageMessage(type, targetId, channelId, path);
 //fun_createImageMessage_call
 */
 /*
 //fun_createFileMessage_call
-RCIMIWFileMessage? ret = engine?.createFileMessage(type,targetId,channelId,path,);
+RCIMIWFileMessage? ret = await engine?.createFileMessage(type, targetId, channelId, path);
 //fun_createFileMessage_call
 */
 /*
 //fun_createSightMessage_call
-RCIMIWSightMessage? ret = engine?.createSightMessage(type,targetId,channelId,path,duration,);
+RCIMIWSightMessage? ret = await engine?.createSightMessage(type, targetId, channelId, path, duration);
 //fun_createSightMessage_call
 */
 /*
 //fun_createVoiceMessage_call
-RCIMIWVoiceMessage? ret = engine?.createVoiceMessage(type,targetId,channelId,path,duration,);
+RCIMIWVoiceMessage? ret = await engine?.createVoiceMessage(type, targetId, channelId, path, duration);
 //fun_createVoiceMessage_call
 */
 /*
 //fun_createReferenceMessage_call
-RCIMIWReferenceMessage? ret = engine?.createReferenceMessage(type,targetId,channelId,referenceMessage,text,);
+RCIMIWReferenceMessage? ret = await engine?.createReferenceMessage(type, targetId, channelId, referenceMessage, text);
 //fun_createReferenceMessage_call
 */
 /*
 //fun_createGIFMessage_call
-RCIMIWGIFMessage? ret = engine?.createGIFMessage(type,targetId,channelId,path,);
+RCIMIWGIFMessage? ret = await engine?.createGIFMessage(type, targetId, channelId, path);
 //fun_createGIFMessage_call
 */
 /*
 //fun_createCustomMessage_call
-RCIMIWCustomMessage? ret = engine?.createCustomMessage(type,targetId,channelId,policy,messageIdentifier,fields,);
+RCIMIWCustomMessage? ret = await engine?.createCustomMessage(type, targetId, channelId, policy, messageIdentifier, fields);
 //fun_createCustomMessage_call
 */
 /*
 //fun_createLocationMessage_call
-RCIMIWLocationMessage? ret = engine?.createLocationMessage(type,targetId,channelId,longitude,latitude,poiName,thumbnailPath,);
+RCIMIWLocationMessage? ret = await engine?.createLocationMessage(type, targetId, channelId, longitude, latitude, poiName, thumbnailPath);
 //fun_createLocationMessage_call
 */
 /*
 //fun_sendMessage_call
-RCIMIWSendMessageCallback? callback = RCIMIWSendMessageCallback(onMessageSaved: (RCIMIWMessage? onMessageSaved) {
+RCIMIWSendMessageCallback? callback = RCIMIWSendMessageCallback(onMessageSaved: (RCIMIWMessage? message) {
     //...
-},onMessageSent: (int? onMessageSent,RCIMIWMessage? onMessageSent) {
+}, onMessageSent: (int? code, RCIMIWMessage? message) {
     //...
 });
-int? ret = engine?.sendMessage(message,callback:callback,);
+
+int? ret = await engine?.sendMessage(message, callback:callback);
 //fun_sendMessage_call
 */
 /*
 //fun_sendMediaMessage_call
-RCIMIWSendMediaMessageListener? listener = RCIMIWSendMediaMessageListener(onMediaMessageSaved: (RCIMIWMediaMessage? onMediaMessageSaved) {
+RCIMIWSendMediaMessageListener? listener = RCIMIWSendMediaMessageListener(onMediaMessageSaved: (RCIMIWMediaMessage? message) {
     //...
-},onMediaMessageSending: (RCIMIWMediaMessage? onMediaMessageSending,int? onMediaMessageSending) {
+}, onMediaMessageSending: (RCIMIWMediaMessage? message, int? progress) {
     //...
-},onSendingMediaMessageCanceled: (RCIMIWMediaMessage? onSendingMediaMessageCanceled) {
+}, onSendingMediaMessageCanceled: (RCIMIWMediaMessage? message) {
     //...
-},onMediaMessageSent: (int? onMediaMessageSent,RCIMIWMediaMessage? onMediaMessageSent) {
+}, onMediaMessageSent: (int? code, RCIMIWMediaMessage? message) {
     //...
 });
-int? ret = engine?.sendMediaMessage(message,listener:listener,);
+
+int? ret = await engine?.sendMediaMessage(message, listener:listener);
 //fun_sendMediaMessage_call
 */
 /*
 //fun_cancelSendingMediaMessage_call
-IRCIMIWCancelSendingMediaMessageCallback? callback = IRCIMIWCancelSendingMediaMessageCallback(onCancelSendingMediaMessageCalled: (int? onCancelSendingMediaMessageCalled,RCIMIWMediaMessage? onCancelSendingMediaMessageCalled) {
+IRCIMIWCancelSendingMediaMessageCallback? callback = IRCIMIWCancelSendingMediaMessageCallback(onCancelSendingMediaMessageCalled: (int? code, RCIMIWMediaMessage? message) {
     //...
 });
-int? ret = engine?.cancelSendingMediaMessage(message,callback:callback,);
+
+int? ret = await engine?.cancelSendingMediaMessage(message, callback:callback);
 //fun_cancelSendingMediaMessage_call
 */
 /*
 //fun_downloadMediaMessage_call
-RCIMIWDownloadMediaMessageListener? listener = RCIMIWDownloadMediaMessageListener(onMediaMessageDownloading: (RCIMIWMediaMessage? onMediaMessageDownloading,int? onMediaMessageDownloading) {
+RCIMIWDownloadMediaMessageListener? listener = RCIMIWDownloadMediaMessageListener(onMediaMessageDownloading: (RCIMIWMediaMessage? message, int? progress) {
     //...
-},onDownloadingMediaMessageCanceled: (RCIMIWMediaMessage? onDownloadingMediaMessageCanceled) {
+}, onDownloadingMediaMessageCanceled: (RCIMIWMediaMessage? message) {
     //...
-},onMediaMessageDownloaded: (int? onMediaMessageDownloaded,RCIMIWMediaMessage? onMediaMessageDownloaded) {
+}, onMediaMessageDownloaded: (int? code, RCIMIWMediaMessage? message) {
     //...
 });
-int? ret = engine?.downloadMediaMessage(message,listener:listener,);
+
+int? ret = await engine?.downloadMediaMessage(message, listener:listener);
 //fun_downloadMediaMessage_call
 */
 /*
 //fun_cancelDownloadingMediaMessage_call
-IRCIMIWCancelDownloadingMediaMessageCallback? callback = IRCIMIWCancelDownloadingMediaMessageCallback(onCancelDownloadingMediaMessageCalled: (int? onCancelDownloadingMediaMessageCalled,RCIMIWMediaMessage? onCancelDownloadingMediaMessageCalled) {
+IRCIMIWCancelDownloadingMediaMessageCallback? callback = IRCIMIWCancelDownloadingMediaMessageCallback(onCancelDownloadingMediaMessageCalled: (int? code, RCIMIWMediaMessage? message) {
     //...
 });
-int? ret = engine?.cancelDownloadingMediaMessage(message,callback:callback,);
+
+int? ret = await engine?.cancelDownloadingMediaMessage(message, callback:callback);
 //fun_cancelDownloadingMediaMessage_call
 */
 /*
 //fun_loadConversation_call
-int? ret = engine?.loadConversation(type,targetId,channelId,);
+int? ret = await engine?.loadConversation(type, targetId, channelId);
 //fun_loadConversation_call
 */
 
@@ -205,11 +205,7 @@ loadConversation(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadConversation(
-        type,
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadConversation(type, targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversation";
   resultCode["code"] = (code ?? -1).toString();
@@ -221,12 +217,13 @@ loadConversation(Map arg) async {
 
 /*
 //fun_getConversation_call
-IRCIMIWGetConversationCallback? callback = IRCIMIWGetConversationCallback(onSuccess: (RCIMIWConversation? onSuccess) {
+IRCIMIWGetConversationCallback? callback = IRCIMIWGetConversationCallback(onSuccess: (RCIMIWConversation? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getConversation(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getConversation(type, targetId, channelId, callback:callback);
 //fun_getConversation_call
 */
 
@@ -262,12 +259,7 @@ getConversation(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getConversation(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getConversation(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversation";
   resultCode["code"] = (code ?? -1).toString();
@@ -279,7 +271,7 @@ getConversation(Map arg) async {
 
 /*
 //fun_loadConversations_call
-int? ret = engine?.loadConversations(conversationTypesInt,channelId,startTime,count,);
+int? ret = await engine?.loadConversations(conversationTypesInt, channelId, startTime, count);
 //fun_loadConversations_call
 */
 
@@ -307,12 +299,7 @@ loadConversations(Map arg) async {
   String? channelId = arg['channelId'];
   int startTime = int.parse(arg['startTime']);
   int count = int.parse(arg['count']);
-  int? code = await IMEngineManager().engine?.loadConversations(
-        conversationTypesInt,
-        channelId,
-        startTime,
-        count,
-      );
+  int? code = await IMEngineManager().engine?.loadConversations(conversationTypesInt, channelId, startTime, count);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversations";
   resultCode["code"] = (code ?? -1).toString();
@@ -324,12 +311,13 @@ loadConversations(Map arg) async {
 
 /*
 //fun_getConversations_call
-IRCIMIWGetConversationsCallback? callback = IRCIMIWGetConversationsCallback(onSuccess: (List<RCIMIWConversation>? onSuccess) {
+IRCIMIWGetConversationsCallback? callback = IRCIMIWGetConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getConversations(conversationTypesInt,channelId,startTime,count,callback:callback,);
+
+int? ret = await engine?.getConversations(conversationTypesInt, channelId, startTime, count, callback:callback);
 //fun_getConversations_call
 */
 
@@ -382,13 +370,9 @@ getConversations(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getConversations(
-        conversationTypesInt,
-        channelId,
-        startTime,
-        count,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.getConversations(conversationTypesInt, channelId, startTime, count, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversations";
   resultCode["code"] = (code ?? -1).toString();
@@ -400,10 +384,11 @@ getConversations(Map arg) async {
 
 /*
 //fun_removeConversation_call
-IRCIMIWRemoveConversationCallback? callback = IRCIMIWRemoveConversationCallback(onConversationRemoved: (int? onConversationRemoved) {
+IRCIMIWRemoveConversationCallback? callback = IRCIMIWRemoveConversationCallback(onConversationRemoved: (int? code) {
     //...
 });
-int? ret = engine?.removeConversation(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.removeConversation(type, targetId, channelId, callback:callback);
 //fun_removeConversation_call
 */
 
@@ -433,12 +418,7 @@ removeConversation(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.removeConversation(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.removeConversation(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeConversation";
   resultCode["code"] = (code ?? -1).toString();
@@ -450,10 +430,11 @@ removeConversation(Map arg) async {
 
 /*
 //fun_removeConversations_call
-IRCIMIWRemoveConversationsCallback? callback = IRCIMIWRemoveConversationsCallback(onConversationsRemoved: (int? onConversationsRemoved) {
+IRCIMIWRemoveConversationsCallback? callback = IRCIMIWRemoveConversationsCallback(onConversationsRemoved: (int? code) {
     //...
 });
-int? ret = engine?.removeConversations(conversationTypesInt,channelId,callback:callback,);
+
+int? ret = await engine?.removeConversations(conversationTypesInt, channelId, callback:callback);
 //fun_removeConversations_call
 */
 
@@ -481,11 +462,7 @@ removeConversations(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.removeConversations(
-        conversationTypesInt,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.removeConversations(conversationTypesInt, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeConversations";
   resultCode["code"] = (code ?? -1).toString();
@@ -497,7 +474,7 @@ removeConversations(Map arg) async {
 
 /*
 //fun_loadUnreadCount_call
-int? ret = engine?.loadUnreadCount(type,targetId,channelId,);
+int? ret = await engine?.loadUnreadCount(type, targetId, channelId);
 //fun_loadUnreadCount_call
 */
 
@@ -515,11 +492,7 @@ loadUnreadCount(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadUnreadCount(
-        type,
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadUnreadCount(type, targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -531,12 +504,13 @@ loadUnreadCount(Map arg) async {
 
 /*
 //fun_getUnreadCount_call
-IRCIMIWGetUnreadCountCallback? callback = IRCIMIWGetUnreadCountCallback(onSuccess: (int? onSuccess) {
+IRCIMIWGetUnreadCountCallback? callback = IRCIMIWGetUnreadCountCallback(onSuccess: (int? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUnreadCount(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getUnreadCount(type, targetId, channelId, callback:callback);
 //fun_getUnreadCount_call
 */
 
@@ -572,12 +546,7 @@ getUnreadCount(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUnreadCount(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getUnreadCount(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -589,15 +558,13 @@ getUnreadCount(Map arg) async {
 
 /*
 //fun_loadTotalUnreadCount_call
-int? ret = engine?.loadTotalUnreadCount(channelId,);
+int? ret = await engine?.loadTotalUnreadCount(channelId);
 //fun_loadTotalUnreadCount_call
 */
 
 loadTotalUnreadCount(Map arg) async {
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadTotalUnreadCount(
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadTotalUnreadCount(channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadTotalUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -609,12 +576,13 @@ loadTotalUnreadCount(Map arg) async {
 
 /*
 //fun_getTotalUnreadCount_call
-IRCIMIWGetTotalUnreadCountCallback? callback = IRCIMIWGetTotalUnreadCountCallback(onSuccess: (int? onSuccess) {
+IRCIMIWGetTotalUnreadCountCallback? callback = IRCIMIWGetTotalUnreadCountCallback(onSuccess: (int? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getTotalUnreadCount(channelId,callback:callback,);
+
+int? ret = await engine?.getTotalUnreadCount(channelId, callback:callback);
 //fun_getTotalUnreadCount_call
 */
 
@@ -639,10 +607,7 @@ getTotalUnreadCount(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getTotalUnreadCount(
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getTotalUnreadCount(channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getTotalUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -654,7 +619,7 @@ getTotalUnreadCount(Map arg) async {
 
 /*
 //fun_loadUnreadMentionedCount_call
-int? ret = engine?.loadUnreadMentionedCount(type,targetId,channelId,);
+int? ret = await engine?.loadUnreadMentionedCount(type, targetId, channelId);
 //fun_loadUnreadMentionedCount_call
 */
 
@@ -672,11 +637,7 @@ loadUnreadMentionedCount(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadUnreadMentionedCount(
-        type,
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadUnreadMentionedCount(type, targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -688,12 +649,13 @@ loadUnreadMentionedCount(Map arg) async {
 
 /*
 //fun_getUnreadMentionedCount_call
-IRCIMIWGetUnreadMentionedCountCallback? callback = IRCIMIWGetUnreadMentionedCountCallback(onSuccess: (int? onSuccess) {
+IRCIMIWGetUnreadMentionedCountCallback? callback = IRCIMIWGetUnreadMentionedCountCallback(onSuccess: (int? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUnreadMentionedCount(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getUnreadMentionedCount(type, targetId, channelId, callback:callback);
 //fun_getUnreadMentionedCount_call
 */
 
@@ -729,12 +691,7 @@ getUnreadMentionedCount(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUnreadMentionedCount(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getUnreadMentionedCount(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -746,7 +703,7 @@ getUnreadMentionedCount(Map arg) async {
 
 /*
 //fun_loadUltraGroupAllUnreadCount_call
-int? ret = engine?.loadUltraGroupAllUnreadCount();
+int? ret = await engine?.loadUltraGroupAllUnreadCount();
 //fun_loadUltraGroupAllUnreadCount_call
 */
 
@@ -763,12 +720,13 @@ loadUltraGroupAllUnreadCount() async {
 
 /*
 //fun_getUltraGroupAllUnreadCount_call
-IRCIMIWGetUltraGroupAllUnreadCountCallback? callback = IRCIMIWGetUltraGroupAllUnreadCountCallback(onSuccess: (int? onSuccess) {
+IRCIMIWGetUltraGroupAllUnreadCountCallback? callback = IRCIMIWGetUltraGroupAllUnreadCountCallback(onSuccess: (int? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUltraGroupAllUnreadCount(callback:callback,);
+
+int? ret = await engine?.getUltraGroupAllUnreadCount(callback:callback);
 //fun_getUltraGroupAllUnreadCount_call
 */
 
@@ -792,9 +750,7 @@ getUltraGroupAllUnreadCount(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUltraGroupAllUnreadCount(
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getUltraGroupAllUnreadCount(callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupAllUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -806,7 +762,7 @@ getUltraGroupAllUnreadCount(Map arg) async {
 
 /*
 //fun_loadUltraGroupAllUnreadMentionedCount_call
-int? ret = engine?.loadUltraGroupAllUnreadMentionedCount();
+int? ret = await engine?.loadUltraGroupAllUnreadMentionedCount();
 //fun_loadUltraGroupAllUnreadMentionedCount_call
 */
 
@@ -823,12 +779,13 @@ loadUltraGroupAllUnreadMentionedCount() async {
 
 /*
 //fun_getUltraGroupAllUnreadMentionedCount_call
-IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback? callback = IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback(onSuccess: (int? onSuccess) {
+IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback? callback = IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback(onSuccess: (int? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUltraGroupAllUnreadMentionedCount(callback:callback,);
+
+int? ret = await engine?.getUltraGroupAllUnreadMentionedCount(callback:callback);
 //fun_getUltraGroupAllUnreadMentionedCount_call
 */
 
@@ -852,9 +809,7 @@ getUltraGroupAllUnreadMentionedCount(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUltraGroupAllUnreadMentionedCount(
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getUltraGroupAllUnreadMentionedCount(callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupAllUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -866,7 +821,7 @@ getUltraGroupAllUnreadMentionedCount(Map arg) async {
 
 /*
 //fun_loadUltraGroupUnreadCount_call
-int? ret = engine?.loadUltraGroupUnreadCount(targetId,);
+int? ret = await engine?.loadUltraGroupUnreadCount(targetId);
 //fun_loadUltraGroupUnreadCount_call
 */
 
@@ -877,9 +832,7 @@ loadUltraGroupUnreadCount(Map arg) async {
   }
 
   String targetId = arg['targetId'];
-  int? code = await IMEngineManager().engine?.loadUltraGroupUnreadCount(
-        targetId,
-      );
+  int? code = await IMEngineManager().engine?.loadUltraGroupUnreadCount(targetId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -891,12 +844,13 @@ loadUltraGroupUnreadCount(Map arg) async {
 
 /*
 //fun_getUltraGroupUnreadCount_call
-IRCIMIWGetUltraGroupUnreadCountCallback? callback = IRCIMIWGetUltraGroupUnreadCountCallback(onSuccess: (int? onSuccess) {
+IRCIMIWGetUltraGroupUnreadCountCallback? callback = IRCIMIWGetUltraGroupUnreadCountCallback(onSuccess: (int? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUltraGroupUnreadCount(targetId,callback:callback,);
+
+int? ret = await engine?.getUltraGroupUnreadCount(targetId, callback:callback);
 //fun_getUltraGroupUnreadCount_call
 */
 
@@ -925,10 +879,7 @@ getUltraGroupUnreadCount(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUltraGroupUnreadCount(
-        targetId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getUltraGroupUnreadCount(targetId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -940,7 +891,7 @@ getUltraGroupUnreadCount(Map arg) async {
 
 /*
 //fun_loadUltraGroupUnreadMentionedCount_call
-int? ret = engine?.loadUltraGroupUnreadMentionedCount(targetId,);
+int? ret = await engine?.loadUltraGroupUnreadMentionedCount(targetId);
 //fun_loadUltraGroupUnreadMentionedCount_call
 */
 
@@ -951,9 +902,7 @@ loadUltraGroupUnreadMentionedCount(Map arg) async {
   }
 
   String targetId = arg['targetId'];
-  int? code = await IMEngineManager().engine?.loadUltraGroupUnreadMentionedCount(
-        targetId,
-      );
+  int? code = await IMEngineManager().engine?.loadUltraGroupUnreadMentionedCount(targetId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -965,12 +914,13 @@ loadUltraGroupUnreadMentionedCount(Map arg) async {
 
 /*
 //fun_getUltraGroupUnreadMentionedCount_call
-IRCIMIWGetUltraGroupUnreadMentionedCountCallback? callback = IRCIMIWGetUltraGroupUnreadMentionedCountCallback(onSuccess: (int? onSuccess) {
+IRCIMIWGetUltraGroupUnreadMentionedCountCallback? callback = IRCIMIWGetUltraGroupUnreadMentionedCountCallback(onSuccess: (int? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUltraGroupUnreadMentionedCount(targetId,callback:callback,);
+
+int? ret = await engine?.getUltraGroupUnreadMentionedCount(targetId, callback:callback);
 //fun_getUltraGroupUnreadMentionedCount_call
 */
 
@@ -999,10 +949,7 @@ getUltraGroupUnreadMentionedCount(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUltraGroupUnreadMentionedCount(
-        targetId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getUltraGroupUnreadMentionedCount(targetId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -1014,7 +961,7 @@ getUltraGroupUnreadMentionedCount(Map arg) async {
 
 /*
 //fun_loadUnreadCountByConversationTypes_call
-int? ret = engine?.loadUnreadCountByConversationTypes(conversationTypesInt,channelId,contain,);
+int? ret = await engine?.loadUnreadCountByConversationTypes(conversationTypesInt, channelId, contain);
 //fun_loadUnreadCountByConversationTypes_call
 */
 
@@ -1037,11 +984,8 @@ loadUnreadCountByConversationTypes(Map arg) async {
   String? channelId = arg['channelId'];
   int containInt = int.parse(arg['contain']);
   bool contain = containInt == 0 ? false : true;
-  int? code = await IMEngineManager().engine?.loadUnreadCountByConversationTypes(
-        conversationTypesInt,
-        channelId,
-        contain,
-      );
+  int? code =
+      await IMEngineManager().engine?.loadUnreadCountByConversationTypes(conversationTypesInt, channelId, contain);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadCountByConversationTypes";
   resultCode["code"] = (code ?? -1).toString();
@@ -1053,12 +997,13 @@ loadUnreadCountByConversationTypes(Map arg) async {
 
 /*
 //fun_getUnreadCountByConversationTypes_call
-IRCIMIWGetUnreadCountByConversationTypesCallback? callback = IRCIMIWGetUnreadCountByConversationTypesCallback(onSuccess: (int? onSuccess) {
+IRCIMIWGetUnreadCountByConversationTypesCallback? callback = IRCIMIWGetUnreadCountByConversationTypesCallback(onSuccess: (int? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUnreadCountByConversationTypes(conversationTypesInt,channelId,contain,callback:callback,);
+
+int? ret = await engine?.getUnreadCountByConversationTypes(conversationTypesInt, channelId, contain, callback:callback);
 //fun_getUnreadCountByConversationTypes_call
 */
 
@@ -1099,12 +1044,9 @@ getUnreadCountByConversationTypes(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUnreadCountByConversationTypes(
-        conversationTypesInt,
-        channelId,
-        contain,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.getUnreadCountByConversationTypes(conversationTypesInt, channelId, contain, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadCountByConversationTypes";
   resultCode["code"] = (code ?? -1).toString();
@@ -1116,10 +1058,11 @@ getUnreadCountByConversationTypes(Map arg) async {
 
 /*
 //fun_clearUnreadCount_call
-IRCIMIWClearUnreadCountCallback? callback = IRCIMIWClearUnreadCountCallback(onUnreadCountCleared: (int? onUnreadCountCleared) {
+IRCIMIWClearUnreadCountCallback? callback = IRCIMIWClearUnreadCountCallback(onUnreadCountCleared: (int? code) {
     //...
 });
-int? ret = engine?.clearUnreadCount(type,targetId,channelId,timestamp,callback:callback,);
+
+int? ret = await engine?.clearUnreadCount(type, targetId, channelId, timestamp, callback:callback);
 //fun_clearUnreadCount_call
 */
 
@@ -1155,13 +1098,8 @@ clearUnreadCount(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.clearUnreadCount(
-        type,
-        targetId,
-        channelId,
-        timestamp,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.clearUnreadCount(type, targetId, channelId, timestamp, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -1173,10 +1111,11 @@ clearUnreadCount(Map arg) async {
 
 /*
 //fun_saveDraftMessage_call
-IRCIMIWSaveDraftMessageCallback? callback = IRCIMIWSaveDraftMessageCallback(onDraftMessageSaved: (int? onDraftMessageSaved) {
+IRCIMIWSaveDraftMessageCallback? callback = IRCIMIWSaveDraftMessageCallback(onDraftMessageSaved: (int? code) {
     //...
 });
-int? ret = engine?.saveDraftMessage(type,targetId,channelId,draft,callback:callback,);
+
+int? ret = await engine?.saveDraftMessage(type, targetId, channelId, draft, callback:callback);
 //fun_saveDraftMessage_call
 */
 
@@ -1212,13 +1151,7 @@ saveDraftMessage(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.saveDraftMessage(
-        type,
-        targetId,
-        channelId,
-        draft,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.saveDraftMessage(type, targetId, channelId, draft, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "saveDraftMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -1230,7 +1163,7 @@ saveDraftMessage(Map arg) async {
 
 /*
 //fun_loadDraftMessage_call
-int? ret = engine?.loadDraftMessage(type,targetId,channelId,);
+int? ret = await engine?.loadDraftMessage(type, targetId, channelId);
 //fun_loadDraftMessage_call
 */
 
@@ -1248,11 +1181,7 @@ loadDraftMessage(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadDraftMessage(
-        type,
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadDraftMessage(type, targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadDraftMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -1264,12 +1193,13 @@ loadDraftMessage(Map arg) async {
 
 /*
 //fun_getDraftMessage_call
-IRCIMIWGetDraftMessageCallback? callback = IRCIMIWGetDraftMessageCallback(onSuccess: (String? onSuccess) {
+IRCIMIWGetDraftMessageCallback? callback = IRCIMIWGetDraftMessageCallback(onSuccess: (String? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getDraftMessage(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getDraftMessage(type, targetId, channelId, callback:callback);
 //fun_getDraftMessage_call
 */
 
@@ -1305,12 +1235,7 @@ getDraftMessage(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getDraftMessage(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getDraftMessage(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getDraftMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -1322,10 +1247,11 @@ getDraftMessage(Map arg) async {
 
 /*
 //fun_clearDraftMessage_call
-IRCIMIWClearDraftMessageCallback? callback = IRCIMIWClearDraftMessageCallback(onDraftMessageCleared: (int? onDraftMessageCleared) {
+IRCIMIWClearDraftMessageCallback? callback = IRCIMIWClearDraftMessageCallback(onDraftMessageCleared: (int? code) {
     //...
 });
-int? ret = engine?.clearDraftMessage(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.clearDraftMessage(type, targetId, channelId, callback:callback);
 //fun_clearDraftMessage_call
 */
 
@@ -1355,12 +1281,7 @@ clearDraftMessage(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.clearDraftMessage(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.clearDraftMessage(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearDraftMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -1372,7 +1293,7 @@ clearDraftMessage(Map arg) async {
 
 /*
 //fun_loadBlockedConversations_call
-int? ret = engine?.loadBlockedConversations(conversationTypesInt,channelId,);
+int? ret = await engine?.loadBlockedConversations(conversationTypesInt, channelId);
 //fun_loadBlockedConversations_call
 */
 
@@ -1388,10 +1309,7 @@ loadBlockedConversations(Map arg) async {
     conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
   }
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadBlockedConversations(
-        conversationTypesInt,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadBlockedConversations(conversationTypesInt, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBlockedConversations";
   resultCode["code"] = (code ?? -1).toString();
@@ -1403,12 +1321,13 @@ loadBlockedConversations(Map arg) async {
 
 /*
 //fun_getBlockedConversations_call
-IRCIMIWGetBlockedConversationsCallback? callback = IRCIMIWGetBlockedConversationsCallback(onSuccess: (List<RCIMIWConversation>? onSuccess) {
+IRCIMIWGetBlockedConversationsCallback? callback = IRCIMIWGetBlockedConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getBlockedConversations(conversationTypesInt,channelId,callback:callback,);
+
+int? ret = await engine?.getBlockedConversations(conversationTypesInt, channelId, callback:callback);
 //fun_getBlockedConversations_call
 */
 
@@ -1449,11 +1368,8 @@ getBlockedConversations(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getBlockedConversations(
-        conversationTypesInt,
-        channelId,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.getBlockedConversations(conversationTypesInt, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBlockedConversations";
   resultCode["code"] = (code ?? -1).toString();
@@ -1465,10 +1381,11 @@ getBlockedConversations(Map arg) async {
 
 /*
 //fun_changeConversationTopStatus_call
-IRCIMIWChangeConversationTopStatusCallback? callback = IRCIMIWChangeConversationTopStatusCallback(onConversationTopStatusChanged: (int? onConversationTopStatusChanged) {
+IRCIMIWChangeConversationTopStatusCallback? callback = IRCIMIWChangeConversationTopStatusCallback(onConversationTopStatusChanged: (int? code) {
     //...
 });
-int? ret = engine?.changeConversationTopStatus(type,targetId,channelId,top,callback:callback,);
+
+int? ret = await engine?.changeConversationTopStatus(type, targetId, channelId, top, callback:callback);
 //fun_changeConversationTopStatus_call
 */
 
@@ -1505,13 +1422,8 @@ changeConversationTopStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changeConversationTopStatus(
-        type,
-        targetId,
-        channelId,
-        top,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.changeConversationTopStatus(type, targetId, channelId, top, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationTopStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -1523,7 +1435,7 @@ changeConversationTopStatus(Map arg) async {
 
 /*
 //fun_loadConversationTopStatus_call
-int? ret = engine?.loadConversationTopStatus(type,targetId,channelId,);
+int? ret = await engine?.loadConversationTopStatus(type, targetId, channelId);
 //fun_loadConversationTopStatus_call
 */
 
@@ -1541,11 +1453,7 @@ loadConversationTopStatus(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadConversationTopStatus(
-        type,
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadConversationTopStatus(type, targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationTopStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -1557,12 +1465,13 @@ loadConversationTopStatus(Map arg) async {
 
 /*
 //fun_getConversationTopStatus_call
-IRCIMIWGetConversationTopStatusCallback? callback = IRCIMIWGetConversationTopStatusCallback(onSuccess: (bool? onSuccess) {
+IRCIMIWGetConversationTopStatusCallback? callback = IRCIMIWGetConversationTopStatusCallback(onSuccess: (bool? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getConversationTopStatus(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getConversationTopStatus(type, targetId, channelId, callback:callback);
 //fun_getConversationTopStatus_call
 */
 
@@ -1598,12 +1507,7 @@ getConversationTopStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getConversationTopStatus(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getConversationTopStatus(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationTopStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -1615,10 +1519,11 @@ getConversationTopStatus(Map arg) async {
 
 /*
 //fun_syncConversationReadStatus_call
-IRCIMIWSyncConversationReadStatusCallback? callback = IRCIMIWSyncConversationReadStatusCallback(onConversationReadStatusSynced: (int? onConversationReadStatusSynced) {
+IRCIMIWSyncConversationReadStatusCallback? callback = IRCIMIWSyncConversationReadStatusCallback(onConversationReadStatusSynced: (int? code) {
     //...
 });
-int? ret = engine?.syncConversationReadStatus(type,targetId,channelId,timestamp,callback:callback,);
+
+int? ret = await engine?.syncConversationReadStatus(type, targetId, channelId, timestamp, callback:callback);
 //fun_syncConversationReadStatus_call
 */
 
@@ -1654,13 +1559,9 @@ syncConversationReadStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.syncConversationReadStatus(
-        type,
-        targetId,
-        channelId,
-        timestamp,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.syncConversationReadStatus(type, targetId, channelId, timestamp, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "syncConversationReadStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -1672,7 +1573,7 @@ syncConversationReadStatus(Map arg) async {
 
 /*
 //fun_sendTypingStatus_call
-int? ret = engine?.sendTypingStatus(type,targetId,channelId,currentType,);
+int? ret = await engine?.sendTypingStatus(type, targetId, channelId, currentType);
 //fun_sendTypingStatus_call
 */
 
@@ -1696,12 +1597,7 @@ sendTypingStatus(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   String currentType = arg['currentType'];
-  int? code = await IMEngineManager().engine?.sendTypingStatus(
-        type,
-        targetId,
-        channelId,
-        currentType,
-      );
+  int? code = await IMEngineManager().engine?.sendTypingStatus(type, targetId, channelId, currentType);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "sendTypingStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -1713,7 +1609,7 @@ sendTypingStatus(Map arg) async {
 
 /*
 //fun_loadMessages_call
-int? ret = engine?.loadMessages(type,targetId,channelId,sentTime,order,policy,count,);
+int? ret = await engine?.loadMessages(type, targetId, channelId, sentTime, order, policy, count);
 //fun_loadMessages_call
 */
 
@@ -1755,15 +1651,7 @@ loadMessages(Map arg) async {
   RCIMIWTimeOrder order = RCIMIWTimeOrder.values[int.parse(arg['order'])];
   RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[int.parse(arg['policy'])];
   int count = int.parse(arg['count']);
-  int? code = await IMEngineManager().engine?.loadMessages(
-        type,
-        targetId,
-        channelId,
-        sentTime,
-        order,
-        policy,
-        count,
-      );
+  int? code = await IMEngineManager().engine?.loadMessages(type, targetId, channelId, sentTime, order, policy, count);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -1775,12 +1663,13 @@ loadMessages(Map arg) async {
 
 /*
 //fun_getMessages_call
-IRCIMIWGetMessagesCallback? callback = IRCIMIWGetMessagesCallback(onSuccess: (List<RCIMIWMessage>? onSuccess) {
+IRCIMIWGetMessagesCallback? callback = IRCIMIWGetMessagesCallback(onSuccess: (List<RCIMIWMessage>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getMessages(type,targetId,channelId,sentTime,order,policy,count,callback:callback,);
+
+int? ret = await engine?.getMessages(type, targetId, channelId, sentTime, order, policy, count, callback:callback);
 //fun_getMessages_call
 */
 
@@ -1847,16 +1736,9 @@ getMessages(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getMessages(
-        type,
-        targetId,
-        channelId,
-        sentTime,
-        order,
-        policy,
-        count,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.getMessages(type, targetId, channelId, sentTime, order, policy, count, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -1868,27 +1750,29 @@ getMessages(Map arg) async {
 
 /*
 //fun_getMessageById_call
-IRCIMIWGetMessageCallback? callback = IRCIMIWGetMessageCallback(onSuccess: (RCIMIWMessage? onSuccess) {
+IRCIMIWGetMessageCallback? callback = IRCIMIWGetMessageCallback(onSuccess: (RCIMIWMessage? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getMessageById(messageId,callback:callback,);
+
+int? ret = await engine?.getMessageById(messageId, callback:callback);
 //fun_getMessageById_call
 */
 /*
 //fun_getMessageByUId_call
-IRCIMIWGetMessageCallback? callback = IRCIMIWGetMessageCallback(onSuccess: (RCIMIWMessage? onSuccess) {
+IRCIMIWGetMessageCallback? callback = IRCIMIWGetMessageCallback(onSuccess: (RCIMIWMessage? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getMessageByUId(messageUId,callback:callback,);
+
+int? ret = await engine?.getMessageByUId(messageUId, callback:callback);
 //fun_getMessageByUId_call
 */
 /*
 //fun_loadFirstUnreadMessage_call
-int? ret = engine?.loadFirstUnreadMessage(type,targetId,channelId,);
+int? ret = await engine?.loadFirstUnreadMessage(type, targetId, channelId);
 //fun_loadFirstUnreadMessage_call
 */
 
@@ -1906,11 +1790,7 @@ loadFirstUnreadMessage(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadFirstUnreadMessage(
-        type,
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadFirstUnreadMessage(type, targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadFirstUnreadMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -1922,12 +1802,13 @@ loadFirstUnreadMessage(Map arg) async {
 
 /*
 //fun_getFirstUnreadMessage_call
-IRCIMIWGetFirstUnreadMessageCallback? callback = IRCIMIWGetFirstUnreadMessageCallback(onSuccess: (RCIMIWMessage? onSuccess) {
+IRCIMIWGetFirstUnreadMessageCallback? callback = IRCIMIWGetFirstUnreadMessageCallback(onSuccess: (RCIMIWMessage? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getFirstUnreadMessage(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getFirstUnreadMessage(type, targetId, channelId, callback:callback);
 //fun_getFirstUnreadMessage_call
 */
 
@@ -1963,12 +1844,7 @@ getFirstUnreadMessage(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getFirstUnreadMessage(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getFirstUnreadMessage(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getFirstUnreadMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -1980,7 +1856,7 @@ getFirstUnreadMessage(Map arg) async {
 
 /*
 //fun_loadUnreadMentionedMessages_call
-int? ret = engine?.loadUnreadMentionedMessages(type,targetId,channelId,);
+int? ret = await engine?.loadUnreadMentionedMessages(type, targetId, channelId);
 //fun_loadUnreadMentionedMessages_call
 */
 
@@ -1998,11 +1874,7 @@ loadUnreadMentionedMessages(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadUnreadMentionedMessages(
-        type,
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadUnreadMentionedMessages(type, targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadMentionedMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -2014,12 +1886,13 @@ loadUnreadMentionedMessages(Map arg) async {
 
 /*
 //fun_getUnreadMentionedMessages_call
-IRCIMIWGetUnreadMentionedMessagesCallback? callback = IRCIMIWGetUnreadMentionedMessagesCallback(onSuccess: (List<RCIMIWMessage>? onSuccess) {
+IRCIMIWGetUnreadMentionedMessagesCallback? callback = IRCIMIWGetUnreadMentionedMessagesCallback(onSuccess: (List<RCIMIWMessage>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUnreadMentionedMessages(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getUnreadMentionedMessages(type, targetId, channelId, callback:callback);
 //fun_getUnreadMentionedMessages_call
 */
 
@@ -2062,12 +1935,7 @@ getUnreadMentionedMessages(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUnreadMentionedMessages(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getUnreadMentionedMessages(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadMentionedMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -2079,26 +1947,29 @@ getUnreadMentionedMessages(Map arg) async {
 
 /*
 //fun_insertMessage_call
-IRCIMIWInsertMessageCallback? callback = IRCIMIWInsertMessageCallback(onMessageInserted: (int? onMessageInserted,RCIMIWMessage? onMessageInserted) {
+IRCIMIWInsertMessageCallback? callback = IRCIMIWInsertMessageCallback(onMessageInserted: (int? code, RCIMIWMessage? message) {
     //...
 });
-int? ret = engine?.insertMessage(message,callback:callback,);
+
+int? ret = await engine?.insertMessage(message, callback:callback);
 //fun_insertMessage_call
 */
 /*
 //fun_insertMessages_call
-IRCIMIWInsertMessagesCallback? callback = IRCIMIWInsertMessagesCallback(onMessagesInserted: (int? onMessagesInserted,List<RCIMIWMessage>? onMessagesInserted) {
+IRCIMIWInsertMessagesCallback? callback = IRCIMIWInsertMessagesCallback(onMessagesInserted: (int? code, List<RCIMIWMessage>? messages) {
     //...
 });
-int? ret = engine?.insertMessages(messages,callback:callback,);
+
+int? ret = await engine?.insertMessages(messages, callback:callback);
 //fun_insertMessages_call
 */
 /*
 //fun_clearMessages_call
-IRCIMIWClearMessagesCallback? callback = IRCIMIWClearMessagesCallback(onMessagesCleared: (int? onMessagesCleared) {
+IRCIMIWClearMessagesCallback? callback = IRCIMIWClearMessagesCallback(onMessagesCleared: (int? code) {
     //...
 });
-int? ret = engine?.clearMessages(type,targetId,channelId,timestamp,policy,callback:callback,);
+
+int? ret = await engine?.clearMessages(type, targetId, channelId, timestamp, policy, callback:callback);
 //fun_clearMessages_call
 */
 
@@ -2140,14 +2011,8 @@ clearMessages(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.clearMessages(
-        type,
-        targetId,
-        channelId,
-        timestamp,
-        policy,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.clearMessages(type, targetId, channelId, timestamp, policy, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -2159,34 +2024,38 @@ clearMessages(Map arg) async {
 
 /*
 //fun_deleteLocalMessages_call
-IRCIMIWDeleteLocalMessagesCallback? callback = IRCIMIWDeleteLocalMessagesCallback(onLocalMessagesDeleted: (int? onLocalMessagesDeleted,List<RCIMIWMessage>? onLocalMessagesDeleted) {
+IRCIMIWDeleteLocalMessagesCallback? callback = IRCIMIWDeleteLocalMessagesCallback(onLocalMessagesDeleted: (int? code, List<RCIMIWMessage>? messages) {
     //...
 });
-int? ret = engine?.deleteLocalMessages(messages,callback:callback,);
+
+int? ret = await engine?.deleteLocalMessages(messages, callback:callback);
 //fun_deleteLocalMessages_call
 */
 /*
 //fun_deleteMessages_call
-IRCIMIWDeleteMessagesCallback? callback = IRCIMIWDeleteMessagesCallback(onMessagesDeleted: (int? onMessagesDeleted,List<RCIMIWMessage>? onMessagesDeleted) {
+IRCIMIWDeleteMessagesCallback? callback = IRCIMIWDeleteMessagesCallback(onMessagesDeleted: (int? code, List<RCIMIWMessage>? messages) {
     //...
 });
-int? ret = engine?.deleteMessages(type,targetId,channelId,messages,callback:callback,);
+
+int? ret = await engine?.deleteMessages(type, targetId, channelId, messages, callback:callback);
 //fun_deleteMessages_call
 */
 /*
 //fun_recallMessage_call
-IRCIMIWRecallMessageCallback? callback = IRCIMIWRecallMessageCallback(onMessageRecalled: (int? onMessageRecalled,RCIMIWMessage? onMessageRecalled) {
+IRCIMIWRecallMessageCallback? callback = IRCIMIWRecallMessageCallback(onMessageRecalled: (int? code, RCIMIWMessage? message) {
     //...
 });
-int? ret = engine?.recallMessage(message,callback:callback,);
+
+int? ret = await engine?.recallMessage(message, callback:callback);
 //fun_recallMessage_call
 */
 /*
 //fun_sendPrivateReadReceiptMessage_call
-IRCIMIWSendPrivateReadReceiptMessageCallback? callback = IRCIMIWSendPrivateReadReceiptMessageCallback(onPrivateReadReceiptMessageSent: (int? onPrivateReadReceiptMessageSent) {
+IRCIMIWSendPrivateReadReceiptMessageCallback? callback = IRCIMIWSendPrivateReadReceiptMessageCallback(onPrivateReadReceiptMessageSent: (int? code) {
     //...
 });
-int? ret = engine?.sendPrivateReadReceiptMessage(targetId,channelId,timestamp,callback:callback,);
+
+int? ret = await engine?.sendPrivateReadReceiptMessage(targetId, channelId, timestamp, callback:callback);
 //fun_sendPrivateReadReceiptMessage_call
 */
 
@@ -2216,12 +2085,8 @@ sendPrivateReadReceiptMessage(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.sendPrivateReadReceiptMessage(
-        targetId,
-        channelId,
-        timestamp,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.sendPrivateReadReceiptMessage(targetId, channelId, timestamp, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "sendPrivateReadReceiptMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -2233,26 +2098,29 @@ sendPrivateReadReceiptMessage(Map arg) async {
 
 /*
 //fun_sendGroupReadReceiptRequest_call
-IRCIMIWSendGroupReadReceiptRequestCallback? callback = IRCIMIWSendGroupReadReceiptRequestCallback(onGroupReadReceiptRequestSent: (int? onGroupReadReceiptRequestSent,RCIMIWMessage? onGroupReadReceiptRequestSent) {
+IRCIMIWSendGroupReadReceiptRequestCallback? callback = IRCIMIWSendGroupReadReceiptRequestCallback(onGroupReadReceiptRequestSent: (int? code, RCIMIWMessage? message) {
     //...
 });
-int? ret = engine?.sendGroupReadReceiptRequest(message,callback:callback,);
+
+int? ret = await engine?.sendGroupReadReceiptRequest(message, callback:callback);
 //fun_sendGroupReadReceiptRequest_call
 */
 /*
 //fun_sendGroupReadReceiptResponse_call
-IRCIMIWSendGroupReadReceiptResponseCallback? callback = IRCIMIWSendGroupReadReceiptResponseCallback(onGroupReadReceiptResponseSent: (int? onGroupReadReceiptResponseSent,List<RCIMIWMessage>? onGroupReadReceiptResponseSent) {
+IRCIMIWSendGroupReadReceiptResponseCallback? callback = IRCIMIWSendGroupReadReceiptResponseCallback(onGroupReadReceiptResponseSent: (int? code, List<RCIMIWMessage>? message) {
     //...
 });
-int? ret = engine?.sendGroupReadReceiptResponse(targetId,channelId,messages,callback:callback,);
+
+int? ret = await engine?.sendGroupReadReceiptResponse(targetId, channelId, messages, callback:callback);
 //fun_sendGroupReadReceiptResponse_call
 */
 /*
 //fun_updateMessageExpansion_call
-IRCIMIWUpdateMessageExpansionCallback? callback = IRCIMIWUpdateMessageExpansionCallback(onMessageExpansionUpdated: (int? onMessageExpansionUpdated) {
+IRCIMIWUpdateMessageExpansionCallback? callback = IRCIMIWUpdateMessageExpansionCallback(onMessageExpansionUpdated: (int? code) {
     //...
 });
-int? ret = engine?.updateMessageExpansion(messageUId,expansion,callback:callback,);
+
+int? ret = await engine?.updateMessageExpansion(messageUId, expansion, callback:callback);
 //fun_updateMessageExpansion_call
 */
 
@@ -2290,11 +2158,7 @@ updateMessageExpansion(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.updateMessageExpansion(
-        messageUId,
-        expansion,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.updateMessageExpansion(messageUId, expansion, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "updateMessageExpansion";
   resultCode["code"] = (code ?? -1).toString();
@@ -2306,10 +2170,11 @@ updateMessageExpansion(Map arg) async {
 
 /*
 //fun_removeMessageExpansionForKeys_call
-IRCIMIWRemoveMessageExpansionForKeysCallback? callback = IRCIMIWRemoveMessageExpansionForKeysCallback(onMessageExpansionForKeysRemoved: (int? onMessageExpansionForKeysRemoved) {
+IRCIMIWRemoveMessageExpansionForKeysCallback? callback = IRCIMIWRemoveMessageExpansionForKeysCallback(onMessageExpansionForKeysRemoved: (int? code) {
     //...
 });
-int? ret = engine?.removeMessageExpansionForKeys(messageUId,keys,callback:callback,);
+
+int? ret = await engine?.removeMessageExpansionForKeys(messageUId, keys, callback:callback);
 //fun_removeMessageExpansionForKeys_call
 */
 
@@ -2338,11 +2203,7 @@ removeMessageExpansionForKeys(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.removeMessageExpansionForKeys(
-        messageUId,
-        keys,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.removeMessageExpansionForKeys(messageUId, keys, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeMessageExpansionForKeys";
   resultCode["code"] = (code ?? -1).toString();
@@ -2354,10 +2215,11 @@ removeMessageExpansionForKeys(Map arg) async {
 
 /*
 //fun_changeMessageSentStatus_call
-IRCIMIWChangeMessageSentStatusCallback? callback = IRCIMIWChangeMessageSentStatusCallback(onMessageSentStatusChanged: (int? onMessageSentStatusChanged) {
+IRCIMIWChangeMessageSentStatusCallback? callback = IRCIMIWChangeMessageSentStatusCallback(onMessageSentStatusChanged: (int? code) {
     //...
 });
-int? ret = engine?.changeMessageSentStatus(messageId,sentStatus,callback:callback,);
+
+int? ret = await engine?.changeMessageSentStatus(messageId, sentStatus, callback:callback);
 //fun_changeMessageSentStatus_call
 */
 
@@ -2386,11 +2248,7 @@ changeMessageSentStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changeMessageSentStatus(
-        messageId,
-        sentStatus,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.changeMessageSentStatus(messageId, sentStatus, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeMessageSentStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -2402,10 +2260,11 @@ changeMessageSentStatus(Map arg) async {
 
 /*
 //fun_changeMessageReceiveStatus_call
-IRCIMIWChangeMessageReceivedStatusCallback? callback = IRCIMIWChangeMessageReceivedStatusCallback(onMessageReceiveStatusChanged: (int? onMessageReceiveStatusChanged) {
+IRCIMIWChangeMessageReceivedStatusCallback? callback = IRCIMIWChangeMessageReceivedStatusCallback(onMessageReceiveStatusChanged: (int? code) {
     //...
 });
-int? ret = engine?.changeMessageReceiveStatus(messageId,receivedStatus,callback:callback,);
+
+int? ret = await engine?.changeMessageReceiveStatus(messageId, receivedStatus, callback:callback);
 //fun_changeMessageReceiveStatus_call
 */
 
@@ -2434,11 +2293,7 @@ changeMessageReceiveStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changeMessageReceiveStatus(
-        messageId,
-        receivedStatus,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.changeMessageReceiveStatus(messageId, receivedStatus, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeMessageReceiveStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -2450,10 +2305,11 @@ changeMessageReceiveStatus(Map arg) async {
 
 /*
 //fun_joinChatRoom_call
-IRCIMIWJoinChatRoomCallback? callback = IRCIMIWJoinChatRoomCallback(onChatRoomJoined: (int? onChatRoomJoined,String? onChatRoomJoined) {
+IRCIMIWJoinChatRoomCallback? callback = IRCIMIWJoinChatRoomCallback(onChatRoomJoined: (int? code, String? targetId) {
     //...
 });
-int? ret = engine?.joinChatRoom(targetId,messageCount,autoCreate,callback:callback,);
+
+int? ret = await engine?.joinChatRoom(targetId, messageCount, autoCreate, callback:callback);
 //fun_joinChatRoom_call
 */
 
@@ -2490,12 +2346,7 @@ joinChatRoom(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.joinChatRoom(
-        targetId,
-        messageCount,
-        autoCreate,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.joinChatRoom(targetId, messageCount, autoCreate, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "joinChatRoom";
   resultCode["code"] = (code ?? -1).toString();
@@ -2507,10 +2358,11 @@ joinChatRoom(Map arg) async {
 
 /*
 //fun_leaveChatRoom_call
-IRCIMIWLeaveChatRoomCallback? callback = IRCIMIWLeaveChatRoomCallback(onChatRoomLeft: (int? onChatRoomLeft,String? onChatRoomLeft) {
+IRCIMIWLeaveChatRoomCallback? callback = IRCIMIWLeaveChatRoomCallback(onChatRoomLeft: (int? code, String? targetId) {
     //...
 });
-int? ret = engine?.leaveChatRoom(targetId,callback:callback,);
+
+int? ret = await engine?.leaveChatRoom(targetId, callback:callback);
 //fun_leaveChatRoom_call
 */
 
@@ -2534,10 +2386,7 @@ leaveChatRoom(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.leaveChatRoom(
-        targetId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.leaveChatRoom(targetId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "leaveChatRoom";
   resultCode["code"] = (code ?? -1).toString();
@@ -2549,7 +2398,7 @@ leaveChatRoom(Map arg) async {
 
 /*
 //fun_loadChatRoomMessages_call
-int? ret = engine?.loadChatRoomMessages(targetId,timestamp,order,count,);
+int? ret = await engine?.loadChatRoomMessages(targetId, timestamp, order, count);
 //fun_loadChatRoomMessages_call
 */
 
@@ -2578,12 +2427,7 @@ loadChatRoomMessages(Map arg) async {
   int timestamp = int.parse(arg['timestamp']);
   RCIMIWTimeOrder order = RCIMIWTimeOrder.values[int.parse(arg['order'])];
   int count = int.parse(arg['count']);
-  int? code = await IMEngineManager().engine?.loadChatRoomMessages(
-        targetId,
-        timestamp,
-        order,
-        count,
-      );
+  int? code = await IMEngineManager().engine?.loadChatRoomMessages(targetId, timestamp, order, count);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadChatRoomMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -2595,12 +2439,13 @@ loadChatRoomMessages(Map arg) async {
 
 /*
 //fun_getChatRoomMessages_call
-IRCIMIWGetChatRoomMessagesCallback? callback = IRCIMIWGetChatRoomMessagesCallback(onSuccess: (List<RCIMIWMessage>? onSuccess) {
+IRCIMIWGetChatRoomMessagesCallback? callback = IRCIMIWGetChatRoomMessagesCallback(onSuccess: (List<RCIMIWMessage>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getChatRoomMessages(targetId,timestamp,order,count,callback:callback,);
+
+int? ret = await engine?.getChatRoomMessages(targetId, timestamp, order, count, callback:callback);
 //fun_getChatRoomMessages_call
 */
 
@@ -2654,13 +2499,8 @@ getChatRoomMessages(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getChatRoomMessages(
-        targetId,
-        timestamp,
-        order,
-        count,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.getChatRoomMessages(targetId, timestamp, order, count, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getChatRoomMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -2672,10 +2512,11 @@ getChatRoomMessages(Map arg) async {
 
 /*
 //fun_addChatRoomEntry_call
-IRCIMIWAddChatRoomEntryCallback? callback = IRCIMIWAddChatRoomEntryCallback(onChatRoomEntryAdded: (int? onChatRoomEntryAdded) {
+IRCIMIWAddChatRoomEntryCallback? callback = IRCIMIWAddChatRoomEntryCallback(onChatRoomEntryAdded: (int? code) {
     //...
 });
-int? ret = engine?.addChatRoomEntry(targetId,key,value,deleteWhenLeft,overwrite,callback:callback,);
+
+int? ret = await engine?.addChatRoomEntry(targetId, key, value, deleteWhenLeft, overwrite, callback:callback);
 //fun_addChatRoomEntry_call
 */
 
@@ -2724,14 +2565,9 @@ addChatRoomEntry(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.addChatRoomEntry(
-        targetId,
-        key,
-        value,
-        deleteWhenLeft,
-        overwrite,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.addChatRoomEntry(targetId, key, value, deleteWhenLeft, overwrite, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addChatRoomEntry";
   resultCode["code"] = (code ?? -1).toString();
@@ -2743,10 +2579,11 @@ addChatRoomEntry(Map arg) async {
 
 /*
 //fun_addChatRoomEntries_call
-IRCIMIWAddChatRoomEntriesCallback? callback = IRCIMIWAddChatRoomEntriesCallback(onChatRoomEntriesAdded: (int? onChatRoomEntriesAdded,Map? onChatRoomEntriesAdded) {
+IRCIMIWAddChatRoomEntriesCallback? callback = IRCIMIWAddChatRoomEntriesCallback(onChatRoomEntriesAdded: (int? code, Map? errors) {
     //...
 });
-int? ret = engine?.addChatRoomEntries(targetId,entries,deleteWhenLeft,overwrite,callback:callback,);
+
+int? ret = await engine?.addChatRoomEntries(targetId, entries, deleteWhenLeft, overwrite, callback:callback);
 //fun_addChatRoomEntries_call
 */
 
@@ -2799,13 +2636,9 @@ addChatRoomEntries(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.addChatRoomEntries(
-        targetId,
-        entries,
-        deleteWhenLeft,
-        overwrite,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.addChatRoomEntries(targetId, entries, deleteWhenLeft, overwrite, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addChatRoomEntries";
   resultCode["code"] = (code ?? -1).toString();
@@ -2817,7 +2650,7 @@ addChatRoomEntries(Map arg) async {
 
 /*
 //fun_loadChatRoomEntry_call
-int? ret = engine?.loadChatRoomEntry(targetId,key,);
+int? ret = await engine?.loadChatRoomEntry(targetId, key);
 //fun_loadChatRoomEntry_call
 */
 
@@ -2834,10 +2667,7 @@ loadChatRoomEntry(Map arg) async {
 
   String targetId = arg['targetId'];
   String key = arg['key'];
-  int? code = await IMEngineManager().engine?.loadChatRoomEntry(
-        targetId,
-        key,
-      );
+  int? code = await IMEngineManager().engine?.loadChatRoomEntry(targetId, key);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadChatRoomEntry";
   resultCode["code"] = (code ?? -1).toString();
@@ -2849,12 +2679,13 @@ loadChatRoomEntry(Map arg) async {
 
 /*
 //fun_getChatRoomEntry_call
-IRCIMIWGetChatRoomEntryCallback? callback = IRCIMIWGetChatRoomEntryCallback(onSuccess: (Map? onSuccess) {
+IRCIMIWGetChatRoomEntryCallback? callback = IRCIMIWGetChatRoomEntryCallback(onSuccess: (Map? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getChatRoomEntry(targetId,key,callback:callback,);
+
+int? ret = await engine?.getChatRoomEntry(targetId, key, callback:callback);
 //fun_getChatRoomEntry_call
 */
 
@@ -2889,11 +2720,7 @@ getChatRoomEntry(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getChatRoomEntry(
-        targetId,
-        key,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getChatRoomEntry(targetId, key, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getChatRoomEntry";
   resultCode["code"] = (code ?? -1).toString();
@@ -2905,7 +2732,7 @@ getChatRoomEntry(Map arg) async {
 
 /*
 //fun_loadChatRoomAllEntries_call
-int? ret = engine?.loadChatRoomAllEntries(targetId,);
+int? ret = await engine?.loadChatRoomAllEntries(targetId);
 //fun_loadChatRoomAllEntries_call
 */
 
@@ -2916,9 +2743,7 @@ loadChatRoomAllEntries(Map arg) async {
   }
 
   String targetId = arg['targetId'];
-  int? code = await IMEngineManager().engine?.loadChatRoomAllEntries(
-        targetId,
-      );
+  int? code = await IMEngineManager().engine?.loadChatRoomAllEntries(targetId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadChatRoomAllEntries";
   resultCode["code"] = (code ?? -1).toString();
@@ -2930,12 +2755,13 @@ loadChatRoomAllEntries(Map arg) async {
 
 /*
 //fun_getChatRoomAllEntries_call
-IRCIMIWGetChatRoomAllEntriesCallback? callback = IRCIMIWGetChatRoomAllEntriesCallback(onSuccess: (Map? onSuccess) {
+IRCIMIWGetChatRoomAllEntriesCallback? callback = IRCIMIWGetChatRoomAllEntriesCallback(onSuccess: (Map? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getChatRoomAllEntries(targetId,callback:callback,);
+
+int? ret = await engine?.getChatRoomAllEntries(targetId, callback:callback);
 //fun_getChatRoomAllEntries_call
 */
 
@@ -2964,10 +2790,7 @@ getChatRoomAllEntries(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getChatRoomAllEntries(
-        targetId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getChatRoomAllEntries(targetId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getChatRoomAllEntries";
   resultCode["code"] = (code ?? -1).toString();
@@ -2979,10 +2802,11 @@ getChatRoomAllEntries(Map arg) async {
 
 /*
 //fun_removeChatRoomEntry_call
-IRCIMIWRemoveChatRoomEntryCallback? callback = IRCIMIWRemoveChatRoomEntryCallback(onChatRoomEntryRemoved: (int? onChatRoomEntryRemoved) {
+IRCIMIWRemoveChatRoomEntryCallback? callback = IRCIMIWRemoveChatRoomEntryCallback(onChatRoomEntryRemoved: (int? code) {
     //...
 });
-int? ret = engine?.removeChatRoomEntry(targetId,key,force,callback:callback,);
+
+int? ret = await engine?.removeChatRoomEntry(targetId, key, force, callback:callback);
 //fun_removeChatRoomEntry_call
 */
 
@@ -3018,12 +2842,7 @@ removeChatRoomEntry(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.removeChatRoomEntry(
-        targetId,
-        key,
-        force,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.removeChatRoomEntry(targetId, key, force, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeChatRoomEntry";
   resultCode["code"] = (code ?? -1).toString();
@@ -3035,10 +2854,11 @@ removeChatRoomEntry(Map arg) async {
 
 /*
 //fun_removeChatRoomEntries_call
-IRCIMIWRemoveChatRoomEntriesCallback? callback = IRCIMIWRemoveChatRoomEntriesCallback(onChatRoomEntriesRemoved: (int? onChatRoomEntriesRemoved) {
+IRCIMIWRemoveChatRoomEntriesCallback? callback = IRCIMIWRemoveChatRoomEntriesCallback(onChatRoomEntriesRemoved: (int? code) {
     //...
 });
-int? ret = engine?.removeChatRoomEntries(targetId,keys,force,callback:callback,);
+
+int? ret = await engine?.removeChatRoomEntries(targetId, keys, force, callback:callback);
 //fun_removeChatRoomEntries_call
 */
 
@@ -3074,12 +2894,7 @@ removeChatRoomEntries(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.removeChatRoomEntries(
-        targetId,
-        keys,
-        force,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.removeChatRoomEntries(targetId, keys, force, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeChatRoomEntries";
   resultCode["code"] = (code ?? -1).toString();
@@ -3091,10 +2906,11 @@ removeChatRoomEntries(Map arg) async {
 
 /*
 //fun_addToBlacklist_call
-IRCIMIWAddToBlacklistCallback? callback = IRCIMIWAddToBlacklistCallback(onBlacklistAdded: (int? onBlacklistAdded,String? onBlacklistAdded) {
+IRCIMIWAddToBlacklistCallback? callback = IRCIMIWAddToBlacklistCallback(onBlacklistAdded: (int? code, String? userId) {
     //...
 });
-int? ret = engine?.addToBlacklist(userId,callback:callback,);
+
+int? ret = await engine?.addToBlacklist(userId, callback:callback);
 //fun_addToBlacklist_call
 */
 
@@ -3118,10 +2934,7 @@ addToBlacklist(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.addToBlacklist(
-        userId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.addToBlacklist(userId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addToBlacklist";
   resultCode["code"] = (code ?? -1).toString();
@@ -3133,10 +2946,11 @@ addToBlacklist(Map arg) async {
 
 /*
 //fun_removeFromBlacklist_call
-IRCIMIWRemoveFromBlacklistCallback? callback = IRCIMIWRemoveFromBlacklistCallback(onBlacklistRemoved: (int? onBlacklistRemoved,String? onBlacklistRemoved) {
+IRCIMIWRemoveFromBlacklistCallback? callback = IRCIMIWRemoveFromBlacklistCallback(onBlacklistRemoved: (int? code, String? userId) {
     //...
 });
-int? ret = engine?.removeFromBlacklist(userId,callback:callback,);
+
+int? ret = await engine?.removeFromBlacklist(userId, callback:callback);
 //fun_removeFromBlacklist_call
 */
 
@@ -3160,10 +2974,7 @@ removeFromBlacklist(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.removeFromBlacklist(
-        userId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.removeFromBlacklist(userId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeFromBlacklist";
   resultCode["code"] = (code ?? -1).toString();
@@ -3175,7 +2986,7 @@ removeFromBlacklist(Map arg) async {
 
 /*
 //fun_loadBlacklistStatus_call
-int? ret = engine?.loadBlacklistStatus(userId,);
+int? ret = await engine?.loadBlacklistStatus(userId);
 //fun_loadBlacklistStatus_call
 */
 
@@ -3186,9 +2997,7 @@ loadBlacklistStatus(Map arg) async {
   }
 
   String userId = arg['userId'];
-  int? code = await IMEngineManager().engine?.loadBlacklistStatus(
-        userId,
-      );
+  int? code = await IMEngineManager().engine?.loadBlacklistStatus(userId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBlacklistStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -3200,12 +3009,13 @@ loadBlacklistStatus(Map arg) async {
 
 /*
 //fun_getBlacklistStatus_call
-IRCIMIWGetBlacklistStatusCallback? callback = IRCIMIWGetBlacklistStatusCallback(onSuccess: (RCIMIWBlacklistStatus? onSuccess) {
+IRCIMIWGetBlacklistStatusCallback? callback = IRCIMIWGetBlacklistStatusCallback(onSuccess: (RCIMIWBlacklistStatus? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getBlacklistStatus(userId,callback:callback,);
+
+int? ret = await engine?.getBlacklistStatus(userId, callback:callback);
 //fun_getBlacklistStatus_call
 */
 
@@ -3234,10 +3044,7 @@ getBlacklistStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getBlacklistStatus(
-        userId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getBlacklistStatus(userId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBlacklistStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -3249,7 +3056,7 @@ getBlacklistStatus(Map arg) async {
 
 /*
 //fun_loadBlacklist_call
-int? ret = engine?.loadBlacklist();
+int? ret = await engine?.loadBlacklist();
 //fun_loadBlacklist_call
 */
 
@@ -3266,12 +3073,13 @@ loadBlacklist() async {
 
 /*
 //fun_getBlacklist_call
-IRCIMIWGetBlacklistCallback? callback = IRCIMIWGetBlacklistCallback(onSuccess: (List<String>? onSuccess) {
+IRCIMIWGetBlacklistCallback? callback = IRCIMIWGetBlacklistCallback(onSuccess: (List<String>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getBlacklist(callback:callback,);
+
+int? ret = await engine?.getBlacklist(callback:callback);
 //fun_getBlacklist_call
 */
 
@@ -3295,9 +3103,7 @@ getBlacklist(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getBlacklist(
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getBlacklist(callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBlacklist";
   resultCode["code"] = (code ?? -1).toString();
@@ -3309,12 +3115,13 @@ getBlacklist(Map arg) async {
 
 /*
 //fun_searchMessages_call
-IRCIMIWSearchMessagesCallback? callback = IRCIMIWSearchMessagesCallback(onSuccess: (List<RCIMIWMessage>? onSuccess) {
+IRCIMIWSearchMessagesCallback? callback = IRCIMIWSearchMessagesCallback(onSuccess: (List<RCIMIWMessage>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.searchMessages(type,targetId,channelId,keyword,startTime,count,callback:callback,);
+
+int? ret = await engine?.searchMessages(type, targetId, channelId, keyword, startTime, count, callback:callback);
 //fun_searchMessages_call
 */
 
@@ -3375,15 +3182,9 @@ searchMessages(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.searchMessages(
-        type,
-        targetId,
-        channelId,
-        keyword,
-        startTime,
-        count,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.searchMessages(type, targetId, channelId, keyword, startTime, count, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -3395,12 +3196,13 @@ searchMessages(Map arg) async {
 
 /*
 //fun_searchMessagesByTimeRange_call
-IRCIMIWSearchMessagesByTimeRangeCallback? callback = IRCIMIWSearchMessagesByTimeRangeCallback(onSuccess: (List<RCIMIWMessage>? onSuccess) {
+IRCIMIWSearchMessagesByTimeRangeCallback? callback = IRCIMIWSearchMessagesByTimeRangeCallback(onSuccess: (List<RCIMIWMessage>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.searchMessagesByTimeRange(type,targetId,channelId,keyword,startTime,endTime,offset,count,callback:callback,);
+
+int? ret = await engine?.searchMessagesByTimeRange(type, targetId, channelId, keyword, startTime, endTime, offset, count, callback:callback);
 //fun_searchMessagesByTimeRange_call
 */
 
@@ -3474,16 +3276,8 @@ searchMessagesByTimeRange(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.searchMessagesByTimeRange(
-        type,
-        targetId,
-        channelId,
-        keyword,
-        startTime,
-        endTime,
-        offset,
-        count,
-        callback: callback,
-      );
+      type, targetId, channelId, keyword, startTime, endTime, offset, count,
+      callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchMessagesByTimeRange";
   resultCode["code"] = (code ?? -1).toString();
@@ -3495,12 +3289,13 @@ searchMessagesByTimeRange(Map arg) async {
 
 /*
 //fun_searchMessagesByUserId_call
-IRCIMIWSearchMessagesByUserIdCallback? callback = IRCIMIWSearchMessagesByUserIdCallback(onSuccess: (List<RCIMIWMessage>? onSuccess) {
+IRCIMIWSearchMessagesByUserIdCallback? callback = IRCIMIWSearchMessagesByUserIdCallback(onSuccess: (List<RCIMIWMessage>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.searchMessagesByUserId(userId,type,targetId,channelId,startTime,count,callback:callback,);
+
+int? ret = await engine?.searchMessagesByUserId(userId, type, targetId, channelId, startTime, count, callback:callback);
 //fun_searchMessagesByUserId_call
 */
 
@@ -3561,15 +3356,9 @@ searchMessagesByUserId(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.searchMessagesByUserId(
-        userId,
-        type,
-        targetId,
-        channelId,
-        startTime,
-        count,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.searchMessagesByUserId(userId, type, targetId, channelId, startTime, count, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchMessagesByUserId";
   resultCode["code"] = (code ?? -1).toString();
@@ -3581,12 +3370,13 @@ searchMessagesByUserId(Map arg) async {
 
 /*
 //fun_searchConversations_call
-IRCIMIWSearchConversationsCallback? callback = IRCIMIWSearchConversationsCallback(onSuccess: (List<RCIMIWSearchConversationResult>? onSuccess) {
+IRCIMIWSearchConversationsCallback? callback = IRCIMIWSearchConversationsCallback(onSuccess: (List<RCIMIWSearchConversationResult>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.searchConversations(conversationTypesInt,channelId,messageTypesInt,keyword,callback:callback,);
+
+int? ret = await engine?.searchConversations(conversationTypesInt, channelId, messageTypesInt, keyword, callback:callback);
 //fun_searchConversations_call
 */
 
@@ -3643,13 +3433,9 @@ searchConversations(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.searchConversations(
-        conversationTypesInt,
-        channelId,
-        messageTypesInt,
-        keyword,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.searchConversations(conversationTypesInt, channelId, messageTypesInt, keyword, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchConversations";
   resultCode["code"] = (code ?? -1).toString();
@@ -3661,10 +3447,11 @@ searchConversations(Map arg) async {
 
 /*
 //fun_changeNotificationQuietHours_call
-IRCIMIWChangeNotificationQuietHoursCallback? callback = IRCIMIWChangeNotificationQuietHoursCallback(onNotificationQuietHoursChanged: (int? onNotificationQuietHoursChanged) {
+IRCIMIWChangeNotificationQuietHoursCallback? callback = IRCIMIWChangeNotificationQuietHoursCallback(onNotificationQuietHoursChanged: (int? code) {
     //...
 });
-int? ret = engine?.changeNotificationQuietHours(startTime,spanMinutes,level,callback:callback,);
+
+int? ret = await engine?.changeNotificationQuietHours(startTime, spanMinutes, level, callback:callback);
 //fun_changeNotificationQuietHours_call
 */
 
@@ -3699,12 +3486,8 @@ changeNotificationQuietHours(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changeNotificationQuietHours(
-        startTime,
-        spanMinutes,
-        level,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.changeNotificationQuietHours(startTime, spanMinutes, level, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeNotificationQuietHours";
   resultCode["code"] = (code ?? -1).toString();
@@ -3716,10 +3499,11 @@ changeNotificationQuietHours(Map arg) async {
 
 /*
 //fun_removeNotificationQuietHours_call
-IRCIMIWRemoveNotificationQuietHoursCallback? callback = IRCIMIWRemoveNotificationQuietHoursCallback(onNotificationQuietHoursRemoved: (int? onNotificationQuietHoursRemoved) {
+IRCIMIWRemoveNotificationQuietHoursCallback? callback = IRCIMIWRemoveNotificationQuietHoursCallback(onNotificationQuietHoursRemoved: (int? code) {
     //...
 });
-int? ret = engine?.removeNotificationQuietHours(callback:callback,);
+
+int? ret = await engine?.removeNotificationQuietHours(callback:callback);
 //fun_removeNotificationQuietHours_call
 */
 
@@ -3737,9 +3521,7 @@ removeNotificationQuietHours(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.removeNotificationQuietHours(
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.removeNotificationQuietHours(callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeNotificationQuietHours";
   resultCode["code"] = (code ?? -1).toString();
@@ -3751,7 +3533,7 @@ removeNotificationQuietHours(Map arg) async {
 
 /*
 //fun_loadNotificationQuietHours_call
-int? ret = engine?.loadNotificationQuietHours();
+int? ret = await engine?.loadNotificationQuietHours();
 //fun_loadNotificationQuietHours_call
 */
 
@@ -3768,12 +3550,13 @@ loadNotificationQuietHours() async {
 
 /*
 //fun_getNotificationQuietHours_call
-IRCIMIWGetNotificationQuietHoursCallback? callback = IRCIMIWGetNotificationQuietHoursCallback(onSuccess: (String? onSuccess,int? onSuccess,RCIMIWPushNotificationQuietHoursLevel? onSuccess) {
+IRCIMIWGetNotificationQuietHoursCallback? callback = IRCIMIWGetNotificationQuietHoursCallback(onSuccess: (String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getNotificationQuietHours(callback:callback,);
+
+int? ret = await engine?.getNotificationQuietHours(callback:callback);
 //fun_getNotificationQuietHours_call
 */
 
@@ -3800,9 +3583,7 @@ getNotificationQuietHours(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getNotificationQuietHours(
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getNotificationQuietHours(callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getNotificationQuietHours";
   resultCode["code"] = (code ?? -1).toString();
@@ -3814,10 +3595,11 @@ getNotificationQuietHours(Map arg) async {
 
 /*
 //fun_changeConversationNotificationLevel_call
-IRCIMIWChangeConversationNotificationLevelCallback? callback = IRCIMIWChangeConversationNotificationLevelCallback(onConversationNotificationLevelChanged: (int? onConversationNotificationLevelChanged) {
+IRCIMIWChangeConversationNotificationLevelCallback? callback = IRCIMIWChangeConversationNotificationLevelCallback(onConversationNotificationLevelChanged: (int? code) {
     //...
 });
-int? ret = engine?.changeConversationNotificationLevel(type,targetId,channelId,level,callback:callback,);
+
+int? ret = await engine?.changeConversationNotificationLevel(type, targetId, channelId, level, callback:callback);
 //fun_changeConversationNotificationLevel_call
 */
 
@@ -3853,13 +3635,9 @@ changeConversationNotificationLevel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changeConversationNotificationLevel(
-        type,
-        targetId,
-        channelId,
-        level,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.changeConversationNotificationLevel(type, targetId, channelId, level, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -3871,7 +3649,7 @@ changeConversationNotificationLevel(Map arg) async {
 
 /*
 //fun_loadConversationNotificationLevel_call
-int? ret = engine?.loadConversationNotificationLevel(type,targetId,channelId,);
+int? ret = await engine?.loadConversationNotificationLevel(type, targetId, channelId);
 //fun_loadConversationNotificationLevel_call
 */
 
@@ -3889,11 +3667,7 @@ loadConversationNotificationLevel(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadConversationNotificationLevel(
-        type,
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadConversationNotificationLevel(type, targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -3905,12 +3679,13 @@ loadConversationNotificationLevel(Map arg) async {
 
 /*
 //fun_getConversationNotificationLevel_call
-IRCIMIWGetConversationNotificationLevelCallback? callback = IRCIMIWGetConversationNotificationLevelCallback(onSuccess: (RCIMIWPushNotificationLevel? onSuccess) {
+IRCIMIWGetConversationNotificationLevelCallback? callback = IRCIMIWGetConversationNotificationLevelCallback(onSuccess: (RCIMIWPushNotificationLevel? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getConversationNotificationLevel(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getConversationNotificationLevel(type, targetId, channelId, callback:callback);
 //fun_getConversationNotificationLevel_call
 */
 
@@ -3946,12 +3721,8 @@ getConversationNotificationLevel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getConversationNotificationLevel(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.getConversationNotificationLevel(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -3963,10 +3734,11 @@ getConversationNotificationLevel(Map arg) async {
 
 /*
 //fun_changeConversationTypeNotificationLevel_call
-IRCIMIWChangeConversationTypeNotificationLevelCallback? callback = IRCIMIWChangeConversationTypeNotificationLevelCallback(onConversationTypeNotificationLevelChanged: (int? onConversationTypeNotificationLevelChanged) {
+IRCIMIWChangeConversationTypeNotificationLevelCallback? callback = IRCIMIWChangeConversationTypeNotificationLevelCallback(onConversationTypeNotificationLevelChanged: (int? code) {
     //...
 });
-int? ret = engine?.changeConversationTypeNotificationLevel(type,level,callback:callback,);
+
+int? ret = await engine?.changeConversationTypeNotificationLevel(type, level, callback:callback);
 //fun_changeConversationTypeNotificationLevel_call
 */
 
@@ -3996,11 +3768,7 @@ changeConversationTypeNotificationLevel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changeConversationTypeNotificationLevel(
-        type,
-        level,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.changeConversationTypeNotificationLevel(type, level, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationTypeNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4012,7 +3780,7 @@ changeConversationTypeNotificationLevel(Map arg) async {
 
 /*
 //fun_loadConversationTypeNotificationLevel_call
-int? ret = engine?.loadConversationTypeNotificationLevel(type,);
+int? ret = await engine?.loadConversationTypeNotificationLevel(type);
 //fun_loadConversationTypeNotificationLevel_call
 */
 
@@ -4023,9 +3791,7 @@ loadConversationTypeNotificationLevel(Map arg) async {
   }
 
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
-  int? code = await IMEngineManager().engine?.loadConversationTypeNotificationLevel(
-        type,
-      );
+  int? code = await IMEngineManager().engine?.loadConversationTypeNotificationLevel(type);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationTypeNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4037,12 +3803,13 @@ loadConversationTypeNotificationLevel(Map arg) async {
 
 /*
 //fun_getConversationTypeNotificationLevel_call
-IRCIMIWGetConversationTypeNotificationLevelCallback? callback = IRCIMIWGetConversationTypeNotificationLevelCallback(onSuccess: (RCIMIWPushNotificationLevel? onSuccess) {
+IRCIMIWGetConversationTypeNotificationLevelCallback? callback = IRCIMIWGetConversationTypeNotificationLevelCallback(onSuccess: (RCIMIWPushNotificationLevel? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getConversationTypeNotificationLevel(type,callback:callback,);
+
+int? ret = await engine?.getConversationTypeNotificationLevel(type, callback:callback);
 //fun_getConversationTypeNotificationLevel_call
 */
 
@@ -4071,10 +3838,7 @@ getConversationTypeNotificationLevel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getConversationTypeNotificationLevel(
-        type,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getConversationTypeNotificationLevel(type, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationTypeNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4086,10 +3850,11 @@ getConversationTypeNotificationLevel(Map arg) async {
 
 /*
 //fun_changeUltraGroupDefaultNotificationLevel_call
-IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback? callback = IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback(onUltraGroupDefaultNotificationLevelChanged: (int? onUltraGroupDefaultNotificationLevelChanged) {
+IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback? callback = IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback(onUltraGroupDefaultNotificationLevelChanged: (int? code) {
     //...
 });
-int? ret = engine?.changeUltraGroupDefaultNotificationLevel(targetId,level,callback:callback,);
+
+int? ret = await engine?.changeUltraGroupDefaultNotificationLevel(targetId, level, callback:callback);
 //fun_changeUltraGroupDefaultNotificationLevel_call
 */
 
@@ -4119,11 +3884,8 @@ changeUltraGroupDefaultNotificationLevel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changeUltraGroupDefaultNotificationLevel(
-        targetId,
-        level,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.changeUltraGroupDefaultNotificationLevel(targetId, level, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeUltraGroupDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4135,7 +3897,7 @@ changeUltraGroupDefaultNotificationLevel(Map arg) async {
 
 /*
 //fun_loadUltraGroupDefaultNotificationLevel_call
-int? ret = engine?.loadUltraGroupDefaultNotificationLevel(targetId,);
+int? ret = await engine?.loadUltraGroupDefaultNotificationLevel(targetId);
 //fun_loadUltraGroupDefaultNotificationLevel_call
 */
 
@@ -4146,9 +3908,7 @@ loadUltraGroupDefaultNotificationLevel(Map arg) async {
   }
 
   String targetId = arg['targetId'];
-  int? code = await IMEngineManager().engine?.loadUltraGroupDefaultNotificationLevel(
-        targetId,
-      );
+  int? code = await IMEngineManager().engine?.loadUltraGroupDefaultNotificationLevel(targetId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4160,12 +3920,13 @@ loadUltraGroupDefaultNotificationLevel(Map arg) async {
 
 /*
 //fun_getUltraGroupDefaultNotificationLevel_call
-IRCIMIWGetUltraGroupDefaultNotificationLevelCallback? callback = IRCIMIWGetUltraGroupDefaultNotificationLevelCallback(onSuccess: (RCIMIWPushNotificationLevel? onSuccess) {
+IRCIMIWGetUltraGroupDefaultNotificationLevelCallback? callback = IRCIMIWGetUltraGroupDefaultNotificationLevelCallback(onSuccess: (RCIMIWPushNotificationLevel? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUltraGroupDefaultNotificationLevel(targetId,callback:callback,);
+
+int? ret = await engine?.getUltraGroupDefaultNotificationLevel(targetId, callback:callback);
 //fun_getUltraGroupDefaultNotificationLevel_call
 */
 
@@ -4194,10 +3955,7 @@ getUltraGroupDefaultNotificationLevel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUltraGroupDefaultNotificationLevel(
-        targetId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getUltraGroupDefaultNotificationLevel(targetId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4209,10 +3967,11 @@ getUltraGroupDefaultNotificationLevel(Map arg) async {
 
 /*
 //fun_changeUltraGroupChannelDefaultNotificationLevel_call
-IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback? callback = IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback(onUltraGroupChannelDefaultNotificationLevelChanged: (int? onUltraGroupChannelDefaultNotificationLevelChanged) {
+IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback? callback = IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback(onUltraGroupChannelDefaultNotificationLevelChanged: (int? code) {
     //...
 });
-int? ret = engine?.changeUltraGroupChannelDefaultNotificationLevel(targetId,channelId,level,callback:callback,);
+
+int? ret = await engine?.changeUltraGroupChannelDefaultNotificationLevel(targetId, channelId, level, callback:callback);
 //fun_changeUltraGroupChannelDefaultNotificationLevel_call
 */
 
@@ -4244,12 +4003,9 @@ changeUltraGroupChannelDefaultNotificationLevel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changeUltraGroupChannelDefaultNotificationLevel(
-        targetId,
-        channelId,
-        level,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.changeUltraGroupChannelDefaultNotificationLevel(targetId, channelId, level, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeUltraGroupChannelDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4261,7 +4017,7 @@ changeUltraGroupChannelDefaultNotificationLevel(Map arg) async {
 
 /*
 //fun_loadUltraGroupChannelDefaultNotificationLevel_call
-int? ret = engine?.loadUltraGroupChannelDefaultNotificationLevel(targetId,channelId,);
+int? ret = await engine?.loadUltraGroupChannelDefaultNotificationLevel(targetId, channelId);
 //fun_loadUltraGroupChannelDefaultNotificationLevel_call
 */
 
@@ -4273,10 +4029,7 @@ loadUltraGroupChannelDefaultNotificationLevel(Map arg) async {
 
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadUltraGroupChannelDefaultNotificationLevel(
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadUltraGroupChannelDefaultNotificationLevel(targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupChannelDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4288,12 +4041,13 @@ loadUltraGroupChannelDefaultNotificationLevel(Map arg) async {
 
 /*
 //fun_getUltraGroupChannelDefaultNotificationLevel_call
-IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback? callback = IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback(onSuccess: (RCIMIWPushNotificationLevel? onSuccess) {
+IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback? callback = IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback(onSuccess: (RCIMIWPushNotificationLevel? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getUltraGroupChannelDefaultNotificationLevel(targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getUltraGroupChannelDefaultNotificationLevel(targetId, channelId, callback:callback);
 //fun_getUltraGroupChannelDefaultNotificationLevel_call
 */
 
@@ -4323,11 +4077,9 @@ getUltraGroupChannelDefaultNotificationLevel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getUltraGroupChannelDefaultNotificationLevel(
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.getUltraGroupChannelDefaultNotificationLevel(targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupChannelDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4339,10 +4091,11 @@ getUltraGroupChannelDefaultNotificationLevel(Map arg) async {
 
 /*
 //fun_changePushContentShowStatus_call
-IRCIMIWChangePushContentShowStatusCallback? callback = IRCIMIWChangePushContentShowStatusCallback(onPushContentShowStatusChanged: (int? onPushContentShowStatusChanged) {
+IRCIMIWChangePushContentShowStatusCallback? callback = IRCIMIWChangePushContentShowStatusCallback(onPushContentShowStatusChanged: (int? code) {
     //...
 });
-int? ret = engine?.changePushContentShowStatus(showContent,callback:callback,);
+
+int? ret = await engine?.changePushContentShowStatus(showContent, callback:callback);
 //fun_changePushContentShowStatus_call
 */
 
@@ -4366,10 +4119,7 @@ changePushContentShowStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changePushContentShowStatus(
-        showContent,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.changePushContentShowStatus(showContent, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changePushContentShowStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -4381,10 +4131,11 @@ changePushContentShowStatus(Map arg) async {
 
 /*
 //fun_changePushLanguage_call
-IRCIMIWChangePushLanguageCallback? callback = IRCIMIWChangePushLanguageCallback(onPushLanguageChanged: (int? onPushLanguageChanged) {
+IRCIMIWChangePushLanguageCallback? callback = IRCIMIWChangePushLanguageCallback(onPushLanguageChanged: (int? code) {
     //...
 });
-int? ret = engine?.changePushLanguage(language,callback:callback,);
+
+int? ret = await engine?.changePushLanguage(language, callback:callback);
 //fun_changePushLanguage_call
 */
 
@@ -4407,10 +4158,7 @@ changePushLanguage(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changePushLanguage(
-        language,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.changePushLanguage(language, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changePushLanguage";
   resultCode["code"] = (code ?? -1).toString();
@@ -4422,10 +4170,11 @@ changePushLanguage(Map arg) async {
 
 /*
 //fun_changePushReceiveStatus_call
-IRCIMIWChangePushReceiveStatusCallback? callback = IRCIMIWChangePushReceiveStatusCallback(onPushReceiveStatusChanged: (int? onPushReceiveStatusChanged) {
+IRCIMIWChangePushReceiveStatusCallback? callback = IRCIMIWChangePushReceiveStatusCallback(onPushReceiveStatusChanged: (int? code) {
     //...
 });
-int? ret = engine?.changePushReceiveStatus(receive,callback:callback,);
+
+int? ret = await engine?.changePushReceiveStatus(receive, callback:callback);
 //fun_changePushReceiveStatus_call
 */
 
@@ -4449,10 +4198,7 @@ changePushReceiveStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.changePushReceiveStatus(
-        receive,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.changePushReceiveStatus(receive, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changePushReceiveStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -4464,17 +4210,18 @@ changePushReceiveStatus(Map arg) async {
 
 /*
 //fun_sendGroupMessageToDesignatedUsers_call
-RCIMIWSendGroupMessageToDesignatedUsersCallback? callback = RCIMIWSendGroupMessageToDesignatedUsersCallback(onMessageSaved: (RCIMIWMessage? onMessageSaved) {
+RCIMIWSendGroupMessageToDesignatedUsersCallback? callback = RCIMIWSendGroupMessageToDesignatedUsersCallback(onMessageSaved: (RCIMIWMessage? message) {
     //...
-},onMessageSent: (int? onMessageSent,RCIMIWMessage? onMessageSent) {
+}, onMessageSent: (int? code, RCIMIWMessage? message) {
     //...
 });
-int? ret = engine?.sendGroupMessageToDesignatedUsers(message,userIds,callback:callback,);
+
+int? ret = await engine?.sendGroupMessageToDesignatedUsers(message, userIds, callback:callback);
 //fun_sendGroupMessageToDesignatedUsers_call
 */
 /*
 //fun_loadMessageCount_call
-int? ret = engine?.loadMessageCount(type,targetId,channelId,);
+int? ret = await engine?.loadMessageCount(type, targetId, channelId);
 //fun_loadMessageCount_call
 */
 
@@ -4492,11 +4239,7 @@ loadMessageCount(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadMessageCount(
-        type,
-        targetId,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadMessageCount(type, targetId, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadMessageCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -4508,12 +4251,13 @@ loadMessageCount(Map arg) async {
 
 /*
 //fun_getMessageCount_call
-IRCIMIWGetMessageCountCallback? callback = IRCIMIWGetMessageCountCallback(onSuccess: (int? onSuccess) {
+IRCIMIWGetMessageCountCallback? callback = IRCIMIWGetMessageCountCallback(onSuccess: (int? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getMessageCount(type,targetId,channelId,callback:callback,);
+
+int? ret = await engine?.getMessageCount(type, targetId, channelId, callback:callback);
 //fun_getMessageCount_call
 */
 
@@ -4549,12 +4293,7 @@ getMessageCount(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getMessageCount(
-        type,
-        targetId,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getMessageCount(type, targetId, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getMessageCount";
   resultCode["code"] = (code ?? -1).toString();
@@ -4566,7 +4305,7 @@ getMessageCount(Map arg) async {
 
 /*
 //fun_loadTopConversations_call
-int? ret = engine?.loadTopConversations(conversationTypesInt,channelId,);
+int? ret = await engine?.loadTopConversations(conversationTypesInt, channelId);
 //fun_loadTopConversations_call
 */
 
@@ -4582,10 +4321,7 @@ loadTopConversations(Map arg) async {
     conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
   }
   String? channelId = arg['channelId'];
-  int? code = await IMEngineManager().engine?.loadTopConversations(
-        conversationTypesInt,
-        channelId,
-      );
+  int? code = await IMEngineManager().engine?.loadTopConversations(conversationTypesInt, channelId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadTopConversations";
   resultCode["code"] = (code ?? -1).toString();
@@ -4597,12 +4333,13 @@ loadTopConversations(Map arg) async {
 
 /*
 //fun_getTopConversations_call
-IRCIMIWGetTopConversationsCallback? callback = IRCIMIWGetTopConversationsCallback(onSuccess: (List<RCIMIWConversation>? onSuccess) {
+IRCIMIWGetTopConversationsCallback? callback = IRCIMIWGetTopConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getTopConversations(conversationTypesInt,channelId,callback:callback,);
+
+int? ret = await engine?.getTopConversations(conversationTypesInt, channelId, callback:callback);
 //fun_getTopConversations_call
 */
 
@@ -4643,11 +4380,7 @@ getTopConversations(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getTopConversations(
-        conversationTypesInt,
-        channelId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getTopConversations(conversationTypesInt, channelId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getTopConversations";
   resultCode["code"] = (code ?? -1).toString();
@@ -4659,10 +4392,11 @@ getTopConversations(Map arg) async {
 
 /*
 //fun_syncUltraGroupReadStatus_call
-IRCIMIWSyncUltraGroupReadStatusCallback? callback = IRCIMIWSyncUltraGroupReadStatusCallback(onUltraGroupReadStatusSynced: (int? onUltraGroupReadStatusSynced) {
+IRCIMIWSyncUltraGroupReadStatusCallback? callback = IRCIMIWSyncUltraGroupReadStatusCallback(onUltraGroupReadStatusSynced: (int? code) {
     //...
 });
-int? ret = engine?.syncUltraGroupReadStatus(targetId,channelId,timestamp,callback:callback,);
+
+int? ret = await engine?.syncUltraGroupReadStatus(targetId, channelId, timestamp, callback:callback);
 //fun_syncUltraGroupReadStatus_call
 */
 
@@ -4692,12 +4426,8 @@ syncUltraGroupReadStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.syncUltraGroupReadStatus(
-        targetId,
-        channelId,
-        timestamp,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.syncUltraGroupReadStatus(targetId, channelId, timestamp, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "syncUltraGroupReadStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -4709,7 +4439,7 @@ syncUltraGroupReadStatus(Map arg) async {
 
 /*
 //fun_loadConversationsForAllChannel_call
-int? ret = engine?.loadConversationsForAllChannel(type,targetId,);
+int? ret = await engine?.loadConversationsForAllChannel(type, targetId);
 //fun_loadConversationsForAllChannel_call
 */
 
@@ -4726,10 +4456,7 @@ loadConversationsForAllChannel(Map arg) async {
 
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
-  int? code = await IMEngineManager().engine?.loadConversationsForAllChannel(
-        type,
-        targetId,
-      );
+  int? code = await IMEngineManager().engine?.loadConversationsForAllChannel(type, targetId);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationsForAllChannel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4741,12 +4468,13 @@ loadConversationsForAllChannel(Map arg) async {
 
 /*
 //fun_getConversationsForAllChannel_call
-IRCIMIWGetConversationsForAllChannelCallback? callback = IRCIMIWGetConversationsForAllChannelCallback(onSuccess: (List<RCIMIWConversation>? onSuccess) {
+IRCIMIWGetConversationsForAllChannelCallback? callback = IRCIMIWGetConversationsForAllChannelCallback(onSuccess: (List<RCIMIWConversation>? t) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getConversationsForAllChannel(type,targetId,callback:callback,);
+
+int? ret = await engine?.getConversationsForAllChannel(type, targetId, callback:callback);
 //fun_getConversationsForAllChannel_call
 */
 
@@ -4788,11 +4516,7 @@ getConversationsForAllChannel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.getConversationsForAllChannel(
-        type,
-        targetId,
-        callback: callback,
-      );
+  int? code = await IMEngineManager().engine?.getConversationsForAllChannel(type, targetId, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationsForAllChannel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4804,26 +4528,29 @@ getConversationsForAllChannel(Map arg) async {
 
 /*
 //fun_modifyUltraGroupMessage_call
-IRCIMIWModifyUltraGroupMessageCallback? callback = IRCIMIWModifyUltraGroupMessageCallback(onUltraGroupMessageModified: (int? onUltraGroupMessageModified) {
+IRCIMIWModifyUltraGroupMessageCallback? callback = IRCIMIWModifyUltraGroupMessageCallback(onUltraGroupMessageModified: (int? code) {
     //...
 });
-int? ret = engine?.modifyUltraGroupMessage(messageUId,message,callback:callback,);
+
+int? ret = await engine?.modifyUltraGroupMessage(messageUId, message, callback:callback);
 //fun_modifyUltraGroupMessage_call
 */
 /*
 //fun_recallUltraGroupMessage_call
-IRCIMIWRecallUltraGroupMessageCallback? callback = IRCIMIWRecallUltraGroupMessageCallback(onUltraGroupMessageRecalled: (int? onUltraGroupMessageRecalled) {
+IRCIMIWRecallUltraGroupMessageCallback? callback = IRCIMIWRecallUltraGroupMessageCallback(onUltraGroupMessageRecalled: (int? code) {
     //...
 });
-int? ret = engine?.recallUltraGroupMessage(message,deleteRemote,callback:callback,);
+
+int? ret = await engine?.recallUltraGroupMessage(message, deleteRemote, callback:callback);
 //fun_recallUltraGroupMessage_call
 */
 /*
 //fun_clearUltraGroupMessages_call
-IRCIMIWClearUltraGroupMessagesCallback? callback = IRCIMIWClearUltraGroupMessagesCallback(onUltraGroupMessagesCleared: (int? onUltraGroupMessagesCleared) {
+IRCIMIWClearUltraGroupMessagesCallback? callback = IRCIMIWClearUltraGroupMessagesCallback(onUltraGroupMessagesCleared: (int? code) {
     //...
 });
-int? ret = engine?.clearUltraGroupMessages(targetId,channelId,timestamp,policy,callback:callback,);
+
+int? ret = await engine?.clearUltraGroupMessages(targetId, channelId, timestamp, policy, callback:callback);
 //fun_clearUltraGroupMessages_call
 */
 
@@ -4859,13 +4586,9 @@ clearUltraGroupMessages(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.clearUltraGroupMessages(
-        targetId,
-        channelId,
-        timestamp,
-        policy,
-        callback: callback,
-      );
+  int? code = await IMEngineManager()
+      .engine
+      ?.clearUltraGroupMessages(targetId, channelId, timestamp, policy, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearUltraGroupMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -4877,10 +4600,11 @@ clearUltraGroupMessages(Map arg) async {
 
 /*
 //fun_sendUltraGroupTypingStatus_call
-IRCIMIWSendUltraGroupTypingStatusCallback? callback = IRCIMIWSendUltraGroupTypingStatusCallback(onUltraGroupTypingStatusSent: (int? onUltraGroupTypingStatusSent) {
+IRCIMIWSendUltraGroupTypingStatusCallback? callback = IRCIMIWSendUltraGroupTypingStatusCallback(onUltraGroupTypingStatusSent: (int? code) {
     //...
 });
-int? ret = engine?.sendUltraGroupTypingStatus(targetId,channelId,typingStatus,callback:callback,);
+
+int? ret = await engine?.sendUltraGroupTypingStatus(targetId, channelId, typingStatus, callback:callback);
 //fun_sendUltraGroupTypingStatus_call
 */
 
@@ -4910,12 +4634,8 @@ sendUltraGroupTypingStatus(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.sendUltraGroupTypingStatus(
-        targetId,
-        channelId,
-        typingStatus,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.sendUltraGroupTypingStatus(targetId, channelId, typingStatus, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "sendUltraGroupTypingStatus";
   resultCode["code"] = (code ?? -1).toString();
@@ -4927,10 +4647,11 @@ sendUltraGroupTypingStatus(Map arg) async {
 
 /*
 //fun_clearUltraGroupMessagesForAllChannel_call
-IRCIMIWClearUltraGroupMessagesForAllChannelCallback? callback = IRCIMIWClearUltraGroupMessagesForAllChannelCallback(onUltraGroupMessagesClearedForAllChannel: (int? onUltraGroupMessagesClearedForAllChannel) {
+IRCIMIWClearUltraGroupMessagesForAllChannelCallback? callback = IRCIMIWClearUltraGroupMessagesForAllChannelCallback(onUltraGroupMessagesClearedForAllChannel: (int? code) {
     //...
 });
-int? ret = engine?.clearUltraGroupMessagesForAllChannel(targetId,timestamp,callback:callback,);
+
+int? ret = await engine?.clearUltraGroupMessagesForAllChannel(targetId, timestamp, callback:callback);
 //fun_clearUltraGroupMessagesForAllChannel_call
 */
 
@@ -4960,11 +4681,8 @@ clearUltraGroupMessagesForAllChannel(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.clearUltraGroupMessagesForAllChannel(
-        targetId,
-        timestamp,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.clearUltraGroupMessagesForAllChannel(targetId, timestamp, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearUltraGroupMessagesForAllChannel";
   resultCode["code"] = (code ?? -1).toString();
@@ -4976,25 +4694,79 @@ clearUltraGroupMessagesForAllChannel(Map arg) async {
 
 /*
 //fun_loadBatchRemoteUltraGroupMessages_call
-int? ret = engine?.loadBatchRemoteUltraGroupMessages(messages,);
+int? ret = await engine?.loadBatchRemoteUltraGroupMessages(messages);
 //fun_loadBatchRemoteUltraGroupMessages_call
 */
 /*
 //fun_getBatchRemoteUltraGroupMessages_call
-IRCIMIWGetBatchRemoteUltraGroupMessagesCallback? callback = IRCIMIWGetBatchRemoteUltraGroupMessagesCallback(onSuccess: (List<RCIMIWMessage>? onSuccess,List<RCIMIWMessage>? onSuccess) {
+IRCIMIWGetBatchRemoteUltraGroupMessagesCallback? callback = IRCIMIWGetBatchRemoteUltraGroupMessagesCallback(onSuccess: (List<RCIMIWMessage>? matchedMessages, List<RCIMIWMessage>? notMatchedMessages) {
     //...
-},onError: (int? onError) {
+}, onError: (int? code) {
     //...
 });
-int? ret = engine?.getBatchRemoteUltraGroupMessages(messages,callback:callback,);
+
+int? ret = await engine?.getBatchRemoteUltraGroupMessages(messages, callback:callback);
 //fun_getBatchRemoteUltraGroupMessages_call
 */
+
+getBatchRemoteUltraGroupMessages(Map arg) async {
+  if (arg['messages'] == null) {
+    RCIWToast.showToast("messages 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List<RCIMIWMessage> messages = arg['messages'];
+  IRCIMIWGetBatchRemoteUltraGroupMessagesCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetBatchRemoteUltraGroupMessagesCallback(
+        onSuccess: (List<RCIMIWMessage>? matchedMessages, List<RCIMIWMessage>? notMatchedMessages) {
+      List matchedMessagesJson = [];
+      if (matchedMessages != null) {
+        for (var temp in matchedMessages) {
+          matchedMessagesJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      List notMatchedMessagesJson = [];
+      if (notMatchedMessages != null) {
+        for (var temp in notMatchedMessages) {
+          notMatchedMessagesJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      Map<String, String> arg = {};
+      arg["listener"] = "getBatchRemoteUltraGroupMessages-onSuccess";
+      arg["matchedMessages"] = matchedMessagesJson.toString();
+      arg["notMatchedMessages"] = notMatchedMessagesJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onError: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "getBatchRemoteUltraGroupMessages-onError";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.getBatchRemoteUltraGroupMessages(messages, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getBatchRemoteUltraGroupMessages";
+  resultCode["code"] = (code ?? -1).toString();
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
 /*
 //fun_updateUltraGroupMessageExpansion_call
-IRCIMIWUpdateUltraGroupMessageExpansionCallback? callback = IRCIMIWUpdateUltraGroupMessageExpansionCallback(onUltraGroupMessageExpansionUpdated: (int? onUltraGroupMessageExpansionUpdated) {
+IRCIMIWUpdateUltraGroupMessageExpansionCallback? callback = IRCIMIWUpdateUltraGroupMessageExpansionCallback(onUltraGroupMessageExpansionUpdated: (int? code) {
     //...
 });
-int? ret = engine?.updateUltraGroupMessageExpansion(messageUId,expansion,callback:callback,);
+
+int? ret = await engine?.updateUltraGroupMessageExpansion(messageUId, expansion, callback:callback);
 //fun_updateUltraGroupMessageExpansion_call
 */
 
@@ -5032,11 +4804,8 @@ updateUltraGroupMessageExpansion(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.updateUltraGroupMessageExpansion(
-        messageUId,
-        expansion,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.updateUltraGroupMessageExpansion(messageUId, expansion, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "updateUltraGroupMessageExpansion";
   resultCode["code"] = (code ?? -1).toString();
@@ -5048,10 +4817,11 @@ updateUltraGroupMessageExpansion(Map arg) async {
 
 /*
 //fun_removeUltraGroupMessageExpansionForKeys_call
-IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback? callback = IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback(onUltraGroupMessageExpansionForKeysRemoved: (int? onUltraGroupMessageExpansionForKeysRemoved) {
+IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback? callback = IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback(onUltraGroupMessageExpansionForKeysRemoved: (int? code) {
     //...
 });
-int? ret = engine?.removeUltraGroupMessageExpansionForKeys(messageUId,keys,callback:callback,);
+
+int? ret = await engine?.removeUltraGroupMessageExpansionForKeys(messageUId, keys, callback:callback);
 //fun_removeUltraGroupMessageExpansionForKeys_call
 */
 
@@ -5081,11 +4851,8 @@ removeUltraGroupMessageExpansionForKeys(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.removeUltraGroupMessageExpansionForKeys(
-        messageUId,
-        keys,
-        callback: callback,
-      );
+  int? code =
+      await IMEngineManager().engine?.removeUltraGroupMessageExpansionForKeys(messageUId, keys, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeUltraGroupMessageExpansionForKeys";
   resultCode["code"] = (code ?? -1).toString();
@@ -5097,7 +4864,7 @@ removeUltraGroupMessageExpansionForKeys(Map arg) async {
 
 /*
 //fun_changeLogLevel_call
-int? ret = engine?.changeLogLevel(level,);
+int? ret = await engine?.changeLogLevel(level);
 //fun_changeLogLevel_call
 */
 
@@ -5108,9 +4875,7 @@ changeLogLevel(Map arg) async {
   }
 
   RCIMIWLogLevel level = RCIMIWLogLevel.values[int.parse(arg['level'])];
-  int? code = await IMEngineManager().engine?.changeLogLevel(
-        level,
-      );
+  int? code = await IMEngineManager().engine?.changeLogLevel(level);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeLogLevel";
   resultCode["code"] = (code ?? -1).toString();

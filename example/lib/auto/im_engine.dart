@@ -9,12 +9,7 @@ class IMEngineManager {
   factory IMEngineManager() => _instance;
 
   setEngineListener() {
-    engine?.onMessageReceived = (
-      RCIMIWMessage? message,
-      int? left,
-      bool? offline,
-      bool? hasPackage,
-    ) {
+    engine?.onMessageReceived = (RCIMIWMessage? message, int? left, bool? offline, bool? hasPackage) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageReceived";
       arg["message"] = formatJson(message?.toJson());
@@ -26,15 +21,13 @@ class IMEngineManager {
     };
 /*
 //callback_onMessageReceived_call
-engine?.onMessageReceived = (RCIMIWMessage? message,int? left,bool? offline,bool? hasPackage,) {
+engine?.onMessageReceived = (RCIMIWMessage? message, int? left, bool? offline, bool? hasPackage) {
     //...
 };
 //callback_onMessageReceived_call
 */
 
-    engine?.onConnectionStatusChanged = (
-      RCIMIWConnectionStatus? status,
-    ) {
+    engine?.onConnectionStatusChanged = (RCIMIWConnectionStatus? status) {
       Map<String, String> arg = {};
       arg["listener"] = "onConnectionStatusChanged";
       arg["status"] = status.toString();
@@ -43,18 +36,14 @@ engine?.onMessageReceived = (RCIMIWMessage? message,int? left,bool? offline,bool
     };
 /*
 //callback_onConnectionStatusChanged_call
-engine?.onConnectionStatusChanged = (RCIMIWConnectionStatus? status,) {
+engine?.onConnectionStatusChanged = (RCIMIWConnectionStatus? status) {
     //...
 };
 //callback_onConnectionStatusChanged_call
 */
 
-    engine?.onConversationTopStatusSynced = (
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      bool? top,
-    ) {
+    engine?.onConversationTopStatusSynced =
+        (RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTopStatusSynced";
       arg["type"] = type.toString();
@@ -66,15 +55,13 @@ engine?.onConnectionStatusChanged = (RCIMIWConnectionStatus? status,) {
     };
 /*
 //callback_onConversationTopStatusSynced_call
-engine?.onConversationTopStatusSynced = (RCIMIWConversationType? type,String? targetId,String? channelId,bool? top,) {
+engine?.onConversationTopStatusSynced = (RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
     //...
 };
 //callback_onConversationTopStatusSynced_call
 */
 
-    engine?.onRemoteMessageRecalled = (
-      RCIMIWMessage? message,
-    ) {
+    engine?.onRemoteMessageRecalled = (RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteMessageRecalled";
       arg["message"] = formatJson(message?.toJson());
@@ -83,17 +70,13 @@ engine?.onConversationTopStatusSynced = (RCIMIWConversationType? type,String? ta
     };
 /*
 //callback_onRemoteMessageRecalled_call
-engine?.onRemoteMessageRecalled = (RCIMIWMessage? message,) {
+engine?.onRemoteMessageRecalled = (RCIMIWMessage? message) {
     //...
 };
 //callback_onRemoteMessageRecalled_call
 */
 
-    engine?.onPrivateReadReceiptReceived = (
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
+    engine?.onPrivateReadReceiptReceived = (String? targetId, String? channelId, int? timestamp) {
       Map<String, String> arg = {};
       arg["listener"] = "onPrivateReadReceiptReceived";
       arg["targetId"] = targetId ?? "";
@@ -104,16 +87,13 @@ engine?.onRemoteMessageRecalled = (RCIMIWMessage? message,) {
     };
 /*
 //callback_onPrivateReadReceiptReceived_call
-engine?.onPrivateReadReceiptReceived = (String? targetId,String? channelId,int? timestamp,) {
+engine?.onPrivateReadReceiptReceived = (String? targetId, String? channelId, int? timestamp) {
     //...
 };
 //callback_onPrivateReadReceiptReceived_call
 */
 
-    engine?.onRemoteMessageExpansionUpdated = (
-      Map? expansion,
-      RCIMIWMessage? message,
-    ) {
+    engine?.onRemoteMessageExpansionUpdated = (Map? expansion, RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteMessageExpansionUpdated";
       arg["expansion"] = expansion.toString();
@@ -123,16 +103,13 @@ engine?.onPrivateReadReceiptReceived = (String? targetId,String? channelId,int? 
     };
 /*
 //callback_onRemoteMessageExpansionUpdated_call
-engine?.onRemoteMessageExpansionUpdated = (Map? expansion,RCIMIWMessage? message,) {
+engine?.onRemoteMessageExpansionUpdated = (Map? expansion, RCIMIWMessage? message) {
     //...
 };
 //callback_onRemoteMessageExpansionUpdated_call
 */
 
-    engine?.onRemoteMessageExpansionForKeyRemoved = (
-      RCIMIWMessage? message,
-      List<String>? keys,
-    ) {
+    engine?.onRemoteMessageExpansionForKeyRemoved = (RCIMIWMessage? message, List<String>? keys) {
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteMessageExpansionForKeyRemoved";
       arg["message"] = formatJson(message?.toJson());
@@ -142,16 +119,13 @@ engine?.onRemoteMessageExpansionUpdated = (Map? expansion,RCIMIWMessage? message
     };
 /*
 //callback_onRemoteMessageExpansionForKeyRemoved_call
-engine?.onRemoteMessageExpansionForKeyRemoved = (RCIMIWMessage? message,List<String>? keys,) {
+engine?.onRemoteMessageExpansionForKeyRemoved = (RCIMIWMessage? message, List<String>? keys) {
     //...
 };
 //callback_onRemoteMessageExpansionForKeyRemoved_call
 */
 
-    engine?.onChatRoomMemberChanged = (
-      String? targetId,
-      List<RCIMIWChatRoomMemberAction>? actions,
-    ) {
+    engine?.onChatRoomMemberChanged = (String? targetId, List<RCIMIWChatRoomMemberAction>? actions) {
       List actionsJson = [];
       if (actions != null) {
         for (var temp in actions) {
@@ -168,18 +142,14 @@ engine?.onRemoteMessageExpansionForKeyRemoved = (RCIMIWMessage? message,List<Str
     };
 /*
 //callback_onChatRoomMemberChanged_call
-engine?.onChatRoomMemberChanged = (String? targetId,List<RCIMIWChatRoomMemberAction>? actions,) {
+engine?.onChatRoomMemberChanged = (String? targetId, List<RCIMIWChatRoomMemberAction>? actions) {
     //...
 };
 //callback_onChatRoomMemberChanged_call
 */
 
-    engine?.onTypingStatusChanged = (
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      List<RCIMIWTypingStatus>? userTypingStatus,
-    ) {
+    engine?.onTypingStatusChanged = (RCIMIWConversationType? type, String? targetId, String? channelId,
+        List<RCIMIWTypingStatus>? userTypingStatus) {
       List userTypingStatusJson = [];
       if (userTypingStatus != null) {
         for (var temp in userTypingStatus) {
@@ -198,17 +168,14 @@ engine?.onChatRoomMemberChanged = (String? targetId,List<RCIMIWChatRoomMemberAct
     };
 /*
 //callback_onTypingStatusChanged_call
-engine?.onTypingStatusChanged = (RCIMIWConversationType? type,String? targetId,String? channelId,List<RCIMIWTypingStatus>? userTypingStatus,) {
+engine?.onTypingStatusChanged = (RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWTypingStatus>? userTypingStatus) {
     //...
 };
 //callback_onTypingStatusChanged_call
 */
 
-    engine?.onConversationReadStatusSyncMessageReceived = (
-      RCIMIWConversationType? type,
-      String? targetId,
-      int? timestamp,
-    ) {
+    engine?.onConversationReadStatusSyncMessageReceived =
+        (RCIMIWConversationType? type, String? targetId, int? timestamp) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationReadStatusSyncMessageReceived";
       arg["type"] = type.toString();
@@ -219,15 +186,13 @@ engine?.onTypingStatusChanged = (RCIMIWConversationType? type,String? targetId,S
     };
 /*
 //callback_onConversationReadStatusSyncMessageReceived_call
-engine?.onConversationReadStatusSyncMessageReceived = (RCIMIWConversationType? type,String? targetId,int? timestamp,) {
+engine?.onConversationReadStatusSyncMessageReceived = (RCIMIWConversationType? type, String? targetId, int? timestamp) {
     //...
 };
 //callback_onConversationReadStatusSyncMessageReceived_call
 */
 
-    engine?.onChatRoomEntriesSynced = (
-      String? roomId,
-    ) {
+    engine?.onChatRoomEntriesSynced = (String? roomId) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntriesSynced";
       arg["roomId"] = roomId ?? "";
@@ -236,17 +201,14 @@ engine?.onConversationReadStatusSyncMessageReceived = (RCIMIWConversationType? t
     };
 /*
 //callback_onChatRoomEntriesSynced_call
-engine?.onChatRoomEntriesSynced = (String? roomId,) {
+engine?.onChatRoomEntriesSynced = (String? roomId) {
     //...
 };
 //callback_onChatRoomEntriesSynced_call
 */
 
-    engine?.onChatRoomEntriesChanged = (
-      RCIMIWChatRoomEntriesOperationType? operationType,
-      String? roomId,
-      Map? entries,
-    ) {
+    engine?.onChatRoomEntriesChanged =
+        (RCIMIWChatRoomEntriesOperationType? operationType, String? roomId, Map? entries) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntriesChanged";
       arg["operationType"] = operationType.toString();
@@ -257,15 +219,13 @@ engine?.onChatRoomEntriesSynced = (String? roomId,) {
     };
 /*
 //callback_onChatRoomEntriesChanged_call
-engine?.onChatRoomEntriesChanged = (RCIMIWChatRoomEntriesOperationType? operationType,String? roomId,Map? entries,) {
+engine?.onChatRoomEntriesChanged = (RCIMIWChatRoomEntriesOperationType? operationType, String? roomId, Map? entries) {
     //...
 };
 //callback_onChatRoomEntriesChanged_call
 */
 
-    engine?.onRemoteUltraGroupMessageExpansionUpdated = (
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onRemoteUltraGroupMessageExpansionUpdated = (List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -281,15 +241,13 @@ engine?.onChatRoomEntriesChanged = (RCIMIWChatRoomEntriesOperationType? operatio
     };
 /*
 //callback_onRemoteUltraGroupMessageExpansionUpdated_call
-engine?.onRemoteUltraGroupMessageExpansionUpdated = (List<RCIMIWMessage>? messages,) {
+engine?.onRemoteUltraGroupMessageExpansionUpdated = (List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onRemoteUltraGroupMessageExpansionUpdated_call
 */
 
-    engine?.onRemoteUltraGroupMessageModified = (
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onRemoteUltraGroupMessageModified = (List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -305,15 +263,13 @@ engine?.onRemoteUltraGroupMessageExpansionUpdated = (List<RCIMIWMessage>? messag
     };
 /*
 //callback_onRemoteUltraGroupMessageModified_call
-engine?.onRemoteUltraGroupMessageModified = (List<RCIMIWMessage>? messages,) {
+engine?.onRemoteUltraGroupMessageModified = (List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onRemoteUltraGroupMessageModified_call
 */
 
-    engine?.onRemoteUltraGroupMessageRecalled = (
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onRemoteUltraGroupMessageRecalled = (List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -329,17 +285,13 @@ engine?.onRemoteUltraGroupMessageModified = (List<RCIMIWMessage>? messages,) {
     };
 /*
 //callback_onRemoteUltraGroupMessageRecalled_call
-engine?.onRemoteUltraGroupMessageRecalled = (List<RCIMIWMessage>? messages,) {
+engine?.onRemoteUltraGroupMessageRecalled = (List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onRemoteUltraGroupMessageRecalled_call
 */
 
-    engine?.onUltraGroupReadTimeReceived = (
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
+    engine?.onUltraGroupReadTimeReceived = (String? targetId, String? channelId, int? timestamp) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupReadTimeReceived";
       arg["targetId"] = targetId ?? "";
@@ -350,15 +302,13 @@ engine?.onRemoteUltraGroupMessageRecalled = (List<RCIMIWMessage>? messages,) {
     };
 /*
 //callback_onUltraGroupReadTimeReceived_call
-engine?.onUltraGroupReadTimeReceived = (String? targetId,String? channelId,int? timestamp,) {
+engine?.onUltraGroupReadTimeReceived = (String? targetId, String? channelId, int? timestamp) {
     //...
 };
 //callback_onUltraGroupReadTimeReceived_call
 */
 
-    engine?.onUltraGroupTypingStatusChanged = (
-      List<RCIMIWUltraGroupTypingStatusInfo>? info,
-    ) {
+    engine?.onUltraGroupTypingStatusChanged = (List<RCIMIWUltraGroupTypingStatusInfo>? info) {
       List infoJson = [];
       if (info != null) {
         for (var temp in info) {
@@ -374,15 +324,13 @@ engine?.onUltraGroupReadTimeReceived = (String? targetId,String? channelId,int? 
     };
 /*
 //callback_onUltraGroupTypingStatusChanged_call
-engine?.onUltraGroupTypingStatusChanged = (List<RCIMIWUltraGroupTypingStatusInfo>? info,) {
+engine?.onUltraGroupTypingStatusChanged = (List<RCIMIWUltraGroupTypingStatusInfo>? info) {
     //...
 };
 //callback_onUltraGroupTypingStatusChanged_call
 */
 
-    engine?.onMessageBlocked = (
-      RCIMIWBlockedMessageInfo? info,
-    ) {
+    engine?.onMessageBlocked = (RCIMIWBlockedMessageInfo? info) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageBlocked";
       arg["info"] = formatJson(info?.toJson());
@@ -391,16 +339,13 @@ engine?.onUltraGroupTypingStatusChanged = (List<RCIMIWUltraGroupTypingStatusInfo
     };
 /*
 //callback_onMessageBlocked_call
-engine?.onMessageBlocked = (RCIMIWBlockedMessageInfo? info,) {
+engine?.onMessageBlocked = (RCIMIWBlockedMessageInfo? info) {
     //...
 };
 //callback_onMessageBlocked_call
 */
 
-    engine?.onChatRoomStatusChanged = (
-      String? targetId,
-      RCIMIWChatRoomStatus? status,
-    ) {
+    engine?.onChatRoomStatusChanged = (String? targetId, RCIMIWChatRoomStatus? status) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomStatusChanged";
       arg["targetId"] = targetId ?? "";
@@ -410,16 +355,13 @@ engine?.onMessageBlocked = (RCIMIWBlockedMessageInfo? info,) {
     };
 /*
 //callback_onChatRoomStatusChanged_call
-engine?.onChatRoomStatusChanged = (String? targetId,RCIMIWChatRoomStatus? status,) {
+engine?.onChatRoomStatusChanged = (String? targetId, RCIMIWChatRoomStatus? status) {
     //...
 };
 //callback_onChatRoomStatusChanged_call
 */
 
-    engine?.onGroupMessageReadReceiptRequestReceived = (
-      String? targetId,
-      String? messageUId,
-    ) {
+    engine?.onGroupMessageReadReceiptRequestReceived = (String? targetId, String? messageUId) {
       Map<String, String> arg = {};
       arg["listener"] = "onGroupMessageReadReceiptRequestReceived";
       arg["targetId"] = targetId ?? "";
@@ -429,17 +371,13 @@ engine?.onChatRoomStatusChanged = (String? targetId,RCIMIWChatRoomStatus? status
     };
 /*
 //callback_onGroupMessageReadReceiptRequestReceived_call
-engine?.onGroupMessageReadReceiptRequestReceived = (String? targetId,String? messageUId,) {
+engine?.onGroupMessageReadReceiptRequestReceived = (String? targetId, String? messageUId) {
     //...
 };
 //callback_onGroupMessageReadReceiptRequestReceived_call
 */
 
-    engine?.onGroupMessageReadReceiptResponseReceived = (
-      String? targetId,
-      String? messageUId,
-      Map? respondUserIds,
-    ) {
+    engine?.onGroupMessageReadReceiptResponseReceived = (String? targetId, String? messageUId, Map? respondUserIds) {
       Map<String, String> arg = {};
       arg["listener"] = "onGroupMessageReadReceiptResponseReceived";
       arg["targetId"] = targetId ?? "";
@@ -450,16 +388,13 @@ engine?.onGroupMessageReadReceiptRequestReceived = (String? targetId,String? mes
     };
 /*
 //callback_onGroupMessageReadReceiptResponseReceived_call
-engine?.onGroupMessageReadReceiptResponseReceived = (String? targetId,String? messageUId,Map? respondUserIds,) {
+engine?.onGroupMessageReadReceiptResponseReceived = (String? targetId, String? messageUId, Map? respondUserIds) {
     //...
 };
 //callback_onGroupMessageReadReceiptResponseReceived_call
 */
 
-    engine?.onConnected = (
-      int? code,
-      String? userId,
-    ) {
+    engine?.onConnected = (int? code, String? userId) {
       Map<String, String> arg = {};
       arg["listener"] = "onConnected";
       arg["code"] = code.toString();
@@ -469,15 +404,13 @@ engine?.onGroupMessageReadReceiptResponseReceived = (String? targetId,String? me
     };
 /*
 //callback_onConnected_call
-engine?.onConnected = (int? code,String? userId,) {
+engine?.onConnected = (int? code, String? userId) {
     //...
 };
 //callback_onConnected_call
 */
 
-    engine?.onDatabaseOpened = (
-      int? code,
-    ) {
+    engine?.onDatabaseOpened = (int? code) {
       Map<String, String> arg = {};
       arg["listener"] = "onDatabaseOpened";
       arg["code"] = code.toString();
@@ -486,19 +419,14 @@ engine?.onConnected = (int? code,String? userId,) {
     };
 /*
 //callback_onDatabaseOpened_call
-engine?.onDatabaseOpened = (int? code,) {
+engine?.onDatabaseOpened = (int? code) {
     //...
 };
 //callback_onDatabaseOpened_call
 */
 
-    engine?.onConversationLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWConversation? conversation,
-    ) {
+    engine?.onConversationLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId,
+        RCIMIWConversation? conversation) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationLoaded";
       arg["code"] = code.toString();
@@ -511,20 +439,14 @@ engine?.onDatabaseOpened = (int? code,) {
     };
 /*
 //callback_onConversationLoaded_call
-engine?.onConversationLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,RCIMIWConversation? conversation,) {
+engine?.onConversationLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWConversation? conversation) {
     //...
 };
 //callback_onConversationLoaded_call
 */
 
-    engine?.onConversationsLoaded = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      int? startTime,
-      int? count,
-      List<RCIMIWConversation>? conversations,
-    ) {
+    engine?.onConversationsLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId,
+        int? startTime, int? count, List<RCIMIWConversation>? conversations) {
       List conversationsJson = [];
       if (conversations != null) {
         for (var temp in conversations) {
@@ -545,18 +467,13 @@ engine?.onConversationLoaded = (int? code,RCIMIWConversationType? type,String? t
     };
 /*
 //callback_onConversationsLoaded_call
-engine?.onConversationsLoaded = (int? code,List<RCIMIWConversationType>? conversationTypes,String? channelId,int? startTime,int? count,List<RCIMIWConversation>? conversations,) {
+engine?.onConversationsLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, int? startTime, int? count, List<RCIMIWConversation>? conversations) {
     //...
 };
 //callback_onConversationsLoaded_call
 */
 
-    engine?.onConversationRemoved = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-    ) {
+    engine?.onConversationRemoved = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationRemoved";
       arg["code"] = code.toString();
@@ -568,17 +485,13 @@ engine?.onConversationsLoaded = (int? code,List<RCIMIWConversationType>? convers
     };
 /*
 //callback_onConversationRemoved_call
-engine?.onConversationRemoved = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,) {
+engine?.onConversationRemoved = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId) {
     //...
 };
 //callback_onConversationRemoved_call
 */
 
-    engine?.onConversationsRemoved = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-    ) {
+    engine?.onConversationsRemoved = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationsRemoved";
       arg["code"] = code.toString();
@@ -589,17 +502,13 @@ engine?.onConversationRemoved = (int? code,RCIMIWConversationType? type,String? 
     };
 /*
 //callback_onConversationsRemoved_call
-engine?.onConversationsRemoved = (int? code,List<RCIMIWConversationType>? conversationTypes,String? channelId,) {
+engine?.onConversationsRemoved = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId) {
     //...
 };
 //callback_onConversationsRemoved_call
 */
 
-    engine?.onTotalUnreadCountLoaded = (
-      int? code,
-      String? channelId,
-      int? count,
-    ) {
+    engine?.onTotalUnreadCountLoaded = (int? code, String? channelId, int? count) {
       Map<String, String> arg = {};
       arg["listener"] = "onTotalUnreadCountLoaded";
       arg["code"] = code.toString();
@@ -610,19 +519,14 @@ engine?.onConversationsRemoved = (int? code,List<RCIMIWConversationType>? conver
     };
 /*
 //callback_onTotalUnreadCountLoaded_call
-engine?.onTotalUnreadCountLoaded = (int? code,String? channelId,int? count,) {
+engine?.onTotalUnreadCountLoaded = (int? code, String? channelId, int? count) {
     //...
 };
 //callback_onTotalUnreadCountLoaded_call
 */
 
-    engine?.onUnreadCountLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? count,
-    ) {
+    engine?.onUnreadCountLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
       Map<String, String> arg = {};
       arg["listener"] = "onUnreadCountLoaded";
       arg["code"] = code.toString();
@@ -635,19 +539,14 @@ engine?.onTotalUnreadCountLoaded = (int? code,String? channelId,int? count,) {
     };
 /*
 //callback_onUnreadCountLoaded_call
-engine?.onUnreadCountLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,int? count,) {
+engine?.onUnreadCountLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
     //...
 };
 //callback_onUnreadCountLoaded_call
 */
 
-    engine?.onUnreadCountByConversationTypesLoaded = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      bool? contain,
-      int? count,
-    ) {
+    engine?.onUnreadCountByConversationTypesLoaded =
+        (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, bool? contain, int? count) {
       Map<String, String> arg = {};
       arg["listener"] = "onUnreadCountByConversationTypesLoaded";
       arg["code"] = code.toString();
@@ -660,19 +559,14 @@ engine?.onUnreadCountLoaded = (int? code,RCIMIWConversationType? type,String? ta
     };
 /*
 //callback_onUnreadCountByConversationTypesLoaded_call
-engine?.onUnreadCountByConversationTypesLoaded = (int? code,List<RCIMIWConversationType>? conversationTypes,String? channelId,bool? contain,int? count,) {
+engine?.onUnreadCountByConversationTypesLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, bool? contain, int? count) {
     //...
 };
 //callback_onUnreadCountByConversationTypesLoaded_call
 */
 
-    engine?.onUnreadMentionedCountLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? count,
-    ) {
+    engine?.onUnreadMentionedCountLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
       Map<String, String> arg = {};
       arg["listener"] = "onUnreadMentionedCountLoaded";
       arg["code"] = code.toString();
@@ -685,16 +579,13 @@ engine?.onUnreadCountByConversationTypesLoaded = (int? code,List<RCIMIWConversat
     };
 /*
 //callback_onUnreadMentionedCountLoaded_call
-engine?.onUnreadMentionedCountLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,int? count,) {
+engine?.onUnreadMentionedCountLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
     //...
 };
 //callback_onUnreadMentionedCountLoaded_call
 */
 
-    engine?.onUltraGroupAllUnreadCountLoaded = (
-      int? code,
-      int? count,
-    ) {
+    engine?.onUltraGroupAllUnreadCountLoaded = (int? code, int? count) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupAllUnreadCountLoaded";
       arg["code"] = code.toString();
@@ -704,16 +595,13 @@ engine?.onUnreadMentionedCountLoaded = (int? code,RCIMIWConversationType? type,S
     };
 /*
 //callback_onUltraGroupAllUnreadCountLoaded_call
-engine?.onUltraGroupAllUnreadCountLoaded = (int? code,int? count,) {
+engine?.onUltraGroupAllUnreadCountLoaded = (int? code, int? count) {
     //...
 };
 //callback_onUltraGroupAllUnreadCountLoaded_call
 */
 
-    engine?.onUltraGroupAllUnreadMentionedCountLoaded = (
-      int? code,
-      int? count,
-    ) {
+    engine?.onUltraGroupAllUnreadMentionedCountLoaded = (int? code, int? count) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupAllUnreadMentionedCountLoaded";
       arg["code"] = code.toString();
@@ -723,7 +611,7 @@ engine?.onUltraGroupAllUnreadCountLoaded = (int? code,int? count,) {
     };
 /*
 //callback_onUltraGroupAllUnreadMentionedCountLoaded_call
-engine?.onUltraGroupAllUnreadMentionedCountLoaded = (int? code,int? count,) {
+engine?.onUltraGroupAllUnreadMentionedCountLoaded = (int? code, int? count) {
     //...
 };
 //callback_onUltraGroupAllUnreadMentionedCountLoaded_call
@@ -743,13 +631,8 @@ engine?.onUltraGroupConversationsSynced = () {
 //callback_onUltraGroupConversationsSynced_call
 */
 
-    engine?.onUnreadCountCleared = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
+    engine?.onUnreadCountCleared =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
       Map<String, String> arg = {};
       arg["listener"] = "onUnreadCountCleared";
       arg["code"] = code.toString();
@@ -762,19 +645,14 @@ engine?.onUltraGroupConversationsSynced = () {
     };
 /*
 //callback_onUnreadCountCleared_call
-engine?.onUnreadCountCleared = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,int? timestamp,) {
+engine?.onUnreadCountCleared = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
     //...
 };
 //callback_onUnreadCountCleared_call
 */
 
-    engine?.onDraftMessageSaved = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      String? draft,
-    ) {
+    engine?.onDraftMessageSaved =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? draft) {
       Map<String, String> arg = {};
       arg["listener"] = "onDraftMessageSaved";
       arg["code"] = code.toString();
@@ -787,18 +665,13 @@ engine?.onUnreadCountCleared = (int? code,RCIMIWConversationType? type,String? t
     };
 /*
 //callback_onDraftMessageSaved_call
-engine?.onDraftMessageSaved = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,String? draft,) {
+engine?.onDraftMessageSaved = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? draft) {
     //...
 };
 //callback_onDraftMessageSaved_call
 */
 
-    engine?.onDraftMessageCleared = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-    ) {
+    engine?.onDraftMessageCleared = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId) {
       Map<String, String> arg = {};
       arg["listener"] = "onDraftMessageCleared";
       arg["code"] = code.toString();
@@ -810,19 +683,14 @@ engine?.onDraftMessageSaved = (int? code,RCIMIWConversationType? type,String? ta
     };
 /*
 //callback_onDraftMessageCleared_call
-engine?.onDraftMessageCleared = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,) {
+engine?.onDraftMessageCleared = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId) {
     //...
 };
 //callback_onDraftMessageCleared_call
 */
 
-    engine?.onDraftMessageLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      String? draft,
-    ) {
+    engine?.onDraftMessageLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? draft) {
       Map<String, String> arg = {};
       arg["listener"] = "onDraftMessageLoaded";
       arg["code"] = code.toString();
@@ -835,18 +703,14 @@ engine?.onDraftMessageCleared = (int? code,RCIMIWConversationType? type,String? 
     };
 /*
 //callback_onDraftMessageLoaded_call
-engine?.onDraftMessageLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,String? draft,) {
+engine?.onDraftMessageLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? draft) {
     //...
 };
 //callback_onDraftMessageLoaded_call
 */
 
-    engine?.onBlockedConversationsLoaded = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      List<RCIMIWConversation>? conversations,
-    ) {
+    engine?.onBlockedConversationsLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes,
+        String? channelId, List<RCIMIWConversation>? conversations) {
       List conversationsJson = [];
       if (conversations != null) {
         for (var temp in conversations) {
@@ -865,19 +729,14 @@ engine?.onDraftMessageLoaded = (int? code,RCIMIWConversationType? type,String? t
     };
 /*
 //callback_onBlockedConversationsLoaded_call
-engine?.onBlockedConversationsLoaded = (int? code,List<RCIMIWConversationType>? conversationTypes,String? channelId,List<RCIMIWConversation>? conversations,) {
+engine?.onBlockedConversationsLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, List<RCIMIWConversation>? conversations) {
     //...
 };
 //callback_onBlockedConversationsLoaded_call
 */
 
-    engine?.onConversationTopStatusChanged = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      bool? top,
-    ) {
+    engine?.onConversationTopStatusChanged =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTopStatusChanged";
       arg["code"] = code.toString();
@@ -890,19 +749,14 @@ engine?.onBlockedConversationsLoaded = (int? code,List<RCIMIWConversationType>? 
     };
 /*
 //callback_onConversationTopStatusChanged_call
-engine?.onConversationTopStatusChanged = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,bool? top,) {
+engine?.onConversationTopStatusChanged = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
     //...
 };
 //callback_onConversationTopStatusChanged_call
 */
 
-    engine?.onConversationTopStatusLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      bool? top,
-    ) {
+    engine?.onConversationTopStatusLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTopStatusLoaded";
       arg["code"] = code.toString();
@@ -915,19 +769,14 @@ engine?.onConversationTopStatusChanged = (int? code,RCIMIWConversationType? type
     };
 /*
 //callback_onConversationTopStatusLoaded_call
-engine?.onConversationTopStatusLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,bool? top,) {
+engine?.onConversationTopStatusLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
     //...
 };
 //callback_onConversationTopStatusLoaded_call
 */
 
-    engine?.onConversationReadStatusSynced = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
+    engine?.onConversationReadStatusSynced =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationReadStatusSynced";
       arg["code"] = code.toString();
@@ -940,15 +789,13 @@ engine?.onConversationTopStatusLoaded = (int? code,RCIMIWConversationType? type,
     };
 /*
 //callback_onConversationReadStatusSynced_call
-engine?.onConversationReadStatusSynced = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,int? timestamp,) {
+engine?.onConversationReadStatusSynced = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
     //...
 };
 //callback_onConversationReadStatusSynced_call
 */
 
-    engine?.onMessageAttached = (
-      RCIMIWMessage? message,
-    ) {
+    engine?.onMessageAttached = (RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageAttached";
       arg["message"] = formatJson(message?.toJson());
@@ -957,16 +804,13 @@ engine?.onConversationReadStatusSynced = (int? code,RCIMIWConversationType? type
     };
 /*
 //callback_onMessageAttached_call
-engine?.onMessageAttached = (RCIMIWMessage? message,) {
+engine?.onMessageAttached = (RCIMIWMessage? message) {
     //...
 };
 //callback_onMessageAttached_call
 */
 
-    engine?.onMessageSent = (
-      int? code,
-      RCIMIWMessage? message,
-    ) {
+    engine?.onMessageSent = (int? code, RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageSent";
       arg["code"] = code.toString();
@@ -976,15 +820,13 @@ engine?.onMessageAttached = (RCIMIWMessage? message,) {
     };
 /*
 //callback_onMessageSent_call
-engine?.onMessageSent = (int? code,RCIMIWMessage? message,) {
+engine?.onMessageSent = (int? code, RCIMIWMessage? message) {
     //...
 };
 //callback_onMessageSent_call
 */
 
-    engine?.onMediaMessageAttached = (
-      RCIMIWMediaMessage? message,
-    ) {
+    engine?.onMediaMessageAttached = (RCIMIWMediaMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageAttached";
       arg["message"] = formatJson(message?.toJson());
@@ -993,16 +835,13 @@ engine?.onMessageSent = (int? code,RCIMIWMessage? message,) {
     };
 /*
 //callback_onMediaMessageAttached_call
-engine?.onMediaMessageAttached = (RCIMIWMediaMessage? message,) {
+engine?.onMediaMessageAttached = (RCIMIWMediaMessage? message) {
     //...
 };
 //callback_onMediaMessageAttached_call
 */
 
-    engine?.onMediaMessageSending = (
-      RCIMIWMediaMessage? message,
-      int? progress,
-    ) {
+    engine?.onMediaMessageSending = (RCIMIWMediaMessage? message, int? progress) {
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageSending";
       arg["message"] = formatJson(message?.toJson());
@@ -1012,16 +851,13 @@ engine?.onMediaMessageAttached = (RCIMIWMediaMessage? message,) {
     };
 /*
 //callback_onMediaMessageSending_call
-engine?.onMediaMessageSending = (RCIMIWMediaMessage? message,int? progress,) {
+engine?.onMediaMessageSending = (RCIMIWMediaMessage? message, int? progress) {
     //...
 };
 //callback_onMediaMessageSending_call
 */
 
-    engine?.onSendingMediaMessageCanceled = (
-      int? code,
-      RCIMIWMediaMessage? message,
-    ) {
+    engine?.onSendingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onSendingMediaMessageCanceled";
       arg["code"] = code.toString();
@@ -1031,16 +867,13 @@ engine?.onMediaMessageSending = (RCIMIWMediaMessage? message,int? progress,) {
     };
 /*
 //callback_onSendingMediaMessageCanceled_call
-engine?.onSendingMediaMessageCanceled = (int? code,RCIMIWMediaMessage? message,) {
+engine?.onSendingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? message) {
     //...
 };
 //callback_onSendingMediaMessageCanceled_call
 */
 
-    engine?.onMediaMessageSent = (
-      int? code,
-      RCIMIWMediaMessage? message,
-    ) {
+    engine?.onMediaMessageSent = (int? code, RCIMIWMediaMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageSent";
       arg["code"] = code.toString();
@@ -1050,16 +883,13 @@ engine?.onSendingMediaMessageCanceled = (int? code,RCIMIWMediaMessage? message,)
     };
 /*
 //callback_onMediaMessageSent_call
-engine?.onMediaMessageSent = (int? code,RCIMIWMediaMessage? message,) {
+engine?.onMediaMessageSent = (int? code, RCIMIWMediaMessage? message) {
     //...
 };
 //callback_onMediaMessageSent_call
 */
 
-    engine?.onMediaMessageDownloading = (
-      RCIMIWMediaMessage? message,
-      int? progress,
-    ) {
+    engine?.onMediaMessageDownloading = (RCIMIWMediaMessage? message, int? progress) {
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageDownloading";
       arg["message"] = formatJson(message?.toJson());
@@ -1069,16 +899,13 @@ engine?.onMediaMessageSent = (int? code,RCIMIWMediaMessage? message,) {
     };
 /*
 //callback_onMediaMessageDownloading_call
-engine?.onMediaMessageDownloading = (RCIMIWMediaMessage? message,int? progress,) {
+engine?.onMediaMessageDownloading = (RCIMIWMediaMessage? message, int? progress) {
     //...
 };
 //callback_onMediaMessageDownloading_call
 */
 
-    engine?.onMediaMessageDownloaded = (
-      int? code,
-      RCIMIWMediaMessage? message,
-    ) {
+    engine?.onMediaMessageDownloaded = (int? code, RCIMIWMediaMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageDownloaded";
       arg["code"] = code.toString();
@@ -1088,16 +915,13 @@ engine?.onMediaMessageDownloading = (RCIMIWMediaMessage? message,int? progress,)
     };
 /*
 //callback_onMediaMessageDownloaded_call
-engine?.onMediaMessageDownloaded = (int? code,RCIMIWMediaMessage? message,) {
+engine?.onMediaMessageDownloaded = (int? code, RCIMIWMediaMessage? message) {
     //...
 };
 //callback_onMediaMessageDownloaded_call
 */
 
-    engine?.onDownloadingMediaMessageCanceled = (
-      int? code,
-      RCIMIWMediaMessage? message,
-    ) {
+    engine?.onDownloadingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onDownloadingMediaMessageCanceled";
       arg["code"] = code.toString();
@@ -1107,21 +931,14 @@ engine?.onMediaMessageDownloaded = (int? code,RCIMIWMediaMessage? message,) {
     };
 /*
 //callback_onDownloadingMediaMessageCanceled_call
-engine?.onDownloadingMediaMessageCanceled = (int? code,RCIMIWMediaMessage? message,) {
+engine?.onDownloadingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? message) {
     //...
 };
 //callback_onDownloadingMediaMessageCanceled_call
 */
 
-    engine?.onMessagesLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? sentTime,
-      RCIMIWTimeOrder? order,
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onMessagesLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId,
+        int? sentTime, RCIMIWTimeOrder? order, List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1143,19 +960,14 @@ engine?.onDownloadingMediaMessageCanceled = (int? code,RCIMIWMediaMessage? messa
     };
 /*
 //callback_onMessagesLoaded_call
-engine?.onMessagesLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,int? sentTime,RCIMIWTimeOrder? order,List<RCIMIWMessage>? messages,) {
+engine?.onMessagesLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? sentTime, RCIMIWTimeOrder? order, List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onMessagesLoaded_call
 */
 
-    engine?.onUnreadMentionedMessagesLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onUnreadMentionedMessagesLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1175,19 +987,14 @@ engine?.onMessagesLoaded = (int? code,RCIMIWConversationType? type,String? targe
     };
 /*
 //callback_onUnreadMentionedMessagesLoaded_call
-engine?.onUnreadMentionedMessagesLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,List<RCIMIWMessage>? messages,) {
+engine?.onUnreadMentionedMessagesLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onUnreadMentionedMessagesLoaded_call
 */
 
-    engine?.onFirstUnreadMessageLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWMessage? message,
-    ) {
+    engine?.onFirstUnreadMessageLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onFirstUnreadMessageLoaded";
       arg["code"] = code.toString();
@@ -1200,16 +1007,13 @@ engine?.onUnreadMentionedMessagesLoaded = (int? code,RCIMIWConversationType? typ
     };
 /*
 //callback_onFirstUnreadMessageLoaded_call
-engine?.onFirstUnreadMessageLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,RCIMIWMessage? message,) {
+engine?.onFirstUnreadMessageLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWMessage? message) {
     //...
 };
 //callback_onFirstUnreadMessageLoaded_call
 */
 
-    engine?.onMessageInserted = (
-      int? code,
-      RCIMIWMessage? message,
-    ) {
+    engine?.onMessageInserted = (int? code, RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageInserted";
       arg["code"] = code.toString();
@@ -1219,16 +1023,13 @@ engine?.onFirstUnreadMessageLoaded = (int? code,RCIMIWConversationType? type,Str
     };
 /*
 //callback_onMessageInserted_call
-engine?.onMessageInserted = (int? code,RCIMIWMessage? message,) {
+engine?.onMessageInserted = (int? code, RCIMIWMessage? message) {
     //...
 };
 //callback_onMessageInserted_call
 */
 
-    engine?.onMessagesInserted = (
-      int? code,
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onMessagesInserted = (int? code, List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1245,19 +1046,14 @@ engine?.onMessageInserted = (int? code,RCIMIWMessage? message,) {
     };
 /*
 //callback_onMessagesInserted_call
-engine?.onMessagesInserted = (int? code,List<RCIMIWMessage>? messages,) {
+engine?.onMessagesInserted = (int? code, List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onMessagesInserted_call
 */
 
-    engine?.onMessagesCleared = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
+    engine?.onMessagesCleared =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessagesCleared";
       arg["code"] = code.toString();
@@ -1270,16 +1066,13 @@ engine?.onMessagesInserted = (int? code,List<RCIMIWMessage>? messages,) {
     };
 /*
 //callback_onMessagesCleared_call
-engine?.onMessagesCleared = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,int? timestamp,) {
+engine?.onMessagesCleared = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
     //...
 };
 //callback_onMessagesCleared_call
 */
 
-    engine?.onLocalMessagesDeleted = (
-      int? code,
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onLocalMessagesDeleted = (int? code, List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1296,19 +1089,14 @@ engine?.onMessagesCleared = (int? code,RCIMIWConversationType? type,String? targ
     };
 /*
 //callback_onLocalMessagesDeleted_call
-engine?.onLocalMessagesDeleted = (int? code,List<RCIMIWMessage>? messages,) {
+engine?.onLocalMessagesDeleted = (int? code, List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onLocalMessagesDeleted_call
 */
 
-    engine?.onMessagesDeleted = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onMessagesDeleted =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1328,16 +1116,13 @@ engine?.onLocalMessagesDeleted = (int? code,List<RCIMIWMessage>? messages,) {
     };
 /*
 //callback_onMessagesDeleted_call
-engine?.onMessagesDeleted = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,List<RCIMIWMessage>? messages,) {
+engine?.onMessagesDeleted = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onMessagesDeleted_call
 */
 
-    engine?.onMessageRecalled = (
-      int? code,
-      RCIMIWMessage? message,
-    ) {
+    engine?.onMessageRecalled = (int? code, RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageRecalled";
       arg["code"] = code.toString();
@@ -1347,18 +1132,13 @@ engine?.onMessagesDeleted = (int? code,RCIMIWConversationType? type,String? targ
     };
 /*
 //callback_onMessageRecalled_call
-engine?.onMessageRecalled = (int? code,RCIMIWMessage? message,) {
+engine?.onMessageRecalled = (int? code, RCIMIWMessage? message) {
     //...
 };
 //callback_onMessageRecalled_call
 */
 
-    engine?.onPrivateReadReceiptMessageSent = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
+    engine?.onPrivateReadReceiptMessageSent = (int? code, String? targetId, String? channelId, int? timestamp) {
       Map<String, String> arg = {};
       arg["listener"] = "onPrivateReadReceiptMessageSent";
       arg["code"] = code.toString();
@@ -1370,17 +1150,13 @@ engine?.onMessageRecalled = (int? code,RCIMIWMessage? message,) {
     };
 /*
 //callback_onPrivateReadReceiptMessageSent_call
-engine?.onPrivateReadReceiptMessageSent = (int? code,String? targetId,String? channelId,int? timestamp,) {
+engine?.onPrivateReadReceiptMessageSent = (int? code, String? targetId, String? channelId, int? timestamp) {
     //...
 };
 //callback_onPrivateReadReceiptMessageSent_call
 */
 
-    engine?.onMessageExpansionUpdated = (
-      int? code,
-      String? messageUId,
-      Map? expansion,
-    ) {
+    engine?.onMessageExpansionUpdated = (int? code, String? messageUId, Map? expansion) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageExpansionUpdated";
       arg["code"] = code.toString();
@@ -1391,17 +1167,13 @@ engine?.onPrivateReadReceiptMessageSent = (int? code,String? targetId,String? ch
     };
 /*
 //callback_onMessageExpansionUpdated_call
-engine?.onMessageExpansionUpdated = (int? code,String? messageUId,Map? expansion,) {
+engine?.onMessageExpansionUpdated = (int? code, String? messageUId, Map? expansion) {
     //...
 };
 //callback_onMessageExpansionUpdated_call
 */
 
-    engine?.onMessageExpansionForKeysRemoved = (
-      int? code,
-      String? messageUId,
-      List<String>? keys,
-    ) {
+    engine?.onMessageExpansionForKeysRemoved = (int? code, String? messageUId, List<String>? keys) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageExpansionForKeysRemoved";
       arg["code"] = code.toString();
@@ -1412,16 +1184,13 @@ engine?.onMessageExpansionUpdated = (int? code,String? messageUId,Map? expansion
     };
 /*
 //callback_onMessageExpansionForKeysRemoved_call
-engine?.onMessageExpansionForKeysRemoved = (int? code,String? messageUId,List<String>? keys,) {
+engine?.onMessageExpansionForKeysRemoved = (int? code, String? messageUId, List<String>? keys) {
     //...
 };
 //callback_onMessageExpansionForKeysRemoved_call
 */
 
-    engine?.onMessageReceiveStatusChanged = (
-      int? code,
-      int? messageId,
-    ) {
+    engine?.onMessageReceiveStatusChanged = (int? code, int? messageId) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageReceiveStatusChanged";
       arg["code"] = code.toString();
@@ -1431,16 +1200,13 @@ engine?.onMessageExpansionForKeysRemoved = (int? code,String? messageUId,List<St
     };
 /*
 //callback_onMessageReceiveStatusChanged_call
-engine?.onMessageReceiveStatusChanged = (int? code,int? messageId,) {
+engine?.onMessageReceiveStatusChanged = (int? code, int? messageId) {
     //...
 };
 //callback_onMessageReceiveStatusChanged_call
 */
 
-    engine?.onMessageSentStatusChanged = (
-      int? code,
-      int? messageId,
-    ) {
+    engine?.onMessageSentStatusChanged = (int? code, int? messageId) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageSentStatusChanged";
       arg["code"] = code.toString();
@@ -1450,16 +1216,13 @@ engine?.onMessageReceiveStatusChanged = (int? code,int? messageId,) {
     };
 /*
 //callback_onMessageSentStatusChanged_call
-engine?.onMessageSentStatusChanged = (int? code,int? messageId,) {
+engine?.onMessageSentStatusChanged = (int? code, int? messageId) {
     //...
 };
 //callback_onMessageSentStatusChanged_call
 */
 
-    engine?.onChatRoomJoined = (
-      int? code,
-      String? targetId,
-    ) {
+    engine?.onChatRoomJoined = (int? code, String? targetId) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomJoined";
       arg["code"] = code.toString();
@@ -1469,15 +1232,13 @@ engine?.onMessageSentStatusChanged = (int? code,int? messageId,) {
     };
 /*
 //callback_onChatRoomJoined_call
-engine?.onChatRoomJoined = (int? code,String? targetId,) {
+engine?.onChatRoomJoined = (int? code, String? targetId) {
     //...
 };
 //callback_onChatRoomJoined_call
 */
 
-    engine?.onChatRoomJoining = (
-      String? targetId,
-    ) {
+    engine?.onChatRoomJoining = (String? targetId) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomJoining";
       arg["targetId"] = targetId ?? "";
@@ -1486,16 +1247,13 @@ engine?.onChatRoomJoined = (int? code,String? targetId,) {
     };
 /*
 //callback_onChatRoomJoining_call
-engine?.onChatRoomJoining = (String? targetId,) {
+engine?.onChatRoomJoining = (String? targetId) {
     //...
 };
 //callback_onChatRoomJoining_call
 */
 
-    engine?.onChatRoomLeft = (
-      int? code,
-      String? targetId,
-    ) {
+    engine?.onChatRoomLeft = (int? code, String? targetId) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomLeft";
       arg["code"] = code.toString();
@@ -1505,18 +1263,13 @@ engine?.onChatRoomJoining = (String? targetId,) {
     };
 /*
 //callback_onChatRoomLeft_call
-engine?.onChatRoomLeft = (int? code,String? targetId,) {
+engine?.onChatRoomLeft = (int? code, String? targetId) {
     //...
 };
 //callback_onChatRoomLeft_call
 */
 
-    engine?.onChatRoomMessagesLoaded = (
-      int? code,
-      String? targetId,
-      List<RCIMIWMessage>? messages,
-      int? syncTime,
-    ) {
+    engine?.onChatRoomMessagesLoaded = (int? code, String? targetId, List<RCIMIWMessage>? messages, int? syncTime) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1535,17 +1288,13 @@ engine?.onChatRoomLeft = (int? code,String? targetId,) {
     };
 /*
 //callback_onChatRoomMessagesLoaded_call
-engine?.onChatRoomMessagesLoaded = (int? code,String? targetId,List<RCIMIWMessage>? messages,int? syncTime,) {
+engine?.onChatRoomMessagesLoaded = (int? code, String? targetId, List<RCIMIWMessage>? messages, int? syncTime) {
     //...
 };
 //callback_onChatRoomMessagesLoaded_call
 */
 
-    engine?.onChatRoomEntryAdded = (
-      int? code,
-      String? targetId,
-      String? key,
-    ) {
+    engine?.onChatRoomEntryAdded = (int? code, String? targetId, String? key) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntryAdded";
       arg["code"] = code.toString();
@@ -1556,18 +1305,13 @@ engine?.onChatRoomMessagesLoaded = (int? code,String? targetId,List<RCIMIWMessag
     };
 /*
 //callback_onChatRoomEntryAdded_call
-engine?.onChatRoomEntryAdded = (int? code,String? targetId,String? key,) {
+engine?.onChatRoomEntryAdded = (int? code, String? targetId, String? key) {
     //...
 };
 //callback_onChatRoomEntryAdded_call
 */
 
-    engine?.onChatRoomEntriesAdded = (
-      int? code,
-      String? targetId,
-      Map? entries,
-      Map? errorEntries,
-    ) {
+    engine?.onChatRoomEntriesAdded = (int? code, String? targetId, Map? entries, Map? errorEntries) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntriesAdded";
       arg["code"] = code.toString();
@@ -1579,17 +1323,13 @@ engine?.onChatRoomEntryAdded = (int? code,String? targetId,String? key,) {
     };
 /*
 //callback_onChatRoomEntriesAdded_call
-engine?.onChatRoomEntriesAdded = (int? code,String? targetId,Map? entries,Map? errorEntries,) {
+engine?.onChatRoomEntriesAdded = (int? code, String? targetId, Map? entries, Map? errorEntries) {
     //...
 };
 //callback_onChatRoomEntriesAdded_call
 */
 
-    engine?.onChatRoomEntryLoaded = (
-      int? code,
-      String? targetId,
-      Map? entry,
-    ) {
+    engine?.onChatRoomEntryLoaded = (int? code, String? targetId, Map? entry) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntryLoaded";
       arg["code"] = code.toString();
@@ -1600,17 +1340,13 @@ engine?.onChatRoomEntriesAdded = (int? code,String? targetId,Map? entries,Map? e
     };
 /*
 //callback_onChatRoomEntryLoaded_call
-engine?.onChatRoomEntryLoaded = (int? code,String? targetId,Map? entry,) {
+engine?.onChatRoomEntryLoaded = (int? code, String? targetId, Map? entry) {
     //...
 };
 //callback_onChatRoomEntryLoaded_call
 */
 
-    engine?.onChatRoomAllEntriesLoaded = (
-      int? code,
-      String? targetId,
-      Map? entries,
-    ) {
+    engine?.onChatRoomAllEntriesLoaded = (int? code, String? targetId, Map? entries) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomAllEntriesLoaded";
       arg["code"] = code.toString();
@@ -1621,17 +1357,13 @@ engine?.onChatRoomEntryLoaded = (int? code,String? targetId,Map? entry,) {
     };
 /*
 //callback_onChatRoomAllEntriesLoaded_call
-engine?.onChatRoomAllEntriesLoaded = (int? code,String? targetId,Map? entries,) {
+engine?.onChatRoomAllEntriesLoaded = (int? code, String? targetId, Map? entries) {
     //...
 };
 //callback_onChatRoomAllEntriesLoaded_call
 */
 
-    engine?.onChatRoomEntryRemoved = (
-      int? code,
-      String? targetId,
-      String? key,
-    ) {
+    engine?.onChatRoomEntryRemoved = (int? code, String? targetId, String? key) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntryRemoved";
       arg["code"] = code.toString();
@@ -1642,17 +1374,13 @@ engine?.onChatRoomAllEntriesLoaded = (int? code,String? targetId,Map? entries,) 
     };
 /*
 //callback_onChatRoomEntryRemoved_call
-engine?.onChatRoomEntryRemoved = (int? code,String? targetId,String? key,) {
+engine?.onChatRoomEntryRemoved = (int? code, String? targetId, String? key) {
     //...
 };
 //callback_onChatRoomEntryRemoved_call
 */
 
-    engine?.onChatRoomEntriesRemoved = (
-      int? code,
-      String? targetId,
-      List<String>? keys,
-    ) {
+    engine?.onChatRoomEntriesRemoved = (int? code, String? targetId, List<String>? keys) {
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntriesRemoved";
       arg["code"] = code.toString();
@@ -1663,16 +1391,13 @@ engine?.onChatRoomEntryRemoved = (int? code,String? targetId,String? key,) {
     };
 /*
 //callback_onChatRoomEntriesRemoved_call
-engine?.onChatRoomEntriesRemoved = (int? code,String? targetId,List<String>? keys,) {
+engine?.onChatRoomEntriesRemoved = (int? code, String? targetId, List<String>? keys) {
     //...
 };
 //callback_onChatRoomEntriesRemoved_call
 */
 
-    engine?.onBlacklistAdded = (
-      int? code,
-      String? userId,
-    ) {
+    engine?.onBlacklistAdded = (int? code, String? userId) {
       Map<String, String> arg = {};
       arg["listener"] = "onBlacklistAdded";
       arg["code"] = code.toString();
@@ -1682,16 +1407,13 @@ engine?.onChatRoomEntriesRemoved = (int? code,String? targetId,List<String>? key
     };
 /*
 //callback_onBlacklistAdded_call
-engine?.onBlacklistAdded = (int? code,String? userId,) {
+engine?.onBlacklistAdded = (int? code, String? userId) {
     //...
 };
 //callback_onBlacklistAdded_call
 */
 
-    engine?.onBlacklistRemoved = (
-      int? code,
-      String? userId,
-    ) {
+    engine?.onBlacklistRemoved = (int? code, String? userId) {
       Map<String, String> arg = {};
       arg["listener"] = "onBlacklistRemoved";
       arg["code"] = code.toString();
@@ -1701,17 +1423,13 @@ engine?.onBlacklistAdded = (int? code,String? userId,) {
     };
 /*
 //callback_onBlacklistRemoved_call
-engine?.onBlacklistRemoved = (int? code,String? userId,) {
+engine?.onBlacklistRemoved = (int? code, String? userId) {
     //...
 };
 //callback_onBlacklistRemoved_call
 */
 
-    engine?.onBlacklistStatusLoaded = (
-      int? code,
-      String? userId,
-      RCIMIWBlacklistStatus? status,
-    ) {
+    engine?.onBlacklistStatusLoaded = (int? code, String? userId, RCIMIWBlacklistStatus? status) {
       Map<String, String> arg = {};
       arg["listener"] = "onBlacklistStatusLoaded";
       arg["code"] = code.toString();
@@ -1722,16 +1440,13 @@ engine?.onBlacklistRemoved = (int? code,String? userId,) {
     };
 /*
 //callback_onBlacklistStatusLoaded_call
-engine?.onBlacklistStatusLoaded = (int? code,String? userId,RCIMIWBlacklistStatus? status,) {
+engine?.onBlacklistStatusLoaded = (int? code, String? userId, RCIMIWBlacklistStatus? status) {
     //...
 };
 //callback_onBlacklistStatusLoaded_call
 */
 
-    engine?.onBlacklistLoaded = (
-      int? code,
-      List<String>? userIds,
-    ) {
+    engine?.onBlacklistLoaded = (int? code, List<String>? userIds) {
       Map<String, String> arg = {};
       arg["listener"] = "onBlacklistLoaded";
       arg["code"] = code.toString();
@@ -1741,22 +1456,14 @@ engine?.onBlacklistStatusLoaded = (int? code,String? userId,RCIMIWBlacklistStatu
     };
 /*
 //callback_onBlacklistLoaded_call
-engine?.onBlacklistLoaded = (int? code,List<String>? userIds,) {
+engine?.onBlacklistLoaded = (int? code, List<String>? userIds) {
     //...
 };
 //callback_onBlacklistLoaded_call
 */
 
-    engine?.onMessagesSearched = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      String? keyword,
-      int? startTime,
-      int? count,
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onMessagesSearched = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId,
+        String? keyword, int? startTime, int? count, List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1779,24 +1486,22 @@ engine?.onBlacklistLoaded = (int? code,List<String>? userIds,) {
     };
 /*
 //callback_onMessagesSearched_call
-engine?.onMessagesSearched = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,String? keyword,int? startTime,int? count,List<RCIMIWMessage>? messages,) {
+engine?.onMessagesSearched = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? keyword, int? startTime, int? count, List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onMessagesSearched_call
 */
 
-    engine?.onMessagesSearchedByTimeRange = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      String? keyword,
-      int? startTime,
-      int? endTime,
-      int? offset,
-      int? count,
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onMessagesSearchedByTimeRange = (int? code,
+        RCIMIWConversationType? type,
+        String? targetId,
+        String? channelId,
+        String? keyword,
+        int? startTime,
+        int? endTime,
+        int? offset,
+        int? count,
+        List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1821,22 +1526,14 @@ engine?.onMessagesSearched = (int? code,RCIMIWConversationType? type,String? tar
     };
 /*
 //callback_onMessagesSearchedByTimeRange_call
-engine?.onMessagesSearchedByTimeRange = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,String? keyword,int? startTime,int? endTime,int? offset,int? count,List<RCIMIWMessage>? messages,) {
+engine?.onMessagesSearchedByTimeRange = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? keyword, int? startTime, int? endTime, int? offset, int? count, List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onMessagesSearchedByTimeRange_call
 */
 
-    engine?.onMessagesSearchedByUserId = (
-      int? code,
-      String? userId,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? startTime,
-      int? count,
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onMessagesSearchedByUserId = (int? code, String? userId, RCIMIWConversationType? type, String? targetId,
+        String? channelId, int? startTime, int? count, List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1859,20 +1556,14 @@ engine?.onMessagesSearchedByTimeRange = (int? code,RCIMIWConversationType? type,
     };
 /*
 //callback_onMessagesSearchedByUserId_call
-engine?.onMessagesSearchedByUserId = (int? code,String? userId,RCIMIWConversationType? type,String? targetId,String? channelId,int? startTime,int? count,List<RCIMIWMessage>? messages,) {
+engine?.onMessagesSearchedByUserId = (int? code, String? userId, RCIMIWConversationType? type, String? targetId, String? channelId, int? startTime, int? count, List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onMessagesSearchedByUserId_call
 */
 
-    engine?.onConversationsSearched = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      List<RCIMIWMessageType>? messageTypes,
-      String? keyword,
-      List<RCIMIWSearchConversationResult>? conversations,
-    ) {
+    engine?.onConversationsSearched = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId,
+        List<RCIMIWMessageType>? messageTypes, String? keyword, List<RCIMIWSearchConversationResult>? conversations) {
       List conversationsJson = [];
       if (conversations != null) {
         for (var temp in conversations) {
@@ -1893,16 +1584,13 @@ engine?.onMessagesSearchedByUserId = (int? code,String? userId,RCIMIWConversatio
     };
 /*
 //callback_onConversationsSearched_call
-engine?.onConversationsSearched = (int? code,List<RCIMIWConversationType>? conversationTypes,String? channelId,List<RCIMIWMessageType>? messageTypes,String? keyword,List<RCIMIWSearchConversationResult>? conversations,) {
+engine?.onConversationsSearched = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, List<RCIMIWMessageType>? messageTypes, String? keyword, List<RCIMIWSearchConversationResult>? conversations) {
     //...
 };
 //callback_onConversationsSearched_call
 */
 
-    engine?.onGroupReadReceiptRequestSent = (
-      int? code,
-      RCIMIWMessage? message,
-    ) {
+    engine?.onGroupReadReceiptRequestSent = (int? code, RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onGroupReadReceiptRequestSent";
       arg["code"] = code.toString();
@@ -1912,18 +1600,14 @@ engine?.onConversationsSearched = (int? code,List<RCIMIWConversationType>? conve
     };
 /*
 //callback_onGroupReadReceiptRequestSent_call
-engine?.onGroupReadReceiptRequestSent = (int? code,RCIMIWMessage? message,) {
+engine?.onGroupReadReceiptRequestSent = (int? code, RCIMIWMessage? message) {
     //...
 };
 //callback_onGroupReadReceiptRequestSent_call
 */
 
-    engine?.onGroupReadReceiptResponseSent = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      List<RCIMIWMessage>? messages,
-    ) {
+    engine?.onGroupReadReceiptResponseSent =
+        (int? code, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1942,18 +1626,14 @@ engine?.onGroupReadReceiptRequestSent = (int? code,RCIMIWMessage? message,) {
     };
 /*
 //callback_onGroupReadReceiptResponseSent_call
-engine?.onGroupReadReceiptResponseSent = (int? code,String? targetId,String? channelId,List<RCIMIWMessage>? messages,) {
+engine?.onGroupReadReceiptResponseSent = (int? code, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
     //...
 };
 //callback_onGroupReadReceiptResponseSent_call
 */
 
-    engine?.onNotificationQuietHoursChanged = (
-      int? code,
-      String? startTime,
-      int? spanMinutes,
-      RCIMIWPushNotificationQuietHoursLevel? level,
-    ) {
+    engine?.onNotificationQuietHoursChanged =
+        (int? code, String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onNotificationQuietHoursChanged";
       arg["code"] = code.toString();
@@ -1965,15 +1645,13 @@ engine?.onGroupReadReceiptResponseSent = (int? code,String? targetId,String? cha
     };
 /*
 //callback_onNotificationQuietHoursChanged_call
-engine?.onNotificationQuietHoursChanged = (int? code,String? startTime,int? spanMinutes,RCIMIWPushNotificationQuietHoursLevel? level,) {
+engine?.onNotificationQuietHoursChanged = (int? code, String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
     //...
 };
 //callback_onNotificationQuietHoursChanged_call
 */
 
-    engine?.onNotificationQuietHoursRemoved = (
-      int? code,
-    ) {
+    engine?.onNotificationQuietHoursRemoved = (int? code) {
       Map<String, String> arg = {};
       arg["listener"] = "onNotificationQuietHoursRemoved";
       arg["code"] = code.toString();
@@ -1982,18 +1660,14 @@ engine?.onNotificationQuietHoursChanged = (int? code,String? startTime,int? span
     };
 /*
 //callback_onNotificationQuietHoursRemoved_call
-engine?.onNotificationQuietHoursRemoved = (int? code,) {
+engine?.onNotificationQuietHoursRemoved = (int? code) {
     //...
 };
 //callback_onNotificationQuietHoursRemoved_call
 */
 
-    engine?.onNotificationQuietHoursLoaded = (
-      int? code,
-      String? startTime,
-      int? spanMinutes,
-      RCIMIWPushNotificationQuietHoursLevel? level,
-    ) {
+    engine?.onNotificationQuietHoursLoaded =
+        (int? code, String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onNotificationQuietHoursLoaded";
       arg["code"] = code.toString();
@@ -2005,19 +1679,14 @@ engine?.onNotificationQuietHoursRemoved = (int? code,) {
     };
 /*
 //callback_onNotificationQuietHoursLoaded_call
-engine?.onNotificationQuietHoursLoaded = (int? code,String? startTime,int? spanMinutes,RCIMIWPushNotificationQuietHoursLevel? level,) {
+engine?.onNotificationQuietHoursLoaded = (int? code, String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
     //...
 };
 //callback_onNotificationQuietHoursLoaded_call
 */
 
-    engine?.onConversationNotificationLevelChanged = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine?.onConversationNotificationLevelChanged = (int? code, RCIMIWConversationType? type, String? targetId,
+        String? channelId, RCIMIWPushNotificationLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationNotificationLevelChanged";
       arg["code"] = code.toString();
@@ -2030,19 +1699,14 @@ engine?.onNotificationQuietHoursLoaded = (int? code,String? startTime,int? spanM
     };
 /*
 //callback_onConversationNotificationLevelChanged_call
-engine?.onConversationNotificationLevelChanged = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,RCIMIWPushNotificationLevel? level,) {
+engine?.onConversationNotificationLevelChanged = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
     //...
 };
 //callback_onConversationNotificationLevelChanged_call
 */
 
-    engine?.onConversationNotificationLevelLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine?.onConversationNotificationLevelLoaded = (int? code, RCIMIWConversationType? type, String? targetId,
+        String? channelId, RCIMIWPushNotificationLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationNotificationLevelLoaded";
       arg["code"] = code.toString();
@@ -2055,17 +1719,14 @@ engine?.onConversationNotificationLevelChanged = (int? code,RCIMIWConversationTy
     };
 /*
 //callback_onConversationNotificationLevelLoaded_call
-engine?.onConversationNotificationLevelLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,RCIMIWPushNotificationLevel? level,) {
+engine?.onConversationNotificationLevelLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
     //...
 };
 //callback_onConversationNotificationLevelLoaded_call
 */
 
-    engine?.onConversationTypeNotificationLevelChanged = (
-      int? code,
-      RCIMIWConversationType? type,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine?.onConversationTypeNotificationLevelChanged =
+        (int? code, RCIMIWConversationType? type, RCIMIWPushNotificationLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTypeNotificationLevelChanged";
       arg["code"] = code.toString();
@@ -2076,17 +1737,14 @@ engine?.onConversationNotificationLevelLoaded = (int? code,RCIMIWConversationTyp
     };
 /*
 //callback_onConversationTypeNotificationLevelChanged_call
-engine?.onConversationTypeNotificationLevelChanged = (int? code,RCIMIWConversationType? type,RCIMIWPushNotificationLevel? level,) {
+engine?.onConversationTypeNotificationLevelChanged = (int? code, RCIMIWConversationType? type, RCIMIWPushNotificationLevel? level) {
     //...
 };
 //callback_onConversationTypeNotificationLevelChanged_call
 */
 
-    engine?.onConversationTypeNotificationLevelLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine?.onConversationTypeNotificationLevelLoaded =
+        (int? code, RCIMIWConversationType? type, RCIMIWPushNotificationLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTypeNotificationLevelLoaded";
       arg["code"] = code.toString();
@@ -2097,17 +1755,14 @@ engine?.onConversationTypeNotificationLevelChanged = (int? code,RCIMIWConversati
     };
 /*
 //callback_onConversationTypeNotificationLevelLoaded_call
-engine?.onConversationTypeNotificationLevelLoaded = (int? code,RCIMIWConversationType? type,RCIMIWPushNotificationLevel? level,) {
+engine?.onConversationTypeNotificationLevelLoaded = (int? code, RCIMIWConversationType? type, RCIMIWPushNotificationLevel? level) {
     //...
 };
 //callback_onConversationTypeNotificationLevelLoaded_call
 */
 
-    engine?.onUltraGroupDefaultNotificationLevelChanged = (
-      int? code,
-      String? targetId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine?.onUltraGroupDefaultNotificationLevelChanged =
+        (int? code, String? targetId, RCIMIWPushNotificationLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupDefaultNotificationLevelChanged";
       arg["code"] = code.toString();
@@ -2118,17 +1773,14 @@ engine?.onConversationTypeNotificationLevelLoaded = (int? code,RCIMIWConversatio
     };
 /*
 //callback_onUltraGroupDefaultNotificationLevelChanged_call
-engine?.onUltraGroupDefaultNotificationLevelChanged = (int? code,String? targetId,RCIMIWPushNotificationLevel? level,) {
+engine?.onUltraGroupDefaultNotificationLevelChanged = (int? code, String? targetId, RCIMIWPushNotificationLevel? level) {
     //...
 };
 //callback_onUltraGroupDefaultNotificationLevelChanged_call
 */
 
-    engine?.onUltraGroupDefaultNotificationLevelLoaded = (
-      int? code,
-      String? targetId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine?.onUltraGroupDefaultNotificationLevelLoaded =
+        (int? code, String? targetId, RCIMIWPushNotificationLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupDefaultNotificationLevelLoaded";
       arg["code"] = code.toString();
@@ -2139,18 +1791,14 @@ engine?.onUltraGroupDefaultNotificationLevelChanged = (int? code,String? targetI
     };
 /*
 //callback_onUltraGroupDefaultNotificationLevelLoaded_call
-engine?.onUltraGroupDefaultNotificationLevelLoaded = (int? code,String? targetId,RCIMIWPushNotificationLevel? level,) {
+engine?.onUltraGroupDefaultNotificationLevelLoaded = (int? code, String? targetId, RCIMIWPushNotificationLevel? level) {
     //...
 };
 //callback_onUltraGroupDefaultNotificationLevelLoaded_call
 */
 
-    engine?.onUltraGroupChannelDefaultNotificationLevelChanged = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine?.onUltraGroupChannelDefaultNotificationLevelChanged =
+        (int? code, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupChannelDefaultNotificationLevelChanged";
       arg["code"] = code.toString();
@@ -2162,18 +1810,14 @@ engine?.onUltraGroupDefaultNotificationLevelLoaded = (int? code,String? targetId
     };
 /*
 //callback_onUltraGroupChannelDefaultNotificationLevelChanged_call
-engine?.onUltraGroupChannelDefaultNotificationLevelChanged = (int? code,String? targetId,String? channelId,RCIMIWPushNotificationLevel? level,) {
+engine?.onUltraGroupChannelDefaultNotificationLevelChanged = (int? code, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
     //...
 };
 //callback_onUltraGroupChannelDefaultNotificationLevelChanged_call
 */
 
-    engine?.onUltraGroupChannelDefaultNotificationLevelLoaded = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine?.onUltraGroupChannelDefaultNotificationLevelLoaded =
+        (int? code, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupChannelDefaultNotificationLevelLoaded";
       arg["code"] = code.toString();
@@ -2185,16 +1829,13 @@ engine?.onUltraGroupChannelDefaultNotificationLevelChanged = (int? code,String? 
     };
 /*
 //callback_onUltraGroupChannelDefaultNotificationLevelLoaded_call
-engine?.onUltraGroupChannelDefaultNotificationLevelLoaded = (int? code,String? targetId,String? channelId,RCIMIWPushNotificationLevel? level,) {
+engine?.onUltraGroupChannelDefaultNotificationLevelLoaded = (int? code, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
     //...
 };
 //callback_onUltraGroupChannelDefaultNotificationLevelLoaded_call
 */
 
-    engine?.onPushContentShowStatusChanged = (
-      int? code,
-      bool? showContent,
-    ) {
+    engine?.onPushContentShowStatusChanged = (int? code, bool? showContent) {
       Map<String, String> arg = {};
       arg["listener"] = "onPushContentShowStatusChanged";
       arg["code"] = code.toString();
@@ -2204,16 +1845,13 @@ engine?.onUltraGroupChannelDefaultNotificationLevelLoaded = (int? code,String? t
     };
 /*
 //callback_onPushContentShowStatusChanged_call
-engine?.onPushContentShowStatusChanged = (int? code,bool? showContent,) {
+engine?.onPushContentShowStatusChanged = (int? code, bool? showContent) {
     //...
 };
 //callback_onPushContentShowStatusChanged_call
 */
 
-    engine?.onPushLanguageChanged = (
-      int? code,
-      String? language,
-    ) {
+    engine?.onPushLanguageChanged = (int? code, String? language) {
       Map<String, String> arg = {};
       arg["listener"] = "onPushLanguageChanged";
       arg["code"] = code.toString();
@@ -2223,16 +1861,13 @@ engine?.onPushContentShowStatusChanged = (int? code,bool? showContent,) {
     };
 /*
 //callback_onPushLanguageChanged_call
-engine?.onPushLanguageChanged = (int? code,String? language,) {
+engine?.onPushLanguageChanged = (int? code, String? language) {
     //...
 };
 //callback_onPushLanguageChanged_call
 */
 
-    engine?.onPushReceiveStatusChanged = (
-      int? code,
-      bool? receive,
-    ) {
+    engine?.onPushReceiveStatusChanged = (int? code, bool? receive) {
       Map<String, String> arg = {};
       arg["listener"] = "onPushReceiveStatusChanged";
       arg["code"] = code.toString();
@@ -2242,19 +1877,14 @@ engine?.onPushLanguageChanged = (int? code,String? language,) {
     };
 /*
 //callback_onPushReceiveStatusChanged_call
-engine?.onPushReceiveStatusChanged = (int? code,bool? receive,) {
+engine?.onPushReceiveStatusChanged = (int? code, bool? receive) {
     //...
 };
 //callback_onPushReceiveStatusChanged_call
 */
 
-    engine?.onMessageCountLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? count,
-    ) {
+    engine?.onMessageCountLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
       Map<String, String> arg = {};
       arg["listener"] = "onMessageCountLoaded";
       arg["code"] = code.toString();
@@ -2267,18 +1897,14 @@ engine?.onPushReceiveStatusChanged = (int? code,bool? receive,) {
     };
 /*
 //callback_onMessageCountLoaded_call
-engine?.onMessageCountLoaded = (int? code,RCIMIWConversationType? type,String? targetId,String? channelId,int? count,) {
+engine?.onMessageCountLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
     //...
 };
 //callback_onMessageCountLoaded_call
 */
 
-    engine?.onTopConversationsLoaded = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      List<RCIMIWConversation>? conversations,
-    ) {
+    engine?.onTopConversationsLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId,
+        List<RCIMIWConversation>? conversations) {
       List conversationsJson = [];
       if (conversations != null) {
         for (var temp in conversations) {
@@ -2297,15 +1923,13 @@ engine?.onMessageCountLoaded = (int? code,RCIMIWConversationType? type,String? t
     };
 /*
 //callback_onTopConversationsLoaded_call
-engine?.onTopConversationsLoaded = (int? code,List<RCIMIWConversationType>? conversationTypes,String? channelId,List<RCIMIWConversation>? conversations,) {
+engine?.onTopConversationsLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, List<RCIMIWConversation>? conversations) {
     //...
 };
 //callback_onTopConversationsLoaded_call
 */
 
-    engine?.onGroupMessageToDesignatedUsersAttached = (
-      RCIMIWMessage? message,
-    ) {
+    engine?.onGroupMessageToDesignatedUsersAttached = (RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onGroupMessageToDesignatedUsersAttached";
       arg["message"] = formatJson(message?.toJson());
@@ -2314,16 +1938,13 @@ engine?.onTopConversationsLoaded = (int? code,List<RCIMIWConversationType>? conv
     };
 /*
 //callback_onGroupMessageToDesignatedUsersAttached_call
-engine?.onGroupMessageToDesignatedUsersAttached = (RCIMIWMessage? message,) {
+engine?.onGroupMessageToDesignatedUsersAttached = (RCIMIWMessage? message) {
     //...
 };
 //callback_onGroupMessageToDesignatedUsersAttached_call
 */
 
-    engine?.onGroupMessageToDesignatedUsersSent = (
-      int? code,
-      RCIMIWMessage? message,
-    ) {
+    engine?.onGroupMessageToDesignatedUsersSent = (int? code, RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onGroupMessageToDesignatedUsersSent";
       arg["code"] = code.toString();
@@ -2333,18 +1954,13 @@ engine?.onGroupMessageToDesignatedUsersAttached = (RCIMIWMessage? message,) {
     };
 /*
 //callback_onGroupMessageToDesignatedUsersSent_call
-engine?.onGroupMessageToDesignatedUsersSent = (int? code,RCIMIWMessage? message,) {
+engine?.onGroupMessageToDesignatedUsersSent = (int? code, RCIMIWMessage? message) {
     //...
 };
 //callback_onGroupMessageToDesignatedUsersSent_call
 */
 
-    engine?.onUltraGroupReadStatusSynced = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
+    engine?.onUltraGroupReadStatusSynced = (int? code, String? targetId, String? channelId, int? timestamp) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupReadStatusSynced";
       arg["code"] = code.toString();
@@ -2356,18 +1972,14 @@ engine?.onGroupMessageToDesignatedUsersSent = (int? code,RCIMIWMessage? message,
     };
 /*
 //callback_onUltraGroupReadStatusSynced_call
-engine?.onUltraGroupReadStatusSynced = (int? code,String? targetId,String? channelId,int? timestamp,) {
+engine?.onUltraGroupReadStatusSynced = (int? code, String? targetId, String? channelId, int? timestamp) {
     //...
 };
 //callback_onUltraGroupReadStatusSynced_call
 */
 
-    engine?.onConversationsLoadedForAllChannel = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      List<RCIMIWConversation>? conversations,
-    ) {
+    engine?.onConversationsLoadedForAllChannel =
+        (int? code, RCIMIWConversationType? type, String? targetId, List<RCIMIWConversation>? conversations) {
       List conversationsJson = [];
       if (conversations != null) {
         for (var temp in conversations) {
@@ -2386,17 +1998,13 @@ engine?.onUltraGroupReadStatusSynced = (int? code,String? targetId,String? chann
     };
 /*
 //callback_onConversationsLoadedForAllChannel_call
-engine?.onConversationsLoadedForAllChannel = (int? code,RCIMIWConversationType? type,String? targetId,List<RCIMIWConversation>? conversations,) {
+engine?.onConversationsLoadedForAllChannel = (int? code, RCIMIWConversationType? type, String? targetId, List<RCIMIWConversation>? conversations) {
     //...
 };
 //callback_onConversationsLoadedForAllChannel_call
 */
 
-    engine?.onUltraGroupUnreadMentionedCountLoaded = (
-      int? code,
-      String? targetId,
-      int? count,
-    ) {
+    engine?.onUltraGroupUnreadMentionedCountLoaded = (int? code, String? targetId, int? count) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupUnreadMentionedCountLoaded";
       arg["code"] = code.toString();
@@ -2407,17 +2015,13 @@ engine?.onConversationsLoadedForAllChannel = (int? code,RCIMIWConversationType? 
     };
 /*
 //callback_onUltraGroupUnreadMentionedCountLoaded_call
-engine?.onUltraGroupUnreadMentionedCountLoaded = (int? code,String? targetId,int? count,) {
+engine?.onUltraGroupUnreadMentionedCountLoaded = (int? code, String? targetId, int? count) {
     //...
 };
 //callback_onUltraGroupUnreadMentionedCountLoaded_call
 */
 
-    engine?.onUltraGroupUnreadCountLoaded = (
-      int? code,
-      String? targetId,
-      int? count,
-    ) {
+    engine?.onUltraGroupUnreadCountLoaded = (int? code, String? targetId, int? count) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupUnreadCountLoaded";
       arg["code"] = code.toString();
@@ -2428,16 +2032,13 @@ engine?.onUltraGroupUnreadMentionedCountLoaded = (int? code,String? targetId,int
     };
 /*
 //callback_onUltraGroupUnreadCountLoaded_call
-engine?.onUltraGroupUnreadCountLoaded = (int? code,String? targetId,int? count,) {
+engine?.onUltraGroupUnreadCountLoaded = (int? code, String? targetId, int? count) {
     //...
 };
 //callback_onUltraGroupUnreadCountLoaded_call
 */
 
-    engine?.onUltraGroupMessageModified = (
-      int? code,
-      String? messageUId,
-    ) {
+    engine?.onUltraGroupMessageModified = (int? code, String? messageUId) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessageModified";
       arg["code"] = code.toString();
@@ -2447,17 +2048,13 @@ engine?.onUltraGroupUnreadCountLoaded = (int? code,String? targetId,int? count,)
     };
 /*
 //callback_onUltraGroupMessageModified_call
-engine?.onUltraGroupMessageModified = (int? code,String? messageUId,) {
+engine?.onUltraGroupMessageModified = (int? code, String? messageUId) {
     //...
 };
 //callback_onUltraGroupMessageModified_call
 */
 
-    engine?.onUltraGroupMessageRecalled = (
-      int? code,
-      RCIMIWMessage? message,
-      bool? deleteRemote,
-    ) {
+    engine?.onUltraGroupMessageRecalled = (int? code, RCIMIWMessage? message, bool? deleteRemote) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessageRecalled";
       arg["code"] = code.toString();
@@ -2468,19 +2065,14 @@ engine?.onUltraGroupMessageModified = (int? code,String? messageUId,) {
     };
 /*
 //callback_onUltraGroupMessageRecalled_call
-engine?.onUltraGroupMessageRecalled = (int? code,RCIMIWMessage? message,bool? deleteRemote,) {
+engine?.onUltraGroupMessageRecalled = (int? code, RCIMIWMessage? message, bool? deleteRemote) {
     //...
 };
 //callback_onUltraGroupMessageRecalled_call
 */
 
-    engine?.onUltraGroupMessagesCleared = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-      RCIMIWMessageOperationPolicy? policy,
-    ) {
+    engine?.onUltraGroupMessagesCleared =
+        (int? code, String? targetId, String? channelId, int? timestamp, RCIMIWMessageOperationPolicy? policy) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessagesCleared";
       arg["code"] = code.toString();
@@ -2493,17 +2085,13 @@ engine?.onUltraGroupMessageRecalled = (int? code,RCIMIWMessage? message,bool? de
     };
 /*
 //callback_onUltraGroupMessagesCleared_call
-engine?.onUltraGroupMessagesCleared = (int? code,String? targetId,String? channelId,int? timestamp,RCIMIWMessageOperationPolicy? policy,) {
+engine?.onUltraGroupMessagesCleared = (int? code, String? targetId, String? channelId, int? timestamp, RCIMIWMessageOperationPolicy? policy) {
     //...
 };
 //callback_onUltraGroupMessagesCleared_call
 */
 
-    engine?.onUltraGroupMessagesClearedForAllChannel = (
-      int? code,
-      String? targetId,
-      int? timestamp,
-    ) {
+    engine?.onUltraGroupMessagesClearedForAllChannel = (int? code, String? targetId, int? timestamp) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessagesClearedForAllChannel";
       arg["code"] = code.toString();
@@ -2514,18 +2102,14 @@ engine?.onUltraGroupMessagesCleared = (int? code,String? targetId,String? channe
     };
 /*
 //callback_onUltraGroupMessagesClearedForAllChannel_call
-engine?.onUltraGroupMessagesClearedForAllChannel = (int? code,String? targetId,int? timestamp,) {
+engine?.onUltraGroupMessagesClearedForAllChannel = (int? code, String? targetId, int? timestamp) {
     //...
 };
 //callback_onUltraGroupMessagesClearedForAllChannel_call
 */
 
-    engine?.onUltraGroupTypingStatusSent = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      RCIMIWUltraGroupTypingStatus? typingStatus,
-    ) {
+    engine?.onUltraGroupTypingStatusSent =
+        (int? code, String? targetId, String? channelId, RCIMIWUltraGroupTypingStatus? typingStatus) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupTypingStatusSent";
       arg["code"] = code.toString();
@@ -2537,17 +2121,14 @@ engine?.onUltraGroupMessagesClearedForAllChannel = (int? code,String? targetId,i
     };
 /*
 //callback_onUltraGroupTypingStatusSent_call
-engine?.onUltraGroupTypingStatusSent = (int? code,String? targetId,String? channelId,RCIMIWUltraGroupTypingStatus? typingStatus,) {
+engine?.onUltraGroupTypingStatusSent = (int? code, String? targetId, String? channelId, RCIMIWUltraGroupTypingStatus? typingStatus) {
     //...
 };
 //callback_onUltraGroupTypingStatusSent_call
 */
 
-    engine?.onBatchRemoteUltraGroupMessagesLoaded = (
-      int? code,
-      List<RCIMIWMessage>? matchedMessages,
-      List<RCIMIWMessage>? notMatchedMessages,
-    ) {
+    engine?.onBatchRemoteUltraGroupMessagesLoaded =
+        (int? code, List<RCIMIWMessage>? matchedMessages, List<RCIMIWMessage>? notMatchedMessages) {
       List matchedMessagesJson = [];
       if (matchedMessages != null) {
         for (var temp in matchedMessages) {
@@ -2572,17 +2153,13 @@ engine?.onUltraGroupTypingStatusSent = (int? code,String? targetId,String? chann
     };
 /*
 //callback_onBatchRemoteUltraGroupMessagesLoaded_call
-engine?.onBatchRemoteUltraGroupMessagesLoaded = (int? code,List<RCIMIWMessage>? matchedMessages,List<RCIMIWMessage>? notMatchedMessages,) {
+engine?.onBatchRemoteUltraGroupMessagesLoaded = (int? code, List<RCIMIWMessage>? matchedMessages, List<RCIMIWMessage>? notMatchedMessages) {
     //...
 };
 //callback_onBatchRemoteUltraGroupMessagesLoaded_call
 */
 
-    engine?.onUltraGroupMessageExpansionUpdated = (
-      int? code,
-      Map? expansion,
-      String? messageUId,
-    ) {
+    engine?.onUltraGroupMessageExpansionUpdated = (int? code, Map? expansion, String? messageUId) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessageExpansionUpdated";
       arg["code"] = code.toString();
@@ -2593,17 +2170,13 @@ engine?.onBatchRemoteUltraGroupMessagesLoaded = (int? code,List<RCIMIWMessage>? 
     };
 /*
 //callback_onUltraGroupMessageExpansionUpdated_call
-engine?.onUltraGroupMessageExpansionUpdated = (int? code,Map? expansion,String? messageUId,) {
+engine?.onUltraGroupMessageExpansionUpdated = (int? code, Map? expansion, String? messageUId) {
     //...
 };
 //callback_onUltraGroupMessageExpansionUpdated_call
 */
 
-    engine?.onUltraGroupMessageExpansionForKeysRemoved = (
-      int? code,
-      String? messageUId,
-      List<String>? keys,
-    ) {
+    engine?.onUltraGroupMessageExpansionForKeysRemoved = (int? code, String? messageUId, List<String>? keys) {
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessageExpansionForKeysRemoved";
       arg["code"] = code.toString();
@@ -2614,7 +2187,7 @@ engine?.onUltraGroupMessageExpansionUpdated = (int? code,Map? expansion,String? 
     };
 /*
 //callback_onUltraGroupMessageExpansionForKeysRemoved_call
-engine?.onUltraGroupMessageExpansionForKeysRemoved = (int? code,String? messageUId,List<String>? keys,) {
+engine?.onUltraGroupMessageExpansionForKeysRemoved = (int? code, String? messageUId, List<String>? keys) {
     //...
 };
 //callback_onUltraGroupMessageExpansionForKeysRemoved_call

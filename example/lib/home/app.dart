@@ -52,10 +52,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   showListDialog(Map map) async {
-    if (map['params'] == null) {
-      return;
-    }
-    List params = List.from(map['params']);
+    List params = List.from(map['params'] ?? {});
     Map result = {};
     String action = map["action"].toString();
     String method = getMethodName(action);

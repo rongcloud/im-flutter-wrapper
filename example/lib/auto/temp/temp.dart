@@ -16,6 +16,94 @@ const disconnect = {
   "action": engine_fun.disconnect,
 };
 
+const createTextMessage = {
+  "title": "createTextMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "text", "type": "String", "hint": "", "lable": "请输入text",},
+  ],
+  "action": engine_fun.createTextMessage,
+};
+
+const createImageMessage = {
+  "title": "createImageMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "path", "type": "String", "hint": "", "lable": "请输入path",},
+  ],
+  "action": engine_fun.createImageMessage,
+};
+
+const createFileMessage = {
+  "title": "createFileMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "path", "type": "String", "hint": "", "lable": "请输入path",},
+  ],
+  "action": engine_fun.createFileMessage,
+};
+
+const createSightMessage = {
+  "title": "createSightMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "path", "type": "String", "hint": "", "lable": "请输入path",},{"key": "duration", "type": "String", "hint": "", "lable": "请输入duration",},
+  ],
+  "action": engine_fun.createSightMessage,
+};
+
+const createVoiceMessage = {
+  "title": "createVoiceMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "path", "type": "String", "hint": "", "lable": "请输入path",},{"key": "duration", "type": "String", "hint": "", "lable": "请输入duration",},
+  ],
+  "action": engine_fun.createVoiceMessage,
+};
+
+const createReferenceMessage = {
+  "title": "createReferenceMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "referenceMessage", "type": "String", "hint": "", "lable": "请输入referenceMessage",},{"key": "text", "type": "String", "hint": "", "lable": "请输入text",},
+  ],
+  "action": engine_fun.createReferenceMessage,
+};
+
+const createGIFMessage = {
+  "title": "createGIFMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "path", "type": "String", "hint": "", "lable": "请输入path",},
+  ],
+  "action": engine_fun.createGIFMessage,
+};
+
+const createCustomMessage = {
+  "title": "createCustomMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "policy", "type": "String", "hint": "", "lable": "请输入policy",},{"key": "messageIdentifier", "type": "String", "hint": "", "lable": "请输入messageIdentifier",},{"key": "fields", "type": "String", "hint": "", "lable": "请输入fields",},
+  ],
+  "action": engine_fun.createCustomMessage,
+};
+
+const createLocationMessage = {
+  "title": "createLocationMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "longitude", "type": "String", "hint": "", "lable": "请输入longitude",},{"key": "latitude", "type": "String", "hint": "", "lable": "请输入latitude",},{"key": "poiName", "type": "String", "hint": "", "lable": "请输入poiName",},{"key": "thumbnailPath", "type": "String", "hint": "", "lable": "请输入thumbnailPath",},
+  ],
+  "action": engine_fun.createLocationMessage,
+};
+
+const sendMessage = {
+  "title": "sendMessage",
+  "params": [
+    {"key": "message", "type": "String", "hint": "", "lable": "请输入message",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.sendMessage,
+};
+
+const sendMediaMessage = {
+  "title": "sendMediaMessage",
+  "params": [
+    {"key": "message", "type": "String", "hint": "", "lable": "请输入message",},{"key": "listener", "type": "String", "hint": "", "lable": "请输入listener",},
+  ],
+  "action": engine_fun.sendMediaMessage,
+};
+
 const loadConversation = {
   "title": "loadConversation",
   "params": [
@@ -790,6 +878,14 @@ const clearUltraGroupMessagesForAllChannel = {
     {"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "timestamp", "type": "String", "hint": "", "lable": "请输入timestamp",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
   ],
   "action": engine_fun.clearUltraGroupMessagesForAllChannel,
+};
+
+const getBatchRemoteUltraGroupMessages = {
+  "title": "getBatchRemoteUltraGroupMessages",
+  "params": [
+    {"key": "messages", "type": "String", "hint": "", "lable": "请输入messages",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getBatchRemoteUltraGroupMessages,
 };
 
 const updateUltraGroupMessageExpansion = {

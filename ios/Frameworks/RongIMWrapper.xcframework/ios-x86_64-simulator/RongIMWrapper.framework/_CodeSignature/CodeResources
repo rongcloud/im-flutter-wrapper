@@ -4,30 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Frameworks/RongChatRoom.framework/Info.plist</key>
-		<data>
-		+ZHaSJts/NhjwsLpqFzojPwFK1s=
-		</data>
-		<key>Frameworks/RongChatRoom.framework/RongChatRoom</key>
-		<data>
-		EAWKq/oNk1+of3tsFiVXzSgUlpA=
-		</data>
-		<key>Frameworks/RongChatRoom.framework/_CodeSignature/CodeResources</key>
-		<data>
-		1h2K9qNbfV0p4CGQVROehtLZfso=
-		</data>
-		<key>Frameworks/RongIMLibCore.framework/Info.plist</key>
-		<data>
-		Lpp+rgSM7f7syykz8QVLJjr3InM=
-		</data>
-		<key>Frameworks/RongIMLibCore.framework/RongIMLibCore</key>
-		<data>
-		kC8TMw3oKXNgYnic3DplP8YBoQ0=
-		</data>
-		<key>Frameworks/RongIMLibCore.framework/_CodeSignature/CodeResources</key>
-		<data>
-		5zXDp31q0aAwe2orFOxyHowOTgw=
-		</data>
 		<key>Headers/RCIMIWBlockedMessageInfo.h</key>
 		<data>
 		oFtw97CuFfdFacaQCYa0vlc7X8w=
@@ -166,81 +142,19 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		XQygxr5OQY1UqeLrW8/Twfb3TUk=
+		f8MjVf1v7tjNZfsDaozIvO/H8Rw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		NZ9No+S4WqrWW5TykXH9+Z5euVk=
 		</data>
+		<key>RCConfig.plist</key>
+		<data>
+		tLLC4Uyo/ChnXw0e+qQoP2Aq2Rc=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Frameworks/RongChatRoom.framework/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			+ZHaSJts/NhjwsLpqFzojPwFK1s=
-			</data>
-			<key>hash2</key>
-			<data>
-			9QFzjscZSXu35r8ylEyWfQqAGW88+RCOKysh1XtoJTA=
-			</data>
-		</dict>
-		<key>Frameworks/RongChatRoom.framework/RongChatRoom</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			EAWKq/oNk1+of3tsFiVXzSgUlpA=
-			</data>
-			<key>hash2</key>
-			<data>
-			bYFl82y+StVTlGqsheQ83Hb4DECLj2Kot4fZ9oqNhQI=
-			</data>
-		</dict>
-		<key>Frameworks/RongChatRoom.framework/_CodeSignature/CodeResources</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			1h2K9qNbfV0p4CGQVROehtLZfso=
-			</data>
-			<key>hash2</key>
-			<data>
-			e+gVOOKfaKdIF75T5oTZ/ziob2YyfU6YG7rTbxLC6+8=
-			</data>
-		</dict>
-		<key>Frameworks/RongIMLibCore.framework/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Lpp+rgSM7f7syykz8QVLJjr3InM=
-			</data>
-			<key>hash2</key>
-			<data>
-			IQtSqg8lrc6kE0Noph4sBzl6ufzVOocZT8vYZtRtNUM=
-			</data>
-		</dict>
-		<key>Frameworks/RongIMLibCore.framework/RongIMLibCore</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			kC8TMw3oKXNgYnic3DplP8YBoQ0=
-			</data>
-			<key>hash2</key>
-			<data>
-			XFMWqNTDr1H6RP9mhkhWywSoE8w5/mQ0nrBVwtpoiMw=
-			</data>
-		</dict>
-		<key>Frameworks/RongIMLibCore.framework/_CodeSignature/CodeResources</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			5zXDp31q0aAwe2orFOxyHowOTgw=
-			</data>
-			<key>hash2</key>
-			<data>
-			DSgWKKk35kvhNFTQOYDgVeH9chD88l6OcWLPXAgHMXw=
-			</data>
-		</dict>
 		<key>Headers/RCIMIWBlockedMessageInfo.h</key>
 		<dict>
 			<key>hash</key>
@@ -624,6 +538,17 @@
 			<key>hash2</key>
 			<data>
 			36RjpvjhhFKiIU/yFLXix/9LoU9JtswsvCOB2uxmCKE=
+			</data>
+		</dict>
+		<key>RCConfig.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			tLLC4Uyo/ChnXw0e+qQoP2Aq2Rc=
+			</data>
+			<key>hash2</key>
+			<data>
+			vw5hCzMW6KYUbA7UDYMWR4yCSd/1uDX8ljdaiOveDLs=
 			</data>
 		</dict>
 	</dict>
