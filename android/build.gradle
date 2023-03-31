@@ -37,6 +37,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
-    implementation 'cn.rongcloud.sdk:im_libcore:5.3.3'
-    implementation 'cn.rongcloud.sdk:im_chatroom:5.3.3'
+    def configFile = file('../version.config')
+    def configProperties = new Properties()
+    assert configFile.exists()
+    configFile.withReader("UTF-8") { reader -> configProperties.load(reader) }
+    def android_im_sdk_version = configProperties.getProperty("android_im_sdk_version")
+    assert android_im_sdk_version != null, "You need to config android_im_sdk_version in version.config!!"
+
+    implementation 'cn.rongcloud.sdk:im_lib:' + android_im_sdk_version
 }

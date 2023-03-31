@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RCIMIWDefines.h"
 
 @class RCIMIWCompressOptions;
 
@@ -34,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL kickReconnectDevice;
 
 @property (nonatomic, strong) RCIMIWCompressOptions *compressOptions;
+
+@property (nonatomic, assign) RCIMIWLogLevel logLevel;
 
 @end
 

@@ -1968,6 +1968,13 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     return result;
   }
 
+  @override
+  Future<int> getDeltaTime() async {
+    log("[RC:Flutter] engine:getDeltaTime");
+    int result = await _channel.invokeMethod('engine:getDeltaTime');
+    return result;
+  }
+
   Future<dynamic> _handler(MethodCall call) async {
     log("[RC:Flutter] " + call.method + " arguments:" + call.arguments.toString());
     switch (call.method) {

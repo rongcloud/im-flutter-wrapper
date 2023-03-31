@@ -37,6 +37,7 @@ dependencies:
   path_provider: 2.0.3
   just_audio: 0.9.25
   permission_handler: 10.0.0
+  universal_html: ^2.0.8
 
 dev_dependencies:
   flutter_test:

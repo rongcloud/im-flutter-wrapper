@@ -1,8 +1,7 @@
 import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
 
 class RCIMConverter {
-
-    static Map<String, Function> decodeMap = {};
+  static Map<String, Function> decodeMap = {};
   static RCIMIWMessage convertMessage(Map<String, dynamic> json) {
     RCIMIWMessageType messageType =
         RCIMIWMessageType.values[json['messageType']];
@@ -10,7 +9,8 @@ class RCIMConverter {
     switch (messageType) {
       case RCIMIWMessageType.unknown:
       case RCIMIWMessageType.userCustom:
-        if (json['rawData'] != "" && decodeMap.containsKey(json['objectName'])) {
+        if (json['rawData'] != "" &&
+            decodeMap.containsKey(json['objectName'])) {
           return decodeMap[json['objectName']!]!(json);
         }
         return RCIMIWUnknownMessage.fromJson(json);
@@ -19,12 +19,22 @@ class RCIMConverter {
       case RCIMIWMessageType.text:
         return RCIMIWTextMessage.fromJson(json);
       case RCIMIWMessageType.voice:
+        var duration = json['duration'];
+        // web 端有返回 double 的情况
+        if (duration is double) {
+          json['duration'] = duration.ceil();
+        }
         return RCIMIWVoiceMessage.fromJson(json);
       case RCIMIWMessageType.image:
         return RCIMIWImageMessage.fromJson(json);
       case RCIMIWMessageType.file:
         return RCIMIWFileMessage.fromJson(json);
       case RCIMIWMessageType.sight:
+        var duration = json['duration'];
+        // web 端有返回 double 的情况
+        if (duration is double) {
+          json['duration'] = duration.ceil();
+        }
         return RCIMIWSightMessage.fromJson(json);
       case RCIMIWMessageType.gif:
         return RCIMIWGIFMessage.fromJson(json);

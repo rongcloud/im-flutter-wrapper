@@ -519,7 +519,7 @@ const cancelDownloadingMediaMessage = {
       "key": "messageId",
       "type": "String",
       "hint": "",
-      "lable": "请输入引用的消息 Id",
+      "lable": "请输入需要取消的消息 Id",
     },
   ],
   "action": engine_fun.cancelDownloadingMediaMessage,
@@ -744,8 +744,7 @@ const clearMessages = {
       "key": "timestamp",
       "type": "String",
       "hint": "",
-      "lable":
-          "清除消息截止时间戳，0 <= recordTime <= 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 recordTime 的消息",
+      "lable": "清除消息截止时间戳，0 <= recordTime <= 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 recordTime 的消息",
     },
     {
       "key": "policy",

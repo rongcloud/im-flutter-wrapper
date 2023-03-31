@@ -38,7 +38,9 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
-  <script type="text/javascript" src="src/WebIMWrapper-0.0.1-alpha.5.js"></script>
+  
+  <!-- 使用 Web 必须先依赖 Web SDK，开发者可将这行代码复制到自己的项目中。-->
+  <script type="text/javascript" src="./node_modules/web-im-wrapper/index.umd.js"></script>
 </head>
 <body>
   <script>

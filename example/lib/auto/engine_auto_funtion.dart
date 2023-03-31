@@ -53,6 +53,12 @@ connect(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "connect";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -77,6 +83,12 @@ disconnect(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "disconnect";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -209,6 +221,12 @@ loadConversation(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversation";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -263,6 +281,12 @@ getConversation(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversation";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -303,6 +327,12 @@ loadConversations(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversations";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -376,6 +406,12 @@ getConversations(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversations";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -422,6 +458,12 @@ removeConversation(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeConversation";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -466,6 +508,12 @@ removeConversations(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeConversations";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -496,6 +544,12 @@ loadUnreadCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -550,6 +604,12 @@ getUnreadCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -568,6 +628,12 @@ loadTotalUnreadCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadTotalUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -611,6 +677,12 @@ getTotalUnreadCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getTotalUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -641,6 +713,12 @@ loadUnreadMentionedCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -695,6 +773,12 @@ getUnreadMentionedCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -712,6 +796,7 @@ loadUltraGroupAllUnreadCount() async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupAllUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -754,6 +839,12 @@ getUltraGroupAllUnreadCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupAllUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -771,6 +862,7 @@ loadUltraGroupAllUnreadMentionedCount() async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupAllUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -813,6 +905,12 @@ getUltraGroupAllUnreadMentionedCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupAllUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -836,6 +934,12 @@ loadUltraGroupUnreadCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -883,6 +987,12 @@ getUltraGroupUnreadCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -906,6 +1016,12 @@ loadUltraGroupUnreadMentionedCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -953,6 +1069,12 @@ getUltraGroupUnreadMentionedCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupUnreadMentionedCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -989,6 +1111,12 @@ loadUnreadCountByConversationTypes(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadCountByConversationTypes";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1050,6 +1178,12 @@ getUnreadCountByConversationTypes(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadCountByConversationTypes";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1103,6 +1237,12 @@ clearUnreadCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearUnreadCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1155,6 +1295,12 @@ saveDraftMessage(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "saveDraftMessage";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1185,6 +1331,12 @@ loadDraftMessage(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadDraftMessage";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1239,6 +1391,12 @@ getDraftMessage(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getDraftMessage";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1285,6 +1443,12 @@ clearDraftMessage(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearDraftMessage";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1313,6 +1477,12 @@ loadBlockedConversations(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBlockedConversations";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1373,6 +1543,12 @@ getBlockedConversations(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBlockedConversations";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1427,6 +1603,12 @@ changeConversationTopStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationTopStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1457,6 +1639,12 @@ loadConversationTopStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationTopStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1511,6 +1699,12 @@ getConversationTopStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationTopStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1565,6 +1759,12 @@ syncConversationReadStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "syncConversationReadStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1601,6 +1801,12 @@ sendTypingStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "sendTypingStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1655,6 +1861,12 @@ loadMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1742,6 +1954,12 @@ getMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1794,6 +2012,12 @@ loadFirstUnreadMessage(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadFirstUnreadMessage";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1848,6 +2072,12 @@ getFirstUnreadMessage(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getFirstUnreadMessage";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1878,6 +2108,12 @@ loadUnreadMentionedMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadMentionedMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -1939,6 +2175,12 @@ getUnreadMentionedMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadMentionedMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2016,6 +2258,12 @@ clearMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2090,6 +2338,12 @@ sendPrivateReadReceiptMessage(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "sendPrivateReadReceiptMessage";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2162,6 +2416,12 @@ updateMessageExpansion(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "updateMessageExpansion";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2207,6 +2467,12 @@ removeMessageExpansionForKeys(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeMessageExpansionForKeys";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2252,6 +2518,12 @@ changeMessageSentStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeMessageSentStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2297,6 +2569,12 @@ changeMessageReceiveStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeMessageReceiveStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2350,6 +2628,12 @@ joinChatRoom(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "joinChatRoom";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2390,6 +2674,12 @@ leaveChatRoom(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "leaveChatRoom";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2431,6 +2721,12 @@ loadChatRoomMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadChatRoomMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2504,6 +2800,12 @@ getChatRoomMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getChatRoomMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2571,6 +2873,12 @@ addChatRoomEntry(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addChatRoomEntry";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2642,6 +2950,12 @@ addChatRoomEntries(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addChatRoomEntries";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2671,6 +2985,12 @@ loadChatRoomEntry(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadChatRoomEntry";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2724,6 +3044,12 @@ getChatRoomEntry(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getChatRoomEntry";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2747,6 +3073,12 @@ loadChatRoomAllEntries(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadChatRoomAllEntries";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2794,6 +3126,12 @@ getChatRoomAllEntries(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getChatRoomAllEntries";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2846,6 +3184,12 @@ removeChatRoomEntry(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeChatRoomEntry";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2898,6 +3242,12 @@ removeChatRoomEntries(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeChatRoomEntries";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2938,6 +3288,12 @@ addToBlacklist(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addToBlacklist";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -2978,6 +3334,12 @@ removeFromBlacklist(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeFromBlacklist";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3001,6 +3363,12 @@ loadBlacklistStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBlacklistStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3048,6 +3416,12 @@ getBlacklistStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBlacklistStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3065,6 +3439,7 @@ loadBlacklist() async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBlacklist";
   resultCode["code"] = (code ?? -1).toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3107,6 +3482,12 @@ getBlacklist(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBlacklist";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3188,6 +3569,12 @@ searchMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3281,6 +3668,12 @@ searchMessagesByTimeRange(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchMessagesByTimeRange";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3362,6 +3755,12 @@ searchMessagesByUserId(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchMessagesByUserId";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3439,6 +3838,12 @@ searchConversations(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchConversations";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3491,6 +3896,12 @@ changeNotificationQuietHours(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeNotificationQuietHours";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3525,6 +3936,12 @@ removeNotificationQuietHours(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeNotificationQuietHours";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3542,6 +3959,7 @@ loadNotificationQuietHours() async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadNotificationQuietHours";
   resultCode["code"] = (code ?? -1).toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3587,6 +4005,12 @@ getNotificationQuietHours(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getNotificationQuietHours";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3641,6 +4065,12 @@ changeConversationNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3671,6 +4101,12 @@ loadConversationNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3726,6 +4162,12 @@ getConversationNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3772,6 +4214,12 @@ changeConversationTypeNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationTypeNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3795,6 +4243,12 @@ loadConversationTypeNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationTypeNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3842,6 +4296,12 @@ getConversationTypeNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationTypeNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3889,6 +4349,12 @@ changeUltraGroupDefaultNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeUltraGroupDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3912,6 +4378,12 @@ loadUltraGroupDefaultNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -3959,6 +4431,12 @@ getUltraGroupDefaultNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4009,6 +4487,12 @@ changeUltraGroupChannelDefaultNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeUltraGroupChannelDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4033,6 +4517,12 @@ loadUltraGroupChannelDefaultNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupChannelDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4083,6 +4573,12 @@ getUltraGroupChannelDefaultNotificationLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupChannelDefaultNotificationLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4123,6 +4619,12 @@ changePushContentShowStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changePushContentShowStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4162,6 +4664,12 @@ changePushLanguage(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changePushLanguage";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4202,6 +4710,12 @@ changePushReceiveStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changePushReceiveStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4243,6 +4757,12 @@ loadMessageCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadMessageCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4297,6 +4817,12 @@ getMessageCount(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getMessageCount";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4325,6 +4851,12 @@ loadTopConversations(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadTopConversations";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4384,6 +4916,12 @@ getTopConversations(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getTopConversations";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4431,6 +4969,12 @@ syncUltraGroupReadStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "syncUltraGroupReadStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4460,6 +5004,12 @@ loadConversationsForAllChannel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationsForAllChannel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4520,6 +5070,12 @@ getConversationsForAllChannel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationsForAllChannel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4592,6 +5148,12 @@ clearUltraGroupMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearUltraGroupMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4639,6 +5201,12 @@ sendUltraGroupTypingStatus(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "sendUltraGroupTypingStatus";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4686,6 +5254,12 @@ clearUltraGroupMessagesForAllChannel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearUltraGroupMessagesForAllChannel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4754,6 +5328,12 @@ getBatchRemoteUltraGroupMessages(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBatchRemoteUltraGroupMessages";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4809,6 +5389,12 @@ updateUltraGroupMessageExpansion(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "updateUltraGroupMessageExpansion";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4856,6 +5442,12 @@ removeUltraGroupMessageExpansionForKeys(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeUltraGroupMessageExpansionForKeys";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }
@@ -4879,6 +5471,30 @@ changeLogLevel(Map arg) async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeLogLevel";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getDeltaTime_call
+int? ret = await engine?.getDeltaTime();
+//fun_getDeltaTime_call
+*/
+
+getDeltaTime() async {
+  int? code = await IMEngineManager().engine?.getDeltaTime();
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getDeltaTime";
+  resultCode["code"] = (code ?? -1).toString();
+
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";
   }

@@ -1,7 +1,18 @@
-#
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint im_interface_wrapper_flutter.podspec` to validate before publishing.
-#
+im_sdk_version = 'Unknown'
+
+config = File.expand_path(File.join('..', '..', 'version.config'), __FILE__)
+
+File.foreach(config) do |line|
+    matches = line.match(/ios_im_sdk_version\=(.*)/)
+    if matches
+      im_sdk_version = matches[1].split("#")[0].strip
+    end
+end
+
+if im_sdk_version == 'Unknown'
+    raise "You need to config ios_im_sdk_version in version.config!!"
+end
+
 Pod::Spec.new do |s|
   s.name             = 'rongcloud_im_wrapper_plugin'
   s.version          = '0.0.1'
@@ -22,6 +33,6 @@ Pod::Spec.new do |s|
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' }
-  s.dependency 'RongCloudIM/IMLibCore', '5.3.3'
-  s.dependency 'RongCloudIM/ChatRoom', '5.3.3'
+  s.dependency 'RongCloudIM/IMLibCore', im_sdk_version
+  s.dependency 'RongCloudIM/ChatRoom', im_sdk_version
 end

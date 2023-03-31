@@ -1016,7 +1016,7 @@ __deprecated_msg("Use [RCIMIWEngine getConversationTopStatus:targetId:success:er
 
 - (NSInteger)getConversationTopStatus:(RCIMIWConversationType)type
                              targetId:(NSString *)targetId
-                              success:(nullable void (^)(Boolean top))successBlock
+                              success:(nullable void (^)(BOOL top))successBlock
                                 error:(nullable void (^)(NSInteger code))errorBlock;
 
 /**
@@ -1033,7 +1033,7 @@ __deprecated_msg("Use [RCIMIWEngine getConversationTopStatus:targetId:channelId:
 - (NSInteger)getConversationTopStatus:(RCIMIWConversationType)type
                              targetId:(NSString *)targetId
                             channelId:(nullable NSString *)channelId
-                              success:(nullable void (^)(Boolean top))successBlock
+                              success:(nullable void (^)(BOOL top))successBlock
                                 error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)loadTopConversations:(NSArray<NSNumber *> *)conversationTypes
@@ -1821,6 +1821,15 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
 - (NSInteger)getUltraGroupUnreadMentionedCount:(NSString *)targetId
                                        success:(nullable void (^)(NSInteger count))successBlock
                                          error:(nullable void (^)(NSInteger code))errorBlock;
+/*!
+ 获取当前手机与服务器的时间差
+
+ @return 时间差
+ @discussion 消息发送成功后，SDK 会与服务器同步时间，消息所在数据库中存储的时间就是服务器时间。
+
+ @remarks 数据获取
+ */
+- (long long)getDeltaTime;
 
 @end
 

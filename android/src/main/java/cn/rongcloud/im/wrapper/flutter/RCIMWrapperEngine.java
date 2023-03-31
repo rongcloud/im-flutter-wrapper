@@ -712,6 +712,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       case "engine:changeLogLevel":
         changeLogLevel(call, result);
         break;
+
+      case "engine:getDeltaTime":
+        getDeltaTime(call, result);
+        break;
     }
   }
 
@@ -2871,6 +2875,15 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       RCIMIWLogLevel level = RCIMWrapperArgumentAdapter.toRCIMIWLogLevel(call.argument("level"));
 
       code = engine.changeLogLevel(level);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getDeltaTime(@NonNull MethodCall call, @NonNull Result result) {
+    long code = 0;
+    if (engine != null) {
+
+      code = engine.getDeltaTime();
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }

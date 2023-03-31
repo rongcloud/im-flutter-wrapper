@@ -3,7 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rongcloud_im_wrapper_plugin_example/im_interface/options.dart';
+import 'package:rongcloud_im_wrapper_plugin_example/im_interface/options.dart'
+    if (dart.library.html) 'package:rongcloud_im_wrapper_plugin_example/im_interface/options_web.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/route.dart';
 
 import '../auto/bottom_view.dart';
@@ -72,7 +73,8 @@ class _MyAppState extends State<MyApp> {
                   itemBuilder: (BuildContext context, int index) {
                     var param = params[index];
                     // 文本框
-                    if (param['type'] == "String" || param['type'] == "number") {
+                    if (param['type'] == "String" ||
+                        param['type'] == "number") {
                       return SizedBox(
                           child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +90,9 @@ class _MyAppState extends State<MyApp> {
                             ),
                           ),
                           TextField(
-                            keyboardType: param['type'] == "String" ? TextInputType.text : TextInputType.number,
+                            keyboardType: param['type'] == "String"
+                                ? TextInputType.text
+                                : TextInputType.number,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(left: 10),
                               hintText: param["hint"],
@@ -126,7 +130,7 @@ class _MyAppState extends State<MyApp> {
                         onPressed: () {
                           Navigator.of(context).pop();
                           result['context'] = _scaffoldKey.currentContext;
-                          if (params != null) {
+                          if (params.length > 0) {
                             map['action'].call(result);
                           } else {
                             map['action'];
@@ -162,14 +166,14 @@ class _MyAppState extends State<MyApp> {
 
   getMethodName(String text) {
     try {
-      if (kIsWeb) {
+      if (kIsWeb && text.contains('function')) {
         var sub = text.substring(text.indexOf('function'));
         var result = sub.substring(0, sub.indexOf('('));
         return result.split(' ')[1];
       }
       return text.split('\'')[1];
     } catch (e) {
-      print(text);
+      print("getMethodName text: $text, error:$e");
     }
   }
 
@@ -203,7 +207,8 @@ class _MyAppState extends State<MyApp> {
                             itemBuilder: (BuildContext context, int index) {
                               return ExpansionTile(
                                 title: Text(titleList[index]),
-                                children: _buildExpansionSubWidget(titleList[index]),
+                                children:
+                                    _buildExpansionSubWidget(titleList[index]),
                               );
                             })),
                     Container(

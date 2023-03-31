@@ -63,8 +63,7 @@ const changeNotificationQuietHours = {
       "key": "level",
       "type": "String",
       "hint": "",
-      "lable":
-          "请输入通知级别 \n 0:未设置（向上查询群或者APP级别设置）存量数据中0表示未设置\n 1:群聊超级群仅@消息通知，单聊代表消息不通知 \n 2:消息通知被屏蔽，即不接收消息通知",
+      "lable": "请输入通知级别 \n 0:未设置（向上查询群或者APP级别设置）存量数据中0表示未设置\n 1:群聊超级群仅@消息通知，单聊代表消息不通知 \n 2:消息通知被屏蔽，即不接收消息通知",
     },
   ],
   "action": engine_fun.changeNotificationQuietHours,
@@ -129,4 +128,9 @@ const changeLogLevel = {
     },
   ],
   "action": engine_fun.changeLogLevel,
+};
+
+const getDeltaTime = {
+  "title": "获取时间差",
+  "action": engine_fun.getDeltaTime,
 };

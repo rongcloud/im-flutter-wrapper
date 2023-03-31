@@ -1,7 +1,8 @@
 name: rongcloud_im_wrapper_plugin
 description: Rongcloud IM interface wrapper for flutter.
-version: 5.3.3
+version: 5.4.0
 homepage: https://www.rongcloud.cn/
+repository: https://github.com/rongcloud/im-flutter-wrapper
 
 environment:
   sdk: ">=2.15.0 <3.0.0"
@@ -11,6 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  flutter_web_plugins:
+    sdk: flutter
+  js: ^0.6.4
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +37,9 @@ flutter:
         pluginClass: RCIMWrapperPlugin
       ios:
         pluginClass: RCIMWrapperPlugin
+      web:
+        pluginClass: RCIMWrapperPluginWeb
+        fileName: rongcloud_im_wrapper_plugin_web.dart  
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

@@ -136,6 +136,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *channelIdHW;
 
 /*!
+ 华为推送消息分类
+ 
+ 社交通讯:即时通讯[IM],音频、视频通话[VOIP]
+ 服务提醒:订阅[SUBSCRIPTION],出行[TRAVEL],健康[HEALTH],工作事项提醒[WORK],帐号动态[ACCOUNT],订单&物流[EXPRESS],财务[FINANCE],系统提示[SYSTEM_REMINDER],邮件[MAIL]
+ 资讯营销类:内容资讯/新闻/财经动态/生活资讯/社交动态/调研/其他[MARKETING]
+ 营销活动:产品促销/功能推荐/运营活动/MARKETING
+ 更多信息请参考华为消息分类标准文档: https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/message-classification-0000001149358835
+ 
+ @discussion 默认值为 null，如果为 null，则以服务配置为准
+ 
+ @since 5.4.0
+ */
+@property (nonatomic, copy) NSString *categoryHW;
+
+/*!
  OPPO 的渠道 ID
  该条消息针对 OPPO 使用的推送渠道，如开发者集成了 OPPO 推送，需要指定 channelId 时，可向 Android 端研发人员获取，channelId 由开发者自行创建。
  */

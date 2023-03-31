@@ -312,11 +312,13 @@ const loadUltraGroupChannelDefaultNotificationLevel = {
 
 const loadUltraGroupAllUnreadCount = {
   "title": "所有超级群会话的未读消息数的总和",
+  "params": [],
   "action": engine_auto_fun.getUltraGroupAllUnreadCount,
 };
 
 const loadUltraGroupAllUnreadMentionedCount = {
   "title": "所有超级群会话中的未读 @ 消息数的总和",
+  "params": [],
   "action": engine_auto_fun.getUltraGroupAllUnreadMentionedCount,
 };
 

@@ -318,6 +318,8 @@ static RCIMWrapperEngine *instance = nil;
     [self removeUltraGroupMessageExpansionForKeys:call result:result];
   } else if ([@"engine:changeLogLevel" isEqualToString:call.method]) {
     [self changeLogLevel:call result:result];
+  } else if ([@"engine:getDeltaTime" isEqualToString:call.method]) {
+    [self getDeltaTime:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -1608,11 +1610,11 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
     NSString *channelId = arguments[@"channelId"];
-    void (^success)(Boolean top) = nil;
+    void (^success)(BOOL top) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
-      success = ^(Boolean top) {
+      success = ^(BOOL top) {
         NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
         [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
         [arguments setValue:@(top) forKey:@"t"];
@@ -4109,6 +4111,17 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWLogLevel level = [RCIMWrapperArgumentAdapter convertLogLevelFromInteger:[(NSNumber *)arguments[@"level"] integerValue]];
 
     code = [self.engine changeLogLevel:level];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getDeltaTime:(FlutterMethodCall *)call result:(FlutterResult)result {
+  long long code;
+  if (self.engine != nil) {
+
+    code = [self.engine getDeltaTime];
   }
   dispatch_to_main_queue(^{
     result(@(code));

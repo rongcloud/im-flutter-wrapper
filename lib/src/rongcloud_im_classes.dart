@@ -45,6 +45,7 @@ class RCIMIWAndroidPushOptions {
   /// 华为的渠道 ID
   /// 该条消息针对华为使用的推送渠道，如开发者集成了华为推送，需要指定 channelId 时，可向 Android 端研发人员获取，channelId 由开发者自行创建。
   String? channelIdHW;
+  String? categoryHW;
 
   /// OPPO 的渠道 ID。
   /// 该条消息针对 OPPO 使用的推送渠道，如开发者集成了 OPPO 推送，需要指定 channelId 时，可向 Android 端研发人员获取，channelId 由开发者自行创建。
@@ -79,6 +80,7 @@ class RCIMIWAndroidPushOptions {
     this.notificationId,
     this.channelIdMi,
     this.channelIdHW,
+    this.categoryHW,
     this.channelIdOPPO,
     this.pushTypeVIVO,
     this.collapseKeyFCM,
@@ -94,6 +96,7 @@ class RCIMIWAndroidPushOptions {
     json['notificationId'] = notificationId;
     json['channelIdMi'] = channelIdMi;
     json['channelIdHW'] = channelIdHW;
+    json['categoryHW'] = categoryHW;
     json['channelIdOPPO'] = channelIdOPPO;
     json['pushTypeVIVO'] = pushTypeVIVO?.index;
     json['collapseKeyFCM'] = collapseKeyFCM;
@@ -109,6 +112,7 @@ class RCIMIWAndroidPushOptions {
     notificationId = json['notificationId'];
     channelIdMi = json['channelIdMi'];
     channelIdHW = json['channelIdHW'];
+    categoryHW = json['categoryHW'];
     channelIdOPPO = json['channelIdOPPO'];
     pushTypeVIVO = json['pushTypeVIVO'] == null ? null : RCIMIWVIVOPushType.values[json['pushTypeVIVO']];
     collapseKeyFCM = json['collapseKeyFCM'];
@@ -337,6 +341,9 @@ class RCIMIWEngineOptions {
 
   /// 压缩项配置
   RCIMIWCompressOptions? compressOptions;
+
+  /// 日志级别
+  RCIMIWLogLevel? logLevel;
   RCIMIWPushOptions? pushOptions;
   bool? enablePush;
   bool? enableIPC;
@@ -347,6 +354,7 @@ class RCIMIWEngineOptions {
     this.statisticServer,
     this.kickReconnectDevice,
     this.compressOptions,
+    this.logLevel,
     this.pushOptions,
     this.enablePush,
     this.enableIPC,
@@ -359,6 +367,7 @@ class RCIMIWEngineOptions {
     json['statisticServer'] = statisticServer;
     json['kickReconnectDevice'] = kickReconnectDevice;
     json['compressOptions'] = compressOptions?.toJson();
+    json['logLevel'] = logLevel?.index;
     json['pushOptions'] = pushOptions?.toJson();
     json['enablePush'] = enablePush;
     json['enableIPC'] = enableIPC;
@@ -373,6 +382,7 @@ class RCIMIWEngineOptions {
     if (json['compressOptions'] != null) {
       compressOptions = RCIMIWCompressOptions.fromJson(Map<String, dynamic>.from(json['compressOptions']));
     }
+    logLevel = json['logLevel'] == null ? null : RCIMIWLogLevel.values[json['logLevel']];
     if (json['pushOptions'] != null) {
       pushOptions = RCIMIWPushOptions.fromJson(Map<String, dynamic>.from(json['pushOptions']));
     }
@@ -680,6 +690,9 @@ class RCIMIWMediaMessage extends RCIMIWMessage {
   /// 远端路径
   String? remote;
 
+  /// Flutter For Web 端选取的文件（移动端使用无效）
+  dynamic file;
+
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = super.toJson();
@@ -868,6 +881,9 @@ class RCIMIWLocationMessage extends RCIMIWMessage {
 
   /// 缩略图地址
   String? thumbnailPath;
+
+  /// 缩略图 base64 字符串 （ Flutter For Web 端使用这个，移动端使用 thumbnailPath ）
+  String? thumbnailBase64;
 
   @override
   Map<String, dynamic> toJson() {
@@ -1082,22 +1098,22 @@ class RCIMIWConversation {
   /// 获取会话类型
   RCIMIWConversationType? conversationType;
 
-  /// 会话 ID
+  /// 会话 ID，单聊时为接收方 ID，群组会话中为群组 ID，聊天室会话中为聊天室 ID，系统会话为开发者指定的系统账号 Id
   String? targetId;
 
-  /// 获取渠道 ID
+  /// 频道 ID
   String? channelId;
 
-  /// 获取未读消息数。
+  /// 当前会话未读消息数量
   int? unreadCount;
 
-  /// 获取本会话里自己被 @ 的消息数量。
+  /// 本会话里自己被 @ 的消息数量
   int? mentionedCount;
 
-  /// 获取置顶状态
+  /// 本会话是否置顶
   bool? top;
 
-  /// 会话草稿
+  /// 会话里保存的草稿信息
   String? draft;
 
   /// 获取最后一条消息

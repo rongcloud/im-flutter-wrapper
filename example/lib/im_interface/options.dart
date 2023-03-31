@@ -29,6 +29,7 @@ const subList = {
     other.changePushLanguage,
     other.changePushReceiveStatus,
     other.changeLogLevel,
+    other.getDeltaTime,
   ],
   "聊天室相关": [
     chatroom.joinChatRoom,

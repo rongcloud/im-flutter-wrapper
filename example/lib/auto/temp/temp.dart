@@ -912,4 +912,12 @@ const changeLogLevel = {
   "action": engine_fun.changeLogLevel,
 };
 
+const getDeltaTime = {
+  "title": "getDeltaTime",
+  "params": [
+    
+  ],
+  "action": engine_fun.getDeltaTime,
+};
+
 */
