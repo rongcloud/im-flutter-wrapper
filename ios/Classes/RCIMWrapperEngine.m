@@ -4167,6 +4167,20 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)onConversationNotificationLevelSynced:(RCIMIWConversationType)type targetId:(NSString *)targetId channelId:(NSString *)channelId level:(RCIMIWPushNotificationLevel)level {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertConversationTypeToInteger:type]) forKey:@"type"];
+  [arguments setValue:targetId forKey:@"targetId"];
+  [arguments setValue:channelId forKey:@"channelId"];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertPushNotificationLevelToInteger:level]) forKey:@"level"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onConversationNotificationLevelSynced" arguments:arguments.copy];
+  });
+}
+
 - (void)onRemoteMessageRecalled:(RCIMIWMessage *)message {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];

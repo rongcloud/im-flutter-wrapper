@@ -2015,6 +2015,20 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         log("[RC:Flutter] engine:onConversationTopStatusSynced invoke finished");
         break;
 
+      case 'engine:onConversationNotificationLevelSynced':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWConversationType? type =
+            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        String? targetId = arguments['targetId'];
+        String? channelId = arguments['channelId'];
+        RCIMIWPushNotificationLevel? level =
+            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+
+        engine?.onConversationNotificationLevelSynced?.call(type, targetId, channelId, level);
+        log("[RC:Flutter] engine:onConversationNotificationLevelSynced invoke finished");
+        break;
+
       case 'engine:onRemoteMessageRecalled':
         Map<dynamic, dynamic> arguments = call.arguments;
 

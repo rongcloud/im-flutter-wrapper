@@ -201,11 +201,10 @@ Future sendTextMessage(Map arg) async {
     return;
   }
 
-  textMessage.pushOptions = RCIMIWMessagePushOptions.create(
-    disableNotification: false,
-    pushContent: arg['pushContent'],
-    pushData: arg['pushData'],
-  );
+  String categoryVivo = arg['categoryVivo'] ?? "";
+  RCIMIWVIVOPushType pushTypeVIVO = RCIMIWVIVOPushType.values[int.parse(arg['pushTypeVIVO'] ?? "0")];
+  RCIMIWAndroidPushOptions androidPushOptions = RCIMIWAndroidPushOptions.create(categoryVivo: categoryVivo, pushTypeVIVO: pushTypeVIVO);
+  textMessage.pushOptions = RCIMIWMessagePushOptions.create(disableNotification: false, pushContent: arg['pushContent'], pushData: arg['pushData'], androidPushOptions: androidPushOptions);
 
   if (arg['Mentioned'] != null) {
     RCIMIWMentionedType mentionedType =

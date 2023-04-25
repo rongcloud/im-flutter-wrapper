@@ -75,6 +75,7 @@ class RCIMIWAndroidPushOptions {
   /// FCM 通知的频道 ID，该应用程序必须使用此频道 ID 创建一个频道，然后才能收到带有该频道 ID 的任何通知。
   /// 如果您未在请求中发送此频道 ID，或者如果应用尚未创建提供的频道 ID，则 FCM 使用应用清单中指定的频道 ID。
   String? channelIdFCM;
+  String? categoryVivo;
 
   RCIMIWAndroidPushOptions.create({
     this.notificationId,
@@ -89,6 +90,7 @@ class RCIMIWAndroidPushOptions {
     this.imageUrlHW,
     this.imageUrlMi,
     this.channelIdFCM,
+    this.categoryVivo,
   });
 
   Map<String, dynamic> toJson() {
@@ -105,6 +107,7 @@ class RCIMIWAndroidPushOptions {
     json['imageUrlHW'] = imageUrlHW;
     json['imageUrlMi'] = imageUrlMi;
     json['channelIdFCM'] = channelIdFCM;
+    json['categoryVivo'] = categoryVivo;
     return json;
   }
 
@@ -121,6 +124,7 @@ class RCIMIWAndroidPushOptions {
     imageUrlHW = json['imageUrlHW'];
     imageUrlMi = json['imageUrlMi'];
     channelIdFCM = json['channelIdFCM'];
+    categoryVivo = json['categoryVivo'];
   }
 }
 
@@ -494,7 +498,7 @@ class RCIMIWMessage {
   /// 所属会话的业务标识，长度限制 20 字符
   String? channelId;
 
-  /// 本地存储的消息的唯一值（数据库索引唯一值）
+  /// 本地数据库中存储的消息的唯一 ID 值。发送新消息时无需指定该 ID，否则会导致消息入库失败。在失败重发消息时，可以填入已入库的消息的 ID，请确保使用上一次发送失败的消息实例。
   int? messageId;
 
   /// 服务器消息唯一 ID（在同一个 Appkey 下全局唯一）
@@ -882,7 +886,7 @@ class RCIMIWLocationMessage extends RCIMIWMessage {
   /// 缩略图地址
   String? thumbnailPath;
 
-  /// 缩略图 base64 字符串 （ Flutter For Web 端使用这个，移动端使用 thumbnailPath ）
+  /// 缩略图 base64 字符串 （仅限 Flutter For Web 端使用）
   String? thumbnailBase64;
 
   @override

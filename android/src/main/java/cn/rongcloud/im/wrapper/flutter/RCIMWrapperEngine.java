@@ -2944,6 +2944,28 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     }
 
     @Override
+    public void onConversationNotificationLevelSynced(
+        RCIMIWConversationType type,
+        String targetId,
+        String channelId,
+        RCIMIWPushNotificationLevel level) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("type", type.ordinal());
+      arguments.put("targetId", targetId);
+      arguments.put("channelId", channelId);
+      arguments.put("level", level.ordinal());
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onConversationNotificationLevelSynced", arguments);
+            }
+          });
+    }
+
+    @Override
     public void onRemoteMessageRecalled(RCIMIWMessage message) {
       final HashMap<String, Object> arguments = new HashMap<>();
 

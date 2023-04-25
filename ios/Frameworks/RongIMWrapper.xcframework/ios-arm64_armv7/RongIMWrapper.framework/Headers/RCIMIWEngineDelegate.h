@@ -269,11 +269,10 @@ NS_ASSUME_NONNULL_BEGIN
                            channelId:(NSString *)channelId
                        conversations:(nullable NSArray<RCIMIWConversation *> *)conversations;
 
-// 暂时注释，原生功能还未开发完成
-//- (void)onConversationNotificationStatusSynced:(RCIMIWConversationType)type
-//                                      targetId:(NSString *)targetId
-//                                     channelId:(NSString *)channelId
-//                                        status:(RCIMIWNotificationStatus)status;
+- (void)onConversationNotificationLevelSynced:(RCIMIWConversationType)type
+                                      targetId:(NSString *)targetId
+                                     channelId:(NSString *)channelId
+                                         level:(RCIMIWPushNotificationLevel)level;
 
 - (void)onConversationTypeNotificationLevelChanged:(NSInteger)code
                                               type:(RCIMIWConversationType)type

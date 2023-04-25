@@ -42,7 +42,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// timeLimit <= 0，则 IM 将一直连接，直到连接成功或者无法连接（如 token 非法）
   /// timeLimit > 0，则 IM 将最多连接 timeLimit 秒
   /// 如果在 timeLimit 秒内连接成功，后面再发生了网络变化或前后台切换，SDK 会自动重连； 如果在 timeLimit 秒无法连接成功则不再进行重连，通过 listener 告知连接超时，您需要再自行调用 connect 接口
-  /// - [callback] 链接事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 链接事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] 接口回调可以监听 [onConnected]
   Future<int> connect(String token, int timeout, {RCIMIWConnectCallback? callback}) async {
@@ -166,7 +166,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 发送普通消息
   /// - [message] 发送的消息实体
-  /// - [callback] 发送消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 发送消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] 接口回调可以监听 [onMessageAttached],[onMessageSent]
   Future<int> sendMessage(RCIMIWMessage message, {RCIMIWSendMessageCallback? callback}) async {
@@ -184,7 +184,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 取消发送媒体消息
   /// - [message] 需要取消发送的媒体消息实体
-  /// - [callback] 取消发送媒体消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 取消发送媒体消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] 接口回调可以监听 [onSendingMediaMessageCanceled]
   /// 此接口不支持 Flutter For Web 端
@@ -205,7 +205,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 取消下载媒体消息
   /// - [message] 需要取消下载的媒体消息实体
-  /// - [callback] 取消下载媒体消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 取消下载媒体消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDownloadingMediaMessageCanceled]
   /// 此接口不支持 Flutter For Web 端
@@ -229,7 +229,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
-  /// - [callback] 获取会话事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 获取会话事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationLoaded]
   Future<int> getConversation(RCIMIWConversationType type, String targetId, String? channelId,
@@ -255,7 +255,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可
   /// - [startTime]    时间戳（毫秒），获取小于此时间戳的会话，传 0 为查询最新数据
   /// - [count]   查询的数量， 0 < count <= 50
-  /// - [callback]     获取会话列表事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback]     获取会话列表事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoaded]
   Future<int> getConversations(
@@ -268,7 +268,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
-  /// - [callback] 移除会话事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 移除会话事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationRemoved]
   Future<int> removeConversation(RCIMIWConversationType type, String targetId, String? channelId,
@@ -279,7 +279,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 根据会话类型移除会话
   /// - [conversationTypes] 会话类型集合
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback]     移除会话列表事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback]     移除会话列表事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsRemoved]
   /// 此接口不支持 Flutter For Web 端
@@ -305,7 +305,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 获取会话未读数事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 获取会话未读数事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountLoaded]
   Future<int> getUnreadCount(RCIMIWConversationType type, String targetId, String? channelId,
@@ -325,7 +325,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取所有未读数
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 获取所有未读数事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 获取所有未读数事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onTotalUnreadCountLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
@@ -350,7 +350,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 获取会话中未读的 @ 消息数量事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 获取会话中未读的 @ 消息数量事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadMentionedCountLoaded]
   Future<int> getUnreadMentionedCount(RCIMIWConversationType type, String targetId, String? channelId,
@@ -367,7 +367,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   }
 
   /// 获取当前用户加入的所有超级群会话的未读消息数的总和。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupAllUnreadCountLoaded]
   Future<int> getUltraGroupAllUnreadCount({IRCIMIWGetUltraGroupAllUnreadCountCallback? callback}) async {
@@ -383,7 +383,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   }
 
   /// 获取当前用户加入的所有超级群会话中的未读 @ 消息数的总和。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupAllUnreadMentionedCountLoaded]
   Future<int> getUltraGroupAllUnreadMentionedCount(
@@ -402,7 +402,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取指定会话的未读消息数
   /// - [targetId] 会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupUnreadCountLoaded]
   Future<int> getUltraGroupUnreadCount(String targetId, {IRCIMIWGetUltraGroupUnreadCountCallback? callback}) async {
@@ -420,7 +420,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取超级群会话中被 @ 的消息数
   /// - [targetId] 会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupUnreadMentionedCountLoaded]
   Future<int> getUltraGroupUnreadMentionedCount(String targetId,
@@ -447,7 +447,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [conversationTypes] 会话类型集合
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [contain]      是否包含免打扰消息的未读消息数。
-  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountByConversationTypesLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
@@ -463,7 +463,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [timestamp] 该会话已阅读的最后一条消息的发送时间戳，清除所有传入当前最新时间戳
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountCleared]
   Future<int> clearUnreadCount(RCIMIWConversationType type, String targetId, String? channelId, int timestamp,
@@ -476,7 +476,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [draft] 草稿的文字内容。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageSaved]
   Future<int> saveDraftMessage(RCIMIWConversationType type, String targetId, String? channelId, String draft,
@@ -499,7 +499,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageLoaded]
   Future<int> getDraftMessage(RCIMIWConversationType type, String targetId, String? channelId,
@@ -511,7 +511,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageCleared]
   Future<int> clearDraftMessage(RCIMIWConversationType type, String targetId, String? channelId,
@@ -533,7 +533,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 获取免打扰的会话列表。
   /// - [conversationTypes] 会话类型集合
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlockedConversationsLoaded]
   /// 在 Flutter For Web 端，此接口返回的会话对象数据中只有 targetId,channelId,conversationType 是正确的，其他值均为默认值
@@ -547,7 +547,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [top]  是否置顶
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTopStatusChanged]
   /// 此接口在 Flutter For Web 端不支持超级群
@@ -572,7 +572,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTopStatusLoaded]
   /// 此接口在 Flutter For Web 端不支持超级群
@@ -586,7 +586,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [timestamp] 会话中已读的最后一条消息的发送时间戳
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationReadStatusSynced]
   Future<int> syncConversationReadStatus(RCIMIWConversationType type, String targetId, String? channelId, int timestamp,
@@ -629,7 +629,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [order] 获取消息的方向。BEFORE：获取 sentTime 之前的消息 （时间递减），AFTER：获取 sentTime 之后的消息 （时间递增）
   /// - [policy] 消息的加载策略。LOCAL：只加载本地，REMOTE：只加载远端，LOCAL_REMOTE：本地远端都加载
   /// - [count] 获取的消息数量，0 < count <= 20
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesLoaded]
   Future<int> getMessages(RCIMIWConversationType type, String targetId, String? channelId, int sentTime,
@@ -640,7 +640,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 根据消息 id 获取消息体（本地数据库索引唯一值）。
   /// - [messageId] 消息的 messageId，可在消息对象中获取
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageById(int messageId, {IRCIMIWGetMessageCallback? callback}) async {
@@ -649,7 +649,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 通过全局唯一 id 获取消息实体。
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageByUId(String messageUId, {IRCIMIWGetMessageCallback? callback}) async {
@@ -672,7 +672,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onFirstUnreadMessageLoaded]
   /// 此接口不支持 Flutter For Web 端
@@ -697,7 +697,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadMentionedMessagesLoaded]
   /// 此接口不支持 Flutter For Web 端
@@ -708,7 +708,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 插入一条消息
   /// - [message] 插入的消息
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageInserted]
   /// 此接口不支持 Flutter For Web 端
@@ -718,7 +718,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 插入多条消息，不支持超级群
   /// - [messages] 插入的消息集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesInserted]
   /// 此接口不支持 Flutter For Web 端
@@ -732,7 +732,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [timestamp] 清除消息截止时间戳，0 <= recordTime <= 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 recordTime 的消息
   /// - [policy] 清除的策略
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesCleared]
   Future<int> clearMessages(RCIMIWConversationType type, String targetId, String? channelId, int timestamp,
@@ -743,7 +743,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 删除本地消息
   /// - [messages] 消息集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onLocalMessagesDeleted]
   /// 此接口不支持 Flutter For Web 端
@@ -756,7 +756,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messages] 消息集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesDeleted]
   Future<int> deleteMessages(
@@ -767,7 +767,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 撤回消息
   /// - [message] 需要被撤回的消息
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageRecalled]
   Future<int> recallMessage(RCIMIWMessage message, {IRCIMIWRecallMessageCallback? callback}) async {
@@ -778,7 +778,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [timestamp] 该会话中已读的最后一条消息的发送时间戳
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPrivateReadReceiptMessageSent]
   Future<int> sendPrivateReadReceiptMessage(String targetId, String? channelId, int timestamp,
@@ -788,7 +788,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 发起群聊消息已读回执请求
   /// - [message] 需要请求已读回执的消息
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onGroupReadReceiptRequestSent]
   Future<int> sendGroupReadReceiptRequest(RCIMIWMessage message,
@@ -800,7 +800,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messages] 会话中需要发送已读回执的消息列表
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onGroupReadReceiptResponseSent]
   Future<int> sendGroupReadReceiptResponse(String targetId, String? channelId, List<RCIMIWMessage> messages,
@@ -812,7 +812,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 每条消息携带扩展信息键值对最大值 300个，单次设置扩展信息键值对最大值 20个
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
   /// - [expansion] 要更新的消息扩展信息键值对，类型是 HashMap；Key 支持大小写英文字母、数字、部分特殊符号 + = - _ 的组合方式，不支持汉字。Value 可以输入空格
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageExpansionUpdated]
   Future<int> updateMessageExpansion(String messageUId, Map expansion,
@@ -823,7 +823,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 删除消息扩展信息中特定的键值对
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
   /// - [keys]  消息扩展信息中待删除的 key 的列表，类型是 ArrayList
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageExpansionForKeysRemoved]
   Future<int> removeMessageExpansionForKeys(String messageUId, List<String> keys,
@@ -834,7 +834,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 设置消息发送状态。
   /// - [messageId] 消息的 messageId，可在消息对象中获取
   /// - [sentStatus] 要修改的状态
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageSentStatusChanged]
   /// 此接口不支持 Flutter For Web 端
@@ -846,7 +846,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 设置消息接收状态。
   /// - [messageId] 消息的 messageId，可在消息对象中获取
   /// - [receivedStatus] 要修改的状态
-  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageReceiveStatusChanged]
   /// 此接口不支持 Flutter For Web 端
@@ -859,7 +859,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 聊天室会话 ID
   /// - [messageCount] 进入聊天室拉取消息数目，-1 时不拉取任何消息，0 时拉取 10 条消息，最多只能拉取 50
   /// - [autoCreate] 是否创建聊天室，TRUE 如果聊天室不存在，sdk 会创建聊天室并加入，如果已存在，则直接加入
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomJoined]
   Future<int> joinChatRoom(String targetId, int messageCount, bool autoCreate,
@@ -869,7 +869,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 退出聊天室。
   /// - [targetId] 聊天室会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomLeft]
   Future<int> leaveChatRoom(String targetId, {IRCIMIWLeaveChatRoomCallback? callback}) async {
@@ -895,7 +895,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [timestamp] 起始的消息发送时间戳
   /// - [order] 拉取顺序 0:倒序，1:正序
   /// - [count] 要获取的消息数量，0 < count <= 50。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomMessagesLoaded]
   Future<int> getChatRoomMessages(String targetId, int timestamp, RCIMIWTimeOrder order, int count,
@@ -909,7 +909,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [value]     聊天室属性对应的值，最大长度 4096 个字符
   /// - [deleteWhenLeft] 用户掉线或退出时，是否自动删除该 Key、Value 值
   /// - [overwrite] 如果当前 key 存在，是否进行覆盖
-  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntryAdded]
   Future<int> addChatRoomEntry(String targetId, String key, String value, bool deleteWhenLeft, bool overwrite,
@@ -922,7 +922,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [entries]   聊天室属性
   /// - [deleteWhenLeft] 用户掉线或退出时，是否自动删除该 Key、Value 值
   /// - [overwrite] 是否强制覆盖
-  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntriesAdded]
   Future<int> addChatRoomEntries(String targetId, Map entries, bool deleteWhenLeft, bool overwrite,
@@ -943,7 +943,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 获取聊天室单个属性。
   /// - [targetId] 聊天室会话 ID
   /// - [key] 聊天室属性键值
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntryLoaded]
   Future<int> getChatRoomEntry(String targetId, String key, {IRCIMIWGetChatRoomEntryCallback? callback}) async {
@@ -961,7 +961,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取聊天室所有属性。
   /// - [targetId] 聊天室会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomAllEntriesLoaded]
   Future<int> getChatRoomAllEntries(String targetId, {IRCIMIWGetChatRoomAllEntriesCallback? callback}) async {
@@ -972,7 +972,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 聊天室会话 ID
   /// - [key] 聊天室属性键值
   /// - [force] 是否强制删除
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntryRemoved]
   Future<int> removeChatRoomEntry(String targetId, String key, bool force,
@@ -984,7 +984,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 聊天室会话 ID
   /// - [keys] 聊天室属性
   /// - [force] 是否强制覆盖
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntriesRemoved]
   Future<int> removeChatRoomEntries(String targetId, List<String> keys, bool force,
@@ -995,7 +995,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 将某个用户加入黑名单。
   /// 当你把对方加入黑名单后，对方再发消息时，就会提示“已被加入黑名单，消息发送失败”。 但你依然可以发消息个对方。
   /// - [userId] 用户 Id
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistAdded]
   /// 此接口不支持 Flutter For Web 端
@@ -1005,7 +1005,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 将某个用户从黑名单中移出。
   /// - [userId] 用户 Id
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistRemoved]
   /// 此接口不支持 Flutter For Web 端
@@ -1025,7 +1025,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取某用户是否在黑名单中。
   /// - [userId] 用户 Id
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistStatusLoaded]
   /// 此接口不支持 Flutter For Web 端
@@ -1043,7 +1043,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   }
 
   /// 获取当前用户设置的黑名单列表。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistLoaded]
   /// 此接口不支持 Flutter For Web 端
@@ -1058,7 +1058,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [keyword] 搜索的关键字
   /// - [startTime] 查询 beginTime 之前的消息， 传 0 时从最新消息开始搜索，从该时间往前搜索。
   /// - [count] 查询的数量，0 < count <= 50。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesSearched]
   /// 此接口不支持 Flutter For Web 端
@@ -1077,7 +1077,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [endTime] 结束时间
   /// - [offset] 偏移量
   /// - [count] 返回的搜索结果数量，0 < count <= 50。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesSearchedByTimeRange]
   /// 此接口不支持 Flutter For Web 端
@@ -1094,7 +1094,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [startTime] 查询记录的起始时间， 传 0 时从最新消息开始搜索，从该时间往前搜索。
   /// - [count] 返回的搜索结果数量 0 < count <= 50。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesSearchedByUserId]
   /// 此接口不支持 Flutter For Web 端
@@ -1109,7 +1109,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messageTypes] 搜索的消息类型
   /// - [keyword]      搜索的关键字。
-  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsSearched]
   /// 此接口不支持 Flutter For Web 端
@@ -1123,7 +1123,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [startTime] 开始消息免打扰时间，格式为 HH:MM:SS
   /// - [spanMinutes] 需要消息免打扰分钟数，0 < spanMinutes < 1440（ 比如，您设置的起始时间是 00：00， 结束时间为 01:00，则 spanMinutes 为 60 分钟。设置为 1439 代表全天免打扰 （23 60 + 59 = 1439 ））
   /// - [level]  消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursChanged]
   /// 此接口不支持 Flutter For Web 端
@@ -1134,7 +1134,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   }
 
   /// 删除已设置的全局时间段消息提醒屏蔽
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursRemoved]
   /// 此接口不支持 Flutter For Web 端
@@ -1152,7 +1152,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   }
 
   /// 获取已设置的时间段消息提醒屏蔽
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursLoaded]
   /// 此接口不支持 Flutter For Web 端
@@ -1166,7 +1166,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 超级群的会话频道 ID。其他类型传 null 即可。<ul><li>如果传入频道 ID，则针对该指定频道设置消息免打扰级别。如果不指定频道 ID，则对所有超级群消息生效。</li><li>*注意*：2022.09.01 之前开通超级群业务的客户，如果不指定频道 ID，则默认传 "" 空字符串，即仅针对指定超级群会话（`targetId`）中*不属于任何频道的消息*设置免打扰状态级别。如需修改请提交工单。</p></li></ul>
   /// - [level] 消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationNotificationLevelChanged]
   Future<int> changeConversationNotificationLevel(
@@ -1190,7 +1190,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型。请注意以下限制：<ul><li>*超级群会话类型*：如在 2022.09.01 之前开通超级群业务，默认不支持为单个超级群会话*所有消息*设置免打扰级别（“所有消息”指所有频道中的消息和不属于任何频道的消息）。该接口仅设置指定超级群会话（`targetId`）中*不属于任何频道的消息*的免打扰状态级别。如需修改请提交工单。</li><li>*聊天室会话类型*：不支持，因为聊天室消息默认不支持消息推送提醒。</li></ul>
   /// - [targetId] 会话 ID
   /// - [channelId] 超级群的会话频道 ID。其他类型传 null 即可。<ul><li>如果传入频道 ID，则针对该指定频道设置消息免打扰级别。如果不指定频道 ID，则对所有超级群消息生效。</li><li>*注意*：2022.09.01 之前开通超级群业务的客户，如果不指定频道 ID，则默认传 "" 空字符串，即仅针对指定超级群会话（`targetId`）中*不属于任何频道的消息*设置免打扰状态级别。如需修改请提交工单。</p></li></ul>
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationNotificationLevelLoaded]
   Future<int> getConversationNotificationLevel(RCIMIWConversationType type, String targetId, String? channelId,
@@ -1202,7 +1202,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 注：如要移除消息提醒状态，设置level为RCIMIWPushNotificationLevelDefault
   /// - [type] 会话类型
   /// - [level] 消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTypeNotificationLevelChanged]
   Future<int> changeConversationTypeNotificationLevel(RCIMIWConversationType type, RCIMIWPushNotificationLevel level,
@@ -1220,7 +1220,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取会话类型的消息提醒状态
   /// - [type] 会话类型
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] [onConversationTypeNotificationLevelLoaded]
   Future<int> getConversationTypeNotificationLevel(RCIMIWConversationType type,
       {IRCIMIWGetConversationTypeNotificationLevelCallback? callback}) async {
@@ -1231,7 +1231,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 一般由管理员设置的接口，针对超级群的所有群成员生效，针对超级群下所有频道生效，优先级较低。如果群成员自己超级群的免打扰级别，那么以群成员自己设置的为准。
   /// - [targetId] 会话 ID
   /// - [level] 消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupDefaultNotificationLevelChanged]
   Future<int> changeUltraGroupDefaultNotificationLevel(String targetId, RCIMIWPushNotificationLevel level,
@@ -1250,7 +1250,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取超级群的默认消息状态
   /// - [targetId] 会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupDefaultNotificationLevelLoaded]
   Future<int> getUltraGroupDefaultNotificationLevel(String targetId,
@@ -1262,7 +1262,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [level] 消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelChanged]
   Future<int> changeUltraGroupChannelDefaultNotificationLevel(
@@ -1284,7 +1284,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 获取超级群频道的默认消息状态
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelLoaded]
   Future<int> getUltraGroupChannelDefaultNotificationLevel(String targetId, String? channelId,
@@ -1294,7 +1294,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 设置是否显示远程推送内容详情，此功能需要从服务端开启用户设置功能。
   /// - [showContent] 是否显示远程推送内容
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPushContentShowStatusChanged]
   Future<int> changePushContentShowStatus(bool showContent,
@@ -1304,7 +1304,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 设置推送语言
   /// - [language] 推送语言， 目前仅支持 en_us、zh_cn、ar_sa
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPushLanguageChanged]
   /// 此接口不支持 Flutter For Web 端
@@ -1316,7 +1316,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 前提：移动端未在线，Web 、MAC/PC 终端在线，移动端是否接收远程推送。
   /// 此功能需要从服务端开启用户设置功能。
   /// - [receive] 是否接收
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPushReceiveStatusChanged]
   /// 此接口不支持 Flutter For Web 端
@@ -1327,7 +1327,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 给指定的群成员发送消息
   /// - [message] 要发送的消息
   /// - [userIds] 群成员集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onGroupMessageToDesignatedUsersAttached], [onGroupMessageToDesignatedUsersSent]
   Future<int> sendGroupMessageToDesignatedUsers(RCIMIWMessage message, List<String> userIds,
@@ -1351,7 +1351,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageCountLoaded]
   /// 此接口不支持 Flutter For Web 端
@@ -1373,7 +1373,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 根据会话类型,获取置顶会话列表
   /// - [conversationTypes] 会话类型集合
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onTopConversationsLoaded]
   Future<int> getTopConversations(List<RCIMIWConversationType> conversationTypes, String? channelId,
@@ -1385,7 +1385,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [timestamp] 已读时间
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupReadStatusSynced]
   /// [timestamp] 在 Flutter For Web 端无效
@@ -1407,7 +1407,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 获取特定会话下所有频道的会话列表，只支持超级群
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoadedForAllChannel]
   Future<int> getConversationsForAllChannel(RCIMIWConversationType type, String targetId,
@@ -1418,7 +1418,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 修改超级群消息
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
   /// - [message] 要修改的 message
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageModified]
   Future<int> modifyUltraGroupMessage(String messageUId, RCIMIWMessage message,
@@ -1429,7 +1429,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 撤回超级群消息
   /// - [message] 需要撤回的消息
   /// - [deleteRemote] 是否删除远端消息
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageRecalled]
   Future<int> recallUltraGroupMessage(RCIMIWMessage message, bool deleteRemote,
@@ -1442,7 +1442,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [timestamp] 时间戳
   /// - [policy] 清除策略
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessagesCleared]
   Future<int> clearUltraGroupMessages(
@@ -1455,7 +1455,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [typingStatus] 输入状态
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupTypingStatusSent]
   Future<int> sendUltraGroupTypingStatus(String targetId, String? channelId, RCIMIWUltraGroupTypingStatus typingStatus,
@@ -1466,7 +1466,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 删除超级群所有频道指定时间之前的消息
   /// - [targetId] 会话 ID
   /// - [timestamp] 时间戳
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessagesClearedForAllChannel]
   Future<int> clearUltraGroupMessagesForAllChannel(String targetId, int timestamp,
@@ -1485,7 +1485,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 从服务获取批量消息
   /// - [messages] 获取的消息集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBatchRemoteUltraGroupMessagesLoaded]
   Future<int> getBatchRemoteUltraGroupMessages(List<RCIMIWMessage> messages,
@@ -1496,7 +1496,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 更新超级群消息扩展信息
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
   /// - [expansion] 更新的消息扩展信息键值对，类型是 HashMap；Key 支持大小写英文字母、数字、部分特殊符号 + = - _ 的组合方式，不支持汉字。Value 可以输入空格。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageExpansionUpdated]
   Future<int> updateUltraGroupMessageExpansion(String messageUId, Map expansion,
@@ -1507,7 +1507,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 删除超级群消息扩展信息中特定的键值对
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
   /// - [keys]  消息扩展信息中待删除的 key 的列表，类型是 ArrayList
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果同时实现，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageExpansionForKeysRemoved]
   Future<int> removeUltraGroupMessageExpansionForKeys(String messageUId, List<String> keys,

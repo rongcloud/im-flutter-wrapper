@@ -44,6 +44,18 @@ const sendTextMessage = {
       "lable": LableString.pushData,
     },
     {
+      "key": "pushTypeVIVO",
+      "type": "String",
+      "hint": "0 运营, 1 系统",
+      "lable": "pushTypeVIVO",
+    },
+    {
+      "key": "categoryVivo",
+      "type": "String",
+      "hint": "",
+      "lable": "categoryVivo",
+    },
+    {
       "key": "extra",
       "type": "String",
       "hint": "",

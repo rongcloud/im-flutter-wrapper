@@ -61,6 +61,25 @@ engine?.onConversationTopStatusSynced = (RCIMIWConversationType? type, String? t
 //callback_onConversationTopStatusSynced_call
 */
 
+    engine?.onConversationNotificationLevelSynced =
+        (RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
+      Map<String, String> arg = {};
+      arg["listener"] = "onConversationNotificationLevelSynced";
+      arg["type"] = type.toString();
+      arg["targetId"] = targetId ?? "";
+      arg["channelId"] = channelId ?? "";
+      arg["level"] = level.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+/*
+//callback_onConversationNotificationLevelSynced_call
+engine?.onConversationNotificationLevelSynced = (RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
+    //...
+};
+//callback_onConversationNotificationLevelSynced_call
+*/
+
     engine?.onRemoteMessageRecalled = (RCIMIWMessage? message) {
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteMessageRecalled";
