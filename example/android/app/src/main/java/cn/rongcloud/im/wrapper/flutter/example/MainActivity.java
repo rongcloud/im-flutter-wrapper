@@ -12,6 +12,7 @@ import java.util.List;
 import io.flutter.embedding.android.FlutterActivity;
 import io.rong.imlib.model.MessageContent;
 import cn.rongcloud.im.wrapper.flutter.RCIMWrapperEngine;
+import io.rong.message.CommandMessage;
 
 public class MainActivity extends FlutterActivity {
     @Override
@@ -20,6 +21,7 @@ public class MainActivity extends FlutterActivity {
 
         List<Class<? extends MessageContent>> list = new ArrayList<>();
         list.add(PokeMessage.class);
+        list.add(CommandMessage.class);
         RCIMWrapperEngine.getInstance().messageContentClassList = list;
 
     }

@@ -30,15 +30,15 @@
 @property (nonatomic, assign, readonly) NSInteger unreadCount;
 
 /*!
-会话中 @ 消息的个数
-
-@discussion 在清除会话未读数（clearMessagesUnreadStatus:targetId:）的时候，会将此值置成 0。
-*/
+ 会话中 @ 消息的个数
+ 
+ @discussion 在清除会话未读数（clearMessagesUnreadStatus:targetId:）的时候，会将此值置成 0。
+ */
 @property (nonatomic, assign, readonly) NSInteger mentionedCount;
 
 /*!
  是否置顶，默认值为 NO
-
+ 
  @discussion
  如果设置了置顶，在 IMKit 的 RCConversationListViewController 中会将此会话置顶显示。
  */
@@ -60,11 +60,14 @@
 @property (nonatomic, assign, readonly) RCIMIWPushNotificationLevel notificationLevel;
 
 /*!
-会话中第一条未读消息时间戳（Unix时间戳、毫秒）
-
-仅支持 超级群会话
+ 会话中第一条未读消息时间戳（Unix时间戳、毫秒）
+ 
+ 仅支持 超级群会话
  @Since 5.2.5
-*/
+ */
 @property (nonatomic, assign, readonly) long long firstUnreadMsgSendTime;
+
+/// 对应原生会话对象的 sentTime
+@property (nonatomic, assign, readonly) long long operationTime;
 
 @end

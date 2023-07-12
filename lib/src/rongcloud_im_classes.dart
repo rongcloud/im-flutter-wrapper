@@ -656,7 +656,7 @@ class RCIMIWRecallNotificationMessage extends RCIMIWMessage {
   /// 是否删除
   bool? deleted;
 
-  /// 撤回的时间（毫秒）
+  /// 被撤回的原始消息的发送时间（毫秒）
   int? recallTime;
 
   /// 撤回动作的时间（毫秒）
@@ -1129,6 +1129,9 @@ class RCIMIWConversation {
   /// 获取会话第一条未读消息的时间戳，仅对超级群生效
   int? firstUnreadMsgSendTime;
 
+  /// 获取会话最后的操作时间
+  int? operationTime;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     json['conversationType'] = conversationType?.index;
@@ -1141,6 +1144,7 @@ class RCIMIWConversation {
     json['lastMessage'] = lastMessage?.toJson();
     json['notificationLevel'] = notificationLevel?.index;
     json['firstUnreadMsgSendTime'] = firstUnreadMsgSendTime;
+    json['operationTime'] = operationTime;
     return json;
   }
 
@@ -1159,6 +1163,7 @@ class RCIMIWConversation {
     notificationLevel =
         json['notificationLevel'] == null ? null : RCIMIWPushNotificationLevel.values[json['notificationLevel']];
     firstUnreadMsgSendTime = json['firstUnreadMsgSendTime'];
+    operationTime = json['operationTime'];
   }
 }
 

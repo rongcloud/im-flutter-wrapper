@@ -7,6 +7,7 @@ import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/app_data.dart';
+import 'package:rongcloud_im_wrapper_plugin_example/custom_message/command_message.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/custom_message/poke_message.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/engine/event_bus.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/toast/Toast.dart';
@@ -446,6 +447,36 @@ Future sendGIFMessage(Map arg) async {
         ?.createGIFMessage(type, targetId, channelId, files[0].path);
     _sendMessage(msg, useCallback);
   }
+}
+
+Future sendCommandMessage(Map arg) async {
+if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+  if (arg['name'] == null) {
+    RCIWToast.showToast("name 为空");
+    return;
+  }
+  if (arg['data'] == null) {
+    RCIWToast.showToast("data 为空");
+    return;
+  }
+
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  String name = arg['name'];
+  String data = arg['data'];
+
+
+  String channelId = arg['channelId'] ?? "";
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+  RCIMDCommandMessage msg = RCIMDCommandMessage(type, targetId, "name", "data");
+  _sendMessage(msg, useCallback);
 }
 
 Future sendLocationMessage(Map arg) async {

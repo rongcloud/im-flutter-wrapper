@@ -10,8 +10,8 @@
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  [GeneratedPluginRegistrant registerWithRegistry:self];
-    NSMutableArray *marr = [NSMutableArray arrayWithObject:[RCDPokeMessage class]];
+    [GeneratedPluginRegistrant registerWithRegistry:self];
+    NSMutableArray *marr = [NSMutableArray arrayWithObjects:[RCDPokeMessage class], [RCCommandMessage class], nil];
     [RCIMWrapperEngine sharedInstance].messageContentClassList = marr.copy;
 
   // Override point for customization after application launch.

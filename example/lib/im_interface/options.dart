@@ -106,6 +106,7 @@ const subList = {
     message.sendGIFMessage,
     message.sendLocationMessage,
     message.sendCustomMessage,
+    message.sendCommandMessage,
     message.sendUserCustomMessage,
     message.cancelSendingMediaMessage,
     message.downloadMediaMessage,

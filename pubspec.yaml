@@ -1,6 +1,6 @@
 name: rongcloud_im_wrapper_plugin
 description: Rongcloud IM interface wrapper for flutter.
-version: 5.4.3
+version: 5.4.5
 homepage: https://www.rongcloud.cn/
 repository: https://github.com/rongcloud/im-flutter-wrapper
 

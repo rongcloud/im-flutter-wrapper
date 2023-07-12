@@ -93,7 +93,7 @@ const recallUltraGroupMessage = {
 };
 
 const clearUltraGroupMessages = {
-  "title": "删除本地特定 channel 特点时间之前的消息",
+  "title": "删除本地特定 channel 特定时间之前的消息",
   "params": [
     {
       "key": "targetId",

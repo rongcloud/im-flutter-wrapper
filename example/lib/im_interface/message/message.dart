@@ -408,6 +408,56 @@ const sendLocationMessage = {
   "action": engine_fun.sendLocationMessage,
 };
 
+
+const sendCommandMessage = {
+  "title": "发送命令消息",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": HintString.channelIdString,
+      "lable": LableString.editChannelIdString,
+    },
+    {
+      "key": "pushContent",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.pushContent,
+    },
+    {
+      "key": "pushData",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.pushData,
+    },
+    {
+      "key": "name",
+      "type": "String",
+      "hint": "必填",
+      "lable": "name",
+    },
+    {
+      "key": "data",
+      "type": "String",
+      "hint": "必填",
+      "lable": "data",
+    },
+  ],
+  "action": engine_fun.sendCommandMessage,
+};
+
 const sendUserCustomMessage = {
   "title": "给 sealtalk 发送自定义消息",
   "params": [
