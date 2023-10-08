@@ -312,6 +312,65 @@ Future sendFileMessage(Map arg) async {
   }
 }
 
+connect(Map arg) async {
+  // 如果为 arg['token'] 1 , 使用 AccountInfo.token1
+  // 如果为 arg['token'] 2 , 使用 AccountInfo.token2
+  // 如果为 arg['token'] 3 , 使用 AccountInfo.token3
+  if (arg['token'] == "1") {
+    arg['token'] = AccountInfo.token1;
+  } else if (arg['token'] == "2") {
+    arg['token'] = AccountInfo.token2;
+  } else if (arg['token'] == "3") {
+    arg['token'] = AccountInfo.token3;
+  }
+
+  if (arg['token'] == null) {
+    RCIWToast.showToast("token 为空");
+    return;
+  }
+
+  if (arg['timeout'] == null) {
+    RCIWToast.showToast("timeout 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String token = arg['token'];
+  int timeout = int.parse(arg['timeout']);
+  RCIMIWConnectCallback? callback;
+  if (useCallback == 1) {
+    callback = RCIMIWConnectCallback(onDatabaseOpened: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "connect-onDatabaseOpened";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onConnected: (int? code, String? userId) {
+      Map<String, String> arg = {};
+      arg["listener"] = "connect-onConnected";
+      arg["code"] = code.toString();
+      arg["userId"] = userId ?? "";
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.connect(token, timeout, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "connect";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
 Future sendSightMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");

@@ -142,7 +142,7 @@ const connect = {
       "lable": "请输入超时时间",
     },
   ],
-  "action": engine_fun.connect,
+  "action": engine_cus_fun.connect,
 };
 
 const disconnect = {
