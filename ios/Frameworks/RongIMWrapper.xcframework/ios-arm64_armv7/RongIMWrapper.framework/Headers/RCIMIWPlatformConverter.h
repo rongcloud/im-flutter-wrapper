@@ -22,6 +22,9 @@
 @class RCIMIWAndroidPushOptions;
 @class RCIMIWIOSPushOptions;
 @class RCIMIWConversation;
+@class RCIMIWTagInfo;
+@class RCIMIWConversationTagInfo;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RCIMIWPlatformConverter : NSObject
@@ -82,6 +85,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 // SearchConversationResult
 + (NSDictionary *)convertSearchConversationResultToDict:(RCIMIWSearchConversationResult *)searchConversationResult;
+
+// SearchConversationResult
++ (NSDictionary *)convertTagInfoToDict:(RCIMIWTagInfo *)tagInfo;
+
+// SearchConversationResult
++ (NSDictionary *)convertConversationTagInfoToDict:(RCIMIWConversationTagInfo *)tagInfo;
+
 
 
 @end

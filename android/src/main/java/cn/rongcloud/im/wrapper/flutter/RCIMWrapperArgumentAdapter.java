@@ -2,6 +2,7 @@ package cn.rongcloud.im.wrapper.flutter;
 
 
 import androidx.annotation.NonNull;
+import cn.rongcloud.im.wrapper.constants.RCIMIWAreaCode;
 import cn.rongcloud.im.wrapper.constants.RCIMIWBlacklistStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomEntriesOperationType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomMemberActionType;
@@ -99,6 +100,10 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWMentionedType toRCIMIWMentionedType(@NonNull Integer type) {
     return RCIMIWMentionedType.values()[type];
+  }
+
+  static RCIMIWAreaCode toRCIMIWAreaCode(@NonNull Integer type) {
+    return RCIMIWAreaCode.values()[type];
   }
 
   static RCIMIWChatRoomEntriesOperationType toRCIMIWChatRoomEntriesOperationType(

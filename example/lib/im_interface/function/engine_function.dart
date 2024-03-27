@@ -49,6 +49,11 @@ Future initEngine(Map arg) async {
       options.enableIPC = enableIPC;
     }
 
+    if (arg['areaCode'] != null) {
+      RCIMIWAreaCode code = RCIMIWAreaCode.values[int.parse(arg['areaCode'])];
+      options.areaCode = code;
+    }
+
     RCIMIWCompressOptions compressOptions = RCIMIWCompressOptions.create();
     if (arg['originalImageQuality'] != null) {
       compressOptions.originalImageQuality =

@@ -5,6 +5,7 @@ import 'unread/unread.dart' as unread;
 import 'chatroom/chatroom.dart' as chatroom;
 import 'ultragroup/ultragroup.dart' as ultragroup;
 import 'other/other.dart' as other;
+import 'tag/tag.dart' as tag;
 
 const titleList = [
   "链接相关",
@@ -13,6 +14,7 @@ const titleList = [
   "未读数相关",
   "聊天室相关",
   "超级群相关",
+  "会话标签",
   "其他配置",
 ];
 
@@ -95,6 +97,7 @@ const subList = {
     conversation.searchConversations,
     conversation.loadMessageCount,
     conversation.loadTopConversations,
+    conversation.getUnreadConversations,
   ],
   "消息相关": [
     message.sendTextMessage,
@@ -135,6 +138,22 @@ const subList = {
     message.searchMessagesByUserId,
     message.sendGroupMessageToDesignatedUsers,
   ],
+  "会话标签": [
+    tag.createTag,
+    tag.removeTag,
+    tag.updateTagNameById,
+    tag.getTags,
+    tag.addConversationToTag,
+    tag.removeConversationFromTag,
+    tag.removeTagsFromConversation,
+    tag.getTagsFromConversation,
+    tag.getConversationsFromTagByPage,
+    tag.getUnreadCountByTag,
+    tag.changeConversationTopStatusInTag,
+    tag.getConversationTopStatusInTag,
+    tag.clearMessagesUnreadStatusByTag,
+    tag.clearConversationsByTag,
+  ],
   "临时接口": [],
 };
 
@@ -147,6 +166,7 @@ const cbList = [
   "cancelDownloadingMediaMessage",
   "getConversation",
   "getConversations",
+  "getUnreadConversations",
   "removeConversation",
   "removeConversations",
   "getUnreadCount",
@@ -226,7 +246,21 @@ const cbList = [
   "clearUltraGroupMessagesForAllChannel",
   "getBatchRemoteUltraGroupMessages",
   "updateUltraGroupMessageExpansion",
-  "removeUltraGroupMessageExpansionForKeys"
+  "removeUltraGroupMessageExpansionForKeys",
+  "createTag",
+  "removeTag",
+  "updateTagNameById",
+  "getTags",
+  "addConversationToTag",
+  "removeConversationFromTag",
+  "removeTagsFromConversation",
+  "getTagsFromConversation",
+  "getConversationsFromTagByPage",
+  "getUnreadCountByTag",
+  "changeConversationTopStatusInTag",
+  "getConversationTopStatusInTag",
+  "clearMessagesUnreadStatusByTag",
+  "clearConversationsByTag"
 ];
 const cbParam = {
   "key": "use_cb",

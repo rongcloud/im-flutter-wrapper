@@ -98,6 +98,8 @@ static RCIMWrapperEngine *instance = nil;
     [self loadConversations:call result:result];
   } else if ([@"engine:getConversations" isEqualToString:call.method]) {
     [self getConversations:call result:result];
+  } else if ([@"engine:getUnreadConversations" isEqualToString:call.method]) {
+    [self getUnreadConversations:call result:result];
   } else if ([@"engine:removeConversation" isEqualToString:call.method]) {
     [self removeConversation:call result:result];
   } else if ([@"engine:removeConversations" isEqualToString:call.method]) {
@@ -320,6 +322,34 @@ static RCIMWrapperEngine *instance = nil;
     [self changeLogLevel:call result:result];
   } else if ([@"engine:getDeltaTime" isEqualToString:call.method]) {
     [self getDeltaTime:call result:result];
+  } else if ([@"engine:createTag" isEqualToString:call.method]) {
+    [self createTag:call result:result];
+  } else if ([@"engine:removeTag" isEqualToString:call.method]) {
+    [self removeTag:call result:result];
+  } else if ([@"engine:updateTagNameById" isEqualToString:call.method]) {
+    [self updateTagNameById:call result:result];
+  } else if ([@"engine:getTags" isEqualToString:call.method]) {
+    [self getTags:call result:result];
+  } else if ([@"engine:addConversationToTag" isEqualToString:call.method]) {
+    [self addConversationToTag:call result:result];
+  } else if ([@"engine:removeConversationFromTag" isEqualToString:call.method]) {
+    [self removeConversationFromTag:call result:result];
+  } else if ([@"engine:removeTagsFromConversation" isEqualToString:call.method]) {
+    [self removeTagsFromConversation:call result:result];
+  } else if ([@"engine:getTagsFromConversation" isEqualToString:call.method]) {
+    [self getTagsFromConversation:call result:result];
+  } else if ([@"engine:getConversationsFromTagByPage" isEqualToString:call.method]) {
+    [self getConversationsFromTagByPage:call result:result];
+  } else if ([@"engine:getUnreadCountByTag" isEqualToString:call.method]) {
+    [self getUnreadCountByTag:call result:result];
+  } else if ([@"engine:changeConversationTopStatusInTag" isEqualToString:call.method]) {
+    [self changeConversationTopStatusInTag:call result:result];
+  } else if ([@"engine:getConversationTopStatusInTag" isEqualToString:call.method]) {
+    [self getConversationTopStatusInTag:call result:result];
+  } else if ([@"engine:clearMessagesUnreadStatusByTag" isEqualToString:call.method]) {
+    [self clearMessagesUnreadStatusByTag:call result:result];
+  } else if ([@"engine:clearConversationsByTag" isEqualToString:call.method]) {
+    [self clearConversationsByTag:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -869,6 +899,50 @@ static RCIMWrapperEngine *instance = nil;
       };
     }
     code = [self.engine getConversations:conversationTypes channelId:channelId startTime:startTime count:count success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getUnreadConversations:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
+    void (^success)(NSArray<RCIMIWConversation *> *t) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWConversation *> *t) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWConversation *element in t) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertConversationToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetUnreadConversationsCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetUnreadConversationsCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getUnreadConversations:conversationTypes success:success error:error];
   }
   dispatch_to_main_queue(^{
     result(@(code));
@@ -4122,6 +4196,500 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
 
     code = [self.engine getDeltaTime];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)createTag:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    NSString *tagName = arguments[@"tagName"];
+    void (^tagCreated)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      tagCreated = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWCreateTagCallback_onTagCreated" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine createTag:tagId tagName:tagName tagCreated:tagCreated];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)removeTag:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    void (^tagRemoved)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      tagRemoved = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWRemoveTagCallback_onTagRemoved" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine removeTag:tagId tagRemoved:tagRemoved];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)updateTagNameById:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    NSString *newName = arguments[@"newName"];
+    void (^tagNameByIdUpdated)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      tagNameByIdUpdated = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWUpdateTagNameByIdCallback_onTagNameByIdUpdated" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine updateTagNameById:tagId newName:newName tagNameByIdUpdated:tagNameByIdUpdated];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getTags:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    void (^successBlock)(NSArray<RCIMIWTagInfo *> *results) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      successBlock = ^(NSArray<RCIMIWTagInfo *> *results) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWTagInfo *element in results) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertTagInfoToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetTagsCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetTagsCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getTags:successBlock error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)addConversationToTag:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    void (^conversationToTagAdded)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      conversationToTagAdded = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWAddConversationToTagCallback_onConversationToTagAdded" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine addConversationToTag:tagId type:type targetId:targetId conversationToTagAdded:conversationToTagAdded];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)removeConversationFromTag:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    void (^conversationFromTagRemoved)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      conversationFromTagRemoved = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWRemoveConversationFromTagCallback_onConversationFromTagRemoved" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine removeConversationFromTag:tagId type:type targetId:targetId conversationFromTagRemoved:conversationFromTagRemoved];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)removeTagsFromConversation:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSArray<NSString *> *tagIds = arguments[@"tagIds"];
+    void (^tagsFromConversationRemoved)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      tagsFromConversationRemoved = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWRemoveTagsFromConversationCallback_onTagsFromConversationRemoved" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine removeTagsFromConversation:type targetId:targetId tagIds:tagIds tagsFromConversationRemoved:tagsFromConversationRemoved];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getTagsFromConversation:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    void (^success)(NSArray<RCIMIWConversationTagInfo *> *conversations) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWConversationTagInfo *> *conversations) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWConversationTagInfo *element in conversations) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertConversationTagInfoToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetTagsFromConversationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetTagsFromConversationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getTagsFromConversation:type targetId:targetId success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getConversationsFromTagByPage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    long long timestamp = [(NSNumber *)arguments[@"timestamp"] longLongValue];
+    int count = [(NSNumber *)arguments[@"count"] intValue];
+    void (^success)(NSArray<RCIMIWConversation *> *conversations) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWConversation *> *conversations) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWConversation *element in conversations) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertConversationToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetConversationsCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetConversationsCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getConversationsFromTagByPage:tagId timestamp:timestamp count:count success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getUnreadCountByTag:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    BOOL contain = [(NSNumber *)arguments[@"contain"] boolValue];
+    void (^success)(NSInteger count) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSInteger count) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(count) forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetUnreadCountCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetUnreadCountCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getUnreadCountByTag:tagId contain:contain success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)changeConversationTopStatusInTag:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    BOOL top = [(NSNumber *)arguments[@"top"] boolValue];
+    void (^conversationTopStatusInTagChanged)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      conversationTopStatusInTagChanged = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWChangeConversationTopStatusInTagCallback_onConversationTopStatusInTagChanged" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine changeConversationTopStatusInTag:tagId type:type targetId:targetId top:top conversationTopStatusInTagChanged:conversationTopStatusInTagChanged];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getConversationTopStatusInTag:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    void (^success)(BOOL top) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(BOOL top) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(top) forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetConversationTopStatusInTagCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetConversationTopStatusInTagCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getConversationTopStatusInTag:tagId type:type targetId:targetId success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)clearMessagesUnreadStatusByTag:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    void (^success)(BOOL top) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(BOOL top) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(top) forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWClearMessagesUnreadStatusByTagCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWClearMessagesUnreadStatusByTagCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine clearMessagesUnreadStatusByTag:tagId success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)clearConversationsByTag:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *tagId = arguments[@"tagId"];
+    BOOL deleteMessage = [(NSNumber *)arguments[@"deleteMessage"] boolValue];
+    void (^success)(BOOL top) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(BOOL top) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(top) forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWClearConversationsByTagCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWClearConversationsByTagCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine clearConversationsByTag:tagId deleteMessage:deleteMessage success:success error:error];
   }
   dispatch_to_main_queue(^{
     result(@(code));

@@ -6,11 +6,13 @@ import androidx.annotation.NonNull;
 import cn.rongcloud.im.wrapper.RCIMIWEngine;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddChatRoomEntriesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddChatRoomEntryCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWAddConversationToTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddToBlacklistCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWCancelDownloadingMediaMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWCancelSendingMediaMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeConversationNotificationLevelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeConversationTopStatusCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeConversationTopStatusInTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeConversationTypeNotificationLevelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeMessageReceivedStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeMessageSentStatusCallback;
@@ -20,12 +22,15 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWChangePushLanguageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangePushReceiveStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWClearConversationsByTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearDraftMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearMessagesCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWClearMessagesUnreadStatusByTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearUltraGroupMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearUltraGroupMessagesForAllChannelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearUnreadCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWConnectCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWCreateTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWDeleteLocalMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWDeleteMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetBatchRemoteUltraGroupMessagesCallback;
@@ -38,6 +43,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetChatRoomMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationNotificationLevelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationTopStatusCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationTopStatusInTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationTypeNotificationLevelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationsForAllChannelCallback;
@@ -47,6 +53,8 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetNotificationQuietHoursCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetTagsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetTagsFromConversationCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetTopConversationsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetTotalUnreadCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUltraGroupAllUnreadCountCallback;
@@ -55,6 +63,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUltraGroupChannelDefaultNotifi
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUltraGroupDefaultNotificationLevelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUltraGroupUnreadCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUltraGroupUnreadMentionedCountCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadConversationsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadCountByConversationTypesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadMentionedCountCallback;
@@ -69,10 +78,13 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWRecallUltraGroupMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveChatRoomEntriesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveChatRoomEntryCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveConversationCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveConversationFromTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveConversationsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveFromBlacklistCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveMessageExpansionForKeysCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveNotificationQuietHoursCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveTagCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveTagsFromConversationCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSaveDraftMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchConversationsCallback;
@@ -88,6 +100,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWSendUltraGroupTypingStatusCallbac
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncConversationReadStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncUltraGroupReadStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateMessageExpansionCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateTagNameByIdCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateUltraGroupMessageExpansionCallback;
 import cn.rongcloud.im.wrapper.callback.RCIMIWConnectCallback;
 import cn.rongcloud.im.wrapper.callback.RCIMIWSendGroupMessageToDesignatedUsersCallback;
@@ -112,7 +125,9 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWTypingStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWUltraGroupTypingStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWUltraGroupTypingStatusInfo;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWConversation;
+import cn.rongcloud.im.wrapper.conversation.RCIMIWConversationTagInfo;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWSearchConversationResult;
+import cn.rongcloud.im.wrapper.conversation.RCIMIWTagInfo;
 import cn.rongcloud.im.wrapper.listener.IRCIMIWDownloadMediaMessageListener;
 import cn.rongcloud.im.wrapper.listener.IRCIMIWSendMediaMessageListener;
 import cn.rongcloud.im.wrapper.listener.RCIMIWDownloadMediaMessageListener;
@@ -151,13 +166,13 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
   private RCIMIWEngine engine = null;
 
-  public List<Class<? extends MessageContent>> messageContentClassList;
+  public List<Class<? extends MessageContent>> messageContentClassList = new ArrayList<>();
 
-  public static RCIMWrapperEngine getInstance() {
-    return SingletonHolder.instance;
-  }
+  //  public static RCIMWrapperEngine getInstance() {
+  //    return SingletonHolder.instance;
+  //  }
 
-  private RCIMWrapperEngine() {}
+  public RCIMWrapperEngine() {}
 
   private static class SingletonHolder {
     @SuppressLint("StaticFieldLeak")
@@ -271,6 +286,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:getConversations":
         getConversations(call, result);
+        break;
+
+      case "engine:getUnreadConversations":
+        getUnreadConversations(call, result);
         break;
 
       case "engine:removeConversation":
@@ -716,6 +735,62 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       case "engine:getDeltaTime":
         getDeltaTime(call, result);
         break;
+
+      case "engine:createTag":
+        createTag(call, result);
+        break;
+
+      case "engine:removeTag":
+        removeTag(call, result);
+        break;
+
+      case "engine:updateTagNameById":
+        updateTagNameById(call, result);
+        break;
+
+      case "engine:getTags":
+        getTags(call, result);
+        break;
+
+      case "engine:addConversationToTag":
+        addConversationToTag(call, result);
+        break;
+
+      case "engine:removeConversationFromTag":
+        removeConversationFromTag(call, result);
+        break;
+
+      case "engine:removeTagsFromConversation":
+        removeTagsFromConversation(call, result);
+        break;
+
+      case "engine:getTagsFromConversation":
+        getTagsFromConversation(call, result);
+        break;
+
+      case "engine:getConversationsFromTagByPage":
+        getConversationsFromTagByPage(call, result);
+        break;
+
+      case "engine:getUnreadCountByTag":
+        getUnreadCountByTag(call, result);
+        break;
+
+      case "engine:changeConversationTopStatusInTag":
+        changeConversationTopStatusInTag(call, result);
+        break;
+
+      case "engine:getConversationTopStatusInTag":
+        getConversationTopStatusInTag(call, result);
+        break;
+
+      case "engine:clearMessagesUnreadStatusByTag":
+        clearMessagesUnreadStatusByTag(call, result);
+        break;
+
+      case "engine:clearConversationsByTag":
+        clearConversationsByTag(call, result);
+        break;
     }
   }
 
@@ -1058,6 +1133,27 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       }
 
       code = engine.getConversations(conversationTypes_str, channelId, startTime, count, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getUnreadConversations(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<Number> conversationTypes = call.argument("conversationTypes");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetUnreadConversationsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetUnreadConversationsCallbackImpl(cb_handler);
+      }
+
+      List conversationTypes_str = new ArrayList();
+      for (Number element : conversationTypes) {
+        conversationTypes_str.add(
+            RCIMWrapperArgumentAdapter.toRCIMIWConversationType((Integer) element));
+      }
+
+      code = engine.getUnreadConversations(conversationTypes_str, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }
@@ -2884,6 +2980,239 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     if (engine != null) {
 
       code = engine.getDeltaTime();
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void createTag(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      String tagName = (String) call.argument("tagName");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWCreateTagCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWCreateTagCallbackImpl(cb_handler);
+      }
+
+      code = engine.createTag(tagId, tagName, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void removeTag(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWRemoveTagCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWRemoveTagCallbackImpl(cb_handler);
+      }
+
+      code = engine.removeTag(tagId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void updateTagNameById(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      String newName = (String) call.argument("newName");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWUpdateTagNameByIdCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWUpdateTagNameByIdCallbackImpl(cb_handler);
+      }
+
+      code = engine.updateTagNameById(tagId, newName, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getTags(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetTagsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetTagsCallbackImpl(cb_handler);
+      }
+
+      code = engine.getTags(callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void addConversationToTag(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWAddConversationToTagCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWAddConversationToTagCallbackImpl(cb_handler);
+      }
+
+      code = engine.addConversationToTag(tagId, type, targetId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void removeConversationFromTag(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWRemoveConversationFromTagCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWRemoveConversationFromTagCallbackImpl(cb_handler);
+      }
+
+      code = engine.removeConversationFromTag(tagId, type, targetId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void removeTagsFromConversation(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      List<String> tagIds = call.argument("tagIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWRemoveTagsFromConversationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWRemoveTagsFromConversationCallbackImpl(cb_handler);
+      }
+
+      code = engine.removeTagsFromConversation(type, targetId, tagIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getTagsFromConversation(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetTagsFromConversationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetTagsFromConversationCallbackImpl(cb_handler);
+      }
+
+      code = engine.getTagsFromConversation(type, targetId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getConversationsFromTagByPage(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      long timestamp = ((Number) call.argument("timestamp")).longValue();
+      int count = ((Number) call.argument("count")).intValue();
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetConversationsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetConversationsCallbackImpl(cb_handler);
+      }
+
+      code = engine.getConversationsFromTagByPage(tagId, timestamp, count, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getUnreadCountByTag(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      Boolean contain = (Boolean) call.argument("contain");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetUnreadCountCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetUnreadCountCallbackImpl(cb_handler);
+      }
+
+      code = engine.getUnreadCountByTag(tagId, contain, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void changeConversationTopStatusInTag(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      Boolean top = (Boolean) call.argument("top");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWChangeConversationTopStatusInTagCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWChangeConversationTopStatusInTagCallbackImpl(cb_handler);
+      }
+
+      code = engine.changeConversationTopStatusInTag(tagId, type, targetId, top, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getConversationTopStatusInTag(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetConversationTopStatusInTagCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetConversationTopStatusInTagCallbackImpl(cb_handler);
+      }
+
+      code = engine.getConversationTopStatusInTag(tagId, type, targetId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void clearMessagesUnreadStatusByTag(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWClearMessagesUnreadStatusByTagCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWClearMessagesUnreadStatusByTagCallbackImpl(cb_handler);
+      }
+
+      code = engine.clearMessagesUnreadStatusByTag(tagId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void clearConversationsByTag(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String tagId = (String) call.argument("tagId");
+      Boolean deleteMessage = (Boolean) call.argument("deleteMessage");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWClearConversationsByTagCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWClearConversationsByTagCallbackImpl(cb_handler);
+      }
+
+      code = engine.clearConversationsByTag(tagId, deleteMessage, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }
@@ -5634,6 +5963,56 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine_cb:IRCIMIWGetConversationsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetUnreadConversationsCallbackImpl implements IRCIMIWGetUnreadConversationsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetUnreadConversationsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWConversation> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWConversation element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertConversation(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetUnreadConversationsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetUnreadConversationsCallback_onError", arguments);
             }
           });
     }
@@ -8398,6 +8777,414 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback_onUltraGroupMessageExpansionForKeysRemoved",
                   arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWCreateTagCallbackImpl implements IRCIMIWCreateTagCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWCreateTagCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onTagCreated(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWCreateTagCallback_onTagCreated", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWRemoveTagCallbackImpl implements IRCIMIWRemoveTagCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWRemoveTagCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onTagRemoved(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWRemoveTagCallback_onTagRemoved", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWUpdateTagNameByIdCallbackImpl implements IRCIMIWUpdateTagNameByIdCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWUpdateTagNameByIdCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onTagNameByIdUpdated(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWUpdateTagNameByIdCallback_onTagNameByIdUpdated", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetTagsCallbackImpl implements IRCIMIWGetTagsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetTagsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWTagInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWTagInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertTagInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetTagsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetTagsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWAddConversationToTagCallbackImpl implements IRCIMIWAddConversationToTagCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWAddConversationToTagCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onConversationToTagAdded(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWAddConversationToTagCallback_onConversationToTagAdded",
+                  arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWRemoveConversationFromTagCallbackImpl
+      implements IRCIMIWRemoveConversationFromTagCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWRemoveConversationFromTagCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onConversationFromTagRemoved(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWRemoveConversationFromTagCallback_onConversationFromTagRemoved",
+                  arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWRemoveTagsFromConversationCallbackImpl
+      implements IRCIMIWRemoveTagsFromConversationCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWRemoveTagsFromConversationCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onTagsFromConversationRemoved(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWRemoveTagsFromConversationCallback_onTagsFromConversationRemoved",
+                  arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetTagsFromConversationCallbackImpl
+      implements IRCIMIWGetTagsFromConversationCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetTagsFromConversationCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWConversationTagInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWConversationTagInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertConversationTagInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetTagsFromConversationCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetTagsFromConversationCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWChangeConversationTopStatusInTagCallbackImpl
+      implements IRCIMIWChangeConversationTopStatusInTagCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWChangeConversationTopStatusInTagCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onConversationTopStatusInTagChanged(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWChangeConversationTopStatusInTagCallback_onConversationTopStatusInTagChanged",
+                  arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetConversationTopStatusInTagCallbackImpl
+      implements IRCIMIWGetConversationTopStatusInTagCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetConversationTopStatusInTagCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(Boolean t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetConversationTopStatusInTagCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetConversationTopStatusInTagCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWClearMessagesUnreadStatusByTagCallbackImpl
+      implements IRCIMIWClearMessagesUnreadStatusByTagCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWClearMessagesUnreadStatusByTagCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(Boolean t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWClearMessagesUnreadStatusByTagCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWClearMessagesUnreadStatusByTagCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWClearConversationsByTagCallbackImpl
+      implements IRCIMIWClearConversationsByTagCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWClearConversationsByTagCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(Boolean t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWClearConversationsByTagCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWClearConversationsByTagCallback_onError", arguments);
             }
           });
     }

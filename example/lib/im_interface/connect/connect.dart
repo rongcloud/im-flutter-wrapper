@@ -47,6 +47,12 @@ const initEngine = {
       "lable": "是否开启单进程模式",
     },
     {
+      "key": "areaCode",
+      "type": "number",
+      "hint": "非必填 0:北京 1:新加坡 2:北美 3:新加坡B企业合作 4:沙特",
+      "lable": "区域码",
+    },
+    {
       "key": "originalImageQuality",
       "type": "number",
       "hint": "非必填",

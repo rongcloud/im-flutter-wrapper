@@ -250,6 +250,23 @@ enum RCIMIWMentionedType {
   part,
 }
 
+enum RCIMIWAreaCode {
+  /// 北京数据中心，默认值
+  bj,
+
+  /// 新加坡数据中心
+  sg,
+
+  /// 北美数据中心
+  na,
+
+  /// 新加坡B企业合作数据中心
+  sgB,
+
+  /// 沙特数据中心
+  sa,
+}
+
 enum RCIMIWChatRoomEntriesOperationType {
   /// 更新操作
   update,

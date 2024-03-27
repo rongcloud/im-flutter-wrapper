@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  会话是否置顶
  */
-@property (nonatomic, assign) BOOL isTop;
+@property (nonatomic, assign) BOOL top;
 
 @end
 

@@ -352,6 +352,24 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<int> getUnreadConversations(List<RCIMIWConversationType> conversationTypes,
+      {IRCIMIWGetUnreadConversationsCallback? callback}) async {
+    List conversationTypesStr = [];
+    for (var element in conversationTypes) {
+      conversationTypesStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "conversationTypes": conversationTypesStr,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getUnreadConversations arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getUnreadConversations', arguments);
+    return result;
+  }
+
+  @override
   Future<int> removeConversation(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWRemoveConversationCallback? callback}) async {
     int rongcloudHandler = addCallback(callback);
@@ -1972,6 +1990,214 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   Future<int> getDeltaTime() async {
     log("[RC:Flutter] engine:getDeltaTime");
     int result = await _channel.invokeMethod('engine:getDeltaTime');
+    return result;
+  }
+
+  @override
+  Future<int> createTag(String tagId, String tagName, {IRCIMIWCreateTagCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "tagName": tagName,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:createTag arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:createTag', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> removeTag(String tagId, {IRCIMIWRemoveTagCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:removeTag arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:removeTag', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> updateTagNameById(String tagId, String newName, {IRCIMIWUpdateTagNameByIdCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "newName": newName,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:updateTagNameById arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:updateTagNameById', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getTags({IRCIMIWGetTagsCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getTags arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getTags', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> addConversationToTag(String tagId, RCIMIWConversationType type, String targetId,
+      {IRCIMIWAddConversationToTagCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "type": type.index,
+      "targetId": targetId,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:addConversationToTag arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:addConversationToTag', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> removeConversationFromTag(String tagId, RCIMIWConversationType type, String targetId,
+      {IRCIMIWRemoveConversationFromTagCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "type": type.index,
+      "targetId": targetId,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:removeConversationFromTag arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:removeConversationFromTag', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> removeTagsFromConversation(RCIMIWConversationType type, String targetId, List<String> tagIds,
+      {IRCIMIWRemoveTagsFromConversationCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "tagIds": tagIds,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:removeTagsFromConversation arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:removeTagsFromConversation', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getTagsFromConversation(RCIMIWConversationType type, String targetId,
+      {IRCIMIWGetTagsFromConversationCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getTagsFromConversation arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getTagsFromConversation', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getConversationsFromTagByPage(String tagId, int timestamp, int count,
+      {IRCIMIWGetConversationsCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "timestamp": timestamp,
+      "count": count,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getConversationsFromTagByPage arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getConversationsFromTagByPage', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getUnreadCountByTag(String tagId, bool contain, {IRCIMIWGetUnreadCountCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "contain": contain,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getUnreadCountByTag arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getUnreadCountByTag', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> changeConversationTopStatusInTag(String tagId, RCIMIWConversationType type, String targetId, bool top,
+      {IRCIMIWChangeConversationTopStatusInTagCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "type": type.index,
+      "targetId": targetId,
+      "top": top,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:changeConversationTopStatusInTag arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:changeConversationTopStatusInTag', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getConversationTopStatusInTag(String tagId, RCIMIWConversationType type, String targetId,
+      {IRCIMIWGetConversationTopStatusInTagCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "type": type.index,
+      "targetId": targetId,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getConversationTopStatusInTag arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getConversationTopStatusInTag', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> clearMessagesUnreadStatusByTag(String tagId,
+      {IRCIMIWClearMessagesUnreadStatusByTagCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:clearMessagesUnreadStatusByTag arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:clearMessagesUnreadStatusByTag', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> clearConversationsByTag(String tagId, bool deleteMessage,
+      {IRCIMIWClearConversationsByTagCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "tagId": tagId,
+      "deleteMessage": deleteMessage,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:clearConversationsByTag arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:clearConversationsByTag', arguments);
     return result;
   }
 
@@ -3879,6 +4105,33 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         log("[RC:Flutter] engine_cb:IRCIMIWGetConversationsCallback_onError invoke finished");
         break;
 
+      case 'engine_cb:IRCIMIWGetUnreadConversationsCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWConversation> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWConversation>? t = tStr;
+
+        IRCIMIWGetUnreadConversationsCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWConversation>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetUnreadConversationsCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetUnreadConversationsCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetUnreadConversationsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetUnreadConversationsCallback_onError invoke finished");
+        break;
+
       case 'engine_cb:IRCIMIWRemoveConversationCallback_onConversationRemoved':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
@@ -5232,6 +5485,203 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onUltraGroupMessageExpansionForKeysRemoved;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback_onUltraGroupMessageExpansionForKeysRemoved invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWCreateTagCallback_onTagCreated':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWCreateTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onTagCreated;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWCreateTagCallback_onTagCreated invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWRemoveTagCallback_onTagRemoved':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWRemoveTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onTagRemoved;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWRemoveTagCallback_onTagRemoved invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWUpdateTagNameByIdCallback_onTagNameByIdUpdated':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWUpdateTagNameByIdCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onTagNameByIdUpdated;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWUpdateTagNameByIdCallback_onTagNameByIdUpdated invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetTagsCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWTagInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWTagInfo.fromJson(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWTagInfo>? t = tStr;
+
+        IRCIMIWGetTagsCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWTagInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetTagsCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetTagsCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetTagsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetTagsCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWAddConversationToTagCallback_onConversationToTagAdded':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWAddConversationToTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onConversationToTagAdded;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWAddConversationToTagCallback_onConversationToTagAdded invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWRemoveConversationFromTagCallback_onConversationFromTagRemoved':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWRemoveConversationFromTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onConversationFromTagRemoved;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWRemoveConversationFromTagCallback_onConversationFromTagRemoved invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWRemoveTagsFromConversationCallback_onTagsFromConversationRemoved':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWRemoveTagsFromConversationCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onTagsFromConversationRemoved;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWRemoveTagsFromConversationCallback_onTagsFromConversationRemoved invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetTagsFromConversationCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWConversationTagInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWConversationTagInfo.fromJson(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWConversationTagInfo>? t = tStr;
+
+        IRCIMIWGetTagsFromConversationCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWConversationTagInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetTagsFromConversationCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetTagsFromConversationCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetTagsFromConversationCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetTagsFromConversationCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWChangeConversationTopStatusInTagCallback_onConversationTopStatusInTagChanged':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWChangeConversationTopStatusInTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onConversationTopStatusInTagChanged;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWChangeConversationTopStatusInTagCallback_onConversationTopStatusInTagChanged invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetConversationTopStatusInTagCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        bool? t = arguments['t'];
+
+        IRCIMIWGetConversationTopStatusInTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(bool?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetConversationTopStatusInTagCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetConversationTopStatusInTagCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetConversationTopStatusInTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetConversationTopStatusInTagCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWClearMessagesUnreadStatusByTagCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        bool? t = arguments['t'];
+
+        IRCIMIWClearMessagesUnreadStatusByTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(bool?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWClearMessagesUnreadStatusByTagCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWClearMessagesUnreadStatusByTagCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWClearMessagesUnreadStatusByTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWClearMessagesUnreadStatusByTagCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWClearConversationsByTagCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        bool? t = arguments['t'];
+
+        IRCIMIWClearConversationsByTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(bool?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWClearConversationsByTagCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWClearConversationsByTagCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWClearConversationsByTagCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWClearConversationsByTagCallback_onError invoke finished");
         break;
     }
   }

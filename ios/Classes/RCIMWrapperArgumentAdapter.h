@@ -85,6 +85,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertMentionedTypeToInteger:(RCIMIWMentionedType)MentionedType;
 
 
++ (RCIMIWAreaCode)convertAreaCodeFromInteger:(NSInteger)integer;
++ (NSInteger)convertAreaCodeToInteger:(RCIMIWAreaCode)AreaCode;
+
+
 + (RCIMIWChatRoomEntriesOperationType)convertChatRoomEntriesOperationTypeFromInteger:(NSInteger)integer;
 + (NSInteger)convertChatRoomEntriesOperationTypeToInteger:(RCIMIWChatRoomEntriesOperationType)ChatRoomEntriesOperationType;
 

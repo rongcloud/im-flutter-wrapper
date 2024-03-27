@@ -339,6 +339,9 @@ class RCIMIWEngineOptions {
   /// 配置数据上传地址
   String? statisticServer;
 
+  /// 数据中心区域码
+  RCIMIWAreaCode? areaCode;
+
   /// 设置断线重连时是否踢出重连设备。
   /// 用户没有开通多设备登录功能的前提下，同一个账号在一台新设备上登录的时候，会把这个账号在之前登录的设备上踢出。
   bool? kickReconnectDevice;
@@ -356,6 +359,7 @@ class RCIMIWEngineOptions {
     this.naviServer,
     this.fileServer,
     this.statisticServer,
+    this.areaCode,
     this.kickReconnectDevice,
     this.compressOptions,
     this.logLevel,
@@ -369,6 +373,7 @@ class RCIMIWEngineOptions {
     json['naviServer'] = naviServer;
     json['fileServer'] = fileServer;
     json['statisticServer'] = statisticServer;
+    json['areaCode'] = areaCode?.index;
     json['kickReconnectDevice'] = kickReconnectDevice;
     json['compressOptions'] = compressOptions?.toJson();
     json['logLevel'] = logLevel?.index;
@@ -382,6 +387,7 @@ class RCIMIWEngineOptions {
     naviServer = json['naviServer'];
     fileServer = json['fileServer'];
     statisticServer = json['statisticServer'];
+    areaCode = json['areaCode'] == null ? null : RCIMIWAreaCode.values[json['areaCode']];
     kickReconnectDevice = json['kickReconnectDevice'];
     if (json['compressOptions'] != null) {
       compressOptions = RCIMIWCompressOptions.fromJson(Map<String, dynamic>.from(json['compressOptions']));
@@ -1076,6 +1082,25 @@ class RCIMIWChatRoomMemberAction {
   }
 }
 
+class RCIMIWConversationTagInfo {
+  RCIMIWTagInfo? tagInfo;
+  bool? top;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['tagInfo'] = tagInfo?.toJson();
+    json['top'] = top;
+    return json;
+  }
+
+  RCIMIWConversationTagInfo.fromJson(Map<String, dynamic> json) {
+    if (json['tagInfo'] != null) {
+      tagInfo = RCIMIWTagInfo.fromJson(Map<String, dynamic>.from(json['tagInfo']));
+    }
+    top = json['top'];
+  }
+}
+
 class RCIMIWSearchConversationResult {
   /// 获取会话的实体，用来容纳和存储客户端的会话信息，对应会话列表中的会话。
   RCIMIWConversation? conversation;
@@ -1095,6 +1120,36 @@ class RCIMIWSearchConversationResult {
       conversation = RCIMIWConversation.fromJson(Map<String, dynamic>.from(json['conversation']));
     }
     count = json['count'];
+  }
+}
+
+class RCIMIWTagInfo {
+  String? tagId;
+  String? tagName;
+  int? count;
+  int? timestamp;
+
+  RCIMIWTagInfo.create({
+    this.tagId,
+    this.tagName,
+    this.count,
+    this.timestamp,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['tagId'] = tagId;
+    json['tagName'] = tagName;
+    json['count'] = count;
+    json['timestamp'] = timestamp;
+    return json;
+  }
+
+  RCIMIWTagInfo.fromJson(Map<String, dynamic> json) {
+    tagId = json['tagId'];
+    tagName = json['tagName'];
+    count = json['count'];
+    timestamp = json['timestamp'];
   }
 }
 

@@ -419,6 +419,70 @@ getConversations(Map arg) async {
 }
 
 /*
+//fun_getUnreadConversations_call
+IRCIMIWGetUnreadConversationsCallback? callback = IRCIMIWGetUnreadConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getUnreadConversations(conversationTypesInt, callback:callback);
+//fun_getUnreadConversations_call
+*/
+
+getUnreadConversations(Map arg) async {
+  if (arg['conversationTypes'] == null) {
+    RCIWToast.showToast("conversationTypes 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List conversationTypes = (arg["conversationTypes"]).split(",");
+  List<RCIMIWConversationType> conversationTypesInt = [];
+  for (var element in conversationTypes) {
+    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+  }
+  IRCIMIWGetUnreadConversationsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetUnreadConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
+      List tJson = [];
+      if (t != null) {
+        for (var temp in t) {
+          tJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      Map<String, String> arg = {};
+      arg["listener"] = "getUnreadConversations-onSuccess";
+      arg["t"] = tJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onError: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "getUnreadConversations-onError";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.getUnreadConversations(conversationTypesInt, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getUnreadConversations";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
 //fun_removeConversation_call
 IRCIMIWRemoveConversationCallback? callback = IRCIMIWRemoveConversationCallback(onConversationRemoved: (int? code) {
     //...
@@ -5494,6 +5558,821 @@ getDeltaTime() async {
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getDeltaTime";
   resultCode["code"] = (code ?? -1).toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_createTag_call
+IRCIMIWCreateTagCallback? callback = IRCIMIWCreateTagCallback(onTagCreated: (int? code) {
+    //...
+});
+
+int? ret = await engine?.createTag(tagId, tagName, callback:callback);
+//fun_createTag_call
+*/
+
+createTag(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+
+  if (arg['tagName'] == null) {
+    RCIWToast.showToast("tagName 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  String tagName = arg['tagName'];
+  IRCIMIWCreateTagCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWCreateTagCallback(onTagCreated: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "createTag-onTagCreated";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.createTag(tagId, tagName, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "createTag";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_removeTag_call
+IRCIMIWRemoveTagCallback? callback = IRCIMIWRemoveTagCallback(onTagRemoved: (int? code) {
+    //...
+});
+
+int? ret = await engine?.removeTag(tagId, callback:callback);
+//fun_removeTag_call
+*/
+
+removeTag(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  IRCIMIWRemoveTagCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRemoveTagCallback(onTagRemoved: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "removeTag-onTagRemoved";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.removeTag(tagId, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "removeTag";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_updateTagNameById_call
+IRCIMIWUpdateTagNameByIdCallback? callback = IRCIMIWUpdateTagNameByIdCallback(onTagNameByIdUpdated: (int? code) {
+    //...
+});
+
+int? ret = await engine?.updateTagNameById(tagId, newName, callback:callback);
+//fun_updateTagNameById_call
+*/
+
+updateTagNameById(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+
+  if (arg['newName'] == null) {
+    RCIWToast.showToast("newName 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  String newName = arg['newName'];
+  IRCIMIWUpdateTagNameByIdCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWUpdateTagNameByIdCallback(onTagNameByIdUpdated: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "updateTagNameById-onTagNameByIdUpdated";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.updateTagNameById(tagId, newName, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "updateTagNameById";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getTags_call
+IRCIMIWGetTagsCallback? callback = IRCIMIWGetTagsCallback(onSuccess: (List<RCIMIWTagInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getTags(callback:callback);
+//fun_getTags_call
+*/
+
+getTags(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  IRCIMIWGetTagsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetTagsCallback(onSuccess: (List<RCIMIWTagInfo>? t) {
+      List tJson = [];
+      if (t != null) {
+        for (var temp in t) {
+          tJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      Map<String, String> arg = {};
+      arg["listener"] = "getTags-onSuccess";
+      arg["t"] = tJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onError: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "getTags-onError";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.getTags(callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getTags";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_addConversationToTag_call
+IRCIMIWAddConversationToTagCallback? callback = IRCIMIWAddConversationToTagCallback(onConversationToTagAdded: (int? code) {
+    //...
+});
+
+int? ret = await engine?.addConversationToTag(tagId, type, targetId, callback:callback);
+//fun_addConversationToTag_call
+*/
+
+addConversationToTag(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  IRCIMIWAddConversationToTagCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWAddConversationToTagCallback(onConversationToTagAdded: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "addConversationToTag-onConversationToTagAdded";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.addConversationToTag(tagId, type, targetId, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "addConversationToTag";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_removeConversationFromTag_call
+IRCIMIWRemoveConversationFromTagCallback? callback = IRCIMIWRemoveConversationFromTagCallback(onConversationFromTagRemoved: (int? code) {
+    //...
+});
+
+int? ret = await engine?.removeConversationFromTag(tagId, type, targetId, callback:callback);
+//fun_removeConversationFromTag_call
+*/
+
+removeConversationFromTag(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  IRCIMIWRemoveConversationFromTagCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRemoveConversationFromTagCallback(onConversationFromTagRemoved: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "removeConversationFromTag-onConversationFromTagRemoved";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.removeConversationFromTag(tagId, type, targetId, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "removeConversationFromTag";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_removeTagsFromConversation_call
+IRCIMIWRemoveTagsFromConversationCallback? callback = IRCIMIWRemoveTagsFromConversationCallback(onTagsFromConversationRemoved: (int? code) {
+    //...
+});
+
+int? ret = await engine?.removeTagsFromConversation(type, targetId, tagIds, callback:callback);
+//fun_removeTagsFromConversation_call
+*/
+
+removeTagsFromConversation(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['tagIds'] == null) {
+    RCIWToast.showToast("tagIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  List<String> tagIds = (arg["tagIds"]).split(",");
+  IRCIMIWRemoveTagsFromConversationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRemoveTagsFromConversationCallback(onTagsFromConversationRemoved: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "removeTagsFromConversation-onTagsFromConversationRemoved";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.removeTagsFromConversation(type, targetId, tagIds, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "removeTagsFromConversation";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getTagsFromConversation_call
+IRCIMIWGetTagsFromConversationCallback? callback = IRCIMIWGetTagsFromConversationCallback(onSuccess: (List<RCIMIWConversationTagInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getTagsFromConversation(type, targetId, callback:callback);
+//fun_getTagsFromConversation_call
+*/
+
+getTagsFromConversation(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  IRCIMIWGetTagsFromConversationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetTagsFromConversationCallback(onSuccess: (List<RCIMIWConversationTagInfo>? t) {
+      List tJson = [];
+      if (t != null) {
+        for (var temp in t) {
+          tJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      Map<String, String> arg = {};
+      arg["listener"] = "getTagsFromConversation-onSuccess";
+      arg["t"] = tJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onError: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "getTagsFromConversation-onError";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.getTagsFromConversation(type, targetId, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getTagsFromConversation";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getConversationsFromTagByPage_call
+IRCIMIWGetConversationsCallback? callback = IRCIMIWGetConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getConversationsFromTagByPage(tagId, timestamp, count, callback:callback);
+//fun_getConversationsFromTagByPage_call
+*/
+
+getConversationsFromTagByPage(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+
+  if (arg['timestamp'] == null) {
+    RCIWToast.showToast("timestamp 为空");
+    return;
+  }
+
+  if (arg['count'] == null) {
+    RCIWToast.showToast("count 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  int timestamp = int.parse(arg['timestamp']);
+  int count = int.parse(arg['count']);
+  IRCIMIWGetConversationsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
+      List tJson = [];
+      if (t != null) {
+        for (var temp in t) {
+          tJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      Map<String, String> arg = {};
+      arg["listener"] = "getConversationsFromTagByPage-onSuccess";
+      arg["t"] = tJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onError: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "getConversationsFromTagByPage-onError";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code =
+      await IMEngineManager().engine?.getConversationsFromTagByPage(tagId, timestamp, count, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getConversationsFromTagByPage";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getUnreadCountByTag_call
+IRCIMIWGetUnreadCountCallback? callback = IRCIMIWGetUnreadCountCallback(onSuccess: (int? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getUnreadCountByTag(tagId, contain, callback:callback);
+//fun_getUnreadCountByTag_call
+*/
+
+getUnreadCountByTag(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+
+  if (arg['contain'] == null) {
+    RCIWToast.showToast("contain 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  int containInt = int.parse(arg['contain']);
+  bool contain = containInt == 0 ? false : true;
+  IRCIMIWGetUnreadCountCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetUnreadCountCallback(onSuccess: (int? t) {
+      Map<String, String> arg = {};
+      arg["listener"] = "getUnreadCountByTag-onSuccess";
+      arg["t"] = t.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onError: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "getUnreadCountByTag-onError";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.getUnreadCountByTag(tagId, contain, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getUnreadCountByTag";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_changeConversationTopStatusInTag_call
+IRCIMIWChangeConversationTopStatusInTagCallback? callback = IRCIMIWChangeConversationTopStatusInTagCallback(onConversationTopStatusInTagChanged: (int? code) {
+    //...
+});
+
+int? ret = await engine?.changeConversationTopStatusInTag(tagId, type, targetId, top, callback:callback);
+//fun_changeConversationTopStatusInTag_call
+*/
+
+changeConversationTopStatusInTag(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['top'] == null) {
+    RCIWToast.showToast("top 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  int topInt = int.parse(arg['top']);
+  bool top = topInt == 0 ? false : true;
+  IRCIMIWChangeConversationTopStatusInTagCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWChangeConversationTopStatusInTagCallback(onConversationTopStatusInTagChanged: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "changeConversationTopStatusInTag-onConversationTopStatusInTagChanged";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code =
+      await IMEngineManager().engine?.changeConversationTopStatusInTag(tagId, type, targetId, top, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "changeConversationTopStatusInTag";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getConversationTopStatusInTag_call
+IRCIMIWGetConversationTopStatusInTagCallback? callback = IRCIMIWGetConversationTopStatusInTagCallback(onSuccess: (bool? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getConversationTopStatusInTag(tagId, type, targetId, callback:callback);
+//fun_getConversationTopStatusInTag_call
+*/
+
+getConversationTopStatusInTag(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  IRCIMIWGetConversationTopStatusInTagCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetConversationTopStatusInTagCallback(onSuccess: (bool? t) {
+      Map<String, String> arg = {};
+      arg["listener"] = "getConversationTopStatusInTag-onSuccess";
+      arg["t"] = t.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onError: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "getConversationTopStatusInTag-onError";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.getConversationTopStatusInTag(tagId, type, targetId, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getConversationTopStatusInTag";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_clearMessagesUnreadStatusByTag_call
+IRCIMIWClearMessagesUnreadStatusByTagCallback? callback = IRCIMIWClearMessagesUnreadStatusByTagCallback(onSuccess: (bool? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.clearMessagesUnreadStatusByTag(tagId, callback:callback);
+//fun_clearMessagesUnreadStatusByTag_call
+*/
+
+clearMessagesUnreadStatusByTag(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  IRCIMIWClearMessagesUnreadStatusByTagCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWClearMessagesUnreadStatusByTagCallback(onSuccess: (bool? t) {
+      Map<String, String> arg = {};
+      arg["listener"] = "clearMessagesUnreadStatusByTag-onSuccess";
+      arg["t"] = t.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onError: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "clearMessagesUnreadStatusByTag-onError";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.clearMessagesUnreadStatusByTag(tagId, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "clearMessagesUnreadStatusByTag";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_clearConversationsByTag_call
+IRCIMIWClearConversationsByTagCallback? callback = IRCIMIWClearConversationsByTagCallback(onSuccess: (bool? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.clearConversationsByTag(tagId, deleteMessage, callback:callback);
+//fun_clearConversationsByTag_call
+*/
+
+clearConversationsByTag(Map arg) async {
+  if (arg['tagId'] == null) {
+    RCIWToast.showToast("tagId 为空");
+    return;
+  }
+
+  if (arg['deleteMessage'] == null) {
+    RCIWToast.showToast("deleteMessage 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String tagId = arg['tagId'];
+  int deleteMessageInt = int.parse(arg['deleteMessage']);
+  bool deleteMessage = deleteMessageInt == 0 ? false : true;
+  IRCIMIWClearConversationsByTagCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWClearConversationsByTagCallback(onSuccess: (bool? t) {
+      Map<String, String> arg = {};
+      arg["listener"] = "clearConversationsByTag-onSuccess";
+      arg["t"] = t.toString();
+
+      bus.emit("rong_im_listener", arg);
+    }, onError: (int? code) {
+      Map<String, String> arg = {};
+      arg["listener"] = "clearConversationsByTag-onError";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    });
+  }
+
+  int? code = await IMEngineManager().engine?.clearConversationsByTag(tagId, deleteMessage, callback: callback);
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "clearConversationsByTag";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
 
   if (IMEngineManager().engine == null) {
     resultCode["errorMsg"] = "引擎未初始化";

@@ -393,6 +393,29 @@
   return index;
 }
 
++ (RCIMIWAreaCode)convertAreaCodeFromInteger:(NSInteger)integer {
+  NSArray *AreaCodeArray = @[
+    @(RCIMIWAreaCodeBJ),
+    @(RCIMIWAreaCodeSG),
+    @(RCIMIWAreaCodeNA),
+    @(RCIMIWAreaCodeSGB),
+    @(RCIMIWAreaCodeSA),
+  ];
+  RCIMIWAreaCode AreaCode = [[AreaCodeArray objectAtIndex:integer] integerValue];
+  return AreaCode;
+}
++ (NSInteger)convertAreaCodeToInteger:(RCIMIWAreaCode)AreaCode {
+  NSArray *AreaCodeArray = @[
+    @(RCIMIWAreaCodeBJ),
+    @(RCIMIWAreaCodeSG),
+    @(RCIMIWAreaCodeNA),
+    @(RCIMIWAreaCodeSGB),
+    @(RCIMIWAreaCodeSA),
+  ];
+  NSInteger index = [AreaCodeArray indexOfObject:@(AreaCode)];
+  return index;
+}
+
 + (RCIMIWChatRoomEntriesOperationType)convertChatRoomEntriesOperationTypeFromInteger:(NSInteger)integer {
   NSArray *ChatRoomEntriesOperationTypeArray = @[
     @(RCIMIWChatRoomEntriesOperationTypeUpdate),

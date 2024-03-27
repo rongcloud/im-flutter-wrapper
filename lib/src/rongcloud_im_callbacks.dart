@@ -71,6 +71,13 @@ class IRCIMIWGetConversationsCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWGetUnreadConversationsCallback {
+  IRCIMIWGetUnreadConversationsCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWConversation>? t) onSuccess;
+  Function(int? code) onError;
+}
+
 class IRCIMIWRemoveConversationCallback {
   IRCIMIWRemoveConversationCallback({required this.onConversationRemoved});
 
@@ -578,6 +585,83 @@ class IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback {
   IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback({required this.onUltraGroupMessageExpansionForKeysRemoved});
 
   Function(int? code) onUltraGroupMessageExpansionForKeysRemoved;
+}
+
+class IRCIMIWCreateTagCallback {
+  IRCIMIWCreateTagCallback({required this.onTagCreated});
+
+  Function(int? code) onTagCreated;
+}
+
+class IRCIMIWRemoveTagCallback {
+  IRCIMIWRemoveTagCallback({required this.onTagRemoved});
+
+  Function(int? code) onTagRemoved;
+}
+
+class IRCIMIWUpdateTagNameByIdCallback {
+  IRCIMIWUpdateTagNameByIdCallback({required this.onTagNameByIdUpdated});
+
+  Function(int? code) onTagNameByIdUpdated;
+}
+
+class IRCIMIWGetTagsCallback {
+  IRCIMIWGetTagsCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWTagInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWAddConversationToTagCallback {
+  IRCIMIWAddConversationToTagCallback({required this.onConversationToTagAdded});
+
+  Function(int? code) onConversationToTagAdded;
+}
+
+class IRCIMIWRemoveConversationFromTagCallback {
+  IRCIMIWRemoveConversationFromTagCallback({required this.onConversationFromTagRemoved});
+
+  Function(int? code) onConversationFromTagRemoved;
+}
+
+class IRCIMIWRemoveTagsFromConversationCallback {
+  IRCIMIWRemoveTagsFromConversationCallback({required this.onTagsFromConversationRemoved});
+
+  Function(int? code) onTagsFromConversationRemoved;
+}
+
+class IRCIMIWGetTagsFromConversationCallback {
+  IRCIMIWGetTagsFromConversationCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWConversationTagInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWChangeConversationTopStatusInTagCallback {
+  IRCIMIWChangeConversationTopStatusInTagCallback({required this.onConversationTopStatusInTagChanged});
+
+  Function(int? code) onConversationTopStatusInTagChanged;
+}
+
+class IRCIMIWGetConversationTopStatusInTagCallback {
+  IRCIMIWGetConversationTopStatusInTagCallback({required this.onSuccess, required this.onError});
+
+  Function(bool? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWClearMessagesUnreadStatusByTagCallback {
+  IRCIMIWClearMessagesUnreadStatusByTagCallback({required this.onSuccess, required this.onError});
+
+  Function(bool? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWClearConversationsByTagCallback {
+  IRCIMIWClearConversationsByTagCallback({required this.onSuccess, required this.onError});
+
+  Function(bool? t) onSuccess;
+  Function(int? code) onError;
 }
 
 class RCIMIWConnectCallback {

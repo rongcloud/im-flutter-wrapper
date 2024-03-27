@@ -9,7 +9,5 @@ class AndroidPushInfo {
 
 class AccountInfo {
   static const appKey = '';
-  static const token1 = '';
-  static const token2 = '';
-  static const token3 = '';
+  static const token = '';
 }

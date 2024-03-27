@@ -539,4 +539,17 @@ typedef NS_ENUM(NSUInteger, RCIMIWImportanceHW) {
     RCIMIWImportanceHWLow = 1,
 };
 
+typedef NS_ENUM(NSUInteger, RCIMIWAreaCode) {
+    /// 默认值，北京数据中心
+    RCIMIWAreaCodeBJ = 1,
+    /// 新加坡数据中心
+    RCIMIWAreaCodeSG = 2,
+    /// 北美数据中心
+    RCIMIWAreaCodeNA = 3,
+    /// 新增的新加坡数据中心
+    RCIMIWAreaCodeSGB = 4,
+    /// 沙特数据中心
+    RCIMIWAreaCodeSA = 5,
+};
+
 #endif /* RCIMIWDefines_h */

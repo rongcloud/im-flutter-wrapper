@@ -136,6 +136,14 @@ const getConversations = {
   "action": engine_fun.getConversations,
 };
 
+const getUnreadConversations = {
+  "title": "getUnreadConversations",
+  "params": [
+    {"key": "conversationTypes", "type": "String", "hint": "", "lable": "请输入conversationTypes",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getUnreadConversations,
+};
+
 const removeConversation = {
   "title": "removeConversation",
   "params": [
@@ -918,6 +926,118 @@ const getDeltaTime = {
     
   ],
   "action": engine_fun.getDeltaTime,
+};
+
+const createTag = {
+  "title": "createTag",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "tagName", "type": "String", "hint": "", "lable": "请输入tagName",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.createTag,
+};
+
+const removeTag = {
+  "title": "removeTag",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.removeTag,
+};
+
+const updateTagNameById = {
+  "title": "updateTagNameById",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "newName", "type": "String", "hint": "", "lable": "请输入newName",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.updateTagNameById,
+};
+
+const getTags = {
+  "title": "getTags",
+  "params": [
+    {"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getTags,
+};
+
+const addConversationToTag = {
+  "title": "addConversationToTag",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.addConversationToTag,
+};
+
+const removeConversationFromTag = {
+  "title": "removeConversationFromTag",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.removeConversationFromTag,
+};
+
+const removeTagsFromConversation = {
+  "title": "removeTagsFromConversation",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "tagIds", "type": "String", "hint": "", "lable": "请输入tagIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.removeTagsFromConversation,
+};
+
+const getTagsFromConversation = {
+  "title": "getTagsFromConversation",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getTagsFromConversation,
+};
+
+const getConversationsFromTagByPage = {
+  "title": "getConversationsFromTagByPage",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "timestamp", "type": "String", "hint": "", "lable": "请输入timestamp",},{"key": "count", "type": "String", "hint": "", "lable": "请输入count",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getConversationsFromTagByPage,
+};
+
+const getUnreadCountByTag = {
+  "title": "getUnreadCountByTag",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "contain", "type": "String", "hint": "", "lable": "请输入contain",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getUnreadCountByTag,
+};
+
+const changeConversationTopStatusInTag = {
+  "title": "changeConversationTopStatusInTag",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "top", "type": "String", "hint": "", "lable": "请输入top",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.changeConversationTopStatusInTag,
+};
+
+const getConversationTopStatusInTag = {
+  "title": "getConversationTopStatusInTag",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getConversationTopStatusInTag,
+};
+
+const clearMessagesUnreadStatusByTag = {
+  "title": "clearMessagesUnreadStatusByTag",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.clearMessagesUnreadStatusByTag,
+};
+
+const clearConversationsByTag = {
+  "title": "clearConversationsByTag",
+  "params": [
+    {"key": "tagId", "type": "String", "hint": "", "lable": "请输入tagId",},{"key": "deleteMessage", "type": "String", "hint": "", "lable": "请输入deleteMessage",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.clearConversationsByTag,
 };
 
 */

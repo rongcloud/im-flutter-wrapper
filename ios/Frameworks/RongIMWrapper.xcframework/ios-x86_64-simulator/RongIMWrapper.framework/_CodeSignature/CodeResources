@@ -30,7 +30,7 @@
 		</data>
 		<key>Headers/RCIMIWConversationTagInfo.h</key>
 		<data>
-		7Joos+OOkpSNyPtlQKjBY9FzJZc=
+		C5vgJNgPATsesPBQufy4L5gpSnQ=
 		</data>
 		<key>Headers/RCIMIWCustomMessage.h</key>
 		<data>
@@ -38,11 +38,11 @@
 		</data>
 		<key>Headers/RCIMIWDefines.h</key>
 		<data>
-		YbpXqYaEpFS5auUalfULho0GUSE=
+		agTp/J86qynzvQtf171seueC69g=
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		fT+5p6eHEjMqAzZ3DrHNQVPBMcA=
+		YE6aBifOMOy+6jI4UVZh5KzidHg=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Headers/RCIMIWEngineOptions.h</key>
 		<data>
-		C8rWlBG+hkN4n+ozwN/NnUJzEgQ=
+		ud+wnRuziaUxwXm6wxNrhO2bBRc=
 		</data>
 		<key>Headers/RCIMIWFileMessage.h</key>
 		<data>
@@ -90,7 +90,7 @@
 		</data>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
 		<data>
-		tbiQ0Hx+ziPxkDiGRQYMx8apUmk=
+		qBfombP/fhIyPE4YuBePNjby9DI=
 		</data>
 		<key>Headers/RCIMIWRecallNotificationMessage.h</key>
 		<data>
@@ -150,7 +150,7 @@
 		</data>
 		<key>RCConfig.plist</key>
 		<data>
-		tLLC4Uyo/ChnXw0e+qQoP2Aq2Rc=
+		QA7nn/q1j2Y4AJbaGtBBs8g71xE=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -225,11 +225,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7Joos+OOkpSNyPtlQKjBY9FzJZc=
+			C5vgJNgPATsesPBQufy4L5gpSnQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			jW6PMirUmCpCuTmVUGEOpSk0a41zBpI28p6gscVX/KI=
+			yLRPC+dWbAoNGPmwjd8jVNHZIlaphbKuehQWY93v28w=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWCustomMessage.h</key>
@@ -247,22 +247,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			YbpXqYaEpFS5auUalfULho0GUSE=
+			agTp/J86qynzvQtf171seueC69g=
 			</data>
 			<key>hash2</key>
 			<data>
-			SvGn+dvKPR1MtB7y4T7N9tBceNzCRVya1NzHpsfH7Bw=
+			bfzQdVrSNos6HJrY0nu4iGHof2l9YQz5AdwIhZvZxsI=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngine.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			fT+5p6eHEjMqAzZ3DrHNQVPBMcA=
+			YE6aBifOMOy+6jI4UVZh5KzidHg=
 			</data>
 			<key>hash2</key>
 			<data>
-			ohQ6Fq/T0JeGYuXz2/5mn+jHt6oqCS6yUXu2ZT/7K5A=
+			QRiui5Qmypnv/F6kvzsFOIuPk6Y+jXwlBzhjfHbN8nQ=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
@@ -280,11 +280,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			C8rWlBG+hkN4n+ozwN/NnUJzEgQ=
+			ud+wnRuziaUxwXm6wxNrhO2bBRc=
 			</data>
 			<key>hash2</key>
 			<data>
-			DZz8yePrwa66cr2uE1AAzTlS/lkC1uCdX7BntgtLJ7M=
+			fx4bU9ekLddFW8qP+iwvOFcOUPzUBbAxoTLD8Cq0PyM=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWFileMessage.h</key>
@@ -390,11 +390,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tbiQ0Hx+ziPxkDiGRQYMx8apUmk=
+			qBfombP/fhIyPE4YuBePNjby9DI=
 			</data>
 			<key>hash2</key>
 			<data>
-			aBbTgXD6sWDiTHn2zbfK4WalBwMRhozdzrUO987/mtM=
+			Qp/Je6EMWPamGGqKOzxdrGy0S8nJgak5S/PNUKIj2VY=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWRecallNotificationMessage.h</key>
@@ -544,11 +544,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tLLC4Uyo/ChnXw0e+qQoP2Aq2Rc=
+			QA7nn/q1j2Y4AJbaGtBBs8g71xE=
 			</data>
 			<key>hash2</key>
 			<data>
-			vw5hCzMW6KYUbA7UDYMWR4yCSd/1uDX8ljdaiOveDLs=
+			q9qti/DvWdK6nHCUQ3R/b3gsZ4wASUjoeUzGtn7YyXI=
 			</data>
 		</dict>
 	</dict>
