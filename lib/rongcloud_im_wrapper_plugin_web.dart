@@ -9,6 +9,7 @@ import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
 import 'src/web/rongcloud_im_wrapper_utils.dart';
 import 'package:rongcloud_im_wrapper_plugin/src/rongcloud_im_converter.dart';
 
+@Deprecated('当前版本不支持 Web 端，请使用其他平台')
 class RCIMWrapperPluginWeb extends RCIMWrapperPlatform {
   RCIMWrapperPluginWeb();
 

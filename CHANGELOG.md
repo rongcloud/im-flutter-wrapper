@@ -1,3 +1,6 @@
+# 5.6.12
+* 移除 SDK 对 Web 平台的支持，[详细信息](https://help.rongcloud.cn/t/topic/1218)
+
 # 5.6.11
 * 更新 Android SDK 依赖为 5.6.10
 * 更新 iOS SDK 依赖为 5.6.11

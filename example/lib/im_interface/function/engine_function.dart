@@ -208,9 +208,15 @@ Future sendTextMessage(Map arg) async {
   }
 
   String categoryVivo = arg['categoryVivo'] ?? "";
-  RCIMIWVIVOPushType pushTypeVIVO = RCIMIWVIVOPushType.values[int.parse(arg['pushTypeVIVO'] ?? "0")];
-  RCIMIWAndroidPushOptions androidPushOptions = RCIMIWAndroidPushOptions.create(categoryVivo: categoryVivo, pushTypeVIVO: pushTypeVIVO);
-  textMessage.pushOptions = RCIMIWMessagePushOptions.create(disableNotification: false, pushContent: arg['pushContent'], pushData: arg['pushData'], androidPushOptions: androidPushOptions);
+  RCIMIWVIVOPushType pushTypeVIVO =
+      RCIMIWVIVOPushType.values[int.parse(arg['pushTypeVIVO'] ?? "0")];
+  RCIMIWAndroidPushOptions androidPushOptions = RCIMIWAndroidPushOptions.create(
+      categoryVivo: categoryVivo, pushTypeVIVO: pushTypeVIVO);
+  textMessage.pushOptions = RCIMIWMessagePushOptions.create(
+      disableNotification: false,
+      pushContent: arg['pushContent'],
+      pushData: arg['pushData'],
+      androidPushOptions: androidPushOptions);
 
   if (arg['Mentioned'] != null) {
     RCIMIWMentionedType mentionedType =
@@ -360,7 +366,9 @@ connect(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager().engine?.connect(token, timeout, callback: callback);
+  int? code = await IMEngineManager()
+      .engine
+      ?.connect(token, timeout, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "connect";
   resultCode["code"] = (code ?? -1).toString();
@@ -514,7 +522,7 @@ Future sendGIFMessage(Map arg) async {
 }
 
 Future sendCommandMessage(Map arg) async {
-if (arg['type'] == null) {
+  if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
     return;
   }
@@ -531,11 +539,11 @@ if (arg['type'] == null) {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type =
+      RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String name = arg['name'];
   String data = arg['data'];
-
 
   String channelId = arg['channelId'] ?? "";
   int useCallback = int.parse(arg['use_cb'] ?? "1");

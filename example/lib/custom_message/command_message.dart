@@ -7,10 +7,13 @@ class RCIMDCommandMessage extends RCIMIWUserCustomMessage {
   String? name;
   String? data;
   // 1. 定义自己的构造方法,需要调用父类的 RCIMIWUserCustomMessage(RCIMIWConversationType type, String targetId)
-  RCIMDCommandMessage(RCIMIWConversationType type, String targetId, this.name, this.data) : super(type, targetId);
+  RCIMDCommandMessage(
+      RCIMIWConversationType type, String targetId, this.name, this.data)
+      : super(type, targetId);
 
   // 2. 需要继承父类的构造函数
-  RCIMDCommandMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  RCIMDCommandMessage.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json);
 
   // 3. 需要实现父类的 decode/encode/messageObjectName
   @override

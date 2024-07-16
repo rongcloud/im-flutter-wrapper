@@ -408,7 +408,6 @@ const sendLocationMessage = {
   "action": engine_fun.sendLocationMessage,
 };
 
-
 const sendCommandMessage = {
   "title": "发送命令消息",
   "params": [
@@ -806,7 +805,8 @@ const clearMessages = {
       "key": "timestamp",
       "type": "String",
       "hint": "",
-      "lable": "清除消息截止时间戳，0 <= recordTime <= 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 recordTime 的消息",
+      "lable":
+          "清除消息截止时间戳，0 <= recordTime <= 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 recordTime 的消息",
     },
     {
       "key": "policy",

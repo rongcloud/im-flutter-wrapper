@@ -658,6 +658,7 @@ class RCIMIWListenerJS {
   external set onUltraGroupMessageExpansionRemoved(dynamic func);
 }
 
+@Deprecated('当前版本不支持 Web 端，请使用其他平台')
 class RCIMIWEngineWeb {
   // create 出来的 js engine 对象，用来调用实例方法
   static RCIMIWEngineJS? imEngine;
