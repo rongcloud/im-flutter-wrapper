@@ -213,6 +213,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy) NSString *categoryVivo;
 
+/*!
+ 荣耀推送消息级别
+ */
+@property (nonatomic, assign) RCIMIWImportanceHonor importanceHonor;
+
+@property (nonatomic, copy) NSString *imageUrlHonor;
+
 @end
 
 NS_ASSUME_NONNULL_END

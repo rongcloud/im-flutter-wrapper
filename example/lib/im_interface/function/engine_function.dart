@@ -56,12 +56,10 @@ Future initEngine(Map arg) async {
 
     RCIMIWCompressOptions compressOptions = RCIMIWCompressOptions.create();
     if (arg['originalImageQuality'] != null) {
-      compressOptions.originalImageQuality =
-          int.parse(arg['originalImageQuality']);
+      compressOptions.originalImageQuality = int.parse(arg['originalImageQuality']);
     }
     if (arg['originalImageMaxSize'] != null) {
-      compressOptions.originalImageMaxSize =
-          int.parse(arg['originalImageMaxSize']);
+      compressOptions.originalImageMaxSize = int.parse(arg['originalImageMaxSize']);
     }
     if (arg['originalImageSize'] != null) {
       compressOptions.originalImageSize = int.parse(arg['originalImageSize']);
@@ -79,20 +77,16 @@ Future initEngine(Map arg) async {
       compressOptions.sightCompressWidth = int.parse(arg['sightCompressWidth']);
     }
     if (arg['sightCompressHeight'] != null) {
-      compressOptions.sightCompressHeight =
-          int.parse(arg['sightCompressHeight']);
+      compressOptions.sightCompressHeight = int.parse(arg['sightCompressHeight']);
     }
     if (arg['locationThumbnailQuality'] != null) {
-      compressOptions.locationThumbnailQuality =
-          int.parse(arg['locationThumbnailQuality']);
+      compressOptions.locationThumbnailQuality = int.parse(arg['locationThumbnailQuality']);
     }
     if (arg['locationThumbnailHeight'] != null) {
-      compressOptions.locationThumbnailHeight =
-          int.parse(arg['locationThumbnailHeight']);
+      compressOptions.locationThumbnailHeight = int.parse(arg['locationThumbnailHeight']);
     }
     if (arg['locationThumbnailWidth'] != null) {
-      compressOptions.locationThumbnailWidth =
-          int.parse(arg['locationThumbnailWidth']);
+      compressOptions.locationThumbnailWidth = int.parse(arg['locationThumbnailWidth']);
     }
 
     RCIMIWPushOptions pushOptions = RCIMIWPushOptions.create(
@@ -189,18 +183,16 @@ Future sendTextMessage(Map arg) async {
   }
 
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType conversationType =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType conversationType = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
   String text = arg['text'];
-  RCIMIWTextMessage? textMessage =
-      await IMEngineManager().engine?.createTextMessage(
-            conversationType,
-            targetId,
-            channelId,
-            text,
-          );
+  RCIMIWTextMessage? textMessage = await IMEngineManager().engine?.createTextMessage(
+        conversationType,
+        targetId,
+        channelId,
+        text,
+      );
 
   if (textMessage == null) {
     RCIWToast.showToast("消息创建失败");
@@ -208,19 +200,12 @@ Future sendTextMessage(Map arg) async {
   }
 
   String categoryVivo = arg['categoryVivo'] ?? "";
-  RCIMIWVIVOPushType pushTypeVIVO =
-      RCIMIWVIVOPushType.values[int.parse(arg['pushTypeVIVO'] ?? "0")];
-  RCIMIWAndroidPushOptions androidPushOptions = RCIMIWAndroidPushOptions.create(
-      categoryVivo: categoryVivo, pushTypeVIVO: pushTypeVIVO);
-  textMessage.pushOptions = RCIMIWMessagePushOptions.create(
-      disableNotification: false,
-      pushContent: arg['pushContent'],
-      pushData: arg['pushData'],
-      androidPushOptions: androidPushOptions);
+  RCIMIWVIVOPushType pushTypeVIVO = RCIMIWVIVOPushType.values[int.parse(arg['pushTypeVIVO'] ?? "0")];
+  RCIMIWAndroidPushOptions androidPushOptions = RCIMIWAndroidPushOptions.create(categoryVivo: categoryVivo, pushTypeVIVO: pushTypeVIVO);
+  textMessage.pushOptions = RCIMIWMessagePushOptions.create(disableNotification: false, pushContent: arg['pushContent'], pushData: arg['pushData'], androidPushOptions: androidPushOptions);
 
   if (arg['Mentioned'] != null) {
-    RCIMIWMentionedType mentionedType =
-        RCIMIWMentionedType.values[int.parse(arg['Mentioned'])];
+    RCIMIWMentionedType mentionedType = RCIMIWMentionedType.values[int.parse(arg['Mentioned'])];
 
     List<String>? users;
     if (arg["MentionedUser"] != null) {
@@ -278,12 +263,10 @@ Future sendImageMessage(Map arg) async {
     return;
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
-  bool original =
-      arg['original'] == null ? false : int.parse(arg['original']) == 1;
+  bool original = arg['original'] == null ? false : int.parse(arg['original']) == 1;
 
   BuildContext context = arg['context'];
   RCIWMediaUlits.showImagePicker(context, (XFile? file) async {
@@ -292,9 +275,7 @@ Future sendImageMessage(Map arg) async {
       String base64 = base64Encode(fileBytes);
     }
 
-    RCIMIWImageMessage? message = await IMEngineManager()
-        .engine
-        ?.createImageMessage(type, targetId, channelId, file?.path ?? '');
+    RCIMIWImageMessage? message = await IMEngineManager().engine?.createImageMessage(type, targetId, channelId, file?.path ?? '');
     message?.original = original;
     _sendMessage(message, useCallback);
   });
@@ -310,15 +291,12 @@ Future sendFileMessage(Map arg) async {
     return;
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
   List<File>? files = await RCIWMediaUlits.pickFiles();
   if (files != null) {
-    RCIMIWFileMessage? msg = await IMEngineManager()
-        .engine
-        ?.createFileMessage(type, targetId, channelId, files[0].path);
+    RCIMIWFileMessage? msg = await IMEngineManager().engine?.createFileMessage(type, targetId, channelId, files[0].path);
     _sendMessage(msg, useCallback);
   }
 }
@@ -366,9 +344,7 @@ connect(Map arg) async {
     });
   }
 
-  int? code = await IMEngineManager()
-      .engine
-      ?.connect(token, timeout, callback: callback);
+  int? code = await IMEngineManager().engine?.connect(token, timeout, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "connect";
   resultCode["code"] = (code ?? -1).toString();
@@ -394,15 +370,12 @@ Future sendSightMessage(Map arg) async {
     return;
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
   BuildContext context = arg['context'];
   RCIWMediaUlits.showVideoPicker(context, (path) async {
-    RCIMIWSightMessage? sightMsg = await IMEngineManager()
-        .engine
-        ?.createSightMessage(type, targetId, channelId, "file://" + path, 10);
+    RCIMIWSightMessage? sightMsg = await IMEngineManager().engine?.createSightMessage(type, targetId, channelId, "file://" + path, 10);
     _sendMessage(sightMsg, useCallback);
   });
 }
@@ -417,8 +390,7 @@ Future sendVoiceMessage(Map arg) async {
     return;
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
   BuildContext context = arg['context'];
@@ -440,10 +412,7 @@ Future sendVoiceMessage(Map arg) async {
             onFinished: () {
               RCIWMediaUlits.stopRecordAudio((path, duration) async {
                 if (path != null && (duration ?? 0) > 0) {
-                  RCIMIWVoiceMessage? msg = await IMEngineManager()
-                      .engine
-                      ?.createVoiceMessage(
-                          type, targetId, channelId, path, duration!);
+                  RCIMIWVoiceMessage? msg = await IMEngineManager().engine?.createVoiceMessage(type, targetId, channelId, path, duration!);
                   _sendMessage(msg, useCallback);
                 }
               });
@@ -477,8 +446,7 @@ Future sendReferenceMessage(Map arg) async {
   }
 
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
 
   String channelId = arg['channelId'] ?? "";
@@ -491,9 +459,7 @@ Future sendReferenceMessage(Map arg) async {
     return;
   }
 
-  RCIMIWReferenceMessage? referenceMsg = await IMEngineManager()
-      .engine
-      ?.createReferenceMessage(type, targetId, channelId, message, text);
+  RCIMIWReferenceMessage? referenceMsg = await IMEngineManager().engine?.createReferenceMessage(type, targetId, channelId, message, text);
   _sendMessage(referenceMsg, useCallback);
 }
 
@@ -507,16 +473,12 @@ Future sendGIFMessage(Map arg) async {
     return;
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
-  List<File>? files =
-      await RCIWMediaUlits.pickFiles(allowedExtensions: ["gif"]);
+  List<File>? files = await RCIWMediaUlits.pickFiles(allowedExtensions: ["gif"]);
   if (files != null) {
-    RCIMIWGIFMessage? msg = await IMEngineManager()
-        .engine
-        ?.createGIFMessage(type, targetId, channelId, files[0].path);
+    RCIMIWGIFMessage? msg = await IMEngineManager().engine?.createGIFMessage(type, targetId, channelId, files[0].path);
     _sendMessage(msg, useCallback);
   }
 }
@@ -539,8 +501,7 @@ Future sendCommandMessage(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String name = arg['name'];
   String data = arg['data'];
@@ -574,8 +535,7 @@ Future sendLocationMessage(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String longitude = arg['longitude'];
   String latitude = arg['latitude'];
@@ -586,18 +546,94 @@ Future sendLocationMessage(Map arg) async {
 
   BuildContext context = arg['context'];
   RCIWMediaUlits.showImagePicker(context, (XFile? file) async {
-    RCIMIWLocationMessage? message =
-        await IMEngineManager().engine?.createLocationMessage(
-              type,
-              targetId,
-              channelId,
-              double.parse(longitude),
-              double.parse(latitude),
-              poiName,
-              file?.path ?? '',
-            );
+    RCIMIWLocationMessage? message = await IMEngineManager().engine?.createLocationMessage(
+          type,
+          targetId,
+          channelId,
+          double.parse(longitude),
+          double.parse(latitude),
+          poiName,
+          file?.path ?? '',
+        );
     _sendMessage(message, useCallback);
   });
+}
+
+Future sendNativeCustomMessage(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['messageIdentifier'] == null) {
+    RCIWToast.showToast("messageIdentifier 为空");
+    return;
+  }
+
+  if (arg["fields"] == null) {
+    RCIWToast.showToast("fields 为空");
+    return;
+  }
+
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  String messageIdentifier = arg['messageIdentifier'];
+  String fields = arg['fields'];
+
+  List searchWords = (arg["searchWords"] ?? "").split(",");
+  // 将 JSON 字符串解析为 Map
+  Map<String, dynamic> fieldsMap = jsonDecode(fields);
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWNativeCustomMessage? msg = await IMEngineManager().engine?.createNativeCustomMessage(type, targetId, channelId, messageIdentifier, fieldsMap);
+  msg?.searchableWords = searchWords.cast<String>();
+  _sendMessage(msg, useCallback);
+}
+
+sendNativeCustomMediaMessage(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['messageIdentifier'] == null) {
+    RCIWToast.showToast("messageIdentifier 为空");
+    return;
+  }
+
+  if (arg["fields"] == null) {
+    RCIWToast.showToast("fields 为空");
+    return;
+  }
+
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  String messageIdentifier = arg['messageIdentifier'];
+
+  String fields = arg['fields'];
+  List searchWords = (arg["searchWords"] ?? "").split(",");
+  // 将 JSON 字符串解析为 Map
+  Map<String, dynamic> fieldsMap = jsonDecode(fields);
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+  BuildContext context = arg['context'];
+  List<File>? files = await RCIWMediaUlits.pickFiles();
+  if (files != null) {
+    RCIMIWNativeCustomMediaMessage? msg = await IMEngineManager().engine?.createNativeCustomMediaMessage(type, targetId, channelId, messageIdentifier, files[0].path, fieldsMap);
+    msg?.searchableWords = searchWords.cast<String>();
+    _sendMessage(msg, useCallback);
+  }
 }
 
 Future sendUserCustomMessage(Map arg) async {
@@ -611,8 +647,7 @@ Future sendUserCustomMessage(Map arg) async {
   }
 
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
   String content = arg['content'] ?? "来自跨平台的祝福~";
@@ -631,12 +666,10 @@ Future sendCustomMessage(Map arg) async {
     return;
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
-  RCIMIWCustomMessagePolicy policy =
-      RCIMIWCustomMessagePolicy.values[int.parse(arg['policy'])];
+  RCIMIWCustomMessagePolicy policy = RCIMIWCustomMessagePolicy.values[int.parse(arg['policy'])];
   String messageIdentifier = arg['messageIdentifier'] ?? "";
   List keys = (arg["keys"] ?? "").split(",");
   List values = (arg["values"] ?? "").split(",");
@@ -645,10 +678,7 @@ Future sendCustomMessage(Map arg) async {
     fields[keys[i]] = values[i];
   }
 
-  RCIMIWCustomMessage? msg = await IMEngineManager()
-      .engine
-      ?.createCustomMessage(
-          type, targetId, channelId, policy, messageIdentifier, fields);
+  RCIMIWCustomMessage? msg = await IMEngineManager().engine?.createCustomMessage(type, targetId, channelId, policy, messageIdentifier, fields);
   _sendMessage(msg, useCallback);
 }
 
@@ -658,8 +688,7 @@ _sendMessage(RCIMIWMessage? message, int useCallback) async {
     return;
   }
 
-  if (message.conversationType == RCIMIWConversationType.chatroom ||
-      message.conversationType == RCIMIWConversationType.system) {
+  if (message.conversationType == RCIMIWConversationType.chatroom || message.conversationType == RCIMIWConversationType.system) {
     message.expansion = null;
   } else {
     message.expansion = {};
@@ -697,9 +726,7 @@ _sendMessage(RCIMIWMessage? message, int useCallback) async {
         bus.emit("rong_im_listener", arg);
       });
     }
-    code = await IMEngineManager()
-        .engine
-        ?.sendMediaMessage(message, listener: listener);
+    code = await IMEngineManager().engine?.sendMediaMessage(message, listener: listener);
     resultCode["listener"] = "sendMediaMessage";
   } else {
     RCIMIWSendMessageCallback? callback;
@@ -719,9 +746,7 @@ _sendMessage(RCIMIWMessage? message, int useCallback) async {
         bus.emit("rong_im_listener", arg);
       });
     }
-    code = await IMEngineManager()
-        .engine
-        ?.sendMessage(message, callback: callback);
+    code = await IMEngineManager().engine?.sendMessage(message, callback: callback);
     resultCode["listener"] = "sendMessage";
   }
   resultCode["code"] = (code ?? -1).toString();
@@ -746,21 +771,16 @@ Future cancelSendingMediaMessage(Map arg) async {
   }
   IRCIMIWCancelSendingMediaMessageCallback? callback;
   if (useCallback == 1) {
-    callback = IRCIMIWCancelSendingMediaMessageCallback(
-        onCancelSendingMediaMessageCalled:
-            (int? code, RCIMIWMediaMessage? message) {
+    callback = IRCIMIWCancelSendingMediaMessageCallback(onCancelSendingMediaMessageCalled: (int? code, RCIMIWMediaMessage? message) {
       Map<String, String> arg = {};
-      arg["listener"] =
-          "cancelSendingMediaMessage-onCancelSendingMediaMessageCalled";
+      arg["listener"] = "cancelSendingMediaMessage-onCancelSendingMediaMessageCalled";
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
       bus.emit("rong_im_listener", arg);
     });
   }
-  IMEngineManager()
-      .engine
-      ?.cancelSendingMediaMessage(message, callback: callback);
+  IMEngineManager().engine?.cancelSendingMediaMessage(message, callback: callback);
 }
 
 Future downloadMediaMessage(Map arg) async {
@@ -781,8 +801,7 @@ Future downloadMediaMessage(Map arg) async {
   }
   RCIMIWDownloadMediaMessageListener? listener;
   if (useCallback == 1) {
-    listener = RCIMIWDownloadMediaMessageListener(
-        onMediaMessageDownloading: (message, progress) {
+    listener = RCIMIWDownloadMediaMessageListener(onMediaMessageDownloading: (message, progress) {
       Map<String, String> arg = {};
       arg["listener"] = "downloadMediaMessage-onMediaMessageDownloading";
       arg["progress"] = progress.toString();
@@ -791,8 +810,7 @@ Future downloadMediaMessage(Map arg) async {
       bus.emit("rong_im_listener", arg);
     }, onDownloadingMediaMessageCanceled: (message) {
       Map<String, String> arg = {};
-      arg["listener"] =
-          "downloadMediaMessage-onDownloadingMediaMessageCanceled";
+      arg["listener"] = "downloadMediaMessage-onDownloadingMediaMessageCanceled";
       arg["message"] = formatJson(message?.toJson());
 
       bus.emit("rong_im_listener", arg);
@@ -805,9 +823,7 @@ Future downloadMediaMessage(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.downloadMediaMessage(message, listener: listener);
+  int? code = await IMEngineManager().engine?.downloadMediaMessage(message, listener: listener);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "downloadMediaMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -832,20 +848,16 @@ Future cancelDownloadingMediaMessage(Map arg) async {
   }
   IRCIMIWCancelDownloadingMediaMessageCallback? callback;
   if (useCallback == 1) {
-    callback = IRCIMIWCancelDownloadingMediaMessageCallback(
-        onCancelDownloadingMediaMessageCalled: (code, message) {
+    callback = IRCIMIWCancelDownloadingMediaMessageCallback(onCancelDownloadingMediaMessageCalled: (code, message) {
       Map<String, String> arg = {};
-      arg["listener"] =
-          "cancelDownloadingMediaMessage-onCancelDownloadingMediaMessageCalled";
+      arg["listener"] = "cancelDownloadingMediaMessage-onCancelDownloadingMediaMessageCalled";
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.cancelDownloadingMediaMessage(message, callback: callback);
+  int? code = await IMEngineManager().engine?.cancelDownloadingMediaMessage(message, callback: callback);
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "cancelDownloadingMediaMessage";
@@ -863,18 +875,16 @@ Future insertMessage(Map arg) async {
     return;
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType conversationType =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType conversationType = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
 
-  RCIMIWTextMessage? textMessage =
-      await IMEngineManager().engine?.createTextMessage(
-            conversationType,
-            targetId,
-            channelId,
-            "这是一条插入的消息",
-          );
+  RCIMIWTextMessage? textMessage = await IMEngineManager().engine?.createTextMessage(
+        conversationType,
+        targetId,
+        channelId,
+        "这是一条插入的消息",
+      );
 
   textMessage!.direction = RCIMIWMessageDirection.receive;
   textMessage!.receivedStatus = RCIMIWReceivedStatus.unread;
@@ -890,9 +900,7 @@ Future insertMessage(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.insertMessage(textMessage!, callback: callback);
+  int? code = await IMEngineManager().engine?.insertMessage(textMessage!, callback: callback);
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessage";
@@ -911,30 +919,26 @@ Future insertMessages(Map arg) async {
   }
 
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType conversationType =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType conversationType = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
 
-  RCIMIWTextMessage? textMessage =
-      await IMEngineManager().engine?.createTextMessage(
-            conversationType,
-            targetId,
-            channelId,
-            "这是一条插入的消息-01",
-          );
-  RCIMIWTextMessage? textMessage1 =
-      await IMEngineManager().engine?.createTextMessage(
-            conversationType,
-            targetId,
-            channelId,
-            "这是一条插入的消息-02",
-          );
+  RCIMIWTextMessage? textMessage = await IMEngineManager().engine?.createTextMessage(
+        conversationType,
+        targetId,
+        channelId,
+        "这是一条插入的消息-01",
+      );
+  RCIMIWTextMessage? textMessage1 = await IMEngineManager().engine?.createTextMessage(
+        conversationType,
+        targetId,
+        channelId,
+        "这是一条插入的消息-02",
+      );
 
   IRCIMIWInsertMessagesCallback? callback;
   if (useCallback == 1) {
-    callback =
-        IRCIMIWInsertMessagesCallback(onMessagesInserted: (code, messages) {
+    callback = IRCIMIWInsertMessagesCallback(onMessagesInserted: (code, messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -949,9 +953,7 @@ Future insertMessages(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.insertMessages([textMessage!, textMessage1!], callback: callback);
+  int? code = await IMEngineManager().engine?.insertMessages([textMessage!, textMessage1!], callback: callback);
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
@@ -978,8 +980,7 @@ Future deleteLocalMessages(Map arg) async {
 
   IRCIMIWDeleteLocalMessagesCallback? callback;
   if (useCallback == 1) {
-    callback = IRCIMIWDeleteLocalMessagesCallback(
-        onLocalMessagesDeleted: (code, messages) {
+    callback = IRCIMIWDeleteLocalMessagesCallback(onLocalMessagesDeleted: (code, messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -994,9 +995,7 @@ Future deleteLocalMessages(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.deleteLocalMessages(messages, callback: callback);
+  int? code = await IMEngineManager().engine?.deleteLocalMessages(messages, callback: callback);
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
@@ -1018,8 +1017,7 @@ Future deleteMessages(Map arg) async {
     return;
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMIWConversationType type =
-      RCIMIWConversationType.values[int.parse(arg['type'])];
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
   List messageIds = (arg["messageIds"]).split(",");
@@ -1034,8 +1032,7 @@ Future deleteMessages(Map arg) async {
   }
   IRCIMIWDeleteMessagesCallback? callback;
   if (useCallback == 1) {
-    callback =
-        IRCIMIWDeleteMessagesCallback(onMessagesDeleted: (code, messages) {
+    callback = IRCIMIWDeleteMessagesCallback(onMessagesDeleted: (code, messages) {
       List messagesJson = [];
       if (messages != null) {
         for (var temp in messages) {
@@ -1050,9 +1047,7 @@ Future deleteMessages(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.deleteMessages(type, targetId, channelId, messages, callback: callback);
+  int? code = await IMEngineManager().engine?.deleteMessages(type, targetId, channelId, messages, callback: callback);
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "deleteMessages";
@@ -1083,9 +1078,7 @@ Future recallMessage(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.recallMessage(message, callback: callback);
+  int? code = await IMEngineManager().engine?.recallMessage(message, callback: callback);
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
@@ -1107,20 +1100,16 @@ Future sendGroupReadReceiptRequest(Map arg) async {
   }
   IRCIMIWSendGroupReadReceiptRequestCallback? callback;
   if (useCallback == 1) {
-    callback = IRCIMIWSendGroupReadReceiptRequestCallback(
-        onGroupReadReceiptRequestSent: (code, message) {
+    callback = IRCIMIWSendGroupReadReceiptRequestCallback(onGroupReadReceiptRequestSent: (code, message) {
       Map<String, String> arg = {};
-      arg["listener"] =
-          "sendGroupReadReceiptRequest-onGroupReadReceiptRequestSent";
+      arg["listener"] = "sendGroupReadReceiptRequest-onGroupReadReceiptRequestSent";
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.sendGroupReadReceiptRequest(message, callback: callback);
+  int? code = await IMEngineManager().engine?.sendGroupReadReceiptRequest(message, callback: callback);
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
@@ -1153,8 +1142,7 @@ Future sendGroupReadReceiptResponse(Map arg) async {
   }
   IRCIMIWSendGroupReadReceiptResponseCallback? callback;
   if (useCallback == 1) {
-    callback = IRCIMIWSendGroupReadReceiptResponseCallback(
-        onGroupReadReceiptResponseSent: (code, message) {
+    callback = IRCIMIWSendGroupReadReceiptResponseCallback(onGroupReadReceiptResponseSent: (code, message) {
       List messagesJson = [];
       if (message != null) {
         for (var temp in message) {
@@ -1162,17 +1150,14 @@ Future sendGroupReadReceiptResponse(Map arg) async {
         }
       }
       Map<String, String> arg = {};
-      arg["listener"] =
-          "sendGroupReadReceiptResponse-onGroupReadReceiptResponseSent";
+      arg["listener"] = "sendGroupReadReceiptResponse-onGroupReadReceiptResponseSent";
       arg["code"] = code.toString();
       arg["message"] = messagesJson.toString();
 
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager().engine?.sendGroupReadReceiptResponse(
-      targetId, channelId, messages,
-      callback: callback);
+  int? code = await IMEngineManager().engine?.sendGroupReadReceiptResponse(targetId, channelId, messages, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -1193,19 +1178,17 @@ Future sendGroupMessageToDesignatedUsers(Map arg) async {
   String channelId = arg['channelId'] ?? "";
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWTextMessage? textMessage =
-      await IMEngineManager().engine?.createTextMessage(
-            RCIMIWConversationType.group,
-            targetId,
-            channelId,
-            "这是一条群定向消息",
-          );
+  RCIMIWTextMessage? textMessage = await IMEngineManager().engine?.createTextMessage(
+        RCIMIWConversationType.group,
+        targetId,
+        channelId,
+        "这是一条群定向消息",
+      );
 
   List<String> userIds = (arg["userIds"]).split(",");
   RCIMIWSendGroupMessageToDesignatedUsersCallback? callback;
   if (useCallback == 1) {
-    callback = RCIMIWSendGroupMessageToDesignatedUsersCallback(
-        onMessageSaved: (message) {
+    callback = RCIMIWSendGroupMessageToDesignatedUsersCallback(onMessageSaved: (message) {
       Map<String, String> arg = {};
       arg["listener"] = "sendGroupMessageToDesignatedUsers-onMessageSaved";
       arg["message"] = formatJson(message?.toJson());
@@ -1220,9 +1203,7 @@ Future sendGroupMessageToDesignatedUsers(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager().engine?.sendGroupMessageToDesignatedUsers(
-      textMessage!, userIds,
-      callback: callback);
+  int? code = await IMEngineManager().engine?.sendGroupMessageToDesignatedUsers(textMessage!, userIds, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -1252,14 +1233,10 @@ Future modifyUltraGroupMessage(Map arg) async {
     bus.emit("rong_im_listener", resultCode);
     return;
   }
-  RCIMIWMessage? textMessage = await IMEngineManager()
-      .engine
-      ?.createTextMessage(RCIMIWConversationType.ultraGroup, message.targetId!,
-          message.channelId, "这个是超级群修改消息的内容");
+  RCIMIWMessage? textMessage = await IMEngineManager().engine?.createTextMessage(RCIMIWConversationType.ultraGroup, message.targetId!, message.channelId, "这个是超级群修改消息的内容");
   IRCIMIWModifyUltraGroupMessageCallback? callback;
   if (useCallback == 1) {
-    callback = IRCIMIWModifyUltraGroupMessageCallback(
-        onUltraGroupMessageModified: (code) {
+    callback = IRCIMIWModifyUltraGroupMessageCallback(onUltraGroupMessageModified: (code) {
       Map<String, String> arg = {};
       arg["listener"] = "modifyUltraGroupMessage-onUltraGroupMessageModified";
       arg["code"] = code.toString();
@@ -1267,9 +1244,7 @@ Future modifyUltraGroupMessage(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.modifyUltraGroupMessage(messageUId, textMessage!, callback: callback);
+  int? code = await IMEngineManager().engine?.modifyUltraGroupMessage(messageUId, textMessage!, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "modifyUltraGroupMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -1324,9 +1299,7 @@ Future loadBatchRemoteUltraGroupMessages(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.getBatchRemoteUltraGroupMessages(messages, callback: callback);
+  int? code = await IMEngineManager().engine?.getBatchRemoteUltraGroupMessages(messages, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBatchRemoteUltraGroupMessages";
   resultCode["code"] = (code ?? -1).toString();
@@ -1358,8 +1331,7 @@ Future recallUltraGroupMessage(Map arg) async {
   bool deleteRemote = deleteRemoteInt == 0 ? false : true;
   IRCIMIWRecallUltraGroupMessageCallback? callback;
   if (useCallback == 1) {
-    callback = IRCIMIWRecallUltraGroupMessageCallback(
-        onUltraGroupMessageRecalled: (code) {
+    callback = IRCIMIWRecallUltraGroupMessageCallback(onUltraGroupMessageRecalled: (code) {
       Map<String, String> arg = {};
       arg["listener"] = "recallUltraGroupMessage-onUltraGroupMessageRecalled";
       arg["code"] = code.toString();
@@ -1367,9 +1339,7 @@ Future recallUltraGroupMessage(Map arg) async {
       bus.emit("rong_im_listener", arg);
     });
   }
-  int? code = await IMEngineManager()
-      .engine
-      ?.recallUltraGroupMessage(message, deleteRemote, callback: callback);
+  int? code = await IMEngineManager().engine?.recallUltraGroupMessage(message, deleteRemote, callback: callback);
   Map<String, String> resultCode = {};
   resultCode["listener"] = "recallUltraGroupMessage";
   resultCode["code"] = (code ?? -1).toString();
@@ -1417,34 +1387,26 @@ Future getMessageByUId(Map arg) async {
 
 Future<RCIMIWMessage?> _getMessageById(int messageId) async {
   Completer<RCIMIWMessage?> completer = Completer();
-  IRCIMIWGetMessageCallback callback =
-      IRCIMIWGetMessageCallback(onSuccess: (RCIMIWMessage? t) {
+  IRCIMIWGetMessageCallback callback = IRCIMIWGetMessageCallback(onSuccess: (RCIMIWMessage? t) {
     completer.complete(t);
   }, onError: (int? code) {
     log('getMessageById onError:${code ?? -1}');
     completer.complete(null);
   });
-  int code = await IMEngineManager()
-          .engine
-          ?.getMessageById(messageId, callback: callback) ??
-      -1;
+  int code = await IMEngineManager().engine?.getMessageById(messageId, callback: callback) ?? -1;
   log('getMessageById invoke error: $code');
   return completer.future;
 }
 
 Future<RCIMIWMessage?> _getMessageByUId(String messageUId) async {
   Completer<RCIMIWMessage?> completer = Completer();
-  IRCIMIWGetMessageCallback callback =
-      IRCIMIWGetMessageCallback(onSuccess: (RCIMIWMessage? t) {
+  IRCIMIWGetMessageCallback callback = IRCIMIWGetMessageCallback(onSuccess: (RCIMIWMessage? t) {
     completer.complete(t);
   }, onError: (int? code) {
     log('getMessageById onError:${code ?? -1}');
     completer.complete(null);
   });
-  int code = await IMEngineManager()
-          .engine
-          ?.getMessageByUId(messageUId, callback: callback) ??
-      -1;
+  int code = await IMEngineManager().engine?.getMessageByUId(messageUId, callback: callback) ?? -1;
   log('getMessageByUId invoke error: $code');
   return completer.future;
 }

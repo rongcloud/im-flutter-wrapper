@@ -17,6 +17,20 @@ enum RCIMIWMessageOperationPolicy {
   localRemote,
 }
 
+enum RCIMIWNativeCustomMessagePersistentFlag {
+  /// 不存储，不计数
+  none,
+
+  /// 在本地只存储，但不计入未读数
+  persisted,
+
+  /// 在本地进行存储并计入未读数
+  counted,
+
+  /// 在本地不存储，不计入未读数，并且如果对方不在线，服务器会直接丢弃该消息，对方如果之后再上线也不会再收到此消息。一般用于发送输入状态之类的消息。
+  status,
+}
+
 enum RCIMIWVIVOPushType {
   /// 运营消息
   operate,
@@ -160,6 +174,12 @@ enum RCIMIWMessageType {
 
   /// 用户自定义消息
   userCustom,
+
+  /// 原生自定义普通消息
+  nativeCustom,
+
+  /// 原生自定义媒体消息
+  nativeCustomMedia,
 }
 
 enum RCIMIWMessageBlockType {
@@ -304,6 +324,14 @@ enum RCIMIWBlacklistStatus {
 
   /// 不在黑名单
   notInBlacklist,
+}
+
+enum RCIMIWImportanceHonor {
+  /// 表示消息为服务与通讯类。消息提醒方式为锁屏+铃声+震动。
+  normal,
+
+  /// 表示消息为资讯营销类。消息提醒方式为静默通知，仅在下拉通知栏展示。
+  low,
 }
 
 enum RCIMIWConnectionStatus {

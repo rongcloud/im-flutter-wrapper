@@ -58,6 +58,10 @@ static RCIMWrapperEngine *instance = nil;
     [self create:call result:result];
   } else if ([@"engine:destroy" isEqualToString:call.method]) {
     [self destroy:call result:result];
+  } else if ([@"engine:registerNativeCustomMessage" isEqualToString:call.method]) {
+    [self registerNativeCustomMessage:call result:result];
+  } else if ([@"engine:registerNativeCustomMediaMessage" isEqualToString:call.method]) {
+    [self registerNativeCustomMediaMessage:call result:result];
   } else if ([@"engine:connect" isEqualToString:call.method]) {
     [self connect:call result:result];
   } else if ([@"engine:disconnect" isEqualToString:call.method]) {
@@ -80,6 +84,10 @@ static RCIMWrapperEngine *instance = nil;
     [self createCustomMessage:call result:result];
   } else if ([@"engine:createLocationMessage" isEqualToString:call.method]) {
     [self createLocationMessage:call result:result];
+  } else if ([@"engine:createNativeCustomMessage" isEqualToString:call.method]) {
+    [self createNativeCustomMessage:call result:result];
+  } else if ([@"engine:createNativeCustomMediaMessage" isEqualToString:call.method]) {
+    [self createNativeCustomMediaMessage:call result:result];
   } else if ([@"engine:sendMessage" isEqualToString:call.method]) {
     [self sendMessage:call result:result];
   } else if ([@"engine:sendMediaMessage" isEqualToString:call.method]) {
@@ -366,6 +374,34 @@ static RCIMWrapperEngine *instance = nil;
   result(nil);
 }
 
+- (void)registerNativeCustomMessage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *messageIdentifier = arguments[@"messageIdentifier"];
+    RCIMIWNativeCustomMessagePersistentFlag persistentFlag = [RCIMWrapperArgumentAdapter convertNativeCustomMessagePersistentFlagFromInteger:[(NSNumber *)arguments[@"persistentFlag"] integerValue]];
+
+    code = [self.engine registerNativeCustomMessage:messageIdentifier persistentFlag:persistentFlag];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)registerNativeCustomMediaMessage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *messageIdentifier = arguments[@"messageIdentifier"];
+    RCIMIWNativeCustomMessagePersistentFlag persistentFlag = [RCIMWrapperArgumentAdapter convertNativeCustomMessagePersistentFlagFromInteger:[(NSNumber *)arguments[@"persistentFlag"] integerValue]];
+
+    code = [self.engine registerNativeCustomMediaMessage:messageIdentifier persistentFlag:persistentFlag];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
 - (void)connect:(FlutterMethodCall *)call result:(FlutterResult)result {
   NSInteger code = -1;
   if (self.engine != nil) {
@@ -566,6 +602,41 @@ static RCIMWrapperEngine *instance = nil;
     NSString *thumbnailPath = arguments[@"thumbnailPath"];
 
     res = [self.engine createLocationMessage:type targetId:targetId channelId:channelId longitude:longitude latitude:latitude poiName:poiName thumbnailPath:thumbnailPath];
+  }
+  dispatch_to_main_queue(^{
+    result([RCIMIWPlatformConverter convertMessageToDict:res]);
+  });
+}
+
+- (void)createNativeCustomMessage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  RCIMIWNativeCustomMessage *res = nil;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    NSString *messageIdentifier = arguments[@"messageIdentifier"];
+    NSDictionary<NSString *, id> *fields = arguments[@"fields"];
+
+    res = [self.engine createNativeCustomMessage:type targetId:targetId channelId:channelId messageIdentifier:messageIdentifier fields:fields];
+  }
+  dispatch_to_main_queue(^{
+    result([RCIMIWPlatformConverter convertMessageToDict:res]);
+  });
+}
+
+- (void)createNativeCustomMediaMessage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  RCIMIWNativeCustomMediaMessage *res = nil;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    NSString *messageIdentifier = arguments[@"messageIdentifier"];
+    NSString *path = arguments[@"path"];
+    NSDictionary<NSString *, id> *fields = arguments[@"fields"];
+
+    res = [self.engine createNativeCustomMediaMessage:type targetId:targetId channelId:channelId messageIdentifier:messageIdentifier path:path fields:fields];
   }
   dispatch_to_main_queue(^{
     result([RCIMIWPlatformConverter convertMessageToDict:res]);

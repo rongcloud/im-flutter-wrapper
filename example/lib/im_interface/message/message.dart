@@ -4,6 +4,44 @@ import 'package:rongcloud_im_wrapper_plugin_example/strings/lable_string.dart';
 import '../function/engine_function.dart' as engine_fun;
 import '../../auto/engine_auto_funtion.dart' as engine_auto_fun;
 
+const registerNativeCustomMessage = {
+  "title": "注册普通消息",
+  "params": [
+    {
+      "key": "messageIdentifier",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入messageIdentifier",
+    },
+    {
+      "key": "persistentFlag",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入persistentFlag",
+    },
+  ],
+  "action": engine_auto_fun.registerNativeCustomMessage,
+};
+
+const registerNativeCustomMediaMessage = {
+  "title": "注册媒体消息",
+  "params": [
+    {
+      "key": "messageIdentifier",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入messageIdentifier",
+    },
+    {
+      "key": "persistentFlag",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入persistentFlag",
+    },
+  ],
+  "action": engine_auto_fun.registerNativeCustomMediaMessage,
+};
+
 const sendTextMessage = {
   "title": "发送文本消息",
   "params": [
@@ -547,6 +585,98 @@ const sendCustomMessage = {
   "action": engine_fun.sendCustomMessage,
 };
 
+const sendNativeCustomMessage = {
+  "title": "发送自定义消息 V3",
+  "params": [
+    {
+      "key": "type",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入type",
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入targetId",
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入channelId",
+    },
+    {
+      "key": "messageIdentifier",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入messageIdentifier",
+    },
+    {
+      "key": "fields",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入fields",
+    },
+    {
+      "key": "searchWords",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入searchWords",
+    },
+  ],
+  "action": engine_fun.sendNativeCustomMessage,
+};
+
+const sendNativeCustomMediaMessage = {
+  "title": "发送自定义媒体消息 V3",
+  "params": [
+    {
+      "key": "type",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入type",
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入targetId",
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入channelId",
+    },
+    {
+      "key": "messageIdentifier",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入messageIdentifier",
+    },
+    {
+      "key": "path",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入path",
+    },
+    {
+      "key": "fields",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入fields",
+    },
+    {
+      "key": "searchWords",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入searchWords",
+    },
+  ],
+  "action": engine_fun.sendNativeCustomMediaMessage,
+};
+
 const cancelSendingMediaMessage = {
   "title": "取消发送中的媒体消息",
   "params": [
@@ -805,8 +935,7 @@ const clearMessages = {
       "key": "timestamp",
       "type": "String",
       "hint": "",
-      "lable":
-          "清除消息截止时间戳，0 <= recordTime <= 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 recordTime 的消息",
+      "lable": "清除消息截止时间戳，0 <= recordTime <= 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 recordTime 的消息",
     },
     {
       "key": "policy",

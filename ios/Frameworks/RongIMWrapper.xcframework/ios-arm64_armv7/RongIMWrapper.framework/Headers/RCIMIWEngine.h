@@ -18,6 +18,8 @@
 #import <RongIMWrapper/RCIMIWReferenceMessage.h>
 #import <RongIMWrapper/RCIMIWCustomMessage.h>
 #import <RongIMWrapper/RCIMIWLocationMessage.h>
+#import <RongIMWrapper/RCIMIWNativeCustomMessage.h>
+#import <RongIMWrapper/RCIMIWNativeCustomMediaMessage.h>
 #import <RongIMWrapper/RCIMIWEngineDelegate.h>
 #import <RongIMWrapper/RCIMIWDefines.h>
 
@@ -67,6 +69,20 @@ __deprecated_msg("Use [RCIMIWEngine connect:timeout:databaseOpened:connected:] i
 #pragma mark - 消息创建/注册
 
 - (NSInteger)registerCustomMessage:(NSArray<Class> *)messageContentClassList;
+
+/// 注册原生自定义普通消息
+///
+/// - Parameter messageIdentifier: 消息唯一标识
+/// - Parameter persistentFlag: 消息存储策略
+/// - Returns: 接口调用状态
+- (NSInteger)registerNativeCustomMessage:(NSString *)messageIdentifier persistentFlag:(RCIMIWNativeCustomMessagePersistentFlag)persistent;
+
+/// 注册原生自定义媒体消息
+///
+/// - Parameter messageIdentifier: 消息唯一标识
+/// - Parameter persistentFlag: 消息存储策略
+/// - Returns: 接口调用状态
+- (NSInteger)registerNativeCustomMediaMessage:(NSString *)messageIdentifier persistentFlag:(RCIMIWNativeCustomMessagePersistentFlag)persistent;
 
 - (RCIMIWTextMessage *)createTextMessage:(RCIMIWConversationType)type
                                 targetId:(NSString *)targetId
@@ -120,6 +136,34 @@ __deprecated_msg("Use [RCIMIWEngine connect:timeout:databaseOpened:connected:] i
                                         latitude:(double)latitude
                                          poiName:(NSString *)poiName
                                    thumbnailPath:(NSString *)thumbnailPath;
+
+/// 创建原生自定义普通消息
+/// 
+/// - Parameter type: 会话类型
+/// - Parameter targetId: 会话 ID
+/// - Parameter channelId: 所属会话的业务标识
+/// - Parameter messageIdentifier: 消息唯一标识
+/// - Parameter fields: 消息内容
+- (RCIMIWNativeCustomMessage *)createNativeCustomMessage:(RCIMIWConversationType)type
+                                                targetId:(NSString *)targetId
+                                               channelId:(nullable NSString *)channelId
+                                       messageIdentifier:(NSString *)messageIdentifier
+                                                  fields:(NSDictionary<NSString *, id> *)fields;
+
+/// 创建原生自定义媒体消息
+///
+/// - Parameter type: 会话类型
+/// - Parameter targetId: 会话 ID
+/// - Parameter channelId: 所属会话的业务标识
+/// - Parameter messageIdentifier: 消息唯一标识
+/// - Parameter path: 媒体文件路径
+/// - Parameter fields: 消息内容
+- (RCIMIWNativeCustomMediaMessage *)createNativeCustomMediaMessage:(RCIMIWConversationType)type
+                                                          targetId:(NSString *)targetId
+                                                         channelId:(nullable NSString *)channelId
+                                                 messageIdentifier:(NSString *)messageIdentifier
+                                                              path:(NSString *)path
+                                                            fields:(NSDictionary<NSString *, id> *)fields;
 
 #pragma mark - 发送消息
 

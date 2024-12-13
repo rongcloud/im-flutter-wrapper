@@ -1,14 +1,13 @@
 import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
-import 'dart:convert' as json_lib show json;
+import 'dart:convert' as json_lib show json ;
 
 // 自定义消息需要继承 RCIMIWUserCustomMessage
 //
 class RCIMDPokeMessage extends RCIMIWUserCustomMessage {
+
   String? pokeMessage;
   // 1. 定义自己的构造方法,需要调用父类的 RCIMIWUserCustomMessage(RCIMIWConversationType type, String targetId)
-  RCIMDPokeMessage(
-      RCIMIWConversationType type, String targetId, this.pokeMessage)
-      : super(type, targetId);
+  RCIMDPokeMessage(RCIMIWConversationType type, String targetId, this.pokeMessage) : super(type, targetId);
 
   // 2. 需要继承父类的构造函数
   RCIMDPokeMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json);

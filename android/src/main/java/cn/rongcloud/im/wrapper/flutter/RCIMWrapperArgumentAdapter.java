@@ -12,12 +12,14 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWConversationType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWCustomMessagePolicy;
 import cn.rongcloud.im.wrapper.constants.RCIMIWErrorCode;
 import cn.rongcloud.im.wrapper.constants.RCIMIWImportanceHW;
+import cn.rongcloud.im.wrapper.constants.RCIMIWImportanceHonor;
 import cn.rongcloud.im.wrapper.constants.RCIMIWLogLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMentionedType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageBlockType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageDirection;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageOperationPolicy;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageType;
+import cn.rongcloud.im.wrapper.constants.RCIMIWNativeCustomMessagePersistentFlag;
 import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationQuietHoursLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWReceivedStatus;
@@ -35,6 +37,11 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWMessageOperationPolicy toRCIMIWMessageOperationPolicy(@NonNull Integer type) {
     return RCIMIWMessageOperationPolicy.values()[type];
+  }
+
+  static RCIMIWNativeCustomMessagePersistentFlag toRCIMIWNativeCustomMessagePersistentFlag(
+      @NonNull Integer type) {
+    return RCIMIWNativeCustomMessagePersistentFlag.values()[type];
   }
 
   static RCIMIWVIVOPushType toRCIMIWVIVOPushType(@NonNull Integer type) {
@@ -117,6 +124,10 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWBlacklistStatus toRCIMIWBlacklistStatus(@NonNull Integer type) {
     return RCIMIWBlacklistStatus.values()[type];
+  }
+
+  static RCIMIWImportanceHonor toRCIMIWImportanceHonor(@NonNull Integer type) {
+    return RCIMIWImportanceHonor.values()[type];
   }
 
   static RCIMIWConnectionStatus toRCIMIWConnectionStatus(@NonNull Integer type) {

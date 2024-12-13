@@ -1,16 +1,14 @@
 import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
 
 class IRCIMIWConnectCallback {
-  IRCIMIWConnectCallback(
-      {required this.onConnected, required this.onDatabaseOpened});
+  IRCIMIWConnectCallback({required this.onConnected, required this.onDatabaseOpened});
 
   Function(int? code, String? userId) onConnected;
   Function(int? code) onDatabaseOpened;
 }
 
 class IRCIMIWSendMessageCallback {
-  IRCIMIWSendMessageCallback(
-      {required this.onMessageSaved, required this.onMessageSent});
+  IRCIMIWSendMessageCallback({required this.onMessageSaved, required this.onMessageSent});
 
   Function(RCIMIWMessage? message) onMessageSaved;
   Function(int? code, RCIMIWMessage? message) onMessageSent;
@@ -30,11 +28,9 @@ class IRCIMIWSendMediaMessageListener {
 }
 
 class IRCIMIWCancelSendingMediaMessageCallback {
-  IRCIMIWCancelSendingMediaMessageCallback(
-      {required this.onCancelSendingMediaMessageCalled});
+  IRCIMIWCancelSendingMediaMessageCallback({required this.onCancelSendingMediaMessageCalled});
 
-  Function(int? code, RCIMIWMediaMessage? message)
-      onCancelSendingMediaMessageCalled;
+  Function(int? code, RCIMIWMediaMessage? message) onCancelSendingMediaMessageCalled;
 }
 
 class IRCIMIWDownloadMediaMessageListener {
@@ -43,23 +39,19 @@ class IRCIMIWDownloadMediaMessageListener {
       required this.onDownloadingMediaMessageCanceled,
       required this.onMediaMessageDownloaded});
 
-  Function(RCIMIWMediaMessage? message, int? progress)
-      onMediaMessageDownloading;
+  Function(RCIMIWMediaMessage? message, int? progress) onMediaMessageDownloading;
   Function(RCIMIWMediaMessage? message) onDownloadingMediaMessageCanceled;
   Function(int? code, RCIMIWMediaMessage? message) onMediaMessageDownloaded;
 }
 
 class IRCIMIWCancelDownloadingMediaMessageCallback {
-  IRCIMIWCancelDownloadingMediaMessageCallback(
-      {required this.onCancelDownloadingMediaMessageCalled});
+  IRCIMIWCancelDownloadingMediaMessageCallback({required this.onCancelDownloadingMediaMessageCalled});
 
-  Function(int? code, RCIMIWMediaMessage? message)
-      onCancelDownloadingMediaMessageCalled;
+  Function(int? code, RCIMIWMediaMessage? message) onCancelDownloadingMediaMessageCalled;
 }
 
 class IRCIMIWGetConversationCallback {
-  IRCIMIWGetConversationCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetConversationCallback({required this.onSuccess, required this.onError});
 
   Function(RCIMIWConversation? t) onSuccess;
   Function(int? code) onError;
@@ -73,16 +65,14 @@ class IRCIMIWObjectCallback<T> {
 }
 
 class IRCIMIWGetConversationsCallback {
-  IRCIMIWGetConversationsCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetConversationsCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWConversation>? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetUnreadConversationsCallback {
-  IRCIMIWGetUnreadConversationsCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUnreadConversationsCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWConversation>? t) onSuccess;
   Function(int? code) onError;
@@ -101,64 +91,56 @@ class IRCIMIWRemoveConversationsCallback {
 }
 
 class IRCIMIWGetUnreadCountCallback {
-  IRCIMIWGetUnreadCountCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUnreadCountCallback({required this.onSuccess, required this.onError});
 
   Function(int? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetTotalUnreadCountCallback {
-  IRCIMIWGetTotalUnreadCountCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetTotalUnreadCountCallback({required this.onSuccess, required this.onError});
 
   Function(int? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetUnreadMentionedCountCallback {
-  IRCIMIWGetUnreadMentionedCountCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUnreadMentionedCountCallback({required this.onSuccess, required this.onError});
 
   Function(int? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetUltraGroupAllUnreadCountCallback {
-  IRCIMIWGetUltraGroupAllUnreadCountCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUltraGroupAllUnreadCountCallback({required this.onSuccess, required this.onError});
 
   Function(int? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback {
-  IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback({required this.onSuccess, required this.onError});
 
   Function(int? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetUltraGroupUnreadCountCallback {
-  IRCIMIWGetUltraGroupUnreadCountCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUltraGroupUnreadCountCallback({required this.onSuccess, required this.onError});
 
   Function(int? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetUltraGroupUnreadMentionedCountCallback {
-  IRCIMIWGetUltraGroupUnreadMentionedCountCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUltraGroupUnreadMentionedCountCallback({required this.onSuccess, required this.onError});
 
   Function(int? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetUnreadCountByConversationTypesCallback {
-  IRCIMIWGetUnreadCountByConversationTypesCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUnreadCountByConversationTypesCallback({required this.onSuccess, required this.onError});
 
   Function(int? t) onSuccess;
   Function(int? code) onError;
@@ -177,8 +159,7 @@ class IRCIMIWSaveDraftMessageCallback {
 }
 
 class IRCIMIWGetDraftMessageCallback {
-  IRCIMIWGetDraftMessageCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetDraftMessageCallback({required this.onSuccess, required this.onError});
 
   Function(String? t) onSuccess;
   Function(int? code) onError;
@@ -191,31 +172,27 @@ class IRCIMIWClearDraftMessageCallback {
 }
 
 class IRCIMIWGetBlockedConversationsCallback {
-  IRCIMIWGetBlockedConversationsCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetBlockedConversationsCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWConversation>? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWChangeConversationTopStatusCallback {
-  IRCIMIWChangeConversationTopStatusCallback(
-      {required this.onConversationTopStatusChanged});
+  IRCIMIWChangeConversationTopStatusCallback({required this.onConversationTopStatusChanged});
 
   Function(int? code) onConversationTopStatusChanged;
 }
 
 class IRCIMIWGetConversationTopStatusCallback {
-  IRCIMIWGetConversationTopStatusCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetConversationTopStatusCallback({required this.onSuccess, required this.onError});
 
   Function(bool? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWSyncConversationReadStatusCallback {
-  IRCIMIWSyncConversationReadStatusCallback(
-      {required this.onConversationReadStatusSynced});
+  IRCIMIWSyncConversationReadStatusCallback({required this.onConversationReadStatusSynced});
 
   Function(int? code) onConversationReadStatusSynced;
 }
@@ -235,16 +212,14 @@ class IRCIMIWGetMessageCallback {
 }
 
 class IRCIMIWGetFirstUnreadMessageCallback {
-  IRCIMIWGetFirstUnreadMessageCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetFirstUnreadMessageCallback({required this.onSuccess, required this.onError});
 
   Function(RCIMIWMessage? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetUnreadMentionedMessagesCallback {
-  IRCIMIWGetUnreadMentionedMessagesCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUnreadMentionedMessagesCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWMessage>? t) onSuccess;
   Function(int? code) onError;
@@ -287,51 +262,43 @@ class IRCIMIWRecallMessageCallback {
 }
 
 class IRCIMIWSendPrivateReadReceiptMessageCallback {
-  IRCIMIWSendPrivateReadReceiptMessageCallback(
-      {required this.onPrivateReadReceiptMessageSent});
+  IRCIMIWSendPrivateReadReceiptMessageCallback({required this.onPrivateReadReceiptMessageSent});
 
   Function(int? code) onPrivateReadReceiptMessageSent;
 }
 
 class IRCIMIWSendGroupReadReceiptRequestCallback {
-  IRCIMIWSendGroupReadReceiptRequestCallback(
-      {required this.onGroupReadReceiptRequestSent});
+  IRCIMIWSendGroupReadReceiptRequestCallback({required this.onGroupReadReceiptRequestSent});
 
   Function(int? code, RCIMIWMessage? message) onGroupReadReceiptRequestSent;
 }
 
 class IRCIMIWSendGroupReadReceiptResponseCallback {
-  IRCIMIWSendGroupReadReceiptResponseCallback(
-      {required this.onGroupReadReceiptResponseSent});
+  IRCIMIWSendGroupReadReceiptResponseCallback({required this.onGroupReadReceiptResponseSent});
 
-  Function(int? code, List<RCIMIWMessage>? message)
-      onGroupReadReceiptResponseSent;
+  Function(int? code, List<RCIMIWMessage>? message) onGroupReadReceiptResponseSent;
 }
 
 class IRCIMIWUpdateMessageExpansionCallback {
-  IRCIMIWUpdateMessageExpansionCallback(
-      {required this.onMessageExpansionUpdated});
+  IRCIMIWUpdateMessageExpansionCallback({required this.onMessageExpansionUpdated});
 
   Function(int? code) onMessageExpansionUpdated;
 }
 
 class IRCIMIWRemoveMessageExpansionForKeysCallback {
-  IRCIMIWRemoveMessageExpansionForKeysCallback(
-      {required this.onMessageExpansionForKeysRemoved});
+  IRCIMIWRemoveMessageExpansionForKeysCallback({required this.onMessageExpansionForKeysRemoved});
 
   Function(int? code) onMessageExpansionForKeysRemoved;
 }
 
 class IRCIMIWChangeMessageSentStatusCallback {
-  IRCIMIWChangeMessageSentStatusCallback(
-      {required this.onMessageSentStatusChanged});
+  IRCIMIWChangeMessageSentStatusCallback({required this.onMessageSentStatusChanged});
 
   Function(int? code) onMessageSentStatusChanged;
 }
 
 class IRCIMIWChangeMessageReceivedStatusCallback {
-  IRCIMIWChangeMessageReceivedStatusCallback(
-      {required this.onMessageReceiveStatusChanged});
+  IRCIMIWChangeMessageReceivedStatusCallback({required this.onMessageReceiveStatusChanged});
 
   Function(int? code) onMessageReceiveStatusChanged;
 }
@@ -349,8 +316,7 @@ class IRCIMIWLeaveChatRoomCallback {
 }
 
 class IRCIMIWGetChatRoomMessagesCallback {
-  IRCIMIWGetChatRoomMessagesCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetChatRoomMessagesCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWMessage>? t) onSuccess;
   Function(int? code) onError;
@@ -369,16 +335,14 @@ class IRCIMIWAddChatRoomEntriesCallback {
 }
 
 class IRCIMIWGetChatRoomEntryCallback {
-  IRCIMIWGetChatRoomEntryCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetChatRoomEntryCallback({required this.onSuccess, required this.onError});
 
   Function(Map? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetChatRoomAllEntriesCallback {
-  IRCIMIWGetChatRoomAllEntriesCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetChatRoomAllEntriesCallback({required this.onSuccess, required this.onError});
 
   Function(Map? t) onSuccess;
   Function(int? code) onError;
@@ -391,8 +355,7 @@ class IRCIMIWRemoveChatRoomEntryCallback {
 }
 
 class IRCIMIWRemoveChatRoomEntriesCallback {
-  IRCIMIWRemoveChatRoomEntriesCallback(
-      {required this.onChatRoomEntriesRemoved});
+  IRCIMIWRemoveChatRoomEntriesCallback({required this.onChatRoomEntriesRemoved});
 
   Function(int? code) onChatRoomEntriesRemoved;
 }
@@ -410,8 +373,7 @@ class IRCIMIWRemoveFromBlacklistCallback {
 }
 
 class IRCIMIWGetBlacklistStatusCallback {
-  IRCIMIWGetBlacklistStatusCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetBlacklistStatusCallback({required this.onSuccess, required this.onError});
 
   Function(RCIMIWBlacklistStatus? t) onSuccess;
   Function(int? code) onError;
@@ -425,100 +387,86 @@ class IRCIMIWGetBlacklistCallback {
 }
 
 class IRCIMIWSearchMessagesCallback {
-  IRCIMIWSearchMessagesCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWSearchMessagesCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWMessage>? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWSearchMessagesByTimeRangeCallback {
-  IRCIMIWSearchMessagesByTimeRangeCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWSearchMessagesByTimeRangeCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWMessage>? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWSearchMessagesByUserIdCallback {
-  IRCIMIWSearchMessagesByUserIdCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWSearchMessagesByUserIdCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWMessage>? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWSearchConversationsCallback {
-  IRCIMIWSearchConversationsCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWSearchConversationsCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWSearchConversationResult>? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWChangeNotificationQuietHoursCallback {
-  IRCIMIWChangeNotificationQuietHoursCallback(
-      {required this.onNotificationQuietHoursChanged});
+  IRCIMIWChangeNotificationQuietHoursCallback({required this.onNotificationQuietHoursChanged});
 
   Function(int? code) onNotificationQuietHoursChanged;
 }
 
 class IRCIMIWRemoveNotificationQuietHoursCallback {
-  IRCIMIWRemoveNotificationQuietHoursCallback(
-      {required this.onNotificationQuietHoursRemoved});
+  IRCIMIWRemoveNotificationQuietHoursCallback({required this.onNotificationQuietHoursRemoved});
 
   Function(int? code) onNotificationQuietHoursRemoved;
 }
 
 class IRCIMIWGetNotificationQuietHoursCallback {
-  IRCIMIWGetNotificationQuietHoursCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetNotificationQuietHoursCallback({required this.onSuccess, required this.onError});
 
-  Function(String? startTime, int? spanMinutes,
-      RCIMIWPushNotificationQuietHoursLevel? level) onSuccess;
+  Function(String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWChangeConversationNotificationLevelCallback {
-  IRCIMIWChangeConversationNotificationLevelCallback(
-      {required this.onConversationNotificationLevelChanged});
+  IRCIMIWChangeConversationNotificationLevelCallback({required this.onConversationNotificationLevelChanged});
 
   Function(int? code) onConversationNotificationLevelChanged;
 }
 
 class IRCIMIWGetConversationNotificationLevelCallback {
-  IRCIMIWGetConversationNotificationLevelCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetConversationNotificationLevelCallback({required this.onSuccess, required this.onError});
 
   Function(RCIMIWPushNotificationLevel? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWChangeConversationTypeNotificationLevelCallback {
-  IRCIMIWChangeConversationTypeNotificationLevelCallback(
-      {required this.onConversationTypeNotificationLevelChanged});
+  IRCIMIWChangeConversationTypeNotificationLevelCallback({required this.onConversationTypeNotificationLevelChanged});
 
   Function(int? code) onConversationTypeNotificationLevelChanged;
 }
 
 class IRCIMIWGetConversationTypeNotificationLevelCallback {
-  IRCIMIWGetConversationTypeNotificationLevelCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetConversationTypeNotificationLevelCallback({required this.onSuccess, required this.onError});
 
   Function(RCIMIWPushNotificationLevel? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback {
-  IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback(
-      {required this.onUltraGroupDefaultNotificationLevelChanged});
+  IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback({required this.onUltraGroupDefaultNotificationLevelChanged});
 
   Function(int? code) onUltraGroupDefaultNotificationLevelChanged;
 }
 
 class IRCIMIWGetUltraGroupDefaultNotificationLevelCallback {
-  IRCIMIWGetUltraGroupDefaultNotificationLevelCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUltraGroupDefaultNotificationLevelCallback({required this.onSuccess, required this.onError});
 
   Function(RCIMIWPushNotificationLevel? t) onSuccess;
   Function(int? code) onError;
@@ -532,16 +480,14 @@ class IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback {
 }
 
 class IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback {
-  IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback({required this.onSuccess, required this.onError});
 
   Function(RCIMIWPushNotificationLevel? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWChangePushContentShowStatusCallback {
-  IRCIMIWChangePushContentShowStatusCallback(
-      {required this.onPushContentShowStatusChanged});
+  IRCIMIWChangePushContentShowStatusCallback({required this.onPushContentShowStatusChanged});
 
   Function(int? code) onPushContentShowStatusChanged;
 }
@@ -553,105 +499,90 @@ class IRCIMIWChangePushLanguageCallback {
 }
 
 class IRCIMIWChangePushReceiveStatusCallback {
-  IRCIMIWChangePushReceiveStatusCallback(
-      {required this.onPushReceiveStatusChanged});
+  IRCIMIWChangePushReceiveStatusCallback({required this.onPushReceiveStatusChanged});
 
   Function(int? code) onPushReceiveStatusChanged;
 }
 
 class IRCIMIWSendGroupMessageToDesignatedUsersCallback {
-  IRCIMIWSendGroupMessageToDesignatedUsersCallback(
-      {required this.onMessageSaved, required this.onMessageSent});
+  IRCIMIWSendGroupMessageToDesignatedUsersCallback({required this.onMessageSaved, required this.onMessageSent});
 
   Function(RCIMIWMessage? message) onMessageSaved;
   Function(int? code, RCIMIWMessage? message) onMessageSent;
 }
 
 class IRCIMIWGetMessageCountCallback {
-  IRCIMIWGetMessageCountCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetMessageCountCallback({required this.onSuccess, required this.onError});
 
   Function(int? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWGetTopConversationsCallback {
-  IRCIMIWGetTopConversationsCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetTopConversationsCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWConversation>? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWSyncUltraGroupReadStatusCallback {
-  IRCIMIWSyncUltraGroupReadStatusCallback(
-      {required this.onUltraGroupReadStatusSynced});
+  IRCIMIWSyncUltraGroupReadStatusCallback({required this.onUltraGroupReadStatusSynced});
 
   Function(int? code) onUltraGroupReadStatusSynced;
 }
 
 class IRCIMIWGetConversationsForAllChannelCallback {
-  IRCIMIWGetConversationsForAllChannelCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetConversationsForAllChannelCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWConversation>? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWModifyUltraGroupMessageCallback {
-  IRCIMIWModifyUltraGroupMessageCallback(
-      {required this.onUltraGroupMessageModified});
+  IRCIMIWModifyUltraGroupMessageCallback({required this.onUltraGroupMessageModified});
 
   Function(int? code) onUltraGroupMessageModified;
 }
 
 class IRCIMIWRecallUltraGroupMessageCallback {
-  IRCIMIWRecallUltraGroupMessageCallback(
-      {required this.onUltraGroupMessageRecalled});
+  IRCIMIWRecallUltraGroupMessageCallback({required this.onUltraGroupMessageRecalled});
 
   Function(int? code) onUltraGroupMessageRecalled;
 }
 
 class IRCIMIWClearUltraGroupMessagesCallback {
-  IRCIMIWClearUltraGroupMessagesCallback(
-      {required this.onUltraGroupMessagesCleared});
+  IRCIMIWClearUltraGroupMessagesCallback({required this.onUltraGroupMessagesCleared});
 
   Function(int? code) onUltraGroupMessagesCleared;
 }
 
 class IRCIMIWSendUltraGroupTypingStatusCallback {
-  IRCIMIWSendUltraGroupTypingStatusCallback(
-      {required this.onUltraGroupTypingStatusSent});
+  IRCIMIWSendUltraGroupTypingStatusCallback({required this.onUltraGroupTypingStatusSent});
 
   Function(int? code) onUltraGroupTypingStatusSent;
 }
 
 class IRCIMIWClearUltraGroupMessagesForAllChannelCallback {
-  IRCIMIWClearUltraGroupMessagesForAllChannelCallback(
-      {required this.onUltraGroupMessagesClearedForAllChannel});
+  IRCIMIWClearUltraGroupMessagesForAllChannelCallback({required this.onUltraGroupMessagesClearedForAllChannel});
 
   Function(int? code) onUltraGroupMessagesClearedForAllChannel;
 }
 
 class IRCIMIWGetBatchRemoteUltraGroupMessagesCallback {
-  IRCIMIWGetBatchRemoteUltraGroupMessagesCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetBatchRemoteUltraGroupMessagesCallback({required this.onSuccess, required this.onError});
 
-  Function(List<RCIMIWMessage>? matchedMessages,
-      List<RCIMIWMessage>? notMatchedMessages) onSuccess;
+  Function(List<RCIMIWMessage>? matchedMessages, List<RCIMIWMessage>? notMatchedMessages) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWUpdateUltraGroupMessageExpansionCallback {
-  IRCIMIWUpdateUltraGroupMessageExpansionCallback(
-      {required this.onUltraGroupMessageExpansionUpdated});
+  IRCIMIWUpdateUltraGroupMessageExpansionCallback({required this.onUltraGroupMessageExpansionUpdated});
 
   Function(int? code) onUltraGroupMessageExpansionUpdated;
 }
 
 class IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback {
-  IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback(
-      {required this.onUltraGroupMessageExpansionForKeysRemoved});
+  IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback({required this.onUltraGroupMessageExpansionForKeysRemoved});
 
   Function(int? code) onUltraGroupMessageExpansionForKeysRemoved;
 }
@@ -688,53 +619,46 @@ class IRCIMIWAddConversationToTagCallback {
 }
 
 class IRCIMIWRemoveConversationFromTagCallback {
-  IRCIMIWRemoveConversationFromTagCallback(
-      {required this.onConversationFromTagRemoved});
+  IRCIMIWRemoveConversationFromTagCallback({required this.onConversationFromTagRemoved});
 
   Function(int? code) onConversationFromTagRemoved;
 }
 
 class IRCIMIWRemoveTagsFromConversationCallback {
-  IRCIMIWRemoveTagsFromConversationCallback(
-      {required this.onTagsFromConversationRemoved});
+  IRCIMIWRemoveTagsFromConversationCallback({required this.onTagsFromConversationRemoved});
 
   Function(int? code) onTagsFromConversationRemoved;
 }
 
 class IRCIMIWGetTagsFromConversationCallback {
-  IRCIMIWGetTagsFromConversationCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetTagsFromConversationCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWConversationTagInfo>? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWChangeConversationTopStatusInTagCallback {
-  IRCIMIWChangeConversationTopStatusInTagCallback(
-      {required this.onConversationTopStatusInTagChanged});
+  IRCIMIWChangeConversationTopStatusInTagCallback({required this.onConversationTopStatusInTagChanged});
 
   Function(int? code) onConversationTopStatusInTagChanged;
 }
 
 class IRCIMIWGetConversationTopStatusInTagCallback {
-  IRCIMIWGetConversationTopStatusInTagCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWGetConversationTopStatusInTagCallback({required this.onSuccess, required this.onError});
 
   Function(bool? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWClearMessagesUnreadStatusByTagCallback {
-  IRCIMIWClearMessagesUnreadStatusByTagCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWClearMessagesUnreadStatusByTagCallback({required this.onSuccess, required this.onError});
 
   Function(bool? t) onSuccess;
   Function(int? code) onError;
 }
 
 class IRCIMIWClearConversationsByTagCallback {
-  IRCIMIWClearConversationsByTagCallback(
-      {required this.onSuccess, required this.onError});
+  IRCIMIWClearConversationsByTagCallback({required this.onSuccess, required this.onError});
 
   Function(bool? t) onSuccess;
   Function(int? code) onError;
@@ -769,19 +693,15 @@ class RCIMIWSendMediaMessageListener {
 
 class RCIMIWDownloadMediaMessageListener {
   RCIMIWDownloadMediaMessageListener(
-      {this.onMediaMessageDownloading,
-      this.onDownloadingMediaMessageCanceled,
-      required this.onMediaMessageDownloaded});
+      {this.onMediaMessageDownloading, this.onDownloadingMediaMessageCanceled, required this.onMediaMessageDownloaded});
 
-  Function(RCIMIWMediaMessage? message, int? progress)?
-      onMediaMessageDownloading;
+  Function(RCIMIWMediaMessage? message, int? progress)? onMediaMessageDownloading;
   Function(RCIMIWMediaMessage? message)? onDownloadingMediaMessageCanceled;
   Function(int? code, RCIMIWMediaMessage? message) onMediaMessageDownloaded;
 }
 
 class RCIMIWSendGroupMessageToDesignatedUsersCallback {
-  RCIMIWSendGroupMessageToDesignatedUsersCallback(
-      {this.onMessageSaved, required this.onMessageSent});
+  RCIMIWSendGroupMessageToDesignatedUsersCallback({this.onMessageSaved, required this.onMessageSent});
 
   Function(RCIMIWMessage? message)? onMessageSaved;
   Function(int? code, RCIMIWMessage? message) onMessageSent;

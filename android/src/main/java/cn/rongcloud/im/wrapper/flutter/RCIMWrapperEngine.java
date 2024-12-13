@@ -116,6 +116,7 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWCustomMessagePolicy;
 import cn.rongcloud.im.wrapper.constants.RCIMIWLogLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageOperationPolicy;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageType;
+import cn.rongcloud.im.wrapper.constants.RCIMIWNativeCustomMessagePersistentFlag;
 import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationQuietHoursLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWReceivedStatus;
@@ -140,6 +141,8 @@ import cn.rongcloud.im.wrapper.messages.RCIMIWImageMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWLocationMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWMediaMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWMessage;
+import cn.rongcloud.im.wrapper.messages.RCIMIWNativeCustomMediaMessage;
+import cn.rongcloud.im.wrapper.messages.RCIMIWNativeCustomMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWReferenceMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWSightMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWTextMessage;
@@ -208,6 +211,14 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         destroy(call, result);
         break;
 
+      case "engine:registerNativeCustomMessage":
+        registerNativeCustomMessage(call, result);
+        break;
+
+      case "engine:registerNativeCustomMediaMessage":
+        registerNativeCustomMediaMessage(call, result);
+        break;
+
       case "engine:connect":
         connect(call, result);
         break;
@@ -250,6 +261,14 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:createLocationMessage":
         createLocationMessage(call, result);
+        break;
+
+      case "engine:createNativeCustomMessage":
+        createNativeCustomMessage(call, result);
+        break;
+
+      case "engine:createNativeCustomMediaMessage":
+        createNativeCustomMediaMessage(call, result);
         break;
 
       case "engine:sendMessage":
@@ -812,6 +831,32 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result);
   }
 
+  private void registerNativeCustomMessage(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String messageIdentifier = (String) call.argument("messageIdentifier");
+      RCIMIWNativeCustomMessagePersistentFlag persistentFlag =
+          RCIMWrapperArgumentAdapter.toRCIMIWNativeCustomMessagePersistentFlag(
+              call.argument("persistentFlag"));
+
+      code = engine.registerNativeCustomMessage(messageIdentifier, persistentFlag);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void registerNativeCustomMediaMessage(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String messageIdentifier = (String) call.argument("messageIdentifier");
+      RCIMIWNativeCustomMessagePersistentFlag persistentFlag =
+          RCIMWrapperArgumentAdapter.toRCIMIWNativeCustomMessagePersistentFlag(
+              call.argument("persistentFlag"));
+
+      code = engine.registerNativeCustomMediaMessage(messageIdentifier, persistentFlag);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   private void connect(@NonNull MethodCall call, @NonNull Result result) {
     int code = -1;
     if (engine != null) {
@@ -974,6 +1019,39 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       res =
           engine.createLocationMessage(
               type, targetId, channelId, longitude, latitude, poiName, thumbnailPath);
+    }
+    RCIMWrapperMainThreadPoster.success(result, RCIMIWPlatformConverter.convertMessage(res));
+  }
+
+  private void createNativeCustomMessage(@NonNull MethodCall call, @NonNull Result result) {
+    RCIMIWNativeCustomMessage res = null;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      String messageIdentifier = (String) call.argument("messageIdentifier");
+      Map<String, Object> fields = (Map<String, Object>) call.argument("fields");
+
+      res = engine.createNativeCustomMessage(type, targetId, channelId, messageIdentifier, fields);
+    }
+    RCIMWrapperMainThreadPoster.success(result, RCIMIWPlatformConverter.convertMessage(res));
+  }
+
+  private void createNativeCustomMediaMessage(@NonNull MethodCall call, @NonNull Result result) {
+    RCIMIWNativeCustomMediaMessage res = null;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      String messageIdentifier = (String) call.argument("messageIdentifier");
+      String path = (String) call.argument("path");
+      Map<String, Object> fields = (Map<String, Object>) call.argument("fields");
+
+      res =
+          engine.createNativeCustomMediaMessage(
+              type, targetId, channelId, messageIdentifier, path, fields);
     }
     RCIMWrapperMainThreadPoster.success(result, RCIMIWPlatformConverter.convertMessage(res));
   }

@@ -3,14 +3,12 @@ import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
 class RCIMConverter {
   static Map<String, Function> decodeMap = {};
   static RCIMIWMessage convertMessage(Map<String, dynamic> json) {
-    RCIMIWMessageType messageType =
-        RCIMIWMessageType.values[json['messageType']];
+    RCIMIWMessageType messageType = RCIMIWMessageType.values[json['messageType']];
 
     switch (messageType) {
       case RCIMIWMessageType.unknown:
       case RCIMIWMessageType.userCustom:
-        if (json['rawData'] != "" &&
-            decodeMap.containsKey(json['objectName'])) {
+        if (json['rawData'] != "" && decodeMap.containsKey(json['objectName'])) {
           return decodeMap[json['objectName']!]!(json);
         }
         return RCIMIWUnknownMessage.fromJson(json);
@@ -48,6 +46,10 @@ class RCIMConverter {
         return RCIMIWCommandNotificationMessage.fromJson(json);
       case RCIMIWMessageType.location:
         return RCIMIWLocationMessage.fromJson(json);
+      case RCIMIWMessageType.nativeCustom:
+        return RCIMIWNativeCustomMessage.fromJson(json);
+      case RCIMIWMessageType.nativeCustomMedia:
+        return RCIMIWNativeCustomMediaMessage.fromJson(json);
     }
   }
 }

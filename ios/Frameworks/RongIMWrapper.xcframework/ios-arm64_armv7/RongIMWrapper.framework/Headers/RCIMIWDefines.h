@@ -196,6 +196,16 @@ typedef NS_ENUM(NSInteger, RCIMIWMessageType)  {
      用户自定义消息
      */
     RCIMIWMessageTypeUserCustom = 13,
+    
+    /*!
+     原生自定义普通消息
+     */
+    RCIMIWMessageTypeNativeCustom = 14,
+    
+    /*!
+     原生自定义媒体消息
+     */
+    RCIMIWMessageTypeNativeCustomMedia = 15,
 };
 
 #pragma mark 自定义消息的类别
@@ -205,6 +215,18 @@ typedef NS_ENUM(NSUInteger, RCIMIWCustomMessagePolicy) {
     RCIMIWCustomMessagePolicyNormal,
     RCIMIWCustomMessagePolicyStatus,
     RCIMIWCustomMessagePolicyStorage,
+};
+
+
+typedef NS_ENUM(NSUInteger, RCIMIWNativeCustomMessagePersistentFlag) {
+    RCIMIWNativeCustomMessagePersistentNone,
+    /// 在本地只存储，但不计入未读数
+    RCIMIWNativeCustomMessagePersistentPersisted,
+    /// 在本地进行存储并计入未读数
+    RCIMIWNativeCustomMessagePersistentCounted,
+    /// 在本地不存储，不计入未读数，并且如果对方不在线，服务器会直接丢弃该消息，对方如果之后再上线也不会再收到此消息。
+    /// 一般用于发送输入状态之类的消息。
+    RCIMIWNativeCustomMessagePersistentStatus,
 };
 
 #pragma mark 消息的方向
@@ -537,6 +559,21 @@ typedef NS_ENUM(NSUInteger, RCIMIWImportanceHW) {
      华为推送消息级别 LOW, 表示消息为资讯营销类。消息提醒方式为静默通知，仅在下拉通知栏展示。
      */
     RCIMIWImportanceHWLow = 1,
+};
+
+/**
+ 荣耀推送消息级别
+ */
+typedef NS_ENUM(NSUInteger, RCIMIWImportanceHonor) {
+    /*!
+     华为推送消息级别 NORMAL，表示消息为服务与通讯类。消息提醒方式为锁屏+铃声+震动。
+     */
+    RCIMIWImportanceHonorNormal = 0,
+    
+    /*!
+     华为推送消息级别 LOW, 表示消息为资讯营销类。消息提醒方式为静默通知，仅在下拉通知栏展示。
+     */
+    RCIMIWImportanceHonorLow = 1,
 };
 
 typedef NS_ENUM(NSUInteger, RCIMIWAreaCode) {

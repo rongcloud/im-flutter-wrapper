@@ -174,24 +174,9 @@ const loadDraftMessage = {
 const clearDraftMessage = {
   "title": "删除指定会话中的草稿信息",
   "params": [
-    {
-      "key": "type",
-      "type": "String",
-      "hint": "",
-      "lable": LableString.conversationType
-    },
-    {
-      "key": "targetId",
-      "type": "String",
-      "hint": "",
-      "lable": LableString.editTargetIdString
-    },
-    {
-      "key": "channelId",
-      "type": "String",
-      "hint": HintString.channelIdString,
-      "lable": LableString.editChannelIdString
-    },
+    {"key": "type", "type": "String", "hint": "", "lable": LableString.conversationType},
+    {"key": "targetId", "type": "String", "hint": "", "lable": LableString.editTargetIdString},
+    {"key": "channelId", "type": "String", "hint": HintString.channelIdString, "lable": LableString.editChannelIdString},
   ],
   "action": engine_fun.clearDraftMessage,
 };

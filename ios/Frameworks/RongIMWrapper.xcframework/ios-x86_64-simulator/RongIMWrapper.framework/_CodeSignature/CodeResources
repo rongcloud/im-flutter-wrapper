@@ -38,11 +38,11 @@
 		</data>
 		<key>Headers/RCIMIWDefines.h</key>
 		<data>
-		agTp/J86qynzvQtf171seueC69g=
+		eol/yMMWxD5sCT05wcGeXcYmqUM=
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		YE6aBifOMOy+6jI4UVZh5KzidHg=
+		64Y+xrsLW0p1FIexk8K8ICOLCw0=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
@@ -86,7 +86,15 @@
 		</data>
 		<key>Headers/RCIMIWMessagePushOptions.h</key>
 		<data>
-		ZcO7tjMS+sTtbj1Kt5UBcCcaOIM=
+		INZw8eqQqHxDVlRDBufb3BzB0zw=
+		</data>
+		<key>Headers/RCIMIWNativeCustomMediaMessage.h</key>
+		<data>
+		TtJvIjR75Xsdwui1Xgi2LDy7sQo=
+		</data>
+		<key>Headers/RCIMIWNativeCustomMessage.h</key>
+		<data>
+		jl/KqekfUeoiPBsnZx9uSXwL604=
 		</data>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
 		<data>
@@ -138,11 +146,11 @@
 		</data>
 		<key>Headers/RongIMWrapper.h</key>
 		<data>
-		2VkE6IilLIthHdmKvEbqXjElsYA=
+		YdH8Ujk85GPUJ+MR6roHGiP+3tU=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		f8MjVf1v7tjNZfsDaozIvO/H8Rw=
+		QMCV3rhXoD+WVcW4JtEn86ZPdlQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -247,22 +255,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			agTp/J86qynzvQtf171seueC69g=
+			eol/yMMWxD5sCT05wcGeXcYmqUM=
 			</data>
 			<key>hash2</key>
 			<data>
-			bfzQdVrSNos6HJrY0nu4iGHof2l9YQz5AdwIhZvZxsI=
+			BVGBRSwY5wKEat5PE4nFqps1FVWTbwCiBdItmLNcK8o=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngine.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			YE6aBifOMOy+6jI4UVZh5KzidHg=
+			64Y+xrsLW0p1FIexk8K8ICOLCw0=
 			</data>
 			<key>hash2</key>
 			<data>
-			QRiui5Qmypnv/F6kvzsFOIuPk6Y+jXwlBzhjfHbN8nQ=
+			UrxJREgUJC9UUYi/wE70/8Fgbg8xckI7i9xH1h/Wc54=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
@@ -379,11 +387,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZcO7tjMS+sTtbj1Kt5UBcCcaOIM=
+			INZw8eqQqHxDVlRDBufb3BzB0zw=
 			</data>
 			<key>hash2</key>
 			<data>
-			b7kEw1R+ZMzek+ezbuDuRIRcAmhPd4cPz78U2Q+luPA=
+			H0JJfmDTazbk58Jx/4KfuloerPu+JFrxF8b7kwmAGqw=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWNativeCustomMediaMessage.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			TtJvIjR75Xsdwui1Xgi2LDy7sQo=
+			</data>
+			<key>hash2</key>
+			<data>
+			x0bXk2B/V8CSuGyipr38ldRg4z5VlJewFFik2dIfKQc=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWNativeCustomMessage.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			jl/KqekfUeoiPBsnZx9uSXwL604=
+			</data>
+			<key>hash2</key>
+			<data>
+			zJCZ22Musnlgmz168nQy/X2928Pf0VqeH3OBJJ0ALA8=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
@@ -522,11 +552,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			2VkE6IilLIthHdmKvEbqXjElsYA=
+			YdH8Ujk85GPUJ+MR6roHGiP+3tU=
 			</data>
 			<key>hash2</key>
 			<data>
-			jxBK1ndjfttXXv+FZvfqvSpkL1XrlaBB+PwBsGbpe5I=
+			FMIRQbrWJ0ecIdMZivMktP0aloY6adherETYM/denrQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

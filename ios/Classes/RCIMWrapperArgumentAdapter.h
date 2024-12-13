@@ -21,6 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertMessageOperationPolicyToInteger:(RCIMIWMessageOperationPolicy)MessageOperationPolicy;
 
 
++ (RCIMIWNativeCustomMessagePersistentFlag)convertNativeCustomMessagePersistentFlagFromInteger:(NSInteger)integer;
++ (NSInteger)convertNativeCustomMessagePersistentFlagToInteger:(RCIMIWNativeCustomMessagePersistentFlag)NativeCustomMessagePersistentFlag;
+
+
 + (RCIMIWVIVOPushType)convertVIVOPushTypeFromInteger:(NSInteger)integer;
 + (NSInteger)convertVIVOPushTypeToInteger:(RCIMIWVIVOPushType)VIVOPushType;
 
@@ -99,6 +103,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (RCIMIWBlacklistStatus)convertBlacklistStatusFromInteger:(NSInteger)integer;
 + (NSInteger)convertBlacklistStatusToInteger:(RCIMIWBlacklistStatus)BlacklistStatus;
+
+
++ (RCIMIWImportanceHonor)convertImportanceHonorFromInteger:(NSInteger)integer;
++ (NSInteger)convertImportanceHonorToInteger:(RCIMIWImportanceHonor)ImportanceHonor;
 
 
 + (RCIMIWConnectionStatus)convertConnectionStatusFromInteger:(NSInteger)integer;

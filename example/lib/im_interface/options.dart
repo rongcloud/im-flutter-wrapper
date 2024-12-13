@@ -100,6 +100,8 @@ const subList = {
     conversation.getUnreadConversations,
   ],
   "消息相关": [
+    message.registerNativeCustomMessage,
+    message.registerNativeCustomMediaMessage,
     message.sendTextMessage,
     message.sendImageMessage,
     message.sendFileMessage,
@@ -111,6 +113,8 @@ const subList = {
     message.sendCustomMessage,
     message.sendCommandMessage,
     message.sendUserCustomMessage,
+    message.sendNativeCustomMessage,
+    message.sendNativeCustomMediaMessage,
     message.cancelSendingMediaMessage,
     message.downloadMediaMessage,
     message.cancelDownloadingMediaMessage,

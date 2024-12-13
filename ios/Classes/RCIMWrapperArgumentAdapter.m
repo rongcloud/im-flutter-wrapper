@@ -45,6 +45,27 @@
   return index;
 }
 
++ (RCIMIWNativeCustomMessagePersistentFlag)convertNativeCustomMessagePersistentFlagFromInteger:(NSInteger)integer {
+  NSArray *NativeCustomMessagePersistentFlagArray = @[
+    @(RCIMIWNativeCustomMessagePersistentNone),
+    @(RCIMIWNativeCustomMessagePersistentPersisted),
+    @(RCIMIWNativeCustomMessagePersistentCounted),
+    @(RCIMIWNativeCustomMessagePersistentStatus),
+  ];
+  RCIMIWNativeCustomMessagePersistentFlag NativeCustomMessagePersistentFlag = [[NativeCustomMessagePersistentFlagArray objectAtIndex:integer] integerValue];
+  return NativeCustomMessagePersistentFlag;
+}
++ (NSInteger)convertNativeCustomMessagePersistentFlagToInteger:(RCIMIWNativeCustomMessagePersistentFlag)NativeCustomMessagePersistentFlag {
+  NSArray *NativeCustomMessagePersistentFlagArray = @[
+    @(RCIMIWNativeCustomMessagePersistentNone),
+    @(RCIMIWNativeCustomMessagePersistentPersisted),
+    @(RCIMIWNativeCustomMessagePersistentCounted),
+    @(RCIMIWNativeCustomMessagePersistentStatus),
+  ];
+  NSInteger index = [NativeCustomMessagePersistentFlagArray indexOfObject:@(NativeCustomMessagePersistentFlag)];
+  return index;
+}
+
 + (RCIMIWVIVOPushType)convertVIVOPushTypeFromInteger:(NSInteger)integer {
   NSArray *VIVOPushTypeArray = @[
     @(RCIMIWVIVOPushTypeOperate),
@@ -210,6 +231,8 @@
     @(RCIMIWMessageTypeCommandNotification),
     @(RCIMIWMessageTypeLocation),
     @(RCIMIWMessageTypeUserCustom),
+    @(RCIMIWMessageTypeNativeCustom),
+    @(RCIMIWMessageTypeNativeCustomMedia),
   ];
   RCIMIWMessageType MessageType = [[MessageTypeArray objectAtIndex:integer] integerValue];
   return MessageType;
@@ -230,6 +253,8 @@
     @(RCIMIWMessageTypeCommandNotification),
     @(RCIMIWMessageTypeLocation),
     @(RCIMIWMessageTypeUserCustom),
+    @(RCIMIWMessageTypeNativeCustom),
+    @(RCIMIWMessageTypeNativeCustomMedia),
   ];
   NSInteger index = [MessageTypeArray indexOfObject:@(MessageType)];
   return index;
@@ -474,6 +499,23 @@
     @(RCIMIWBlacklistStatusNotInBlacklist),
   ];
   NSInteger index = [BlacklistStatusArray indexOfObject:@(BlacklistStatus)];
+  return index;
+}
+
++ (RCIMIWImportanceHonor)convertImportanceHonorFromInteger:(NSInteger)integer {
+  NSArray *ImportanceHonorArray = @[
+    @(RCIMIWImportanceHonorNormal),
+    @(RCIMIWImportanceHonorLow),
+  ];
+  RCIMIWImportanceHonor ImportanceHonor = [[ImportanceHonorArray objectAtIndex:integer] integerValue];
+  return ImportanceHonor;
+}
++ (NSInteger)convertImportanceHonorToInteger:(RCIMIWImportanceHonor)ImportanceHonor {
+  NSArray *ImportanceHonorArray = @[
+    @(RCIMIWImportanceHonorNormal),
+    @(RCIMIWImportanceHonorLow),
+  ];
+  NSInteger index = [ImportanceHonorArray indexOfObject:@(ImportanceHonor)];
   return index;
 }
 

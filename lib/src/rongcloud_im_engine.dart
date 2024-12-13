@@ -38,9 +38,7 @@ class RCIMIWEngine {
   /// - [objectName] 自定义消息的 objectName, 需要与原生定义的 objectName 相同
   /// - [messageDcoder] 消息的解析方法
   Future<void> registerCustomMessage(
-      String objectName,
-      RCIMIWUserCustomMessage Function(Map<String, dynamic> json)
-          messageDcoder) async {
+      String objectName, RCIMIWUserCustomMessage Function(Map<String, dynamic> json) messageDcoder) async {
     RCIMConverter.decodeMap[objectName] = messageDcoder;
   }
 
@@ -52,14 +50,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [path] 图片消息的本地路径，必须为有效路径
   /// - [返回值] 图片消息实体
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
   Future<RCIMIWImageMessage?> createImageMessageForWeb(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      dynamic file) async {
-    return RCIMWrapperPlatform.instance
-        .createImageMessageForWeb(type, targetId, channelId, file);
+      RCIMIWConversationType type, String targetId, String? channelId, dynamic file) async {
+    return RCIMWrapperPlatform.instance.createImageMessageForWeb(type, targetId, channelId, file);
   }
 
   /// 构建文件消息
@@ -68,14 +61,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [file] 文件节点
   /// - [返回值] 文件消息实体
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
   Future<RCIMIWFileMessage?> createFileMessageForWeb(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      dynamic file) async {
-    return RCIMWrapperPlatform.instance
-        .createFileMessageForWeb(type, targetId, channelId, file);
+      RCIMIWConversationType type, String targetId, String? channelId, dynamic file) async {
+    return RCIMWrapperPlatform.instance.createFileMessageForWeb(type, targetId, channelId, file);
   }
 
   /// 构建小视频消息
@@ -85,14 +73,9 @@ class RCIMIWEngine {
   /// - [file] 小视频文件节点
   /// - [duration] 小视频消息的视频时长
   /// - [返回值] 视频消息实体
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
   Future<RCIMIWSightMessage?> createSightMessageForWeb(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      dynamic file) async {
-    return RCIMWrapperPlatform.instance
-        .createSightMessageForWeb(type, targetId, channelId, file);
+      RCIMIWConversationType type, String targetId, String? channelId, dynamic file) async {
+    return RCIMWrapperPlatform.instance.createSightMessageForWeb(type, targetId, channelId, file);
   }
 
   /// 构建 GIF 消息
@@ -101,11 +84,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [path] GIF 消息的本地路径
   /// - [返回值] GIF 消息实体
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
-  Future<RCIMIWGIFMessage?> createGIFMessageForWeb(RCIMIWConversationType type,
-      String targetId, String? channelId, dynamic file) async {
-    return await RCIMWrapperPlatform.instance
-        .createGIFMessageForWeb(type, targetId, channelId, file);
+  Future<RCIMIWGIFMessage?> createGIFMessageForWeb(
+      RCIMIWConversationType type, String targetId, String? channelId, dynamic file) async {
+    return await RCIMWrapperPlatform.instance.createGIFMessageForWeb(type, targetId, channelId, file);
   }
 
   /// 构建语音消息 (高清语音)
@@ -115,14 +96,9 @@ class RCIMIWEngine {
   /// - [file] 语音文件节点
   /// - [duration] 语音消息的消息时长
   /// - [返回值] 语音消息的实体
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
   Future<RCIMIWVoiceMessage?> createVoiceMessageForWeb(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      dynamic file) async {
-    return RCIMWrapperPlatform.instance
-        .createVoiceMessageForWeb(type, targetId, channelId, file);
+      RCIMIWConversationType type, String targetId, String? channelId, dynamic file) async {
+    return RCIMWrapperPlatform.instance.createVoiceMessageForWeb(type, targetId, channelId, file);
   }
 
   /// 构建位置消息
@@ -134,17 +110,10 @@ class RCIMIWEngine {
   /// - [poiName]  POI 信息
   /// - [thumbnailBase64] 缩略图的 base64 字符串
   /// - [返回值] 位置消息实体
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
-  Future<RCIMIWLocationMessage?> createLocationMessageForWeb(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      double longitude,
-      double latitude,
-      String poiName,
-      String thumbnailBase64) async {
-    return RCIMWrapperPlatform.instance.createLocationMessageForWeb(type,
-        targetId, channelId, longitude, latitude, poiName, thumbnailBase64);
+  Future<RCIMIWLocationMessage?> createLocationMessageForWeb(RCIMIWConversationType type, String targetId,
+      String? channelId, double longitude, double latitude, String poiName, String thumbnailBase64) async {
+    return RCIMWrapperPlatform.instance
+        .createLocationMessageForWeb(type, targetId, channelId, longitude, latitude, poiName, thumbnailBase64);
   }
 
   /// 更新消息扩展信息
@@ -154,11 +123,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageExpansionUpdated]
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
   Future<int> updateMessageExpansionForWeb(RCIMIWMessage message, Map expansion,
       {IRCIMIWUpdateMessageExpansionCallback? callback}) async {
-    return await RCIMWrapperPlatform.instance
-        .updateMessageExpansionForWeb(message, expansion, callback: callback);
+    return await RCIMWrapperPlatform.instance.updateMessageExpansionForWeb(message, expansion, callback: callback);
   }
 
   /// 删除消息扩展信息中特定的键值对
@@ -167,12 +134,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageExpansionForKeysRemoved]
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
-  Future<int> removeMessageExpansionForKeysForWeb(
-      RCIMIWMessage message, List<String> keys,
+  Future<int> removeMessageExpansionForKeysForWeb(RCIMIWMessage message, List<String> keys,
       {IRCIMIWRemoveMessageExpansionForKeysCallback? callback}) async {
-    return await RCIMWrapperPlatform.instance
-        .removeMessageExpansionForKeysForWeb(message, keys, callback: callback);
+    return await RCIMWrapperPlatform.instance.removeMessageExpansionForKeysForWeb(message, keys, callback: callback);
   }
 
   /// 发送某个会话中的消息阅读回执
@@ -182,13 +146,10 @@ class RCIMIWEngine {
   /// - [callback] 事件回调
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPrivateReadReceiptMessageSent]
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
-  Future<int> sendPrivateReadReceiptMessageForWeb(
-      String targetId, String? channelId, int timestamp, String messageUId,
+  Future<int> sendPrivateReadReceiptMessageForWeb(String targetId, String? channelId, int timestamp, String messageUId,
       {IRCIMIWSendPrivateReadReceiptMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.sendPrivateReadReceiptMessageForWeb(
-        targetId, channelId, timestamp, messageUId,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .sendPrivateReadReceiptMessageForWeb(targetId, channelId, timestamp, messageUId, callback: callback);
   }
 
   /// 更新超级群消息扩展信息
@@ -197,13 +158,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageExpansionUpdated]
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
-  Future<int> updateUltraGroupMessageExpansionForWeb(
-      RCIMIWMessage message, Map expansion,
+  Future<int> updateUltraGroupMessageExpansionForWeb(RCIMIWMessage message, Map expansion,
       {IRCIMIWUpdateUltraGroupMessageExpansionCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.updateUltraGroupMessageExpansionForWeb(
-        message, expansion,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.updateUltraGroupMessageExpansionForWeb(message, expansion, callback: callback);
   }
 
   /// 删除超级群消息扩展信息中特定的键值对
@@ -212,13 +169,10 @@ class RCIMIWEngine {
   /// - [callback] 事件回调
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageExpansionForKeysRemoved]
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
-  Future<int> removeUltraGroupMessageExpansionForKeysForWeb(
-      RCIMIWMessage message, List<String> keys,
+  Future<int> removeUltraGroupMessageExpansionForKeysForWeb(RCIMIWMessage message, List<String> keys,
       {IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback? callback}) {
     return RCIMWrapperPlatform.instance
-        .removeUltraGroupMessageExpansionForKeysForWeb(message, keys,
-            callback: callback);
+        .removeUltraGroupMessageExpansionForKeysForWeb(message, keys, callback: callback);
   }
 
   /// 修改超级群消息
@@ -227,19 +181,14 @@ class RCIMIWEngine {
   /// - [callback] 事件回调
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageModified]
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
-  Future<int> modifyUltraGroupMessageForWeb(
-      RCIMIWMessage originalMessage, RCIMIWMessage newMessage,
+  Future<int> modifyUltraGroupMessageForWeb(RCIMIWMessage originalMessage, RCIMIWMessage newMessage,
       {IRCIMIWModifyUltraGroupMessageCallback? callback}) {
-    return RCIMWrapperPlatform.instance.modifyUltraGroupMessageForWeb(
-        originalMessage, newMessage,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.modifyUltraGroupMessageForWeb(originalMessage, newMessage, callback: callback);
   }
 
   /// 消息扩展信息更改的回调 (web 端)
   /// - [expansion] 消息扩展信息中更新的键值对，只包含更新的键值对，不是全部的数据。如果想获取全部的键值对，请使用 message 的 expansion 属性。
   /// - [messageUId] 发生变化的消息 UId
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
   Function(
     Map? expansion,
     String? messageUId,
@@ -248,7 +197,6 @@ class RCIMIWEngine {
   /// 消息扩展信息删除的回调
   /// - [messageUId] 发生变化的消息 UId
   /// - [keys] 消息扩展信息中删除的键值对 key 列表
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
   Function(
     String? messageUId,
     List<String>? keys,
@@ -256,10 +204,27 @@ class RCIMIWEngine {
 
   /// 会话状态更新的回调
   /// - [conversations] 有更新的所有会话
-  @Deprecated('当前版本不支持 Web 端，请使用其他平台')
   Function(List<RCIMIWConversation> conversations)? onConversationsUpdateForWeb;
 
   // -------- web 专有的方法 --------
+
+  /// 注册原生自定义普通消息
+  /// - [messageIdentifier] 消息的唯一标识
+  /// - [persistentFlag] 消息的存储策略
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表当前接口调用操作失败，详细错误参考错误码
+  Future<int> registerNativeCustomMessage(
+      String messageIdentifier, RCIMIWNativeCustomMessagePersistentFlag persistentFlag) async {
+    return RCIMWrapperPlatform.instance.registerNativeCustomMessage(messageIdentifier, persistentFlag);
+  }
+
+  /// 注册原生自定义媒体消息
+  /// - [messageIdentifier] 消息的唯一标识
+  /// - [persistentFlag] 消息的存储策略
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表当前接口调用操作失败，详细错误参考错误码
+  Future<int> registerNativeCustomMediaMessage(
+      String messageIdentifier, RCIMIWNativeCustomMessagePersistentFlag persistentFlag) async {
+    return RCIMWrapperPlatform.instance.registerNativeCustomMediaMessage(messageIdentifier, persistentFlag);
+  }
 
   /// 连接融云服务器，在整个应用程序全局，只需要调用一次。调用此接口返回非业务错误码时，SDK 会启动重连机制进行重连；如果仍没有连接成功，会在设备网络状态变化时再次进行重连。
   /// - [token] 调用 server api 获取到的 token
@@ -270,10 +235,8 @@ class RCIMIWEngine {
   /// - [callback] 链接事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] 接口回调可以监听 [onConnected]
-  Future<int> connect(String token, int timeout,
-      {RCIMIWConnectCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .connect(token, timeout, callback: callback);
+  Future<int> connect(String token, int timeout, {RCIMIWConnectCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.connect(token, timeout, callback: callback);
   }
 
   /// 断开链接
@@ -290,10 +253,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [text] 文本内容
   /// - [返回值] 文本消息实体
-  Future<RCIMIWTextMessage?> createTextMessage(RCIMIWConversationType type,
-      String targetId, String? channelId, String text) async {
-    return RCIMWrapperPlatform.instance
-        .createTextMessage(type, targetId, channelId, text);
+  Future<RCIMIWTextMessage?> createTextMessage(
+      RCIMIWConversationType type, String targetId, String? channelId, String text) async {
+    return RCIMWrapperPlatform.instance.createTextMessage(type, targetId, channelId, text);
   }
 
   /// 构建图片消息
@@ -302,10 +264,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [path] 图片消息的本地路径，必须为有效路径
   /// - [返回值] 图片消息实体
-  Future<RCIMIWImageMessage?> createImageMessage(RCIMIWConversationType type,
-      String targetId, String? channelId, String path) async {
-    return RCIMWrapperPlatform.instance
-        .createImageMessage(type, targetId, channelId, path);
+  Future<RCIMIWImageMessage?> createImageMessage(
+      RCIMIWConversationType type, String targetId, String? channelId, String path) async {
+    return RCIMWrapperPlatform.instance.createImageMessage(type, targetId, channelId, path);
   }
 
   /// 构建文件消息
@@ -314,10 +275,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [path] 文件消息的本地路径，必须为有效路径
   /// - [返回值] 文件消息实体
-  Future<RCIMIWFileMessage?> createFileMessage(RCIMIWConversationType type,
-      String targetId, String? channelId, String path) async {
-    return RCIMWrapperPlatform.instance
-        .createFileMessage(type, targetId, channelId, path);
+  Future<RCIMIWFileMessage?> createFileMessage(
+      RCIMIWConversationType type, String targetId, String? channelId, String path) async {
+    return RCIMWrapperPlatform.instance.createFileMessage(type, targetId, channelId, path);
   }
 
   /// 构建小视频消息
@@ -327,10 +287,9 @@ class RCIMIWEngine {
   /// - [path] 小视频消息的本地路径，必须为有效路径
   /// - [duration] 小视频消息的视频时长
   /// - [返回值] 视频消息实体
-  Future<RCIMIWSightMessage?> createSightMessage(RCIMIWConversationType type,
-      String targetId, String? channelId, String path, int duration) async {
-    return RCIMWrapperPlatform.instance
-        .createSightMessage(type, targetId, channelId, path, duration);
+  Future<RCIMIWSightMessage?> createSightMessage(
+      RCIMIWConversationType type, String targetId, String? channelId, String path, int duration) async {
+    return RCIMWrapperPlatform.instance.createSightMessage(type, targetId, channelId, path, duration);
   }
 
   /// 构建语音消息 (高清语音)
@@ -340,10 +299,9 @@ class RCIMIWEngine {
   /// - [path] 语音消息的本地路径，必须为有效路径
   /// - [duration] 语音消息的消息时长
   /// - [返回值] 语音消息的实体
-  Future<RCIMIWVoiceMessage?> createVoiceMessage(RCIMIWConversationType type,
-      String targetId, String? channelId, String path, int duration) async {
-    return RCIMWrapperPlatform.instance
-        .createVoiceMessage(type, targetId, channelId, path, duration);
+  Future<RCIMIWVoiceMessage?> createVoiceMessage(
+      RCIMIWConversationType type, String targetId, String? channelId, String path, int duration) async {
+    return RCIMWrapperPlatform.instance.createVoiceMessage(type, targetId, channelId, path, duration);
   }
 
   /// 构建引用消息
@@ -353,14 +311,9 @@ class RCIMIWEngine {
   /// - [referenceMessage] 引用的消息
   /// - [text]   引用的文本内容
   /// - [返回值] 引用消息实体
-  Future<RCIMIWReferenceMessage?> createReferenceMessage(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      RCIMIWMessage referenceMessage,
-      String text) async {
-    return RCIMWrapperPlatform.instance.createReferenceMessage(
-        type, targetId, channelId, referenceMessage, text);
+  Future<RCIMIWReferenceMessage?> createReferenceMessage(RCIMIWConversationType type, String targetId,
+      String? channelId, RCIMIWMessage referenceMessage, String text) async {
+    return RCIMWrapperPlatform.instance.createReferenceMessage(type, targetId, channelId, referenceMessage, text);
   }
 
   /// 构建 GIF 消息
@@ -369,10 +322,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [path] GIF 消息的本地路径
   /// - [返回值] GIF 消息实体
-  Future<RCIMIWGIFMessage?> createGIFMessage(RCIMIWConversationType type,
-      String targetId, String? channelId, String path) async {
-    return RCIMWrapperPlatform.instance
-        .createGIFMessage(type, targetId, channelId, path);
+  Future<RCIMIWGIFMessage?> createGIFMessage(
+      RCIMIWConversationType type, String targetId, String? channelId, String path) async {
+    return RCIMWrapperPlatform.instance.createGIFMessage(type, targetId, channelId, path);
   }
 
   /// 构建自定义消息
@@ -383,15 +335,10 @@ class RCIMIWEngine {
   /// - [messageIdentifier] 消息的标识符，需唯一
   /// - [fields]  消息的内容键值对
   /// - [返回值] 自定义消息实体
-  Future<RCIMIWCustomMessage?> createCustomMessage(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      RCIMIWCustomMessagePolicy policy,
-      String messageIdentifier,
-      Map fields) async {
-    return RCIMWrapperPlatform.instance.createCustomMessage(
-        type, targetId, channelId, policy, messageIdentifier, fields);
+  Future<RCIMIWCustomMessage?> createCustomMessage(RCIMIWConversationType type, String targetId, String? channelId,
+      RCIMIWCustomMessagePolicy policy, String messageIdentifier, Map fields) async {
+    return RCIMWrapperPlatform.instance
+        .createCustomMessage(type, targetId, channelId, policy, messageIdentifier, fields);
   }
 
   /// 构建位置消息
@@ -403,16 +350,36 @@ class RCIMIWEngine {
   /// - [poiName]  POI 信息
   /// - [thumbnailPath] 缩略图本地路径，必须为有效路径
   /// - [返回值] 位置消息实体
-  Future<RCIMIWLocationMessage?> createLocationMessage(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      double longitude,
-      double latitude,
-      String poiName,
-      String thumbnailPath) async {
-    return RCIMWrapperPlatform.instance.createLocationMessage(
-        type, targetId, channelId, longitude, latitude, poiName, thumbnailPath);
+  Future<RCIMIWLocationMessage?> createLocationMessage(RCIMIWConversationType type, String targetId, String? channelId,
+      double longitude, double latitude, String poiName, String thumbnailPath) async {
+    return RCIMWrapperPlatform.instance
+        .createLocationMessage(type, targetId, channelId, longitude, latitude, poiName, thumbnailPath);
+  }
+
+  /// 构建原生自定义普通消息
+  /// - [type] 会话类型
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [messageIdentifier] 消息的标识符，需唯一
+  /// - [fields] 消息的内容键值对
+  /// - [返回值] 原生自定义普通消息
+  Future<RCIMIWNativeCustomMessage?> createNativeCustomMessage(
+      RCIMIWConversationType type, String targetId, String? channelId, String messageIdentifier, Map fields) async {
+    return RCIMWrapperPlatform.instance.createNativeCustomMessage(type, targetId, channelId, messageIdentifier, fields);
+  }
+
+  /// 构建原生自定义媒体消息
+  /// - [type] 会话类型
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [messageIdentifier] 消息的标识符，需唯一
+  /// - [path] 媒体文件的本地路径，必须为有效路径
+  /// - [fields] 消息的内容键值对
+  /// - [返回值] 原生自定义媒体消息
+  Future<RCIMIWNativeCustomMediaMessage?> createNativeCustomMediaMessage(RCIMIWConversationType type, String targetId,
+      String? channelId, String messageIdentifier, String path, Map fields) async {
+    return RCIMWrapperPlatform.instance
+        .createNativeCustomMediaMessage(type, targetId, channelId, messageIdentifier, path, fields);
   }
 
   /// 发送普通消息
@@ -420,10 +387,8 @@ class RCIMIWEngine {
   /// - [callback] 发送消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] 接口回调可以监听 [onMessageAttached],[onMessageSent]
-  Future<int> sendMessage(RCIMIWMessage message,
-      {RCIMIWSendMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .sendMessage(message, callback: callback);
+  Future<int> sendMessage(RCIMIWMessage message, {RCIMIWSendMessageCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.sendMessage(message, callback: callback);
   }
 
   /// 发送媒体消息
@@ -431,10 +396,8 @@ class RCIMIWEngine {
   /// - [listener] 发送媒体消息的事件监听
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] 接口回调可以监听 [onMediaMessageSending],[onMediaMessageAttached],[onMediaMessageSent]
-  Future<int> sendMediaMessage(RCIMIWMediaMessage message,
-      {RCIMIWSendMediaMessageListener? listener}) async {
-    return RCIMWrapperPlatform.instance
-        .sendMediaMessage(message, listener: listener);
+  Future<int> sendMediaMessage(RCIMIWMediaMessage message, {RCIMIWSendMediaMessageListener? listener}) async {
+    return RCIMWrapperPlatform.instance.sendMediaMessage(message, listener: listener);
   }
 
   /// 取消发送媒体消息
@@ -445,8 +408,7 @@ class RCIMIWEngine {
   /// 此接口不支持 Flutter For Web 端
   Future<int> cancelSendingMediaMessage(RCIMIWMediaMessage message,
       {IRCIMIWCancelSendingMediaMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .cancelSendingMediaMessage(message, callback: callback);
+    return RCIMWrapperPlatform.instance.cancelSendingMediaMessage(message, callback: callback);
   }
 
   /// 下载媒体消息
@@ -455,10 +417,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMediaMessageDownloaded], [onMediaMessageDownloading]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> downloadMediaMessage(RCIMIWMediaMessage message,
-      {RCIMIWDownloadMediaMessageListener? listener}) async {
-    return RCIMWrapperPlatform.instance
-        .downloadMediaMessage(message, listener: listener);
+  Future<int> downloadMediaMessage(RCIMIWMediaMessage message, {RCIMIWDownloadMediaMessageListener? listener}) async {
+    return RCIMWrapperPlatform.instance.downloadMediaMessage(message, listener: listener);
   }
 
   /// 取消下载媒体消息
@@ -469,8 +429,7 @@ class RCIMIWEngine {
   /// 此接口不支持 Flutter For Web 端
   Future<int> cancelDownloadingMediaMessage(RCIMIWMediaMessage message,
       {IRCIMIWCancelDownloadingMediaMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .cancelDownloadingMediaMessage(message, callback: callback);
+    return RCIMWrapperPlatform.instance.cancelDownloadingMediaMessage(message, callback: callback);
   }
 
   /// 加载某个会话
@@ -480,10 +439,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationLoaded]
   @Deprecated('请使用 [getConversation] 代替')
-  Future<int> loadConversation(
-      RCIMIWConversationType type, String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadConversation(type, targetId, channelId);
+  Future<int> loadConversation(RCIMIWConversationType type, String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadConversation(type, targetId, channelId);
   }
 
   /// 获取某个会话
@@ -493,11 +450,9 @@ class RCIMIWEngine {
   /// - [callback] 获取会话事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationLoaded]
-  Future<int> getConversation(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> getConversation(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWGetConversationCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getConversation(type, targetId, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.getConversation(type, targetId, channelId, callback: callback);
   }
 
   /// 加载某些会话
@@ -508,10 +463,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoaded]
   @Deprecated('请使用 [getConversations] 代替')
-  Future<int> loadConversations(List<RCIMIWConversationType> conversationTypes,
-      String? channelId, int startTime, int count) async {
-    return RCIMWrapperPlatform.instance
-        .loadConversations(conversationTypes, channelId, startTime, count);
+  Future<int> loadConversations(
+      List<RCIMIWConversationType> conversationTypes, String? channelId, int startTime, int count) async {
+    return RCIMWrapperPlatform.instance.loadConversations(conversationTypes, channelId, startTime, count);
   }
 
   /// 获取某些会话
@@ -522,23 +476,20 @@ class RCIMIWEngine {
   /// - [callback]     获取会话列表事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoaded]
-  Future<int> getConversations(List<RCIMIWConversationType> conversationTypes,
-      String? channelId, int startTime, int count,
+  Future<int> getConversations(
+      List<RCIMIWConversationType> conversationTypes, String? channelId, int startTime, int count,
       {IRCIMIWGetConversationsCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getConversations(
-        conversationTypes, channelId, startTime, count,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .getConversations(conversationTypes, channelId, startTime, count, callback: callback);
   }
 
   /// 获取指定类型的含有未读消息的会话列表
   /// - [conversationTypes] 支持单聊、群聊、系统会话
   /// - [callback] 获取会话列表事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> getUnreadConversations(
-      List<RCIMIWConversationType> conversationTypes,
+  Future<int> getUnreadConversations(List<RCIMIWConversationType> conversationTypes,
       {IRCIMIWGetUnreadConversationsCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getUnreadConversations(conversationTypes, callback: callback);
+    return RCIMWrapperPlatform.instance.getUnreadConversations(conversationTypes, callback: callback);
   }
 
   /// 移除某个会话
@@ -548,11 +499,9 @@ class RCIMIWEngine {
   /// - [callback] 移除会话事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationRemoved]
-  Future<int> removeConversation(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> removeConversation(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWRemoveConversationCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .removeConversation(type, targetId, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.removeConversation(type, targetId, channelId, callback: callback);
   }
 
   /// 根据会话类型移除会话
@@ -562,11 +511,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsRemoved]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> removeConversations(
-      List<RCIMIWConversationType> conversationTypes, String? channelId,
+  Future<int> removeConversations(List<RCIMIWConversationType> conversationTypes, String? channelId,
       {IRCIMIWRemoveConversationsCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .removeConversations(conversationTypes, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.removeConversations(conversationTypes, channelId, callback: callback);
   }
 
   /// 加载某个会话的未读数
@@ -577,10 +524,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountLoaded]
   @Deprecated('请使用 [getUnreadCount] 代替')
-  Future<int> loadUnreadCount(
-      RCIMIWConversationType type, String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadUnreadCount(type, targetId, channelId);
+  Future<int> loadUnreadCount(RCIMIWConversationType type, String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadUnreadCount(type, targetId, channelId);
   }
 
   /// 获取某个会话的未读数
@@ -591,11 +536,9 @@ class RCIMIWEngine {
   /// - [callback] 获取会话未读数事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountLoaded]
-  Future<int> getUnreadCount(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> getUnreadCount(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWGetUnreadCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getUnreadCount(type, targetId, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.getUnreadCount(type, targetId, channelId, callback: callback);
   }
 
   /// 加载所有未读数
@@ -614,10 +557,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onTotalUnreadCountLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
-  Future<int> getTotalUnreadCount(String? channelId,
-      {IRCIMIWGetTotalUnreadCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getTotalUnreadCount(channelId, callback: callback);
+  Future<int> getTotalUnreadCount(String? channelId, {IRCIMIWGetTotalUnreadCountCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getTotalUnreadCount(channelId, callback: callback);
   }
 
   /// 加载会话中未读的 @ 消息数量。
@@ -628,10 +569,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadMentionedCountLoaded]
   @Deprecated('请使用 [getUnreadMentionedCount] 代替')
-  Future<int> loadUnreadMentionedCount(
-      RCIMIWConversationType type, String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadUnreadMentionedCount(type, targetId, channelId);
+  Future<int> loadUnreadMentionedCount(RCIMIWConversationType type, String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadUnreadMentionedCount(type, targetId, channelId);
   }
 
   /// 获取会话中未读的 @ 消息数量。
@@ -642,11 +581,9 @@ class RCIMIWEngine {
   /// - [callback] 获取会话中未读的 @ 消息数量事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadMentionedCountLoaded]
-  Future<int> getUnreadMentionedCount(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> getUnreadMentionedCount(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWGetUnreadMentionedCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getUnreadMentionedCount(type, targetId, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.getUnreadMentionedCount(type, targetId, channelId, callback: callback);
   }
 
   /// 加载当前用户加入的所有超级群会话的未读消息数的总和。
@@ -661,10 +598,8 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupAllUnreadCountLoaded]
-  Future<int> getUltraGroupAllUnreadCount(
-      {IRCIMIWGetUltraGroupAllUnreadCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getUltraGroupAllUnreadCount(callback: callback);
+  Future<int> getUltraGroupAllUnreadCount({IRCIMIWGetUltraGroupAllUnreadCountCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getUltraGroupAllUnreadCount(callback: callback);
   }
 
   /// 加载当前用户加入的所有超级群会话中的未读 @ 消息数的总和。
@@ -681,8 +616,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onUltraGroupAllUnreadMentionedCountLoaded]
   Future<int> getUltraGroupAllUnreadMentionedCount(
       {IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getUltraGroupAllUnreadMentionedCount(callback: callback);
+    return RCIMWrapperPlatform.instance.getUltraGroupAllUnreadMentionedCount(callback: callback);
   }
 
   /// 获取指定会话的未读消息数
@@ -699,10 +633,8 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupUnreadCountLoaded]
-  Future<int> getUltraGroupUnreadCount(String targetId,
-      {IRCIMIWGetUltraGroupUnreadCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getUltraGroupUnreadCount(targetId, callback: callback);
+  Future<int> getUltraGroupUnreadCount(String targetId, {IRCIMIWGetUltraGroupUnreadCountCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getUltraGroupUnreadCount(targetId, callback: callback);
   }
 
   /// 获取超级群会话中被 @ 的消息数
@@ -711,8 +643,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onUltraGroupUnreadMentionedCountLoaded]
   @Deprecated('请使用 [getUltraGroupUnreadMentionedCount] 代替')
   Future<int> loadUltraGroupUnreadMentionedCount(String targetId) async {
-    return RCIMWrapperPlatform.instance
-        .loadUltraGroupUnreadMentionedCount(targetId);
+    return RCIMWrapperPlatform.instance.loadUltraGroupUnreadMentionedCount(targetId);
   }
 
   /// 获取超级群会话中被 @ 的消息数
@@ -722,8 +653,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onUltraGroupUnreadMentionedCountLoaded]
   Future<int> getUltraGroupUnreadMentionedCount(String targetId,
       {IRCIMIWGetUltraGroupUnreadMentionedCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getUltraGroupUnreadMentionedCount(targetId, callback: callback);
+    return RCIMWrapperPlatform.instance.getUltraGroupUnreadMentionedCount(targetId, callback: callback);
   }
 
   /// 根据会话类型加载未读数
@@ -736,11 +666,8 @@ class RCIMIWEngine {
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   @Deprecated('请使用 [getUnreadCountByConversationTypes] 代替')
   Future<int> loadUnreadCountByConversationTypes(
-      List<RCIMIWConversationType> conversationTypes,
-      String? channelId,
-      bool contain) async {
-    return RCIMWrapperPlatform.instance.loadUnreadCountByConversationTypes(
-        conversationTypes, channelId, contain);
+      List<RCIMIWConversationType> conversationTypes, String? channelId, bool contain) async {
+    return RCIMWrapperPlatform.instance.loadUnreadCountByConversationTypes(conversationTypes, channelId, contain);
   }
 
   /// 根据会话类型加载未读数
@@ -753,13 +680,10 @@ class RCIMIWEngine {
   /// - [接口回调] [onUnreadCountByConversationTypesLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   Future<int> getUnreadCountByConversationTypes(
-      List<RCIMIWConversationType> conversationTypes,
-      String? channelId,
-      bool contain,
+      List<RCIMIWConversationType> conversationTypes, String? channelId, bool contain,
       {IRCIMIWGetUnreadCountByConversationTypesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getUnreadCountByConversationTypes(
-        conversationTypes, channelId, contain,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .getUnreadCountByConversationTypes(conversationTypes, channelId, contain, callback: callback);
   }
 
   /// 清除某个会话中的未读消息数。
@@ -771,12 +695,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountCleared]
-  Future<int> clearUnreadCount(RCIMIWConversationType type, String targetId,
-      String? channelId, int timestamp,
+  Future<int> clearUnreadCount(RCIMIWConversationType type, String targetId, String? channelId, int timestamp,
       {IRCIMIWClearUnreadCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.clearUnreadCount(
-        type, targetId, channelId, timestamp,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.clearUnreadCount(type, targetId, channelId, timestamp, callback: callback);
   }
 
   /// 保存会话草稿信息。
@@ -787,11 +708,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageSaved]
-  Future<int> saveDraftMessage(RCIMIWConversationType type, String targetId,
-      String? channelId, String draft,
+  Future<int> saveDraftMessage(RCIMIWConversationType type, String targetId, String? channelId, String draft,
       {IRCIMIWSaveDraftMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .saveDraftMessage(type, targetId, channelId, draft, callback: callback);
+    return RCIMWrapperPlatform.instance.saveDraftMessage(type, targetId, channelId, draft, callback: callback);
   }
 
   /// 加载会话中的草稿信息。
@@ -801,10 +720,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageLoaded]
   @Deprecated('请使用 [getDraftMessage] 代替')
-  Future<int> loadDraftMessage(
-      RCIMIWConversationType type, String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadDraftMessage(type, targetId, channelId);
+  Future<int> loadDraftMessage(RCIMIWConversationType type, String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadDraftMessage(type, targetId, channelId);
   }
 
   /// 获取会话中的草稿信息。
@@ -814,11 +731,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageLoaded]
-  Future<int> getDraftMessage(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> getDraftMessage(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWGetDraftMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getDraftMessage(type, targetId, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.getDraftMessage(type, targetId, channelId, callback: callback);
   }
 
   /// 删除指定会话中的草稿信息。
@@ -828,11 +743,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageCleared]
-  Future<int> clearDraftMessage(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> clearDraftMessage(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWClearDraftMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .clearDraftMessage(type, targetId, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.clearDraftMessage(type, targetId, channelId, callback: callback);
   }
 
   /// 加载免打扰的会话列表。
@@ -842,10 +755,8 @@ class RCIMIWEngine {
   /// - [接口回调] [onBlockedConversationsLoaded]
   /// 在 Flutter For Web 端，此接口返回的会话对象数据中只有 targetId,channelId,conversationType 是正确的，其他值均为默认值
   @Deprecated('请使用 [getBlockedConversations] 代替')
-  Future<int> loadBlockedConversations(
-      List<RCIMIWConversationType> conversationTypes, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadBlockedConversations(conversationTypes, channelId);
+  Future<int> loadBlockedConversations(List<RCIMIWConversationType> conversationTypes, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadBlockedConversations(conversationTypes, channelId);
   }
 
   /// 获取免打扰的会话列表。
@@ -855,12 +766,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlockedConversationsLoaded]
   /// 在 Flutter For Web 端，此接口返回的会话对象数据中只有 targetId,channelId,conversationType 是正确的，其他值均为默认值
-  Future<int> getBlockedConversations(
-      List<RCIMIWConversationType> conversationTypes, String? channelId,
+  Future<int> getBlockedConversations(List<RCIMIWConversationType> conversationTypes, String? channelId,
       {IRCIMIWGetBlockedConversationsCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getBlockedConversations(
-        conversationTypes, channelId,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.getBlockedConversations(conversationTypes, channelId, callback: callback);
   }
 
   /// 设置会话的置顶状态。若会话不存在，调用此方法 SDK 自动创建会话并置顶。
@@ -872,12 +780,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTopStatusChanged]
   /// 此接口在 Flutter For Web 端不支持超级群
-  Future<int> changeConversationTopStatus(
-      RCIMIWConversationType type, String targetId, String? channelId, bool top,
+  Future<int> changeConversationTopStatus(RCIMIWConversationType type, String targetId, String? channelId, bool top,
       {IRCIMIWChangeConversationTopStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.changeConversationTopStatus(
-        type, targetId, channelId, top,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.changeConversationTopStatus(type, targetId, channelId, top, callback: callback);
   }
 
   /// 加载会话的置顶状态
@@ -888,10 +793,8 @@ class RCIMIWEngine {
   /// - [接口回调] [onConversationTopStatusLoaded]
   /// 此接口在 Flutter For Web 端不支持超级群
   @Deprecated('请使用 [getConversationTopStatus] 代替')
-  Future<int> loadConversationTopStatus(
-      RCIMIWConversationType type, String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadConversationTopStatus(type, targetId, channelId);
+  Future<int> loadConversationTopStatus(RCIMIWConversationType type, String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadConversationTopStatus(type, targetId, channelId);
   }
 
   /// 获取会话的置顶状态
@@ -902,12 +805,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTopStatusLoaded]
   /// 此接口在 Flutter For Web 端不支持超级群
-  Future<int> getConversationTopStatus(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> getConversationTopStatus(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWGetConversationTopStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getConversationTopStatus(
-        type, targetId, channelId,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.getConversationTopStatus(type, targetId, channelId, callback: callback);
   }
 
   /// 同步会话阅读状态。
@@ -918,12 +818,10 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationReadStatusSynced]
-  Future<int> syncConversationReadStatus(RCIMIWConversationType type,
-      String targetId, String? channelId, int timestamp,
+  Future<int> syncConversationReadStatus(RCIMIWConversationType type, String targetId, String? channelId, int timestamp,
       {IRCIMIWSyncConversationReadStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.syncConversationReadStatus(
-        type, targetId, channelId, timestamp,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .syncConversationReadStatus(type, targetId, channelId, timestamp, callback: callback);
   }
 
   /// 向会话中发送正在输入的状态，目前只支持单聊。
@@ -932,10 +830,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [currentType] 当前的状态
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> sendTypingStatus(RCIMIWConversationType type, String targetId,
-      String? channelId, String currentType) async {
-    return RCIMWrapperPlatform.instance
-        .sendTypingStatus(type, targetId, channelId, currentType);
+  Future<int> sendTypingStatus(
+      RCIMIWConversationType type, String targetId, String? channelId, String currentType) async {
+    return RCIMWrapperPlatform.instance.sendTypingStatus(type, targetId, channelId, currentType);
   }
 
   /// 加载历史消息
@@ -949,16 +846,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesLoaded]
   @Deprecated('请使用 [getMessages] 代替')
-  Future<int> loadMessages(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      int sentTime,
-      RCIMIWTimeOrder order,
-      RCIMIWMessageOperationPolicy policy,
-      int count) async {
-    return RCIMWrapperPlatform.instance.loadMessages(
-        type, targetId, channelId, sentTime, order, policy, count);
+  Future<int> loadMessages(RCIMIWConversationType type, String targetId, String? channelId, int sentTime,
+      RCIMIWTimeOrder order, RCIMIWMessageOperationPolicy policy, int count) async {
+    return RCIMWrapperPlatform.instance.loadMessages(type, targetId, channelId, sentTime, order, policy, count);
   }
 
   /// 加载历史消息
@@ -972,18 +862,11 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesLoaded]
-  Future<int> getMessages(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      int sentTime,
-      RCIMIWTimeOrder order,
-      RCIMIWMessageOperationPolicy policy,
-      int count,
+  Future<int> getMessages(RCIMIWConversationType type, String targetId, String? channelId, int sentTime,
+      RCIMIWTimeOrder order, RCIMIWMessageOperationPolicy policy, int count,
       {IRCIMIWGetMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getMessages(
-        type, targetId, channelId, sentTime, order, policy, count,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .getMessages(type, targetId, channelId, sentTime, order, policy, count, callback: callback);
   }
 
   /// 根据消息 id 获取消息体（本地数据库索引唯一值）。
@@ -991,10 +874,8 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// 此接口不支持 Flutter For Web 端
-  Future<int> getMessageById(int messageId,
-      {IRCIMIWGetMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getMessageById(messageId, callback: callback);
+  Future<int> getMessageById(int messageId, {IRCIMIWGetMessageCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getMessageById(messageId, callback: callback);
   }
 
   /// 通过全局唯一 id 获取消息实体。
@@ -1002,10 +883,8 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// 此接口不支持 Flutter For Web 端
-  Future<int> getMessageByUId(String messageUId,
-      {IRCIMIWGetMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getMessageByUId(messageUId, callback: callback);
+  Future<int> getMessageByUId(String messageUId, {IRCIMIWGetMessageCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getMessageByUId(messageUId, callback: callback);
   }
 
   /// 加载第一条未读消息。
@@ -1016,10 +895,8 @@ class RCIMIWEngine {
   /// - [接口回调] [onFirstUnreadMessageLoaded]
   /// 此接口不支持 Flutter For Web 端
   @Deprecated('请使用 [getFirstUnreadMessage] 代替')
-  Future<int> loadFirstUnreadMessage(
-      RCIMIWConversationType type, String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadFirstUnreadMessage(type, targetId, channelId);
+  Future<int> loadFirstUnreadMessage(RCIMIWConversationType type, String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadFirstUnreadMessage(type, targetId, channelId);
   }
 
   /// 获取第一条未读消息。
@@ -1030,11 +907,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onFirstUnreadMessageLoaded]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> getFirstUnreadMessage(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> getFirstUnreadMessage(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWGetFirstUnreadMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getFirstUnreadMessage(type, targetId, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.getFirstUnreadMessage(type, targetId, channelId, callback: callback);
   }
 
   /// 加载会话中未读的 @ 消息。
@@ -1045,10 +920,8 @@ class RCIMIWEngine {
   /// - [接口回调] [onUnreadMentionedMessagesLoaded]
   /// 此接口不支持 Flutter For Web 端
   @Deprecated('请使用 [getUnreadMentionedMessages] 代替')
-  Future<int> loadUnreadMentionedMessages(
-      RCIMIWConversationType type, String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadUnreadMentionedMessages(type, targetId, channelId);
+  Future<int> loadUnreadMentionedMessages(RCIMIWConversationType type, String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadUnreadMentionedMessages(type, targetId, channelId);
   }
 
   /// 获取会话中未读的 @ 消息。
@@ -1059,12 +932,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadMentionedMessagesLoaded]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> getUnreadMentionedMessages(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> getUnreadMentionedMessages(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWGetUnreadMentionedMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getUnreadMentionedMessages(
-        type, targetId, channelId,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.getUnreadMentionedMessages(type, targetId, channelId, callback: callback);
   }
 
   /// 插入一条消息
@@ -1073,10 +943,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageInserted]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> insertMessage(RCIMIWMessage message,
-      {IRCIMIWInsertMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .insertMessage(message, callback: callback);
+  Future<int> insertMessage(RCIMIWMessage message, {IRCIMIWInsertMessageCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.insertMessage(message, callback: callback);
   }
 
   /// 插入多条消息，不支持超级群
@@ -1085,10 +953,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesInserted]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> insertMessages(List<RCIMIWMessage> messages,
-      {IRCIMIWInsertMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .insertMessages(messages, callback: callback);
+  Future<int> insertMessages(List<RCIMIWMessage> messages, {IRCIMIWInsertMessagesCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.insertMessages(messages, callback: callback);
   }
 
   /// 清除消息
@@ -1100,12 +966,10 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesCleared]
-  Future<int> clearMessages(RCIMIWConversationType type, String targetId,
-      String? channelId, int timestamp, RCIMIWMessageOperationPolicy policy,
+  Future<int> clearMessages(RCIMIWConversationType type, String targetId, String? channelId, int timestamp,
+      RCIMIWMessageOperationPolicy policy,
       {IRCIMIWClearMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.clearMessages(
-        type, targetId, channelId, timestamp, policy,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.clearMessages(type, targetId, channelId, timestamp, policy, callback: callback);
   }
 
   /// 删除本地消息
@@ -1114,10 +978,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onLocalMessagesDeleted]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> deleteLocalMessages(List<RCIMIWMessage> messages,
-      {IRCIMIWDeleteLocalMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .deleteLocalMessages(messages, callback: callback);
+  Future<int> deleteLocalMessages(List<RCIMIWMessage> messages, {IRCIMIWDeleteLocalMessagesCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.deleteLocalMessages(messages, callback: callback);
   }
 
   /// 删除消息
@@ -1128,12 +990,10 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesDeleted]
-  Future<int> deleteMessages(RCIMIWConversationType type, String targetId,
-      String? channelId, List<RCIMIWMessage> messages,
+  Future<int> deleteMessages(
+      RCIMIWConversationType type, String targetId, String? channelId, List<RCIMIWMessage> messages,
       {IRCIMIWDeleteMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.deleteMessages(
-        type, targetId, channelId, messages,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.deleteMessages(type, targetId, channelId, messages, callback: callback);
   }
 
   /// 撤回消息
@@ -1141,10 +1001,8 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageRecalled]
-  Future<int> recallMessage(RCIMIWMessage message,
-      {IRCIMIWRecallMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .recallMessage(message, callback: callback);
+  Future<int> recallMessage(RCIMIWMessage message, {IRCIMIWRecallMessageCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.recallMessage(message, callback: callback);
   }
 
   /// 发送某个会话中的消息阅读回执
@@ -1154,12 +1012,10 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPrivateReadReceiptMessageSent]
-  Future<int> sendPrivateReadReceiptMessage(
-      String targetId, String? channelId, int timestamp,
+  Future<int> sendPrivateReadReceiptMessage(String targetId, String? channelId, int timestamp,
       {IRCIMIWSendPrivateReadReceiptMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.sendPrivateReadReceiptMessage(
-        targetId, channelId, timestamp,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .sendPrivateReadReceiptMessage(targetId, channelId, timestamp, callback: callback);
   }
 
   /// 发起群聊消息已读回执请求
@@ -1169,8 +1025,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onGroupReadReceiptRequestSent]
   Future<int> sendGroupReadReceiptRequest(RCIMIWMessage message,
       {IRCIMIWSendGroupReadReceiptRequestCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .sendGroupReadReceiptRequest(message, callback: callback);
+    return RCIMWrapperPlatform.instance.sendGroupReadReceiptRequest(message, callback: callback);
   }
 
   /// 发送群聊已读回执
@@ -1180,12 +1035,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onGroupReadReceiptResponseSent]
-  Future<int> sendGroupReadReceiptResponse(
-      String targetId, String? channelId, List<RCIMIWMessage> messages,
+  Future<int> sendGroupReadReceiptResponse(String targetId, String? channelId, List<RCIMIWMessage> messages,
       {IRCIMIWSendGroupReadReceiptResponseCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.sendGroupReadReceiptResponse(
-        targetId, channelId, messages,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.sendGroupReadReceiptResponse(targetId, channelId, messages, callback: callback);
   }
 
   /// 更新消息扩展信息
@@ -1197,8 +1049,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onMessageExpansionUpdated]
   Future<int> updateMessageExpansion(String messageUId, Map expansion,
       {IRCIMIWUpdateMessageExpansionCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .updateMessageExpansion(messageUId, expansion, callback: callback);
+    return RCIMWrapperPlatform.instance.updateMessageExpansion(messageUId, expansion, callback: callback);
   }
 
   /// 删除消息扩展信息中特定的键值对
@@ -1207,11 +1058,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageExpansionForKeysRemoved]
-  Future<int> removeMessageExpansionForKeys(
-      String messageUId, List<String> keys,
+  Future<int> removeMessageExpansionForKeys(String messageUId, List<String> keys,
       {IRCIMIWRemoveMessageExpansionForKeysCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .removeMessageExpansionForKeys(messageUId, keys, callback: callback);
+    return RCIMWrapperPlatform.instance.removeMessageExpansionForKeys(messageUId, keys, callback: callback);
   }
 
   /// 设置消息发送状态。
@@ -1221,11 +1070,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageSentStatusChanged]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> changeMessageSentStatus(
-      int messageId, RCIMIWSentStatus sentStatus,
+  Future<int> changeMessageSentStatus(int messageId, RCIMIWSentStatus sentStatus,
       {IRCIMIWChangeMessageSentStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .changeMessageSentStatus(messageId, sentStatus, callback: callback);
+    return RCIMWrapperPlatform.instance.changeMessageSentStatus(messageId, sentStatus, callback: callback);
   }
 
   /// 设置消息接收状态。
@@ -1235,12 +1082,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageReceiveStatusChanged]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> changeMessageReceiveStatus(
-      int messageId, RCIMIWReceivedStatus receivedStatus,
+  Future<int> changeMessageReceiveStatus(int messageId, RCIMIWReceivedStatus receivedStatus,
       {IRCIMIWChangeMessageReceivedStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.changeMessageReceiveStatus(
-        messageId, receivedStatus,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.changeMessageReceiveStatus(messageId, receivedStatus, callback: callback);
   }
 
   /// 加入聊天室。
@@ -1252,8 +1096,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onChatRoomJoined]
   Future<int> joinChatRoom(String targetId, int messageCount, bool autoCreate,
       {IRCIMIWJoinChatRoomCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .joinChatRoom(targetId, messageCount, autoCreate, callback: callback);
+    return RCIMWrapperPlatform.instance.joinChatRoom(targetId, messageCount, autoCreate, callback: callback);
   }
 
   /// 退出聊天室。
@@ -1261,10 +1104,8 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomLeft]
-  Future<int> leaveChatRoom(String targetId,
-      {IRCIMIWLeaveChatRoomCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .leaveChatRoom(targetId, callback: callback);
+  Future<int> leaveChatRoom(String targetId, {IRCIMIWLeaveChatRoomCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.leaveChatRoom(targetId, callback: callback);
   }
 
   /// 加载聊天室历史消息记录。
@@ -1276,10 +1117,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomMessagesLoaded]
   @Deprecated('请使用 [getChatRoomMessages] 代替')
-  Future<int> loadChatRoomMessages(
-      String targetId, int timestamp, RCIMIWTimeOrder order, int count) async {
-    return RCIMWrapperPlatform.instance
-        .loadChatRoomMessages(targetId, timestamp, order, count);
+  Future<int> loadChatRoomMessages(String targetId, int timestamp, RCIMIWTimeOrder order, int count) async {
+    return RCIMWrapperPlatform.instance.loadChatRoomMessages(targetId, timestamp, order, count);
   }
 
   /// 获取聊天室历史消息记录。
@@ -1291,12 +1130,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomMessagesLoaded]
-  Future<int> getChatRoomMessages(
-      String targetId, int timestamp, RCIMIWTimeOrder order, int count,
+  Future<int> getChatRoomMessages(String targetId, int timestamp, RCIMIWTimeOrder order, int count,
       {IRCIMIWGetChatRoomMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getChatRoomMessages(
-        targetId, timestamp, order, count,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.getChatRoomMessages(targetId, timestamp, order, count, callback: callback);
   }
 
   /// 设置聊天室自定义属性。
@@ -1308,12 +1144,10 @@ class RCIMIWEngine {
   /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntryAdded]
-  Future<int> addChatRoomEntry(String targetId, String key, String value,
-      bool deleteWhenLeft, bool overwrite,
+  Future<int> addChatRoomEntry(String targetId, String key, String value, bool deleteWhenLeft, bool overwrite,
       {IRCIMIWAddChatRoomEntryCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.addChatRoomEntry(
-        targetId, key, value, deleteWhenLeft, overwrite,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .addChatRoomEntry(targetId, key, value, deleteWhenLeft, overwrite, callback: callback);
   }
 
   /// 批量设置聊天室自定义属性
@@ -1324,12 +1158,10 @@ class RCIMIWEngine {
   /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntriesAdded]
-  Future<int> addChatRoomEntries(
-      String targetId, Map entries, bool deleteWhenLeft, bool overwrite,
+  Future<int> addChatRoomEntries(String targetId, Map entries, bool deleteWhenLeft, bool overwrite,
       {IRCIMIWAddChatRoomEntriesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.addChatRoomEntries(
-        targetId, entries, deleteWhenLeft, overwrite,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .addChatRoomEntries(targetId, entries, deleteWhenLeft, overwrite, callback: callback);
   }
 
   /// 加载聊天室单个属性。
@@ -1348,10 +1180,8 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntryLoaded]
-  Future<int> getChatRoomEntry(String targetId, String key,
-      {IRCIMIWGetChatRoomEntryCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getChatRoomEntry(targetId, key, callback: callback);
+  Future<int> getChatRoomEntry(String targetId, String key, {IRCIMIWGetChatRoomEntryCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getChatRoomEntry(targetId, key, callback: callback);
   }
 
   /// 加载聊天室所有属性。
@@ -1368,10 +1198,8 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomAllEntriesLoaded]
-  Future<int> getChatRoomAllEntries(String targetId,
-      {IRCIMIWGetChatRoomAllEntriesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getChatRoomAllEntries(targetId, callback: callback);
+  Future<int> getChatRoomAllEntries(String targetId, {IRCIMIWGetChatRoomAllEntriesCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getChatRoomAllEntries(targetId, callback: callback);
   }
 
   /// 删除聊天室自定义属性。
@@ -1383,8 +1211,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onChatRoomEntryRemoved]
   Future<int> removeChatRoomEntry(String targetId, String key, bool force,
       {IRCIMIWRemoveChatRoomEntryCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .removeChatRoomEntry(targetId, key, force, callback: callback);
+    return RCIMWrapperPlatform.instance.removeChatRoomEntry(targetId, key, force, callback: callback);
   }
 
   /// 批量删除聊天室自定义属性
@@ -1394,11 +1221,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntriesRemoved]
-  Future<int> removeChatRoomEntries(
-      String targetId, List<String> keys, bool force,
+  Future<int> removeChatRoomEntries(String targetId, List<String> keys, bool force,
       {IRCIMIWRemoveChatRoomEntriesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .removeChatRoomEntries(targetId, keys, force, callback: callback);
+    return RCIMWrapperPlatform.instance.removeChatRoomEntries(targetId, keys, force, callback: callback);
   }
 
   /// 将某个用户加入黑名单。
@@ -1408,10 +1233,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistAdded]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> addToBlacklist(String userId,
-      {IRCIMIWAddToBlacklistCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .addToBlacklist(userId, callback: callback);
+  Future<int> addToBlacklist(String userId, {IRCIMIWAddToBlacklistCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.addToBlacklist(userId, callback: callback);
   }
 
   /// 将某个用户从黑名单中移出。
@@ -1420,10 +1243,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistRemoved]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> removeFromBlacklist(String userId,
-      {IRCIMIWRemoveFromBlacklistCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .removeFromBlacklist(userId, callback: callback);
+  Future<int> removeFromBlacklist(String userId, {IRCIMIWRemoveFromBlacklistCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.removeFromBlacklist(userId, callback: callback);
   }
 
   /// 获取某用户是否在黑名单中。
@@ -1442,10 +1263,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistStatusLoaded]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> getBlacklistStatus(String userId,
-      {IRCIMIWGetBlacklistStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getBlacklistStatus(userId, callback: callback);
+  Future<int> getBlacklistStatus(String userId, {IRCIMIWGetBlacklistStatusCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getBlacklistStatus(userId, callback: callback);
   }
 
   /// 加载当前用户设置的黑名单列表。
@@ -1477,12 +1296,11 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesSearched]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> searchMessages(RCIMIWConversationType type, String targetId,
-      String? channelId, String keyword, int startTime, int count,
+  Future<int> searchMessages(
+      RCIMIWConversationType type, String targetId, String? channelId, String keyword, int startTime, int count,
       {IRCIMIWSearchMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.searchMessages(
-        type, targetId, channelId, keyword, startTime, count,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .searchMessages(type, targetId, channelId, keyword, startTime, count, callback: callback);
   }
 
   /// 根据关键字搜索指定会话中某个时间段的消息。
@@ -1498,15 +1316,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesSearchedByTimeRange]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> searchMessagesByTimeRange(
-      RCIMIWConversationType type,
-      String targetId,
-      String? channelId,
-      String keyword,
-      int startTime,
-      int endTime,
-      int offset,
-      int count,
+  Future<int> searchMessagesByTimeRange(RCIMIWConversationType type, String targetId, String? channelId, String keyword,
+      int startTime, int endTime, int offset, int count,
       {IRCIMIWSearchMessagesByTimeRangeCallback? callback}) async {
     return RCIMWrapperPlatform.instance.searchMessagesByTimeRange(
         type, targetId, channelId, keyword, startTime, endTime, offset, count,
@@ -1524,12 +1335,11 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesSearchedByUserId]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> searchMessagesByUserId(String userId, RCIMIWConversationType type,
-      String targetId, String? channelId, int startTime, int count,
+  Future<int> searchMessagesByUserId(
+      String userId, RCIMIWConversationType type, String targetId, String? channelId, int startTime, int count,
       {IRCIMIWSearchMessagesByUserIdCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.searchMessagesByUserId(
-        userId, type, targetId, channelId, startTime, count,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .searchMessagesByUserId(userId, type, targetId, channelId, startTime, count, callback: callback);
   }
 
   /// 根据关键字搜索会话。
@@ -1541,15 +1351,11 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsSearched]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> searchConversations(
-      List<RCIMIWConversationType> conversationTypes,
-      String? channelId,
-      List<RCIMIWMessageType> messageTypes,
-      String keyword,
+  Future<int> searchConversations(List<RCIMIWConversationType> conversationTypes, String? channelId,
+      List<RCIMIWMessageType> messageTypes, String keyword,
       {IRCIMIWSearchConversationsCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.searchConversations(
-        conversationTypes, channelId, messageTypes, keyword,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .searchConversations(conversationTypes, channelId, messageTypes, keyword, callback: callback);
   }
 
   /// 屏蔽某个时间段的消息提醒
@@ -1560,12 +1366,10 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursChanged]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> changeNotificationQuietHours(String startTime, int spanMinutes,
-      RCIMIWPushNotificationQuietHoursLevel level,
+  Future<int> changeNotificationQuietHours(
+      String startTime, int spanMinutes, RCIMIWPushNotificationQuietHoursLevel level,
       {IRCIMIWChangeNotificationQuietHoursCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.changeNotificationQuietHours(
-        startTime, spanMinutes, level,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.changeNotificationQuietHours(startTime, spanMinutes, level, callback: callback);
   }
 
   /// 删除已设置的全局时间段消息提醒屏蔽
@@ -1573,10 +1377,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursRemoved]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> removeNotificationQuietHours(
-      {IRCIMIWRemoveNotificationQuietHoursCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .removeNotificationQuietHours(callback: callback);
+  Future<int> removeNotificationQuietHours({IRCIMIWRemoveNotificationQuietHoursCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.removeNotificationQuietHours(callback: callback);
   }
 
   /// 加载已设置的时间段消息提醒屏蔽
@@ -1593,10 +1395,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursLoaded]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> getNotificationQuietHours(
-      {IRCIMIWGetNotificationQuietHoursCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getNotificationQuietHours(callback: callback);
+  Future<int> getNotificationQuietHours({IRCIMIWGetNotificationQuietHoursCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getNotificationQuietHours(callback: callback);
   }
 
   /// 设置会话的消息提醒状态
@@ -1608,12 +1408,11 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationNotificationLevelChanged]
-  Future<int> changeConversationNotificationLevel(RCIMIWConversationType type,
-      String targetId, String? channelId, RCIMIWPushNotificationLevel level,
+  Future<int> changeConversationNotificationLevel(
+      RCIMIWConversationType type, String targetId, String? channelId, RCIMIWPushNotificationLevel level,
       {IRCIMIWChangeConversationNotificationLevelCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.changeConversationNotificationLevel(
-        type, targetId, channelId, level,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .changeConversationNotificationLevel(type, targetId, channelId, level, callback: callback);
   }
 
   /// 加载会话的消息提醒状态
@@ -1623,10 +1422,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationNotificationLevelLoaded]
   @Deprecated('请使用 [getConversationNotificationLevel] 代替')
-  Future<int> loadConversationNotificationLevel(
-      RCIMIWConversationType type, String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadConversationNotificationLevel(type, targetId, channelId);
+  Future<int> loadConversationNotificationLevel(RCIMIWConversationType type, String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadConversationNotificationLevel(type, targetId, channelId);
   }
 
   /// 获取会话的消息提醒状态
@@ -1636,12 +1433,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationNotificationLevelLoaded]
-  Future<int> getConversationNotificationLevel(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> getConversationNotificationLevel(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWGetConversationNotificationLevelCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getConversationNotificationLevel(
-        type, targetId, channelId,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.getConversationNotificationLevel(type, targetId, channelId, callback: callback);
   }
 
   /// 设置会话类型的消息提醒状态
@@ -1651,23 +1445,17 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTypeNotificationLevelChanged]
-  Future<int> changeConversationTypeNotificationLevel(
-      RCIMIWConversationType type, RCIMIWPushNotificationLevel level,
-      {IRCIMIWChangeConversationTypeNotificationLevelCallback?
-          callback}) async {
-    return RCIMWrapperPlatform.instance.changeConversationTypeNotificationLevel(
-        type, level,
-        callback: callback);
+  Future<int> changeConversationTypeNotificationLevel(RCIMIWConversationType type, RCIMIWPushNotificationLevel level,
+      {IRCIMIWChangeConversationTypeNotificationLevelCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.changeConversationTypeNotificationLevel(type, level, callback: callback);
   }
 
   /// 获取会话类型的消息提醒状态
   /// - [type] 会话类型
   /// - [返回值] [onConversationTypeNotificationLevelLoaded]
   @Deprecated('请使用 [getConversationTypeNotificationLevel] 代替')
-  Future<int> loadConversationTypeNotificationLevel(
-      RCIMIWConversationType type) async {
-    return RCIMWrapperPlatform.instance
-        .loadConversationTypeNotificationLevel(type);
+  Future<int> loadConversationTypeNotificationLevel(RCIMIWConversationType type) async {
+    return RCIMWrapperPlatform.instance.loadConversationTypeNotificationLevel(type);
   }
 
   /// 获取会话类型的消息提醒状态
@@ -1676,8 +1464,7 @@ class RCIMIWEngine {
   /// - [返回值] [onConversationTypeNotificationLevelLoaded]
   Future<int> getConversationTypeNotificationLevel(RCIMIWConversationType type,
       {IRCIMIWGetConversationTypeNotificationLevelCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getConversationTypeNotificationLevel(type, callback: callback);
+    return RCIMWrapperPlatform.instance.getConversationTypeNotificationLevel(type, callback: callback);
   }
 
   /// 设置超级群的默认消息状态
@@ -1687,13 +1474,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupDefaultNotificationLevelChanged]
-  Future<int> changeUltraGroupDefaultNotificationLevel(
-      String targetId, RCIMIWPushNotificationLevel level,
-      {IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback?
-          callback}) async {
-    return RCIMWrapperPlatform.instance
-        .changeUltraGroupDefaultNotificationLevel(targetId, level,
-            callback: callback);
+  Future<int> changeUltraGroupDefaultNotificationLevel(String targetId, RCIMIWPushNotificationLevel level,
+      {IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.changeUltraGroupDefaultNotificationLevel(targetId, level, callback: callback);
   }
 
   /// 获取超级群的默认消息状态
@@ -1702,8 +1485,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onUltraGroupDefaultNotificationLevelLoaded]
   @Deprecated('请使用 [getUltraGroupDefaultNotificationLevel] 代替')
   Future<int> loadUltraGroupDefaultNotificationLevel(String targetId) async {
-    return RCIMWrapperPlatform.instance
-        .loadUltraGroupDefaultNotificationLevel(targetId);
+    return RCIMWrapperPlatform.instance.loadUltraGroupDefaultNotificationLevel(targetId);
   }
 
   /// 获取超级群的默认消息状态
@@ -1713,8 +1495,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onUltraGroupDefaultNotificationLevelLoaded]
   Future<int> getUltraGroupDefaultNotificationLevel(String targetId,
       {IRCIMIWGetUltraGroupDefaultNotificationLevelCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getUltraGroupDefaultNotificationLevel(targetId, callback: callback);
+    return RCIMWrapperPlatform.instance.getUltraGroupDefaultNotificationLevel(targetId, callback: callback);
   }
 
   /// 设置超级群频道的默认消息状态
@@ -1726,12 +1507,9 @@ class RCIMIWEngine {
   /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelChanged]
   Future<int> changeUltraGroupChannelDefaultNotificationLevel(
       String targetId, String? channelId, RCIMIWPushNotificationLevel level,
-      {IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback?
-          callback}) async {
+      {IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback? callback}) async {
     return RCIMWrapperPlatform.instance
-        .changeUltraGroupChannelDefaultNotificationLevel(
-            targetId, channelId, level,
-            callback: callback);
+        .changeUltraGroupChannelDefaultNotificationLevel(targetId, channelId, level, callback: callback);
   }
 
   /// 获取超级群频道的默认消息状态
@@ -1740,10 +1518,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelLoaded]
   @Deprecated('请使用 [getUltraGroupChannelDefaultNotificationLevel] 代替')
-  Future<int> loadUltraGroupChannelDefaultNotificationLevel(
-      String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadUltraGroupChannelDefaultNotificationLevel(targetId, channelId);
+  Future<int> loadUltraGroupChannelDefaultNotificationLevel(String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadUltraGroupChannelDefaultNotificationLevel(targetId, channelId);
   }
 
   /// 获取超级群频道的默认消息状态
@@ -1752,13 +1528,10 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelLoaded]
-  Future<int> getUltraGroupChannelDefaultNotificationLevel(
-      String targetId, String? channelId,
-      {IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback?
-          callback}) async {
+  Future<int> getUltraGroupChannelDefaultNotificationLevel(String targetId, String? channelId,
+      {IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback? callback}) async {
     return RCIMWrapperPlatform.instance
-        .getUltraGroupChannelDefaultNotificationLevel(targetId, channelId,
-            callback: callback);
+        .getUltraGroupChannelDefaultNotificationLevel(targetId, channelId, callback: callback);
   }
 
   /// 设置是否显示远程推送内容详情，此功能需要从服务端开启用户设置功能。
@@ -1768,8 +1541,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onPushContentShowStatusChanged]
   Future<int> changePushContentShowStatus(bool showContent,
       {IRCIMIWChangePushContentShowStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .changePushContentShowStatus(showContent, callback: callback);
+    return RCIMWrapperPlatform.instance.changePushContentShowStatus(showContent, callback: callback);
   }
 
   /// 设置推送语言
@@ -1778,10 +1550,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPushLanguageChanged]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> changePushLanguage(String language,
-      {IRCIMIWChangePushLanguageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .changePushLanguage(language, callback: callback);
+  Future<int> changePushLanguage(String language, {IRCIMIWChangePushLanguageCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.changePushLanguage(language, callback: callback);
   }
 
   /// 设置是否接收远程推送。
@@ -1792,10 +1562,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPushReceiveStatusChanged]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> changePushReceiveStatus(bool receive,
-      {IRCIMIWChangePushReceiveStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .changePushReceiveStatus(receive, callback: callback);
+  Future<int> changePushReceiveStatus(bool receive, {IRCIMIWChangePushReceiveStatusCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.changePushReceiveStatus(receive, callback: callback);
   }
 
   /// 给指定的群成员发送消息
@@ -1804,12 +1572,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onGroupMessageToDesignatedUsersAttached], [onGroupMessageToDesignatedUsersSent]
-  Future<int> sendGroupMessageToDesignatedUsers(
-      RCIMIWMessage message, List<String> userIds,
+  Future<int> sendGroupMessageToDesignatedUsers(RCIMIWMessage message, List<String> userIds,
       {RCIMIWSendGroupMessageToDesignatedUsersCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.sendGroupMessageToDesignatedUsers(
-        message, userIds,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.sendGroupMessageToDesignatedUsers(message, userIds, callback: callback);
   }
 
   /// 加载指定会话的消息总数。
@@ -1820,10 +1585,8 @@ class RCIMIWEngine {
   /// - [接口回调] [onMessageCountLoaded]
   /// 此接口不支持 Flutter For Web 端
   @Deprecated('请使用 [getMessageCount] 代替')
-  Future<int> loadMessageCount(
-      RCIMIWConversationType type, String targetId, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadMessageCount(type, targetId, channelId);
+  Future<int> loadMessageCount(RCIMIWConversationType type, String targetId, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadMessageCount(type, targetId, channelId);
   }
 
   /// 获取指定会话的消息总数。
@@ -1834,11 +1597,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageCountLoaded]
   /// 此接口不支持 Flutter For Web 端
-  Future<int> getMessageCount(
-      RCIMIWConversationType type, String targetId, String? channelId,
+  Future<int> getMessageCount(RCIMIWConversationType type, String targetId, String? channelId,
       {IRCIMIWGetMessageCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getMessageCount(type, targetId, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.getMessageCount(type, targetId, channelId, callback: callback);
   }
 
   /// 根据会话类型,加载置顶会话列表
@@ -1847,10 +1608,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onTopConversationsLoaded]
   @Deprecated('请使用 [getTopConversations] 代替')
-  Future<int> loadTopConversations(
-      List<RCIMIWConversationType> conversationTypes, String? channelId) async {
-    return RCIMWrapperPlatform.instance
-        .loadTopConversations(conversationTypes, channelId);
+  Future<int> loadTopConversations(List<RCIMIWConversationType> conversationTypes, String? channelId) async {
+    return RCIMWrapperPlatform.instance.loadTopConversations(conversationTypes, channelId);
   }
 
   /// 根据会话类型,获取置顶会话列表
@@ -1859,11 +1618,9 @@ class RCIMIWEngine {
   /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onTopConversationsLoaded]
-  Future<int> getTopConversations(
-      List<RCIMIWConversationType> conversationTypes, String? channelId,
+  Future<int> getTopConversations(List<RCIMIWConversationType> conversationTypes, String? channelId,
       {IRCIMIWGetTopConversationsCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getTopConversations(conversationTypes, channelId, callback: callback);
+    return RCIMWrapperPlatform.instance.getTopConversations(conversationTypes, channelId, callback: callback);
   }
 
   /// 上报超级群的已读时间
@@ -1874,12 +1631,9 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupReadStatusSynced]
   /// [timestamp] 在 Flutter For Web 端无效
-  Future<int> syncUltraGroupReadStatus(
-      String targetId, String? channelId, int timestamp,
+  Future<int> syncUltraGroupReadStatus(String targetId, String? channelId, int timestamp,
       {IRCIMIWSyncUltraGroupReadStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.syncUltraGroupReadStatus(
-        targetId, channelId, timestamp,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.syncUltraGroupReadStatus(targetId, channelId, timestamp, callback: callback);
   }
 
   /// 获取特定会话下所有频道的会话列表，只支持超级群
@@ -1888,10 +1642,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoadedForAllChannel]
   @Deprecated('请使用 [getConversationsForAllChannel] 代替')
-  Future<int> loadConversationsForAllChannel(
-      RCIMIWConversationType type, String targetId) async {
-    return RCIMWrapperPlatform.instance
-        .loadConversationsForAllChannel(type, targetId);
+  Future<int> loadConversationsForAllChannel(RCIMIWConversationType type, String targetId) async {
+    return RCIMWrapperPlatform.instance.loadConversationsForAllChannel(type, targetId);
   }
 
   /// 获取特定会话下所有频道的会话列表，只支持超级群
@@ -1900,11 +1652,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoadedForAllChannel]
-  Future<int> getConversationsForAllChannel(
-      RCIMIWConversationType type, String targetId,
+  Future<int> getConversationsForAllChannel(RCIMIWConversationType type, String targetId,
       {IRCIMIWGetConversationsForAllChannelCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getConversationsForAllChannel(type, targetId, callback: callback);
+    return RCIMWrapperPlatform.instance.getConversationsForAllChannel(type, targetId, callback: callback);
   }
 
   /// 修改超级群消息
@@ -1915,8 +1665,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onUltraGroupMessageModified]
   Future<int> modifyUltraGroupMessage(String messageUId, RCIMIWMessage message,
       {IRCIMIWModifyUltraGroupMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .modifyUltraGroupMessage(messageUId, message, callback: callback);
+    return RCIMWrapperPlatform.instance.modifyUltraGroupMessage(messageUId, message, callback: callback);
   }
 
   /// 撤回超级群消息
@@ -1927,8 +1676,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onUltraGroupMessageRecalled]
   Future<int> recallUltraGroupMessage(RCIMIWMessage message, bool deleteRemote,
       {IRCIMIWRecallUltraGroupMessageCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .recallUltraGroupMessage(message, deleteRemote, callback: callback);
+    return RCIMWrapperPlatform.instance.recallUltraGroupMessage(message, deleteRemote, callback: callback);
   }
 
   /// 删除超级群指定时间之前的消息
@@ -1939,12 +1687,11 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessagesCleared]
-  Future<int> clearUltraGroupMessages(String targetId, String? channelId,
-      int timestamp, RCIMIWMessageOperationPolicy policy,
+  Future<int> clearUltraGroupMessages(
+      String targetId, String? channelId, int timestamp, RCIMIWMessageOperationPolicy policy,
       {IRCIMIWClearUltraGroupMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.clearUltraGroupMessages(
-        targetId, channelId, timestamp, policy,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .clearUltraGroupMessages(targetId, channelId, timestamp, policy, callback: callback);
   }
 
   /// 发送超级群输入状态
@@ -1954,12 +1701,10 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupTypingStatusSent]
-  Future<int> sendUltraGroupTypingStatus(String targetId, String? channelId,
-      RCIMIWUltraGroupTypingStatus typingStatus,
+  Future<int> sendUltraGroupTypingStatus(String targetId, String? channelId, RCIMIWUltraGroupTypingStatus typingStatus,
       {IRCIMIWSendUltraGroupTypingStatusCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.sendUltraGroupTypingStatus(
-        targetId, channelId, typingStatus,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .sendUltraGroupTypingStatus(targetId, channelId, typingStatus, callback: callback);
   }
 
   /// 删除超级群所有频道指定时间之前的消息
@@ -1968,12 +1713,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessagesClearedForAllChannel]
-  Future<int> clearUltraGroupMessagesForAllChannel(
-      String targetId, int timestamp,
+  Future<int> clearUltraGroupMessagesForAllChannel(String targetId, int timestamp,
       {IRCIMIWClearUltraGroupMessagesForAllChannelCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.clearUltraGroupMessagesForAllChannel(
-        targetId, timestamp,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.clearUltraGroupMessagesForAllChannel(targetId, timestamp, callback: callback);
   }
 
   /// 从服务获取批量消息
@@ -1981,10 +1723,8 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBatchRemoteUltraGroupMessagesLoaded]
   @Deprecated('请使用 [getBatchRemoteUltraGroupMessages] 代替')
-  Future<int> loadBatchRemoteUltraGroupMessages(
-      List<RCIMIWMessage> messages) async {
-    return RCIMWrapperPlatform.instance
-        .loadBatchRemoteUltraGroupMessages(messages);
+  Future<int> loadBatchRemoteUltraGroupMessages(List<RCIMIWMessage> messages) async {
+    return RCIMWrapperPlatform.instance.loadBatchRemoteUltraGroupMessages(messages);
   }
 
   /// 从服务获取批量消息
@@ -1994,8 +1734,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onBatchRemoteUltraGroupMessagesLoaded]
   Future<int> getBatchRemoteUltraGroupMessages(List<RCIMIWMessage> messages,
       {IRCIMIWGetBatchRemoteUltraGroupMessagesCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getBatchRemoteUltraGroupMessages(messages, callback: callback);
+    return RCIMWrapperPlatform.instance.getBatchRemoteUltraGroupMessages(messages, callback: callback);
   }
 
   /// 更新超级群消息扩展信息
@@ -2006,9 +1745,7 @@ class RCIMIWEngine {
   /// - [接口回调] [onUltraGroupMessageExpansionUpdated]
   Future<int> updateUltraGroupMessageExpansion(String messageUId, Map expansion,
       {IRCIMIWUpdateUltraGroupMessageExpansionCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.updateUltraGroupMessageExpansion(
-        messageUId, expansion,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.updateUltraGroupMessageExpansion(messageUId, expansion, callback: callback);
   }
 
   /// 删除超级群消息扩展信息中特定的键值对
@@ -2017,13 +1754,9 @@ class RCIMIWEngine {
   /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageExpansionForKeysRemoved]
-  Future<int> removeUltraGroupMessageExpansionForKeys(
-      String messageUId, List<String> keys,
-      {IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback?
-          callback}) async {
-    return RCIMWrapperPlatform.instance.removeUltraGroupMessageExpansionForKeys(
-        messageUId, keys,
-        callback: callback);
+  Future<int> removeUltraGroupMessageExpansionForKeys(String messageUId, List<String> keys,
+      {IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.removeUltraGroupMessageExpansionForKeys(messageUId, keys, callback: callback);
   }
 
   /// 修改日志等级
@@ -2045,18 +1778,15 @@ class RCIMIWEngine {
   /// - [tagName] 长度不超过 15 个字，标签名称可以重复。
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> createTag(String tagId, String tagName,
-      {IRCIMIWCreateTagCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .createTag(tagId, tagName, callback: callback);
+  Future<int> createTag(String tagId, String tagName, {IRCIMIWCreateTagCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.createTag(tagId, tagName, callback: callback);
   }
 
   /// 移除标签
   /// - [tagId] 标签唯一标识，字符型，长度不超过 10 个字。
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> removeTag(String tagId,
-      {IRCIMIWRemoveTagCallback? callback}) async {
+  Future<int> removeTag(String tagId, {IRCIMIWRemoveTagCallback? callback}) async {
     return RCIMWrapperPlatform.instance.removeTag(tagId, callback: callback);
   }
 
@@ -2065,10 +1795,8 @@ class RCIMIWEngine {
   /// - [newName] 长度不超过 15 个字，标签名称可以重复。
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> updateTagNameById(String tagId, String newName,
-      {IRCIMIWUpdateTagNameByIdCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .updateTagNameById(tagId, newName, callback: callback);
+  Future<int> updateTagNameById(String tagId, String newName, {IRCIMIWUpdateTagNameByIdCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.updateTagNameById(tagId, newName, callback: callback);
   }
 
   /// 获取当前用户已创建的标签信息
@@ -2084,11 +1812,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> addConversationToTag(
-      String tagId, RCIMIWConversationType type, String targetId,
+  Future<int> addConversationToTag(String tagId, RCIMIWConversationType type, String targetId,
       {IRCIMIWAddConversationToTagCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .addConversationToTag(tagId, type, targetId, callback: callback);
+    return RCIMWrapperPlatform.instance.addConversationToTag(tagId, type, targetId, callback: callback);
   }
 
   /// 从标签中移除一个会话
@@ -2097,11 +1823,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> removeConversationFromTag(
-      String tagId, RCIMIWConversationType type, String targetId,
+  Future<int> removeConversationFromTag(String tagId, RCIMIWConversationType type, String targetId,
       {IRCIMIWRemoveConversationFromTagCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .removeConversationFromTag(tagId, type, targetId, callback: callback);
+    return RCIMWrapperPlatform.instance.removeConversationFromTag(tagId, type, targetId, callback: callback);
   }
 
   /// 为指定会话移除一个或多个标签
@@ -2110,11 +1834,9 @@ class RCIMIWEngine {
   /// - [tagIds] 标签集合
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> removeTagsFromConversation(
-      RCIMIWConversationType type, String targetId, List<String> tagIds,
+  Future<int> removeTagsFromConversation(RCIMIWConversationType type, String targetId, List<String> tagIds,
       {IRCIMIWRemoveTagsFromConversationCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .removeTagsFromConversation(type, targetId, tagIds, callback: callback);
+    return RCIMWrapperPlatform.instance.removeTagsFromConversation(type, targetId, tagIds, callback: callback);
   }
 
   /// 获取指定会话携带的所有标签
@@ -2122,11 +1844,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> getTagsFromConversation(
-      RCIMIWConversationType type, String targetId,
+  Future<int> getTagsFromConversation(RCIMIWConversationType type, String targetId,
       {IRCIMIWGetTagsFromConversationCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getTagsFromConversation(type, targetId, callback: callback);
+    return RCIMWrapperPlatform.instance.getTagsFromConversation(type, targetId, callback: callback);
   }
 
   /// 以会话中最后一条消息时间戳为界，分页获取本地指定标签下会话列表
@@ -2135,12 +1855,9 @@ class RCIMIWEngine {
   /// - [count] 获取的数量。当实际取回的会话数量小于 count 值时，表明已取完数据。
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> getConversationsFromTagByPage(
-      String tagId, int timestamp, int count,
+  Future<int> getConversationsFromTagByPage(String tagId, int timestamp, int count,
       {IRCIMIWGetConversationsCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getConversationsFromTagByPage(
-        tagId, timestamp, count,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.getConversationsFromTagByPage(tagId, timestamp, count, callback: callback);
   }
 
   /// 获取携带指定标签的所有会话的未读消息数。
@@ -2148,10 +1865,8 @@ class RCIMIWEngine {
   /// - [contain] 是否包含免打扰会话。
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> getUnreadCountByTag(String tagId, bool contain,
-      {IRCIMIWGetUnreadCountCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .getUnreadCountByTag(tagId, contain, callback: callback);
+  Future<int> getUnreadCountByTag(String tagId, bool contain, {IRCIMIWGetUnreadCountCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getUnreadCountByTag(tagId, contain, callback: callback);
   }
 
   /// 在携带指定标签的所有会话中设置指定会话置顶。例如，在所有添加了「培训班」标签的会话中将与「Tom」的私聊会话置顶。
@@ -2161,12 +1876,10 @@ class RCIMIWEngine {
   /// - [top] 是否置顶
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> changeConversationTopStatusInTag(
-      String tagId, RCIMIWConversationType type, String targetId, bool top,
+  Future<int> changeConversationTopStatusInTag(String tagId, RCIMIWConversationType type, String targetId, bool top,
       {IRCIMIWChangeConversationTopStatusInTagCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.changeConversationTopStatusInTag(
-        tagId, type, targetId, top,
-        callback: callback);
+    return RCIMWrapperPlatform.instance
+        .changeConversationTopStatusInTag(tagId, type, targetId, top, callback: callback);
   }
 
   /// 查询指定会话是否在携带同一标签的所有会话中置顶。获取成功后会返回是否已置顶。
@@ -2175,12 +1888,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  Future<int> getConversationTopStatusInTag(
-      String tagId, RCIMIWConversationType type, String targetId,
+  Future<int> getConversationTopStatusInTag(String tagId, RCIMIWConversationType type, String targetId,
       {IRCIMIWGetConversationTopStatusInTagCallback? callback}) async {
-    return RCIMWrapperPlatform.instance.getConversationTopStatusInTag(
-        tagId, type, targetId,
-        callback: callback);
+    return RCIMWrapperPlatform.instance.getConversationTopStatusInTag(tagId, type, targetId, callback: callback);
   }
 
   /// 清除携带指定标签的所有会话的未读消息数。
@@ -2189,8 +1899,7 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   Future<int> clearMessagesUnreadStatusByTag(String tagId,
       {IRCIMIWClearMessagesUnreadStatusByTagCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .clearMessagesUnreadStatusByTag(tagId, callback: callback);
+    return RCIMWrapperPlatform.instance.clearMessagesUnreadStatusByTag(tagId, callback: callback);
   }
 
   /// 删除指定标签下的全部会话，同时解除这些会话和标签的绑定关系。删除成功后，会话不再携带指定的标签。这些会话收到新消息时，会产生新的会话。
@@ -2200,8 +1909,7 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   Future<int> clearConversationsByTag(String tagId, bool deleteMessage,
       {IRCIMIWClearConversationsByTagCallback? callback}) async {
-    return RCIMWrapperPlatform.instance
-        .clearConversationsByTag(tagId, deleteMessage, callback: callback);
+    return RCIMWrapperPlatform.instance.clearConversationsByTag(tagId, deleteMessage, callback: callback);
   }
 
   /// 收到消息的监听

@@ -1,5 +1,21 @@
 /*
 
+const registerNativeCustomMessage = {
+  "title": "registerNativeCustomMessage",
+  "params": [
+    {"key": "messageIdentifier", "type": "String", "hint": "", "lable": "请输入messageIdentifier",},{"key": "persistentFlag", "type": "String", "hint": "", "lable": "请输入persistentFlag",},
+  ],
+  "action": engine_fun.registerNativeCustomMessage,
+};
+
+const registerNativeCustomMediaMessage = {
+  "title": "registerNativeCustomMediaMessage",
+  "params": [
+    {"key": "messageIdentifier", "type": "String", "hint": "", "lable": "请输入messageIdentifier",},{"key": "persistentFlag", "type": "String", "hint": "", "lable": "请输入persistentFlag",},
+  ],
+  "action": engine_fun.registerNativeCustomMediaMessage,
+};
+
 const connect = {
   "title": "connect",
   "params": [
@@ -86,6 +102,22 @@ const createLocationMessage = {
     {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "longitude", "type": "String", "hint": "", "lable": "请输入longitude",},{"key": "latitude", "type": "String", "hint": "", "lable": "请输入latitude",},{"key": "poiName", "type": "String", "hint": "", "lable": "请输入poiName",},{"key": "thumbnailPath", "type": "String", "hint": "", "lable": "请输入thumbnailPath",},
   ],
   "action": engine_fun.createLocationMessage,
+};
+
+const createNativeCustomMessage = {
+  "title": "createNativeCustomMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "messageIdentifier", "type": "String", "hint": "", "lable": "请输入messageIdentifier",},{"key": "fields", "type": "String", "hint": "", "lable": "请输入fields",},
+  ],
+  "action": engine_fun.createNativeCustomMessage,
+};
+
+const createNativeCustomMediaMessage = {
+  "title": "createNativeCustomMediaMessage",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "messageIdentifier", "type": "String", "hint": "", "lable": "请输入messageIdentifier",},{"key": "path", "type": "String", "hint": "", "lable": "请输入path",},{"key": "fields", "type": "String", "hint": "", "lable": "请输入fields",},
+  ],
+  "action": engine_fun.createNativeCustomMediaMessage,
 };
 
 const sendMessage = {
