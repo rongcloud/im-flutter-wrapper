@@ -508,7 +508,7 @@ Future sendCommandMessage(Map arg) async {
 
   String channelId = arg['channelId'] ?? "";
   int useCallback = int.parse(arg['use_cb'] ?? "1");
-  RCIMDCommandMessage msg = RCIMDCommandMessage(type, targetId, "name", "data");
+  RCIMDCommandMessage msg = RCIMDCommandMessage(type, targetId, name, data);
   _sendMessage(msg, useCallback);
 }
 
@@ -1288,12 +1288,12 @@ Future loadBatchRemoteUltraGroupMessages(Map arg) async {
       }
       if (notMatchedMessages != null) {
         for (var temp in notMatchedMessages) {
-          matchedMessagesJson.add(formatJson(temp.toJson()) + "\n");
+          noMatchedMessagesJson.add(formatJson(temp.toJson()) + "\n");
         }
       }
       Map<String, String> arg = {};
       arg["listener"] = "getBatchRemoteUltraGroupMessages-onSuccess";
-      arg["matchedMessages"] = matchedMessages.toString();
+      arg["matchedMessages"] = matchedMessagesJson.toString();
       arg["notMatchedMessages"] = noMatchedMessagesJson.toString();
 
       bus.emit("rong_im_listener", arg);

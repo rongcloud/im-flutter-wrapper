@@ -358,6 +358,10 @@ static RCIMWrapperEngine *instance = nil;
     [self clearMessagesUnreadStatusByTag:call result:result];
   } else if ([@"engine:clearConversationsByTag" isEqualToString:call.method]) {
     [self clearConversationsByTag:call result:result];
+  } else if ([@"engine:setModuleName" isEqualToString:call.method]) {
+    [self setModuleName:call result:result];
+  } else if ([@"engine:writeLog" isEqualToString:call.method]) {
+    [self writeLog:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -4761,6 +4765,36 @@ static RCIMWrapperEngine *instance = nil;
       };
     }
     code = [self.engine clearConversationsByTag:tagId deleteMessage:deleteMessage success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)setModuleName:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *moduleName = arguments[@"moduleName"];
+    NSString *version = arguments[@"version"];
+
+    code = [self.engine setModuleName:moduleName version:version];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)writeLog:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *method = arguments[@"method"];
+    NSString *callMethod = arguments[@"callMethod"];
+    int codeValue = [(NSNumber *)arguments[@"codeValue"] intValue];
+    NSString *message = arguments[@"message"];
+
+    code = [self.engine writeLog:method callMethod:callMethod codeValue:codeValue message:message];
   }
   dispatch_to_main_queue(^{
     result(@(code));

@@ -12,6 +12,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class RCIWMediaUlits {
+  static AudioRecorder audioRecorder = AudioRecorder();
   //选择本地文件，成功返回文件信息
   static Future<List<File>?> pickFiles(
       {List<String>? allowedExtensions}) async {
@@ -116,7 +117,7 @@ class RCIWMediaUlits {
   }
 
   static Future<bool> checkPermission() async {
-    bool hasPermission = await Record().hasPermission();
+    bool hasPermission = await audioRecorder.hasPermission();
     return hasPermission;
   }
 
@@ -128,16 +129,23 @@ class RCIWMediaUlits {
         DateTime.now().millisecondsSinceEpoch.toString() +
         ".aac";
     // Start recording
-    await Record().start(
+    await audioRecorder.start(
+      const RecordConfig(
+        encoder: AudioEncoder.aacLc,
+        sampleRate: 44100,
+        bitRate: 128000,
+        numChannels: 1,
+      ),
       path: tempPath, // required
-      encoder: AudioEncoder.AAC, // by default
+
+      // encoder: AudioEncoder.AAC, // by default
     );
   }
 
 //录音结束，通过 finished 返回本地路径和语音时长，注：Android 必须要加 file:// 头
   static void stopRecordAudio(
       Function(String? path, int? duration) finished) async {
-    String? audioPath = await Record().stop();
+    String? audioPath = await audioRecorder.stop();
 
     AudioPlayer player = AudioPlayer();
     Duration? durationA = await player.setFilePath(audioPath!);

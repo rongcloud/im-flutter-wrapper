@@ -239,12 +239,7 @@ class RCIMIWIOSPushOptions {
   /// iOS 富文本推送内容的 URL，与 category 一起使用。
   String? richMediaUri;
 
-  RCIMIWIOSPushOptions.create({
-    this.threadId,
-    this.category,
-    this.apnsCollapseId,
-    this.richMediaUri,
-  });
+  RCIMIWIOSPushOptions.create({this.threadId, this.category, this.apnsCollapseId, this.richMediaUri});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
@@ -451,13 +446,7 @@ class RCIMIWUserInfo {
   /// 附加信息。
   String? extra;
 
-  RCIMIWUserInfo.create({
-    this.userId,
-    this.name,
-    this.portrait,
-    this.alias,
-    this.extra,
-  });
+  RCIMIWUserInfo.create({this.userId, this.name, this.portrait, this.alias, this.extra});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
@@ -624,8 +613,9 @@ class RCIMIWMessage {
     messageUId = json['messageUId'];
     offLine = json['offLine'];
     if (json['groupReadReceiptInfo'] != null) {
-      groupReadReceiptInfo =
-          RCIMIWGroupReadReceiptInfo.fromJson(Map<String, dynamic>.from(json['groupReadReceiptInfo']));
+      groupReadReceiptInfo = RCIMIWGroupReadReceiptInfo.fromJson(
+        Map<String, dynamic>.from(json['groupReadReceiptInfo']),
+      );
     }
     receivedTime = json['receivedTime'];
     sentTime = json['sentTime'];
@@ -871,11 +861,7 @@ class RCIMIWMentionedInfo {
   /// 包含 @ 提醒的消息，本地通知和远程推送显示的内容
   String? mentionedContent;
 
-  RCIMIWMentionedInfo.create({
-    this.type,
-    this.userIdList,
-    this.mentionedContent,
-  });
+  RCIMIWMentionedInfo.create({this.type, this.userIdList, this.mentionedContent});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
@@ -1194,12 +1180,7 @@ class RCIMIWTagInfo {
   int? count;
   int? timestamp;
 
-  RCIMIWTagInfo.create({
-    this.tagId,
-    this.tagName,
-    this.count,
-    this.timestamp,
-  });
+  RCIMIWTagInfo.create({this.tagId, this.tagName, this.count, this.timestamp});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};

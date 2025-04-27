@@ -810,6 +810,14 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       case "engine:clearConversationsByTag":
         clearConversationsByTag(call, result);
         break;
+
+      case "engine:setModuleName":
+        setModuleName(call, result);
+        break;
+
+      case "engine:writeLog":
+        writeLog(call, result);
+        break;
     }
   }
 
@@ -3291,6 +3299,30 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       }
 
       code = engine.clearConversationsByTag(tagId, deleteMessage, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setModuleName(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String moduleName = (String) call.argument("moduleName");
+      String version = (String) call.argument("version");
+
+      code = engine.setModuleName(moduleName, version);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void writeLog(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String method = (String) call.argument("method");
+      String callMethod = (String) call.argument("callMethod");
+      int codeValue = ((Number) call.argument("codeValue")).intValue();
+      String message = (String) call.argument("message");
+
+      code = engine.writeLog(method, callMethod, codeValue, message);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }

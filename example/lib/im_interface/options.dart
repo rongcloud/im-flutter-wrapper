@@ -7,16 +7,7 @@ import 'ultragroup/ultragroup.dart' as ultragroup;
 import 'other/other.dart' as other;
 import 'tag/tag.dart' as tag;
 
-const titleList = [
-  "链接相关",
-  "会话相关",
-  "消息相关",
-  "未读数相关",
-  "聊天室相关",
-  "超级群相关",
-  "会话标签",
-  "其他配置",
-];
+const titleList = ["链接相关", "会话相关", "消息相关", "未读数相关", "聊天室相关", "超级群相关", "会话标签", "其他配置"];
 
 const subList = {
   "其他配置": [
@@ -71,13 +62,7 @@ const subList = {
     unread.loadUnreadMentionedCount,
     unread.clearUnreadCount,
   ],
-  "链接相关": [
-    connect.initEngine,
-    connect.connect,
-    connect.disconnect,
-    connect.setListener,
-    connect.destroy,
-  ],
+  "链接相关": [connect.initEngine, connect.connect, connect.disconnect, connect.setListener, connect.destroy],
   "会话相关": [
     conversation.loadConversations,
     conversation.loadConversation,
@@ -264,11 +249,6 @@ const cbList = [
   "changeConversationTopStatusInTag",
   "getConversationTopStatusInTag",
   "clearMessagesUnreadStatusByTag",
-  "clearConversationsByTag"
+  "clearConversationsByTag",
 ];
-const cbParam = {
-  "key": "use_cb",
-  "type": "number",
-  "hint": "0为不使用 1为使用,默认不填为使用",
-  "lable": "请输入是否使用callback",
-};
+const cbParam = {"key": "use_cb", "type": "number", "hint": "0为不使用 1为使用,默认不填为使用", "lable": "请输入是否使用callback"};

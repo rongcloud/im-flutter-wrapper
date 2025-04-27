@@ -21,7 +21,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-rongcloud_im_wrapper_plugin: 5.12.1+1
+rongcloud_im_wrapper_plugin: 5.12.1+2
 ```
 
 
@@ -129,3 +129,137 @@ engine.disconnect(receivePush);
 ```dart
 engine.destroy();
 ```
+
+
+------
+
+
+This tutorial helps beginners quickly get started with RongCloud’s Flutter Instant Messaging SDK. You’ll learn the basic integration process and core communication features.
+
+## RongCloud developer account
+
+You need a RongCloud developer account to use the SDK.
+
+Before you start, register a developer account on RongCloud’s website. After registration, a default development environment app will be created for you in the Singapore Data Center. Get the App Key for this app to use in this tutorial.
+
+>App Secret is used to generate data signatures and is only required when calling RongCloud’s server API. It’s not needed for this tutorial.
+
+If you already have a RongCloud developer account, you can create an app in the appropriate environment.
+
+The App Key/Secret is essential for connecting to RongCloud’s servers. Keep it secure.
+
+### Import the SDK {#import}
+
+1. Add the dependency to your project’s `pubspec.yaml`
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+
+rongcloud_im_wrapper_plugin: 5.12.1+2
+```
+
+2. Run `flutter pub get` in your project directory to download the plugin
+
+### Initialize {#init}
+
+1. Import the header file before using the SDK
+
+```dart
+import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
+```
+
+2. Initialize the SDK and configure engine parameters before using any features
+
+```dart
+RCIMIWEngineOptions options = RCIMIWEngineOptions.create();
+RCIMIWEngine engine = await RCIMIWEngine.create(appkey, options);
+```
+
+Note: Use the App Key obtained from the [RongCloud Developer Console](https://developer.rongcloud.cn/app/appkey/iwj1eg7Wb9M437VP1w==).
+
+### Connect to RongCloud {#connect}
+
+1. A `Token` is the user’s credential for connecting to RongCloud. Before connecting, request a Token from your App Server using RongCloud’s [Server API](/imserver/server/v1/user/register). The client uses this Token to connect.
+2. `timeout` is the connection timeout in seconds.
+
+Note: If `code == 31004`, the Token is invalid. This happens if the Token has expired or if the Token and App Key are from different environments. Request a new Token from your server and reconnect.
+
+```dart
+engine.connect(
+        token,
+        timeout,
+      );
+```
+
+1. `code` is the connection status code. 0 means success.
+2. `userId` is the ID of the connected user.
+
+```dart
+engine.onConnected = (
+  int? code,
+  String? userId,
+) {};
+```
+
+### Listen for messages {#msg-listener}
+
+Implement the message listener callback to receive messages.
+
+##### Code example {#msg-code}
+
+Set up a message listener to receive real-time or offline messages.
+
+1. `message` is the received message object
+2. `left` is the number of remaining messages in the current package (up to 200 messages per package)
+3. `offline` indicates if the message is offline
+4. `hasPackage` indicates if there are more message packages on the server
+
+```dart
+engine.onMessageReceived = (
+  RCIMIWMessage? message,
+  int? left,
+  bool? offline,
+  bool? hasPackage,
+) {
+};
+```
+
+### Send a message {#sendmessage}
+
+```dart
+RCIMIWTextMessage? textMessage = await engine.createTextMessage(
+        conversationType,
+        targetId,
+        channelId,
+        text,
+      );
+engine.sendMessage(textMessage);
+```
+
+### Listen for message sending results {#msgreceiver}
+
+```dart
+engine.onMessageAttached = (
+  RCIMIWMessage? message,
+) {};
+
+engine.onMessageSent = (
+  int? code,
+  RCIMIWMessage? message,
+) {};
+```
+
+### Log out
+
+```dart
+engine.disconnect(receivePush);
+```
+
+### Destroy the engine
+
+```dart
+engine.destroy();
+```
+

@@ -15,11 +15,12 @@ class IRCIMIWSendMessageCallback {
 }
 
 class IRCIMIWSendMediaMessageListener {
-  IRCIMIWSendMediaMessageListener(
-      {required this.onMediaMessageSaved,
-      required this.onMediaMessageSending,
-      required this.onSendingMediaMessageCanceled,
-      required this.onMediaMessageSent});
+  IRCIMIWSendMediaMessageListener({
+    required this.onMediaMessageSaved,
+    required this.onMediaMessageSending,
+    required this.onSendingMediaMessageCanceled,
+    required this.onMediaMessageSent,
+  });
 
   Function(RCIMIWMediaMessage? message) onMediaMessageSaved;
   Function(RCIMIWMediaMessage? message, int? progress) onMediaMessageSending;
@@ -34,10 +35,11 @@ class IRCIMIWCancelSendingMediaMessageCallback {
 }
 
 class IRCIMIWDownloadMediaMessageListener {
-  IRCIMIWDownloadMediaMessageListener(
-      {required this.onMediaMessageDownloading,
-      required this.onDownloadingMediaMessageCanceled,
-      required this.onMediaMessageDownloaded});
+  IRCIMIWDownloadMediaMessageListener({
+    required this.onMediaMessageDownloading,
+    required this.onDownloadingMediaMessageCanceled,
+    required this.onMediaMessageDownloaded,
+  });
 
   Function(RCIMIWMediaMessage? message, int? progress) onMediaMessageDownloading;
   Function(RCIMIWMediaMessage? message) onDownloadingMediaMessageCanceled;
@@ -473,8 +475,9 @@ class IRCIMIWGetUltraGroupDefaultNotificationLevelCallback {
 }
 
 class IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback {
-  IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback(
-      {required this.onUltraGroupChannelDefaultNotificationLevelChanged});
+  IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback({
+    required this.onUltraGroupChannelDefaultNotificationLevelChanged,
+  });
 
   Function(int? code) onUltraGroupChannelDefaultNotificationLevelChanged;
 }
@@ -679,11 +682,12 @@ class RCIMIWSendMessageCallback {
 }
 
 class RCIMIWSendMediaMessageListener {
-  RCIMIWSendMediaMessageListener(
-      {this.onMediaMessageSaved,
-      this.onMediaMessageSending,
-      this.onSendingMediaMessageCanceled,
-      required this.onMediaMessageSent});
+  RCIMIWSendMediaMessageListener({
+    this.onMediaMessageSaved,
+    this.onMediaMessageSending,
+    this.onSendingMediaMessageCanceled,
+    required this.onMediaMessageSent,
+  });
 
   Function(RCIMIWMediaMessage? message)? onMediaMessageSaved;
   Function(RCIMIWMediaMessage? message, int? progress)? onMediaMessageSending;
@@ -692,8 +696,11 @@ class RCIMIWSendMediaMessageListener {
 }
 
 class RCIMIWDownloadMediaMessageListener {
-  RCIMIWDownloadMediaMessageListener(
-      {this.onMediaMessageDownloading, this.onDownloadingMediaMessageCanceled, required this.onMediaMessageDownloaded});
+  RCIMIWDownloadMediaMessageListener({
+    this.onMediaMessageDownloading,
+    this.onDownloadingMediaMessageCanceled,
+    required this.onMediaMessageDownloaded,
+  });
 
   Function(RCIMIWMediaMessage? message, int? progress)? onMediaMessageDownloading;
   Function(RCIMIWMediaMessage? message)? onDownloadingMediaMessageCanceled;

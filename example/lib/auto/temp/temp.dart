@@ -1072,4 +1072,20 @@ const clearConversationsByTag = {
   "action": engine_fun.clearConversationsByTag,
 };
 
+const setModuleName = {
+  "title": "setModuleName",
+  "params": [
+    {"key": "moduleName", "type": "String", "hint": "", "lable": "请输入moduleName",},{"key": "version", "type": "String", "hint": "", "lable": "请输入version",},
+  ],
+  "action": engine_fun.setModuleName,
+};
+
+const writeLog = {
+  "title": "writeLog",
+  "params": [
+    {"key": "method", "type": "String", "hint": "", "lable": "请输入method",},{"key": "callMethod", "type": "String", "hint": "", "lable": "请输入callMethod",},{"key": "codeValue", "type": "String", "hint": "", "lable": "请输入codeValue",},{"key": "message", "type": "String", "hint": "", "lable": "请输入message",},
+  ],
+  "action": engine_fun.writeLog,
+};
+
 */

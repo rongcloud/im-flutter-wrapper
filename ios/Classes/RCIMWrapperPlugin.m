@@ -9,7 +9,7 @@
 #import "RCIMWrapperEngine.h"
 #import <RongIMLibCore/RongIMLibCore.h>
 
-static NSString * const VER = @"5.12.1+1";
+static NSString * const VER = @"5.12.1+2";
 
 @implementation RCIMWrapperPlugin
 

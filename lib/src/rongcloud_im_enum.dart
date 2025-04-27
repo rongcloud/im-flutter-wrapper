@@ -249,13 +249,7 @@ enum RCIMIWConversationType {
   ultraGroup,
 }
 
-enum RCIMIWErrorCode {
-  success,
-  paramError,
-  engineDestroyed,
-  nativeOperationError,
-  resultUnknown,
-}
+enum RCIMIWErrorCode { success, paramError, engineDestroyed, nativeOperationError, resultUnknown }
 
 enum RCIMIWUltraGroupTypingStatus {
   /// 正在输入文本
