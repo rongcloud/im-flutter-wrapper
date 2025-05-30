@@ -148,6 +148,13 @@ class IRCIMIWGetUnreadCountByConversationTypesCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWGetUnreadCountByLevelsCallback {
+  IRCIMIWGetUnreadCountByLevelsCallback({required this.onSuccess, required this.onError});
+
+  Function(int? t) onSuccess;
+  Function(int? code) onError;
+}
+
 class IRCIMIWClearUnreadCountCallback {
   IRCIMIWClearUnreadCountCallback({required this.onUnreadCountCleared});
 
@@ -213,6 +220,13 @@ class IRCIMIWGetMessageCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWGetMessagesAroundTimeCallback {
+  IRCIMIWGetMessagesAroundTimeCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWMessage>? t) onSuccess;
+  Function(int? code) onError;
+}
+
 class IRCIMIWGetFirstUnreadMessageCallback {
   IRCIMIWGetFirstUnreadMessageCallback({required this.onSuccess, required this.onError});
 
@@ -249,6 +263,18 @@ class IRCIMIWDeleteLocalMessagesCallback {
   IRCIMIWDeleteLocalMessagesCallback({required this.onLocalMessagesDeleted});
 
   Function(int? code, List<RCIMIWMessage>? messages) onLocalMessagesDeleted;
+}
+
+class IRCIMIWDeleteLocalMessageByIdsCallback {
+  IRCIMIWDeleteLocalMessageByIdsCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWCompletionCallback {
+  IRCIMIWCompletionCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
 }
 
 class IRCIMIWDeleteMessagesCallback {
@@ -303,6 +329,18 @@ class IRCIMIWChangeMessageReceivedStatusCallback {
   IRCIMIWChangeMessageReceivedStatusCallback({required this.onMessageReceiveStatusChanged});
 
   Function(int? code) onMessageReceiveStatusChanged;
+}
+
+class IRCIMIWChangeMessageReceivedStatusInfoCallback {
+  IRCIMIWChangeMessageReceivedStatusInfoCallback({required this.onMessageReceiveStatusInfoChanged});
+
+  Function(int? code) onMessageReceiveStatusInfoChanged;
+}
+
+class IRCIMIWUpdateMessageLocalExtraCallback {
+  IRCIMIWUpdateMessageLocalExtraCallback({required this.onMessageLocalExtraUpdated});
+
+  Function(int? code) onMessageLocalExtraUpdated;
 }
 
 class IRCIMIWJoinChatRoomCallback {
@@ -404,6 +442,13 @@ class IRCIMIWSearchMessagesByTimeRangeCallback {
 
 class IRCIMIWSearchMessagesByUserIdCallback {
   IRCIMIWSearchMessagesByUserIdCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWMessage>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWSearchMessagesByMessageTypesCallback {
+  IRCIMIWSearchMessagesByMessageTypesCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWMessage>? t) onSuccess;
   Function(int? code) onError;
@@ -664,6 +709,181 @@ class IRCIMIWClearConversationsByTagCallback {
   IRCIMIWClearConversationsByTagCallback({required this.onSuccess, required this.onError});
 
   Function(bool? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWCreateGroupCallback {
+  IRCIMIWCreateGroupCallback({required this.onSuccess, required this.onError});
+
+  Function(int? processCode) onSuccess;
+  Function(int? errorCode, String? errorInfo) onError;
+}
+
+class IRCIMIWGroupInfoUpdatedCallback {
+  IRCIMIWGroupInfoUpdatedCallback({required this.onGroupInfoUpdated});
+
+  Function(int? code, String? errorInfo) onGroupInfoUpdated;
+}
+
+class IRCIMIWGetGroupsInfoCallback {
+  IRCIMIWGetGroupsInfoCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWGroupInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWKickGroupMembersCallback {
+  IRCIMIWKickGroupMembersCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWJoinGroupCallback {
+  IRCIMIWJoinGroupCallback({required this.onSuccess, required this.onError});
+
+  Function(int? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWQuitGroupCallback {
+  IRCIMIWQuitGroupCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWDismissGroupCallback {
+  IRCIMIWDismissGroupCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWTransferGroupOwnerCallback {
+  IRCIMIWTransferGroupOwnerCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWGetGroupMembersCallback {
+  IRCIMIWGetGroupMembersCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWGroupMemberInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetGroupMembersByRoleCallback {
+  IRCIMIWGetGroupMembersByRoleCallback({required this.onSuccess, required this.onError});
+
+  Function(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetJoinedGroupsByRoleCallback {
+  IRCIMIWGetJoinedGroupsByRoleCallback({required this.onSuccess, required this.onError});
+
+  Function(RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetJoinedGroupsCallback {
+  IRCIMIWGetJoinedGroupsCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWGroupInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWSetGroupRemarkCallback {
+  IRCIMIWSetGroupRemarkCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWSetGroupMemberInfoCallback {
+  IRCIMIWSetGroupMemberInfoCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWSearchJoinedGroupsCallback {
+  IRCIMIWSearchJoinedGroupsCallback({required this.onSuccess, required this.onError});
+
+  Function(RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWSearchGroupMembersCallback {
+  IRCIMIWSearchGroupMembersCallback({required this.onSuccess, required this.onError});
+
+  Function(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWAddGroupManagersCallback {
+  IRCIMIWAddGroupManagersCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWRemoveGroupManagersCallback {
+  IRCIMIWRemoveGroupManagersCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWInviteUsersToGroupCallback {
+  IRCIMIWInviteUsersToGroupCallback({required this.onSuccess, required this.onError});
+
+  Function(int? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWAcceptGroupInviteCallback {
+  IRCIMIWAcceptGroupInviteCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWRefuseGroupInviteCallback {
+  IRCIMIWRefuseGroupInviteCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWAcceptGroupApplicationCallback {
+  IRCIMIWAcceptGroupApplicationCallback({required this.onSuccess, required this.onError});
+
+  Function(int? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWRefuseGroupApplicationCallback {
+  IRCIMIWRefuseGroupApplicationCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWGetGroupApplicationsCallback {
+  IRCIMIWGetGroupApplicationsCallback({required this.onSuccess, required this.onError});
+
+  Function(RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWAddGroupFollowsCallback {
+  IRCIMIWAddGroupFollowsCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWRemoveGroupFollowsCallback {
+  IRCIMIWRemoveGroupFollowsCallback({required this.onCompleted});
+
+  Function(int? code) onCompleted;
+}
+
+class IRCIMIWGetGroupFollowsCallback {
+  IRCIMIWGetGroupFollowsCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWFollowInfo>? t) onSuccess;
   Function(int? code) onError;
 }
 

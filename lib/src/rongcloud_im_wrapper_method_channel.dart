@@ -95,6 +95,13 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<RCIMIWConnectionStatus> getConnectionStatus() async {
+    log("[RC:Flutter] engine:getConnectionStatus");
+    int result = await _channel.invokeMethod('engine:getConnectionStatus');
+    return RCIMIWConnectionStatus.values[result];
+  }
+
+  @override
   Future<RCIMIWTextMessage?> createTextMessage(
     RCIMIWConversationType type,
     String targetId,
@@ -428,6 +435,34 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<int> getConversationsWithPriority(
+    List<RCIMIWConversationType> conversationTypes,
+    String? channelId,
+    int startTime,
+    int count,
+    bool topPriority, {
+    IRCIMIWGetConversationsCallback? callback,
+  }) async {
+    List conversationTypesStr = [];
+    for (var element in conversationTypes) {
+      conversationTypesStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "conversationTypes": conversationTypesStr,
+      "channelId": channelId,
+      "startTime": startTime,
+      "count": count,
+      "topPriority": topPriority,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getConversationsWithPriority arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getConversationsWithPriority', arguments);
+    return result;
+  }
+
+  @override
   Future<int> getUnreadConversations(
     List<RCIMIWConversationType> conversationTypes, {
     IRCIMIWGetUnreadConversationsCallback? callback,
@@ -681,6 +716,33 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<int> getUnreadCountByLevels(
+    List<RCIMIWConversationType> conversationTypes,
+    List<RCIMIWPushNotificationLevel> levels, {
+    IRCIMIWGetUnreadCountByLevelsCallback? callback,
+  }) async {
+    List conversationTypesStr = [];
+    for (var element in conversationTypes) {
+      conversationTypesStr.add(element.index);
+    }
+
+    List levelsStr = [];
+    for (var element in levels) {
+      levelsStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "conversationTypes": conversationTypesStr,
+      "levels": levelsStr,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getUnreadCountByLevels arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getUnreadCountByLevels', arguments);
+    return result;
+  }
+
+  @override
   Future<int> clearUnreadCount(
     RCIMIWConversationType type,
     String targetId,
@@ -830,6 +892,30 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<int> changeConversationTopStatusWithUpdateTme(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    bool top,
+    bool updateOperationTime, {
+    IRCIMIWChangeConversationTopStatusCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "channelId": channelId,
+      "top": top,
+      "updateOperationTime": updateOperationTime,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:changeConversationTopStatusWithUpdateTme arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:changeConversationTopStatusWithUpdateTme', arguments);
+    return result;
+  }
+
+  @override
   Future<int> loadConversationTopStatus(RCIMIWConversationType type, String targetId, String? channelId) async {
     Map<String, dynamic> arguments = {"type": type.index, "targetId": targetId, "channelId": channelId};
     log("[RC:Flutter] engine:loadConversationTopStatus arguments: " + arguments.toString());
@@ -970,6 +1056,64 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<int> getMessagesAroundTime(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    int sentTime,
+    int beforeCount,
+    int afterCount, {
+    IRCIMIWGetMessagesAroundTimeCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "channelId": channelId,
+      "sentTime": sentTime,
+      "beforeCount": beforeCount,
+      "afterCount": afterCount,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getMessagesAroundTime arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getMessagesAroundTime', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getLocalMessagesByMessageTypes(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    List<RCIMIWMessageType> messageTypes,
+    int sentTime,
+    RCIMIWTimeOrder order,
+    int count, {
+    IRCIMIWGetMessagesCallback? callback,
+  }) async {
+    List messageTypesStr = [];
+    for (var element in messageTypes) {
+      messageTypesStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "channelId": channelId,
+      "messageTypes": messageTypesStr,
+      "sentTime": sentTime,
+      "order": order.index,
+      "count": count,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getLocalMessagesByMessageTypes arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getLocalMessagesByMessageTypes', arguments);
+    return result;
+  }
+
+  @override
   Future<int> loadFirstUnreadMessage(RCIMIWConversationType type, String targetId, String? channelId) async {
     Map<String, dynamic> arguments = {"type": type.index, "targetId": targetId, "channelId": channelId};
     log("[RC:Flutter] engine:loadFirstUnreadMessage arguments: " + arguments.toString());
@@ -1084,6 +1228,16 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     Map<String, dynamic> arguments = {"messages": messagesStr, "cb_handler": rongcloudHandler};
     log("[RC:Flutter] engine:deleteLocalMessages arguments: " + arguments.toString());
     int result = await _channel.invokeMethod('engine:deleteLocalMessages', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> deleteLocalMessageByIds(List<int> messageIds, {IRCIMIWDeleteLocalMessageByIdsCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"messageIds": messageIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:deleteLocalMessageByIds arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:deleteLocalMessageByIds', arguments);
     return result;
   }
 
@@ -1241,6 +1395,38 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     };
     log("[RC:Flutter] engine:changeMessageReceiveStatus arguments: " + arguments.toString());
     int result = await _channel.invokeMethod('engine:changeMessageReceiveStatus', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> changeMessageReceiveStatusInfo(
+    int messageId,
+    RCIMIWReceivedStatusInfo receivedStatusInfo, {
+    IRCIMIWChangeMessageReceivedStatusInfoCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "messageId": messageId,
+      "receivedStatusInfo": receivedStatusInfo.toJson(),
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:changeMessageReceiveStatusInfo arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:changeMessageReceiveStatusInfo', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> updateMessageLocalExtra(
+    int messageId,
+    String extra, {
+    IRCIMIWUpdateMessageLocalExtraCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"messageId": messageId, "extra": extra, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:updateMessageLocalExtra arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:updateMessageLocalExtra', arguments);
     return result;
   }
 
@@ -1560,6 +1746,38 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     };
     log("[RC:Flutter] engine:searchMessagesByUserId arguments: " + arguments.toString());
     int result = await _channel.invokeMethod('engine:searchMessagesByUserId', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> searchMessagesByMessageTypes(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    List<RCIMIWMessageType> messageTypes,
+    String keyword,
+    int startTime,
+    int count, {
+    IRCIMIWSearchMessagesByMessageTypesCallback? callback,
+  }) async {
+    List messageTypesStr = [];
+    for (var element in messageTypes) {
+      messageTypesStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "channelId": channelId,
+      "messageTypes": messageTypesStr,
+      "keyword": keyword,
+      "startTime": startTime,
+      "count": count,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:searchMessagesByMessageTypes arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:searchMessagesByMessageTypes', arguments);
     return result;
   }
 
@@ -2354,6 +2572,425 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     return result;
   }
 
+  @override
+  Future<int> createGroup(
+    RCIMIWGroupInfo groupInfo,
+    List<String> inviteeUserIds, {
+    IRCIMIWCreateGroupCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupInfo": groupInfo.toJson(),
+      "inviteeUserIds": inviteeUserIds,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:createGroup arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:createGroup', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> updateGroupInfo(RCIMIWGroupInfo groupInfo, {IRCIMIWGroupInfoUpdatedCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupInfo": groupInfo.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:updateGroupInfo arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:updateGroupInfo', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getGroupsInfo(List<String> groupIds, {IRCIMIWGetGroupsInfoCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupIds": groupIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getGroupsInfo arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getGroupsInfo', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> kickGroupMembers(
+    String groupId,
+    List<String> userIds,
+    RCIMIWQuitGroupConfig config, {
+    IRCIMIWKickGroupMembersCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupId": groupId,
+      "userIds": userIds,
+      "config": config.toJson(),
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:kickGroupMembers arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:kickGroupMembers', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> joinGroup(String groupId, {IRCIMIWJoinGroupCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:joinGroup arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:joinGroup', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> quitGroup(String groupId, RCIMIWQuitGroupConfig config, {IRCIMIWQuitGroupCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "config": config.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:quitGroup arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:quitGroup', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> dismissGroup(String groupId, {IRCIMIWDismissGroupCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:dismissGroup arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:dismissGroup', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> transferGroupOwner(
+    String groupId,
+    String newOwnerId,
+    bool quitGroup,
+    RCIMIWQuitGroupConfig config, {
+    IRCIMIWTransferGroupOwnerCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupId": groupId,
+      "newOwnerId": newOwnerId,
+      "quitGroup": quitGroup,
+      "config": config.toJson(),
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:transferGroupOwner arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:transferGroupOwner', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getGroupMembers(String groupId, List<String> userIds, {IRCIMIWGetGroupMembersCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "userIds": userIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getGroupMembers arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getGroupMembers', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getGroupMembersByRole(
+    String groupId,
+    RCIMIWGroupMemberRole role,
+    RCIMIWPagingQueryOption option, {
+    IRCIMIWGetGroupMembersByRoleCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupId": groupId,
+      "role": role.index,
+      "option": option.toJson(),
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getGroupMembersByRole arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getGroupMembersByRole', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getJoinedGroupsByRole(
+    RCIMIWGroupMemberRole role,
+    RCIMIWPagingQueryOption option, {
+    IRCIMIWGetJoinedGroupsByRoleCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"role": role.index, "option": option.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getJoinedGroupsByRole arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getJoinedGroupsByRole', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getJoinedGroups(List<String> groupIds, {IRCIMIWGetJoinedGroupsCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupIds": groupIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getJoinedGroups arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getJoinedGroups', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> setGroupRemark(String groupId, String remark, {IRCIMIWSetGroupRemarkCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "remark": remark, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:setGroupRemark arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:setGroupRemark', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> setGroupMemberInfo(
+    String groupId,
+    String userId,
+    String nickname,
+    String extra, {
+    IRCIMIWSetGroupMemberInfoCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupId": groupId,
+      "userId": userId,
+      "nickname": nickname,
+      "extra": extra,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:setGroupMemberInfo arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:setGroupMemberInfo', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> searchJoinedGroups(
+    String groupName,
+    RCIMIWPagingQueryOption option, {
+    IRCIMIWSearchJoinedGroupsCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupName": groupName,
+      "option": option.toJson(),
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:searchJoinedGroups arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:searchJoinedGroups', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> searchGroupMembers(
+    String groupId,
+    String name,
+    RCIMIWPagingQueryOption option, {
+    IRCIMIWSearchGroupMembersCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupId": groupId,
+      "name": name,
+      "option": option.toJson(),
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:searchGroupMembers arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:searchGroupMembers', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> addGroupManagers(
+    String groupId,
+    List<String> userIds, {
+    IRCIMIWAddGroupManagersCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "userIds": userIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:addGroupManagers arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:addGroupManagers', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> removeGroupManagers(
+    String groupId,
+    List<String> userIds, {
+    IRCIMIWRemoveGroupManagersCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "userIds": userIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:removeGroupManagers arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:removeGroupManagers', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> inviteUsersToGroup(
+    String groupId,
+    List<String> userIds, {
+    IRCIMIWInviteUsersToGroupCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "userIds": userIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:inviteUsersToGroup arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:inviteUsersToGroup', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> acceptGroupInvite(String groupId, String inviterId, {IRCIMIWAcceptGroupInviteCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "inviterId": inviterId, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:acceptGroupInvite arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:acceptGroupInvite', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> refuseGroupInvite(
+    String groupId,
+    String inviterId,
+    String reason, {
+    IRCIMIWRefuseGroupInviteCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupId": groupId,
+      "inviterId": inviterId,
+      "reason": reason,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:refuseGroupInvite arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:refuseGroupInvite', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> acceptGroupApplication(
+    String groupId,
+    String inviterId,
+    String applicantId, {
+    IRCIMIWAcceptGroupApplicationCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupId": groupId,
+      "inviterId": inviterId,
+      "applicantId": applicantId,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:acceptGroupApplication arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:acceptGroupApplication', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> refuseGroupApplication(
+    String groupId,
+    String inviterId,
+    String applicantId,
+    String reason, {
+    IRCIMIWRefuseGroupApplicationCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "groupId": groupId,
+      "inviterId": inviterId,
+      "applicantId": applicantId,
+      "reason": reason,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:refuseGroupApplication arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:refuseGroupApplication', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getGroupApplications(
+    RCIMIWPagingQueryOption option,
+    List<RCIMIWGroupApplicationDirection> directions,
+    List<RCIMIWGroupApplicationStatus> status, {
+    IRCIMIWGetGroupApplicationsCallback? callback,
+  }) async {
+    List directionsStr = [];
+    for (var element in directions) {
+      directionsStr.add(element.index);
+    }
+
+    List statusStr = [];
+    for (var element in status) {
+      statusStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "option": option.toJson(),
+      "directions": directionsStr,
+      "status": statusStr,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getGroupApplications arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getGroupApplications', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> addGroupFollows(String groupId, List<String> userIds, {IRCIMIWAddGroupFollowsCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "userIds": userIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:addGroupFollows arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:addGroupFollows', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> removeGroupFollows(
+    String groupId,
+    List<String> userIds, {
+    IRCIMIWRemoveGroupFollowsCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "userIds": userIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:removeGroupFollows arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:removeGroupFollows', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getGroupFollows(String groupId, {IRCIMIWGetGroupFollowsCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"groupId": groupId, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getGroupFollows arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getGroupFollows', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> setCheckChatRoomDuplicateMessage(bool enableCheck) async {
+    Map<String, dynamic> arguments = {"enableCheck": enableCheck};
+    log("[RC:Flutter] engine:setCheckChatRoomDuplicateMessage arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:setCheckChatRoomDuplicateMessage', arguments);
+    return result;
+  }
+
   Future<dynamic> _handler(MethodCall call) async {
     log("[RC:Flutter] " + call.method + " arguments:" + call.arguments.toString());
     switch (call.method) {
@@ -2370,6 +3007,13 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         engine?.onMessageReceived?.call(message, left, offline, hasPackage);
         log("[RC:Flutter] engine:onMessageReceived invoke finished");
+        break;
+
+      case 'engine:onOfflineMessageSyncCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        engine?.onOfflineMessageSyncCompleted?.call();
+        log("[RC:Flutter] engine:onOfflineMessageSyncCompleted invoke finished");
         break;
 
       case 'engine:onConnectionStatusChanged':
@@ -3896,6 +4540,144 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         log("[RC:Flutter] engine:onUltraGroupMessageExpansionForKeysRemoved invoke finished");
         break;
 
+      case 'engine:onGroupOperation':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWGroupMemberInfo> memberInfosStr = [];
+        arguments['memberInfos'].forEach((element) {
+          memberInfosStr.add(RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(element)));
+        });
+
+        String? groupId = arguments['groupId'];
+        RCIMIWGroupMemberInfo? operatorInfo =
+            arguments['operatorInfo'] != null
+                ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['operatorInfo']))
+                : null;
+        RCIMIWGroupInfo? groupInfo =
+            arguments['groupInfo'] != null
+                ? RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(arguments['groupInfo']))
+                : null;
+        RCIMIWGroupOperation? operation =
+            arguments['operation'] == null ? null : RCIMIWGroupOperation.values[arguments['operation']];
+        List<RCIMIWGroupMemberInfo>? memberInfos = memberInfosStr;
+        int? operationTime = arguments['operationTime'];
+
+        engine?.onGroupOperation?.call(groupId, operatorInfo, groupInfo, operation, memberInfos, operationTime);
+        log("[RC:Flutter] engine:onGroupOperation invoke finished");
+        break;
+
+      case 'engine:onGroupInfoChanged':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWGroupMemberInfo? operatorInfo =
+            arguments['operatorInfo'] != null
+                ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['operatorInfo']))
+                : null;
+        RCIMIWGroupInfo? fullGroupInfo =
+            arguments['fullGroupInfo'] != null
+                ? RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(arguments['fullGroupInfo']))
+                : null;
+        RCIMIWGroupInfo? changedGroupInfo =
+            arguments['changedGroupInfo'] != null
+                ? RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(arguments['changedGroupInfo']))
+                : null;
+        int? operationTime = arguments['operationTime'];
+
+        engine?.onGroupInfoChanged?.call(operatorInfo, fullGroupInfo, changedGroupInfo, operationTime);
+        log("[RC:Flutter] engine:onGroupInfoChanged invoke finished");
+        break;
+
+      case 'engine:onGroupMemberInfoChanged':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        String? groupId = arguments['groupId'];
+        RCIMIWGroupMemberInfo? operatorInfo =
+            arguments['operatorInfo'] != null
+                ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['operatorInfo']))
+                : null;
+        RCIMIWGroupMemberInfo? memberInfo =
+            arguments['memberInfo'] != null
+                ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['memberInfo']))
+                : null;
+        int? operationTime = arguments['operationTime'];
+
+        engine?.onGroupMemberInfoChanged?.call(groupId, operatorInfo, memberInfo, operationTime);
+        log("[RC:Flutter] engine:onGroupMemberInfoChanged invoke finished");
+        break;
+
+      case 'engine:onGroupApplicationEvent':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWGroupApplicationInfo? info =
+            arguments['info'] != null
+                ? RCIMIWGroupApplicationInfo.fromJson(Map<String, dynamic>.from(arguments['info']))
+                : null;
+
+        engine?.onGroupApplicationEvent?.call(info);
+        log("[RC:Flutter] engine:onGroupApplicationEvent invoke finished");
+        break;
+
+      case 'engine:onGroupRemarkChangedSync':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        String? groupId = arguments['groupId'];
+        RCIMIWGroupOperationType? operationType =
+            arguments['operationType'] == null ? null : RCIMIWGroupOperationType.values[arguments['operationType']];
+        String? groupRemark = arguments['groupRemark'];
+        int? operationTime = arguments['operationTime'];
+
+        engine?.onGroupRemarkChangedSync?.call(groupId, operationType, groupRemark, operationTime);
+        log("[RC:Flutter] engine:onGroupRemarkChangedSync invoke finished");
+        break;
+
+      case 'engine:onGroupFollowsChangedSync':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        String? groupId = arguments['groupId'];
+        RCIMIWGroupOperationType? operationType =
+            arguments['operationType'] == null ? null : RCIMIWGroupOperationType.values[arguments['operationType']];
+        List<String>? userIds = List.from(arguments['userIds']);
+        int? operationTime = arguments['operationTime'];
+
+        engine?.onGroupFollowsChangedSync?.call(groupId, operationType, userIds, operationTime);
+        log("[RC:Flutter] engine:onGroupFollowsChangedSync invoke finished");
+        break;
+
+      case 'engine:onChatRoomNotifyMultiLoginSync':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWChatRoomSyncEvent? event =
+            arguments['event'] != null
+                ? RCIMIWChatRoomSyncEvent.fromJson(Map<String, dynamic>.from(arguments['event']))
+                : null;
+
+        engine?.onChatRoomNotifyMultiLoginSync?.call(event);
+        log("[RC:Flutter] engine:onChatRoomNotifyMultiLoginSync invoke finished");
+        break;
+
+      case 'engine:onChatRoomNotifyBlock':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWChatRoomMemberBlockEvent? event =
+            arguments['event'] != null
+                ? RCIMIWChatRoomMemberBlockEvent.fromJson(Map<String, dynamic>.from(arguments['event']))
+                : null;
+
+        engine?.onChatRoomNotifyBlock?.call(event);
+        log("[RC:Flutter] engine:onChatRoomNotifyBlock invoke finished");
+        break;
+
+      case 'engine:onChatRoomNotifyBan':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWChatRoomMemberBanEvent? event =
+            arguments['event'] != null
+                ? RCIMIWChatRoomMemberBanEvent.fromJson(Map<String, dynamic>.from(arguments['event']))
+                : null;
+
+        engine?.onChatRoomNotifyBan?.call(event);
+        log("[RC:Flutter] engine:onChatRoomNotifyBan invoke finished");
+        break;
+
       case 'engine_cb:RCIMIWConnectCallback_onDatabaseOpened':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
@@ -4546,6 +5328,28 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         log("[RC:Flutter] engine_cb:IRCIMIWGetUnreadCountByConversationTypesCallback_onError invoke finished");
         break;
 
+      case 'engine_cb:IRCIMIWGetUnreadCountByLevelsCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? t = arguments['t'];
+
+        IRCIMIWGetUnreadCountByLevelsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetUnreadCountByLevelsCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetUnreadCountByLevelsCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetUnreadCountByLevelsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetUnreadCountByLevelsCallback_onError invoke finished");
+        break;
+
       case 'engine_cb:IRCIMIWClearUnreadCountCallback_onUnreadCountCleared':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
@@ -4726,6 +5530,33 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         log("[RC:Flutter] engine_cb:IRCIMIWGetMessageCallback_onError invoke finished");
         break;
 
+      case 'engine_cb:IRCIMIWGetMessagesAroundTimeCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWMessage> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMConverter.convertMessage(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWMessage>? t = tStr;
+
+        IRCIMIWGetMessagesAroundTimeCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWMessage>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMessagesAroundTimeCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMessagesAroundTimeCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetMessagesAroundTimeCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMessagesAroundTimeCallback_onError invoke finished");
+        break;
+
       case 'engine_cb:IRCIMIWGetFirstUnreadMessageCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
@@ -4834,6 +5665,28 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?, List<RCIMIWMessage>?)? method = callback?.onLocalMessagesDeleted;
         method?.call(code, messages);
         log("[RC:Flutter] engine_cb:IRCIMIWDeleteLocalMessagesCallback_onLocalMessagesDeleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWDeleteLocalMessageByIdsCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWDeleteLocalMessageByIdsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWDeleteLocalMessageByIdsCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWCompletionCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWCompletionCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWCompletionCallback_onCompleted invoke finished");
         break;
 
       case 'engine_cb:IRCIMIWDeleteMessagesCallback_onMessagesDeleted':
@@ -4963,6 +5816,30 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         log(
           "[RC:Flutter] engine_cb:IRCIMIWChangeMessageReceivedStatusCallback_onMessageReceiveStatusChanged invoke finished",
         );
+        break;
+
+      case 'engine_cb:IRCIMIWChangeMessageReceivedStatusInfoCallback_onMessageReceiveStatusInfoChanged':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWChangeMessageReceivedStatusInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onMessageReceiveStatusInfoChanged;
+        method?.call(code);
+        log(
+          "[RC:Flutter] engine_cb:IRCIMIWChangeMessageReceivedStatusInfoCallback_onMessageReceiveStatusInfoChanged invoke finished",
+        );
+        break;
+
+      case 'engine_cb:IRCIMIWUpdateMessageLocalExtraCallback_onMessageLocalExtraUpdated':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWUpdateMessageLocalExtraCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onMessageLocalExtraUpdated;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWUpdateMessageLocalExtraCallback_onMessageLocalExtraUpdated invoke finished");
         break;
 
       case 'engine_cb:IRCIMIWJoinChatRoomCallback_onChatRoomJoined':
@@ -5252,6 +6129,33 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWSearchMessagesByUserIdCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchMessagesByMessageTypesCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWMessage> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMConverter.convertMessage(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWMessage>? t = tStr;
+
+        IRCIMIWSearchMessagesByMessageTypesCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWMessage>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchMessagesByMessageTypesCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchMessagesByMessageTypesCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWSearchMessagesByMessageTypesCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchMessagesByMessageTypesCallback_onError invoke finished");
         break;
 
       case 'engine_cb:IRCIMIWSearchConversationsCallback_onSuccess':
@@ -5957,6 +6861,485 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWClearConversationsByTagCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWCreateGroupCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? processCode = arguments['processCode'];
+
+        IRCIMIWCreateGroupCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onSuccess;
+        method?.call(processCode);
+        log("[RC:Flutter] engine_cb:IRCIMIWCreateGroupCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWCreateGroupCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? errorCode = arguments['errorCode'];
+        String? errorInfo = arguments['errorInfo'];
+
+        IRCIMIWCreateGroupCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?, String?)? method = callback?.onError;
+        method?.call(errorCode, errorInfo);
+        log("[RC:Flutter] engine_cb:IRCIMIWCreateGroupCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGroupInfoUpdatedCallback_onGroupInfoUpdated':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+        String? errorInfo = arguments['errorInfo'];
+
+        IRCIMIWGroupInfoUpdatedCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?, String?)? method = callback?.onGroupInfoUpdated;
+        method?.call(code, errorInfo);
+        log("[RC:Flutter] engine_cb:IRCIMIWGroupInfoUpdatedCallback_onGroupInfoUpdated invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupsInfoCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWGroupInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWGroupInfo>? t = tStr;
+
+        IRCIMIWGetGroupsInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWGroupInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupsInfoCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupsInfoCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetGroupsInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupsInfoCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWKickGroupMembersCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWKickGroupMembersCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWKickGroupMembersCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWJoinGroupCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? t = arguments['t'];
+
+        IRCIMIWJoinGroupCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWJoinGroupCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWJoinGroupCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWJoinGroupCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWJoinGroupCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWQuitGroupCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWQuitGroupCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWQuitGroupCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWDismissGroupCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWDismissGroupCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWDismissGroupCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWTransferGroupOwnerCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWTransferGroupOwnerCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWTransferGroupOwnerCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupMembersCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWGroupMemberInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWGroupMemberInfo>? t = tStr;
+
+        IRCIMIWGetGroupMembersCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWGroupMemberInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupMembersCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupMembersCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetGroupMembersCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupMembersCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupMembersByRoleCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t =
+            arguments['t'] != null
+                ? RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+                : null;
+
+        IRCIMIWGetGroupMembersByRoleCallback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupMembersByRoleCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupMembersByRoleCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetGroupMembersByRoleCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupMembersByRoleCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetJoinedGroupsByRoleCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t =
+            arguments['t'] != null
+                ? RCIMIWPagingQueryResult<RCIMIWGroupInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+                : null;
+
+        IRCIMIWGetJoinedGroupsByRoleCallback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWPagingQueryResult<RCIMIWGroupInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetJoinedGroupsByRoleCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetJoinedGroupsByRoleCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetJoinedGroupsByRoleCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetJoinedGroupsByRoleCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetJoinedGroupsCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWGroupInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWGroupInfo>? t = tStr;
+
+        IRCIMIWGetJoinedGroupsCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWGroupInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetJoinedGroupsCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetJoinedGroupsCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetJoinedGroupsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetJoinedGroupsCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSetGroupRemarkCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWSetGroupRemarkCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWSetGroupRemarkCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSetGroupMemberInfoCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWSetGroupMemberInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWSetGroupMemberInfoCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchJoinedGroupsCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t =
+            arguments['t'] != null
+                ? RCIMIWPagingQueryResult<RCIMIWGroupInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+                : null;
+
+        IRCIMIWSearchJoinedGroupsCallback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWPagingQueryResult<RCIMIWGroupInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchJoinedGroupsCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchJoinedGroupsCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWSearchJoinedGroupsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchJoinedGroupsCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchGroupMembersCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t =
+            arguments['t'] != null
+                ? RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+                : null;
+
+        IRCIMIWSearchGroupMembersCallback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchGroupMembersCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchGroupMembersCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWSearchGroupMembersCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchGroupMembersCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWAddGroupManagersCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWAddGroupManagersCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWAddGroupManagersCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWRemoveGroupManagersCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWRemoveGroupManagersCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWRemoveGroupManagersCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWInviteUsersToGroupCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? t = arguments['t'];
+
+        IRCIMIWInviteUsersToGroupCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWInviteUsersToGroupCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWInviteUsersToGroupCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWInviteUsersToGroupCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWInviteUsersToGroupCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWAcceptGroupInviteCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWAcceptGroupInviteCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWAcceptGroupInviteCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWRefuseGroupInviteCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWRefuseGroupInviteCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWRefuseGroupInviteCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWAcceptGroupApplicationCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? t = arguments['t'];
+
+        IRCIMIWAcceptGroupApplicationCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWAcceptGroupApplicationCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWAcceptGroupApplicationCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWAcceptGroupApplicationCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWAcceptGroupApplicationCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWRefuseGroupApplicationCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWRefuseGroupApplicationCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWRefuseGroupApplicationCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupApplicationsCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>? t =
+            arguments['t'] != null
+                ? RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>.fromJson(
+                  Map<String, dynamic>.from(arguments['t']),
+                )
+                : null;
+
+        IRCIMIWGetGroupApplicationsCallback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupApplicationsCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupApplicationsCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetGroupApplicationsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupApplicationsCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWAddGroupFollowsCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWAddGroupFollowsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWAddGroupFollowsCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWRemoveGroupFollowsCallback_onCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWRemoveGroupFollowsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onCompleted;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWRemoveGroupFollowsCallback_onCompleted invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupFollowsCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWFollowInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWFollowInfo.fromJson(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWFollowInfo>? t = tStr;
+
+        IRCIMIWGetGroupFollowsCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWFollowInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupFollowsCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetGroupFollowsCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetGroupFollowsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetGroupFollowsCallback_onError invoke finished");
         break;
     }
   }

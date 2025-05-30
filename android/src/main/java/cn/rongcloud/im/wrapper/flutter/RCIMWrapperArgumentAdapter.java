@@ -6,7 +6,11 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWAreaCode;
 import cn.rongcloud.im.wrapper.constants.RCIMIWBlacklistStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomEntriesOperationType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomMemberActionType;
+import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomMemberBanType;
+import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomMemberOperateType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomStatus;
+import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomSyncStatus;
+import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomSyncStatusReason;
 import cn.rongcloud.im.wrapper.constants.RCIMIWConnectionStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWConversationType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWCustomMessagePolicy;
@@ -15,6 +19,7 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWImportanceHW;
 import cn.rongcloud.im.wrapper.constants.RCIMIWImportanceHonor;
 import cn.rongcloud.im.wrapper.constants.RCIMIWLogLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMentionedType;
+import cn.rongcloud.im.wrapper.constants.RCIMIWMessageAuditType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageBlockType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageDirection;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageOperationPolicy;
@@ -27,9 +32,66 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWSentStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWTimeOrder;
 import cn.rongcloud.im.wrapper.constants.RCIMIWUltraGroupTypingStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWVIVOPushType;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationDirection;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationStatus;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationType;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupInviteHandlePermission;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupJoinPermission;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupMemberInfoEditPermission;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupMemberRole;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperation;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationPermission;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationType;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupStatus;
 
 public class RCIMWrapperArgumentAdapter {
   private RCIMWrapperArgumentAdapter() {}
+
+  static RCIMIWGroupInviteHandlePermission toRCIMIWGroupInviteHandlePermission(
+      @NonNull Integer type) {
+    return RCIMIWGroupInviteHandlePermission.values()[type];
+  }
+
+  static RCIMIWGroupApplicationStatus toRCIMIWGroupApplicationStatus(@NonNull Integer type) {
+    return RCIMIWGroupApplicationStatus.values()[type];
+  }
+
+  static RCIMIWGroupApplicationDirection toRCIMIWGroupApplicationDirection(@NonNull Integer type) {
+    return RCIMIWGroupApplicationDirection.values()[type];
+  }
+
+  static RCIMIWGroupOperation toRCIMIWGroupOperation(@NonNull Integer type) {
+    return RCIMIWGroupOperation.values()[type];
+  }
+
+  static RCIMIWGroupJoinPermission toRCIMIWGroupJoinPermission(@NonNull Integer type) {
+    return RCIMIWGroupJoinPermission.values()[type];
+  }
+
+  static RCIMIWGroupStatus toRCIMIWGroupStatus(@NonNull Integer type) {
+    return RCIMIWGroupStatus.values()[type];
+  }
+
+  static RCIMIWGroupOperationPermission toRCIMIWGroupOperationPermission(@NonNull Integer type) {
+    return RCIMIWGroupOperationPermission.values()[type];
+  }
+
+  static RCIMIWGroupOperationType toRCIMIWGroupOperationType(@NonNull Integer type) {
+    return RCIMIWGroupOperationType.values()[type];
+  }
+
+  static RCIMIWGroupMemberInfoEditPermission toRCIMIWGroupMemberInfoEditPermission(
+      @NonNull Integer type) {
+    return RCIMIWGroupMemberInfoEditPermission.values()[type];
+  }
+
+  static RCIMIWGroupMemberRole toRCIMIWGroupMemberRole(@NonNull Integer type) {
+    return RCIMIWGroupMemberRole.values()[type];
+  }
+
+  static RCIMIWGroupApplicationType toRCIMIWGroupApplicationType(@NonNull Integer type) {
+    return RCIMIWGroupApplicationType.values()[type];
+  }
 
   static RCIMIWImportanceHW toRCIMIWImportanceHW(@NonNull Integer type) {
     return RCIMIWImportanceHW.values()[type];
@@ -50,6 +112,10 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWSentStatus toRCIMIWSentStatus(@NonNull Integer type) {
     return RCIMIWSentStatus.values()[type];
+  }
+
+  static RCIMIWChatRoomSyncStatus toRCIMIWChatRoomSyncStatus(@NonNull Integer type) {
+    return RCIMIWChatRoomSyncStatus.values()[type];
   }
 
   static RCIMIWPushNotificationQuietHoursLevel toRCIMIWPushNotificationQuietHoursLevel(
@@ -81,6 +147,18 @@ public class RCIMWrapperArgumentAdapter {
     return RCIMIWMessageBlockType.values()[type];
   }
 
+  static RCIMIWMessageAuditType toRCIMIWMessageAuditType(@NonNull Integer type) {
+    return RCIMIWMessageAuditType.values()[type];
+  }
+
+  static RCIMIWChatRoomMemberBanType toRCIMIWChatRoomMemberBanType(@NonNull Integer type) {
+    return RCIMIWChatRoomMemberBanType.values()[type];
+  }
+
+  static RCIMIWChatRoomMemberOperateType toRCIMIWChatRoomMemberOperateType(@NonNull Integer type) {
+    return RCIMIWChatRoomMemberOperateType.values()[type];
+  }
+
   static RCIMIWTimeOrder toRCIMIWTimeOrder(@NonNull Integer type) {
     return RCIMIWTimeOrder.values()[type];
   }
@@ -99,6 +177,10 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWErrorCode toRCIMIWErrorCode(@NonNull Integer type) {
     return RCIMIWErrorCode.values()[type];
+  }
+
+  static RCIMIWChatRoomSyncStatusReason toRCIMIWChatRoomSyncStatusReason(@NonNull Integer type) {
+    return RCIMIWChatRoomSyncStatusReason.values()[type];
   }
 
   static RCIMIWUltraGroupTypingStatus toRCIMIWUltraGroupTypingStatus(@NonNull Integer type) {

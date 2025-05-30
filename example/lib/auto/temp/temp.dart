@@ -168,6 +168,14 @@ const getConversations = {
   "action": engine_fun.getConversations,
 };
 
+const getConversationsWithPriority = {
+  "title": "getConversationsWithPriority",
+  "params": [
+    {"key": "conversationTypes", "type": "String", "hint": "", "lable": "请输入conversationTypes",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "startTime", "type": "String", "hint": "", "lable": "请输入startTime",},{"key": "count", "type": "String", "hint": "", "lable": "请输入count",},{"key": "topPriority", "type": "String", "hint": "", "lable": "请输入topPriority",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getConversationsWithPriority,
+};
+
 const getUnreadConversations = {
   "title": "getUnreadConversations",
   "params": [
@@ -320,6 +328,14 @@ const getUnreadCountByConversationTypes = {
   "action": engine_fun.getUnreadCountByConversationTypes,
 };
 
+const getUnreadCountByLevels = {
+  "title": "getUnreadCountByLevels",
+  "params": [
+    {"key": "conversationTypes", "type": "String", "hint": "", "lable": "请输入conversationTypes",},{"key": "levels", "type": "String", "hint": "", "lable": "请输入levels",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getUnreadCountByLevels,
+};
+
 const clearUnreadCount = {
   "title": "clearUnreadCount",
   "params": [
@@ -384,6 +400,14 @@ const changeConversationTopStatus = {
   "action": engine_fun.changeConversationTopStatus,
 };
 
+const changeConversationTopStatusWithUpdateTme = {
+  "title": "changeConversationTopStatusWithUpdateTme",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "top", "type": "String", "hint": "", "lable": "请输入top",},{"key": "updateOperationTime", "type": "String", "hint": "", "lable": "请输入updateOperationTime",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.changeConversationTopStatusWithUpdateTme,
+};
+
 const loadConversationTopStatus = {
   "title": "loadConversationTopStatus",
   "params": [
@@ -432,6 +456,22 @@ const getMessages = {
   "action": engine_fun.getMessages,
 };
 
+const getMessagesAroundTime = {
+  "title": "getMessagesAroundTime",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "sentTime", "type": "String", "hint": "", "lable": "请输入sentTime",},{"key": "beforeCount", "type": "String", "hint": "", "lable": "请输入beforeCount",},{"key": "afterCount", "type": "String", "hint": "", "lable": "请输入afterCount",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getMessagesAroundTime,
+};
+
+const getLocalMessagesByMessageTypes = {
+  "title": "getLocalMessagesByMessageTypes",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "messageTypes", "type": "String", "hint": "", "lable": "请输入messageTypes",},{"key": "sentTime", "type": "String", "hint": "", "lable": "请输入sentTime",},{"key": "order", "type": "String", "hint": "", "lable": "请输入order",},{"key": "count", "type": "String", "hint": "", "lable": "请输入count",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getLocalMessagesByMessageTypes,
+};
+
 const loadFirstUnreadMessage = {
   "title": "loadFirstUnreadMessage",
   "params": [
@@ -472,6 +512,14 @@ const clearMessages = {
   "action": engine_fun.clearMessages,
 };
 
+const deleteLocalMessageByIds = {
+  "title": "deleteLocalMessageByIds",
+  "params": [
+    {"key": "messageIds", "type": "String", "hint": "", "lable": "请输入messageIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.deleteLocalMessageByIds,
+};
+
 const sendPrivateReadReceiptMessage = {
   "title": "sendPrivateReadReceiptMessage",
   "params": [
@@ -510,6 +558,22 @@ const changeMessageReceiveStatus = {
     {"key": "messageId", "type": "String", "hint": "", "lable": "请输入messageId",},{"key": "receivedStatus", "type": "String", "hint": "", "lable": "请输入receivedStatus",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
   ],
   "action": engine_fun.changeMessageReceiveStatus,
+};
+
+const changeMessageReceiveStatusInfo = {
+  "title": "changeMessageReceiveStatusInfo",
+  "params": [
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入messageId",},{"key": "receivedStatusInfo", "type": "String", "hint": "", "lable": "请输入receivedStatusInfo",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.changeMessageReceiveStatusInfo,
+};
+
+const updateMessageLocalExtra = {
+  "title": "updateMessageLocalExtra",
+  "params": [
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入messageId",},{"key": "extra", "type": "String", "hint": "", "lable": "请输入extra",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.updateMessageLocalExtra,
 };
 
 const joinChatRoom = {
@@ -678,6 +742,14 @@ const searchMessagesByUserId = {
     {"key": "userId", "type": "String", "hint": "", "lable": "请输入userId",},{"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "startTime", "type": "String", "hint": "", "lable": "请输入startTime",},{"key": "count", "type": "String", "hint": "", "lable": "请输入count",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
   ],
   "action": engine_fun.searchMessagesByUserId,
+};
+
+const searchMessagesByMessageTypes = {
+  "title": "searchMessagesByMessageTypes",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "messageTypes", "type": "String", "hint": "", "lable": "请输入messageTypes",},{"key": "keyword", "type": "String", "hint": "", "lable": "请输入keyword",},{"key": "startTime", "type": "String", "hint": "", "lable": "请输入startTime",},{"key": "count", "type": "String", "hint": "", "lable": "请输入count",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.searchMessagesByMessageTypes,
 };
 
 const searchConversations = {
@@ -1086,6 +1158,206 @@ const writeLog = {
     {"key": "method", "type": "String", "hint": "", "lable": "请输入method",},{"key": "callMethod", "type": "String", "hint": "", "lable": "请输入callMethod",},{"key": "codeValue", "type": "String", "hint": "", "lable": "请输入codeValue",},{"key": "message", "type": "String", "hint": "", "lable": "请输入message",},
   ],
   "action": engine_fun.writeLog,
+};
+
+const getGroupsInfo = {
+  "title": "getGroupsInfo",
+  "params": [
+    {"key": "groupIds", "type": "String", "hint": "", "lable": "请输入groupIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getGroupsInfo,
+};
+
+const joinGroup = {
+  "title": "joinGroup",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.joinGroup,
+};
+
+const quitGroup = {
+  "title": "quitGroup",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "config", "type": "String", "hint": "", "lable": "请输入config",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.quitGroup,
+};
+
+const dismissGroup = {
+  "title": "dismissGroup",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.dismissGroup,
+};
+
+const transferGroupOwner = {
+  "title": "transferGroupOwner",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "newOwnerId", "type": "String", "hint": "", "lable": "请输入newOwnerId",},{"key": "quitGroup", "type": "String", "hint": "", "lable": "请输入quitGroup",},{"key": "config", "type": "String", "hint": "", "lable": "请输入config",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.transferGroupOwner,
+};
+
+const getGroupMembers = {
+  "title": "getGroupMembers",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getGroupMembers,
+};
+
+const getGroupMembersByRole = {
+  "title": "getGroupMembersByRole",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "role", "type": "String", "hint": "", "lable": "请输入role",},{"key": "option", "type": "String", "hint": "", "lable": "请输入option",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getGroupMembersByRole,
+};
+
+const getJoinedGroupsByRole = {
+  "title": "getJoinedGroupsByRole",
+  "params": [
+    {"key": "role", "type": "String", "hint": "", "lable": "请输入role",},{"key": "option", "type": "String", "hint": "", "lable": "请输入option",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getJoinedGroupsByRole,
+};
+
+const getJoinedGroups = {
+  "title": "getJoinedGroups",
+  "params": [
+    {"key": "groupIds", "type": "String", "hint": "", "lable": "请输入groupIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getJoinedGroups,
+};
+
+const setGroupRemark = {
+  "title": "setGroupRemark",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "remark", "type": "String", "hint": "", "lable": "请输入remark",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.setGroupRemark,
+};
+
+const setGroupMemberInfo = {
+  "title": "setGroupMemberInfo",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "userId", "type": "String", "hint": "", "lable": "请输入userId",},{"key": "nickname", "type": "String", "hint": "", "lable": "请输入nickname",},{"key": "extra", "type": "String", "hint": "", "lable": "请输入extra",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.setGroupMemberInfo,
+};
+
+const searchJoinedGroups = {
+  "title": "searchJoinedGroups",
+  "params": [
+    {"key": "groupName", "type": "String", "hint": "", "lable": "请输入groupName",},{"key": "option", "type": "String", "hint": "", "lable": "请输入option",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.searchJoinedGroups,
+};
+
+const searchGroupMembers = {
+  "title": "searchGroupMembers",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "name", "type": "String", "hint": "", "lable": "请输入name",},{"key": "option", "type": "String", "hint": "", "lable": "请输入option",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.searchGroupMembers,
+};
+
+const addGroupManagers = {
+  "title": "addGroupManagers",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.addGroupManagers,
+};
+
+const removeGroupManagers = {
+  "title": "removeGroupManagers",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.removeGroupManagers,
+};
+
+const inviteUsersToGroup = {
+  "title": "inviteUsersToGroup",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.inviteUsersToGroup,
+};
+
+const acceptGroupInvite = {
+  "title": "acceptGroupInvite",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "inviterId", "type": "String", "hint": "", "lable": "请输入inviterId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.acceptGroupInvite,
+};
+
+const refuseGroupInvite = {
+  "title": "refuseGroupInvite",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "inviterId", "type": "String", "hint": "", "lable": "请输入inviterId",},{"key": "reason", "type": "String", "hint": "", "lable": "请输入reason",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.refuseGroupInvite,
+};
+
+const acceptGroupApplication = {
+  "title": "acceptGroupApplication",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "inviterId", "type": "String", "hint": "", "lable": "请输入inviterId",},{"key": "applicantId", "type": "String", "hint": "", "lable": "请输入applicantId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.acceptGroupApplication,
+};
+
+const refuseGroupApplication = {
+  "title": "refuseGroupApplication",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "inviterId", "type": "String", "hint": "", "lable": "请输入inviterId",},{"key": "applicantId", "type": "String", "hint": "", "lable": "请输入applicantId",},{"key": "reason", "type": "String", "hint": "", "lable": "请输入reason",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.refuseGroupApplication,
+};
+
+const getGroupApplications = {
+  "title": "getGroupApplications",
+  "params": [
+    {"key": "option", "type": "String", "hint": "", "lable": "请输入option",},{"key": "directions", "type": "String", "hint": "", "lable": "请输入directions",},{"key": "status", "type": "String", "hint": "", "lable": "请输入status",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getGroupApplications,
+};
+
+const addGroupFollows = {
+  "title": "addGroupFollows",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.addGroupFollows,
+};
+
+const removeGroupFollows = {
+  "title": "removeGroupFollows",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.removeGroupFollows,
+};
+
+const getGroupFollows = {
+  "title": "getGroupFollows",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getGroupFollows,
+};
+
+const setCheckChatRoomDuplicateMessage = {
+  "title": "setCheckChatRoomDuplicateMessage",
+  "params": [
+    {"key": "enableCheck", "type": "String", "hint": "", "lable": "请输入enableCheck",},
+  ],
+  "action": engine_fun.setCheckChatRoomDuplicateMessage,
 };
 
 */

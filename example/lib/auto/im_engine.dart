@@ -10,8 +10,12 @@ class IMEngineManager {
 
   setEngineListener() {
     engine?.onMessageReceived = (RCIMIWMessage? message, int? left, bool? offline, bool? hasPackage) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageReceived";
+      arg["timestamp"] = timeStr;
       arg["message"] = formatJson(message?.toJson());
       arg["left"] = left.toString();
       arg["offline"] = offline.toString();
@@ -27,9 +31,31 @@ engine?.onMessageReceived = (RCIMIWMessage? message, int? left, bool? offline, b
 //callback_onMessageReceived_call
 */
 
+    engine?.onOfflineMessageSyncCompleted = () {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onOfflineMessageSyncCompleted";
+      arg["timestamp"] = timeStr;
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onOfflineMessageSyncCompleted_call
+engine?.onOfflineMessageSyncCompleted = () {
+    //...
+};
+//callback_onOfflineMessageSyncCompleted_call
+*/
+
     engine?.onConnectionStatusChanged = (RCIMIWConnectionStatus? status) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConnectionStatusChanged";
+      arg["timestamp"] = timeStr;
       arg["status"] = status.toString();
 
       bus.emit("rong_im_listener", arg);
@@ -48,8 +74,12 @@ engine?.onConnectionStatusChanged = (RCIMIWConnectionStatus? status) {
       String? channelId,
       bool? top,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTopStatusSynced";
+      arg["timestamp"] = timeStr;
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -71,8 +101,12 @@ engine?.onConversationTopStatusSynced = (RCIMIWConversationType? type, String? t
       String? channelId,
       RCIMIWPushNotificationLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationNotificationLevelSynced";
+      arg["timestamp"] = timeStr;
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -89,8 +123,12 @@ engine?.onConversationNotificationLevelSynced = (RCIMIWConversationType? type, S
 */
 
     engine?.onRemoteMessageRecalled = (RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteMessageRecalled";
+      arg["timestamp"] = timeStr;
       arg["message"] = formatJson(message?.toJson());
 
       bus.emit("rong_im_listener", arg);
@@ -104,8 +142,12 @@ engine?.onRemoteMessageRecalled = (RCIMIWMessage? message) {
 */
 
     engine?.onPrivateReadReceiptReceived = (String? targetId, String? channelId, int? timestamp) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onPrivateReadReceiptReceived";
+      arg["timestamp"] = timeStr;
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
       arg["timestamp"] = timestamp.toString();
@@ -121,8 +163,12 @@ engine?.onPrivateReadReceiptReceived = (String? targetId, String? channelId, int
 */
 
     engine?.onRemoteMessageExpansionUpdated = (Map? expansion, RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteMessageExpansionUpdated";
+      arg["timestamp"] = timeStr;
       arg["expansion"] = expansion.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -137,8 +183,12 @@ engine?.onRemoteMessageExpansionUpdated = (Map? expansion, RCIMIWMessage? messag
 */
 
     engine?.onRemoteMessageExpansionForKeyRemoved = (RCIMIWMessage? message, List<String>? keys) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteMessageExpansionForKeyRemoved";
+      arg["timestamp"] = timeStr;
       arg["message"] = formatJson(message?.toJson());
       arg["keys"] = keys.toString();
 
@@ -160,8 +210,12 @@ engine?.onRemoteMessageExpansionForKeyRemoved = (RCIMIWMessage? message, List<St
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomMemberChanged";
+      arg["timestamp"] = timeStr;
       arg["targetId"] = targetId ?? "";
       arg["actions"] = actionsJson.toString();
 
@@ -188,8 +242,12 @@ engine?.onChatRoomMemberChanged = (String? targetId, List<RCIMIWChatRoomMemberAc
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onTypingStatusChanged";
+      arg["timestamp"] = timeStr;
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -210,8 +268,12 @@ engine?.onTypingStatusChanged = (RCIMIWConversationType? type, String? targetId,
       String? targetId,
       int? timestamp,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationReadStatusSyncMessageReceived";
+      arg["timestamp"] = timeStr;
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
       arg["timestamp"] = timestamp.toString();
@@ -227,8 +289,12 @@ engine?.onConversationReadStatusSyncMessageReceived = (RCIMIWConversationType? t
 */
 
     engine?.onChatRoomEntriesSynced = (String? roomId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntriesSynced";
+      arg["timestamp"] = timeStr;
       arg["roomId"] = roomId ?? "";
 
       bus.emit("rong_im_listener", arg);
@@ -246,8 +312,12 @@ engine?.onChatRoomEntriesSynced = (String? roomId) {
       String? roomId,
       Map? entries,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntriesChanged";
+      arg["timestamp"] = timeStr;
       arg["operationType"] = operationType.toString();
       arg["roomId"] = roomId ?? "";
       arg["entries"] = entries.toString();
@@ -270,8 +340,12 @@ engine?.onChatRoomEntriesChanged = (RCIMIWChatRoomEntriesOperationType? operatio
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteUltraGroupMessageExpansionUpdated";
+      arg["timestamp"] = timeStr;
       arg["messages"] = messagesJson.toString();
 
       bus.emit("rong_im_listener", arg);
@@ -292,8 +366,12 @@ engine?.onRemoteUltraGroupMessageExpansionUpdated = (List<RCIMIWMessage>? messag
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteUltraGroupMessageModified";
+      arg["timestamp"] = timeStr;
       arg["messages"] = messagesJson.toString();
 
       bus.emit("rong_im_listener", arg);
@@ -314,8 +392,12 @@ engine?.onRemoteUltraGroupMessageModified = (List<RCIMIWMessage>? messages) {
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onRemoteUltraGroupMessageRecalled";
+      arg["timestamp"] = timeStr;
       arg["messages"] = messagesJson.toString();
 
       bus.emit("rong_im_listener", arg);
@@ -329,8 +411,12 @@ engine?.onRemoteUltraGroupMessageRecalled = (List<RCIMIWMessage>? messages) {
 */
 
     engine?.onUltraGroupReadTimeReceived = (String? targetId, String? channelId, int? timestamp) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupReadTimeReceived";
+      arg["timestamp"] = timeStr;
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
       arg["timestamp"] = timestamp.toString();
@@ -353,8 +439,12 @@ engine?.onUltraGroupReadTimeReceived = (String? targetId, String? channelId, int
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupTypingStatusChanged";
+      arg["timestamp"] = timeStr;
       arg["info"] = infoJson.toString();
 
       bus.emit("rong_im_listener", arg);
@@ -368,8 +458,12 @@ engine?.onUltraGroupTypingStatusChanged = (List<RCIMIWUltraGroupTypingStatusInfo
 */
 
     engine?.onMessageBlocked = (RCIMIWBlockedMessageInfo? info) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageBlocked";
+      arg["timestamp"] = timeStr;
       arg["info"] = formatJson(info?.toJson());
 
       bus.emit("rong_im_listener", arg);
@@ -383,8 +477,12 @@ engine?.onMessageBlocked = (RCIMIWBlockedMessageInfo? info) {
 */
 
     engine?.onChatRoomStatusChanged = (String? targetId, RCIMIWChatRoomStatus? status) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomStatusChanged";
+      arg["timestamp"] = timeStr;
       arg["targetId"] = targetId ?? "";
       arg["status"] = status.toString();
 
@@ -399,8 +497,12 @@ engine?.onChatRoomStatusChanged = (String? targetId, RCIMIWChatRoomStatus? statu
 */
 
     engine?.onGroupMessageReadReceiptRequestReceived = (String? targetId, String? messageUId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onGroupMessageReadReceiptRequestReceived";
+      arg["timestamp"] = timeStr;
       arg["targetId"] = targetId ?? "";
       arg["messageUId"] = messageUId ?? "";
 
@@ -415,8 +517,12 @@ engine?.onGroupMessageReadReceiptRequestReceived = (String? targetId, String? me
 */
 
     engine?.onGroupMessageReadReceiptResponseReceived = (String? targetId, String? messageUId, Map? respondUserIds) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onGroupMessageReadReceiptResponseReceived";
+      arg["timestamp"] = timeStr;
       arg["targetId"] = targetId ?? "";
       arg["messageUId"] = messageUId ?? "";
       arg["respondUserIds"] = respondUserIds.toString();
@@ -432,8 +538,12 @@ engine?.onGroupMessageReadReceiptResponseReceived = (String? targetId, String? m
 */
 
     engine?.onConnected = (int? code, String? userId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConnected";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["userId"] = userId ?? "";
 
@@ -448,8 +558,12 @@ engine?.onConnected = (int? code, String? userId) {
 */
 
     engine?.onDatabaseOpened = (int? code) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onDatabaseOpened";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
 
       bus.emit("rong_im_listener", arg);
@@ -469,8 +583,12 @@ engine?.onDatabaseOpened = (int? code) {
       String? channelId,
       RCIMIWConversation? conversation,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -502,8 +620,12 @@ engine?.onConversationLoaded = (int? code, RCIMIWConversationType? type, String?
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationsLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["conversationTypes"] = conversationTypes.toString();
       arg["channelId"] = channelId ?? "";
@@ -522,8 +644,12 @@ engine?.onConversationsLoaded = (int? code, List<RCIMIWConversationType>? conver
 */
 
     engine?.onConversationRemoved = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationRemoved";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -540,8 +666,12 @@ engine?.onConversationRemoved = (int? code, RCIMIWConversationType? type, String
 */
 
     engine?.onConversationsRemoved = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationsRemoved";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["conversationTypes"] = conversationTypes.toString();
       arg["channelId"] = channelId ?? "";
@@ -557,8 +687,12 @@ engine?.onConversationsRemoved = (int? code, List<RCIMIWConversationType>? conve
 */
 
     engine?.onTotalUnreadCountLoaded = (int? code, String? channelId, int? count) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onTotalUnreadCountLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["channelId"] = channelId ?? "";
       arg["count"] = count.toString();
@@ -580,8 +714,12 @@ engine?.onTotalUnreadCountLoaded = (int? code, String? channelId, int? count) {
       String? channelId,
       int? count,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUnreadCountLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -605,8 +743,12 @@ engine?.onUnreadCountLoaded = (int? code, RCIMIWConversationType? type, String? 
       bool? contain,
       int? count,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUnreadCountByConversationTypesLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["conversationTypes"] = conversationTypes.toString();
       arg["channelId"] = channelId ?? "";
@@ -630,8 +772,12 @@ engine?.onUnreadCountByConversationTypesLoaded = (int? code, List<RCIMIWConversa
       String? channelId,
       int? count,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUnreadMentionedCountLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -649,8 +795,12 @@ engine?.onUnreadMentionedCountLoaded = (int? code, RCIMIWConversationType? type,
 */
 
     engine?.onUltraGroupAllUnreadCountLoaded = (int? code, int? count) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupAllUnreadCountLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["count"] = count.toString();
 
@@ -665,8 +815,12 @@ engine?.onUltraGroupAllUnreadCountLoaded = (int? code, int? count) {
 */
 
     engine?.onUltraGroupAllUnreadMentionedCountLoaded = (int? code, int? count) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupAllUnreadMentionedCountLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["count"] = count.toString();
 
@@ -681,8 +835,12 @@ engine?.onUltraGroupAllUnreadMentionedCountLoaded = (int? code, int? count) {
 */
 
     engine?.onUltraGroupConversationsSynced = () {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupConversationsSynced";
+      arg["timestamp"] = timeStr;
 
       bus.emit("rong_im_listener", arg);
     };
@@ -701,8 +859,12 @@ engine?.onUltraGroupConversationsSynced = () {
       String? channelId,
       int? timestamp,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUnreadCountCleared";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -726,8 +888,12 @@ engine?.onUnreadCountCleared = (int? code, RCIMIWConversationType? type, String?
       String? channelId,
       String? draft,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onDraftMessageSaved";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -745,8 +911,12 @@ engine?.onDraftMessageSaved = (int? code, RCIMIWConversationType? type, String? 
 */
 
     engine?.onDraftMessageCleared = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onDraftMessageCleared";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -769,8 +939,12 @@ engine?.onDraftMessageCleared = (int? code, RCIMIWConversationType? type, String
       String? channelId,
       String? draft,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onDraftMessageLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -800,8 +974,12 @@ engine?.onDraftMessageLoaded = (int? code, RCIMIWConversationType? type, String?
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onBlockedConversationsLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["conversationTypes"] = conversationTypes.toString();
       arg["channelId"] = channelId ?? "";
@@ -824,8 +1002,12 @@ engine?.onBlockedConversationsLoaded = (int? code, List<RCIMIWConversationType>?
       String? channelId,
       bool? top,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTopStatusChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -849,8 +1031,12 @@ engine?.onConversationTopStatusChanged = (int? code, RCIMIWConversationType? typ
       String? channelId,
       bool? top,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTopStatusLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -874,8 +1060,12 @@ engine?.onConversationTopStatusLoaded = (int? code, RCIMIWConversationType? type
       String? channelId,
       int? timestamp,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationReadStatusSynced";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -893,8 +1083,12 @@ engine?.onConversationReadStatusSynced = (int? code, RCIMIWConversationType? typ
 */
 
     engine?.onMessageAttached = (RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageAttached";
+      arg["timestamp"] = timeStr;
       arg["message"] = formatJson(message?.toJson());
 
       bus.emit("rong_im_listener", arg);
@@ -908,8 +1102,12 @@ engine?.onMessageAttached = (RCIMIWMessage? message) {
 */
 
     engine?.onMessageSent = (int? code, RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageSent";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -924,8 +1122,12 @@ engine?.onMessageSent = (int? code, RCIMIWMessage? message) {
 */
 
     engine?.onMediaMessageAttached = (RCIMIWMediaMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageAttached";
+      arg["timestamp"] = timeStr;
       arg["message"] = formatJson(message?.toJson());
 
       bus.emit("rong_im_listener", arg);
@@ -939,8 +1141,12 @@ engine?.onMediaMessageAttached = (RCIMIWMediaMessage? message) {
 */
 
     engine?.onMediaMessageSending = (RCIMIWMediaMessage? message, int? progress) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageSending";
+      arg["timestamp"] = timeStr;
       arg["message"] = formatJson(message?.toJson());
       arg["progress"] = progress.toString();
 
@@ -955,8 +1161,12 @@ engine?.onMediaMessageSending = (RCIMIWMediaMessage? message, int? progress) {
 */
 
     engine?.onSendingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onSendingMediaMessageCanceled";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -971,8 +1181,12 @@ engine?.onSendingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? message)
 */
 
     engine?.onMediaMessageSent = (int? code, RCIMIWMediaMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageSent";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -987,8 +1201,12 @@ engine?.onMediaMessageSent = (int? code, RCIMIWMediaMessage? message) {
 */
 
     engine?.onMediaMessageDownloading = (RCIMIWMediaMessage? message, int? progress) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageDownloading";
+      arg["timestamp"] = timeStr;
       arg["message"] = formatJson(message?.toJson());
       arg["progress"] = progress.toString();
 
@@ -1003,8 +1221,12 @@ engine?.onMediaMessageDownloading = (RCIMIWMediaMessage? message, int? progress)
 */
 
     engine?.onMediaMessageDownloaded = (int? code, RCIMIWMediaMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMediaMessageDownloaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -1019,8 +1241,12 @@ engine?.onMediaMessageDownloaded = (int? code, RCIMIWMediaMessage? message) {
 */
 
     engine?.onDownloadingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onDownloadingMediaMessageCanceled";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -1050,8 +1276,12 @@ engine?.onDownloadingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? mess
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessagesLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -1084,8 +1314,12 @@ engine?.onMessagesLoaded = (int? code, RCIMIWConversationType? type, String? tar
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUnreadMentionedMessagesLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -1109,8 +1343,12 @@ engine?.onUnreadMentionedMessagesLoaded = (int? code, RCIMIWConversationType? ty
       String? channelId,
       RCIMIWMessage? message,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onFirstUnreadMessageLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -1128,8 +1366,12 @@ engine?.onFirstUnreadMessageLoaded = (int? code, RCIMIWConversationType? type, S
 */
 
     engine?.onMessageInserted = (int? code, RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageInserted";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -1151,8 +1393,12 @@ engine?.onMessageInserted = (int? code, RCIMIWMessage? message) {
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessagesInserted";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["messages"] = messagesJson.toString();
 
@@ -1173,8 +1419,12 @@ engine?.onMessagesInserted = (int? code, List<RCIMIWMessage>? messages) {
       String? channelId,
       int? timestamp,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessagesCleared";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -1199,8 +1449,12 @@ engine?.onMessagesCleared = (int? code, RCIMIWConversationType? type, String? ta
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onLocalMessagesDeleted";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["messages"] = messagesJson.toString();
 
@@ -1228,8 +1482,12 @@ engine?.onLocalMessagesDeleted = (int? code, List<RCIMIWMessage>? messages) {
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessagesDeleted";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -1247,8 +1505,12 @@ engine?.onMessagesDeleted = (int? code, RCIMIWConversationType? type, String? ta
 */
 
     engine?.onMessageRecalled = (int? code, RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageRecalled";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -1263,8 +1525,12 @@ engine?.onMessageRecalled = (int? code, RCIMIWMessage? message) {
 */
 
     engine?.onPrivateReadReceiptMessageSent = (int? code, String? targetId, String? channelId, int? timestamp) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onPrivateReadReceiptMessageSent";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -1281,8 +1547,12 @@ engine?.onPrivateReadReceiptMessageSent = (int? code, String? targetId, String? 
 */
 
     engine?.onMessageExpansionUpdated = (int? code, String? messageUId, Map? expansion) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageExpansionUpdated";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["messageUId"] = messageUId ?? "";
       arg["expansion"] = expansion.toString();
@@ -1298,8 +1568,12 @@ engine?.onMessageExpansionUpdated = (int? code, String? messageUId, Map? expansi
 */
 
     engine?.onMessageExpansionForKeysRemoved = (int? code, String? messageUId, List<String>? keys) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageExpansionForKeysRemoved";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["messageUId"] = messageUId ?? "";
       arg["keys"] = keys.toString();
@@ -1315,8 +1589,12 @@ engine?.onMessageExpansionForKeysRemoved = (int? code, String? messageUId, List<
 */
 
     engine?.onMessageReceiveStatusChanged = (int? code, int? messageId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageReceiveStatusChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["messageId"] = messageId.toString();
 
@@ -1331,8 +1609,12 @@ engine?.onMessageReceiveStatusChanged = (int? code, int? messageId) {
 */
 
     engine?.onMessageSentStatusChanged = (int? code, int? messageId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageSentStatusChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["messageId"] = messageId.toString();
 
@@ -1347,8 +1629,12 @@ engine?.onMessageSentStatusChanged = (int? code, int? messageId) {
 */
 
     engine?.onChatRoomJoined = (int? code, String? targetId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomJoined";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
 
@@ -1363,8 +1649,12 @@ engine?.onChatRoomJoined = (int? code, String? targetId) {
 */
 
     engine?.onChatRoomJoining = (String? targetId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomJoining";
+      arg["timestamp"] = timeStr;
       arg["targetId"] = targetId ?? "";
 
       bus.emit("rong_im_listener", arg);
@@ -1378,8 +1668,12 @@ engine?.onChatRoomJoining = (String? targetId) {
 */
 
     engine?.onChatRoomLeft = (int? code, String? targetId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomLeft";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
 
@@ -1401,8 +1695,12 @@ engine?.onChatRoomLeft = (int? code, String? targetId) {
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomMessagesLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["messages"] = messagesJson.toString();
@@ -1419,8 +1717,12 @@ engine?.onChatRoomMessagesLoaded = (int? code, String? targetId, List<RCIMIWMess
 */
 
     engine?.onChatRoomEntryAdded = (int? code, String? targetId, String? key) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntryAdded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["key"] = key ?? "";
@@ -1436,8 +1738,12 @@ engine?.onChatRoomEntryAdded = (int? code, String? targetId, String? key) {
 */
 
     engine?.onChatRoomEntriesAdded = (int? code, String? targetId, Map? entries, Map? errorEntries) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntriesAdded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["entries"] = entries.toString();
@@ -1454,8 +1760,12 @@ engine?.onChatRoomEntriesAdded = (int? code, String? targetId, Map? entries, Map
 */
 
     engine?.onChatRoomEntryLoaded = (int? code, String? targetId, Map? entry) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntryLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["entry"] = entry.toString();
@@ -1471,8 +1781,12 @@ engine?.onChatRoomEntryLoaded = (int? code, String? targetId, Map? entry) {
 */
 
     engine?.onChatRoomAllEntriesLoaded = (int? code, String? targetId, Map? entries) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomAllEntriesLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["entries"] = entries.toString();
@@ -1488,8 +1802,12 @@ engine?.onChatRoomAllEntriesLoaded = (int? code, String? targetId, Map? entries)
 */
 
     engine?.onChatRoomEntryRemoved = (int? code, String? targetId, String? key) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntryRemoved";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["key"] = key ?? "";
@@ -1505,8 +1823,12 @@ engine?.onChatRoomEntryRemoved = (int? code, String? targetId, String? key) {
 */
 
     engine?.onChatRoomEntriesRemoved = (int? code, String? targetId, List<String>? keys) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onChatRoomEntriesRemoved";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["keys"] = keys.toString();
@@ -1522,8 +1844,12 @@ engine?.onChatRoomEntriesRemoved = (int? code, String? targetId, List<String>? k
 */
 
     engine?.onBlacklistAdded = (int? code, String? userId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onBlacklistAdded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["userId"] = userId ?? "";
 
@@ -1538,8 +1864,12 @@ engine?.onBlacklistAdded = (int? code, String? userId) {
 */
 
     engine?.onBlacklistRemoved = (int? code, String? userId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onBlacklistRemoved";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["userId"] = userId ?? "";
 
@@ -1554,8 +1884,12 @@ engine?.onBlacklistRemoved = (int? code, String? userId) {
 */
 
     engine?.onBlacklistStatusLoaded = (int? code, String? userId, RCIMIWBlacklistStatus? status) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onBlacklistStatusLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["userId"] = userId ?? "";
       arg["status"] = status.toString();
@@ -1571,8 +1905,12 @@ engine?.onBlacklistStatusLoaded = (int? code, String? userId, RCIMIWBlacklistSta
 */
 
     engine?.onBlacklistLoaded = (int? code, List<String>? userIds) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onBlacklistLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["userIds"] = userIds.toString();
 
@@ -1603,8 +1941,12 @@ engine?.onBlacklistLoaded = (int? code, List<String>? userIds) {
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessagesSearched";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -1643,8 +1985,12 @@ engine?.onMessagesSearched = (int? code, RCIMIWConversationType? type, String? t
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessagesSearchedByTimeRange";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -1683,8 +2029,12 @@ engine?.onMessagesSearchedByTimeRange = (int? code, RCIMIWConversationType? type
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessagesSearchedByUserId";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["userId"] = userId ?? "";
       arg["type"] = type.toString();
@@ -1719,8 +2069,12 @@ engine?.onMessagesSearchedByUserId = (int? code, String? userId, RCIMIWConversat
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationsSearched";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["conversationTypes"] = conversationTypes.toString();
       arg["channelId"] = channelId ?? "";
@@ -1739,8 +2093,12 @@ engine?.onConversationsSearched = (int? code, List<RCIMIWConversationType>? conv
 */
 
     engine?.onGroupReadReceiptRequestSent = (int? code, RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onGroupReadReceiptRequestSent";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -1767,8 +2125,12 @@ engine?.onGroupReadReceiptRequestSent = (int? code, RCIMIWMessage? message) {
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onGroupReadReceiptResponseSent";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -1790,8 +2152,12 @@ engine?.onGroupReadReceiptResponseSent = (int? code, String? targetId, String? c
       int? spanMinutes,
       RCIMIWPushNotificationQuietHoursLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onNotificationQuietHoursChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["startTime"] = startTime ?? "";
       arg["spanMinutes"] = spanMinutes.toString();
@@ -1808,8 +2174,12 @@ engine?.onNotificationQuietHoursChanged = (int? code, String? startTime, int? sp
 */
 
     engine?.onNotificationQuietHoursRemoved = (int? code) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onNotificationQuietHoursRemoved";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
 
       bus.emit("rong_im_listener", arg);
@@ -1828,8 +2198,12 @@ engine?.onNotificationQuietHoursRemoved = (int? code) {
       int? spanMinutes,
       RCIMIWPushNotificationQuietHoursLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onNotificationQuietHoursLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["startTime"] = startTime ?? "";
       arg["spanMinutes"] = spanMinutes.toString();
@@ -1852,8 +2226,12 @@ engine?.onNotificationQuietHoursLoaded = (int? code, String? startTime, int? spa
       String? channelId,
       RCIMIWPushNotificationLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationNotificationLevelChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -1877,8 +2255,12 @@ engine?.onConversationNotificationLevelChanged = (int? code, RCIMIWConversationT
       String? channelId,
       RCIMIWPushNotificationLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationNotificationLevelLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -1900,8 +2282,12 @@ engine?.onConversationNotificationLevelLoaded = (int? code, RCIMIWConversationTy
       RCIMIWConversationType? type,
       RCIMIWPushNotificationLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTypeNotificationLevelChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["level"] = level.toString();
@@ -1921,8 +2307,12 @@ engine?.onConversationTypeNotificationLevelChanged = (int? code, RCIMIWConversat
       RCIMIWConversationType? type,
       RCIMIWPushNotificationLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationTypeNotificationLevelLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["level"] = level.toString();
@@ -1942,8 +2332,12 @@ engine?.onConversationTypeNotificationLevelLoaded = (int? code, RCIMIWConversati
       String? targetId,
       RCIMIWPushNotificationLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupDefaultNotificationLevelChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["level"] = level.toString();
@@ -1963,8 +2357,12 @@ engine?.onUltraGroupDefaultNotificationLevelChanged = (int? code, String? target
       String? targetId,
       RCIMIWPushNotificationLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupDefaultNotificationLevelLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["level"] = level.toString();
@@ -1985,8 +2383,12 @@ engine?.onUltraGroupDefaultNotificationLevelLoaded = (int? code, String? targetI
       String? channelId,
       RCIMIWPushNotificationLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupChannelDefaultNotificationLevelChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -2008,8 +2410,12 @@ engine?.onUltraGroupChannelDefaultNotificationLevelChanged = (int? code, String?
       String? channelId,
       RCIMIWPushNotificationLevel? level,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupChannelDefaultNotificationLevelLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -2026,8 +2432,12 @@ engine?.onUltraGroupChannelDefaultNotificationLevelLoaded = (int? code, String? 
 */
 
     engine?.onPushContentShowStatusChanged = (int? code, bool? showContent) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onPushContentShowStatusChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["showContent"] = showContent.toString();
 
@@ -2042,8 +2452,12 @@ engine?.onPushContentShowStatusChanged = (int? code, bool? showContent) {
 */
 
     engine?.onPushLanguageChanged = (int? code, String? language) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onPushLanguageChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["language"] = language ?? "";
 
@@ -2058,8 +2472,12 @@ engine?.onPushLanguageChanged = (int? code, String? language) {
 */
 
     engine?.onPushReceiveStatusChanged = (int? code, bool? receive) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onPushReceiveStatusChanged";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["receive"] = receive.toString();
 
@@ -2080,8 +2498,12 @@ engine?.onPushReceiveStatusChanged = (int? code, bool? receive) {
       String? channelId,
       int? count,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onMessageCountLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -2111,8 +2533,12 @@ engine?.onMessageCountLoaded = (int? code, RCIMIWConversationType? type, String?
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onTopConversationsLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["conversationTypes"] = conversationTypes.toString();
       arg["channelId"] = channelId ?? "";
@@ -2129,8 +2555,12 @@ engine?.onTopConversationsLoaded = (int? code, List<RCIMIWConversationType>? con
 */
 
     engine?.onGroupMessageToDesignatedUsersAttached = (RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onGroupMessageToDesignatedUsersAttached";
+      arg["timestamp"] = timeStr;
       arg["message"] = formatJson(message?.toJson());
 
       bus.emit("rong_im_listener", arg);
@@ -2144,8 +2574,12 @@ engine?.onGroupMessageToDesignatedUsersAttached = (RCIMIWMessage? message) {
 */
 
     engine?.onGroupMessageToDesignatedUsersSent = (int? code, RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onGroupMessageToDesignatedUsersSent";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
 
@@ -2160,8 +2594,12 @@ engine?.onGroupMessageToDesignatedUsersSent = (int? code, RCIMIWMessage? message
 */
 
     engine?.onUltraGroupReadStatusSynced = (int? code, String? targetId, String? channelId, int? timestamp) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupReadStatusSynced";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -2190,8 +2628,12 @@ engine?.onUltraGroupReadStatusSynced = (int? code, String? targetId, String? cha
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onConversationsLoadedForAllChannel";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["type"] = type.toString();
       arg["targetId"] = targetId ?? "";
@@ -2208,8 +2650,12 @@ engine?.onConversationsLoadedForAllChannel = (int? code, RCIMIWConversationType?
 */
 
     engine?.onUltraGroupUnreadMentionedCountLoaded = (int? code, String? targetId, int? count) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupUnreadMentionedCountLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["count"] = count.toString();
@@ -2225,8 +2671,12 @@ engine?.onUltraGroupUnreadMentionedCountLoaded = (int? code, String? targetId, i
 */
 
     engine?.onUltraGroupUnreadCountLoaded = (int? code, String? targetId, int? count) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupUnreadCountLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["count"] = count.toString();
@@ -2242,8 +2692,12 @@ engine?.onUltraGroupUnreadCountLoaded = (int? code, String? targetId, int? count
 */
 
     engine?.onUltraGroupMessageModified = (int? code, String? messageUId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessageModified";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["messageUId"] = messageUId ?? "";
 
@@ -2258,8 +2712,12 @@ engine?.onUltraGroupMessageModified = (int? code, String? messageUId) {
 */
 
     engine?.onUltraGroupMessageRecalled = (int? code, RCIMIWMessage? message, bool? deleteRemote) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessageRecalled";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["message"] = formatJson(message?.toJson());
       arg["deleteRemote"] = deleteRemote.toString();
@@ -2281,8 +2739,12 @@ engine?.onUltraGroupMessageRecalled = (int? code, RCIMIWMessage? message, bool? 
       int? timestamp,
       RCIMIWMessageOperationPolicy? policy,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessagesCleared";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -2300,8 +2762,12 @@ engine?.onUltraGroupMessagesCleared = (int? code, String? targetId, String? chan
 */
 
     engine?.onUltraGroupMessagesClearedForAllChannel = (int? code, String? targetId, int? timestamp) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessagesClearedForAllChannel";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["timestamp"] = timestamp.toString();
@@ -2322,8 +2788,12 @@ engine?.onUltraGroupMessagesClearedForAllChannel = (int? code, String? targetId,
       String? channelId,
       RCIMIWUltraGroupTypingStatus? typingStatus,
     ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupTypingStatusSent";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["targetId"] = targetId ?? "";
       arg["channelId"] = channelId ?? "";
@@ -2358,8 +2828,12 @@ engine?.onUltraGroupTypingStatusSent = (int? code, String? targetId, String? cha
         }
       }
 
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onBatchRemoteUltraGroupMessagesLoaded";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["matchedMessages"] = matchedMessagesJson.toString();
       arg["notMatchedMessages"] = notMatchedMessagesJson.toString();
@@ -2375,8 +2849,12 @@ engine?.onBatchRemoteUltraGroupMessagesLoaded = (int? code, List<RCIMIWMessage>?
 */
 
     engine?.onUltraGroupMessageExpansionUpdated = (int? code, Map? expansion, String? messageUId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessageExpansionUpdated";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["expansion"] = expansion.toString();
       arg["messageUId"] = messageUId ?? "";
@@ -2392,8 +2870,12 @@ engine?.onUltraGroupMessageExpansionUpdated = (int? code, Map? expansion, String
 */
 
     engine?.onUltraGroupMessageExpansionForKeysRemoved = (int? code, String? messageUId, List<String>? keys) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
       Map<String, String> arg = {};
       arg["listener"] = "onUltraGroupMessageExpansionForKeysRemoved";
+      arg["timestamp"] = timeStr;
       arg["code"] = code.toString();
       arg["messageUId"] = messageUId ?? "";
       arg["keys"] = keys.toString();
@@ -2406,6 +2888,228 @@ engine?.onUltraGroupMessageExpansionForKeysRemoved = (int? code, String? message
     //...
 };
 //callback_onUltraGroupMessageExpansionForKeysRemoved_call
+*/
+
+    engine?.onGroupOperation = (
+      String? groupId,
+      RCIMIWGroupMemberInfo? operatorInfo,
+      RCIMIWGroupInfo? groupInfo,
+      RCIMIWGroupOperation? operation,
+      List<RCIMIWGroupMemberInfo>? memberInfos,
+      int? operationTime,
+    ) {
+      List memberInfosJson = [];
+      if (memberInfos != null) {
+        for (var temp in memberInfos) {
+          memberInfosJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onGroupOperation";
+      arg["timestamp"] = timeStr;
+      arg["groupId"] = groupId ?? "";
+      arg["operatorInfo"] = formatJson(operatorInfo?.toJson());
+      arg["groupInfo"] = formatJson(groupInfo?.toJson());
+      arg["operation"] = operation.toString();
+      arg["memberInfos"] = memberInfosJson.toString();
+      arg["operationTime"] = operationTime.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onGroupOperation_call
+engine?.onGroupOperation = (String? groupId, RCIMIWGroupMemberInfo? operatorInfo, RCIMIWGroupInfo? groupInfo, RCIMIWGroupOperation? operation, List<RCIMIWGroupMemberInfo>? memberInfos, int? operationTime) {
+    //...
+};
+//callback_onGroupOperation_call
+*/
+
+    engine?.onGroupInfoChanged = (
+      RCIMIWGroupMemberInfo? operatorInfo,
+      RCIMIWGroupInfo? fullGroupInfo,
+      RCIMIWGroupInfo? changedGroupInfo,
+      int? operationTime,
+    ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onGroupInfoChanged";
+      arg["timestamp"] = timeStr;
+      arg["operatorInfo"] = formatJson(operatorInfo?.toJson());
+      arg["fullGroupInfo"] = formatJson(fullGroupInfo?.toJson());
+      arg["changedGroupInfo"] = formatJson(changedGroupInfo?.toJson());
+      arg["operationTime"] = operationTime.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onGroupInfoChanged_call
+engine?.onGroupInfoChanged = (RCIMIWGroupMemberInfo? operatorInfo, RCIMIWGroupInfo? fullGroupInfo, RCIMIWGroupInfo? changedGroupInfo, int? operationTime) {
+    //...
+};
+//callback_onGroupInfoChanged_call
+*/
+
+    engine?.onGroupMemberInfoChanged = (
+      String? groupId,
+      RCIMIWGroupMemberInfo? operatorInfo,
+      RCIMIWGroupMemberInfo? memberInfo,
+      int? operationTime,
+    ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onGroupMemberInfoChanged";
+      arg["timestamp"] = timeStr;
+      arg["groupId"] = groupId ?? "";
+      arg["operatorInfo"] = formatJson(operatorInfo?.toJson());
+      arg["memberInfo"] = formatJson(memberInfo?.toJson());
+      arg["operationTime"] = operationTime.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onGroupMemberInfoChanged_call
+engine?.onGroupMemberInfoChanged = (String? groupId, RCIMIWGroupMemberInfo? operatorInfo, RCIMIWGroupMemberInfo? memberInfo, int? operationTime) {
+    //...
+};
+//callback_onGroupMemberInfoChanged_call
+*/
+
+    engine?.onGroupApplicationEvent = (RCIMIWGroupApplicationInfo? info) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onGroupApplicationEvent";
+      arg["timestamp"] = timeStr;
+      arg["info"] = formatJson(info?.toJson());
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onGroupApplicationEvent_call
+engine?.onGroupApplicationEvent = (RCIMIWGroupApplicationInfo? info) {
+    //...
+};
+//callback_onGroupApplicationEvent_call
+*/
+
+    engine?.onGroupRemarkChangedSync = (
+      String? groupId,
+      RCIMIWGroupOperationType? operationType,
+      String? groupRemark,
+      int? operationTime,
+    ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onGroupRemarkChangedSync";
+      arg["timestamp"] = timeStr;
+      arg["groupId"] = groupId ?? "";
+      arg["operationType"] = operationType.toString();
+      arg["groupRemark"] = groupRemark ?? "";
+      arg["operationTime"] = operationTime.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onGroupRemarkChangedSync_call
+engine?.onGroupRemarkChangedSync = (String? groupId, RCIMIWGroupOperationType? operationType, String? groupRemark, int? operationTime) {
+    //...
+};
+//callback_onGroupRemarkChangedSync_call
+*/
+
+    engine?.onGroupFollowsChangedSync = (
+      String? groupId,
+      RCIMIWGroupOperationType? operationType,
+      List<String>? userIds,
+      int? operationTime,
+    ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onGroupFollowsChangedSync";
+      arg["timestamp"] = timeStr;
+      arg["groupId"] = groupId ?? "";
+      arg["operationType"] = operationType.toString();
+      arg["userIds"] = userIds.toString();
+      arg["operationTime"] = operationTime.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onGroupFollowsChangedSync_call
+engine?.onGroupFollowsChangedSync = (String? groupId, RCIMIWGroupOperationType? operationType, List<String>? userIds, int? operationTime) {
+    //...
+};
+//callback_onGroupFollowsChangedSync_call
+*/
+
+    engine?.onChatRoomNotifyMultiLoginSync = (RCIMIWChatRoomSyncEvent? event) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onChatRoomNotifyMultiLoginSync";
+      arg["timestamp"] = timeStr;
+      arg["event"] = formatJson(event?.toJson());
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onChatRoomNotifyMultiLoginSync_call
+engine?.onChatRoomNotifyMultiLoginSync = (RCIMIWChatRoomSyncEvent? event) {
+    //...
+};
+//callback_onChatRoomNotifyMultiLoginSync_call
+*/
+
+    engine?.onChatRoomNotifyBlock = (RCIMIWChatRoomMemberBlockEvent? event) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onChatRoomNotifyBlock";
+      arg["timestamp"] = timeStr;
+      arg["event"] = formatJson(event?.toJson());
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onChatRoomNotifyBlock_call
+engine?.onChatRoomNotifyBlock = (RCIMIWChatRoomMemberBlockEvent? event) {
+    //...
+};
+//callback_onChatRoomNotifyBlock_call
+*/
+
+    engine?.onChatRoomNotifyBan = (RCIMIWChatRoomMemberBanEvent? event) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onChatRoomNotifyBan";
+      arg["timestamp"] = timeStr;
+      arg["event"] = formatJson(event?.toJson());
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onChatRoomNotifyBan_call
+engine?.onChatRoomNotifyBan = (RCIMIWChatRoomMemberBanEvent? event) {
+    //...
+};
+//callback_onChatRoomNotifyBan_call
 */
   }
 

@@ -26,8 +26,12 @@ registerNativeCustomMessage(Map arg) async {
   RCIMIWNativeCustomMessagePersistentFlag persistentFlag =
       RCIMIWNativeCustomMessagePersistentFlag.values[int.parse(arg['persistentFlag'])];
   int? code = await IMEngineManager().engine?.registerNativeCustomMessage(messageIdentifier, persistentFlag);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "registerNativeCustomMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -62,8 +66,12 @@ registerNativeCustomMediaMessage(Map arg) async {
   RCIMIWNativeCustomMessagePersistentFlag persistentFlag =
       RCIMIWNativeCustomMessagePersistentFlag.values[int.parse(arg['persistentFlag'])];
   int? code = await IMEngineManager().engine?.registerNativeCustomMediaMessage(messageIdentifier, persistentFlag);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "registerNativeCustomMediaMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -107,15 +115,23 @@ connect(Map arg) async {
   if (useCallback == 1) {
     callback = RCIMIWConnectCallback(
       onDatabaseOpened: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "connect-onDatabaseOpened";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onConnected: (int? code, String? userId) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "connect-onConnected";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
         arg["userId"] = userId ?? "";
 
@@ -125,8 +141,12 @@ connect(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.connect(token, timeout, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "connect";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -155,8 +175,12 @@ disconnect(Map arg) async {
   int receivePushInt = int.parse(arg['receivePush']);
   bool receivePush = receivePushInt == 0 ? false : true;
   int? code = await IMEngineManager().engine?.disconnect(receivePush);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "disconnect";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -170,6 +194,11 @@ disconnect(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
+/*
+//fun_getConnectionStatus_call
+RCIMIWConnectionStatus? ret = await engine?.getConnectionStatus();
+//fun_getConnectionStatus_call
+*/
 /*
 //fun_createTextMessage_call
 RCIMIWTextMessage? ret = await engine?.createTextMessage(type, targetId, channelId, text);
@@ -303,8 +332,12 @@ loadConversation(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadConversation(type, targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversation";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -349,15 +382,23 @@ getConversation(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetConversationCallback(
       onSuccess: (RCIMIWConversation? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversation-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = formatJson(t?.toJson());
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversation-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -366,8 +407,12 @@ getConversation(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getConversation(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversation";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -412,8 +457,12 @@ loadConversations(Map arg) async {
   int startTime = int.parse(arg['startTime']);
   int count = int.parse(arg['count']);
   int? code = await IMEngineManager().engine?.loadConversations(conversationTypesInt, channelId, startTime, count);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversations";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -475,15 +524,23 @@ getConversations(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversations-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversations-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -498,8 +555,118 @@ getConversations(Map arg) async {
     count,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversations";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getConversationsWithPriority_call
+IRCIMIWGetConversationsCallback? callback = IRCIMIWGetConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getConversationsWithPriority(conversationTypesInt, channelId, startTime, count, topPriority, callback:callback);
+//fun_getConversationsWithPriority_call
+*/
+
+getConversationsWithPriority(Map arg) async {
+  if (arg['conversationTypes'] == null) {
+    RCIWToast.showToast("conversationTypes 为空");
+    return;
+  }
+
+  if (arg['startTime'] == null) {
+    RCIWToast.showToast("startTime 为空");
+    return;
+  }
+
+  if (arg['count'] == null) {
+    RCIWToast.showToast("count 为空");
+    return;
+  }
+
+  if (arg['topPriority'] == null) {
+    RCIWToast.showToast("topPriority 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List conversationTypes = (arg["conversationTypes"]).split(",");
+  List<RCIMIWConversationType> conversationTypesInt = [];
+  for (var element in conversationTypes) {
+    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+  }
+  String? channelId = arg['channelId'];
+  int startTime = int.parse(arg['startTime']);
+  int count = int.parse(arg['count']);
+  int topPriorityInt = int.parse(arg['topPriority']);
+  bool topPriority = topPriorityInt == 0 ? false : true;
+  IRCIMIWGetConversationsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetConversationsCallback(
+      onSuccess: (List<RCIMIWConversation>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getConversationsWithPriority-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getConversationsWithPriority-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getConversationsWithPriority(
+    conversationTypesInt,
+    channelId,
+    startTime,
+    count,
+    topPriority,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getConversationsWithPriority";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -548,15 +715,23 @@ getUnreadConversations(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadConversations-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadConversations-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -565,8 +740,12 @@ getUnreadConversations(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUnreadConversations(conversationTypesInt, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadConversations";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -609,8 +788,12 @@ removeConversation(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveConversationCallback(
       onConversationRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeConversation-onConversationRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -619,8 +802,12 @@ removeConversation(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeConversation(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeConversation";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -661,8 +848,12 @@ removeConversations(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveConversationsCallback(
       onConversationsRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeConversations-onConversationsRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -671,8 +862,12 @@ removeConversations(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeConversations(conversationTypesInt, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeConversations";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -707,8 +902,12 @@ loadUnreadCount(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadUnreadCount(type, targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -753,15 +952,23 @@ getUnreadCount(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUnreadCountCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadCount-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadCount-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -770,8 +977,12 @@ getUnreadCount(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUnreadCount(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -794,8 +1005,12 @@ int? ret = await engine?.loadTotalUnreadCount(channelId);
 loadTotalUnreadCount(Map arg) async {
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadTotalUnreadCount(channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadTotalUnreadCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -829,15 +1044,23 @@ getTotalUnreadCount(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetTotalUnreadCountCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getTotalUnreadCount-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getTotalUnreadCount-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -846,8 +1069,12 @@ getTotalUnreadCount(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getTotalUnreadCount(channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getTotalUnreadCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -882,8 +1109,12 @@ loadUnreadMentionedCount(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadUnreadMentionedCount(type, targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadMentionedCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -928,15 +1159,23 @@ getUnreadMentionedCount(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUnreadMentionedCountCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadMentionedCount-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadMentionedCount-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -945,8 +1184,12 @@ getUnreadMentionedCount(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUnreadMentionedCount(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadMentionedCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -968,8 +1211,12 @@ int? ret = await engine?.loadUltraGroupAllUnreadCount();
 
 loadUltraGroupAllUnreadCount() async {
   int? code = await IMEngineManager().engine?.loadUltraGroupAllUnreadCount();
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupAllUnreadCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (IMEngineManager().engine == null) {
@@ -997,15 +1244,23 @@ getUltraGroupAllUnreadCount(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUltraGroupAllUnreadCountCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupAllUnreadCount-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupAllUnreadCount-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1014,8 +1269,12 @@ getUltraGroupAllUnreadCount(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUltraGroupAllUnreadCount(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupAllUnreadCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1037,8 +1296,12 @@ int? ret = await engine?.loadUltraGroupAllUnreadMentionedCount();
 
 loadUltraGroupAllUnreadMentionedCount() async {
   int? code = await IMEngineManager().engine?.loadUltraGroupAllUnreadMentionedCount();
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupAllUnreadMentionedCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (IMEngineManager().engine == null) {
@@ -1066,15 +1329,23 @@ getUltraGroupAllUnreadMentionedCount(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupAllUnreadMentionedCount-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupAllUnreadMentionedCount-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1083,8 +1354,12 @@ getUltraGroupAllUnreadMentionedCount(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUltraGroupAllUnreadMentionedCount(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupAllUnreadMentionedCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1112,8 +1387,12 @@ loadUltraGroupUnreadCount(Map arg) async {
 
   String targetId = arg['targetId'];
   int? code = await IMEngineManager().engine?.loadUltraGroupUnreadCount(targetId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupUnreadCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1151,15 +1430,23 @@ getUltraGroupUnreadCount(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUltraGroupUnreadCountCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupUnreadCount-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupUnreadCount-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1168,8 +1455,12 @@ getUltraGroupUnreadCount(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUltraGroupUnreadCount(targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupUnreadCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1197,8 +1488,12 @@ loadUltraGroupUnreadMentionedCount(Map arg) async {
 
   String targetId = arg['targetId'];
   int? code = await IMEngineManager().engine?.loadUltraGroupUnreadMentionedCount(targetId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupUnreadMentionedCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1236,15 +1531,23 @@ getUltraGroupUnreadMentionedCount(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUltraGroupUnreadMentionedCountCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupUnreadMentionedCount-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupUnreadMentionedCount-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1253,8 +1556,12 @@ getUltraGroupUnreadMentionedCount(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUltraGroupUnreadMentionedCount(targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupUnreadMentionedCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1298,8 +1605,12 @@ loadUnreadCountByConversationTypes(Map arg) async {
     channelId,
     contain,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadCountByConversationTypes";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1349,15 +1660,23 @@ getUnreadCountByConversationTypes(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUnreadCountByConversationTypesCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadCountByConversationTypes-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadCountByConversationTypes-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1371,8 +1690,99 @@ getUnreadCountByConversationTypes(Map arg) async {
     contain,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadCountByConversationTypes";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getUnreadCountByLevels_call
+IRCIMIWGetUnreadCountByLevelsCallback? callback = IRCIMIWGetUnreadCountByLevelsCallback(onSuccess: (int? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getUnreadCountByLevels(conversationTypesInt, levelsInt, callback:callback);
+//fun_getUnreadCountByLevels_call
+*/
+
+getUnreadCountByLevels(Map arg) async {
+  if (arg['conversationTypes'] == null) {
+    RCIWToast.showToast("conversationTypes 为空");
+    return;
+  }
+
+  if (arg['levels'] == null) {
+    RCIWToast.showToast("levels 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List conversationTypes = (arg["conversationTypes"]).split(",");
+  List<RCIMIWConversationType> conversationTypesInt = [];
+  for (var element in conversationTypes) {
+    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+  }
+
+  List levels = (arg["levels"]).split(",");
+  List<RCIMIWPushNotificationLevel> levelsInt = [];
+  for (var element in levels) {
+    levelsInt.add(RCIMIWPushNotificationLevel.values[int.parse(element)]);
+  }
+  IRCIMIWGetUnreadCountByLevelsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetUnreadCountByLevelsCallback(
+      onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getUnreadCountByLevels-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = t.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getUnreadCountByLevels-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getUnreadCountByLevels(
+    conversationTypesInt,
+    levelsInt,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getUnreadCountByLevels";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1421,8 +1831,12 @@ clearUnreadCount(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWClearUnreadCountCallback(
       onUnreadCountCleared: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "clearUnreadCount-onUnreadCountCleared";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1437,8 +1851,12 @@ clearUnreadCount(Map arg) async {
     timestamp,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearUnreadCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1487,8 +1905,12 @@ saveDraftMessage(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWSaveDraftMessageCallback(
       onDraftMessageSaved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "saveDraftMessage-onDraftMessageSaved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1497,8 +1919,12 @@ saveDraftMessage(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.saveDraftMessage(type, targetId, channelId, draft, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "saveDraftMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1533,8 +1959,12 @@ loadDraftMessage(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadDraftMessage(type, targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadDraftMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1579,15 +2009,23 @@ getDraftMessage(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetDraftMessageCallback(
       onSuccess: (String? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getDraftMessage-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t ?? "";
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getDraftMessage-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1596,8 +2034,12 @@ getDraftMessage(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getDraftMessage(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getDraftMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1640,8 +2082,12 @@ clearDraftMessage(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWClearDraftMessageCallback(
       onDraftMessageCleared: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "clearDraftMessage-onDraftMessageCleared";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1650,8 +2096,12 @@ clearDraftMessage(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.clearDraftMessage(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearDraftMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1684,8 +2134,12 @@ loadBlockedConversations(Map arg) async {
   }
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadBlockedConversations(conversationTypesInt, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBlockedConversations";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1735,15 +2189,23 @@ getBlockedConversations(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getBlockedConversations-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getBlockedConversations-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1756,8 +2218,12 @@ getBlockedConversations(Map arg) async {
     channelId,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBlockedConversations";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1807,8 +2273,12 @@ changeConversationTopStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangeConversationTopStatusCallback(
       onConversationTopStatusChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changeConversationTopStatus-onConversationTopStatusChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1823,8 +2293,95 @@ changeConversationTopStatus(Map arg) async {
     top,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationTopStatus";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_changeConversationTopStatusWithUpdateTme_call
+IRCIMIWChangeConversationTopStatusCallback? callback = IRCIMIWChangeConversationTopStatusCallback(onConversationTopStatusChanged: (int? code) {
+    //...
+});
+
+int? ret = await engine?.changeConversationTopStatusWithUpdateTme(type, targetId, channelId, top, updateOperationTime, callback:callback);
+//fun_changeConversationTopStatusWithUpdateTme_call
+*/
+
+changeConversationTopStatusWithUpdateTme(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['top'] == null) {
+    RCIWToast.showToast("top 为空");
+    return;
+  }
+
+  if (arg['updateOperationTime'] == null) {
+    RCIWToast.showToast("updateOperationTime 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  int topInt = int.parse(arg['top']);
+  bool top = topInt == 0 ? false : true;
+  int updateOperationTimeInt = int.parse(arg['updateOperationTime']);
+  bool updateOperationTime = updateOperationTimeInt == 0 ? false : true;
+  IRCIMIWChangeConversationTopStatusCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWChangeConversationTopStatusCallback(
+      onConversationTopStatusChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "changeConversationTopStatusWithUpdateTme-onConversationTopStatusChanged";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.changeConversationTopStatusWithUpdateTme(
+    type,
+    targetId,
+    channelId,
+    top,
+    updateOperationTime,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "changeConversationTopStatusWithUpdateTme";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1859,8 +2416,12 @@ loadConversationTopStatus(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadConversationTopStatus(type, targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationTopStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1905,15 +2466,23 @@ getConversationTopStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetConversationTopStatusCallback(
       onSuccess: (bool? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationTopStatus-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationTopStatus-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1922,8 +2491,12 @@ getConversationTopStatus(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getConversationTopStatus(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationTopStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -1972,8 +2545,12 @@ syncConversationReadStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWSyncConversationReadStatusCallback(
       onConversationReadStatusSynced: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "syncConversationReadStatus-onConversationReadStatusSynced";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -1988,8 +2565,12 @@ syncConversationReadStatus(Map arg) async {
     timestamp,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "syncConversationReadStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2030,8 +2611,12 @@ sendTypingStatus(Map arg) async {
   String? channelId = arg['channelId'];
   String currentType = arg['currentType'];
   int? code = await IMEngineManager().engine?.sendTypingStatus(type, targetId, channelId, currentType);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "sendTypingStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2090,8 +2675,12 @@ loadMessages(Map arg) async {
   RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[int.parse(arg['policy'])];
   int count = int.parse(arg['count']);
   int? code = await IMEngineManager().engine?.loadMessages(type, targetId, channelId, sentTime, order, policy, count);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2167,15 +2756,23 @@ getMessages(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getMessages-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getMessages-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -2193,8 +2790,12 @@ getMessages(Map arg) async {
     count,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2231,6 +2832,233 @@ int? ret = await engine?.getMessageByUId(messageUId, callback:callback);
 //fun_getMessageByUId_call
 */
 /*
+//fun_getMessagesAroundTime_call
+IRCIMIWGetMessagesAroundTimeCallback? callback = IRCIMIWGetMessagesAroundTimeCallback(onSuccess: (List<RCIMIWMessage>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getMessagesAroundTime(type, targetId, channelId, sentTime, beforeCount, afterCount, callback:callback);
+//fun_getMessagesAroundTime_call
+*/
+
+getMessagesAroundTime(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['sentTime'] == null) {
+    RCIWToast.showToast("sentTime 为空");
+    return;
+  }
+
+  if (arg['beforeCount'] == null) {
+    RCIWToast.showToast("beforeCount 为空");
+    return;
+  }
+
+  if (arg['afterCount'] == null) {
+    RCIWToast.showToast("afterCount 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  int sentTime = int.parse(arg['sentTime']);
+  int beforeCount = int.parse(arg['beforeCount']);
+  int afterCount = int.parse(arg['afterCount']);
+  IRCIMIWGetMessagesAroundTimeCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetMessagesAroundTimeCallback(
+      onSuccess: (List<RCIMIWMessage>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getMessagesAroundTime-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getMessagesAroundTime-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getMessagesAroundTime(
+    type,
+    targetId,
+    channelId,
+    sentTime,
+    beforeCount,
+    afterCount,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getMessagesAroundTime";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getLocalMessagesByMessageTypes_call
+IRCIMIWGetMessagesCallback? callback = IRCIMIWGetMessagesCallback(onSuccess: (List<RCIMIWMessage>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getLocalMessagesByMessageTypes(type, targetId, channelId, messageTypesInt, sentTime, order, count, callback:callback);
+//fun_getLocalMessagesByMessageTypes_call
+*/
+
+getLocalMessagesByMessageTypes(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['messageTypes'] == null) {
+    RCIWToast.showToast("messageTypes 为空");
+    return;
+  }
+
+  if (arg['sentTime'] == null) {
+    RCIWToast.showToast("sentTime 为空");
+    return;
+  }
+
+  if (arg['order'] == null) {
+    RCIWToast.showToast("order 为空");
+    return;
+  }
+
+  if (arg['count'] == null) {
+    RCIWToast.showToast("count 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  List messageTypes = (arg["messageTypes"]).split(",");
+  List<RCIMIWMessageType> messageTypesInt = [];
+  for (var element in messageTypes) {
+    messageTypesInt.add(RCIMIWMessageType.values[int.parse(element)]);
+  }
+  int sentTime = int.parse(arg['sentTime']);
+  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[int.parse(arg['order'])];
+  int count = int.parse(arg['count']);
+  IRCIMIWGetMessagesCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetMessagesCallback(
+      onSuccess: (List<RCIMIWMessage>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getLocalMessagesByMessageTypes-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getLocalMessagesByMessageTypes-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getLocalMessagesByMessageTypes(
+    type,
+    targetId,
+    channelId,
+    messageTypesInt,
+    sentTime,
+    order,
+    count,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getLocalMessagesByMessageTypes";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
 //fun_loadFirstUnreadMessage_call
 int? ret = await engine?.loadFirstUnreadMessage(type, targetId, channelId);
 //fun_loadFirstUnreadMessage_call
@@ -2251,8 +3079,12 @@ loadFirstUnreadMessage(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadFirstUnreadMessage(type, targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadFirstUnreadMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2297,15 +3129,23 @@ getFirstUnreadMessage(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetFirstUnreadMessageCallback(
       onSuccess: (RCIMIWMessage? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getFirstUnreadMessage-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = formatJson(t?.toJson());
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getFirstUnreadMessage-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -2314,8 +3154,12 @@ getFirstUnreadMessage(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getFirstUnreadMessage(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getFirstUnreadMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2350,8 +3194,12 @@ loadUnreadMentionedMessages(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadUnreadMentionedMessages(type, targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUnreadMentionedMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2403,15 +3251,23 @@ getUnreadMentionedMessages(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadMentionedMessages-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadMentionedMessages-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -2420,8 +3276,12 @@ getUnreadMentionedMessages(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUnreadMentionedMessages(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadMentionedMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2494,8 +3354,12 @@ clearMessages(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWClearMessagesCallback(
       onMessagesCleared: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "clearMessages-onMessagesCleared";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -2511,8 +3375,12 @@ clearMessages(Map arg) async {
     policy,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2535,6 +3403,61 @@ IRCIMIWDeleteLocalMessagesCallback? callback = IRCIMIWDeleteLocalMessagesCallbac
 int? ret = await engine?.deleteLocalMessages(messages, callback:callback);
 //fun_deleteLocalMessages_call
 */
+/*
+//fun_deleteLocalMessageByIds_call
+IRCIMIWDeleteLocalMessageByIdsCallback? callback = IRCIMIWDeleteLocalMessageByIdsCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.deleteLocalMessageByIds(messageIds, callback:callback);
+//fun_deleteLocalMessageByIds_call
+*/
+
+deleteLocalMessageByIds(Map arg) async {
+  if (arg['messageIds'] == null) {
+    RCIWToast.showToast("messageIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List<int> messageIds = (arg["messageIds"]).split(",");
+  IRCIMIWDeleteLocalMessageByIdsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWDeleteLocalMessageByIdsCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "deleteLocalMessageByIds-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.deleteLocalMessageByIds(messageIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "deleteLocalMessageByIds";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
 /*
 //fun_deleteMessages_call
 IRCIMIWDeleteMessagesCallback? callback = IRCIMIWDeleteMessagesCallback(onMessagesDeleted: (int? code, List<RCIMIWMessage>? messages) {
@@ -2582,8 +3505,12 @@ sendPrivateReadReceiptMessage(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWSendPrivateReadReceiptMessageCallback(
       onPrivateReadReceiptMessageSent: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "sendPrivateReadReceiptMessage-onPrivateReadReceiptMessageSent";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -2597,8 +3524,12 @@ sendPrivateReadReceiptMessage(Map arg) async {
     timestamp,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "sendPrivateReadReceiptMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2667,8 +3598,12 @@ updateMessageExpansion(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWUpdateMessageExpansionCallback(
       onMessageExpansionUpdated: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "updateMessageExpansion-onMessageExpansionUpdated";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -2677,8 +3612,12 @@ updateMessageExpansion(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.updateMessageExpansion(messageUId, expansion, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "updateMessageExpansion";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2720,8 +3659,12 @@ removeMessageExpansionForKeys(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveMessageExpansionForKeysCallback(
       onMessageExpansionForKeysRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeMessageExpansionForKeys-onMessageExpansionForKeysRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -2730,8 +3673,12 @@ removeMessageExpansionForKeys(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeMessageExpansionForKeys(messageUId, keys, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeMessageExpansionForKeys";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2773,8 +3720,12 @@ changeMessageSentStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangeMessageSentStatusCallback(
       onMessageSentStatusChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changeMessageSentStatus-onMessageSentStatusChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -2783,8 +3734,12 @@ changeMessageSentStatus(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.changeMessageSentStatus(messageId, sentStatus, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeMessageSentStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2826,8 +3781,12 @@ changeMessageReceiveStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangeMessageReceivedStatusCallback(
       onMessageReceiveStatusChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changeMessageReceiveStatus-onMessageReceiveStatusChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -2836,8 +3795,138 @@ changeMessageReceiveStatus(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.changeMessageReceiveStatus(messageId, receivedStatus, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeMessageReceiveStatus";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_changeMessageReceiveStatusInfo_call
+IRCIMIWChangeMessageReceivedStatusInfoCallback? callback = IRCIMIWChangeMessageReceivedStatusInfoCallback(onMessageReceiveStatusInfoChanged: (int? code) {
+    //...
+});
+
+int? ret = await engine?.changeMessageReceiveStatusInfo(messageId, receivedStatusInfo, callback:callback);
+//fun_changeMessageReceiveStatusInfo_call
+*/
+
+changeMessageReceiveStatusInfo(Map arg) async {
+  if (arg['messageId'] == null) {
+    RCIWToast.showToast("messageId 为空");
+    return;
+  }
+
+  if (arg['receivedStatusInfo'] == null) {
+    RCIWToast.showToast("receivedStatusInfo 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int messageId = int.parse(arg['messageId']);
+  RCIMIWReceivedStatusInfo receivedStatusInfo = arg['receivedStatusInfo'];
+  IRCIMIWChangeMessageReceivedStatusInfoCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWChangeMessageReceivedStatusInfoCallback(
+      onMessageReceiveStatusInfoChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "changeMessageReceiveStatusInfo-onMessageReceiveStatusInfoChanged";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.changeMessageReceiveStatusInfo(
+    messageId,
+    receivedStatusInfo,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "changeMessageReceiveStatusInfo";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_updateMessageLocalExtra_call
+IRCIMIWUpdateMessageLocalExtraCallback? callback = IRCIMIWUpdateMessageLocalExtraCallback(onMessageLocalExtraUpdated: (int? code) {
+    //...
+});
+
+int? ret = await engine?.updateMessageLocalExtra(messageId, extra, callback:callback);
+//fun_updateMessageLocalExtra_call
+*/
+
+updateMessageLocalExtra(Map arg) async {
+  if (arg['messageId'] == null) {
+    RCIWToast.showToast("messageId 为空");
+    return;
+  }
+
+  if (arg['extra'] == null) {
+    RCIWToast.showToast("extra 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int messageId = int.parse(arg['messageId']);
+  String extra = arg['extra'];
+  IRCIMIWUpdateMessageLocalExtraCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWUpdateMessageLocalExtraCallback(
+      onMessageLocalExtraUpdated: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "updateMessageLocalExtra-onMessageLocalExtraUpdated";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.updateMessageLocalExtra(messageId, extra, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "updateMessageLocalExtra";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2886,8 +3975,12 @@ joinChatRoom(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWJoinChatRoomCallback(
       onChatRoomJoined: (int? code, String? targetId) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "joinChatRoom-onChatRoomJoined";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
         arg["targetId"] = targetId ?? "";
 
@@ -2897,8 +3990,12 @@ joinChatRoom(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.joinChatRoom(targetId, messageCount, autoCreate, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "joinChatRoom";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2934,8 +4031,12 @@ leaveChatRoom(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWLeaveChatRoomCallback(
       onChatRoomLeft: (int? code, String? targetId) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "leaveChatRoom-onChatRoomLeft";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
         arg["targetId"] = targetId ?? "";
 
@@ -2945,8 +4046,12 @@ leaveChatRoom(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.leaveChatRoom(targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "leaveChatRoom";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -2992,8 +4097,12 @@ loadChatRoomMessages(Map arg) async {
   RCIMIWTimeOrder order = RCIMIWTimeOrder.values[int.parse(arg['order'])];
   int count = int.parse(arg['count']);
   int? code = await IMEngineManager().engine?.loadChatRoomMessages(targetId, timestamp, order, count);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadChatRoomMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3056,15 +4165,23 @@ getChatRoomMessages(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getChatRoomMessages-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getChatRoomMessages-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -3079,8 +4196,12 @@ getChatRoomMessages(Map arg) async {
     count,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getChatRoomMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3142,8 +4263,12 @@ addChatRoomEntry(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWAddChatRoomEntryCallback(
       onChatRoomEntryAdded: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "addChatRoomEntry-onChatRoomEntryAdded";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -3159,8 +4284,12 @@ addChatRoomEntry(Map arg) async {
     overwrite,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addChatRoomEntry";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3225,8 +4354,12 @@ addChatRoomEntries(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWAddChatRoomEntriesCallback(
       onChatRoomEntriesAdded: (int? code, Map? errors) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "addChatRoomEntries-onChatRoomEntriesAdded";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
         arg["errors"] = errors.toString();
 
@@ -3242,8 +4375,12 @@ addChatRoomEntries(Map arg) async {
     overwrite,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addChatRoomEntries";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3277,8 +4414,12 @@ loadChatRoomEntry(Map arg) async {
   String targetId = arg['targetId'];
   String key = arg['key'];
   int? code = await IMEngineManager().engine?.loadChatRoomEntry(targetId, key);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadChatRoomEntry";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3322,15 +4463,23 @@ getChatRoomEntry(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetChatRoomEntryCallback(
       onSuccess: (Map? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getChatRoomEntry-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getChatRoomEntry-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -3339,8 +4488,12 @@ getChatRoomEntry(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getChatRoomEntry(targetId, key, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getChatRoomEntry";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3368,8 +4521,12 @@ loadChatRoomAllEntries(Map arg) async {
 
   String targetId = arg['targetId'];
   int? code = await IMEngineManager().engine?.loadChatRoomAllEntries(targetId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadChatRoomAllEntries";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3407,15 +4564,23 @@ getChatRoomAllEntries(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetChatRoomAllEntriesCallback(
       onSuccess: (Map? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getChatRoomAllEntries-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getChatRoomAllEntries-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -3424,8 +4589,12 @@ getChatRoomAllEntries(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getChatRoomAllEntries(targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getChatRoomAllEntries";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3474,8 +4643,12 @@ removeChatRoomEntry(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveChatRoomEntryCallback(
       onChatRoomEntryRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeChatRoomEntry-onChatRoomEntryRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -3484,8 +4657,12 @@ removeChatRoomEntry(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeChatRoomEntry(targetId, key, force, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeChatRoomEntry";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3534,8 +4711,12 @@ removeChatRoomEntries(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveChatRoomEntriesCallback(
       onChatRoomEntriesRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeChatRoomEntries-onChatRoomEntriesRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -3544,8 +4725,12 @@ removeChatRoomEntries(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeChatRoomEntries(targetId, keys, force, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeChatRoomEntries";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3581,8 +4766,12 @@ addToBlacklist(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWAddToBlacklistCallback(
       onBlacklistAdded: (int? code, String? userId) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "addToBlacklist-onBlacklistAdded";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
         arg["userId"] = userId ?? "";
 
@@ -3592,8 +4781,12 @@ addToBlacklist(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.addToBlacklist(userId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addToBlacklist";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3629,8 +4822,12 @@ removeFromBlacklist(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveFromBlacklistCallback(
       onBlacklistRemoved: (int? code, String? userId) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeFromBlacklist-onBlacklistRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
         arg["userId"] = userId ?? "";
 
@@ -3640,8 +4837,12 @@ removeFromBlacklist(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeFromBlacklist(userId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeFromBlacklist";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3669,8 +4870,12 @@ loadBlacklistStatus(Map arg) async {
 
   String userId = arg['userId'];
   int? code = await IMEngineManager().engine?.loadBlacklistStatus(userId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBlacklistStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3708,15 +4913,23 @@ getBlacklistStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetBlacklistStatusCallback(
       onSuccess: (RCIMIWBlacklistStatus? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getBlacklistStatus-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getBlacklistStatus-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -3725,8 +4938,12 @@ getBlacklistStatus(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getBlacklistStatus(userId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBlacklistStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3748,8 +4965,12 @@ int? ret = await engine?.loadBlacklist();
 
 loadBlacklist() async {
   int? code = await IMEngineManager().engine?.loadBlacklist();
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBlacklist";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (IMEngineManager().engine == null) {
@@ -3777,15 +4998,23 @@ getBlacklist(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetBlacklistCallback(
       onSuccess: (List<String>? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getBlacklist-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getBlacklist-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -3794,8 +5023,12 @@ getBlacklist(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getBlacklist(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBlacklist";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3865,15 +5098,23 @@ searchMessages(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "searchMessages-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "searchMessages-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -3890,8 +5131,12 @@ searchMessages(Map arg) async {
     count,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -3973,15 +5218,23 @@ searchMessagesByTimeRange(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "searchMessagesByTimeRange-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "searchMessagesByTimeRange-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4000,8 +5253,12 @@ searchMessagesByTimeRange(Map arg) async {
     count,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchMessagesByTimeRange";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4071,15 +5328,23 @@ searchMessagesByUserId(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "searchMessagesByUserId-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "searchMessagesByUserId-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4096,8 +5361,131 @@ searchMessagesByUserId(Map arg) async {
     count,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchMessagesByUserId";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_searchMessagesByMessageTypes_call
+IRCIMIWSearchMessagesByMessageTypesCallback? callback = IRCIMIWSearchMessagesByMessageTypesCallback(onSuccess: (List<RCIMIWMessage>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.searchMessagesByMessageTypes(type, targetId, channelId, messageTypesInt, keyword, startTime, count, callback:callback);
+//fun_searchMessagesByMessageTypes_call
+*/
+
+searchMessagesByMessageTypes(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['messageTypes'] == null) {
+    RCIWToast.showToast("messageTypes 为空");
+    return;
+  }
+
+  if (arg['keyword'] == null) {
+    RCIWToast.showToast("keyword 为空");
+    return;
+  }
+
+  if (arg['startTime'] == null) {
+    RCIWToast.showToast("startTime 为空");
+    return;
+  }
+
+  if (arg['count'] == null) {
+    RCIWToast.showToast("count 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  List messageTypes = (arg["messageTypes"]).split(",");
+  List<RCIMIWMessageType> messageTypesInt = [];
+  for (var element in messageTypes) {
+    messageTypesInt.add(RCIMIWMessageType.values[int.parse(element)]);
+  }
+  String keyword = arg['keyword'];
+  int startTime = int.parse(arg['startTime']);
+  int count = int.parse(arg['count']);
+  IRCIMIWSearchMessagesByMessageTypesCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSearchMessagesByMessageTypesCallback(
+      onSuccess: (List<RCIMIWMessage>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "searchMessagesByMessageTypes-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "searchMessagesByMessageTypes-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.searchMessagesByMessageTypes(
+    type,
+    targetId,
+    channelId,
+    messageTypesInt,
+    keyword,
+    startTime,
+    count,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "searchMessagesByMessageTypes";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4163,15 +5551,23 @@ searchConversations(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "searchConversations-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "searchConversations-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4186,8 +5582,12 @@ searchConversations(Map arg) async {
     keyword,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchConversations";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4235,8 +5635,12 @@ changeNotificationQuietHours(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangeNotificationQuietHoursCallback(
       onNotificationQuietHoursChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changeNotificationQuietHours-onNotificationQuietHoursChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4250,8 +5654,12 @@ changeNotificationQuietHours(Map arg) async {
     level,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeNotificationQuietHours";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4282,8 +5690,12 @@ removeNotificationQuietHours(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveNotificationQuietHoursCallback(
       onNotificationQuietHoursRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeNotificationQuietHours-onNotificationQuietHoursRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4292,8 +5704,12 @@ removeNotificationQuietHours(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeNotificationQuietHours(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeNotificationQuietHours";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4315,8 +5731,12 @@ int? ret = await engine?.loadNotificationQuietHours();
 
 loadNotificationQuietHours() async {
   int? code = await IMEngineManager().engine?.loadNotificationQuietHours();
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadNotificationQuietHours";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (IMEngineManager().engine == null) {
@@ -4344,8 +5764,12 @@ getNotificationQuietHours(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetNotificationQuietHoursCallback(
       onSuccess: (String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getNotificationQuietHours-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["startTime"] = startTime ?? "";
         arg["spanMinutes"] = spanMinutes.toString();
         arg["level"] = level.toString();
@@ -4353,8 +5777,12 @@ getNotificationQuietHours(Map arg) async {
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getNotificationQuietHours-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4363,8 +5791,12 @@ getNotificationQuietHours(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getNotificationQuietHours(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getNotificationQuietHours";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4413,8 +5845,12 @@ changeConversationNotificationLevel(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangeConversationNotificationLevelCallback(
       onConversationNotificationLevelChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changeConversationNotificationLevel-onConversationNotificationLevelChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4429,8 +5865,12 @@ changeConversationNotificationLevel(Map arg) async {
     level,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4465,8 +5905,12 @@ loadConversationNotificationLevel(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadConversationNotificationLevel(type, targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4511,15 +5955,23 @@ getConversationNotificationLevel(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetConversationNotificationLevelCallback(
       onSuccess: (RCIMIWPushNotificationLevel? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationNotificationLevel-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationNotificationLevel-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4533,8 +5985,12 @@ getConversationNotificationLevel(Map arg) async {
     channelId,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4576,8 +6032,12 @@ changeConversationTypeNotificationLevel(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangeConversationTypeNotificationLevelCallback(
       onConversationTypeNotificationLevelChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changeConversationTypeNotificationLevel-onConversationTypeNotificationLevelChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4586,8 +6046,12 @@ changeConversationTypeNotificationLevel(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.changeConversationTypeNotificationLevel(type, level, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationTypeNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4615,8 +6079,12 @@ loadConversationTypeNotificationLevel(Map arg) async {
 
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   int? code = await IMEngineManager().engine?.loadConversationTypeNotificationLevel(type);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationTypeNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4654,15 +6122,23 @@ getConversationTypeNotificationLevel(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetConversationTypeNotificationLevelCallback(
       onSuccess: (RCIMIWPushNotificationLevel? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationTypeNotificationLevel-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationTypeNotificationLevel-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4671,8 +6147,12 @@ getConversationTypeNotificationLevel(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getConversationTypeNotificationLevel(type, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationTypeNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4714,8 +6194,12 @@ changeUltraGroupDefaultNotificationLevel(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback(
       onUltraGroupDefaultNotificationLevelChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changeUltraGroupDefaultNotificationLevel-onUltraGroupDefaultNotificationLevelChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4728,8 +6212,12 @@ changeUltraGroupDefaultNotificationLevel(Map arg) async {
     level,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeUltraGroupDefaultNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4757,8 +6245,12 @@ loadUltraGroupDefaultNotificationLevel(Map arg) async {
 
   String targetId = arg['targetId'];
   int? code = await IMEngineManager().engine?.loadUltraGroupDefaultNotificationLevel(targetId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupDefaultNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4796,15 +6288,23 @@ getUltraGroupDefaultNotificationLevel(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUltraGroupDefaultNotificationLevelCallback(
       onSuccess: (RCIMIWPushNotificationLevel? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupDefaultNotificationLevel-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupDefaultNotificationLevel-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4813,8 +6313,12 @@ getUltraGroupDefaultNotificationLevel(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUltraGroupDefaultNotificationLevel(targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupDefaultNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4857,9 +6361,13 @@ changeUltraGroupChannelDefaultNotificationLevel(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback(
       onUltraGroupChannelDefaultNotificationLevelChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] =
             "changeUltraGroupChannelDefaultNotificationLevel-onUltraGroupChannelDefaultNotificationLevelChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4873,8 +6381,12 @@ changeUltraGroupChannelDefaultNotificationLevel(Map arg) async {
     level,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeUltraGroupChannelDefaultNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4903,8 +6415,12 @@ loadUltraGroupChannelDefaultNotificationLevel(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadUltraGroupChannelDefaultNotificationLevel(targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadUltraGroupChannelDefaultNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -4943,15 +6459,23 @@ getUltraGroupChannelDefaultNotificationLevel(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback(
       onSuccess: (RCIMIWPushNotificationLevel? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupChannelDefaultNotificationLevel-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUltraGroupChannelDefaultNotificationLevel-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -4964,8 +6488,12 @@ getUltraGroupChannelDefaultNotificationLevel(Map arg) async {
     channelId,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUltraGroupChannelDefaultNotificationLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5002,8 +6530,12 @@ changePushContentShowStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangePushContentShowStatusCallback(
       onPushContentShowStatusChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changePushContentShowStatus-onPushContentShowStatusChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5012,8 +6544,12 @@ changePushContentShowStatus(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.changePushContentShowStatus(showContent, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changePushContentShowStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5049,8 +6585,12 @@ changePushLanguage(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangePushLanguageCallback(
       onPushLanguageChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changePushLanguage-onPushLanguageChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5059,8 +6599,12 @@ changePushLanguage(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.changePushLanguage(language, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changePushLanguage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5097,8 +6641,12 @@ changePushReceiveStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangePushReceiveStatusCallback(
       onPushReceiveStatusChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changePushReceiveStatus-onPushReceiveStatusChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5107,8 +6655,12 @@ changePushReceiveStatus(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.changePushReceiveStatus(receive, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changePushReceiveStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5154,8 +6706,12 @@ loadMessageCount(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadMessageCount(type, targetId, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadMessageCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5200,15 +6756,23 @@ getMessageCount(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetMessageCountCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getMessageCount-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getMessageCount-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5217,8 +6781,12 @@ getMessageCount(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getMessageCount(type, targetId, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getMessageCount";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5251,8 +6819,12 @@ loadTopConversations(Map arg) async {
   }
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadTopConversations(conversationTypesInt, channelId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadTopConversations";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5302,15 +6874,23 @@ getTopConversations(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getTopConversations-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getTopConversations-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5319,8 +6899,12 @@ getTopConversations(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getTopConversations(conversationTypesInt, channelId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getTopConversations";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5363,8 +6947,12 @@ syncUltraGroupReadStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWSyncUltraGroupReadStatusCallback(
       onUltraGroupReadStatusSynced: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "syncUltraGroupReadStatus-onUltraGroupReadStatusSynced";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5378,8 +6966,12 @@ syncUltraGroupReadStatus(Map arg) async {
     timestamp,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "syncUltraGroupReadStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5413,8 +7005,12 @@ loadConversationsForAllChannel(Map arg) async {
   RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   int? code = await IMEngineManager().engine?.loadConversationsForAllChannel(type, targetId);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadConversationsForAllChannel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5465,15 +7061,23 @@ getConversationsForAllChannel(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationsForAllChannel-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationsForAllChannel-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5482,8 +7086,12 @@ getConversationsForAllChannel(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getConversationsForAllChannel(type, targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationsForAllChannel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5550,8 +7158,12 @@ clearUltraGroupMessages(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWClearUltraGroupMessagesCallback(
       onUltraGroupMessagesCleared: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "clearUltraGroupMessages-onUltraGroupMessagesCleared";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5566,8 +7178,12 @@ clearUltraGroupMessages(Map arg) async {
     policy,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearUltraGroupMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5610,8 +7226,12 @@ sendUltraGroupTypingStatus(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWSendUltraGroupTypingStatusCallback(
       onUltraGroupTypingStatusSent: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "sendUltraGroupTypingStatus-onUltraGroupTypingStatusSent";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5625,8 +7245,12 @@ sendUltraGroupTypingStatus(Map arg) async {
     typingStatus,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "sendUltraGroupTypingStatus";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5668,8 +7292,12 @@ clearUltraGroupMessagesForAllChannel(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWClearUltraGroupMessagesForAllChannelCallback(
       onUltraGroupMessagesClearedForAllChannel: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "clearUltraGroupMessagesForAllChannel-onUltraGroupMessagesClearedForAllChannel";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5682,8 +7310,12 @@ clearUltraGroupMessagesForAllChannel(Map arg) async {
     timestamp,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearUltraGroupMessagesForAllChannel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5740,16 +7372,24 @@ getBatchRemoteUltraGroupMessages(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getBatchRemoteUltraGroupMessages-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["matchedMessages"] = matchedMessagesJson.toString();
         arg["notMatchedMessages"] = notMatchedMessagesJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getBatchRemoteUltraGroupMessages-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5758,8 +7398,12 @@ getBatchRemoteUltraGroupMessages(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getBatchRemoteUltraGroupMessages(messages, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getBatchRemoteUltraGroupMessages";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5810,8 +7454,12 @@ updateUltraGroupMessageExpansion(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWUpdateUltraGroupMessageExpansionCallback(
       onUltraGroupMessageExpansionUpdated: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "updateUltraGroupMessageExpansion-onUltraGroupMessageExpansionUpdated";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5824,8 +7472,12 @@ updateUltraGroupMessageExpansion(Map arg) async {
     expansion,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "updateUltraGroupMessageExpansion";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5867,8 +7519,12 @@ removeUltraGroupMessageExpansionForKeys(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback(
       onUltraGroupMessageExpansionForKeysRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeUltraGroupMessageExpansionForKeys-onUltraGroupMessageExpansionForKeysRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5881,8 +7537,12 @@ removeUltraGroupMessageExpansionForKeys(Map arg) async {
     keys,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeUltraGroupMessageExpansionForKeys";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5910,8 +7570,12 @@ changeLogLevel(Map arg) async {
 
   RCIMIWLogLevel level = RCIMIWLogLevel.values[int.parse(arg['level'])];
   int? code = await IMEngineManager().engine?.changeLogLevel(level);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeLogLevel";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -5933,8 +7597,12 @@ int? ret = await engine?.getDeltaTime();
 
 getDeltaTime() async {
   int? code = await IMEngineManager().engine?.getDeltaTime();
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getDeltaTime";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (IMEngineManager().engine == null) {
@@ -5971,8 +7639,12 @@ createTag(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWCreateTagCallback(
       onTagCreated: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "createTag-onTagCreated";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -5981,8 +7653,12 @@ createTag(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.createTag(tagId, tagName, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "createTag";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6018,8 +7694,12 @@ removeTag(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveTagCallback(
       onTagRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeTag-onTagRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6028,8 +7708,12 @@ removeTag(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeTag(tagId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeTag";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6071,8 +7755,12 @@ updateTagNameById(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWUpdateTagNameByIdCallback(
       onTagNameByIdUpdated: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "updateTagNameById-onTagNameByIdUpdated";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6081,8 +7769,12 @@ updateTagNameById(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.updateTagNameById(tagId, newName, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "updateTagNameById";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6122,15 +7814,23 @@ getTags(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getTags-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getTags-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6139,8 +7839,12 @@ getTags(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getTags(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getTags";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6188,8 +7892,12 @@ addConversationToTag(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWAddConversationToTagCallback(
       onConversationToTagAdded: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "addConversationToTag-onConversationToTagAdded";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6198,8 +7906,12 @@ addConversationToTag(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.addConversationToTag(tagId, type, targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "addConversationToTag";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6247,8 +7959,12 @@ removeConversationFromTag(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveConversationFromTagCallback(
       onConversationFromTagRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeConversationFromTag-onConversationFromTagRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6257,8 +7973,12 @@ removeConversationFromTag(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeConversationFromTag(tagId, type, targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeConversationFromTag";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6306,8 +8026,12 @@ removeTagsFromConversation(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWRemoveTagsFromConversationCallback(
       onTagsFromConversationRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "removeTagsFromConversation-onTagsFromConversationRemoved";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6316,8 +8040,12 @@ removeTagsFromConversation(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.removeTagsFromConversation(type, targetId, tagIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "removeTagsFromConversation";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6368,15 +8096,23 @@ getTagsFromConversation(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getTagsFromConversation-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getTagsFromConversation-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6385,8 +8121,12 @@ getTagsFromConversation(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getTagsFromConversation(type, targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getTagsFromConversation";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6443,15 +8183,23 @@ getConversationsFromTagByPage(Map arg) async {
           }
         }
 
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationsFromTagByPage-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationsFromTagByPage-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6465,8 +8213,12 @@ getConversationsFromTagByPage(Map arg) async {
     count,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationsFromTagByPage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6511,15 +8263,23 @@ getUnreadCountByTag(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetUnreadCountCallback(
       onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadCountByTag-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getUnreadCountByTag-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6528,8 +8288,12 @@ getUnreadCountByTag(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getUnreadCountByTag(tagId, contain, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getUnreadCountByTag";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6584,8 +8348,12 @@ changeConversationTopStatusInTag(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWChangeConversationTopStatusInTagCallback(
       onConversationTopStatusInTagChanged: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "changeConversationTopStatusInTag-onConversationTopStatusInTagChanged";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6600,8 +8368,12 @@ changeConversationTopStatusInTag(Map arg) async {
     top,
     callback: callback,
   );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "changeConversationTopStatusInTag";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6651,15 +8423,23 @@ getConversationTopStatusInTag(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWGetConversationTopStatusInTagCallback(
       onSuccess: (bool? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationTopStatusInTag-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "getConversationTopStatusInTag-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6668,8 +8448,12 @@ getConversationTopStatusInTag(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getConversationTopStatusInTag(tagId, type, targetId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getConversationTopStatusInTag";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6707,15 +8491,23 @@ clearMessagesUnreadStatusByTag(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWClearMessagesUnreadStatusByTagCallback(
       onSuccess: (bool? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "clearMessagesUnreadStatusByTag-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "clearMessagesUnreadStatusByTag-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6724,8 +8516,12 @@ clearMessagesUnreadStatusByTag(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.clearMessagesUnreadStatusByTag(tagId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearMessagesUnreadStatusByTag";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6770,15 +8566,23 @@ clearConversationsByTag(Map arg) async {
   if (useCallback == 1) {
     callback = IRCIMIWClearConversationsByTagCallback(
       onSuccess: (bool? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "clearConversationsByTag-onSuccess";
+        arg["timestamp"] = timeStr;
         arg["t"] = t.toString();
 
         bus.emit("rong_im_listener", arg);
       },
       onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
         Map<String, String> arg = {};
         arg["listener"] = "clearConversationsByTag-onError";
+        arg["timestamp"] = timeStr;
         arg["code"] = code.toString();
 
         bus.emit("rong_im_listener", arg);
@@ -6787,8 +8591,12 @@ clearConversationsByTag(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.clearConversationsByTag(tagId, deleteMessage, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "clearConversationsByTag";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6822,8 +8630,12 @@ setModuleName(Map arg) async {
   String moduleName = arg['moduleName'];
   String version = arg['version'];
   int? code = await IMEngineManager().engine?.setModuleName(moduleName, version);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "setModuleName";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {
@@ -6869,8 +8681,1183 @@ writeLog(Map arg) async {
   int codeValue = int.parse(arg['codeValue']);
   String message = arg['message'];
   int? code = await IMEngineManager().engine?.writeLog(method, callMethod, codeValue, message);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "writeLog";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_createGroup_call
+IRCIMIWCreateGroupCallback? callback = IRCIMIWCreateGroupCallback(onSuccess: (int? processCode) {
+    //...
+}, onError: (int? errorCode, String? errorInfo) {
+    //...
+});
+
+int? ret = await engine?.createGroup(groupInfo, inviteeUserIds, callback:callback);
+//fun_createGroup_call
+*/
+/*
+//fun_updateGroupInfo_call
+IRCIMIWGroupInfoUpdatedCallback? callback = IRCIMIWGroupInfoUpdatedCallback(onGroupInfoUpdated: (int? code, String? errorInfo) {
+    //...
+});
+
+int? ret = await engine?.updateGroupInfo(groupInfo, callback:callback);
+//fun_updateGroupInfo_call
+*/
+/*
+//fun_getGroupsInfo_call
+IRCIMIWGetGroupsInfoCallback? callback = IRCIMIWGetGroupsInfoCallback(onSuccess: (List<RCIMIWGroupInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getGroupsInfo(groupIds, callback:callback);
+//fun_getGroupsInfo_call
+*/
+
+getGroupsInfo(Map arg) async {
+  if (arg['groupIds'] == null) {
+    RCIWToast.showToast("groupIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List<String> groupIds = (arg["groupIds"]).split(",");
+  IRCIMIWGetGroupsInfoCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetGroupsInfoCallback(
+      onSuccess: (List<RCIMIWGroupInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getGroupsInfo-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getGroupsInfo-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getGroupsInfo(groupIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getGroupsInfo";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_kickGroupMembers_call
+IRCIMIWKickGroupMembersCallback? callback = IRCIMIWKickGroupMembersCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.kickGroupMembers(groupId, userIds, config, callback:callback);
+//fun_kickGroupMembers_call
+*/
+/*
+//fun_joinGroup_call
+IRCIMIWJoinGroupCallback? callback = IRCIMIWJoinGroupCallback(onSuccess: (int? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.joinGroup(groupId, callback:callback);
+//fun_joinGroup_call
+*/
+
+joinGroup(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  IRCIMIWJoinGroupCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWJoinGroupCallback(
+      onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "joinGroup-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = t.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "joinGroup-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.joinGroup(groupId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "joinGroup";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_quitGroup_call
+IRCIMIWQuitGroupCallback? callback = IRCIMIWQuitGroupCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.quitGroup(groupId, config, callback:callback);
+//fun_quitGroup_call
+*/
+/*
+//fun_dismissGroup_call
+IRCIMIWDismissGroupCallback? callback = IRCIMIWDismissGroupCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.dismissGroup(groupId, callback:callback);
+//fun_dismissGroup_call
+*/
+
+dismissGroup(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  IRCIMIWDismissGroupCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWDismissGroupCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "dismissGroup-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.dismissGroup(groupId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "dismissGroup";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_transferGroupOwner_call
+IRCIMIWTransferGroupOwnerCallback? callback = IRCIMIWTransferGroupOwnerCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.transferGroupOwner(groupId, newOwnerId, quitGroup, config, callback:callback);
+//fun_transferGroupOwner_call
+*/
+/*
+//fun_getGroupMembers_call
+IRCIMIWGetGroupMembersCallback? callback = IRCIMIWGetGroupMembersCallback(onSuccess: (List<RCIMIWGroupMemberInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getGroupMembers(groupId, userIds, callback:callback);
+//fun_getGroupMembers_call
+*/
+
+getGroupMembers(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  List<String> userIds = (arg["userIds"]).split(",");
+  IRCIMIWGetGroupMembersCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetGroupMembersCallback(
+      onSuccess: (List<RCIMIWGroupMemberInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getGroupMembers-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getGroupMembers-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getGroupMembers(groupId, userIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getGroupMembers";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getGroupMembersByRole_call
+IRCIMIWGetGroupMembersByRoleCallback? callback = IRCIMIWGetGroupMembersByRoleCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getGroupMembersByRole(groupId, role, option, callback:callback);
+//fun_getGroupMembersByRole_call
+*/
+/*
+//fun_getJoinedGroupsByRole_call
+IRCIMIWGetJoinedGroupsByRoleCallback? callback = IRCIMIWGetJoinedGroupsByRoleCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getJoinedGroupsByRole(role, option, callback:callback);
+//fun_getJoinedGroupsByRole_call
+*/
+/*
+//fun_getJoinedGroups_call
+IRCIMIWGetJoinedGroupsCallback? callback = IRCIMIWGetJoinedGroupsCallback(onSuccess: (List<RCIMIWGroupInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getJoinedGroups(groupIds, callback:callback);
+//fun_getJoinedGroups_call
+*/
+
+getJoinedGroups(Map arg) async {
+  if (arg['groupIds'] == null) {
+    RCIWToast.showToast("groupIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List<String> groupIds = (arg["groupIds"]).split(",");
+  IRCIMIWGetJoinedGroupsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetJoinedGroupsCallback(
+      onSuccess: (List<RCIMIWGroupInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getJoinedGroups-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getJoinedGroups-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getJoinedGroups(groupIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getJoinedGroups";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_setGroupRemark_call
+IRCIMIWSetGroupRemarkCallback? callback = IRCIMIWSetGroupRemarkCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.setGroupRemark(groupId, remark, callback:callback);
+//fun_setGroupRemark_call
+*/
+
+setGroupRemark(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['remark'] == null) {
+    RCIWToast.showToast("remark 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  String remark = arg['remark'];
+  IRCIMIWSetGroupRemarkCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSetGroupRemarkCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setGroupRemark-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.setGroupRemark(groupId, remark, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "setGroupRemark";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_setGroupMemberInfo_call
+IRCIMIWSetGroupMemberInfoCallback? callback = IRCIMIWSetGroupMemberInfoCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.setGroupMemberInfo(groupId, userId, nickname, extra, callback:callback);
+//fun_setGroupMemberInfo_call
+*/
+/*
+//fun_searchJoinedGroups_call
+IRCIMIWSearchJoinedGroupsCallback? callback = IRCIMIWSearchJoinedGroupsCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.searchJoinedGroups(groupName, option, callback:callback);
+//fun_searchJoinedGroups_call
+*/
+/*
+//fun_searchGroupMembers_call
+IRCIMIWSearchGroupMembersCallback? callback = IRCIMIWSearchGroupMembersCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.searchGroupMembers(groupId, name, option, callback:callback);
+//fun_searchGroupMembers_call
+*/
+/*
+//fun_addGroupManagers_call
+IRCIMIWAddGroupManagersCallback? callback = IRCIMIWAddGroupManagersCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.addGroupManagers(groupId, userIds, callback:callback);
+//fun_addGroupManagers_call
+*/
+
+addGroupManagers(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  List<String> userIds = (arg["userIds"]).split(",");
+  IRCIMIWAddGroupManagersCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWAddGroupManagersCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "addGroupManagers-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.addGroupManagers(groupId, userIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "addGroupManagers";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_removeGroupManagers_call
+IRCIMIWRemoveGroupManagersCallback? callback = IRCIMIWRemoveGroupManagersCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.removeGroupManagers(groupId, userIds, callback:callback);
+//fun_removeGroupManagers_call
+*/
+
+removeGroupManagers(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  List<String> userIds = (arg["userIds"]).split(",");
+  IRCIMIWRemoveGroupManagersCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRemoveGroupManagersCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "removeGroupManagers-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.removeGroupManagers(groupId, userIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "removeGroupManagers";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_inviteUsersToGroup_call
+IRCIMIWInviteUsersToGroupCallback? callback = IRCIMIWInviteUsersToGroupCallback(onSuccess: (int? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.inviteUsersToGroup(groupId, userIds, callback:callback);
+//fun_inviteUsersToGroup_call
+*/
+
+inviteUsersToGroup(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  List<String> userIds = (arg["userIds"]).split(",");
+  IRCIMIWInviteUsersToGroupCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWInviteUsersToGroupCallback(
+      onSuccess: (int? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "inviteUsersToGroup-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = t.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "inviteUsersToGroup-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.inviteUsersToGroup(groupId, userIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "inviteUsersToGroup";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_acceptGroupInvite_call
+IRCIMIWAcceptGroupInviteCallback? callback = IRCIMIWAcceptGroupInviteCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.acceptGroupInvite(groupId, inviterId, callback:callback);
+//fun_acceptGroupInvite_call
+*/
+
+acceptGroupInvite(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['inviterId'] == null) {
+    RCIWToast.showToast("inviterId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  String inviterId = arg['inviterId'];
+  IRCIMIWAcceptGroupInviteCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWAcceptGroupInviteCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "acceptGroupInvite-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.acceptGroupInvite(groupId, inviterId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "acceptGroupInvite";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_refuseGroupInvite_call
+IRCIMIWRefuseGroupInviteCallback? callback = IRCIMIWRefuseGroupInviteCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.refuseGroupInvite(groupId, inviterId, reason, callback:callback);
+//fun_refuseGroupInvite_call
+*/
+
+refuseGroupInvite(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['inviterId'] == null) {
+    RCIWToast.showToast("inviterId 为空");
+    return;
+  }
+
+  if (arg['reason'] == null) {
+    RCIWToast.showToast("reason 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  String inviterId = arg['inviterId'];
+  String reason = arg['reason'];
+  IRCIMIWRefuseGroupInviteCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRefuseGroupInviteCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "refuseGroupInvite-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.refuseGroupInvite(groupId, inviterId, reason, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "refuseGroupInvite";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_acceptGroupApplication_call
+IRCIMIWAcceptGroupApplicationCallback? callback = IRCIMIWAcceptGroupApplicationCallback(onSuccess: (int? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.acceptGroupApplication(groupId, inviterId, applicantId, callback:callback);
+//fun_acceptGroupApplication_call
+*/
+/*
+//fun_refuseGroupApplication_call
+IRCIMIWRefuseGroupApplicationCallback? callback = IRCIMIWRefuseGroupApplicationCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.refuseGroupApplication(groupId, inviterId, applicantId, reason, callback:callback);
+//fun_refuseGroupApplication_call
+*/
+
+refuseGroupApplication(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['inviterId'] == null) {
+    RCIWToast.showToast("inviterId 为空");
+    return;
+  }
+
+  if (arg['applicantId'] == null) {
+    RCIWToast.showToast("applicantId 为空");
+    return;
+  }
+
+  if (arg['reason'] == null) {
+    RCIWToast.showToast("reason 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  String inviterId = arg['inviterId'];
+  String applicantId = arg['applicantId'];
+  String reason = arg['reason'];
+  IRCIMIWRefuseGroupApplicationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRefuseGroupApplicationCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "refuseGroupApplication-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.refuseGroupApplication(
+    groupId,
+    inviterId,
+    applicantId,
+    reason,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "refuseGroupApplication";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getGroupApplications_call
+IRCIMIWGetGroupApplicationsCallback? callback = IRCIMIWGetGroupApplicationsCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getGroupApplications(option, directionsInt, statusInt, callback:callback);
+//fun_getGroupApplications_call
+*/
+/*
+//fun_addGroupFollows_call
+IRCIMIWAddGroupFollowsCallback? callback = IRCIMIWAddGroupFollowsCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.addGroupFollows(groupId, userIds, callback:callback);
+//fun_addGroupFollows_call
+*/
+
+addGroupFollows(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  List<String> userIds = (arg["userIds"]).split(",");
+  IRCIMIWAddGroupFollowsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWAddGroupFollowsCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "addGroupFollows-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.addGroupFollows(groupId, userIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "addGroupFollows";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_removeGroupFollows_call
+IRCIMIWRemoveGroupFollowsCallback? callback = IRCIMIWRemoveGroupFollowsCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.removeGroupFollows(groupId, userIds, callback:callback);
+//fun_removeGroupFollows_call
+*/
+
+removeGroupFollows(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  List<String> userIds = (arg["userIds"]).split(",");
+  IRCIMIWRemoveGroupFollowsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRemoveGroupFollowsCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "removeGroupFollows-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.removeGroupFollows(groupId, userIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "removeGroupFollows";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getGroupFollows_call
+IRCIMIWGetGroupFollowsCallback? callback = IRCIMIWGetGroupFollowsCallback(onSuccess: (List<RCIMIWFollowInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getGroupFollows(groupId, callback:callback);
+//fun_getGroupFollows_call
+*/
+
+getGroupFollows(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  IRCIMIWGetGroupFollowsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetGroupFollowsCallback(
+      onSuccess: (List<RCIMIWFollowInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getGroupFollows-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getGroupFollows-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getGroupFollows(groupId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getGroupFollows";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_setCheckChatRoomDuplicateMessage_call
+int? ret = await engine?.setCheckChatRoomDuplicateMessage(enableCheck);
+//fun_setCheckChatRoomDuplicateMessage_call
+*/
+
+setCheckChatRoomDuplicateMessage(Map arg) async {
+  if (arg['enableCheck'] == null) {
+    RCIWToast.showToast("enableCheck 为空");
+    return;
+  }
+
+  int enableCheckInt = int.parse(arg['enableCheck']);
+  bool enableCheck = enableCheckInt == 0 ? false : true;
+  int? code = await IMEngineManager().engine?.setCheckChatRoomDuplicateMessage(enableCheck);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "setCheckChatRoomDuplicateMessage";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {

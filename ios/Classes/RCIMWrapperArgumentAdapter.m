@@ -9,6 +9,233 @@
 
 @implementation RCIMWrapperArgumentAdapter
 
++ (RCIMIWGroupInviteHandlePermission)convertGroupInviteHandlePermissionFromInteger:(NSInteger)integer {
+  NSArray *GroupInviteHandlePermissionArray = @[
+    @(RCIMIWGroupInviteHandlePermissionFree),
+    @(RCIMIWGroupInviteHandlePermissionInviteeVerify),
+  ];
+  RCIMIWGroupInviteHandlePermission GroupInviteHandlePermission = [[GroupInviteHandlePermissionArray objectAtIndex:integer] integerValue];
+  return GroupInviteHandlePermission;
+}
++ (NSInteger)convertGroupInviteHandlePermissionToInteger:(RCIMIWGroupInviteHandlePermission)GroupInviteHandlePermission {
+  NSArray *GroupInviteHandlePermissionArray = @[
+    @(RCIMIWGroupInviteHandlePermissionFree),
+    @(RCIMIWGroupInviteHandlePermissionInviteeVerify),
+  ];
+  NSInteger index = [GroupInviteHandlePermissionArray indexOfObject:@(GroupInviteHandlePermission)];
+  return index;
+}
+
++ (RCIMIWGroupApplicationStatus)convertGroupApplicationStatusFromInteger:(NSInteger)integer {
+  NSArray *GroupApplicationStatusArray = @[
+    @(RCIMIWGroupApplicationStatusManagerUnHandled),
+    @(RCIMIWGroupApplicationStatusManagerRefused),
+    @(RCIMIWGroupApplicationStatusInviteeUnHandled),
+    @(RCIMIWGroupApplicationStatusInviteeRefused),
+    @(RCIMIWGroupApplicationStatusJoined),
+    @(RCIMIWGroupApplicationStatusExpired),
+  ];
+  RCIMIWGroupApplicationStatus GroupApplicationStatus = [[GroupApplicationStatusArray objectAtIndex:integer] integerValue];
+  return GroupApplicationStatus;
+}
++ (NSInteger)convertGroupApplicationStatusToInteger:(RCIMIWGroupApplicationStatus)GroupApplicationStatus {
+  NSArray *GroupApplicationStatusArray = @[
+    @(RCIMIWGroupApplicationStatusManagerUnHandled),
+    @(RCIMIWGroupApplicationStatusManagerRefused),
+    @(RCIMIWGroupApplicationStatusInviteeUnHandled),
+    @(RCIMIWGroupApplicationStatusInviteeRefused),
+    @(RCIMIWGroupApplicationStatusJoined),
+    @(RCIMIWGroupApplicationStatusExpired),
+  ];
+  NSInteger index = [GroupApplicationStatusArray indexOfObject:@(GroupApplicationStatus)];
+  return index;
+}
+
++ (RCIMIWGroupApplicationDirection)convertGroupApplicationDirectionFromInteger:(NSInteger)integer {
+  NSArray *GroupApplicationDirectionArray = @[
+    @(RCIMIWGroupApplicationDirectionApplicationSent),
+    @(RCIMIWGroupApplicationDirectionInvitationSent),
+    @(RCIMIWGroupApplicationDirectionInvitationReceived),
+    @(RCIMIWGroupApplicationDirectionApplicationReceived),
+  ];
+  RCIMIWGroupApplicationDirection GroupApplicationDirection = [[GroupApplicationDirectionArray objectAtIndex:integer] integerValue];
+  return GroupApplicationDirection;
+}
++ (NSInteger)convertGroupApplicationDirectionToInteger:(RCIMIWGroupApplicationDirection)GroupApplicationDirection {
+  NSArray *GroupApplicationDirectionArray = @[
+    @(RCIMIWGroupApplicationDirectionApplicationSent),
+    @(RCIMIWGroupApplicationDirectionInvitationSent),
+    @(RCIMIWGroupApplicationDirectionInvitationReceived),
+    @(RCIMIWGroupApplicationDirectionApplicationReceived),
+  ];
+  NSInteger index = [GroupApplicationDirectionArray indexOfObject:@(GroupApplicationDirection)];
+  return index;
+}
+
++ (RCIMIWGroupOperation)convertGroupOperationFromInteger:(NSInteger)integer {
+  NSArray *GroupOperationArray = @[
+    @(RCIMIWGroupOperationCreate),
+    @(RCIMIWGroupOperationJoin),
+    @(RCIMIWGroupOperationKick),
+    @(RCIMIWGroupOperationQuit),
+    @(RCIMIWGroupOperationDismiss),
+    @(RCIMIWGroupOperationAddManager),
+    @(RCIMIWGroupOperationRemoveManager),
+    @(RCIMIWGroupOperationTransferGroupOwner),
+  ];
+  RCIMIWGroupOperation GroupOperation = [[GroupOperationArray objectAtIndex:integer] integerValue];
+  return GroupOperation;
+}
++ (NSInteger)convertGroupOperationToInteger:(RCIMIWGroupOperation)GroupOperation {
+  NSArray *GroupOperationArray = @[
+    @(RCIMIWGroupOperationCreate),
+    @(RCIMIWGroupOperationJoin),
+    @(RCIMIWGroupOperationKick),
+    @(RCIMIWGroupOperationQuit),
+    @(RCIMIWGroupOperationDismiss),
+    @(RCIMIWGroupOperationAddManager),
+    @(RCIMIWGroupOperationRemoveManager),
+    @(RCIMIWGroupOperationTransferGroupOwner),
+  ];
+  NSInteger index = [GroupOperationArray indexOfObject:@(GroupOperation)];
+  return index;
+}
+
++ (RCIMIWGroupJoinPermission)convertGroupJoinPermissionFromInteger:(NSInteger)integer {
+  NSArray *GroupJoinPermissionArray = @[
+    @(RCIMIWGroupJoinPermissionOwnerVerify),
+    @(RCIMIWGroupJoinPermissionFree),
+    @(RCIMIWGroupJoinPermissionOwnerOrManagerVerify),
+    @(RCIMIWGroupJoinPermissionNoOneAllowed),
+  ];
+  RCIMIWGroupJoinPermission GroupJoinPermission = [[GroupJoinPermissionArray objectAtIndex:integer] integerValue];
+  return GroupJoinPermission;
+}
++ (NSInteger)convertGroupJoinPermissionToInteger:(RCIMIWGroupJoinPermission)GroupJoinPermission {
+  NSArray *GroupJoinPermissionArray = @[
+    @(RCIMIWGroupJoinPermissionOwnerVerify),
+    @(RCIMIWGroupJoinPermissionFree),
+    @(RCIMIWGroupJoinPermissionOwnerOrManagerVerify),
+    @(RCIMIWGroupJoinPermissionNoOneAllowed),
+  ];
+  NSInteger index = [GroupJoinPermissionArray indexOfObject:@(GroupJoinPermission)];
+  return index;
+}
+
++ (RCIMIWGroupStatus)convertGroupStatusFromInteger:(NSInteger)integer {
+  NSArray *GroupStatusArray = @[
+    @(RCIMIWGroupStatusUsing),
+    @(RCIMIWGroupStatusDismissed),
+    @(RCIMIWGroupStatusBanned),
+    @(RCIMIWGroupStatusMuted),
+  ];
+  RCIMIWGroupStatus GroupStatus = [[GroupStatusArray objectAtIndex:integer] integerValue];
+  return GroupStatus;
+}
++ (NSInteger)convertGroupStatusToInteger:(RCIMIWGroupStatus)GroupStatus {
+  NSArray *GroupStatusArray = @[
+    @(RCIMIWGroupStatusUsing),
+    @(RCIMIWGroupStatusDismissed),
+    @(RCIMIWGroupStatusBanned),
+    @(RCIMIWGroupStatusMuted),
+  ];
+  NSInteger index = [GroupStatusArray indexOfObject:@(GroupStatus)];
+  return index;
+}
+
++ (RCIMIWGroupOperationPermission)convertGroupOperationPermissionFromInteger:(NSInteger)integer {
+  NSArray *GroupOperationPermissionArray = @[
+    @(RCIMIWGroupOperationPermissionOwner),
+    @(RCIMIWGroupOperationPermissionOwnerOrManager),
+    @(RCIMIWGroupOperationPermissionEveryone),
+  ];
+  RCIMIWGroupOperationPermission GroupOperationPermission = [[GroupOperationPermissionArray objectAtIndex:integer] integerValue];
+  return GroupOperationPermission;
+}
++ (NSInteger)convertGroupOperationPermissionToInteger:(RCIMIWGroupOperationPermission)GroupOperationPermission {
+  NSArray *GroupOperationPermissionArray = @[
+    @(RCIMIWGroupOperationPermissionOwner),
+    @(RCIMIWGroupOperationPermissionOwnerOrManager),
+    @(RCIMIWGroupOperationPermissionEveryone),
+  ];
+  NSInteger index = [GroupOperationPermissionArray indexOfObject:@(GroupOperationPermission)];
+  return index;
+}
+
++ (RCIMIWGroupOperationType)convertGroupOperationTypeFromInteger:(NSInteger)integer {
+  NSArray *GroupOperationTypeArray = @[
+    @(RCIMIWGroupOperationTypeAdd),
+    @(RCIMIWGroupOperationTypeRemove),
+  ];
+  RCIMIWGroupOperationType GroupOperationType = [[GroupOperationTypeArray objectAtIndex:integer] integerValue];
+  return GroupOperationType;
+}
++ (NSInteger)convertGroupOperationTypeToInteger:(RCIMIWGroupOperationType)GroupOperationType {
+  NSArray *GroupOperationTypeArray = @[
+    @(RCIMIWGroupOperationTypeAdd),
+    @(RCIMIWGroupOperationTypeRemove),
+  ];
+  NSInteger index = [GroupOperationTypeArray indexOfObject:@(GroupOperationType)];
+  return index;
+}
+
++ (RCIMIWGroupMemberInfoEditPermission)convertGroupMemberInfoEditPermissionFromInteger:(NSInteger)integer {
+  NSArray *GroupMemberInfoEditPermissionArray = @[
+    @(RCIMIWGroupMemberInfoEditPermissionOwnerOrManagerOrSelf),
+    @(RCIMIWGroupMemberInfoEditPermissionOwnerOrSelf),
+    @(RCIMIWGroupMemberInfoEditPermissionSelf),
+  ];
+  RCIMIWGroupMemberInfoEditPermission GroupMemberInfoEditPermission = [[GroupMemberInfoEditPermissionArray objectAtIndex:integer] integerValue];
+  return GroupMemberInfoEditPermission;
+}
++ (NSInteger)convertGroupMemberInfoEditPermissionToInteger:(RCIMIWGroupMemberInfoEditPermission)GroupMemberInfoEditPermission {
+  NSArray *GroupMemberInfoEditPermissionArray = @[
+    @(RCIMIWGroupMemberInfoEditPermissionOwnerOrManagerOrSelf),
+    @(RCIMIWGroupMemberInfoEditPermissionOwnerOrSelf),
+    @(RCIMIWGroupMemberInfoEditPermissionSelf),
+  ];
+  NSInteger index = [GroupMemberInfoEditPermissionArray indexOfObject:@(GroupMemberInfoEditPermission)];
+  return index;
+}
+
++ (RCIMIWGroupMemberRole)convertGroupMemberRoleFromInteger:(NSInteger)integer {
+  NSArray *GroupMemberRoleArray = @[
+    @(RCIMIWGroupMemberRoleUndef),
+    @(RCIMIWGroupMemberRoleNormal),
+    @(RCIMIWGroupMemberRoleManager),
+    @(RCIMIWGroupMemberRoleOwner),
+  ];
+  RCIMIWGroupMemberRole GroupMemberRole = [[GroupMemberRoleArray objectAtIndex:integer] integerValue];
+  return GroupMemberRole;
+}
++ (NSInteger)convertGroupMemberRoleToInteger:(RCIMIWGroupMemberRole)GroupMemberRole {
+  NSArray *GroupMemberRoleArray = @[
+    @(RCIMIWGroupMemberRoleUndef),
+    @(RCIMIWGroupMemberRoleNormal),
+    @(RCIMIWGroupMemberRoleManager),
+    @(RCIMIWGroupMemberRoleOwner),
+  ];
+  NSInteger index = [GroupMemberRoleArray indexOfObject:@(GroupMemberRole)];
+  return index;
+}
+
++ (RCIMIWGroupApplicationType)convertGroupApplicationTypeFromInteger:(NSInteger)integer {
+  NSArray *GroupApplicationTypeArray = @[
+    @(RCIMIWGroupApplicationTypeApplication),
+    @(RCIMIWGroupApplicationTypeInvitation),
+  ];
+  RCIMIWGroupApplicationType GroupApplicationType = [[GroupApplicationTypeArray objectAtIndex:integer] integerValue];
+  return GroupApplicationType;
+}
++ (NSInteger)convertGroupApplicationTypeToInteger:(RCIMIWGroupApplicationType)GroupApplicationType {
+  NSArray *GroupApplicationTypeArray = @[
+    @(RCIMIWGroupApplicationTypeApplication),
+    @(RCIMIWGroupApplicationTypeInvitation),
+  ];
+  NSInteger index = [GroupApplicationTypeArray indexOfObject:@(GroupApplicationType)];
+  return index;
+}
+
 + (RCIMIWImportanceHW)convertImportanceHWFromInteger:(NSInteger)integer {
   NSArray *ImportanceHWArray = @[
     @(RCIMIWImportanceHWNormal),
@@ -107,6 +334,23 @@
     @(RCIMIWSentStatusCanceled),
   ];
   NSInteger index = [SentStatusArray indexOfObject:@(SentStatus)];
+  return index;
+}
+
++ (RCIMIWChatRoomSyncStatus)convertChatRoomSyncStatusFromInteger:(NSInteger)integer {
+  NSArray *ChatRoomSyncStatusArray = @[
+    @(RCIMIWChatRoomSyncStatusQuit),
+    @(RCIMIWChatRoomSyncStatusJoin),
+  ];
+  RCIMIWChatRoomSyncStatus ChatRoomSyncStatus = [[ChatRoomSyncStatusArray objectAtIndex:integer] integerValue];
+  return ChatRoomSyncStatus;
+}
++ (NSInteger)convertChatRoomSyncStatusToInteger:(RCIMIWChatRoomSyncStatus)ChatRoomSyncStatus {
+  NSArray *ChatRoomSyncStatusArray = @[
+    @(RCIMIWChatRoomSyncStatusQuit),
+    @(RCIMIWChatRoomSyncStatusJoin),
+  ];
+  NSInteger index = [ChatRoomSyncStatusArray indexOfObject:@(ChatRoomSyncStatus)];
   return index;
 }
 
@@ -281,6 +525,69 @@
   return index;
 }
 
++ (RCIMIWMessageAuditType)convertMessageAuditTypeFromInteger:(NSInteger)integer {
+  NSArray *MessageAuditTypeArray = @[
+    @(RCIMIWMessageAuditTypeDisallow),
+    @(RCIMIWMessageAuditTypeAllow),
+  ];
+  RCIMIWMessageAuditType MessageAuditType = [[MessageAuditTypeArray objectAtIndex:integer] integerValue];
+  return MessageAuditType;
+}
++ (NSInteger)convertMessageAuditTypeToInteger:(RCIMIWMessageAuditType)MessageAuditType {
+  NSArray *MessageAuditTypeArray = @[
+    @(RCIMIWMessageAuditTypeDisallow),
+    @(RCIMIWMessageAuditTypeAllow),
+  ];
+  NSInteger index = [MessageAuditTypeArray indexOfObject:@(MessageAuditType)];
+  return index;
+}
+
++ (RCIMIWChatRoomMemberBanType)convertChatRoomMemberBanTypeFromInteger:(NSInteger)integer {
+  NSArray *ChatRoomMemberBanTypeArray = @[
+    @(RCIMIWChatRoomMemberBanTypeUnmuteUsers),
+    @(RCIMIWChatRoomMemberBanTypeMuteUsers),
+    @(RCIMIWChatRoomMemberBanTypeUnmuteAll),
+    @(RCIMIWChatRoomMemberBanTypeMuteAll),
+    @(RCIMIWChatRoomMemberBanTypeRemoveWhitelist),
+    @(RCIMIWChatRoomMemberBanTypeAddWhitelist),
+    @(RCIMIWChatRoomMemberBanTypeUnmuteGlobal),
+    @(RCIMIWChatRoomMemberBanTypeMuteGlobal),
+  ];
+  RCIMIWChatRoomMemberBanType ChatRoomMemberBanType = [[ChatRoomMemberBanTypeArray objectAtIndex:integer] integerValue];
+  return ChatRoomMemberBanType;
+}
++ (NSInteger)convertChatRoomMemberBanTypeToInteger:(RCIMIWChatRoomMemberBanType)ChatRoomMemberBanType {
+  NSArray *ChatRoomMemberBanTypeArray = @[
+    @(RCIMIWChatRoomMemberBanTypeUnmuteUsers),
+    @(RCIMIWChatRoomMemberBanTypeMuteUsers),
+    @(RCIMIWChatRoomMemberBanTypeUnmuteAll),
+    @(RCIMIWChatRoomMemberBanTypeMuteAll),
+    @(RCIMIWChatRoomMemberBanTypeRemoveWhitelist),
+    @(RCIMIWChatRoomMemberBanTypeAddWhitelist),
+    @(RCIMIWChatRoomMemberBanTypeUnmuteGlobal),
+    @(RCIMIWChatRoomMemberBanTypeMuteGlobal),
+  ];
+  NSInteger index = [ChatRoomMemberBanTypeArray indexOfObject:@(ChatRoomMemberBanType)];
+  return index;
+}
+
++ (RCIMIWChatRoomMemberOperateType)convertChatRoomMemberOperateTypeFromInteger:(NSInteger)integer {
+  NSArray *ChatRoomMemberOperateTypeArray = @[
+    @(RCIMIWChatRoomMemberOperateTypeDeblock),
+    @(RCIMIWChatRoomMemberOperateTypeBlocked),
+  ];
+  RCIMIWChatRoomMemberOperateType ChatRoomMemberOperateType = [[ChatRoomMemberOperateTypeArray objectAtIndex:integer] integerValue];
+  return ChatRoomMemberOperateType;
+}
++ (NSInteger)convertChatRoomMemberOperateTypeToInteger:(RCIMIWChatRoomMemberOperateType)ChatRoomMemberOperateType {
+  NSArray *ChatRoomMemberOperateTypeArray = @[
+    @(RCIMIWChatRoomMemberOperateTypeDeblock),
+    @(RCIMIWChatRoomMemberOperateTypeBlocked),
+  ];
+  NSInteger index = [ChatRoomMemberOperateTypeArray indexOfObject:@(ChatRoomMemberOperateType)];
+  return index;
+}
+
 + (RCIMIWTimeOrder)convertTimeOrderFromInteger:(NSInteger)integer {
   NSArray *TimeOrderArray = @[
     @(RCIMIWTimeOrderBefore),
@@ -383,6 +690,23 @@
     @(RCIMIWErrorCodeResultUnknown),
   ];
   NSInteger index = [ErrorCodeArray indexOfObject:@(ErrorCode)];
+  return index;
+}
+
++ (RCIMIWChatRoomSyncStatusReason)convertChatRoomSyncStatusReasonFromInteger:(NSInteger)integer {
+  NSArray *ChatRoomSyncStatusReasonArray = @[
+    @(RCIMIWChatRoomSyncStatusLeaveOnMyOwn),
+    @(RCIMIWChatRoomSyncStatusOtherDeviceLogin),
+  ];
+  RCIMIWChatRoomSyncStatusReason ChatRoomSyncStatusReason = [[ChatRoomSyncStatusReasonArray objectAtIndex:integer] integerValue];
+  return ChatRoomSyncStatusReason;
+}
++ (NSInteger)convertChatRoomSyncStatusReasonToInteger:(RCIMIWChatRoomSyncStatusReason)ChatRoomSyncStatusReason {
+  NSArray *ChatRoomSyncStatusReasonArray = @[
+    @(RCIMIWChatRoomSyncStatusLeaveOnMyOwn),
+    @(RCIMIWChatRoomSyncStatusOtherDeviceLogin),
+  ];
+  NSInteger index = [ChatRoomSyncStatusReasonArray indexOfObject:@(ChatRoomSyncStatusReason)];
   return index;
 }
 

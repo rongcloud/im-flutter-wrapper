@@ -32,6 +32,28 @@ abstract class RCIMIWUserCustomMessage extends RCIMIWMessage {
   String messageObjectName();
 }
 
+class RCIMIWHarmonyPushOptions {
+  /// 通知栏右侧图片，格式支持 png、jpg、jpeg、heif、gif、bmp，图片长宽<25000像素，图片不满足要求的情况下，终端不能显示通知消息。
+  String? imageUrl;
+
+  /// 消息自分类标识，默认为空。category 取值必须为大写字母，例如 IM。消息自分类标识，默认为空。category 取值必须为大写字母，例如 IM。
+  String? category;
+
+  RCIMIWHarmonyPushOptions.create({this.imageUrl, this.category});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['imageUrl'] = imageUrl;
+    json['category'] = category;
+    return json;
+  }
+
+  RCIMIWHarmonyPushOptions.fromJson(Map<String, dynamic> json) {
+    imageUrl = json['imageUrl'];
+    category = json['category'];
+  }
+}
+
 class RCIMIWAndroidPushOptions {
   /// Android 平台 Push 唯一标识。
   /// 目前支持小米、华为推送平台，默认开发者不需要进行设置。
@@ -67,11 +89,6 @@ class RCIMIWAndroidPushOptions {
   /// URL使用的协议必须是HTTPS协议，取值样例：https://example.com/image.png。图标文件须小于 512KB，图标建议规格大小：40dp x 40dp，弧角大小为 8dp，超出建议规格大小的图标会存在图片压缩或显示不全的情况。
   String? imageUrlHW;
 
-  /// 小米 Large icon 链接
-  /// Large icon 可以出现在大图版和多字版消息中，显示在右边。国内版仅 MIUI12 以上版本支持，以下版本均不支持；国际版支持。
-  /// 图片要求：大小 120 120px，格式为 png 或者 jpg 格式
-  String? imageUrlMi;
-
   /// FCM 通知的频道 ID，该应用程序必须使用此频道 ID 创建一个频道，然后才能收到带有该频道 ID 的任何通知。
   /// 如果您未在请求中发送此频道 ID，或者如果应用尚未创建提供的频道 ID，则 FCM 使用应用清单中指定的频道 ID。
   String? channelIdFCM;
@@ -95,7 +112,6 @@ class RCIMIWAndroidPushOptions {
     this.imageUrlFCM,
     this.importanceHW,
     this.imageUrlHW,
-    this.imageUrlMi,
     this.channelIdFCM,
     this.categoryVivo,
     this.importanceHonor,
@@ -114,7 +130,6 @@ class RCIMIWAndroidPushOptions {
     json['imageUrlFCM'] = imageUrlFCM;
     json['importanceHW'] = importanceHW?.index;
     json['imageUrlHW'] = imageUrlHW;
-    json['imageUrlMi'] = imageUrlMi;
     json['channelIdFCM'] = channelIdFCM;
     json['categoryVivo'] = categoryVivo;
     json['importanceHonor'] = importanceHonor?.index;
@@ -133,7 +148,6 @@ class RCIMIWAndroidPushOptions {
     imageUrlFCM = json['imageUrlFCM'];
     importanceHW = json['importanceHW'] == null ? null : RCIMIWImportanceHW.values[json['importanceHW']];
     imageUrlHW = json['imageUrlHW'];
-    imageUrlMi = json['imageUrlMi'];
     channelIdFCM = json['channelIdFCM'];
     categoryVivo = json['categoryVivo'];
     importanceHonor = json['importanceHonor'] == null ? null : RCIMIWImportanceHonor.values[json['importanceHonor']];
@@ -179,6 +193,9 @@ class RCIMIWMessagePushOptions {
   /// Android 平台相关配置
   RCIMIWAndroidPushOptions? androidPushOptions;
 
+  /// 鸿蒙推送配置
+  RCIMIWHarmonyPushOptions? harmonyPushOptions;
+
   RCIMIWMessagePushOptions.create({
     this.disableNotification,
     this.disablePushTitle,
@@ -190,6 +207,7 @@ class RCIMIWMessagePushOptions {
     this.voIPPush,
     this.iOSPushOptions,
     this.androidPushOptions,
+    this.harmonyPushOptions,
   });
 
   Map<String, dynamic> toJson() {
@@ -204,6 +222,7 @@ class RCIMIWMessagePushOptions {
     json['voIPPush'] = voIPPush;
     json['iOSPushOptions'] = iOSPushOptions?.toJson();
     json['androidPushOptions'] = androidPushOptions?.toJson();
+    json['harmonyPushOptions'] = harmonyPushOptions?.toJson();
     return json;
   }
 
@@ -222,6 +241,9 @@ class RCIMIWMessagePushOptions {
     if (json['androidPushOptions'] != null) {
       androidPushOptions = RCIMIWAndroidPushOptions.fromJson(Map<String, dynamic>.from(json['androidPushOptions']));
     }
+    if (json['harmonyPushOptions'] != null) {
+      harmonyPushOptions = RCIMIWHarmonyPushOptions.fromJson(Map<String, dynamic>.from(json['harmonyPushOptions']));
+    }
   }
 }
 
@@ -239,7 +261,20 @@ class RCIMIWIOSPushOptions {
   /// iOS 富文本推送内容的 URL，与 category 一起使用。
   String? richMediaUri;
 
-  RCIMIWIOSPushOptions.create({this.threadId, this.category, this.apnsCollapseId, this.richMediaUri});
+  /// iOS 推送级别。默认值 "active"。
+  /// "passive" 被动通知：即并不需要及时关注的通知，类似餐馆推荐通知。
+  /// "active" 主动通知（默认的）：默认的通知，即人们可能想知道的，类似最喜欢的体育比赛的最新比分。
+  /// "time-sensitive" 时效性通知：需要人们立刻注意的通知，类似账户安全问题或快递动态。
+  /// "critical" 重要通知：关于个人健康或直接影响到设备拥有者的公共安全事件且需要立刻关注的，这类通知很少，一般是来自公共政府机构或健康 App。
+  String? interruptionLevel;
+
+  RCIMIWIOSPushOptions.create({
+    this.threadId,
+    this.category,
+    this.apnsCollapseId,
+    this.richMediaUri,
+    this.interruptionLevel,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
@@ -247,6 +282,7 @@ class RCIMIWIOSPushOptions {
     json['category'] = category;
     json['apnsCollapseId'] = apnsCollapseId;
     json['richMediaUri'] = richMediaUri;
+    json['interruptionLevel'] = interruptionLevel;
     return json;
   }
 
@@ -255,6 +291,7 @@ class RCIMIWIOSPushOptions {
     category = json['category'];
     apnsCollapseId = json['apnsCollapseId'];
     richMediaUri = json['richMediaUri'];
+    interruptionLevel = json['interruptionLevel'];
   }
 }
 
@@ -347,8 +384,15 @@ class RCIMIWEngineOptions {
   /// 配置数据上传地址
   String? statisticServer;
 
+  /// 配置日志上传地址
+  String? logServer;
+
   /// 数据中心区域码
   RCIMIWAreaCode? areaCode;
+
+  /// 网络环境标识
+  /// 标识客户端所在当前网络环境，例如 intranet 内网，private 专网。如果不配置，使用对应于的默认环境配置
+  String? environment;
 
   /// 设置断线重连时是否踢出重连设备。
   /// 用户没有开通多设备登录功能的前提下，同一个账号在一台新设备上登录的时候，会把这个账号在之前登录的设备上踢出。
@@ -367,7 +411,9 @@ class RCIMIWEngineOptions {
     this.naviServer,
     this.fileServer,
     this.statisticServer,
+    this.logServer,
     this.areaCode,
+    this.environment,
     this.kickReconnectDevice,
     this.compressOptions,
     this.logLevel,
@@ -381,7 +427,9 @@ class RCIMIWEngineOptions {
     json['naviServer'] = naviServer;
     json['fileServer'] = fileServer;
     json['statisticServer'] = statisticServer;
+    json['logServer'] = logServer;
     json['areaCode'] = areaCode?.index;
+    json['environment'] = environment;
     json['kickReconnectDevice'] = kickReconnectDevice;
     json['compressOptions'] = compressOptions?.toJson();
     json['logLevel'] = logLevel?.index;
@@ -395,7 +443,9 @@ class RCIMIWEngineOptions {
     naviServer = json['naviServer'];
     fileServer = json['fileServer'];
     statisticServer = json['statisticServer'];
+    logServer = json['logServer'];
     areaCode = json['areaCode'] == null ? null : RCIMIWAreaCode.values[json['areaCode']];
+    environment = json['environment'];
     kickReconnectDevice = json['kickReconnectDevice'];
     if (json['compressOptions'] != null) {
       compressOptions = RCIMIWCompressOptions.fromJson(Map<String, dynamic>.from(json['compressOptions']));
@@ -406,6 +456,33 @@ class RCIMIWEngineOptions {
     }
     enablePush = json['enablePush'];
     enableIPC = json['enableIPC'];
+  }
+}
+
+class RCIMIWMessageAuditInfo {
+  /// 是否送审，消息回调是否送给三方审核
+  RCIMIWMessageAuditType? auditType;
+
+  /// 项目名称 默认为 空字符串
+  String? project;
+
+  /// 审核策略
+  String? strategy;
+
+  RCIMIWMessageAuditInfo.create({this.auditType, this.project, this.strategy});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['auditType'] = auditType?.index;
+    json['project'] = project;
+    json['strategy'] = strategy;
+    return json;
+  }
+
+  RCIMIWMessageAuditInfo.fromJson(Map<String, dynamic> json) {
+    auditType = json['auditType'] == null ? null : RCIMIWMessageAuditType.values[json['auditType']];
+    project = json['project'];
+    strategy = json['strategy'];
   }
 }
 
@@ -550,8 +627,14 @@ class RCIMIWMessage {
   /// 消息的发送时间（Unix 时间戳、毫秒）
   int? sentTime;
 
-  /// 消息的接收状态
+  /// 设置焚烧时间，默认是 0，0 代表该消息非阅后即焚消息。若此值大于 0，则消息为已读状态后，经过 destructDuration 时间后销毁。
+  int? destructDuration;
+
+  /// 消息的接收状态，只能为单一某个状态
   RCIMIWReceivedStatus? receivedStatus;
+
+  /// 消息的接收状态，可同时设为已读、已听、已下载、已收取
+  RCIMIWReceivedStatusInfo? receivedStatusInfo;
 
   /// 消息的发送状态
   RCIMIWSentStatus? sentStatus;
@@ -571,13 +654,23 @@ class RCIMIWMessage {
   /// 消息推送配置
   RCIMIWMessagePushOptions? pushOptions;
 
-  /// 消息的附加字段
+  /// 消息的附加字段，可以随着消息发送给远端
   String? extra;
 
-  /// 消息扩展信息列表，该属性在消息发送时确定，发送之后不能再做修改
-  /// 扩展信息只支持单聊和群组，其它会话类型不能设置扩展信息
-  /// 默认消息扩展字典 key 长度不超过 32 ，value 长度不超过 4096 ，单次设置扩展数量最大为 20，消息的扩展总数不能超过 300
+  /// 消息的本地扩展字段，不会随着消息发送给远端，只会保存在本地数据库中
+  String? localExtra;
+
+  /// 消息扩展信息列表，该属性在消息发送时确定，发送之后不能再做修改。扩展信息只支持单聊、群聊、超级群，其它会话类型不能设置扩展信息。默认消息扩展字典 key 长度不超过 32 ，value 长度不超过 4096 ，单次设置扩展数量最大为 20，消息的扩展总数不能超过 300
   Map? expansion;
+
+  /// 消息是否可以包含扩展信息。
+  bool? canIncludeExpansion;
+
+  /// 消息送审配置
+  RCIMIWMessageAuditInfo? auditInfo;
+
+  /// 定向用户列表，单聊会话类型返回空
+  List<String>? directedUserIds;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
@@ -591,7 +684,9 @@ class RCIMIWMessage {
     json['groupReadReceiptInfo'] = groupReadReceiptInfo?.toJson();
     json['receivedTime'] = receivedTime;
     json['sentTime'] = sentTime;
+    json['destructDuration'] = destructDuration;
     json['receivedStatus'] = receivedStatus?.index;
+    json['receivedStatusInfo'] = receivedStatusInfo?.toJson();
     json['sentStatus'] = sentStatus?.index;
     json['senderUserId'] = senderUserId;
     json['direction'] = direction?.index;
@@ -599,7 +694,11 @@ class RCIMIWMessage {
     json['mentionedInfo'] = mentionedInfo?.toJson();
     json['pushOptions'] = pushOptions?.toJson();
     json['extra'] = extra;
+    json['localExtra'] = localExtra;
     json['expansion'] = expansion;
+    json['canIncludeExpansion'] = canIncludeExpansion;
+    json['auditInfo'] = auditInfo?.toJson();
+    json['directedUserIds'] = directedUserIds;
     return json;
   }
 
@@ -619,7 +718,11 @@ class RCIMIWMessage {
     }
     receivedTime = json['receivedTime'];
     sentTime = json['sentTime'];
+    destructDuration = json['destructDuration'];
     receivedStatus = json['receivedStatus'] == null ? null : RCIMIWReceivedStatus.values[json['receivedStatus']];
+    if (json['receivedStatusInfo'] != null) {
+      receivedStatusInfo = RCIMIWReceivedStatusInfo.fromJson(Map<String, dynamic>.from(json['receivedStatusInfo']));
+    }
     sentStatus = json['sentStatus'] == null ? null : RCIMIWSentStatus.values[json['sentStatus']];
     senderUserId = json['senderUserId'];
     direction = json['direction'] == null ? null : RCIMIWMessageDirection.values[json['direction']];
@@ -633,7 +736,13 @@ class RCIMIWMessage {
       pushOptions = RCIMIWMessagePushOptions.fromJson(Map<String, dynamic>.from(json['pushOptions']));
     }
     extra = json['extra'];
+    localExtra = json['localExtra'];
     expansion = json['expansion'];
+    canIncludeExpansion = json['canIncludeExpansion'];
+    if (json['auditInfo'] != null) {
+      auditInfo = RCIMIWMessageAuditInfo.fromJson(Map<String, dynamic>.from(json['auditInfo']));
+    }
+    directedUserIds = json['directedUserIds']?.cast<String>();
   }
 }
 
@@ -660,6 +769,38 @@ class RCIMIWNativeCustomMediaMessage extends RCIMIWMediaMessage {
     fields = json['fields'];
     searchableWords = json['searchableWords']?.cast<String>();
     messageIdentifier = json['messageIdentifier'];
+  }
+}
+
+class RCIMIWReceivedStatusInfo {
+  /// 获取是否已读取的状态。
+  bool? read;
+
+  /// 获取是否已被收听的状态。
+  bool? listened;
+
+  /// 获取文件是否已经下载的状态。
+  bool? downloaded;
+
+  /// 获取消息是否已经被收取过。该消息已被同时在线或之前登录的其他设备接收。只要任何其他设备先收到该消息，当前设备该状态值就会为 true。
+  bool? retrieved;
+
+  RCIMIWReceivedStatusInfo.create({this.read, this.listened, this.downloaded, this.retrieved});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['read'] = read;
+    json['listened'] = listened;
+    json['downloaded'] = downloaded;
+    json['retrieved'] = retrieved;
+    return json;
+  }
+
+  RCIMIWReceivedStatusInfo.fromJson(Map<String, dynamic> json) {
+    read = json['read'];
+    listened = json['listened'];
+    downloaded = json['downloaded'];
+    retrieved = json['retrieved'];
   }
 }
 
@@ -723,6 +864,9 @@ class RCIMIWRecallNotificationMessage extends RCIMIWMessage {
   /// 撤回动作的时间（毫秒）
   int? recallActionTime;
 
+  /// 撤回操作者的用户 ID
+  String? operatorId;
+
   /// 被撤回的原消息
   RCIMIWMessage? originalMessage;
 
@@ -733,6 +877,7 @@ class RCIMIWRecallNotificationMessage extends RCIMIWMessage {
     json['deleted'] = deleted;
     json['recallTime'] = recallTime;
     json['recallActionTime'] = recallActionTime;
+    json['operatorId'] = operatorId;
     json['originalMessage'] = originalMessage?.toJson();
     return json;
   }
@@ -742,6 +887,7 @@ class RCIMIWRecallNotificationMessage extends RCIMIWMessage {
     deleted = json['deleted'];
     recallTime = json['recallTime'];
     recallActionTime = json['recallActionTime'];
+    operatorId = json['operatorId'];
     if (json['originalMessage'] != null) {
       originalMessage = RCIMConverter.convertMessage(Map<String, dynamic>.from(json['originalMessage']));
     }
@@ -987,6 +1133,358 @@ class RCIMIWReferenceMessage extends RCIMIWMessage {
   }
 }
 
+class RCIMIWPagingQueryResult<T> {
+  String? pageToken;
+  int? totalCount;
+  List<T>? data;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['pageToken'] = pageToken;
+    json['totalCount'] = totalCount;
+    json['data'] = data;
+    return json;
+  }
+
+  RCIMIWPagingQueryResult.fromJson(Map<String, dynamic> json) {
+    pageToken = json['pageToken'] as String?;
+    totalCount = json['totalCount'] as int?;
+
+    var rawList = json['data'] as List<dynamic>?;
+
+    if (rawList != null) {
+      data =
+          rawList.map<T>((e) {
+            final map = Map<String, dynamic>.from(e as Map);
+            if (T == RCIMIWGroupMemberInfo) {
+              return RCIMIWGroupMemberInfo.fromJson(map) as T;
+            } else if (T == RCIMIWGroupInfo) {
+              return RCIMIWGroupInfo.fromJson(map) as T;
+            } else if (T == RCIMIWGroupApplicationInfo) {
+              return RCIMIWGroupApplicationInfo.fromJson(map) as T;
+            } else {
+              throw UnsupportedError('Unsupported type: $T');
+            }
+          }).toList();
+    }
+  }
+}
+
+class RCIMIWFollowInfo {
+  /// 用户 Id
+  String? userId;
+
+  /// 关注时间戳，当前用户关注此用户的时间戳。
+  int? time;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['time'] = time;
+    return json;
+  }
+
+  RCIMIWFollowInfo.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    time = json['time'];
+  }
+}
+
+class RCIMIWGroupInfo {
+  /// 群Id。最大长度 64 个字符。支持大小写英文字母与数字的组合。
+  String? groupId;
+
+  /// 群名称。最长不超过 64 个字符，创建群组时群名称可以重复。
+  String? groupName;
+
+  /// 群头像 URL 地址。长度不超过 128 个字符
+  String? portraitUri;
+
+  /// 群简介。最大长度不超过 512 个字符
+  String? introduction;
+
+  /// 群公告。最大长度不超过 1024 个字符
+  String? notice;
+
+  /// 群扩展信息。默认最多可设置 10 个扩展信息。注意：需要通过开发者后台或 API 设置后才能使用，否则返回设置失败
+  Map? extProfile;
+
+  /// 主动加入群权限权限
+  RCIMIWGroupJoinPermission? joinPermission;
+
+  /// 将群成员移出群组设置权限
+  RCIMIWGroupOperationPermission? removeMemberPermission;
+
+  /// 邀请他人入群权限
+  RCIMIWGroupOperationPermission? invitePermission;
+
+  /// 被邀请入群权限
+  RCIMIWGroupInviteHandlePermission? inviteHandlePermission;
+
+  /// 群信息更新权限
+  RCIMIWGroupOperationPermission? groupInfoEditPermission;
+
+  /// 群成员信息更新权限
+  RCIMIWGroupMemberInfoEditPermission? memberInfoEditPermission;
+
+  /// 创建者ID。 注意：此属性只读
+  String? creatorId;
+
+  /// 群主ID。注意：此属性只读
+  String? ownerId;
+
+  /// 当前群名称备注名。注意：此属性只读
+  String? remark;
+
+  /// 群组创建时间。注意：此属性只读
+  int? createTime;
+
+  /// 群当前成员人数。注意：此属性只读
+  int? membersCount;
+
+  /// 当前用户加入时间：用户多次加入群组时，以最后一次加入时间为准。注意：此属性只读
+  int? joinedTime;
+
+  /// 当前用户群身份：群主、群管理员、群成员。注意：此属性只读
+  RCIMIWGroupMemberRole? role;
+
+  /// 群组状态 (默认为使用中)。注意：此属性只读
+  RCIMIWGroupStatus? groupStatus;
+
+  /// 群组状态更新时间: 如果是使用中，则为创建时间；如果是已解散，则为解散时间。注意：此属性只读
+  int? groupStatusUpdateTime;
+
+  RCIMIWGroupInfo.create({
+    this.groupId,
+    this.groupName,
+    this.portraitUri,
+    this.introduction,
+    this.notice,
+    this.extProfile,
+    this.joinPermission,
+    this.removeMemberPermission,
+    this.invitePermission,
+    this.inviteHandlePermission,
+    this.groupInfoEditPermission,
+    this.memberInfoEditPermission,
+    this.creatorId,
+    this.ownerId,
+    this.remark,
+    this.createTime,
+    this.membersCount,
+    this.joinedTime,
+    this.role,
+    this.groupStatus,
+    this.groupStatusUpdateTime,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['groupId'] = groupId;
+    json['groupName'] = groupName;
+    json['portraitUri'] = portraitUri;
+    json['introduction'] = introduction;
+    json['notice'] = notice;
+    json['extProfile'] = extProfile;
+    json['joinPermission'] = joinPermission?.index;
+    json['removeMemberPermission'] = removeMemberPermission?.index;
+    json['invitePermission'] = invitePermission?.index;
+    json['inviteHandlePermission'] = inviteHandlePermission?.index;
+    json['groupInfoEditPermission'] = groupInfoEditPermission?.index;
+    json['memberInfoEditPermission'] = memberInfoEditPermission?.index;
+    json['creatorId'] = creatorId;
+    json['ownerId'] = ownerId;
+    json['remark'] = remark;
+    json['createTime'] = createTime;
+    json['membersCount'] = membersCount;
+    json['joinedTime'] = joinedTime;
+    json['role'] = role?.index;
+    json['groupStatus'] = groupStatus?.index;
+    json['groupStatusUpdateTime'] = groupStatusUpdateTime;
+    return json;
+  }
+
+  RCIMIWGroupInfo.fromJson(Map<String, dynamic> json) {
+    groupId = json['groupId'];
+    groupName = json['groupName'];
+    portraitUri = json['portraitUri'];
+    introduction = json['introduction'];
+    notice = json['notice'];
+    extProfile = json['extProfile'];
+    joinPermission = json['joinPermission'] == null ? null : RCIMIWGroupJoinPermission.values[json['joinPermission']];
+    removeMemberPermission =
+        json['removeMemberPermission'] == null
+            ? null
+            : RCIMIWGroupOperationPermission.values[json['removeMemberPermission']];
+    invitePermission =
+        json['invitePermission'] == null ? null : RCIMIWGroupOperationPermission.values[json['invitePermission']];
+    inviteHandlePermission =
+        json['inviteHandlePermission'] == null
+            ? null
+            : RCIMIWGroupInviteHandlePermission.values[json['inviteHandlePermission']];
+    groupInfoEditPermission =
+        json['groupInfoEditPermission'] == null
+            ? null
+            : RCIMIWGroupOperationPermission.values[json['groupInfoEditPermission']];
+    memberInfoEditPermission =
+        json['memberInfoEditPermission'] == null
+            ? null
+            : RCIMIWGroupMemberInfoEditPermission.values[json['memberInfoEditPermission']];
+    creatorId = json['creatorId'];
+    ownerId = json['ownerId'];
+    remark = json['remark'];
+    createTime = json['createTime'];
+    membersCount = json['membersCount'];
+    joinedTime = json['joinedTime'];
+    role = json['role'] == null ? null : RCIMIWGroupMemberRole.values[json['role']];
+    groupStatus = json['groupStatus'] == null ? null : RCIMIWGroupStatus.values[json['groupStatus']];
+    groupStatusUpdateTime = json['groupStatusUpdateTime'];
+  }
+}
+
+class RCIMIWGroupMemberInfo {
+  /// 群成员用户Id。
+  String? userId;
+
+  /// 群成员头像 URL 地址。长度不超过 128 个字符
+  String? portraitUri;
+
+  /// 群成员名称。
+  String? name;
+
+  /// 群成员群昵称：默认未设置时为用户名称，最大长度不超过 64 个字符
+  String? nickname;
+
+  /// 群成员附加信息。长度不超过 128 个字符
+  String? extra;
+
+  /// 入群时间：时间戳，精确到毫秒
+  int? joinedTime;
+
+  /// 群成员角色
+  RCIMIWGroupMemberRole? role;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['portraitUri'] = portraitUri;
+    json['name'] = name;
+    json['nickname'] = nickname;
+    json['extra'] = extra;
+    json['joinedTime'] = joinedTime;
+    json['role'] = role?.index;
+    return json;
+  }
+
+  RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    portraitUri = json['portraitUri'];
+    name = json['name'];
+    nickname = json['nickname'];
+    extra = json['extra'];
+    joinedTime = json['joinedTime'];
+    role = json['role'] == null ? null : RCIMIWGroupMemberRole.values[json['role']];
+  }
+}
+
+class RCIMIWPagingQueryOption {
+  /// 当前页数标识，表示当前查询到的位置。
+  String? pageToken;
+
+  /// 每页条数。
+  int? count;
+
+  /// 排序类型：支持设置正序、倒序获取。true：正序；false：倒序。默认值为false，倒序返回。
+  bool? order;
+
+  RCIMIWPagingQueryOption.create({this.pageToken, this.count, this.order});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['pageToken'] = pageToken;
+    json['count'] = count;
+    json['order'] = order;
+    return json;
+  }
+
+  RCIMIWPagingQueryOption.fromJson(Map<String, dynamic> json) {
+    pageToken = json['pageToken'];
+    count = json['count'];
+    order = json['order'];
+  }
+}
+
+class RCIMIWQuitGroupConfig {
+  /// 是否移除群成员禁言状态，true代表移除，false代表不移除。默认为true
+  bool? removeMuteStatus;
+
+  /// 是否移除群成员白名单，true代表移除，false代表不移除。默认为true
+  bool? removeWhiteList;
+
+  /// 是否移除特别关注群成员，true代表移除，false代表不移除。默认为true
+  bool? removeFollow;
+
+  RCIMIWQuitGroupConfig.create({this.removeMuteStatus, this.removeWhiteList, this.removeFollow});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['removeMuteStatus'] = removeMuteStatus;
+    json['removeWhiteList'] = removeWhiteList;
+    json['removeFollow'] = removeFollow;
+    return json;
+  }
+
+  RCIMIWQuitGroupConfig.fromJson(Map<String, dynamic> json) {
+    removeMuteStatus = json['removeMuteStatus'];
+    removeWhiteList = json['removeWhiteList'];
+    removeFollow = json['removeFollow'];
+  }
+}
+
+class RCIMIWGroupApplicationInfo {
+  String? groupId;
+  RCIMIWGroupMemberInfo? joinMemberInfo;
+  RCIMIWGroupMemberInfo? inviterInfo;
+  RCIMIWGroupMemberInfo? operatorInfo;
+  RCIMIWGroupApplicationStatus? status;
+  RCIMIWGroupApplicationDirection? direction;
+  RCIMIWGroupApplicationType? type;
+  int? operationTime;
+  String? reason;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['groupId'] = groupId;
+    json['joinMemberInfo'] = joinMemberInfo?.toJson();
+    json['inviterInfo'] = inviterInfo?.toJson();
+    json['operatorInfo'] = operatorInfo?.toJson();
+    json['status'] = status?.index;
+    json['direction'] = direction?.index;
+    json['type'] = type?.index;
+    json['operationTime'] = operationTime;
+    json['reason'] = reason;
+    return json;
+  }
+
+  RCIMIWGroupApplicationInfo.fromJson(Map<String, dynamic> json) {
+    groupId = json['groupId'];
+    if (json['joinMemberInfo'] != null) {
+      joinMemberInfo = RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(json['joinMemberInfo']));
+    }
+    if (json['inviterInfo'] != null) {
+      inviterInfo = RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(json['inviterInfo']));
+    }
+    if (json['operatorInfo'] != null) {
+      operatorInfo = RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(json['operatorInfo']));
+    }
+    status = json['status'] == null ? null : RCIMIWGroupApplicationStatus.values[json['status']];
+    direction = json['direction'] == null ? null : RCIMIWGroupApplicationDirection.values[json['direction']];
+    type = json['type'] == null ? null : RCIMIWGroupApplicationType.values[json['type']];
+    operationTime = json['operationTime'];
+    reason = json['reason'];
+  }
+}
+
 class RCIMIWBlockedMessageInfo {
   /// 封禁的会话类型
   RCIMIWConversationType? conversationType;
@@ -1113,6 +1611,61 @@ class RCIMIWGroupReadReceiptInfo {
   }
 }
 
+class RCIMIWChatRoomMemberBanEvent {
+  String? chatroomId;
+  RCIMIWChatRoomMemberBanType? banType;
+  int? durationTime;
+  int? operateTime;
+  List<String>? userIdList;
+  String? extra;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['chatroomId'] = chatroomId;
+    json['banType'] = banType?.index;
+    json['durationTime'] = durationTime;
+    json['operateTime'] = operateTime;
+    json['userIdList'] = userIdList;
+    json['extra'] = extra;
+    return json;
+  }
+
+  RCIMIWChatRoomMemberBanEvent.fromJson(Map<String, dynamic> json) {
+    chatroomId = json['chatroomId'];
+    banType = json['banType'] == null ? null : RCIMIWChatRoomMemberBanType.values[json['banType']];
+    durationTime = json['durationTime'];
+    operateTime = json['operateTime'];
+    userIdList = json['userIdList']?.cast<String>();
+    extra = json['extra'];
+  }
+}
+
+class RCIMIWChatRoomSyncEvent {
+  String? chatroomId;
+  RCIMIWChatRoomSyncStatus? status;
+  RCIMIWChatRoomSyncStatusReason? reason;
+  int? time;
+  String? extra;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['chatroomId'] = chatroomId;
+    json['status'] = status?.index;
+    json['reason'] = reason?.index;
+    json['time'] = time;
+    json['extra'] = extra;
+    return json;
+  }
+
+  RCIMIWChatRoomSyncEvent.fromJson(Map<String, dynamic> json) {
+    chatroomId = json['chatroomId'];
+    status = json['status'] == null ? null : RCIMIWChatRoomSyncStatus.values[json['status']];
+    reason = json['reason'] == null ? null : RCIMIWChatRoomSyncStatusReason.values[json['reason']];
+    time = json['time'];
+    extra = json['extra'];
+  }
+}
+
 class RCIMIWChatRoomMemberAction {
   /// 操作的用户
   String? userId;
@@ -1130,6 +1683,35 @@ class RCIMIWChatRoomMemberAction {
   RCIMIWChatRoomMemberAction.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     actionType = json['actionType'] == null ? null : RCIMIWChatRoomMemberActionType.values[json['actionType']];
+  }
+}
+
+class RCIMIWChatRoomMemberBlockEvent {
+  String? chatroomId;
+  RCIMIWChatRoomMemberOperateType? operateType;
+  int? durationTime;
+  int? operateTime;
+  List<String>? userIdList;
+  String? extra;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['chatroomId'] = chatroomId;
+    json['operateType'] = operateType?.index;
+    json['durationTime'] = durationTime;
+    json['operateTime'] = operateTime;
+    json['userIdList'] = userIdList;
+    json['extra'] = extra;
+    return json;
+  }
+
+  RCIMIWChatRoomMemberBlockEvent.fromJson(Map<String, dynamic> json) {
+    chatroomId = json['chatroomId'];
+    operateType = json['operateType'] == null ? null : RCIMIWChatRoomMemberOperateType.values[json['operateType']];
+    durationTime = json['durationTime'];
+    operateTime = json['operateTime'];
+    userIdList = json['userIdList']?.cast<String>();
+    extra = json['extra'];
   }
 }
 
@@ -1212,8 +1794,11 @@ class RCIMIWConversation {
   /// 当前会话未读消息数量
   int? unreadCount;
 
-  /// 本会话里自己被 @ 的消息数量
+  /// 会话中 @ 消息的总未读个数
   int? mentionedCount;
+
+  /// 超级群会话中 @ 我的消息的未读个数，只有超级群获取频道列表时有效。
+  int? mentionedMeCount;
 
   /// 本会话是否置顶
   bool? top;
@@ -1240,6 +1825,7 @@ class RCIMIWConversation {
     json['channelId'] = channelId;
     json['unreadCount'] = unreadCount;
     json['mentionedCount'] = mentionedCount;
+    json['mentionedMeCount'] = mentionedMeCount;
     json['top'] = top;
     json['draft'] = draft;
     json['lastMessage'] = lastMessage?.toJson();
@@ -1256,6 +1842,7 @@ class RCIMIWConversation {
     channelId = json['channelId'];
     unreadCount = json['unreadCount'];
     mentionedCount = json['mentionedCount'];
+    mentionedMeCount = json['mentionedMeCount'];
     top = json['top'];
     draft = json['draft'];
     if (json['lastMessage'] != null) {

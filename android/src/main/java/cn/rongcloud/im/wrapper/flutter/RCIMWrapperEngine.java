@@ -4,9 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import cn.rongcloud.im.wrapper.RCIMIWEngine;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWAcceptGroupApplicationCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWAcceptGroupInviteCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddChatRoomEntriesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddChatRoomEntryCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddConversationToTagCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWAddGroupFollowsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWAddGroupManagersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddToBlacklistCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWCancelDownloadingMediaMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWCancelSendingMediaMessageCallback;
@@ -15,6 +19,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeConversationTopStatusCallba
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeConversationTopStatusInTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeConversationTypeNotificationLevelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeMessageReceivedStatusCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeMessageReceivedStatusInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeMessageSentStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeNotificationQuietHoursCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangePushContentShowStatusCallback;
@@ -29,10 +34,14 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWClearMessagesUnreadStatusByTagCal
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearUltraGroupMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearUltraGroupMessagesForAllChannelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearUnreadCountCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWCompletionCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWConnectCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWCreateGroupCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWCreateTagCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWDeleteLocalMessageByIdsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWDeleteLocalMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWDeleteMessagesCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWDismissGroupCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetBatchRemoteUltraGroupMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetBlacklistCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetBlacklistStatusCallback;
@@ -49,8 +58,16 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationsForAllChannelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetDraftMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetFirstUnreadMessageCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupApplicationsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupFollowsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupMembersByRoleCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupMembersCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupsInfoCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetJoinedGroupsByRoleCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetJoinedGroupsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCountCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesAroundTimeCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetNotificationQuietHoursCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetTagsCallback;
@@ -65,22 +82,32 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUltraGroupUnreadCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUltraGroupUnreadMentionedCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadConversationsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadCountByConversationTypesCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadCountByLevelsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadMentionedCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadMentionedMessagesCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGroupInfoUpdatedCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWInsertMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWInsertMessagesCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWInviteUsersToGroupCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWJoinChatRoomCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWJoinGroupCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWKickGroupMembersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWLeaveChatRoomCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWModifyUltraGroupMessageCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWQuitGroupCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRecallMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRecallUltraGroupMessageCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWRefuseGroupApplicationCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWRefuseGroupInviteCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveChatRoomEntriesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveChatRoomEntryCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveConversationCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveConversationFromTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveConversationsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveFromBlacklistCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveGroupFollowsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveGroupManagersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveMessageExpansionForKeysCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveNotificationQuietHoursCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveTagCallback;
@@ -88,6 +115,9 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveTagsFromConversationCallbac
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSaveDraftMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchConversationsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchGroupMembersCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchJoinedGroupsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchMessagesByMessageTypesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchMessagesByTimeRangeCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchMessagesByUserIdCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchMessagesCallback;
@@ -97,15 +127,22 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWSendGroupReadReceiptResponseCallb
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendPrivateReadReceiptMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendUltraGroupTypingStatusCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupMemberInfoCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupRemarkCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncConversationReadStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncUltraGroupReadStatusCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWTransferGroupOwnerCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateMessageExpansionCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateMessageLocalExtraCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateTagNameByIdCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateUltraGroupMessageExpansionCallback;
 import cn.rongcloud.im.wrapper.callback.RCIMIWConnectCallback;
 import cn.rongcloud.im.wrapper.callback.RCIMIWSendGroupMessageToDesignatedUsersCallback;
 import cn.rongcloud.im.wrapper.callback.RCIMIWSendMessageCallback;
 import cn.rongcloud.im.wrapper.chatroom.RCIMIWChatRoomMemberAction;
+import cn.rongcloud.im.wrapper.chatroom.RCIMIWChatRoomMemberBanEvent;
+import cn.rongcloud.im.wrapper.chatroom.RCIMIWChatRoomMemberBlockEvent;
+import cn.rongcloud.im.wrapper.chatroom.RCIMIWChatRoomSyncEvent;
 import cn.rongcloud.im.wrapper.constants.RCIMIWBlacklistStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWBlockedMessageInfo;
 import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomEntriesOperationType;
@@ -129,6 +166,16 @@ import cn.rongcloud.im.wrapper.conversation.RCIMIWConversation;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWConversationTagInfo;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWSearchConversationResult;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWTagInfo;
+import cn.rongcloud.im.wrapper.group.RCIMIWFollowInfo;
+import cn.rongcloud.im.wrapper.group.RCIMIWGroupApplicationInfo;
+import cn.rongcloud.im.wrapper.group.RCIMIWGroupInfo;
+import cn.rongcloud.im.wrapper.group.RCIMIWGroupMemberInfo;
+import cn.rongcloud.im.wrapper.group.RCIMIWPagingQueryOption;
+import cn.rongcloud.im.wrapper.group.RCIMIWPagingQueryResult;
+import cn.rongcloud.im.wrapper.group.RCIMIWQuitGroupConfig;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupMemberRole;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperation;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationType;
 import cn.rongcloud.im.wrapper.listener.IRCIMIWDownloadMediaMessageListener;
 import cn.rongcloud.im.wrapper.listener.IRCIMIWSendMediaMessageListener;
 import cn.rongcloud.im.wrapper.listener.RCIMIWDownloadMediaMessageListener;
@@ -143,6 +190,7 @@ import cn.rongcloud.im.wrapper.messages.RCIMIWMediaMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWNativeCustomMediaMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWNativeCustomMessage;
+import cn.rongcloud.im.wrapper.messages.RCIMIWReceivedStatusInfo;
 import cn.rongcloud.im.wrapper.messages.RCIMIWReferenceMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWSightMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWTextMessage;
@@ -227,6 +275,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         disconnect(call, result);
         break;
 
+      case "engine:getConnectionStatus":
+        getConnectionStatus(call, result);
+        break;
+
       case "engine:createTextMessage":
         createTextMessage(call, result);
         break;
@@ -307,6 +359,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         getConversations(call, result);
         break;
 
+      case "engine:getConversationsWithPriority":
+        getConversationsWithPriority(call, result);
+        break;
+
       case "engine:getUnreadConversations":
         getUnreadConversations(call, result);
         break;
@@ -383,6 +439,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         getUnreadCountByConversationTypes(call, result);
         break;
 
+      case "engine:getUnreadCountByLevels":
+        getUnreadCountByLevels(call, result);
+        break;
+
       case "engine:clearUnreadCount":
         clearUnreadCount(call, result);
         break;
@@ -413,6 +473,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:changeConversationTopStatus":
         changeConversationTopStatus(call, result);
+        break;
+
+      case "engine:changeConversationTopStatusWithUpdateTme":
+        changeConversationTopStatusWithUpdateTme(call, result);
         break;
 
       case "engine:loadConversationTopStatus":
@@ -447,6 +511,14 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         getMessageByUId(call, result);
         break;
 
+      case "engine:getMessagesAroundTime":
+        getMessagesAroundTime(call, result);
+        break;
+
+      case "engine:getLocalMessagesByMessageTypes":
+        getLocalMessagesByMessageTypes(call, result);
+        break;
+
       case "engine:loadFirstUnreadMessage":
         loadFirstUnreadMessage(call, result);
         break;
@@ -477,6 +549,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:deleteLocalMessages":
         deleteLocalMessages(call, result);
+        break;
+
+      case "engine:deleteLocalMessageByIds":
+        deleteLocalMessageByIds(call, result);
         break;
 
       case "engine:deleteMessages":
@@ -513,6 +589,14 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:changeMessageReceiveStatus":
         changeMessageReceiveStatus(call, result);
+        break;
+
+      case "engine:changeMessageReceiveStatusInfo":
+        changeMessageReceiveStatusInfo(call, result);
+        break;
+
+      case "engine:updateMessageLocalExtra":
+        updateMessageLocalExtra(call, result);
         break;
 
       case "engine:joinChatRoom":
@@ -597,6 +681,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:searchMessagesByUserId":
         searchMessagesByUserId(call, result);
+        break;
+
+      case "engine:searchMessagesByMessageTypes":
+        searchMessagesByMessageTypes(call, result);
         break;
 
       case "engine:searchConversations":
@@ -818,6 +906,118 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       case "engine:writeLog":
         writeLog(call, result);
         break;
+
+      case "engine:createGroup":
+        createGroup(call, result);
+        break;
+
+      case "engine:updateGroupInfo":
+        updateGroupInfo(call, result);
+        break;
+
+      case "engine:getGroupsInfo":
+        getGroupsInfo(call, result);
+        break;
+
+      case "engine:kickGroupMembers":
+        kickGroupMembers(call, result);
+        break;
+
+      case "engine:joinGroup":
+        joinGroup(call, result);
+        break;
+
+      case "engine:quitGroup":
+        quitGroup(call, result);
+        break;
+
+      case "engine:dismissGroup":
+        dismissGroup(call, result);
+        break;
+
+      case "engine:transferGroupOwner":
+        transferGroupOwner(call, result);
+        break;
+
+      case "engine:getGroupMembers":
+        getGroupMembers(call, result);
+        break;
+
+      case "engine:getGroupMembersByRole":
+        getGroupMembersByRole(call, result);
+        break;
+
+      case "engine:getJoinedGroupsByRole":
+        getJoinedGroupsByRole(call, result);
+        break;
+
+      case "engine:getJoinedGroups":
+        getJoinedGroups(call, result);
+        break;
+
+      case "engine:setGroupRemark":
+        setGroupRemark(call, result);
+        break;
+
+      case "engine:setGroupMemberInfo":
+        setGroupMemberInfo(call, result);
+        break;
+
+      case "engine:searchJoinedGroups":
+        searchJoinedGroups(call, result);
+        break;
+
+      case "engine:searchGroupMembers":
+        searchGroupMembers(call, result);
+        break;
+
+      case "engine:addGroupManagers":
+        addGroupManagers(call, result);
+        break;
+
+      case "engine:removeGroupManagers":
+        removeGroupManagers(call, result);
+        break;
+
+      case "engine:inviteUsersToGroup":
+        inviteUsersToGroup(call, result);
+        break;
+
+      case "engine:acceptGroupInvite":
+        acceptGroupInvite(call, result);
+        break;
+
+      case "engine:refuseGroupInvite":
+        refuseGroupInvite(call, result);
+        break;
+
+      case "engine:acceptGroupApplication":
+        acceptGroupApplication(call, result);
+        break;
+
+      case "engine:refuseGroupApplication":
+        refuseGroupApplication(call, result);
+        break;
+
+      case "engine:getGroupApplications":
+        getGroupApplications(call, result);
+        break;
+
+      case "engine:addGroupFollows":
+        addGroupFollows(call, result);
+        break;
+
+      case "engine:removeGroupFollows":
+        removeGroupFollows(call, result);
+        break;
+
+      case "engine:getGroupFollows":
+        getGroupFollows(call, result);
+        break;
+
+      case "engine:setCheckChatRoomDuplicateMessage":
+        setCheckChatRoomDuplicateMessage(call, result);
+        break;
     }
   }
 
@@ -889,6 +1089,15 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       code = engine.disconnect(receivePush);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getConnectionStatus(@NonNull MethodCall call, @NonNull Result result) {
+    RCIMIWConnectionStatus res = null;
+    if (engine != null) {
+
+      res = engine.getConnectionStatus();
+    }
+    RCIMWrapperMainThreadPoster.success(result, res.ordinal());
   }
 
   private void createTextMessage(@NonNull MethodCall call, @NonNull Result result) {
@@ -1223,6 +1432,33 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void getConversationsWithPriority(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<Number> conversationTypes = call.argument("conversationTypes");
+      String channelId = (String) call.argument("channelId");
+      long startTime = ((Number) call.argument("startTime")).longValue();
+      int count = ((Number) call.argument("count")).intValue();
+      Boolean topPriority = (Boolean) call.argument("topPriority");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetConversationsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetConversationsCallbackImpl(cb_handler);
+      }
+
+      List conversationTypes_str = new ArrayList();
+      for (Number element : conversationTypes) {
+        conversationTypes_str.add(
+            RCIMWrapperArgumentAdapter.toRCIMIWConversationType((Integer) element));
+      }
+
+      code =
+          engine.getConversationsWithPriority(
+              conversationTypes_str, channelId, startTime, count, topPriority, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   private void getUnreadConversations(@NonNull MethodCall call, @NonNull Result result) {
     int code = -1;
     if (engine != null) {
@@ -1514,6 +1750,33 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void getUnreadCountByLevels(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<Number> conversationTypes = call.argument("conversationTypes");
+      List<Number> levels = call.argument("levels");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetUnreadCountByLevelsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetUnreadCountByLevelsCallbackImpl(cb_handler);
+      }
+
+      List conversationTypes_str = new ArrayList();
+      for (Number element : conversationTypes) {
+        conversationTypes_str.add(
+            RCIMWrapperArgumentAdapter.toRCIMIWConversationType((Integer) element));
+      }
+
+      List levels_str = new ArrayList();
+      for (Number element : levels) {
+        levels_str.add(RCIMWrapperArgumentAdapter.toRCIMIWPushNotificationLevel((Integer) element));
+      }
+
+      code = engine.getUnreadCountByLevels(conversationTypes_str, levels_str, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   private void clearUnreadCount(@NonNull MethodCall call, @NonNull Result result) {
     int code = -1;
     if (engine != null) {
@@ -1659,6 +1922,29 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void changeConversationTopStatusWithUpdateTme(
+      @NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      Boolean top = (Boolean) call.argument("top");
+      Boolean updateOperationTime = (Boolean) call.argument("updateOperationTime");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWChangeConversationTopStatusCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWChangeConversationTopStatusCallbackImpl(cb_handler);
+      }
+
+      code =
+          engine.changeConversationTopStatusWithUpdateTme(
+              type, targetId, channelId, top, updateOperationTime, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   private void loadConversationTopStatus(@NonNull MethodCall call, @NonNull Result result) {
     int code = -1;
     if (engine != null) {
@@ -1791,6 +2077,58 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       }
 
       code = engine.getMessageByUId(messageUId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getMessagesAroundTime(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      long sentTime = ((Number) call.argument("sentTime")).longValue();
+      int beforeCount = ((Number) call.argument("beforeCount")).intValue();
+      int afterCount = ((Number) call.argument("afterCount")).intValue();
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMessagesAroundTimeCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMessagesAroundTimeCallbackImpl(cb_handler);
+      }
+
+      code =
+          engine.getMessagesAroundTime(
+              type, targetId, channelId, sentTime, beforeCount, afterCount, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getLocalMessagesByMessageTypes(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      List<Number> messageTypes = call.argument("messageTypes");
+      long sentTime = ((Number) call.argument("sentTime")).longValue();
+      RCIMIWTimeOrder order = RCIMWrapperArgumentAdapter.toRCIMIWTimeOrder(call.argument("order"));
+      int count = ((Number) call.argument("count")).intValue();
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMessagesCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMessagesCallbackImpl(cb_handler);
+      }
+
+      List messageTypes_str = new ArrayList();
+      for (Number element : messageTypes) {
+        messageTypes_str.add(RCIMWrapperArgumentAdapter.toRCIMIWMessageType((Integer) element));
+      }
+
+      code =
+          engine.getLocalMessagesByMessageTypes(
+              type, targetId, channelId, messageTypes_str, sentTime, order, count, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }
@@ -1931,6 +2269,21 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       }
 
       code = engine.deleteLocalMessages(messages_str, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void deleteLocalMessageByIds(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<Integer> messageIds = call.argument("messageIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWDeleteLocalMessageByIdsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWDeleteLocalMessageByIdsCallbackImpl(cb_handler);
+      }
+
+      code = engine.deleteLocalMessageByIds(messageIds, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }
@@ -2094,6 +2447,40 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       }
 
       code = engine.changeMessageReceiveStatus(messageId, receivedStatus, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void changeMessageReceiveStatusInfo(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int messageId = ((Number) call.argument("messageId")).intValue();
+      RCIMIWReceivedStatusInfo receivedStatusInfo =
+          RCIMIWPlatformConverter.convertReceivedStatusInfo(
+              (HashMap<String, Object>) call.argument("receivedStatusInfo"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWChangeMessageReceivedStatusInfoCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWChangeMessageReceivedStatusInfoCallbackImpl(cb_handler);
+      }
+
+      code = engine.changeMessageReceiveStatusInfo(messageId, receivedStatusInfo, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void updateMessageLocalExtra(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int messageId = ((Number) call.argument("messageId")).intValue();
+      String extra = (String) call.argument("extra");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWUpdateMessageLocalExtraCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWUpdateMessageLocalExtraCallbackImpl(cb_handler);
+      }
+
+      code = engine.updateMessageLocalExtra(messageId, extra, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }
@@ -2427,6 +2814,35 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       code =
           engine.searchMessagesByUserId(
               userId, type, targetId, channelId, startTime, count, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void searchMessagesByMessageTypes(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      List<Number> messageTypes = call.argument("messageTypes");
+      String keyword = (String) call.argument("keyword");
+      long startTime = ((Number) call.argument("startTime")).longValue();
+      int count = ((Number) call.argument("count")).intValue();
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSearchMessagesByMessageTypesCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSearchMessagesByMessageTypesCallbackImpl(cb_handler);
+      }
+
+      List messageTypes_str = new ArrayList();
+      for (Number element : messageTypes) {
+        messageTypes_str.add(RCIMWrapperArgumentAdapter.toRCIMIWMessageType((Integer) element));
+      }
+
+      code =
+          engine.searchMessagesByMessageTypes(
+              type, targetId, channelId, messageTypes_str, keyword, startTime, count, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }
@@ -3327,6 +3743,488 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void createGroup(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWGroupInfo groupInfo =
+          RCIMIWPlatformConverter.convertGroupInfo(
+              (HashMap<String, Object>) call.argument("groupInfo"));
+      List<String> inviteeUserIds = call.argument("inviteeUserIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWCreateGroupCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWCreateGroupCallbackImpl(cb_handler);
+      }
+
+      code = engine.createGroup(groupInfo, inviteeUserIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void updateGroupInfo(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWGroupInfo groupInfo =
+          RCIMIWPlatformConverter.convertGroupInfo(
+              (HashMap<String, Object>) call.argument("groupInfo"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGroupInfoUpdatedCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGroupInfoUpdatedCallbackImpl(cb_handler);
+      }
+
+      code = engine.updateGroupInfo(groupInfo, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getGroupsInfo(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<String> groupIds = call.argument("groupIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetGroupsInfoCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetGroupsInfoCallbackImpl(cb_handler);
+      }
+
+      code = engine.getGroupsInfo(groupIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void kickGroupMembers(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      List<String> userIds = call.argument("userIds");
+      RCIMIWQuitGroupConfig config =
+          RCIMIWPlatformConverter.convertQuitGroupConfig(
+              (HashMap<String, Object>) call.argument("config"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWKickGroupMembersCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWKickGroupMembersCallbackImpl(cb_handler);
+      }
+
+      code = engine.kickGroupMembers(groupId, userIds, config, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void joinGroup(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWJoinGroupCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWJoinGroupCallbackImpl(cb_handler);
+      }
+
+      code = engine.joinGroup(groupId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void quitGroup(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      RCIMIWQuitGroupConfig config =
+          RCIMIWPlatformConverter.convertQuitGroupConfig(
+              (HashMap<String, Object>) call.argument("config"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWQuitGroupCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWQuitGroupCallbackImpl(cb_handler);
+      }
+
+      code = engine.quitGroup(groupId, config, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void dismissGroup(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWDismissGroupCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWDismissGroupCallbackImpl(cb_handler);
+      }
+
+      code = engine.dismissGroup(groupId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void transferGroupOwner(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      String newOwnerId = (String) call.argument("newOwnerId");
+      Boolean quitGroup = (Boolean) call.argument("quitGroup");
+      RCIMIWQuitGroupConfig config =
+          RCIMIWPlatformConverter.convertQuitGroupConfig(
+              (HashMap<String, Object>) call.argument("config"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWTransferGroupOwnerCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWTransferGroupOwnerCallbackImpl(cb_handler);
+      }
+
+      code = engine.transferGroupOwner(groupId, newOwnerId, quitGroup, config, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getGroupMembers(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      List<String> userIds = call.argument("userIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetGroupMembersCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetGroupMembersCallbackImpl(cb_handler);
+      }
+
+      code = engine.getGroupMembers(groupId, userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getGroupMembersByRole(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      RCIMIWGroupMemberRole role =
+          RCIMWrapperArgumentAdapter.toRCIMIWGroupMemberRole(call.argument("role"));
+      RCIMIWPagingQueryOption option =
+          RCIMIWPlatformConverter.convertPagingQueryOption(
+              (HashMap<String, Object>) call.argument("option"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetGroupMembersByRoleCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetGroupMembersByRoleCallbackImpl(cb_handler);
+      }
+
+      code = engine.getGroupMembersByRole(groupId, role, option, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getJoinedGroupsByRole(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWGroupMemberRole role =
+          RCIMWrapperArgumentAdapter.toRCIMIWGroupMemberRole(call.argument("role"));
+      RCIMIWPagingQueryOption option =
+          RCIMIWPlatformConverter.convertPagingQueryOption(
+              (HashMap<String, Object>) call.argument("option"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetJoinedGroupsByRoleCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetJoinedGroupsByRoleCallbackImpl(cb_handler);
+      }
+
+      code = engine.getJoinedGroupsByRole(role, option, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getJoinedGroups(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<String> groupIds = call.argument("groupIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetJoinedGroupsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetJoinedGroupsCallbackImpl(cb_handler);
+      }
+
+      code = engine.getJoinedGroups(groupIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setGroupRemark(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      String remark = (String) call.argument("remark");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSetGroupRemarkCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSetGroupRemarkCallbackImpl(cb_handler);
+      }
+
+      code = engine.setGroupRemark(groupId, remark, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setGroupMemberInfo(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      String userId = (String) call.argument("userId");
+      String nickname = (String) call.argument("nickname");
+      String extra = (String) call.argument("extra");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSetGroupMemberInfoCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSetGroupMemberInfoCallbackImpl(cb_handler);
+      }
+
+      code = engine.setGroupMemberInfo(groupId, userId, nickname, extra, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void searchJoinedGroups(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupName = (String) call.argument("groupName");
+      RCIMIWPagingQueryOption option =
+          RCIMIWPlatformConverter.convertPagingQueryOption(
+              (HashMap<String, Object>) call.argument("option"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSearchJoinedGroupsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSearchJoinedGroupsCallbackImpl(cb_handler);
+      }
+
+      code = engine.searchJoinedGroups(groupName, option, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void searchGroupMembers(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      String name = (String) call.argument("name");
+      RCIMIWPagingQueryOption option =
+          RCIMIWPlatformConverter.convertPagingQueryOption(
+              (HashMap<String, Object>) call.argument("option"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSearchGroupMembersCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSearchGroupMembersCallbackImpl(cb_handler);
+      }
+
+      code = engine.searchGroupMembers(groupId, name, option, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void addGroupManagers(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      List<String> userIds = call.argument("userIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWAddGroupManagersCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWAddGroupManagersCallbackImpl(cb_handler);
+      }
+
+      code = engine.addGroupManagers(groupId, userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void removeGroupManagers(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      List<String> userIds = call.argument("userIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWRemoveGroupManagersCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWRemoveGroupManagersCallbackImpl(cb_handler);
+      }
+
+      code = engine.removeGroupManagers(groupId, userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void inviteUsersToGroup(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      List<String> userIds = call.argument("userIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWInviteUsersToGroupCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWInviteUsersToGroupCallbackImpl(cb_handler);
+      }
+
+      code = engine.inviteUsersToGroup(groupId, userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void acceptGroupInvite(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      String inviterId = (String) call.argument("inviterId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWAcceptGroupInviteCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWAcceptGroupInviteCallbackImpl(cb_handler);
+      }
+
+      code = engine.acceptGroupInvite(groupId, inviterId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void refuseGroupInvite(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      String inviterId = (String) call.argument("inviterId");
+      String reason = (String) call.argument("reason");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWRefuseGroupInviteCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWRefuseGroupInviteCallbackImpl(cb_handler);
+      }
+
+      code = engine.refuseGroupInvite(groupId, inviterId, reason, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void acceptGroupApplication(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      String inviterId = (String) call.argument("inviterId");
+      String applicantId = (String) call.argument("applicantId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWAcceptGroupApplicationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWAcceptGroupApplicationCallbackImpl(cb_handler);
+      }
+
+      code = engine.acceptGroupApplication(groupId, inviterId, applicantId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void refuseGroupApplication(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      String inviterId = (String) call.argument("inviterId");
+      String applicantId = (String) call.argument("applicantId");
+      String reason = (String) call.argument("reason");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWRefuseGroupApplicationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWRefuseGroupApplicationCallbackImpl(cb_handler);
+      }
+
+      code = engine.refuseGroupApplication(groupId, inviterId, applicantId, reason, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getGroupApplications(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWPagingQueryOption option =
+          RCIMIWPlatformConverter.convertPagingQueryOption(
+              (HashMap<String, Object>) call.argument("option"));
+      List<Number> directions = call.argument("directions");
+      List<Number> status = call.argument("status");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetGroupApplicationsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetGroupApplicationsCallbackImpl(cb_handler);
+      }
+
+      List directions_str = new ArrayList();
+      for (Number element : directions) {
+        directions_str.add(
+            RCIMWrapperArgumentAdapter.toRCIMIWGroupApplicationDirection((Integer) element));
+      }
+
+      List status_str = new ArrayList();
+      for (Number element : status) {
+        status_str.add(
+            RCIMWrapperArgumentAdapter.toRCIMIWGroupApplicationStatus((Integer) element));
+      }
+
+      code = engine.getGroupApplications(option, directions_str, status_str, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void addGroupFollows(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      List<String> userIds = call.argument("userIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWAddGroupFollowsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWAddGroupFollowsCallbackImpl(cb_handler);
+      }
+
+      code = engine.addGroupFollows(groupId, userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void removeGroupFollows(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      List<String> userIds = call.argument("userIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWRemoveGroupFollowsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWRemoveGroupFollowsCallbackImpl(cb_handler);
+      }
+
+      code = engine.removeGroupFollows(groupId, userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getGroupFollows(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String groupId = (String) call.argument("groupId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetGroupFollowsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetGroupFollowsCallbackImpl(cb_handler);
+      }
+
+      code = engine.getGroupFollows(groupId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setCheckChatRoomDuplicateMessage(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      Boolean enableCheck = (Boolean) call.argument("enableCheck");
+
+      code = engine.setCheckChatRoomDuplicateMessage(enableCheck);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   class RCIMIWListenerImpl extends RCIMIWListener {
 
     @Override
@@ -3344,6 +4242,19 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine:onMessageReceived", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onOfflineMessageSyncCompleted() {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onOfflineMessageSyncCompleted", arguments);
             }
           });
     }
@@ -5705,6 +6616,188 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             }
           });
     }
+
+    @Override
+    public void onGroupOperation(
+        String groupId,
+        RCIMIWGroupMemberInfo operatorInfo,
+        RCIMIWGroupInfo groupInfo,
+        RCIMIWGroupOperation operation,
+        List<RCIMIWGroupMemberInfo> memberInfos,
+        long operationTime) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List memberInfos_str = new ArrayList();
+
+      if (memberInfos != null) {
+        for (RCIMIWGroupMemberInfo element : memberInfos) {
+          memberInfos_str.add(RCIMIWPlatformConverter.convertGroupMemberInfo(element));
+        }
+      }
+
+      arguments.put("groupId", groupId);
+      arguments.put("operatorInfo", RCIMIWPlatformConverter.convertGroupMemberInfo(operatorInfo));
+      arguments.put("groupInfo", RCIMIWPlatformConverter.convertGroupInfo(groupInfo));
+      arguments.put("operation", operation.ordinal());
+      arguments.put("memberInfos", memberInfos_str);
+      arguments.put("operationTime", operationTime);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onGroupOperation", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onGroupInfoChanged(
+        RCIMIWGroupMemberInfo operatorInfo,
+        RCIMIWGroupInfo fullGroupInfo,
+        RCIMIWGroupInfo changedGroupInfo,
+        long operationTime) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("operatorInfo", RCIMIWPlatformConverter.convertGroupMemberInfo(operatorInfo));
+      arguments.put("fullGroupInfo", RCIMIWPlatformConverter.convertGroupInfo(fullGroupInfo));
+      arguments.put("changedGroupInfo", RCIMIWPlatformConverter.convertGroupInfo(changedGroupInfo));
+      arguments.put("operationTime", operationTime);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onGroupInfoChanged", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onGroupMemberInfoChanged(
+        String groupId,
+        RCIMIWGroupMemberInfo operatorInfo,
+        RCIMIWGroupMemberInfo memberInfo,
+        long operationTime) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("groupId", groupId);
+      arguments.put("operatorInfo", RCIMIWPlatformConverter.convertGroupMemberInfo(operatorInfo));
+      arguments.put("memberInfo", RCIMIWPlatformConverter.convertGroupMemberInfo(memberInfo));
+      arguments.put("operationTime", operationTime);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onGroupMemberInfoChanged", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onGroupApplicationEvent(RCIMIWGroupApplicationInfo info) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("info", RCIMIWPlatformConverter.convertGroupApplicationInfo(info));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onGroupApplicationEvent", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onGroupRemarkChangedSync(
+        String groupId,
+        RCIMIWGroupOperationType operationType,
+        String groupRemark,
+        long operationTime) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("groupId", groupId);
+      arguments.put("operationType", operationType.ordinal());
+      arguments.put("groupRemark", groupRemark);
+      arguments.put("operationTime", operationTime);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onGroupRemarkChangedSync", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onGroupFollowsChangedSync(
+        String groupId,
+        RCIMIWGroupOperationType operationType,
+        List<String> userIds,
+        long operationTime) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("groupId", groupId);
+      arguments.put("operationType", operationType.ordinal());
+      arguments.put("userIds", userIds);
+      arguments.put("operationTime", operationTime);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onGroupFollowsChangedSync", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onChatRoomNotifyMultiLoginSync(RCIMIWChatRoomSyncEvent event) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("event", RCIMIWPlatformConverter.convertChatRoomSyncEvent(event));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onChatRoomNotifyMultiLoginSync", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onChatRoomNotifyBlock(RCIMIWChatRoomMemberBlockEvent event) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("event", RCIMIWPlatformConverter.convertChatRoomMemberBlockEvent(event));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onChatRoomNotifyBlock", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onChatRoomNotifyBan(RCIMIWChatRoomMemberBanEvent event) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("event", RCIMIWPlatformConverter.convertChatRoomMemberBanEvent(event));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onChatRoomNotifyBan", arguments);
+            }
+          });
+    }
   }
 
   class IRCIMIWConnectCallbackImpl implements IRCIMIWConnectCallback {
@@ -6522,6 +7615,48 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     }
   }
 
+  class IRCIMIWGetUnreadCountByLevelsCallbackImpl implements IRCIMIWGetUnreadCountByLevelsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetUnreadCountByLevelsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(Integer t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetUnreadCountByLevelsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetUnreadCountByLevelsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
   class IRCIMIWClearUnreadCountCallbackImpl implements IRCIMIWClearUnreadCountCallback {
     private int cb_handler = -1;
 
@@ -6873,6 +8008,56 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     }
   }
 
+  class IRCIMIWGetMessagesAroundTimeCallbackImpl implements IRCIMIWGetMessagesAroundTimeCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetMessagesAroundTimeCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWMessage> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWMessage element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertMessage(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessagesAroundTimeCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessagesAroundTimeCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
   class IRCIMIWGetFirstUnreadMessageCallbackImpl implements IRCIMIWGetFirstUnreadMessageCallback {
     private int cb_handler = -1;
 
@@ -7080,6 +8265,56 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWDeleteLocalMessagesCallback_onLocalMessagesDeleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWDeleteLocalMessageByIdsCallbackImpl
+      implements IRCIMIWDeleteLocalMessageByIdsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWDeleteLocalMessageByIdsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWDeleteLocalMessageByIdsCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWCompletionCallbackImpl implements IRCIMIWCompletionCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWCompletionCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWCompletionCallback_onCompleted", arguments);
             }
           });
     }
@@ -7337,6 +8572,60 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWChangeMessageReceivedStatusCallback_onMessageReceiveStatusChanged",
+                  arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWChangeMessageReceivedStatusInfoCallbackImpl
+      implements IRCIMIWChangeMessageReceivedStatusInfoCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWChangeMessageReceivedStatusInfoCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onMessageReceiveStatusInfoChanged(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWChangeMessageReceivedStatusInfoCallback_onMessageReceiveStatusInfoChanged",
+                  arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWUpdateMessageLocalExtraCallbackImpl
+      implements IRCIMIWUpdateMessageLocalExtraCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWUpdateMessageLocalExtraCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onMessageLocalExtraUpdated(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWUpdateMessageLocalExtraCallback_onMessageLocalExtraUpdated",
                   arguments);
             }
           });
@@ -7908,6 +9197,57 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWSearchMessagesByUserIdCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSearchMessagesByMessageTypesCallbackImpl
+      implements IRCIMIWSearchMessagesByMessageTypesCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSearchMessagesByMessageTypesCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWMessage> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWMessage element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertMessage(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSearchMessagesByMessageTypesCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSearchMessagesByMessageTypesCallback_onError", arguments);
             }
           });
     }
@@ -9295,6 +10635,922 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWClearConversationsByTagCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWCreateGroupCallbackImpl implements IRCIMIWCreateGroupCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWCreateGroupCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(int processCode) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("processCode", processCode);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWCreateGroupCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int errorCode, String errorInfo) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("errorCode", errorCode);
+      arguments.put("errorInfo", errorInfo);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWCreateGroupCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGroupInfoUpdatedCallbackImpl implements IRCIMIWGroupInfoUpdatedCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGroupInfoUpdatedCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onGroupInfoUpdated(int code, String errorInfo) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+      arguments.put("errorInfo", errorInfo);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGroupInfoUpdatedCallback_onGroupInfoUpdated", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetGroupsInfoCallbackImpl implements IRCIMIWGetGroupsInfoCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetGroupsInfoCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWGroupInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWGroupInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertGroupInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetGroupsInfoCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetGroupsInfoCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWKickGroupMembersCallbackImpl implements IRCIMIWKickGroupMembersCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWKickGroupMembersCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWKickGroupMembersCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWJoinGroupCallbackImpl implements IRCIMIWJoinGroupCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWJoinGroupCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(Integer t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWJoinGroupCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWJoinGroupCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWQuitGroupCallbackImpl implements IRCIMIWQuitGroupCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWQuitGroupCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWQuitGroupCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWDismissGroupCallbackImpl implements IRCIMIWDismissGroupCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWDismissGroupCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWDismissGroupCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWTransferGroupOwnerCallbackImpl implements IRCIMIWTransferGroupOwnerCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWTransferGroupOwnerCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWTransferGroupOwnerCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetGroupMembersCallbackImpl implements IRCIMIWGetGroupMembersCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetGroupMembersCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWGroupMemberInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWGroupMemberInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertGroupMemberInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetGroupMembersCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetGroupMembersCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetGroupMembersByRoleCallbackImpl implements IRCIMIWGetGroupMembersByRoleCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetGroupMembersByRoleCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertPagingQueryResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetGroupMembersByRoleCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetGroupMembersByRoleCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetJoinedGroupsByRoleCallbackImpl implements IRCIMIWGetJoinedGroupsByRoleCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetJoinedGroupsByRoleCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWPagingQueryResult<RCIMIWGroupInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertPagingQueryResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetJoinedGroupsByRoleCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetJoinedGroupsByRoleCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetJoinedGroupsCallbackImpl implements IRCIMIWGetJoinedGroupsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetJoinedGroupsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWGroupInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWGroupInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertGroupInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetJoinedGroupsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetJoinedGroupsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSetGroupRemarkCallbackImpl implements IRCIMIWSetGroupRemarkCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSetGroupRemarkCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSetGroupRemarkCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSetGroupMemberInfoCallbackImpl implements IRCIMIWSetGroupMemberInfoCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSetGroupMemberInfoCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSetGroupMemberInfoCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSearchJoinedGroupsCallbackImpl implements IRCIMIWSearchJoinedGroupsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSearchJoinedGroupsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWPagingQueryResult<RCIMIWGroupInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertPagingQueryResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSearchJoinedGroupsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSearchJoinedGroupsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSearchGroupMembersCallbackImpl implements IRCIMIWSearchGroupMembersCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSearchGroupMembersCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertPagingQueryResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSearchGroupMembersCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSearchGroupMembersCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWAddGroupManagersCallbackImpl implements IRCIMIWAddGroupManagersCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWAddGroupManagersCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWAddGroupManagersCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWRemoveGroupManagersCallbackImpl implements IRCIMIWRemoveGroupManagersCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWRemoveGroupManagersCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWRemoveGroupManagersCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWInviteUsersToGroupCallbackImpl implements IRCIMIWInviteUsersToGroupCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWInviteUsersToGroupCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(Integer t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWInviteUsersToGroupCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWInviteUsersToGroupCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWAcceptGroupInviteCallbackImpl implements IRCIMIWAcceptGroupInviteCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWAcceptGroupInviteCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWAcceptGroupInviteCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWRefuseGroupInviteCallbackImpl implements IRCIMIWRefuseGroupInviteCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWRefuseGroupInviteCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWRefuseGroupInviteCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWAcceptGroupApplicationCallbackImpl implements IRCIMIWAcceptGroupApplicationCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWAcceptGroupApplicationCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(Integer t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWAcceptGroupApplicationCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWAcceptGroupApplicationCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWRefuseGroupApplicationCallbackImpl implements IRCIMIWRefuseGroupApplicationCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWRefuseGroupApplicationCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWRefuseGroupApplicationCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetGroupApplicationsCallbackImpl implements IRCIMIWGetGroupApplicationsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetGroupApplicationsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertPagingQueryResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetGroupApplicationsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetGroupApplicationsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWAddGroupFollowsCallbackImpl implements IRCIMIWAddGroupFollowsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWAddGroupFollowsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWAddGroupFollowsCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWRemoveGroupFollowsCallbackImpl implements IRCIMIWRemoveGroupFollowsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWRemoveGroupFollowsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onCompleted(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWRemoveGroupFollowsCallback_onCompleted", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetGroupFollowsCallbackImpl implements IRCIMIWGetGroupFollowsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetGroupFollowsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWFollowInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWFollowInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertFollowInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetGroupFollowsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetGroupFollowsCallback_onError", arguments);
             }
           });
     }

@@ -13,6 +13,50 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RCIMWrapperArgumentAdapter : NSObject
 
 
++ (RCIMIWGroupInviteHandlePermission)convertGroupInviteHandlePermissionFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupInviteHandlePermissionToInteger:(RCIMIWGroupInviteHandlePermission)GroupInviteHandlePermission;
+
+
++ (RCIMIWGroupApplicationStatus)convertGroupApplicationStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupApplicationStatusToInteger:(RCIMIWGroupApplicationStatus)GroupApplicationStatus;
+
+
++ (RCIMIWGroupApplicationDirection)convertGroupApplicationDirectionFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupApplicationDirectionToInteger:(RCIMIWGroupApplicationDirection)GroupApplicationDirection;
+
+
++ (RCIMIWGroupOperation)convertGroupOperationFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupOperationToInteger:(RCIMIWGroupOperation)GroupOperation;
+
+
++ (RCIMIWGroupJoinPermission)convertGroupJoinPermissionFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupJoinPermissionToInteger:(RCIMIWGroupJoinPermission)GroupJoinPermission;
+
+
++ (RCIMIWGroupStatus)convertGroupStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupStatusToInteger:(RCIMIWGroupStatus)GroupStatus;
+
+
++ (RCIMIWGroupOperationPermission)convertGroupOperationPermissionFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupOperationPermissionToInteger:(RCIMIWGroupOperationPermission)GroupOperationPermission;
+
+
++ (RCIMIWGroupOperationType)convertGroupOperationTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupOperationTypeToInteger:(RCIMIWGroupOperationType)GroupOperationType;
+
+
++ (RCIMIWGroupMemberInfoEditPermission)convertGroupMemberInfoEditPermissionFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupMemberInfoEditPermissionToInteger:(RCIMIWGroupMemberInfoEditPermission)GroupMemberInfoEditPermission;
+
+
++ (RCIMIWGroupMemberRole)convertGroupMemberRoleFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupMemberRoleToInteger:(RCIMIWGroupMemberRole)GroupMemberRole;
+
+
++ (RCIMIWGroupApplicationType)convertGroupApplicationTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupApplicationTypeToInteger:(RCIMIWGroupApplicationType)GroupApplicationType;
+
+
 + (RCIMIWImportanceHW)convertImportanceHWFromInteger:(NSInteger)integer;
 + (NSInteger)convertImportanceHWToInteger:(RCIMIWImportanceHW)ImportanceHW;
 
@@ -31,6 +75,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (RCIMIWSentStatus)convertSentStatusFromInteger:(NSInteger)integer;
 + (NSInteger)convertSentStatusToInteger:(RCIMIWSentStatus)SentStatus;
+
+
++ (RCIMIWChatRoomSyncStatus)convertChatRoomSyncStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertChatRoomSyncStatusToInteger:(RCIMIWChatRoomSyncStatus)ChatRoomSyncStatus;
 
 
 + (RCIMIWPushNotificationQuietHoursLevel)convertPushNotificationQuietHoursLevelFromInteger:(NSInteger)integer;
@@ -61,6 +109,18 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertMessageBlockTypeToInteger:(RCIMIWMessageBlockType)MessageBlockType;
 
 
++ (RCIMIWMessageAuditType)convertMessageAuditTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertMessageAuditTypeToInteger:(RCIMIWMessageAuditType)MessageAuditType;
+
+
++ (RCIMIWChatRoomMemberBanType)convertChatRoomMemberBanTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertChatRoomMemberBanTypeToInteger:(RCIMIWChatRoomMemberBanType)ChatRoomMemberBanType;
+
+
++ (RCIMIWChatRoomMemberOperateType)convertChatRoomMemberOperateTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertChatRoomMemberOperateTypeToInteger:(RCIMIWChatRoomMemberOperateType)ChatRoomMemberOperateType;
+
+
 + (RCIMIWTimeOrder)convertTimeOrderFromInteger:(NSInteger)integer;
 + (NSInteger)convertTimeOrderToInteger:(RCIMIWTimeOrder)TimeOrder;
 
@@ -79,6 +139,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (RCIMIWErrorCode)convertErrorCodeFromInteger:(NSInteger)integer;
 + (NSInteger)convertErrorCodeToInteger:(RCIMIWErrorCode)ErrorCode;
+
+
++ (RCIMIWChatRoomSyncStatusReason)convertChatRoomSyncStatusReasonFromInteger:(NSInteger)integer;
++ (NSInteger)convertChatRoomSyncStatusReasonToInteger:(RCIMIWChatRoomSyncStatusReason)ChatRoomSyncStatusReason;
 
 
 + (RCIMIWUltraGroupTypingStatus)convertUltraGroupTypingStatusFromInteger:(NSInteger)integer;

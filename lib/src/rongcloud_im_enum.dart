@@ -1,3 +1,151 @@
+enum RCIMIWGroupInviteHandlePermission {
+  /// 不需要被邀请人同意（默认）。
+  free,
+
+  /// 需要被邀请人同意
+  inviteeverify,
+}
+
+enum RCIMIWGroupApplicationStatus {
+  /// 管理员待处理
+  managerunhandled,
+
+  /// 管理员拒绝。
+  managerrefused,
+
+  /// 被邀请人待处理
+  inviteeunhandled,
+
+  /// 被邀请人拒绝。
+  inviteerefused,
+
+  /// 已加入
+  joined,
+
+  /// 已过期
+  expired,
+}
+
+enum RCIMIWGroupApplicationDirection {
+  /// 发出申请。
+  applicationsent,
+
+  /// 发出的邀请。
+  invitationsent,
+
+  /// 收到的邀请。
+  invitationreceived,
+
+  /// 收到的申请。
+  applicationreceived,
+}
+
+enum RCIMIWGroupOperation {
+  /// 创建。
+  create,
+
+  /// 加入
+  join,
+
+  /// 踢出
+  kick,
+
+  /// 退出。
+  quit,
+
+  /// 解散
+  dismiss,
+
+  /// 添加管理员
+  addmanager,
+
+  /// 移除管理员。
+  removemanager,
+
+  /// 转移群主
+  transfergroupowner,
+}
+
+enum RCIMIWGroupJoinPermission {
+  /// 需要群主验证（默认）
+  ownerverify,
+
+  /// 不用验证
+  free,
+
+  /// 群管理员或者群主验证
+  ownerormanagerverify,
+
+  /// 不允许任何人加入
+  nooneallowed,
+}
+
+enum RCIMIWGroupStatus {
+  /// 使用中（默认状态）
+  using,
+
+  /// 已解散
+  dismissed,
+
+  /// 已封禁
+  banned,
+
+  /// 已禁言
+  muted,
+}
+
+enum RCIMIWGroupOperationPermission {
+  /// 群主（默认）。
+  owner,
+
+  /// 群主+群管理员。
+  ownerormanager,
+
+  /// 所有人
+  everyone,
+}
+
+enum RCIMIWGroupOperationType {
+  /// 加入。
+  add,
+
+  /// 移除
+  remove,
+}
+
+enum RCIMIWGroupMemberInfoEditPermission {
+  /// 群主+群管理员+自已(默认)。
+  ownerormanagerorself,
+
+  /// 群主+自已。
+  ownerorself,
+
+  /// 仅自已
+  self,
+}
+
+enum RCIMIWGroupMemberRole {
+  /// 未定义角色（使用此枚举代表查询全部类型群成员）
+  undef,
+
+  /// 普通群成员
+  normal,
+
+  /// 管理员。
+  manager,
+
+  /// 群主。
+  owner,
+}
+
+enum RCIMIWGroupApplicationType {
+  /// 主动加入群组
+  application,
+
+  /// 被邀请加入群组。
+  invitation,
+}
+
 enum RCIMIWImportanceHW {
   /// 表示消息为服务与通讯类。消息提醒方式为锁屏+铃声+震动。
   normal,
@@ -58,9 +206,11 @@ enum RCIMIWSentStatus {
   /// 对方已销毁
   destroyed,
 
-  /// 对方已取消
+  /// 本地已取消
   canceled,
 }
+
+enum RCIMIWChatRoomSyncStatus { quit, join }
 
 enum RCIMIWPushNotificationQuietHoursLevel {
   /// 未设置。如未设置，SDK会依次查询消息所属群的用户级别免打扰设置及其他非用户级别设置，再判断是否需要推送通知。
@@ -196,6 +346,48 @@ enum RCIMIWMessageBlockType {
   thirdParty,
 }
 
+enum RCIMIWMessageAuditType {
+  /// 不需要送审，默认值
+  disallow,
+
+  /// 需要送审
+  allow,
+}
+
+enum RCIMIWChatRoomMemberBanType {
+  /// 解除指定聊天室中用户禁言
+  unmuteusers,
+
+  /// 禁言指定聊天室中用户
+  muteusers,
+
+  /// 解除聊天室全体禁言
+  unmuteall,
+
+  /// 聊天室全体禁言
+  muteall,
+
+  /// 移出禁言用户白名单
+  removewhitelist,
+
+  /// 添加禁言用户白名单
+  addwhitelist,
+
+  /// 解除用户聊天室全局禁言
+  unmuteglobal,
+
+  /// 用户聊天室全局禁言
+  muteglobal,
+}
+
+enum RCIMIWChatRoomMemberOperateType {
+  /// 0是解封
+  deblock,
+
+  /// 1是封禁
+  blocked,
+}
+
 enum RCIMIWTimeOrder {
   /// 时间递减
   before,
@@ -250,6 +442,14 @@ enum RCIMIWConversationType {
 }
 
 enum RCIMIWErrorCode { success, paramError, engineDestroyed, nativeOperationError, resultUnknown }
+
+enum RCIMIWChatRoomSyncStatusReason {
+  /// 自己主动离开
+  leaveonmyown,
+
+  /// 多端加入互踢导致离开
+  otherdevicelogin,
+}
 
 enum RCIMIWUltraGroupTypingStatus {
   /// 正在输入文本

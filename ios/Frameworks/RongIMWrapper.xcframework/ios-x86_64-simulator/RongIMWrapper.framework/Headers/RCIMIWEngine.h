@@ -3,7 +3,7 @@
 //  RongIMWrapper
 //
 //  Created by RongCloud on 2/15/22.
-//
+// 
 
 #import <Foundation/Foundation.h>
 
@@ -18,8 +18,6 @@
 #import <RongIMWrapper/RCIMIWReferenceMessage.h>
 #import <RongIMWrapper/RCIMIWCustomMessage.h>
 #import <RongIMWrapper/RCIMIWLocationMessage.h>
-#import <RongIMWrapper/RCIMIWNativeCustomMessage.h>
-#import <RongIMWrapper/RCIMIWNativeCustomMediaMessage.h>
 #import <RongIMWrapper/RCIMIWEngineDelegate.h>
 #import <RongIMWrapper/RCIMIWDefines.h>
 
@@ -69,20 +67,6 @@ __deprecated_msg("Use [RCIMIWEngine connect:timeout:databaseOpened:connected:] i
 #pragma mark - 消息创建/注册
 
 - (NSInteger)registerCustomMessage:(NSArray<Class> *)messageContentClassList;
-
-/// 注册原生自定义普通消息
-///
-/// - Parameter messageIdentifier: 消息唯一标识
-/// - Parameter persistentFlag: 消息存储策略
-/// - Returns: 接口调用状态
-- (NSInteger)registerNativeCustomMessage:(NSString *)messageIdentifier persistentFlag:(RCIMIWNativeCustomMessagePersistentFlag)persistent;
-
-/// 注册原生自定义媒体消息
-///
-/// - Parameter messageIdentifier: 消息唯一标识
-/// - Parameter persistentFlag: 消息存储策略
-/// - Returns: 接口调用状态
-- (NSInteger)registerNativeCustomMediaMessage:(NSString *)messageIdentifier persistentFlag:(RCIMIWNativeCustomMessagePersistentFlag)persistent;
 
 - (RCIMIWTextMessage *)createTextMessage:(RCIMIWConversationType)type
                                 targetId:(NSString *)targetId
@@ -136,34 +120,6 @@ __deprecated_msg("Use [RCIMIWEngine connect:timeout:databaseOpened:connected:] i
                                         latitude:(double)latitude
                                          poiName:(NSString *)poiName
                                    thumbnailPath:(NSString *)thumbnailPath;
-
-/// 创建原生自定义普通消息
-/// 
-/// - Parameter type: 会话类型
-/// - Parameter targetId: 会话 ID
-/// - Parameter channelId: 所属会话的业务标识
-/// - Parameter messageIdentifier: 消息唯一标识
-/// - Parameter fields: 消息内容
-- (RCIMIWNativeCustomMessage *)createNativeCustomMessage:(RCIMIWConversationType)type
-                                                targetId:(NSString *)targetId
-                                               channelId:(nullable NSString *)channelId
-                                       messageIdentifier:(NSString *)messageIdentifier
-                                                  fields:(NSDictionary<NSString *, id> *)fields;
-
-/// 创建原生自定义媒体消息
-///
-/// - Parameter type: 会话类型
-/// - Parameter targetId: 会话 ID
-/// - Parameter channelId: 所属会话的业务标识
-/// - Parameter messageIdentifier: 消息唯一标识
-/// - Parameter path: 媒体文件路径
-/// - Parameter fields: 消息内容
-- (RCIMIWNativeCustomMediaMessage *)createNativeCustomMediaMessage:(RCIMIWConversationType)type
-                                                          targetId:(NSString *)targetId
-                                                         channelId:(nullable NSString *)channelId
-                                                 messageIdentifier:(NSString *)messageIdentifier
-                                                              path:(NSString *)path
-                                                            fields:(NSDictionary<NSString *, id> *)fields;
 
 #pragma mark - 发送消息
 
@@ -628,12 +584,6 @@ __deprecated_msg("Use [RCIMIWEngine getConversations:startTime:count:success:err
                       success:(nullable void (^)(NSArray<RCIMIWConversation *> *))successBlock
                         error:(nullable void (^)(NSInteger code))errorBlock;
 
-
-- (NSInteger)getUnreadConversations:(NSArray<NSNumber *> *)conversationTypes
-                      success:(nullable void (^)(NSArray<RCIMIWConversation *> *))successBlock
-                        error:(nullable void (^)(NSInteger code))errorBlock;
-
-
 /*!
  分页获取会话列表
  
@@ -1066,7 +1016,7 @@ __deprecated_msg("Use [RCIMIWEngine getConversationTopStatus:targetId:success:er
 
 - (NSInteger)getConversationTopStatus:(RCIMIWConversationType)type
                              targetId:(NSString *)targetId
-                              success:(nullable void (^)(BOOL top))successBlock
+                              success:(nullable void (^)(Boolean top))successBlock
                                 error:(nullable void (^)(NSInteger code))errorBlock;
 
 /**
@@ -1083,7 +1033,7 @@ __deprecated_msg("Use [RCIMIWEngine getConversationTopStatus:targetId:channelId:
 - (NSInteger)getConversationTopStatus:(RCIMIWConversationType)type
                              targetId:(NSString *)targetId
                             channelId:(nullable NSString *)channelId
-                              success:(nullable void (^)(BOOL top))successBlock
+                              success:(nullable void (^)(Boolean top))successBlock
                                 error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)loadTopConversations:(NSArray<NSNumber *> *)conversationTypes
@@ -1539,66 +1489,50 @@ __deprecated_msg("Use [RCIMIWEngine searchConversations:channelId:messageTypes:k
 
 #pragma mark - 会话标签
 //
-- (NSInteger)createTag:(NSString *)tagId tagName:(NSString *)tagName tagCreated:(nullable void (^)(NSInteger code))tagCreatedBlock;
+//- (NSInteger)createTag:(NSString *)tagId tagName:(NSString *)tagName;
 //
-- (NSInteger)removeTag:(NSString *)tagId tagRemoved:(nullable void (^)(NSInteger code))tagRemovedBlock;
-
-- (NSInteger)updateTagNameById:(NSString *)tagId newName:(NSString *)newName tagNameByIdUpdated:(nullable void (^)(NSInteger code))tagNameByIdUpdatedBlock;
-
-- (NSInteger)getTags:(nullable void (^)(NSArray<RCIMIWTagInfo *> *results))successBlock
-               error:(nullable void (^)(NSInteger code))errorBlock;;
-
-- (NSInteger)addConversationToTag:(NSString *)tagId
-                             type:(RCIMIWConversationType)type
-                         targetId:(NSString *)targetId
-           conversationToTagAdded:(nullable void (^)(NSInteger code))conversationToTagAddedBlock;
-
-/*!
- 从指定标签移除会话
- */
-- (NSInteger)removeConversationFromTag:(NSString *)tagId
-                                   type: (RCIMIWConversationType)type
-                               targetId:(NSString *)targetId
-             conversationFromTagRemoved:(nullable void (^)(NSInteger code))conversationFromTagRemovedBlock;
-
-/*!
- 删除指定会话中的某些标签
- */
-- (NSInteger)removeTagsFromConversation:(RCIMIWConversationType)type
-                               targetId:(NSString *)targetId
-                                 tagIds:(NSArray<NSString *> *)tagIds
-            tagsFromConversationRemoved:(nullable void (^)(NSInteger code))tagsFromConversationRemovedBlock;
+//- (NSInteger)removeTag:(NSString *)tagId;
 //
-- (NSInteger)getTagsFromConversation:(RCIMIWConversationType)type targetId:(NSString *)targetId
-                             success:(nullable void (^)(NSArray<RCIMIWConversationTagInfo *> *conversations))successBlock
-                               error:(nullable void (^)(NSInteger code))errorBlock;
+//- (NSInteger)updateTagNameById:(NSString *)tagId newName:(NSString *)newName;
 //
-- (NSInteger)getConversationsFromTagByPage:(NSString *)tagId
-                                 timestamp:(long long)timestamp
-                                     count:(int)count
-                                   success:(nullable void (^)(NSArray<RCIMIWConversation *> *conversations))successBlock
-                                     error:(nullable void (^)(NSInteger code))errorBlock;
-
-- (NSInteger)getUnreadCountByTag:(NSString *)tagId contain:(BOOL)containBlocked                     success:(nullable void (^)(NSInteger count))successBlock
-                           error:(nullable void (^)(NSInteger code))errorBlock;
+//- (NSInteger)loadTags;
 //
-- (NSInteger)changeConversationTopStatusInTag:(NSString *)tagId type:(RCIMIWConversationType)type targetId:(NSString *)targetId top:(BOOL)top
-            conversationTopStatusInTagChanged:(nullable void (^)(NSInteger code))conversationTopStatusInTagChangedBlock;;
+//- (NSInteger)addConversationsToTag:(NSString *)tagId
+//                  conversationType:(RCIMIWConversationType)type
+//                          targetId:(NSString *)targetId;
 //
-- (NSInteger)getConversationTopStatusInTag:(NSString *)tagId type:(RCIMIWConversationType)type targetId:(NSString *)targetId
-                                   success:(nullable void (^)(BOOL top))successBlock
-                                     error:(nullable void (^)(NSInteger code))errorBlock;
+///*!
+// 从指定标签移除会话
+// */
+//- (NSInteger)removeConversationsFromTag:(NSString *)tagId
+//                       conversationType: (RCIMIWConversationType)type
+//                               targetId:(NSString *)targetId;
 //
-- (NSInteger)clearMessagesUnreadStatusByTag:(NSString *)tagId
-                                    success:(nullable void (^)(BOOL top))successBlock
-                                      error:(nullable void (^)(NSInteger code))errorBlock;
+///*!
+// 删除指定会话中的某些标签
+// */
+//- (NSInteger)removeTagsFromConversation:(RCIMIWConversationType)type
+//                               targetId:(NSString *)targetId
+//                                 tagIds:(NSArray<NSString *> *)tagIds;
+//
+//- (NSInteger)loadTagsFromConversation:(RCIMIWConversationType)type targetId:(NSString *)targetId;
+//
+//- (NSInteger)loadConversationsFromTagByPage:(NSString *)tagId
+//                                  timestamp:(long long)timestamp
+//                                      count:(int)count;
+//
+//- (NSInteger)loadUnreadCountByTag:(NSString *)tagId containBlocked:(BOOL)containBlocked;
+//
+//- (NSInteger)changeConversationTopStatusInTag:(NSString *)tagId conversationType:(RCIMIWConversationType)type targetId:(NSString *)targetId top:(BOOL)top;
+//
+//- (NSInteger)loadConversationTopStatusInTag:(NSString *)tagId conversationType:(RCIMIWConversationType)type targetId:(NSString *)targetId;
+//
+//- (NSInteger)clearMessagesUnreadStatusByTag:(NSString *)tagId;
 //
 ///*!
 // @param deleteMessage 是否清除本地历史消息
 // */
-- (NSInteger)clearConversationsByTag:(NSString *)tagId deleteMessage:(BOOL)deleteMessage
-                             success:(nullable void (^)(BOOL top))successBlock
-                               error:(nullable void (^)(NSInteger code))errorBlock;
+//- (NSInteger)clearConversationsByTag:(NSString *)tagId deleteMessage:(BOOL)deleteMessage;
 
 #pragma mark - 全局免打扰
 
@@ -1887,34 +1821,6 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
 - (NSInteger)getUltraGroupUnreadMentionedCount:(NSString *)targetId
                                        success:(nullable void (^)(NSInteger count))successBlock
                                          error:(nullable void (^)(NSInteger code))errorBlock;
-/*!
- 获取当前手机与服务器的时间差
- 
- @return 时间差
- @discussion 消息发送成功后，SDK 会与服务器同步时间，消息所在数据库中存储的时间就是服务器时间。
- 
- @remarks 数据获取
- */
-- (long long)getDeltaTime;
-
-/*!
- 设置包名和版本号，埋点使用
- 
- @param moduleName             包名
- @param version                    版本号
- */
-- (NSInteger)setModuleName:(NSString *)moduleName version:(NSString *)version;
-
-/*!
- 上报运行日志
- 
- @param method             方法名
- @param callMethod    即将调用方法名
- @param codeValue      错误号，没有错误填0
- @param message           上报消息内容
- */
-- (NSInteger)writeLog:(NSString *)method callMethod:(NSString *)callMethod codeValue:(int)codeValue message:(NSString *)message;
-
 
 @end
 

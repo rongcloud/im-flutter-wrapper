@@ -225,3 +225,11 @@ const removeChatRoomEntries = {
   ],
   "action": engine_fun.removeChatRoomEntries,
 };
+
+const setCheckChatRoomDuplicateMessage = {
+  "title": "设置是否检查聊天室重复消息",
+  "params": [
+    {"key": "enableCheck", "type": "String", "hint": "", "lable": "请输入enableCheck",},
+  ],
+  "action": engine_fun.setCheckChatRoomDuplicateMessage,
+};

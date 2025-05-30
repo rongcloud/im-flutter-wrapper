@@ -94,6 +94,12 @@ const sendTextMessage = {
       "lable": "categoryVivo",
     },
     {
+      "key": "canIncludeExpansion",
+      "type": "number",
+      "hint": "0 不允许, 1 允许",
+      "lable": "是否允许信息扩展",
+    },
+    {
       "key": "extra",
       "type": "String",
       "hint": "",

@@ -79,6 +79,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('disconnect() has not been implemented.');
   }
 
+  /// 获取当前 IM 服务连接状态
+  /// - [返回值] 当前连接状态
+  Future<RCIMIWConnectionStatus> getConnectionStatus() async {
+    throw UnimplementedError('getConnectionStatus() has not been implemented.');
+  }
+
   /// 构建文本消息
   /// - [type] 会话类型，
   /// - [targetId] 会话 ID
@@ -335,9 +341,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
-  /// - [callback] 获取会话事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 获取会话事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onConversationLoaded]
   Future<int> getConversation(
     RCIMIWConversationType type,
     String targetId,
@@ -369,9 +374,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可
   /// - [startTime]    时间戳（毫秒），获取小于此时间戳的会话，传 0 为查询最新数据
   /// - [count]   查询的数量， 0 < count <= 50
-  /// - [callback]     获取会话列表事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback]     获取会话列表事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onConversationsLoaded]
   Future<int> getConversations(
     List<RCIMIWConversationType> conversationTypes,
     String? channelId,
@@ -380,6 +384,25 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     IRCIMIWGetConversationsCallback? callback,
   }) async {
     throw UnimplementedError('getConversations() has not been implemented.');
+  }
+
+  /// 获取某些会话，可设置是否优先置顶
+  /// - [conversationTypes] 会话类型
+  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可
+  /// - [startTime]    时间戳（毫秒），获取小于此时间戳的会话，传 0 为查询最新数据
+  /// - [count]   查询的数量， 0 < count <= 50
+  /// - [topPriority]  是否优先置顶，true: 优先置顶，false: 不优先置顶
+  /// - [callback]     获取会话列表事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getConversationsWithPriority(
+    List<RCIMIWConversationType> conversationTypes,
+    String? channelId,
+    int startTime,
+    int count,
+    bool topPriority, {
+    IRCIMIWGetConversationsCallback? callback,
+  }) async {
+    throw UnimplementedError('getConversationsWithPriority() has not been implemented.');
   }
 
   /// 获取指定类型的含有未读消息的会话列表
@@ -441,9 +464,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 获取会话未读数事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 获取会话未读数事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUnreadCountLoaded]
   Future<int> getUnreadCount(
     RCIMIWConversationType type,
     String targetId,
@@ -465,9 +487,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取所有未读数
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 获取所有未读数事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 获取所有未读数事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onTotalUnreadCountLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   Future<int> getTotalUnreadCount(String? channelId, {IRCIMIWGetTotalUnreadCountCallback? callback}) async {
     throw UnimplementedError('getTotalUnreadCount() has not been implemented.');
@@ -490,9 +511,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 获取会话中未读的 @ 消息数量事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 获取会话中未读的 @ 消息数量事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUnreadMentionedCountLoaded]
   Future<int> getUnreadMentionedCount(
     RCIMIWConversationType type,
     String targetId,
@@ -511,9 +531,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   }
 
   /// 获取当前用户加入的所有超级群会话的未读消息数的总和。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUltraGroupAllUnreadCountLoaded]
   Future<int> getUltraGroupAllUnreadCount({IRCIMIWGetUltraGroupAllUnreadCountCallback? callback}) async {
     throw UnimplementedError('getUltraGroupAllUnreadCount() has not been implemented.');
   }
@@ -527,9 +546,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   }
 
   /// 获取当前用户加入的所有超级群会话中的未读 @ 消息数的总和。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUltraGroupAllUnreadMentionedCountLoaded]
   Future<int> getUltraGroupAllUnreadMentionedCount({
     IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback? callback,
   }) async {
@@ -547,9 +565,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取指定会话的未读消息数
   /// - [targetId] 会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUltraGroupUnreadCountLoaded]
   Future<int> getUltraGroupUnreadCount(String targetId, {IRCIMIWGetUltraGroupUnreadCountCallback? callback}) async {
     throw UnimplementedError('getUltraGroupUnreadCount() has not been implemented.');
   }
@@ -565,9 +582,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取超级群会话中被 @ 的消息数
   /// - [targetId] 会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUltraGroupUnreadMentionedCountLoaded]
   Future<int> getUltraGroupUnreadMentionedCount(
     String targetId, {
     IRCIMIWGetUltraGroupUnreadMentionedCountCallback? callback,
@@ -597,9 +613,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [conversationTypes] 会话类型集合
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [contain]      是否包含免打扰消息的未读消息数。
-  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback]     事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUnreadCountByConversationTypesLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   Future<int> getUnreadCountByConversationTypes(
     List<RCIMIWConversationType> conversationTypes,
@@ -608,6 +623,19 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     IRCIMIWGetUnreadCountByConversationTypesCallback? callback,
   }) async {
     throw UnimplementedError('getUnreadCountByConversationTypes() has not been implemented.');
+  }
+
+  /// 根据会话的免打扰级别加载未读数
+  /// - [conversationTypes] 会话类型列表
+  /// - [levels] 免打扰级别列表
+  /// - [callback] 获取会话未读消息数回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getUnreadCountByLevels(
+    List<RCIMIWConversationType> conversationTypes,
+    List<RCIMIWPushNotificationLevel> levels, {
+    IRCIMIWGetUnreadCountByLevelsCallback? callback,
+  }) async {
+    throw UnimplementedError('getUnreadCountByLevels() has not been implemented.');
   }
 
   /// 清除某个会话中的未读消息数。
@@ -662,9 +690,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onDraftMessageLoaded]
   Future<int> getDraftMessage(
     RCIMIWConversationType type,
     String targetId,
@@ -704,9 +731,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 获取免打扰的会话列表。
   /// - [conversationTypes] 会话类型集合
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback]     事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onBlockedConversationsLoaded]
   /// 在 Flutter For Web 端，此接口返回的会话对象数据中只有 targetId,channelId,conversationType 是正确的，其他值均为默认值
   Future<int> getBlockedConversations(
     List<RCIMIWConversationType> conversationTypes,
@@ -735,6 +761,26 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('changeConversationTopStatus() has not been implemented.');
   }
 
+  /// 设置会话的置顶状态。若会话不存在，调用此方法 SDK 自动创建会话并置顶。
+  /// - [type] 会话类型
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [top]  是否置顶
+  /// - [updateOperationTime] 是否更新操作事件，默认不更新，如果需要更新请传 true
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// - [接口回调] [onConversationTopStatusChanged]
+  Future<int> changeConversationTopStatusWithUpdateTme(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    bool top,
+    bool updateOperationTime, {
+    IRCIMIWChangeConversationTopStatusCallback? callback,
+  }) async {
+    throw UnimplementedError('changeConversationTopStatusWithUpdateTme() has not been implemented.');
+  }
+
   /// 加载会话的置顶状态
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
@@ -751,9 +797,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onConversationTopStatusLoaded]
   /// 此接口在 Flutter For Web 端不支持超级群
   Future<int> getConversationTopStatus(
     RCIMIWConversationType type,
@@ -828,9 +873,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [order] 获取消息的方向。BEFORE：获取 sentTime 之前的消息 （时间递减），AFTER：获取 sentTime 之后的消息 （时间递增）
   /// - [policy] 消息的加载策略。LOCAL：只加载本地，REMOTE：只加载远端，LOCAL_REMOTE：本地远端都加载
   /// - [count] 获取的消息数量，0 < count <= 20
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onMessagesLoaded]
   Future<int> getMessages(
     RCIMIWConversationType type,
     String targetId,
@@ -862,6 +906,50 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('getMessageByUId() has not been implemented.');
   }
 
+  /// 在会话中获取指定消息的前后指定数量的消息。返回的消息列表中会包含指定的消息。消息列表时间顺序从新到旧。
+  /// - [type] 会话类型。
+  /// - [targetId] 会话 ID。
+  /// - [channelId] 消息所属会话的业务标识。
+  /// - [sentTime] 指定消息的发送时间，不能为 0。单位：毫秒。
+  /// - [beforeCount] 指定消息的前部分消息数量。
+  /// - [afterCount] 指定消息的后部分消息数量。
+  /// - [callback] 获取结果回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getMessagesAroundTime(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    int sentTime,
+    int beforeCount,
+    int afterCount, {
+    IRCIMIWGetMessagesAroundTimeCallback? callback,
+  }) async {
+    throw UnimplementedError('getMessagesAroundTime() has not been implemented.');
+  }
+
+  /// 获取会话中指定类型的消息。
+  /// - [type] 会话类型。
+  /// - [targetId] 会话 ID。
+  /// - [channelId] 消息所属会话的业务标识。
+  /// - [messageTypes] 消息类型列表。
+  /// - [sentTime] 消息发送时间戳，0 表示最新的消息
+  /// - [order] 获取消息的方向。BEFORE：获取 sentTime 之前的消息 （时间递减），AFTER：获取 sentTime 之后的消息 （时间递增）
+  /// - [count] 获取的消息数量
+  /// - [callback] 获取结果回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getLocalMessagesByMessageTypes(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    List<RCIMIWMessageType> messageTypes,
+    int sentTime,
+    RCIMIWTimeOrder order,
+    int count, {
+    IRCIMIWGetMessagesCallback? callback,
+  }) async {
+    throw UnimplementedError('getLocalMessagesByMessageTypes() has not been implemented.');
+  }
+
   /// 加载第一条未读消息。
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
@@ -878,9 +966,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onFirstUnreadMessageLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getFirstUnreadMessage(
     RCIMIWConversationType type,
@@ -907,9 +994,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUnreadMentionedMessagesLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getUnreadMentionedMessages(
     RCIMIWConversationType type,
@@ -968,6 +1054,14 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 此接口不支持 Flutter For Web 端
   Future<int> deleteLocalMessages(List<RCIMIWMessage> messages, {IRCIMIWDeleteLocalMessagesCallback? callback}) async {
     throw UnimplementedError('deleteLocalMessages() has not been implemented.');
+  }
+
+  /// 根据 messageId 批量删除本地消息
+  /// - [messageIds] 消息的 messageId 集合
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> deleteLocalMessageByIds(List<int> messageIds, {IRCIMIWDeleteLocalMessageByIdsCallback? callback}) async {
+    throw UnimplementedError('deleteLocalMessageByIds() has not been implemented.');
   }
 
   /// 删除消息
@@ -1100,6 +1194,33 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('changeMessageReceiveStatus() has not been implemented.');
   }
 
+  /// 设置消息接收状态。
+  /// - [messageId] 消息的 messageId，可在消息对象中获取
+  /// - [receivedStatusInfo] 要修改的状态
+  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// - [接口回调] [onMessageReceiveStatusChanged]
+  Future<int> changeMessageReceiveStatusInfo(
+    int messageId,
+    RCIMIWReceivedStatusInfo receivedStatusInfo, {
+    IRCIMIWChangeMessageReceivedStatusInfoCallback? callback,
+  }) async {
+    throw UnimplementedError('changeMessageReceiveStatusInfo() has not been implemented.');
+  }
+
+  /// 设置消息的附加信息，只能用于本地使用，无法同步到远端。
+  /// - [messageId] 消息的 messageId，可在消息对象中获取
+  /// - [extra] 附加信息
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> updateMessageLocalExtra(
+    int messageId,
+    String extra, {
+    IRCIMIWUpdateMessageLocalExtraCallback? callback,
+  }) async {
+    throw UnimplementedError('updateMessageLocalExtra() has not been implemented.');
+  }
+
   /// 加入聊天室。
   /// - [targetId] 聊天室会话 ID
   /// - [messageCount] 进入聊天室拉取消息数目，-1 时不拉取任何消息，0 时拉取 10 条消息，最多只能拉取 50
@@ -1144,9 +1265,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [timestamp] 起始的消息发送时间戳
   /// - [order] 拉取顺序 0:倒序，1:正序
   /// - [count] 要获取的消息数量，0 < count <= 50。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onChatRoomMessagesLoaded]
   Future<int> getChatRoomMessages(
     String targetId,
     int timestamp,
@@ -1208,9 +1328,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 获取聊天室单个属性。
   /// - [targetId] 聊天室会话 ID
   /// - [key] 聊天室属性键值
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onChatRoomEntryLoaded]
   Future<int> getChatRoomEntry(String targetId, String key, {IRCIMIWGetChatRoomEntryCallback? callback}) async {
     throw UnimplementedError('getChatRoomEntry() has not been implemented.');
   }
@@ -1226,9 +1345,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取聊天室所有属性。
   /// - [targetId] 聊天室会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onChatRoomAllEntriesLoaded]
   Future<int> getChatRoomAllEntries(String targetId, {IRCIMIWGetChatRoomAllEntriesCallback? callback}) async {
     throw UnimplementedError('getChatRoomAllEntries() has not been implemented.');
   }
@@ -1298,9 +1416,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取某用户是否在黑名单中。
   /// - [userId] 用户 Id
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onBlacklistStatusLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getBlacklistStatus(String userId, {IRCIMIWGetBlacklistStatusCallback? callback}) async {
     throw UnimplementedError('getBlacklistStatus() has not been implemented.');
@@ -1316,9 +1433,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   }
 
   /// 获取当前用户设置的黑名单列表。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onBlacklistLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getBlacklist({IRCIMIWGetBlacklistCallback? callback}) async {
     throw UnimplementedError('getBlacklist() has not been implemented.');
@@ -1397,6 +1513,29 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('searchMessagesByUserId() has not been implemented.');
   }
 
+  /// 根据关键字搜索指定会话中，指定消息类型的本地历史消息。
+  /// - [type] 会话类型。
+  /// - [targetId] 会话 ID。
+  /// - [channelId] 消息所属的会话标识。
+  /// - [messageTypes] 消息类型集合。
+  /// - [keyword] 搜索的关键字，非空。
+  /// - [startTime] 查询 startTime 之前的消息（传 0 表示从最新消息开始搜索），单位：毫秒
+  /// - [count] 最大的查询数量，最大 100。
+  /// - [callback] 搜索结果的回调接口
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> searchMessagesByMessageTypes(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    List<RCIMIWMessageType> messageTypes,
+    String keyword,
+    int startTime,
+    int count, {
+    IRCIMIWSearchMessagesByMessageTypesCallback? callback,
+  }) async {
+    throw UnimplementedError('searchMessagesByMessageTypes() has not been implemented.');
+  }
+
   /// 根据关键字搜索会话。
   /// - [conversationTypes] 会话类型集合
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
@@ -1452,9 +1591,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   }
 
   /// 获取已设置的时间段消息提醒屏蔽
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onNotificationQuietHoursLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getNotificationQuietHours({IRCIMIWGetNotificationQuietHoursCallback? callback}) async {
     throw UnimplementedError('getNotificationQuietHours() has not been implemented.');
@@ -1494,9 +1632,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型。请注意以下限制：<ul><li>*超级群会话类型*：如在 2022.09.01 之前开通超级群业务，默认不支持为单个超级群会话*所有消息*设置免打扰级别（“所有消息”指所有频道中的消息和不属于任何频道的消息）。该接口仅设置指定超级群会话（`targetId`）中*不属于任何频道的消息*的免打扰状态级别。如需修改请提交工单。</li><li>*聊天室会话类型*：不支持，因为聊天室消息默认不支持消息推送提醒。</li></ul>
   /// - [targetId] 会话 ID
   /// - [channelId] 超级群的会话频道 ID。其他类型传 null 即可。<ul><li>如果传入频道 ID，则针对该指定频道设置消息免打扰级别。如果不指定频道 ID，则对所有超级群消息生效。</li><li>*注意*：2022.09.01 之前开通超级群业务的客户，如果不指定频道 ID，则默认传 "" 空字符串，即仅针对指定超级群会话（`targetId`）中*不属于任何频道的消息*设置免打扰状态级别。如需修改请提交工单。</p></li></ul>
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onConversationNotificationLevelLoaded]
   Future<int> getConversationNotificationLevel(
     RCIMIWConversationType type,
     String targetId,
@@ -1529,10 +1666,6 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('loadConversationTypeNotificationLevel() has not been implemented.');
   }
 
-  /// 获取会话类型的消息提醒状态
-  /// - [type] 会话类型
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
-  /// - [返回值] [onConversationTypeNotificationLevelLoaded]
   Future<int> getConversationTypeNotificationLevel(
     RCIMIWConversationType type, {
     IRCIMIWGetConversationTypeNotificationLevelCallback? callback,
@@ -1566,9 +1699,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 获取超级群的默认消息状态
   /// - [targetId] 会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUltraGroupDefaultNotificationLevelLoaded]
   Future<int> getUltraGroupDefaultNotificationLevel(
     String targetId, {
     IRCIMIWGetUltraGroupDefaultNotificationLevelCallback? callback,
@@ -1605,9 +1737,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 获取超级群频道的默认消息状态
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelLoaded]
   Future<int> getUltraGroupChannelDefaultNotificationLevel(
     String targetId,
     String? channelId, {
@@ -1680,9 +1811,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onMessageCountLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageCount(
     RCIMIWConversationType type,
@@ -1706,9 +1836,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 根据会话类型,获取置顶会话列表
   /// - [conversationTypes] 会话类型集合
   /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback]     事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onTopConversationsLoaded]
   Future<int> getTopConversations(
     List<RCIMIWConversationType> conversationTypes,
     String? channelId, {
@@ -1747,9 +1876,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 获取特定会话下所有频道的会话列表，只支持超级群
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onConversationsLoadedForAllChannel]
   Future<int> getConversationsForAllChannel(
     RCIMIWConversationType type,
     String targetId, {
@@ -1845,9 +1973,8 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// 从服务获取批量消息
   /// - [messages] 获取的消息集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onBatchRemoteUltraGroupMessagesLoaded]
   Future<int> getBatchRemoteUltraGroupMessages(
     List<RCIMIWMessage> messages, {
     IRCIMIWGetBatchRemoteUltraGroupMessagesCallback? callback,
@@ -2074,6 +2201,339 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   Future<int> writeLog(String method, String callMethod, int codeValue, String message) async {
     throw UnimplementedError('writeLog() has not been implemented.');
+  }
+
+  Future<int> createGroup(
+    RCIMIWGroupInfo groupInfo,
+    List<String> inviteeUserIds, {
+    IRCIMIWCreateGroupCallback? callback,
+  }) async {
+    throw UnimplementedError('createGroup() has not been implemented.');
+  }
+
+  /// 更新群组资料
+  /// - [groupInfo] 群信息，只需传入需要修改的参数
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> updateGroupInfo(RCIMIWGroupInfo groupInfo, {IRCIMIWGroupInfoUpdatedCallback? callback}) async {
+    throw UnimplementedError('updateGroupInfo() has not been implemented.');
+  }
+
+  /// - [groupIds]
+  /// - [callback]
+  /// - [返回值]
+  Future<int> getGroupsInfo(List<String> groupIds, {IRCIMIWGetGroupsInfoCallback? callback}) async {
+    throw UnimplementedError('getGroupsInfo() has not been implemented.');
+  }
+
+  /// 踢出群组
+  /// - [groupId] 群组Id。
+  /// - [userIds] 群成员Id数组。支持批量操作，单次上限为 100 个。
+  /// - [config] 踢出群组配置。允许传空，传空代表使用默认配置。
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> kickGroupMembers(
+    String groupId,
+    List<String> userIds,
+    RCIMIWQuitGroupConfig config, {
+    IRCIMIWKickGroupMembersCallback? callback,
+  }) async {
+    throw UnimplementedError('kickGroupMembers() has not been implemented.');
+  }
+
+  /// 主动加入群组
+  /// - [groupId] 群组Id。
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> joinGroup(String groupId, {IRCIMIWJoinGroupCallback? callback}) async {
+    throw UnimplementedError('joinGroup() has not been implemented.');
+  }
+
+  /// 主动退出群组
+  /// - [groupId] 群组 ID
+  /// - [config] 退出群组配置。允许传空，传空代表使用默认配置。
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> quitGroup(String groupId, RCIMIWQuitGroupConfig config, {IRCIMIWQuitGroupCallback? callback}) async {
+    throw UnimplementedError('quitGroup() has not been implemented.');
+  }
+
+  /// 解散群组
+  /// - [groupId] 群组 ID
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> dismissGroup(String groupId, {IRCIMIWDismissGroupCallback? callback}) async {
+    throw UnimplementedError('dismissGroup() has not been implemented.');
+  }
+
+  /// 转让群主身份
+  /// - [groupId] 群组 ID
+  /// - [newOwnerId] 新群主 ID
+  /// - [quitGroup] 是否退出群组
+  /// - [config] 转让群主配置。允许传空，传空代表使用默认配置。
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> transferGroupOwner(
+    String groupId,
+    String newOwnerId,
+    bool quitGroup,
+    RCIMIWQuitGroupConfig config, {
+    IRCIMIWTransferGroupOwnerCallback? callback,
+  }) async {
+    throw UnimplementedError('transferGroupOwner() has not been implemented.');
+  }
+
+  /// 获取已加入指定群成员信息
+  /// - [groupId] 群组 ID
+  /// - [userIds] 用户 ID 列表，一次最多不超过 100 个。
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getGroupMembers(String groupId, List<String> userIds, {IRCIMIWGetGroupMembersCallback? callback}) async {
+    throw UnimplementedError('getGroupMembers() has not been implemented.');
+  }
+
+  /// 分页获取群成员信息
+  /// - [groupId] 群组 ID
+  /// - [role] 群成员角色
+  /// - [option] 查询选项，包含 页面标识（非必填，不填返回第一页数据）、每页条数（最大不超过 100 条）、是否正序查询（默认倒序）
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getGroupMembersByRole(
+    String groupId,
+    RCIMIWGroupMemberRole role,
+    RCIMIWPagingQueryOption option, {
+    IRCIMIWGetGroupMembersByRoleCallback? callback,
+  }) async {
+    throw UnimplementedError('getGroupMembersByRole() has not been implemented.');
+  }
+
+  /// 按角色获取已加入群组的资料
+  /// - [role] 群成员角色
+  /// - [option] 查询选项，包含 页面标识（非必填，不填返回第一页数据）、每页条数（最大不超过 100 条）、是否正序查询（默认倒序）
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getJoinedGroupsByRole(
+    RCIMIWGroupMemberRole role,
+    RCIMIWPagingQueryOption option, {
+    IRCIMIWGetJoinedGroupsByRoleCallback? callback,
+  }) async {
+    throw UnimplementedError('getJoinedGroupsByRole() has not been implemented.');
+  }
+
+  /// 获取指定已加入群组的资料
+  /// - [groupIds] 群组 ID 列表。
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getJoinedGroups(List<String> groupIds, {IRCIMIWGetJoinedGroupsCallback? callback}) async {
+    throw UnimplementedError('getJoinedGroups() has not been implemented.');
+  }
+
+  /// 设置群组备注名
+  /// - [groupId] 群组 ID。
+  /// - [remark] 群备注，字符串长度不超过 64 个字符。传空或空字符串表示移除群备注
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> setGroupRemark(String groupId, String remark, {IRCIMIWSetGroupRemarkCallback? callback}) async {
+    throw UnimplementedError('setGroupRemark() has not been implemented.');
+  }
+
+  /// 设置群成员资料
+  /// - [groupId] 群组 ID
+  /// - [userId] 用户ID， 必填项，支持传入当前登录用户 ID。
+  /// - [nickname] 用户昵称，非必填项，长度不超过 64 个字符，传空或空字符串表示移除用户昵称。
+  /// - [extra] 附加信息，非必填项，长度不超过 128 个字符
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> setGroupMemberInfo(
+    String groupId,
+    String userId,
+    String nickname,
+    String extra, {
+    IRCIMIWSetGroupMemberInfoCallback? callback,
+  }) async {
+    throw UnimplementedError('setGroupMemberInfo() has not been implemented.');
+  }
+
+  /// 按群名称搜索已加入群组的资料
+  /// - [groupName] 群名称，不能为空，最长不超过 64 个字符。
+  /// - [option] 查询选项，包含 页面标识（非必填，不填返回第一页数据）、每页条数（最大不超过 200 条）、是否正序查询（默认倒序）。
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> searchJoinedGroups(
+    String groupName,
+    RCIMIWPagingQueryOption option, {
+    IRCIMIWSearchJoinedGroupsCallback? callback,
+  }) async {
+    throw UnimplementedError('searchJoinedGroups() has not been implemented.');
+  }
+
+  /// 根据群成员昵称查询群成员
+  /// - [groupId] 群组ID
+  /// - [name] 群成员昵称，必填，不能为空最长不超过 64 个字符。
+  /// - [option] 查询选项，包含 页面标识（非必填，不填返回第一页数据）、每页条数（最大不超过 200 条）、是否正序查询（默认倒序）
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// @note 优先匹配群成员昵称 nickname，再匹配群成员用户名 name。只要其中一个字段匹配成功，即返回搜索结果。
+  Future<int> searchGroupMembers(
+    String groupId,
+    String name,
+    RCIMIWPagingQueryOption option, {
+    IRCIMIWSearchGroupMembersCallback? callback,
+  }) async {
+    throw UnimplementedError('searchGroupMembers() has not been implemented.');
+  }
+
+  /// 添加群管理员
+  /// - [groupId] 群组 ID，必填项
+  /// - [userIds] 用户 ID 数组，必填项。用户 ID 必须为群成员，一次最多设置 10 个群成员为管理员，管理员上限为 10 个。群主不支持设置为管理员
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口���用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> addGroupManagers(
+    String groupId,
+    List<String> userIds, {
+    IRCIMIWAddGroupManagersCallback? callback,
+  }) async {
+    throw UnimplementedError('addGroupManagers() has not been implemented.');
+  }
+
+  /// 移除群管理员
+  /// - [groupId] 群组 ID，必填项
+  /// - [userIds] 用户 ID 数组，必填项。一次最多操作 10 个管理员
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> removeGroupManagers(
+    String groupId,
+    List<String> userIds, {
+    IRCIMIWRemoveGroupManagersCallback? callback,
+  }) async {
+    throw UnimplementedError('removeGroupManagers() has not been implemented.');
+  }
+
+  /// 邀请用户加入群组
+  /// - [groupId] 群组ID
+  /// - [userIds] 用户ID列表，一次最多不超过 30 个
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// @note
+  /// *`callback` 的 `processCode` 参数说明*
+  /// - 当群组的 `joinPermission` 为需要群主或管理员审批时，`processCode` 返回 `RC_GROUP_JOIN_GROUP_NEED_MANAGER_ACCEPT` ( 25424 )，表示需要等待群主或管理员审批。
+  /// - 当群组的 `joinPermission` 为不用验证，同时 `inviteHandlePermission` 为需要被邀请人同意时，`processCode` 返回 `RC_GROUP_NEED_INVITEE_ACCEPT` ( 25427 )，表示需要被邀请人同意后才能进入群组。
+  Future<int> inviteUsersToGroup(
+    String groupId,
+    List<String> userIds, {
+    IRCIMIWInviteUsersToGroupCallback? callback,
+  }) async {
+    throw UnimplementedError('inviteUsersToGroup() has not been implemented.');
+  }
+
+  /// 用户同意加入群组
+  /// - [groupId] 群组ID
+  /// - [inviterId] 邀请者ID
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> acceptGroupInvite(String groupId, String inviterId, {IRCIMIWAcceptGroupInviteCallback? callback}) async {
+    throw UnimplementedError('acceptGroupInvite() has not been implemented.');
+  }
+
+  /// 用户拒绝加入群组
+  /// - [groupId] 群组ID
+  /// - [inviterId] 邀请者ID
+  /// - [reason] 拒绝原因，非必填项，拒绝时可选择是否输入拒绝原因，内容不超过 128 个字符。
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> refuseGroupInvite(
+    String groupId,
+    String inviterId,
+    String reason, {
+    IRCIMIWRefuseGroupInviteCallback? callback,
+  }) async {
+    throw UnimplementedError('refuseGroupInvite() has not been implemented.');
+  }
+
+  /// 群主或管理员同意用户加入群组
+  /// - [groupId] 群组 ID
+  /// - [inviterId] ��请人用户 ID，非必填，如果是邀请入群，则传邀请人ID；如果是用户主动加群，可以为空。
+  /// - [applicantId] 申请入群用户 ID
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// @note
+  /// *`callback` 的 `processCode` 参数说明*
+  /// - 当群组的 `inviteHandlePermission` 为需要被邀请人同意时，若 `processCode` 返回 `RC_GROUP_NEED_INVITEE_ACCEPT` (25427)，表示需等待被邀请人同意方可加入群组。
+  /// - 当群组的 `inviteHandlePermission` 为无需被邀请人同意时，若 `processCode` 返回 `RC_SUCCESS` (0)，表示被邀请人已成功加入群组。
+  /// 以上仅适用于邀请加入群组的情况，当用户主动申请加入群组时，`processCode` 始终为 `RC_SUCCESS` (0)。
+  Future<int> acceptGroupApplication(
+    String groupId,
+    String inviterId,
+    String applicantId, {
+    IRCIMIWAcceptGroupApplicationCallback? callback,
+  }) async {
+    throw UnimplementedError('acceptGroupApplication() has not been implemented.');
+  }
+
+  /// 群主或管理员拒绝用户加入群组
+  /// - [groupId] 群组ID
+  /// - [inviterId] 邀请人用户 ID ，非必填，如果是邀请入群，则传邀请人ID；如果是主动加群，��以为空。
+  /// - [applicantId] 申请者ID
+  /// - [reason] 拒绝原因，内容不超过 128 个字符。
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> refuseGroupApplication(
+    String groupId,
+    String inviterId,
+    String applicantId,
+    String reason, {
+    IRCIMIWRefuseGroupApplicationCallback? callback,
+  }) async {
+    throw UnimplementedError('refuseGroupApplication() has not been implemented.');
+  }
+
+  /// 分页获取群组申请列表
+  /// - [option] 查询选项，包含 页面标识（非必填，不填返回第一页数据）、每页条数（最大不超过 200 条）、是否正序查询（默认倒序）
+  /// - [directions] 申请方向 `RCGroupApplicationDirection` 数组
+  /// - [status] 状态类型 `RCGroupApplicationStatus` 数组
+  /// - [callback] 事件回调，此接口不支持返回请求总数。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getGroupApplications(
+    RCIMIWPagingQueryOption option,
+    List<RCIMIWGroupApplicationDirection> directions,
+    List<RCIMIWGroupApplicationStatus> status, {
+    IRCIMIWGetGroupApplicationsCallback? callback,
+  }) async {
+    throw UnimplementedError('getGroupApplications() has not been implemented.');
+  }
+
+  /// 添加群组特别关注用户
+  /// - [groupId] 群组 ID
+  /// - [userIds] 用户 ID 列表，单次最多关注 100 个用户。
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码。
+  Future<int> addGroupFollows(String groupId, List<String> userIds, {IRCIMIWAddGroupFollowsCallback? callback}) async {
+    throw UnimplementedError('addGroupFollows() has not been implemented.');
+  }
+
+  /// 删除群组特别关注用户
+  /// - [groupId] 群组 ID
+  /// - [userIds] 用户 ID 列表，单次取消关注 100 个用户。
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码。
+  Future<int> removeGroupFollows(
+    String groupId,
+    List<String> userIds, {
+    IRCIMIWRemoveGroupFollowsCallback? callback,
+  }) async {
+    throw UnimplementedError('removeGroupFollows() has not been implemented.');
+  }
+
+  /// 获取群组特别关注用户
+  /// - [groupId] 群组 ID
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码。
+  Future<int> getGroupFollows(String groupId, {IRCIMIWGetGroupFollowsCallback? callback}) async {
+    throw UnimplementedError('getGroupFollows() has not been implemented.');
+  }
+
+  Future<int> setCheckChatRoomDuplicateMessage(bool enableCheck) async {
+    throw UnimplementedError('setCheckChatRoomDuplicateMessage() has not been implemented.');
   }
 
   // -------- web 专有的方法 --------
