@@ -206,6 +206,11 @@ typedef NS_ENUM(NSInteger, RCIMIWMessageType)  {
      原生自定义媒体消息
      */
     RCIMIWMessageTypeNativeCustomMedia = 15,
+    
+    /*!
+     群组通知消息
+     */
+    RCIMIWMessageTypeGroupNotification = 16,
 };
 
 #pragma mark 自定义消息的类别

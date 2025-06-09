@@ -330,6 +330,9 @@ enum RCIMIWMessageType {
 
   /// 原生自定义媒体消息
   nativeCustomMedia,
+
+  /// 群通知消息
+  groupNotification,
 }
 
 enum RCIMIWMessageBlockType {

@@ -21,7 +21,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-rongcloud_im_wrapper_plugin: 5.18.0
+rongcloud_im_wrapper_plugin: 5.20.1
 ```
 
 
@@ -157,7 +157,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-rongcloud_im_wrapper_plugin: 5.18.0
+rongcloud_im_wrapper_plugin: 5.20.1
 ```
 
 2. Run `flutter pub get` in your project directory to download the plugin

@@ -39,6 +39,7 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWUnknownMessage.h>
 #import <RongIMWrapper/RCIMIWNativeCustomMessage.h>
 #import <RongIMWrapper/RCIMIWNativeCustomMediaMessage.h>
+#import <RongIMWrapper/RCIMIWGroupNotificationMessage.h>
 #import <RongIMWrapper/RCIMIWConversation.h>
 #import <RongIMWrapper/RCIMIWSearchConversationResult.h>
 

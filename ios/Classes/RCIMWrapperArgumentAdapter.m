@@ -477,6 +477,7 @@
     @(RCIMIWMessageTypeUserCustom),
     @(RCIMIWMessageTypeNativeCustom),
     @(RCIMIWMessageTypeNativeCustomMedia),
+    @(RCIMIWMessageTypeGroupNotification),
   ];
   RCIMIWMessageType MessageType = [[MessageTypeArray objectAtIndex:integer] integerValue];
   return MessageType;
@@ -499,6 +500,7 @@
     @(RCIMIWMessageTypeUserCustom),
     @(RCIMIWMessageTypeNativeCustom),
     @(RCIMIWMessageTypeNativeCustomMedia),
+    @(RCIMIWMessageTypeGroupNotification),
   ];
   NSInteger index = [MessageTypeArray indexOfObject:@(MessageType)];
   return index;

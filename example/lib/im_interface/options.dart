@@ -109,6 +109,8 @@ const subList = {
     message.loadMessages,
     message.getMessageById,
     message.getMessageByUId,
+    message.getMessagesAroundTime,
+    message.getLocalMessagesByMessageTypes,
     message.loadFirstUnreadMessage,
     message.loadUnreadMentionedMessages,
     message.insertMessage,
@@ -127,6 +129,7 @@ const subList = {
     message.searchMessages,
     message.searchMessagesByTimeRange,
     message.searchMessagesByUserId,
+    message.searchMessagesByMessageTypes,
     message.sendGroupMessageToDesignatedUsers,
   ],
   "会话标签": [

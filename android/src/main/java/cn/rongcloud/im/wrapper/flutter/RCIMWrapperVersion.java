@@ -1,5 +1,5 @@
 package cn.rongcloud.im.wrapper.flutter;
 
 public class RCIMWrapperVersion {
-    public static final String SDK_VERSION = "5.18.0";
+    public static final String SDK_VERSION = "5.20.1";
 }

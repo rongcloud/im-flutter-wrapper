@@ -10,4 +10,5 @@ class AndroidPushInfo {
 class AccountInfo {
   static const appKey = '';
   static const token = '';
+  static const naviServer = '';
 }

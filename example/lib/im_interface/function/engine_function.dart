@@ -32,6 +32,9 @@ Future initEngine(Map arg) async {
     }
 
     RCIMIWEngineOptions options = RCIMIWEngineOptions.create();
+    if (arg['naviServer'] == '1') {
+      arg['naviServer'] = AccountInfo.naviServer1;
+    }
     if (arg['naviServer'] != null) {
       options.naviServer = arg['naviServer'];
     }

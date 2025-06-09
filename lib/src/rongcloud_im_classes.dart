@@ -1110,6 +1110,30 @@ class RCIMIWLocationMessage extends RCIMIWMessage {
   }
 }
 
+class RCIMIWGroupNotificationMessage extends RCIMIWMessage {
+  String? operation;
+  String? operatorUserId;
+  String? data;
+  String? message;
+
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = super.toJson();
+    json['operation'] = operation;
+    json['operatorUserId'] = operatorUserId;
+    json['data'] = data;
+    json['message'] = message;
+    return json;
+  }
+
+  RCIMIWGroupNotificationMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    operation = json['operation'];
+    operatorUserId = json['operatorUserId'];
+    data = json['data'];
+    message = json['message'];
+  }
+}
+
 class RCIMIWReferenceMessage extends RCIMIWMessage {
   /// 引用文本
   String? text;

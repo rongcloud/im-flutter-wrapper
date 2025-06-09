@@ -63,12 +63,7 @@ const sendTextMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
-    {
-      "key": "text",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入发送文本",
-    },
+    {"key": "text", "type": "String", "hint": "", "lable": "请输入发送文本"},
     {
       "key": "pushContent",
       "type": "String",
@@ -99,42 +94,12 @@ const sendTextMessage = {
       "hint": "0 不允许, 1 允许",
       "lable": "是否允许信息扩展",
     },
-    {
-      "key": "extra",
-      "type": "String",
-      "hint": "",
-      "lable": "消息的扩展信息",
-    },
-    {
-      "key": "userId",
-      "type": "String",
-      "hint": "",
-      "lable": "用户信息ID",
-    },
-    {
-      "key": "name",
-      "type": "String",
-      "hint": "",
-      "lable": "用户信息名称",
-    },
-    {
-      "key": "portrait",
-      "type": "String",
-      "hint": "",
-      "lable": "用户信息头像",
-    },
-    {
-      "key": "alias",
-      "type": "String",
-      "hint": "",
-      "lable": "用户信息别名",
-    },
-    {
-      "key": "userinfo_extra",
-      "type": "String",
-      "hint": "",
-      "lable": "用户信息扩展",
-    },
+    {"key": "extra", "type": "String", "hint": "", "lable": "消息的扩展信息"},
+    {"key": "userId", "type": "String", "hint": "", "lable": "用户信息ID"},
+    {"key": "name", "type": "String", "hint": "", "lable": "用户信息名称"},
+    {"key": "portrait", "type": "String", "hint": "", "lable": "用户信息头像"},
+    {"key": "alias", "type": "String", "hint": "", "lable": "用户信息别名"},
+    {"key": "userinfo_extra", "type": "String", "hint": "", "lable": "用户信息扩展"},
     {
       "key": "Mentioned",
       "type": "number",
@@ -147,12 +112,7 @@ const sendTextMessage = {
       "hint": "多个以英文,分割  eg:user1,user2",
       "lable": "请输入@的用户",
     },
-    {
-      "key": "MentionedText",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入@文本",
-    },
+    {"key": "MentionedText", "type": "String", "hint": "", "lable": "请输入@文本"},
   ],
   "action": engine_fun.sendTextMessage,
 };
@@ -332,18 +292,8 @@ const sendReferenceMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
-    {
-      "key": "messageId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入引用的消息 Id",
-    },
-    {
-      "key": "text",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入引用文本",
-    },
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入引用的消息 Id"},
+    {"key": "text", "type": "String", "hint": "", "lable": "请输入引用文本"},
     {
       "key": "pushContent",
       "type": "String",
@@ -430,24 +380,9 @@ const sendLocationMessage = {
       "hint": "",
       "lable": LableString.pushData,
     },
-    {
-      "key": "longitude",
-      "type": "String",
-      "hint": "必填",
-      "lable": "经度",
-    },
-    {
-      "key": "latitude",
-      "type": "String",
-      "hint": "必填",
-      "lable": "纬度",
-    },
-    {
-      "key": "poiName",
-      "type": "String",
-      "hint": "必填",
-      "lable": "地理位置信息",
-    },
+    {"key": "longitude", "type": "String", "hint": "必填", "lable": "经度"},
+    {"key": "latitude", "type": "String", "hint": "必填", "lable": "纬度"},
+    {"key": "poiName", "type": "String", "hint": "必填", "lable": "地理位置信息"},
   ],
   "action": engine_fun.sendLocationMessage,
 };
@@ -485,18 +420,8 @@ const sendCommandMessage = {
       "hint": "",
       "lable": LableString.pushData,
     },
-    {
-      "key": "name",
-      "type": "String",
-      "hint": "必填",
-      "lable": "name",
-    },
-    {
-      "key": "data",
-      "type": "String",
-      "hint": "必填",
-      "lable": "data",
-    },
+    {"key": "name", "type": "String", "hint": "必填", "lable": "name"},
+    {"key": "data", "type": "String", "hint": "必填", "lable": "data"},
   ],
   "action": engine_fun.sendCommandMessage,
 };
@@ -522,7 +447,7 @@ const sendUserCustomMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
-    {"key": "content", "type": "String", "hint": "", "lable": "备注内容 "}
+    {"key": "content", "type": "String", "hint": "", "lable": "备注内容 "},
   ],
   "action": engine_fun.sendUserCustomMessage,
 };
@@ -552,7 +477,8 @@ const sendCustomMessage = {
       "key": "policy",
       "type": "String",
       "hint": "",
-      "lable": "请输入存储策略 \n 0: 客户端不存储，支持离线消息机制，不计入未读消息数 "
+      "lable":
+          "请输入存储策略 \n 0: 客户端不存储，支持离线消息机制，不计入未读消息数 "
           "\n 1:客户端存储，支持离线消息机制，且存入服务端历史消息，计入未读消息数"
           "\n 2:客户端不存储，服务端不存储，不计入未读消息数"
           "\n 3:客户端存储，支持离线消息机制，且存入服务端历史消息，不计入未读消息数",
@@ -594,36 +520,16 @@ const sendCustomMessage = {
 const sendNativeCustomMessage = {
   "title": "发送自定义消息 V3",
   "params": [
-    {
-      "key": "type",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入type",
-    },
-    {
-      "key": "targetId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入targetId",
-    },
-    {
-      "key": "channelId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入channelId",
-    },
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type"},
+    {"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId"},
+    {"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId"},
     {
       "key": "messageIdentifier",
       "type": "String",
       "hint": "",
       "lable": "请输入messageIdentifier",
     },
-    {
-      "key": "fields",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入fields",
-    },
+    {"key": "fields", "type": "String", "hint": "", "lable": "请输入fields"},
     {
       "key": "searchWords",
       "type": "String",
@@ -637,42 +543,17 @@ const sendNativeCustomMessage = {
 const sendNativeCustomMediaMessage = {
   "title": "发送自定义媒体消息 V3",
   "params": [
-    {
-      "key": "type",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入type",
-    },
-    {
-      "key": "targetId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入targetId",
-    },
-    {
-      "key": "channelId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入channelId",
-    },
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type"},
+    {"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId"},
+    {"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId"},
     {
       "key": "messageIdentifier",
       "type": "String",
       "hint": "",
       "lable": "请输入messageIdentifier",
     },
-    {
-      "key": "path",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入path",
-    },
-    {
-      "key": "fields",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入fields",
-    },
+    {"key": "path", "type": "String", "hint": "", "lable": "请输入path"},
+    {"key": "fields", "type": "String", "hint": "", "lable": "请输入fields"},
     {
       "key": "searchWords",
       "type": "String",
@@ -699,12 +580,7 @@ const cancelSendingMediaMessage = {
 const downloadMediaMessage = {
   "title": "下载媒体消息",
   "params": [
-    {
-      "key": "messageId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入下载的消息 Id",
-    },
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入下载的消息 Id"},
   ],
   "action": engine_fun.downloadMediaMessage,
 };
@@ -743,12 +619,7 @@ const sendTypingStatus = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
-    {
-      "key": "currentType",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入当前的状态",
-    },
+    {"key": "currentType", "type": "String", "hint": "", "lable": "请输入当前的状态"},
   ],
   "action": engine_auto_fun.sendTypingStatus,
 };
@@ -792,12 +663,7 @@ const loadMessages = {
       "hint": "0: 仅本地 1: 仅远端  2: 本地和远端",
       "lable": "请输入加载策略",
     },
-    {
-      "key": "count",
-      "type": "number",
-      "hint": "最多获取 20 条",
-      "lable": "请输入获取数量",
-    },
+    {"key": "count", "type": "number", "hint": "最多获取 20 条", "lable": "请输入获取数量"},
   ],
   "action": engine_auto_fun.getMessages,
 };
@@ -805,12 +671,7 @@ const loadMessages = {
 const getMessageById = {
   "title": "根据消息ID加载消息",
   "params": [
-    {
-      "key": "messageId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入消息 Id",
-    },
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入消息 Id"},
   ],
   "action": engine_fun.getMessageById,
 };
@@ -818,14 +679,61 @@ const getMessageById = {
 const getMessageByUId = {
   "title": "根据远端 UID 加载消息",
   "params": [
-    {
-      "key": "messageUId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入消息 UId",
-    },
+    {"key": "messageUId", "type": "String", "hint": "", "lable": "请输入消息 UId"},
   ],
   "action": engine_fun.getMessageByUId,
+};
+
+const getMessagesAroundTime = {
+  "title": "根据时间获取前后消息",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type"},
+    {"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId"},
+    {"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId"},
+    {"key": "sentTime", "type": "String", "hint": "", "lable": "请输入sentTime"},
+    {
+      "key": "beforeCount",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入beforeCount",
+    },
+    {
+      "key": "afterCount",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入afterCount",
+    },
+  ],
+  "action": engine_auto_fun.getMessagesAroundTime,
+};
+
+const getLocalMessagesByMessageTypes = {
+  "title": "根据消息类型获取本地消息",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type"},
+    {"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId"},
+    {"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId"},
+    {
+      "key": "messageTypes",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入messageTypes",
+    },
+    {
+      "key": "sentTime",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入开始时间(时间戳单位: 毫秒)",
+    },
+    {
+      "key": "order",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入时间策略 \n 0:获取小于 sentTime 的消息 \n1:获取大于 sentTime 的消息",
+    },
+    {"key": "count", "type": "String", "hint": "", "lable": "请输入count"},
+  ],
+  "action": engine_auto_fun.getLocalMessagesByMessageTypes,
 };
 
 const loadFirstUnreadMessage = {
@@ -941,7 +849,8 @@ const clearMessages = {
       "key": "timestamp",
       "type": "String",
       "hint": "",
-      "lable": "清除消息截止时间戳，0 <= recordTime <= 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 recordTime 的消息",
+      "lable":
+          "清除消息截止时间戳，0 <= recordTime <= 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 recordTime 的消息",
     },
     {
       "key": "policy",
@@ -1000,12 +909,7 @@ const deleteMessages = {
 const recallMessage = {
   "title": "撤回某条消息",
   "params": [
-    {
-      "key": "messageId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入撤回的消息 Id",
-    },
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入撤回的消息 Id"},
   ],
   "action": engine_fun.recallMessage,
 };
@@ -1088,12 +992,7 @@ const updateMessageExpansion = {
       "hint": "Key 支持大小写英文字母、数字、部分特殊符号 + = - _ 的组合方式，不支持汉字",
       "lable": "请输入keys",
     },
-    {
-      "key": "values",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入values",
-    },
+    {"key": "values", "type": "String", "hint": "", "lable": "请输入values"},
   ],
   "action": engine_auto_fun.updateMessageExpansion,
 };
@@ -1101,18 +1000,8 @@ const updateMessageExpansion = {
 const removeMessageExpansionForKeys = {
   "title": "根据 key 移除消息扩展",
   "params": [
-    {
-      "key": "messageUId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入消息 UId",
-    },
-    {
-      "key": "keys",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入keys",
-    },
+    {"key": "messageUId", "type": "String", "hint": "", "lable": "请输入消息 UId"},
+    {"key": "keys", "type": "String", "hint": "", "lable": "请输入keys"},
   ],
   "action": engine_auto_fun.removeMessageExpansionForKeys,
 };
@@ -1120,12 +1009,7 @@ const removeMessageExpansionForKeys = {
 const changeMessageSentStatus = {
   "title": "修改消息的发送状态",
   "params": [
-    {
-      "key": "messageId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入消息 Id",
-    },
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入消息 Id"},
     {
       "key": "sentStatus",
       "type": "number",
@@ -1139,12 +1023,7 @@ const changeMessageSentStatus = {
 const changeMessageReceiveStatus = {
   "title": "修改消息的接收状态",
   "params": [
-    {
-      "key": "messageId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入消息 Id",
-    },
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入消息 Id"},
     {
       "key": "receivedStatus",
       "type": "String",
@@ -1176,24 +1055,9 @@ const searchMessages = {
       "hint": "",
       "lable": LableString.editChannelIdString,
     },
-    {
-      "key": "keyword",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入关键字",
-    },
-    {
-      "key": "startTime",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入查询的开始时间",
-    },
-    {
-      "key": "count",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入查询数量",
-    },
+    {"key": "keyword", "type": "String", "hint": "", "lable": "请输入关键字"},
+    {"key": "startTime", "type": "String", "hint": "", "lable": "请输入查询的开始时间"},
+    {"key": "count", "type": "String", "hint": "", "lable": "请输入查询数量"},
   ],
   "action": engine_auto_fun.searchMessages,
 };
@@ -1219,36 +1083,11 @@ const searchMessagesByTimeRange = {
       "hint": "",
       "lable": LableString.editChannelIdString,
     },
-    {
-      "key": "keyword",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入关键字",
-    },
-    {
-      "key": "startTime",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入查询的开始时间",
-    },
-    {
-      "key": "endTime",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入查询的结束时间",
-    },
-    {
-      "key": "offset",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入偏移量",
-    },
-    {
-      "key": "count",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入查询数量",
-    },
+    {"key": "keyword", "type": "String", "hint": "", "lable": "请输入关键字"},
+    {"key": "startTime", "type": "String", "hint": "", "lable": "请输入查询的开始时间"},
+    {"key": "endTime", "type": "String", "hint": "", "lable": "请输入查询的结束时间"},
+    {"key": "offset", "type": "String", "hint": "", "lable": "请输入偏移量"},
+    {"key": "count", "type": "String", "hint": "", "lable": "请输入查询数量"},
   ],
   "action": engine_auto_fun.searchMessagesByTimeRange,
 };
@@ -1256,12 +1095,7 @@ const searchMessagesByTimeRange = {
 const searchMessagesByUserId = {
   "title": "根据用户ID 搜索消息",
   "params": [
-    {
-      "key": "userId",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入用户 ID",
-    },
+    {"key": "userId", "type": "String", "hint": "", "lable": "请输入用户 ID"},
     {
       "key": "type",
       "type": "String",
@@ -1280,20 +1114,29 @@ const searchMessagesByUserId = {
       "hint": "",
       "lable": LableString.editChannelIdString,
     },
-    {
-      "key": "startTime",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入查询的开始时间",
-    },
-    {
-      "key": "count",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入查询数量",
-    },
+    {"key": "startTime", "type": "String", "hint": "", "lable": "请输入查询的开始时间"},
+    {"key": "count", "type": "String", "hint": "", "lable": "请输入查询数量"},
   ],
   "action": engine_auto_fun.searchMessagesByUserId,
+};
+
+const searchMessagesByMessageTypes = {
+  "title": "根据消息类型搜索消息",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type"},
+    {"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId"},
+    {"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId"},
+    {
+      "key": "messageTypes",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入消息类型，用英文逗号分割",
+    },
+    {"key": "keyword", "type": "String", "hint": "", "lable": "请输入keyword"},
+    {"key": "startTime", "type": "String", "hint": "", "lable": "请输入查询的开始时间"},
+    {"key": "count", "type": "String", "hint": "", "lable": "请输入查询数量"},
+  ],
+  "action": engine_auto_fun.searchMessagesByMessageTypes,
 };
 
 const sendGroupMessageToDesignatedUsers = {
@@ -1311,12 +1154,7 @@ const sendGroupMessageToDesignatedUsers = {
       "hint": "",
       "lable": LableString.editChannelIdString,
     },
-    {
-      "key": "userIds",
-      "type": "String",
-      "hint": "",
-      "lable": "请输入需要接收的用户",
-    },
+    {"key": "userIds", "type": "String", "hint": "", "lable": "请输入需要接收的用户"},
   ],
   "action": engine_fun.sendGroupMessageToDesignatedUsers,
 };

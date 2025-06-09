@@ -20,6 +20,7 @@
 #import <RongIMWrapper/RCIMIWLocationMessage.h>
 #import <RongIMWrapper/RCIMIWNativeCustomMessage.h>
 #import <RongIMWrapper/RCIMIWNativeCustomMediaMessage.h>
+#import <RongIMWrapper/RCIMIWGroupNotificationMessage.h>
 #import <RongIMWrapper/RCIMIWEngineDelegate.h>
 #import <RongIMWrapper/RCIMIWDefines.h>
 #import <RongIMWrapper/RCIMIWGroupInfo.h>
