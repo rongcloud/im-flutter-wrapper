@@ -42,6 +42,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWDeleteLocalMessageByIdsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWDeleteLocalMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWDeleteMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWDismissGroupCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetAutoTranslateEnabledCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetBatchRemoteUltraGroupMessagesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetBlacklistCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetBlacklistStatusCallback;
@@ -132,6 +133,8 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupRemarkCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncConversationReadStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncUltraGroupReadStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWTransferGroupOwnerCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWTranslateGetLanguageCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWTranslateResponseCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateMessageExpansionCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateMessageLocalExtraCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateTagNameByIdCallback;
@@ -159,6 +162,7 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationQuietHoursLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWReceivedStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWSentStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWTimeOrder;
+import cn.rongcloud.im.wrapper.constants.RCIMIWTranslateStrategy;
 import cn.rongcloud.im.wrapper.constants.RCIMIWTypingStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWUltraGroupTypingStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWUltraGroupTypingStatusInfo;
@@ -197,6 +201,9 @@ import cn.rongcloud.im.wrapper.messages.RCIMIWTextMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWVoiceMessage;
 import cn.rongcloud.im.wrapper.options.RCIMIWEngineOptions;
 import cn.rongcloud.im.wrapper.platform.RCIMIWPlatformConverter;
+import cn.rongcloud.im.wrapper.translate.RCIMIWTranslateItem;
+import cn.rongcloud.im.wrapper.translate.RCIMIWTranslateMessagesParams;
+import cn.rongcloud.im.wrapper.translate.RCIMIWTranslateTextParams;
 import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterAssets;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
@@ -1017,6 +1024,38 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:setCheckChatRoomDuplicateMessage":
         setCheckChatRoomDuplicateMessage(call, result);
+        break;
+
+      case "engine:translateMessagesWithParams":
+        translateMessagesWithParams(call, result);
+        break;
+
+      case "engine:translateTextsWithParams":
+        translateTextsWithParams(call, result);
+        break;
+
+      case "engine:setTranslationLanguage":
+        setTranslationLanguage(call, result);
+        break;
+
+      case "engine:getTranslationLanguage":
+        getTranslationLanguage(call, result);
+        break;
+
+      case "engine:setAutoTranslateEnable":
+        setAutoTranslateEnable(call, result);
+        break;
+
+      case "engine:getAutoTranslateEnabled":
+        getAutoTranslateEnabled(call, result);
+        break;
+
+      case "engine:batchSetConversationTranslateStrategy":
+        batchSetConversationTranslateStrategy(call, result);
+        break;
+
+      case "engine:calculateTextMD5":
+        calculateTextMD5(call, result);
         break;
     }
   }
@@ -3478,7 +3517,7 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
   }
 
   private void getDeltaTime(@NonNull MethodCall call, @NonNull Result result) {
-    long code = 0;
+    long code = 0L;
     if (engine != null) {
 
       code = engine.getDeltaTime();
@@ -4225,6 +4264,135 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void translateMessagesWithParams(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWTranslateMessagesParams params =
+          RCIMIWPlatformConverter.convertTranslateMessagesParams(
+              (HashMap<String, Object>) call.argument("params"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWTranslateResponseCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWTranslateResponseCallbackImpl(cb_handler);
+      }
+
+      code = engine.translateMessagesWithParams(params, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void translateTextsWithParams(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWTranslateTextParams params =
+          RCIMIWPlatformConverter.convertTranslateTextParams(
+              (HashMap<String, Object>) call.argument("params"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWTranslateResponseCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWTranslateResponseCallbackImpl(cb_handler);
+      }
+
+      code = engine.translateTextsWithParams(params, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setTranslationLanguage(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String language = (String) call.argument("language");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWTranslateResponseCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWTranslateResponseCallbackImpl(cb_handler);
+      }
+
+      code = engine.setTranslationLanguage(language, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getTranslationLanguage(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWTranslateGetLanguageCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWTranslateGetLanguageCallbackImpl(cb_handler);
+      }
+
+      code = engine.getTranslationLanguage(callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setAutoTranslateEnable(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      Boolean isEnable = (Boolean) call.argument("isEnable");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWTranslateResponseCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWTranslateResponseCallbackImpl(cb_handler);
+      }
+
+      code = engine.setAutoTranslateEnable(isEnable, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getAutoTranslateEnabled(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetAutoTranslateEnabledCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetAutoTranslateEnabledCallbackImpl(cb_handler);
+      }
+
+      code = engine.getAutoTranslateEnabled(callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void batchSetConversationTranslateStrategy(
+      @NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<Number> types = call.argument("types");
+      List<String> targetIds = call.argument("targetIds");
+      List<String> channelIds = call.argument("channelIds");
+      RCIMIWTranslateStrategy strategy =
+          RCIMWrapperArgumentAdapter.toRCIMIWTranslateStrategy(call.argument("strategy"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWTranslateResponseCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWTranslateResponseCallbackImpl(cb_handler);
+      }
+
+      List types_str = new ArrayList();
+      for (Number element : types) {
+        types_str.add(RCIMWrapperArgumentAdapter.toRCIMIWConversationType((Integer) element));
+      }
+
+      code =
+          engine.batchSetConversationTranslateStrategy(
+              types_str, targetIds, channelIds, strategy, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void calculateTextMD5(@NonNull MethodCall call, @NonNull Result result) {
+    String code = "";
+    if (engine != null) {
+      String text = (String) call.argument("text");
+
+      code = engine.calculateTextMD5(text);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   class RCIMIWListenerImpl extends RCIMIWListener {
 
     @Override
@@ -4311,6 +4479,28 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine:onConversationNotificationLevelSynced", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onConversationTranslationStrategySynced(
+        RCIMIWConversationType type,
+        String targetId,
+        String channelId,
+        RCIMIWTranslateStrategy strategy) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("type", type.ordinal());
+      arguments.put("targetId", targetId);
+      arguments.put("channelId", channelId);
+      arguments.put("strategy", strategy.ordinal());
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onConversationTranslationStrategySynced", arguments);
             }
           });
     }
@@ -6795,6 +6985,59 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine:onChatRoomNotifyBan", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onTranslationDidFinished(List<RCIMIWTranslateItem> items) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List items_str = new ArrayList();
+
+      if (items != null) {
+        for (RCIMIWTranslateItem element : items) {
+          items_str.add(RCIMIWPlatformConverter.convertTranslateItem(element));
+        }
+      }
+
+      arguments.put("items", items_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onTranslationDidFinished", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onTranslationLanguageDidChange(String language) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("language", language);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onTranslationLanguageDidChange", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onAutoTranslateStateDidChange(boolean isEnable) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("isEnable", isEnable);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onAutoTranslateStateDidChange", arguments);
             }
           });
     }
@@ -11551,6 +11794,116 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine_cb:IRCIMIWGetGroupFollowsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWTranslateResponseCallbackImpl implements IRCIMIWTranslateResponseCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWTranslateResponseCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onTranslateResponse(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWTranslateResponseCallback_onTranslateResponse", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWTranslateGetLanguageCallbackImpl implements IRCIMIWTranslateGetLanguageCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWTranslateGetLanguageCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(String t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWTranslateGetLanguageCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWTranslateGetLanguageCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetAutoTranslateEnabledCallbackImpl
+      implements IRCIMIWGetAutoTranslateEnabledCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetAutoTranslateEnabledCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(Boolean t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onError", arguments);
             }
           });
     }

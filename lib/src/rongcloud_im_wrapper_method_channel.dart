@@ -2991,6 +2991,106 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     return result;
   }
 
+  @override
+  Future<int> translateMessagesWithParams(
+    RCIMIWTranslateMessagesParams params, {
+    IRCIMIWTranslateResponseCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"params": params.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:translateMessagesWithParams arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:translateMessagesWithParams', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> translateTextsWithParams(
+    RCIMIWTranslateTextParams params, {
+    IRCIMIWTranslateResponseCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"params": params.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:translateTextsWithParams arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:translateTextsWithParams', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> setTranslationLanguage(String language, {IRCIMIWTranslateResponseCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"language": language, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:setTranslationLanguage arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:setTranslationLanguage', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getTranslationLanguage({IRCIMIWTranslateGetLanguageCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getTranslationLanguage arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getTranslationLanguage', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> setAutoTranslateEnable(bool isEnable, {IRCIMIWTranslateResponseCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"isEnable": isEnable, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:setAutoTranslateEnable arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:setAutoTranslateEnable', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getAutoTranslateEnabled({IRCIMIWGetAutoTranslateEnabledCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getAutoTranslateEnabled arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getAutoTranslateEnabled', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> batchSetConversationTranslateStrategy(
+    List<RCIMIWConversationType> types,
+    List<String> targetIds,
+    List<String> channelIds,
+    RCIMIWTranslateStrategy strategy, {
+    IRCIMIWTranslateResponseCallback? callback,
+  }) async {
+    List typesStr = [];
+    for (var element in types) {
+      typesStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "types": typesStr,
+      "targetIds": targetIds,
+      "channelIds": channelIds,
+      "strategy": strategy.index,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:batchSetConversationTranslateStrategy arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:batchSetConversationTranslateStrategy', arguments);
+    return result;
+  }
+
+  @override
+  Future<String> calculateTextMD5(String text) async {
+    Map<String, dynamic> arguments = {"text": text};
+    log("[RC:Flutter] engine:calculateTextMD5 arguments: " + arguments.toString());
+    String result = await _channel.invokeMethod('engine:calculateTextMD5', arguments);
+    return result;
+  }
+
   Future<dynamic> _handler(MethodCall call) async {
     log("[RC:Flutter] " + call.method + " arguments:" + call.arguments.toString());
     switch (call.method) {
@@ -3051,6 +3151,20 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         engine?.onConversationNotificationLevelSynced?.call(type, targetId, channelId, level);
         log("[RC:Flutter] engine:onConversationNotificationLevelSynced invoke finished");
+        break;
+
+      case 'engine:onConversationTranslationStrategySynced':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWConversationType? type =
+            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        String? targetId = arguments['targetId'];
+        String? channelId = arguments['channelId'];
+        RCIMIWTranslateStrategy? strategy =
+            arguments['strategy'] == null ? null : RCIMIWTranslateStrategy.values[arguments['strategy']];
+
+        engine?.onConversationTranslationStrategySynced?.call(type, targetId, channelId, strategy);
+        log("[RC:Flutter] engine:onConversationTranslationStrategySynced invoke finished");
         break;
 
       case 'engine:onRemoteMessageRecalled':
@@ -4676,6 +4790,37 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         engine?.onChatRoomNotifyBan?.call(event);
         log("[RC:Flutter] engine:onChatRoomNotifyBan invoke finished");
+        break;
+
+      case 'engine:onTranslationDidFinished':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWTranslateItem> itemsStr = [];
+        arguments['items'].forEach((element) {
+          itemsStr.add(RCIMIWTranslateItem.fromJson(Map<String, dynamic>.from(element)));
+        });
+
+        List<RCIMIWTranslateItem>? items = itemsStr;
+
+        engine?.onTranslationDidFinished?.call(items);
+        log("[RC:Flutter] engine:onTranslationDidFinished invoke finished");
+        break;
+
+      case 'engine:onTranslationLanguageDidChange':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        String? language = arguments['language'];
+
+        engine?.onTranslationLanguageDidChange?.call(language);
+        log("[RC:Flutter] engine:onTranslationLanguageDidChange invoke finished");
+        break;
+
+      case 'engine:onAutoTranslateStateDidChange':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        bool? isEnable = arguments['isEnable'];
+
+        engine?.onAutoTranslateStateDidChange?.call(isEnable);
+        log("[RC:Flutter] engine:onAutoTranslateStateDidChange invoke finished");
         break;
 
       case 'engine_cb:RCIMIWConnectCallback_onDatabaseOpened':
@@ -7340,6 +7485,61 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWGetGroupFollowsCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWTranslateResponseCallback_onTranslateResponse':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWTranslateResponseCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onTranslateResponse;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWTranslateResponseCallback_onTranslateResponse invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWTranslateGetLanguageCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        String? t = arguments['t'];
+
+        IRCIMIWTranslateGetLanguageCallback? callback = takeCallback(rongcloudHandler);
+        Function(String?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWTranslateGetLanguageCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWTranslateGetLanguageCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWTranslateGetLanguageCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWTranslateGetLanguageCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        bool? t = arguments['t'];
+
+        IRCIMIWGetAutoTranslateEnabledCallback? callback = takeCallback(rongcloudHandler);
+        Function(bool?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetAutoTranslateEnabledCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onError invoke finished");
         break;
     }
   }

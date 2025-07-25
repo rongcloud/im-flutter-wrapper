@@ -921,16 +921,21 @@ class RCIMIWMediaMessage extends RCIMIWMessage {
 class RCIMIWTextMessage extends RCIMIWMessage {
   /// 文本内容
   String? text;
+  RCIMIWTranslateInfo? translateInfo;
 
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = super.toJson();
     json['text'] = text;
+    json['translateInfo'] = translateInfo?.toJson();
     return json;
   }
 
   RCIMIWTextMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     text = json['text'];
+    if (json['translateInfo'] != null) {
+      translateInfo = RCIMIWTranslateInfo.fromJson(Map<String, dynamic>.from(json['translateInfo']));
+    }
   }
 }
 
@@ -1154,6 +1159,148 @@ class RCIMIWReferenceMessage extends RCIMIWMessage {
     if (json['referenceMessage'] != null) {
       referenceMessage = RCIMConverter.convertMessage(Map<String, dynamic>.from(json['referenceMessage']));
     }
+  }
+}
+
+class RCIMIWTranslateMessageParam {
+  String? messageUId;
+
+  /// Getters
+  String? sourceLanguage;
+  String? targetLanguage;
+
+  RCIMIWTranslateMessageParam.create({this.messageUId, this.sourceLanguage, this.targetLanguage});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    json['sourceLanguage'] = sourceLanguage;
+    json['targetLanguage'] = targetLanguage;
+    return json;
+  }
+
+  RCIMIWTranslateMessageParam.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
+    sourceLanguage = json['sourceLanguage'];
+    targetLanguage = json['targetLanguage'];
+  }
+}
+
+class RCIMIWTranslateTextParams {
+  RCIMIWTranslateMode? mode;
+  List<RCIMIWTranslateTextParam>? list;
+
+  RCIMIWTranslateTextParams.create({this.mode, this.list});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['mode'] = mode?.index;
+    json['list'] = list?.map((item) => item.toJson()).toList();
+    return json;
+  }
+
+  RCIMIWTranslateTextParams.fromJson(Map<String, dynamic> json) {
+    mode = json['mode'] == null ? null : RCIMIWTranslateMode.values[json['mode']];
+    list = json['list']?.map<RCIMIWTranslateTextParam>((item) => RCIMIWTranslateTextParam.fromJson(item)).toList();
+  }
+}
+
+class RCIMIWTranslateMessagesParams {
+  /// Getters
+  bool? force;
+  RCIMIWTranslateMode? mode;
+  List<RCIMIWTranslateMessageParam>? list;
+
+  RCIMIWTranslateMessagesParams.create({this.force, this.mode, this.list});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['force'] = force;
+    json['mode'] = mode?.index;
+    json['list'] = list?.map((item) => item.toJson()).toList();
+    return json;
+  }
+
+  RCIMIWTranslateMessagesParams.fromJson(Map<String, dynamic> json) {
+    force = json['force'];
+    mode = json['mode'] == null ? null : RCIMIWTranslateMode.values[json['mode']];
+    list =
+        json['list']?.map<RCIMIWTranslateMessageParam>((item) => RCIMIWTranslateMessageParam.fromJson(item)).toList();
+  }
+}
+
+class RCIMIWTranslateInfo {
+  /// Getters
+  String? translatedText;
+  String? targetLanguage;
+  RCIMIWTranslateStatus? status;
+
+  RCIMIWTranslateInfo.create({this.translatedText, this.targetLanguage, this.status});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['translatedText'] = translatedText;
+    json['targetLanguage'] = targetLanguage;
+    json['status'] = status?.index;
+    return json;
+  }
+
+  RCIMIWTranslateInfo.fromJson(Map<String, dynamic> json) {
+    translatedText = json['translatedText'];
+    targetLanguage = json['targetLanguage'];
+    status = json['status'] == null ? null : RCIMIWTranslateStatus.values[json['status']];
+  }
+}
+
+class RCIMIWTranslateTextParam {
+  String? text;
+
+  /// Getters
+  String? sourceLanguage;
+  String? targetLanguage;
+
+  RCIMIWTranslateTextParam.create({this.text, this.sourceLanguage, this.targetLanguage});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['text'] = text;
+    json['sourceLanguage'] = sourceLanguage;
+    json['targetLanguage'] = targetLanguage;
+    return json;
+  }
+
+  RCIMIWTranslateTextParam.fromJson(Map<String, dynamic> json) {
+    text = json['text'];
+    sourceLanguage = json['sourceLanguage'];
+    targetLanguage = json['targetLanguage'];
+  }
+}
+
+class RCIMIWTranslateItem {
+  /// Getters
+  String? identifier;
+  RCIMIWTranslateInfo? translateInfo;
+  int? errorCode;
+  RCIMIWTranslateResultType? resultType;
+
+  RCIMIWTranslateItem.create({this.identifier, this.translateInfo, this.errorCode, this.resultType});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['identifier'] = identifier;
+    json['translateInfo'] = translateInfo?.toJson();
+    json['errorCode'] = errorCode;
+    json['resultType'] = resultType?.index;
+    return json;
+  }
+
+  RCIMIWTranslateItem.fromJson(Map<String, dynamic> json) {
+    identifier = json['identifier'];
+    if (json['translateInfo'] != null) {
+      translateInfo = RCIMIWTranslateInfo.fromJson(Map<String, dynamic>.from(json['translateInfo']));
+    }
+    errorCode = json['errorCode'];
+    resultType = json['resultType'] == null ? null : RCIMIWTranslateResultType.values[json['resultType']];
   }
 }
 
@@ -1842,6 +1989,9 @@ class RCIMIWConversation {
   /// 获取会话最后的操作时间
   int? operationTime;
 
+  /// 获取会话翻译策略
+  RCIMIWTranslateStrategy? translateStrategy;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     json['conversationType'] = conversationType?.index;
@@ -1856,6 +2006,7 @@ class RCIMIWConversation {
     json['notificationLevel'] = notificationLevel?.index;
     json['firstUnreadMsgSendTime'] = firstUnreadMsgSendTime;
     json['operationTime'] = operationTime;
+    json['translateStrategy'] = translateStrategy?.index;
     return json;
   }
 
@@ -1876,6 +2027,8 @@ class RCIMIWConversation {
         json['notificationLevel'] == null ? null : RCIMIWPushNotificationLevel.values[json['notificationLevel']];
     firstUnreadMsgSendTime = json['firstUnreadMsgSendTime'];
     operationTime = json['operationTime'];
+    translateStrategy =
+        json['translateStrategy'] == null ? null : RCIMIWTranslateStrategy.values[json['translateStrategy']];
   }
 }
 

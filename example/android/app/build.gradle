@@ -107,7 +107,7 @@ dependencies {
 
     // oppo
 //    implementation(name: 'push-3.0.0', ext: 'aar')
-    implementation 'com.google.code.gson:gson:2.6.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'commons-codec:commons-codec:1.6'
     implementation 'androidx.annotation:annotation:1.1.0'
 }

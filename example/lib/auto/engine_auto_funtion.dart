@@ -9870,3 +9870,374 @@ setCheckChatRoomDuplicateMessage(Map arg) async {
   }
   bus.emit("rong_im_listener", resultCode);
 }
+
+/*
+//fun_translateMessagesWithParams_call
+IRCIMIWTranslateResponseCallback? callback = IRCIMIWTranslateResponseCallback(onTranslateResponse: (int? code) {
+    //...
+});
+
+int? ret = await engine?.translateMessagesWithParams(params, callback:callback);
+//fun_translateMessagesWithParams_call
+*/
+/*
+//fun_translateTextsWithParams_call
+IRCIMIWTranslateResponseCallback? callback = IRCIMIWTranslateResponseCallback(onTranslateResponse: (int? code) {
+    //...
+});
+
+int? ret = await engine?.translateTextsWithParams(params, callback:callback);
+//fun_translateTextsWithParams_call
+*/
+/*
+//fun_setTranslationLanguage_call
+IRCIMIWTranslateResponseCallback? callback = IRCIMIWTranslateResponseCallback(onTranslateResponse: (int? code) {
+    //...
+});
+
+int? ret = await engine?.setTranslationLanguage(language, callback:callback);
+//fun_setTranslationLanguage_call
+*/
+
+setTranslationLanguage(Map arg) async {
+  if (arg['language'] == null) {
+    RCIWToast.showToast("language 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String language = arg['language'];
+  IRCIMIWTranslateResponseCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWTranslateResponseCallback(
+      onTranslateResponse: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setTranslationLanguage-onTranslateResponse";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.setTranslationLanguage(language, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "setTranslationLanguage";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getTranslationLanguage_call
+IRCIMIWTranslateGetLanguageCallback? callback = IRCIMIWTranslateGetLanguageCallback(onSuccess: (String? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getTranslationLanguage(callback:callback);
+//fun_getTranslationLanguage_call
+*/
+
+getTranslationLanguage(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  IRCIMIWTranslateGetLanguageCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWTranslateGetLanguageCallback(
+      onSuccess: (String? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getTranslationLanguage-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = t ?? "";
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getTranslationLanguage-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getTranslationLanguage(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getTranslationLanguage";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_setAutoTranslateEnable_call
+IRCIMIWTranslateResponseCallback? callback = IRCIMIWTranslateResponseCallback(onTranslateResponse: (int? code) {
+    //...
+});
+
+int? ret = await engine?.setAutoTranslateEnable(isEnable, callback:callback);
+//fun_setAutoTranslateEnable_call
+*/
+
+setAutoTranslateEnable(Map arg) async {
+  if (arg['isEnable'] == null) {
+    RCIWToast.showToast("isEnable 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int isEnableInt = int.parse(arg['isEnable']);
+  bool isEnable = isEnableInt == 0 ? false : true;
+  IRCIMIWTranslateResponseCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWTranslateResponseCallback(
+      onTranslateResponse: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setAutoTranslateEnable-onTranslateResponse";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.setAutoTranslateEnable(isEnable, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "setAutoTranslateEnable";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getAutoTranslateEnabled_call
+IRCIMIWGetAutoTranslateEnabledCallback? callback = IRCIMIWGetAutoTranslateEnabledCallback(onSuccess: (bool? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getAutoTranslateEnabled(callback:callback);
+//fun_getAutoTranslateEnabled_call
+*/
+
+getAutoTranslateEnabled(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  IRCIMIWGetAutoTranslateEnabledCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetAutoTranslateEnabledCallback(
+      onSuccess: (bool? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getAutoTranslateEnabled-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = t.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getAutoTranslateEnabled-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getAutoTranslateEnabled(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getAutoTranslateEnabled";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_batchSetConversationTranslateStrategy_call
+IRCIMIWTranslateResponseCallback? callback = IRCIMIWTranslateResponseCallback(onTranslateResponse: (int? code) {
+    //...
+});
+
+int? ret = await engine?.batchSetConversationTranslateStrategy(typesInt, targetIds, channelIds, strategy, callback:callback);
+//fun_batchSetConversationTranslateStrategy_call
+*/
+
+batchSetConversationTranslateStrategy(Map arg) async {
+  if (arg['types'] == null) {
+    RCIWToast.showToast("types 为空");
+    return;
+  }
+
+  if (arg['targetIds'] == null) {
+    RCIWToast.showToast("targetIds 为空");
+    return;
+  }
+
+  if (arg['channelIds'] == null) {
+    RCIWToast.showToast("channelIds 为空");
+    return;
+  }
+
+  if (arg['strategy'] == null) {
+    RCIWToast.showToast("strategy 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List types = (arg["types"]).split(",");
+  List<RCIMIWConversationType> typesInt = [];
+  for (var element in types) {
+    typesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+  }
+  List<String> targetIds = (arg["targetIds"]).split(",");
+  List<String> channelIds = (arg["channelIds"]).split(",");
+  RCIMIWTranslateStrategy strategy = RCIMIWTranslateStrategy.values[int.parse(arg['strategy'])];
+  IRCIMIWTranslateResponseCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWTranslateResponseCallback(
+      onTranslateResponse: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "batchSetConversationTranslateStrategy-onTranslateResponse";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.batchSetConversationTranslateStrategy(
+    typesInt,
+    targetIds,
+    channelIds,
+    strategy,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "batchSetConversationTranslateStrategy";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_calculateTextMD5_call
+String? ret = await engine?.calculateTextMD5(text);
+//fun_calculateTextMD5_call
+*/
+
+calculateTextMD5(Map arg) async {
+  if (arg['text'] == null) {
+    RCIWToast.showToast("text 为空");
+    return;
+  }
+
+  String text = arg['text'];
+  String? code = await IMEngineManager().engine?.calculateTextMD5(text);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "calculateTextMD5";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? "").toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}

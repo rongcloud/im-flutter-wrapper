@@ -38,7 +38,7 @@
 		</data>
 		<key>Headers/RCIMIWConversation.h</key>
 		<data>
-		cfvS+gjJGqWWJ+J06kmP1gFFlWY=
+		94neiHy6YJERlpffi5KxgiH7ujw=
 		</data>
 		<key>Headers/RCIMIWConversationTagInfo.h</key>
 		<data>
@@ -54,11 +54,11 @@
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		qU5jJp/k3kVs9Tx5bX2lwGiru9c=
+		aYD4TeQ2/MdVj6KECu333Z/Iu8E=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
-		fLTzv6PsdO7r9PpKJIFWE8TBl2U=
+		bktk1dyXPAB1ZQV0AUPfv4onqLQ=
 		</data>
 		<key>Headers/RCIMIWEngineOptions.h</key>
 		<data>
@@ -146,7 +146,7 @@
 		</data>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
 		<data>
-		ijmK20Cz0qp9+82NuucR0hcdG+M=
+		1orSH8J8uujw67MCpTyUB4/4Aho=
 		</data>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
 		<data>
@@ -186,7 +186,51 @@
 		</data>
 		<key>Headers/RCIMIWTextMessage.h</key>
 		<data>
-		Rm8BdDUpfiiOteZNWkBihhndJ9k=
+		Ity7YQkrMTTZQlmLLsmu3RIRvqM=
+		</data>
+		<key>Headers/RCIMIWTranslateConverter.h</key>
+		<data>
+		eT1InMLmyQlNNk7EjXepYsHzwfc=
+		</data>
+		<key>Headers/RCIMIWTranslateInfo.h</key>
+		<data>
+		gGLrKGAoPltzqeg+0m7x5982QP0=
+		</data>
+		<key>Headers/RCIMIWTranslateItem.h</key>
+		<data>
+		a2qcAW6uIgsGhDC1OVVMeZ9D1/Y=
+		</data>
+		<key>Headers/RCIMIWTranslateMessageParam.h</key>
+		<data>
+		PQArVPFHKRsx6qXFmcLXYu+ROsU=
+		</data>
+		<key>Headers/RCIMIWTranslateMessagesParams.h</key>
+		<data>
+		pks8zLSzJU8xdrSLHK3btIqamUw=
+		</data>
+		<key>Headers/RCIMIWTranslateMode.h</key>
+		<data>
+		pJLBCDF24OwCxVfSbTl3w8yTXic=
+		</data>
+		<key>Headers/RCIMIWTranslateResultType.h</key>
+		<data>
+		P7WcVJS1ia3IJBOIBdX4ASvtlOw=
+		</data>
+		<key>Headers/RCIMIWTranslateStatus.h</key>
+		<data>
+		gPkEXxT7tkvUYENb6dWGVPM6W4E=
+		</data>
+		<key>Headers/RCIMIWTranslateStrategy.h</key>
+		<data>
+		UxtVGh/EybZiBx4+i2X72FCKFq0=
+		</data>
+		<key>Headers/RCIMIWTranslateTextParam.h</key>
+		<data>
+		UIMhd8QfhFNP9TGdx+y3PaSXLDw=
+		</data>
+		<key>Headers/RCIMIWTranslateTextParams.h</key>
+		<data>
+		GeVXgZUxB7waxzxIdFnRTZySRDY=
 		</data>
 		<key>Headers/RCIMIWTypingStatus.h</key>
 		<data>
@@ -210,7 +254,7 @@
 		</data>
 		<key>Headers/RongIMWrapper.h</key>
 		<data>
-		/iDmQCZULKpnaRgL2584RT7JI+w=
+		nT/Y7BDIt3huQ9e0KBCAYl3Fy2Q=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -319,11 +363,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			cfvS+gjJGqWWJ+J06kmP1gFFlWY=
+			94neiHy6YJERlpffi5KxgiH7ujw=
 			</data>
 			<key>hash2</key>
 			<data>
-			0tNcPQoJZnw0+5dcPMuuxnN97BwlNfKOjax5lntpm9U=
+			/+Bh+QW265TeilSqr5RDqDBiOrce/n57xyVxtOltueM=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWConversationTagInfo.h</key>
@@ -363,22 +407,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qU5jJp/k3kVs9Tx5bX2lwGiru9c=
+			aYD4TeQ2/MdVj6KECu333Z/Iu8E=
 			</data>
 			<key>hash2</key>
 			<data>
-			jWx5W2p5ZmsoRz9O3qlzwVVwq9ymjEa3tq2vjJyMbH0=
+			frDW1PPjFCT3mVFtcg9xK5QiOz6ZELwdTCmH2H10AR0=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			fLTzv6PsdO7r9PpKJIFWE8TBl2U=
+			bktk1dyXPAB1ZQV0AUPfv4onqLQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			GfPh7KhnKe9k4b2QUwcxg/v0vWdRuyIudZAvp4hNoeU=
+			CgWsz1X+fa7xVhWXRPWdcO6RhCA7z/CtmwZ8DV1euKc=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineOptions.h</key>
@@ -616,11 +660,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ijmK20Cz0qp9+82NuucR0hcdG+M=
+			1orSH8J8uujw67MCpTyUB4/4Aho=
 			</data>
 			<key>hash2</key>
 			<data>
-			YWanjJSEGyr/SOb6rVPw3JtC5JRom7PYH97CSOBcoUo=
+			n/LCHfLdJV766lZGuI3P0iF+N5nHmxwxd8zK0J6bTbE=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
@@ -726,11 +770,132 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Rm8BdDUpfiiOteZNWkBihhndJ9k=
+			Ity7YQkrMTTZQlmLLsmu3RIRvqM=
 			</data>
 			<key>hash2</key>
 			<data>
-			AYeHN9oWIpMsiyefGcxC7jFEpauDhASYP4RcxB9Kl08=
+			/bxQ34a7+SgkEhWbmJKJrjFSyaDq2hsCjhSI8sGpHfI=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateConverter.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			eT1InMLmyQlNNk7EjXepYsHzwfc=
+			</data>
+			<key>hash2</key>
+			<data>
+			EV2Sztkp9/VZ8ZCUD4u8F9vQMqXRB0e3RHvzF/GcIYU=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateInfo.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			gGLrKGAoPltzqeg+0m7x5982QP0=
+			</data>
+			<key>hash2</key>
+			<data>
+			TIRBKDRdHtVdJ+PZPy8w4MSKTcZIsKWNZ9CcfaI2oGs=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateItem.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			a2qcAW6uIgsGhDC1OVVMeZ9D1/Y=
+			</data>
+			<key>hash2</key>
+			<data>
+			VfXKKentPm+mFUK4TSAklK8BwAD5GEMffzcmORLhr4U=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateMessageParam.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			PQArVPFHKRsx6qXFmcLXYu+ROsU=
+			</data>
+			<key>hash2</key>
+			<data>
+			D24pHfvStUZMzLxX+mwqDOuKZ80viiE+IC3Ujb0ZfKg=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateMessagesParams.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			pks8zLSzJU8xdrSLHK3btIqamUw=
+			</data>
+			<key>hash2</key>
+			<data>
+			yI7sZ8RVkxGeWmXNZtvEkYv8EhzTcYQ8S4ceEgK7ho0=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateMode.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			pJLBCDF24OwCxVfSbTl3w8yTXic=
+			</data>
+			<key>hash2</key>
+			<data>
+			o1tlhc5wms56rzuv3AIEe5KGOlDzmuTe89W1C2UysKc=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateResultType.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			P7WcVJS1ia3IJBOIBdX4ASvtlOw=
+			</data>
+			<key>hash2</key>
+			<data>
+			vyitTPEUVLlgwdJqIUfmdeHTVMY1pB5Ak6y66oYPwsQ=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateStatus.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			gPkEXxT7tkvUYENb6dWGVPM6W4E=
+			</data>
+			<key>hash2</key>
+			<data>
+			xSYwzowmYRmigo1kUFyCld/e7ABxbCNe5DoCrikafbU=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateStrategy.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			UxtVGh/EybZiBx4+i2X72FCKFq0=
+			</data>
+			<key>hash2</key>
+			<data>
+			0EZcLWKaR6MqSvlKXhpHFDOc/lIuxu+k/h9XaK99spY=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateTextParam.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			UIMhd8QfhFNP9TGdx+y3PaSXLDw=
+			</data>
+			<key>hash2</key>
+			<data>
+			xkoXBuRLjjwZOPAkp4HcL1i9UKI98hKToK4xIU4yTsc=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWTranslateTextParams.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			GeVXgZUxB7waxzxIdFnRTZySRDY=
+			</data>
+			<key>hash2</key>
+			<data>
+			+cEm6HvS+YepoqhAT7Kqz96pI5k+nIScvOUBa8Kqq6M=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWTypingStatus.h</key>
@@ -792,11 +957,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/iDmQCZULKpnaRgL2584RT7JI+w=
+			nT/Y7BDIt3huQ9e0KBCAYl3Fy2Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			XZN0UxiB9bJEweLwjVZEUj7NrgVpoXkcKY+GvUvPrkQ=
+			tQM8nO5iImpwAvkQzWEjgV3efaad/7qGqSNJt+WD1a4=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

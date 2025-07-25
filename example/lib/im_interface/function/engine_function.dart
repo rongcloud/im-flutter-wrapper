@@ -32,6 +32,7 @@ Future initEngine(Map arg) async {
     }
 
     RCIMIWEngineOptions options = RCIMIWEngineOptions.create();
+    options.logLevel = RCIMIWLogLevel.verbose;
     if (arg['naviServer'] == '1') {
       arg['naviServer'] = AccountInfo.naviServer1;
     }
@@ -220,8 +221,7 @@ Future sendTextMessage(Map arg) async {
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
   String text = arg['text'];
-  RCIMIWTextMessage? textMessage = await IMEngineManager()
-      .engine
+  RCIMIWTextMessage? textMessage = await IMEngineManager().engine
       ?.createTextMessage(conversationType, targetId, channelId, text);
 
   if (textMessage == null) {
@@ -323,8 +323,7 @@ Future sendImageMessage(Map arg) async {
       String base64 = base64Encode(fileBytes);
     }
 
-    RCIMIWImageMessage? message = await IMEngineManager()
-        .engine
+    RCIMIWImageMessage? message = await IMEngineManager().engine
         ?.createImageMessage(type, targetId, channelId, file?.path ?? '');
     message?.original = original;
     _sendMessage(message, useCallback);
@@ -348,11 +347,11 @@ Future sendFileMessage(Map arg) async {
   List<File>? files = await RCIWMediaUlits.pickFiles();
   if (files != null) {
     RCIMIWFileMessage? msg = await IMEngineManager().engine?.createFileMessage(
-          type,
-          targetId,
-          channelId,
-          files[0].path,
-        );
+      type,
+      targetId,
+      channelId,
+      files[0].path,
+    );
     _sendMessage(msg, useCallback);
   }
 }
@@ -408,10 +407,10 @@ connect(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.connect(
-        token,
-        timeout,
-        callback: callback,
-      );
+    token,
+    timeout,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "connect";
   String timeStr = _generateTimeStamp();
@@ -445,8 +444,7 @@ Future sendSightMessage(Map arg) async {
   String channelId = arg['channelId'] ?? "";
   BuildContext context = arg['context'];
   RCIWMediaUlits.showVideoPicker(context, (path) async {
-    RCIMIWSightMessage? sightMsg = await IMEngineManager()
-        .engine
+    RCIMIWSightMessage? sightMsg = await IMEngineManager().engine
         ?.createSightMessage(type, targetId, channelId, "file://" + path, 10);
     _sendMessage(sightMsg, useCallback);
   });
@@ -485,14 +483,14 @@ Future sendVoiceMessage(Map arg) async {
             onFinished: () {
               RCIWMediaUlits.stopRecordAudio((path, duration) async {
                 if (path != null && (duration ?? 0) > 0) {
-                  RCIMIWVoiceMessage? msg =
-                      await IMEngineManager().engine?.createVoiceMessage(
-                            type,
-                            targetId,
-                            channelId,
-                            path,
-                            duration!,
-                          );
+                  RCIMIWVoiceMessage? msg = await IMEngineManager().engine
+                      ?.createVoiceMessage(
+                        type,
+                        targetId,
+                        channelId,
+                        path,
+                        duration!,
+                      );
                   _sendMessage(msg, useCallback);
                 }
               });
@@ -542,8 +540,7 @@ Future sendReferenceMessage(Map arg) async {
     return;
   }
 
-  RCIMIWReferenceMessage? referenceMsg = await IMEngineManager()
-      .engine
+  RCIMIWReferenceMessage? referenceMsg = await IMEngineManager().engine
       ?.createReferenceMessage(type, targetId, channelId, message, text);
   _sendMessage(referenceMsg, useCallback);
 }
@@ -567,11 +564,11 @@ Future sendGIFMessage(Map arg) async {
   );
   if (files != null) {
     RCIMIWGIFMessage? msg = await IMEngineManager().engine?.createGIFMessage(
-          type,
-          targetId,
-          channelId,
-          files[0].path,
-        );
+      type,
+      targetId,
+      channelId,
+      files[0].path,
+    );
     _sendMessage(msg, useCallback);
   }
 }
@@ -641,16 +638,16 @@ Future sendLocationMessage(Map arg) async {
 
   BuildContext context = arg['context'];
   RCIWMediaUlits.showImagePicker(context, (XFile? file) async {
-    RCIMIWLocationMessage? message =
-        await IMEngineManager().engine?.createLocationMessage(
-              type,
-              targetId,
-              channelId,
-              double.parse(longitude),
-              double.parse(latitude),
-              poiName,
-              file?.path ?? '',
-            );
+    RCIMIWLocationMessage? message = await IMEngineManager().engine
+        ?.createLocationMessage(
+          type,
+          targetId,
+          channelId,
+          double.parse(longitude),
+          double.parse(latitude),
+          poiName,
+          file?.path ?? '',
+        );
     _sendMessage(message, useCallback);
   });
 }
@@ -688,14 +685,14 @@ Future sendNativeCustomMessage(Map arg) async {
   Map<String, dynamic> fieldsMap = jsonDecode(fields);
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWNativeCustomMessage? msg =
-      await IMEngineManager().engine?.createNativeCustomMessage(
-            type,
-            targetId,
-            channelId,
-            messageIdentifier,
-            fieldsMap,
-          );
+  RCIMIWNativeCustomMessage? msg = await IMEngineManager().engine
+      ?.createNativeCustomMessage(
+        type,
+        targetId,
+        channelId,
+        messageIdentifier,
+        fieldsMap,
+      );
   msg?.searchableWords = searchWords.cast<String>();
   _sendMessage(msg, useCallback);
 }
@@ -735,15 +732,15 @@ sendNativeCustomMediaMessage(Map arg) async {
   BuildContext context = arg['context'];
   List<File>? files = await RCIWMediaUlits.pickFiles();
   if (files != null) {
-    RCIMIWNativeCustomMediaMessage? msg =
-        await IMEngineManager().engine?.createNativeCustomMediaMessage(
-              type,
-              targetId,
-              channelId,
-              messageIdentifier,
-              files[0].path,
-              fieldsMap,
-            );
+    RCIMIWNativeCustomMediaMessage? msg = await IMEngineManager().engine
+        ?.createNativeCustomMediaMessage(
+          type,
+          targetId,
+          channelId,
+          messageIdentifier,
+          files[0].path,
+          fieldsMap,
+        );
     msg?.searchableWords = searchWords.cast<String>();
     _sendMessage(msg, useCallback);
   }
@@ -794,15 +791,15 @@ Future sendCustomMessage(Map arg) async {
     fields[keys[i]] = values[i];
   }
 
-  RCIMIWCustomMessage? msg =
-      await IMEngineManager().engine?.createCustomMessage(
-            type,
-            targetId,
-            channelId,
-            policy,
-            messageIdentifier,
-            fields,
-          );
+  RCIMIWCustomMessage? msg = await IMEngineManager().engine
+      ?.createCustomMessage(
+        type,
+        targetId,
+        channelId,
+        policy,
+        messageIdentifier,
+        fields,
+      );
   _sendMessage(msg, useCallback);
 }
 
@@ -863,9 +860,9 @@ _sendMessage(RCIMIWMessage? message, int useCallback) async {
       );
     }
     code = await IMEngineManager().engine?.sendMediaMessage(
-          message,
-          listener: listener,
-        );
+      message,
+      listener: listener,
+    );
     resultCode["listener"] = "sendMediaMessage";
   } else {
     RCIMIWSendMessageCallback? callback;
@@ -893,9 +890,9 @@ _sendMessage(RCIMIWMessage? message, int useCallback) async {
       );
     }
     code = await IMEngineManager().engine?.sendMessage(
-          message,
-          callback: callback,
-        );
+      message,
+      callback: callback,
+    );
     resultCode["listener"] = "sendMessage";
   }
   String timeStr = _generateTimeStamp();
@@ -938,9 +935,9 @@ Future cancelSendingMediaMessage(Map arg) async {
     );
   }
   IMEngineManager().engine?.cancelSendingMediaMessage(
-        message,
-        callback: callback,
-      );
+    message,
+    callback: callback,
+  );
 }
 
 Future downloadMediaMessage(Map arg) async {
@@ -995,9 +992,9 @@ Future downloadMediaMessage(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.downloadMediaMessage(
-        message,
-        listener: listener,
-      );
+    message,
+    listener: listener,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "downloadMediaMessage";
   String timeStr = _generateTimeStamp();
@@ -1039,9 +1036,9 @@ Future cancelDownloadingMediaMessage(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.cancelDownloadingMediaMessage(
-        message,
-        callback: callback,
-      );
+    message,
+    callback: callback,
+  );
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "cancelDownloadingMediaMessage";
@@ -1066,8 +1063,7 @@ Future insertMessage(Map arg) async {
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
 
-  RCIMIWTextMessage? textMessage = await IMEngineManager()
-      .engine
+  RCIMIWTextMessage? textMessage = await IMEngineManager().engine
       ?.createTextMessage(conversationType, targetId, channelId, "这是一条插入的消息");
 
   textMessage!.direction = RCIMIWMessageDirection.receive;
@@ -1089,9 +1085,9 @@ Future insertMessage(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.insertMessage(
-        textMessage!,
-        callback: callback,
-      );
+    textMessage!,
+    callback: callback,
+  );
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessage";
@@ -1117,20 +1113,20 @@ Future insertMessages(Map arg) async {
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
 
-  RCIMIWTextMessage? textMessage =
-      await IMEngineManager().engine?.createTextMessage(
-            conversationType,
-            targetId,
-            channelId,
-            "这是一条插入的消息-01",
-          );
-  RCIMIWTextMessage? textMessage1 =
-      await IMEngineManager().engine?.createTextMessage(
-            conversationType,
-            targetId,
-            channelId,
-            "这是一条插入的消息-02",
-          );
+  RCIMIWTextMessage? textMessage = await IMEngineManager().engine
+      ?.createTextMessage(
+        conversationType,
+        targetId,
+        channelId,
+        "这是一条插入的消息-01",
+      );
+  RCIMIWTextMessage? textMessage1 = await IMEngineManager().engine
+      ?.createTextMessage(
+        conversationType,
+        targetId,
+        channelId,
+        "这是一条插入的消息-02",
+      );
 
   IRCIMIWInsertMessagesCallback? callback;
   if (useCallback == 1) {
@@ -1205,9 +1201,9 @@ Future deleteLocalMessages(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.deleteLocalMessages(
-        messages,
-        callback: callback,
-      );
+    messages,
+    callback: callback,
+  );
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
@@ -1267,12 +1263,12 @@ Future deleteMessages(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.deleteMessages(
-        type,
-        targetId,
-        channelId,
-        messages,
-        callback: callback,
-      );
+    type,
+    targetId,
+    channelId,
+    messages,
+    callback: callback,
+  );
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "deleteMessages";
@@ -1310,9 +1306,9 @@ Future recallMessage(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.recallMessage(
-        message,
-        callback: callback,
-      );
+    message,
+    callback: callback,
+  );
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
@@ -1349,9 +1345,9 @@ Future sendGroupReadReceiptRequest(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.sendGroupReadReceiptRequest(
-        message,
-        callback: callback,
-      );
+    message,
+    callback: callback,
+  );
 
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
@@ -1405,11 +1401,11 @@ Future sendGroupReadReceiptResponse(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.sendGroupReadReceiptResponse(
-        targetId,
-        channelId,
-        messages,
-        callback: callback,
-      );
+    targetId,
+    channelId,
+    messages,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
   String timeStr = _generateTimeStamp();
@@ -1432,13 +1428,13 @@ Future sendGroupMessageToDesignatedUsers(Map arg) async {
   String channelId = arg['channelId'] ?? "";
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWTextMessage? textMessage =
-      await IMEngineManager().engine?.createTextMessage(
-            RCIMIWConversationType.group,
-            targetId,
-            channelId,
-            "这是一条群定向消息",
-          );
+  RCIMIWTextMessage? textMessage = await IMEngineManager().engine
+      ?.createTextMessage(
+        RCIMIWConversationType.group,
+        targetId,
+        channelId,
+        "这是一条群定向消息",
+      );
 
   List<String> userIds = (arg["userIds"]).split(",");
   RCIMIWSendGroupMessageToDesignatedUsersCallback? callback;
@@ -1466,10 +1462,10 @@ Future sendGroupMessageToDesignatedUsers(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.sendGroupMessageToDesignatedUsers(
-        textMessage!,
-        userIds,
-        callback: callback,
-      );
+    textMessage!,
+    userIds,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "insertMessages";
   String timeStr = _generateTimeStamp();
@@ -1501,13 +1497,13 @@ Future modifyUltraGroupMessage(Map arg) async {
     bus.emit("rong_im_listener", resultCode);
     return;
   }
-  RCIMIWMessage? textMessage =
-      await IMEngineManager().engine?.createTextMessage(
-            RCIMIWConversationType.ultraGroup,
-            message.targetId!,
-            message.channelId,
-            "这个是超级群修改消息的内容",
-          );
+  RCIMIWMessage? textMessage = await IMEngineManager().engine
+      ?.createTextMessage(
+        RCIMIWConversationType.ultraGroup,
+        message.targetId!,
+        message.channelId,
+        "这个是超级群修改消息的内容",
+      );
   IRCIMIWModifyUltraGroupMessageCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWModifyUltraGroupMessageCallback(
@@ -1523,10 +1519,10 @@ Future modifyUltraGroupMessage(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.modifyUltraGroupMessage(
-        messageUId,
-        textMessage!,
-        callback: callback,
-      );
+    messageUId,
+    textMessage!,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "modifyUltraGroupMessage";
   String timeStr = _generateTimeStamp();
@@ -1591,9 +1587,9 @@ Future loadBatchRemoteUltraGroupMessages(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.getBatchRemoteUltraGroupMessages(
-        messages,
-        callback: callback,
-      );
+    messages,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "loadBatchRemoteUltraGroupMessages";
   String timeStr = _generateTimeStamp();
@@ -1640,10 +1636,10 @@ Future recallUltraGroupMessage(Map arg) async {
     );
   }
   int? code = await IMEngineManager().engine?.recallUltraGroupMessage(
-        message,
-        deleteRemote,
-        callback: callback,
-      );
+    message,
+    deleteRemote,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "recallUltraGroupMessage";
   String timeStr = _generateTimeStamp();
@@ -1706,10 +1702,11 @@ Future<RCIMIWMessage?> _getMessageById(int messageId) async {
       completer.complete(null);
     },
   );
-  int code = await IMEngineManager().engine?.getMessageById(
-            messageId,
-            callback: callback,
-          ) ??
+  int code =
+      await IMEngineManager().engine?.getMessageById(
+        messageId,
+        callback: callback,
+      ) ??
       -1;
   log('getMessageById invoke error: $code');
   return completer.future;
@@ -1726,10 +1723,11 @@ Future<RCIMIWMessage?> _getMessageByUId(String messageUId) async {
       completer.complete(null);
     },
   );
-  int code = await IMEngineManager().engine?.getMessageByUId(
-            messageUId,
-            callback: callback,
-          ) ??
+  int code =
+      await IMEngineManager().engine?.getMessageByUId(
+        messageUId,
+        callback: callback,
+      ) ??
       -1;
   log('getMessageByUId invoke error: $code');
   return completer.future;
@@ -1772,38 +1770,39 @@ Future createGroup(Map arg) async {
     return;
   }
 
-  RCIMIWGroupJoinPermission? joinPermission = arg['joinPermission'] != null
-      ? RCIMIWGroupJoinPermission.values[int.parse(arg['joinPermission'])]
-      : null;
+  RCIMIWGroupJoinPermission? joinPermission =
+      arg['joinPermission'] != null
+          ? RCIMIWGroupJoinPermission.values[int.parse(arg['joinPermission'])]
+          : null;
   RCIMIWGroupOperationPermission? removeMemberPermission =
       arg['removeMemberPermission'] != null
           ? RCIMIWGroupOperationPermission.values[int.parse(
-              arg['removeMemberPermission'],
-            )]
+            arg['removeMemberPermission'],
+          )]
           : null;
   RCIMIWGroupOperationPermission? invitePermission =
       arg['invitePermission'] != null
           ? RCIMIWGroupOperationPermission.values[int.parse(
-              arg['invitePermission'],
-            )]
+            arg['invitePermission'],
+          )]
           : null;
   RCIMIWGroupInviteHandlePermission? inviteHandlePermission =
       arg['inviteHandlePermission'] != null
           ? RCIMIWGroupInviteHandlePermission.values[int.parse(
-              arg['inviteHandlePermission'],
-            )]
+            arg['inviteHandlePermission'],
+          )]
           : null;
   RCIMIWGroupOperationPermission? groupInfoEditPermission =
       arg['groupInfoEditPermission'] != null
           ? RCIMIWGroupOperationPermission.values[int.parse(
-              arg['groupInfoEditPermission'],
-            )]
+            arg['groupInfoEditPermission'],
+          )]
           : null;
   RCIMIWGroupMemberInfoEditPermission? memberInfoEditPermission =
       arg['memberInfoEditPermission'] != null
           ? RCIMIWGroupMemberInfoEditPermission.values[int.parse(
-              arg['memberInfoEditPermission'],
-            )]
+            arg['memberInfoEditPermission'],
+          )]
           : null;
 
   RCIMIWGroupInfo groupInfo = RCIMIWGroupInfo.create(
@@ -1853,10 +1852,10 @@ Future createGroup(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.createGroup(
-        groupInfo,
-        inviteeUserIds,
-        callback: callback,
-      );
+    groupInfo,
+    inviteeUserIds,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "createGroup";
   resultCode["code"] = (code ?? -1).toString();
@@ -1894,38 +1893,39 @@ Future updateGroupInfo(Map arg) async {
     return;
   }
 
-  RCIMIWGroupJoinPermission? joinPermission = arg['joinPermission'] != null
-      ? RCIMIWGroupJoinPermission.values[int.parse(arg['joinPermission'])]
-      : null;
+  RCIMIWGroupJoinPermission? joinPermission =
+      arg['joinPermission'] != null
+          ? RCIMIWGroupJoinPermission.values[int.parse(arg['joinPermission'])]
+          : null;
   RCIMIWGroupOperationPermission? removeMemberPermission =
       arg['removeMemberPermission'] != null
           ? RCIMIWGroupOperationPermission.values[int.parse(
-              arg['removeMemberPermission'],
-            )]
+            arg['removeMemberPermission'],
+          )]
           : null;
   RCIMIWGroupOperationPermission? invitePermission =
       arg['invitePermission'] != null
           ? RCIMIWGroupOperationPermission.values[int.parse(
-              arg['invitePermission'],
-            )]
+            arg['invitePermission'],
+          )]
           : null;
   RCIMIWGroupInviteHandlePermission? inviteHandlePermission =
       arg['inviteHandlePermission'] != null
           ? RCIMIWGroupInviteHandlePermission.values[int.parse(
-              arg['inviteHandlePermission'],
-            )]
+            arg['inviteHandlePermission'],
+          )]
           : null;
   RCIMIWGroupOperationPermission? groupInfoEditPermission =
       arg['groupInfoEditPermission'] != null
           ? RCIMIWGroupOperationPermission.values[int.parse(
-              arg['groupInfoEditPermission'],
-            )]
+            arg['groupInfoEditPermission'],
+          )]
           : null;
   RCIMIWGroupMemberInfoEditPermission? memberInfoEditPermission =
       arg['memberInfoEditPermission'] != null
           ? RCIMIWGroupMemberInfoEditPermission.values[int.parse(
-              arg['memberInfoEditPermission'],
-            )]
+            arg['memberInfoEditPermission'],
+          )]
           : null;
 
   RCIMIWGroupInfo groupInfo = RCIMIWGroupInfo.create(
@@ -1959,9 +1959,9 @@ Future updateGroupInfo(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.updateGroupInfo(
-        groupInfo,
-        callback: callback,
-      );
+    groupInfo,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "updateGroupInfo";
   resultCode["code"] = (code ?? -1).toString();
@@ -2018,11 +2018,11 @@ Future kickGroupMembers(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.kickGroupMembers(
-        groupId,
-        userIds,
-        config,
-        callback: callback,
-      );
+    groupId,
+    userIds,
+    config,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "kickGroupMembers";
   resultCode["code"] = (code ?? -1).toString();
@@ -2072,10 +2072,10 @@ quitGroup(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.quitGroup(
-        groupId,
-        config,
-        callback: callback,
-      );
+    groupId,
+    config,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "quitGroup";
   resultCode["code"] = (code ?? -1).toString();
@@ -2138,12 +2138,12 @@ transferGroupOwner(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.transferGroupOwner(
-        groupId,
-        newOwnerId,
-        quitGroup,
-        config,
-        callback: callback,
-      );
+    groupId,
+    newOwnerId,
+    quitGroup,
+    config,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "transferGroupOwner";
   resultCode["code"] = (code ?? -1).toString();
@@ -2210,11 +2210,11 @@ getGroupMembersByRole(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getGroupMembersByRole(
-        groupId,
-        role,
-        option,
-        callback: callback,
-      );
+    groupId,
+    role,
+    option,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getGroupMembersByRole";
   resultCode["code"] = (code ?? -1).toString();
@@ -2275,10 +2275,10 @@ getJoinedGroupsByRole(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getJoinedGroupsByRole(
-        role,
-        option,
-        callback: callback,
-      );
+    role,
+    option,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getJoinedGroupsByRole";
   resultCode["code"] = (code ?? -1).toString();
@@ -2338,10 +2338,10 @@ searchJoinedGroups(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.searchJoinedGroups(
-        groupName,
-        option,
-        callback: callback,
-      );
+    groupName,
+    option,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchJoinedGroups";
   resultCode["code"] = (code ?? -1).toString();
@@ -2407,11 +2407,11 @@ searchGroupMembers(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.searchGroupMembers(
-        groupId,
-        name,
-        option,
-        callback: callback,
-      );
+    groupId,
+    name,
+    option,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchGroupMembers";
   resultCode["code"] = (code ?? -1).toString();
@@ -2486,11 +2486,11 @@ getGroupApplications(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.getGroupApplications(
-        option,
-        directionsInt,
-        statusInt,
-        callback: callback,
-      );
+    option,
+    directionsInt,
+    statusInt,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "getGroupApplications";
   resultCode["code"] = (code ?? -1).toString();
@@ -2546,11 +2546,11 @@ acceptGroupApplication(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.acceptGroupApplication(
-        groupId,
-        inviterId,
-        applicantId,
-        callback: callback,
-      );
+    groupId,
+    inviterId,
+    applicantId,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "acceptGroupApplication";
   resultCode["code"] = (code ?? -1).toString();
@@ -2599,14 +2599,272 @@ setGroupMemberInfo(Map arg) async {
   }
 
   int? code = await IMEngineManager().engine?.setGroupMemberInfo(
-        groupId,
-        userId,
-        nickname,
-        extra,
-        callback: callback,
-      );
+    groupId,
+    userId,
+    nickname,
+    extra,
+    callback: callback,
+  );
   Map<String, String> resultCode = {};
   resultCode["listener"] = "setGroupMemberInfo";
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+translateMessagesWithParams(Map arg) async {
+  if (arg['messageUid'] == null) {
+    RCIWToast.showToast("messageUid 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  bool force = (arg['force'] ?? "0") == "0" ? false : true;
+  RCIMIWTranslateMode mode =
+      (arg['mode'] ?? "0") == "0"
+          ? RCIMIWTranslateMode.mechanical
+          : RCIMIWTranslateMode.intelligent;
+
+  // 解析参数并组装 RCIMIWTranslateMessagesParams 的 list
+  List<String> messageUids = (arg['messageUid'] ?? '').toString().split(',');
+  List<String> sourceLanguages = (arg['sourceLanguage'] ?? '').toString().split(
+    ',',
+  );
+  List<String> targetLanguages = (arg['targetLanguage'] ?? '').toString().split(
+    ',',
+  );
+
+  List<RCIMIWTranslateMessageParam> paramList = [];
+  for (int i = 0; i < messageUids.length; i++) {
+    String messageUid = messageUids[i];
+    String? sourceLanguage =
+        sourceLanguages.length > i ? sourceLanguages[i] : null;
+    String? targetLanguage =
+        targetLanguages.length > i ? targetLanguages[i] : null;
+    if (messageUid.isNotEmpty) {
+      paramList.add(
+        RCIMIWTranslateMessageParam.create(
+          messageUId: messageUid,
+          sourceLanguage: sourceLanguage,
+          targetLanguage: targetLanguage,
+        ),
+      );
+    }
+  }
+
+  RCIMIWTranslateMessagesParams params = RCIMIWTranslateMessagesParams.create(
+    force: force,
+    mode: mode,
+    list: paramList,
+  );
+
+  IRCIMIWTranslateResponseCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWTranslateResponseCallback(
+      onTranslateResponse: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "translateMessagesWithParams-onTranslateResponse";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.translateMessagesWithParams(
+    params,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "translateMessagesWithParams";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+translateTextsWithParams(Map arg) async {
+  if (arg['text'] == null) {
+    RCIWToast.showToast("text 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWTranslateMode mode =
+      (arg['mode'] ?? "0") == "0"
+          ? RCIMIWTranslateMode.mechanical
+          : RCIMIWTranslateMode.intelligent;
+
+  // 解析参数并组装 RCIMIWTranslateTextParams 的 list
+  List<String> texts = (arg['text'] ?? '').toString().split(',');
+  List<String> sourceLanguages = (arg['sourceLanguage'] ?? '').toString().split(
+    ',',
+  );
+  List<String> targetLanguages = (arg['targetLanguage'] ?? '').toString().split(
+    ',',
+  );
+
+  List<RCIMIWTranslateTextParam> paramList = [];
+  for (int i = 0; i < texts.length; i++) {
+    String text = texts[i];
+    String? sourceLanguage =
+        sourceLanguages.length > i ? sourceLanguages[i] : null;
+    String? targetLanguage =
+        targetLanguages.length > i ? targetLanguages[i] : null;
+    if (text.isNotEmpty) {
+      paramList.add(
+        RCIMIWTranslateTextParam.create(
+          text: text,
+          sourceLanguage: sourceLanguage,
+          targetLanguage: targetLanguage,
+        ),
+      );
+    }
+  }
+
+  RCIMIWTranslateTextParams params = RCIMIWTranslateTextParams.create(
+    mode: mode,
+    list: paramList,
+  );
+
+  IRCIMIWTranslateResponseCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWTranslateResponseCallback(
+      onTranslateResponse: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "translateTextsWithParams-onTranslateResponse";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.translateTextsWithParams(
+    params,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "translateTextsWithParams";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+batchSetConversationTranslateStrategy(Map arg) async {
+  if (arg['types'] == null) {
+    RCIWToast.showToast("types 为空");
+    return;
+  }
+
+  if (arg['targetIds'] == null) {
+    RCIWToast.showToast("targetIds 为空");
+    return;
+  }
+
+  if (arg['strategy'] == null) {
+    RCIWToast.showToast("strategy 为空");
+    return;
+  }
+
+  if (arg['strategy'] != "0" &&
+      arg['strategy'] != "1" &&
+      arg['strategy'] != "2") {
+    RCIWToast.showToast("strategy 为非法值");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List<RCIMIWConversationType> types =
+      (arg["types"] ?? "")
+          .split(",")
+          .map((e) => RCIMIWConversationType.values[int.parse(e)])
+          .toList()
+          .cast<RCIMIWConversationType>();
+  List<String> targetIds = (arg["targetIds"] ?? "").split(",");
+  List<String> channelIds = (arg["channelIds"] ?? "").split(",");
+
+  if (types.length != targetIds.length) {
+    RCIWToast.showToast("types 和 targetIds 长度不一致");
+    return;
+  }
+
+  RCIMIWTranslateStrategy strategy =
+      RCIMIWTranslateStrategy.values[int.parse(arg['strategy'])];
+  IRCIMIWTranslateResponseCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWTranslateResponseCallback(
+      onTranslateResponse: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] =
+            "batchSetConversationTranslateStrategy-onTranslateResponse";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine
+      ?.batchSetConversationTranslateStrategy(
+        types,
+        targetIds,
+        channelIds,
+        strategy,
+        callback: callback,
+      );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "batchSetConversationTranslateStrategy";
+  resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
   if (arg['context'] != null) {

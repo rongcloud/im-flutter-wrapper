@@ -7,8 +7,9 @@ import 'ultragroup/ultragroup.dart' as ultragroup;
 import 'other/other.dart' as other;
 import 'tag/tag.dart' as tag;
 import 'group/group.dart' as group;
+import 'translate/translate.dart' as translate;
 
-const titleList = ["链接相关", "会话相关", "消息相关", "群组相关", "未读数相关", "聊天室相关", "超级群相关", "会话标签", "其他配置"];
+const titleList = ["链接相关", "会话相关", "消息相关", "群组相关", "未读数相关", "聊天室相关", "超级群相关", "会话标签", "翻译相关", "其他配置"];
 
 const subList = {
   "其他配置": [
@@ -177,6 +178,15 @@ const subList = {
     group.removeGroupFollows,
     group.getGroupFollows,
   ],
+  "翻译相关": [
+    translate.translateMessagesWithParams,
+    translate.translateTextsWithParams,
+    translate.setTranslationLanguage,
+    translate.getTranslationLanguage,
+    translate.setAutoTranslateEnable,
+    translate.getAutoTranslateEnabled,
+    translate.batchSetConversationTranslateStrategy,
+  ],
   "临时接口": [],
 };
 
@@ -320,5 +330,12 @@ const cbList = [
   "addGroupFollows",
   "removeGroupFollows",
   "getGroupFollows",
+  "translateMessagesWithParams",
+  "translateTextsWithParams",
+  "setTranslationLanguage",
+  "getTranslationLanguage",
+  "setAutoTranslateEnable",
+  "getAutoTranslateEnabled",
+  "batchSetConversationTranslateStrategy",
 ];
 const cbParam = {"key": "use_cb", "type": "number", "hint": "0为不使用 1为使用,默认不填为使用", "lable": "请输入是否使用callback"};

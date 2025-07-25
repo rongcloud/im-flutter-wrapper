@@ -2940,6 +2940,89 @@ class RCIMIWEngine {
     return RCIMWrapperPlatform.instance.setCheckChatRoomDuplicateMessage(enableCheck);
   }
 
+  /// 批量翻译消息
+  /// - [params] 需要翻译的消息
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> translateMessagesWithParams(
+    RCIMIWTranslateMessagesParams params, {
+    IRCIMIWTranslateResponseCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.translateMessagesWithParams(params, callback: callback);
+  }
+
+  /// 批量翻译内容
+  /// - [params] 需要翻译的内容
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> translateTextsWithParams(
+    RCIMIWTranslateTextParams params, {
+    IRCIMIWTranslateResponseCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.translateTextsWithParams(params, callback: callback);
+  }
+
+  /// 设置翻译语言
+  /// SDK 不校验字符串有效性
+  /// - [language] 翻译语言
+  /// - [callback] 参数校验回调结果
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> setTranslationLanguage(String language, {IRCIMIWTranslateResponseCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.setTranslationLanguage(language, callback: callback);
+  }
+
+  /// 获取翻译目标语言
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getTranslationLanguage({IRCIMIWTranslateGetLanguageCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getTranslationLanguage(callback: callback);
+  }
+
+  /// 设置自动翻译开关
+  /// - [isEnable] 是否开启自动翻译
+  /// - [callback] 参数校验回调结果
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> setAutoTranslateEnable(bool isEnable, {IRCIMIWTranslateResponseCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.setAutoTranslateEnable(isEnable, callback: callback);
+  }
+
+  /// 获取自动翻译开关状态
+  /// - [callback] 参数校验回调结果
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getAutoTranslateEnabled({IRCIMIWGetAutoTranslateEnabledCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getAutoTranslateEnabled(callback: callback);
+  }
+
+  /// 批量设置会话翻译策略
+  /// - [types] 会话类型列表
+  /// - [targetIds] 会话ID列表
+  /// - [channelIds] 频道ID列表
+  /// - [strategy] 翻译策略
+  /// - [callback] 参数校验回调结果
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> batchSetConversationTranslateStrategy(
+    List<RCIMIWConversationType> types,
+    List<String> targetIds,
+    List<String> channelIds,
+    RCIMIWTranslateStrategy strategy, {
+    IRCIMIWTranslateResponseCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.batchSetConversationTranslateStrategy(
+      types,
+      targetIds,
+      channelIds,
+      strategy,
+      callback: callback,
+    );
+  }
+
+  /// 计算文本MD5值
+  /// - [text] 需要计算MD5的文本
+  /// - [返回值] MD5字符串，计算失败返回null
+  Future<String> calculateTextMD5(String text) async {
+    return RCIMWrapperPlatform.instance.calculateTextMD5(text);
+  }
+
   /// 收到消息的监听
   /// - [message] 接收到的消息对象
   /// - [left]  当客户端连接成功后，服务端会将所有补偿消息以消息包的形式下发给客户端，最多每 200 条消息为一个消息包，即一个 Package, 客户端接受到消息包后，会逐条解析并通知应用。left 为当前消息包（Package）里还剩余的消息条数
@@ -2970,6 +3053,14 @@ class RCIMIWEngine {
   /// - [level] 当前会话通知的类型
   Function(RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level)?
   onConversationNotificationLevelSynced;
+
+  /// 会话翻译策略多端同步监听
+  /// - [type] 会话类型
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [strategy] 翻译策略
+  Function(RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWTranslateStrategy? strategy)?
+  onConversationTranslationStrategySynced;
 
   /// 撤回消息监听器
   /// - [message] 原本的消息会变为撤回消息
@@ -4043,4 +4134,10 @@ class RCIMIWEngine {
   /// 禁言相关事件通知回调
   /// - [event] 禁言事件信息
   Function(RCIMIWChatRoomMemberBanEvent? event)? onChatRoomNotifyBan;
+
+  Function(List<RCIMIWTranslateItem>? items)? onTranslationDidFinished;
+
+  Function(String? language)? onTranslationLanguageDidChange;
+
+  Function(bool? isEnable)? onAutoTranslateStateDidChange;
 }

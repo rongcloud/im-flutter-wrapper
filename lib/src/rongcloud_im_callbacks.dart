@@ -887,6 +887,26 @@ class IRCIMIWGetGroupFollowsCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWTranslateResponseCallback {
+  IRCIMIWTranslateResponseCallback({required this.onTranslateResponse});
+
+  Function(int? code) onTranslateResponse;
+}
+
+class IRCIMIWTranslateGetLanguageCallback {
+  IRCIMIWTranslateGetLanguageCallback({required this.onSuccess, required this.onError});
+
+  Function(String? t) onSuccess;
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetAutoTranslateEnabledCallback {
+  IRCIMIWGetAutoTranslateEnabledCallback({required this.onSuccess, required this.onError});
+
+  Function(bool? t) onSuccess;
+  Function(int? code) onError;
+}
+
 class RCIMIWConnectCallback {
   RCIMIWConnectCallback({this.onDatabaseOpened, required this.onConnected});
 

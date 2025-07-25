@@ -236,6 +236,25 @@
   return index;
 }
 
++ (RCIMIWTranslateStrategy)convertTranslateStrategyFromInteger:(NSInteger)integer {
+  NSArray *TranslateStrategyArray = @[
+    @(RCIMIWTranslateStrategyDefaultFollowUser),
+    @(RCIMIWTranslateStrategyAutoOn),
+    @(RCIMIWTranslateStrategyAutoOff),
+  ];
+  RCIMIWTranslateStrategy TranslateStrategy = [[TranslateStrategyArray objectAtIndex:integer] integerValue];
+  return TranslateStrategy;
+}
++ (NSInteger)convertTranslateStrategyToInteger:(RCIMIWTranslateStrategy)TranslateStrategy {
+  NSArray *TranslateStrategyArray = @[
+    @(RCIMIWTranslateStrategyDefaultFollowUser),
+    @(RCIMIWTranslateStrategyAutoOn),
+    @(RCIMIWTranslateStrategyAutoOff),
+  ];
+  NSInteger index = [TranslateStrategyArray indexOfObject:@(TranslateStrategy)];
+  return index;
+}
+
 + (RCIMIWImportanceHW)convertImportanceHWFromInteger:(NSInteger)integer {
   NSArray *ImportanceHWArray = @[
     @(RCIMIWImportanceHWNormal),
@@ -390,6 +409,27 @@
   return index;
 }
 
++ (RCIMIWTranslateStatus)convertTranslateStatusFromInteger:(NSInteger)integer {
+  NSArray *TranslateStatusArray = @[
+    @(RCIMIWTranslateStatusNone),
+    @(RCIMIWTranslateStatusTranslating),
+    @(RCIMIWTranslateStatusSuccess),
+    @(RCIMIWTranslateStatusFailed),
+  ];
+  RCIMIWTranslateStatus TranslateStatus = [[TranslateStatusArray objectAtIndex:integer] integerValue];
+  return TranslateStatus;
+}
++ (NSInteger)convertTranslateStatusToInteger:(RCIMIWTranslateStatus)TranslateStatus {
+  NSArray *TranslateStatusArray = @[
+    @(RCIMIWTranslateStatusNone),
+    @(RCIMIWTranslateStatusTranslating),
+    @(RCIMIWTranslateStatusSuccess),
+    @(RCIMIWTranslateStatusFailed),
+  ];
+  NSInteger index = [TranslateStatusArray indexOfObject:@(TranslateStatus)];
+  return index;
+}
+
 + (RCIMIWReceivedStatus)convertReceivedStatusFromInteger:(NSInteger)integer {
   NSArray *ReceivedStatusArray = @[
     @(RCIMIWReceivedStatusUnread),
@@ -456,6 +496,40 @@
     @(RCIMIWPushNotificationLevelBlocked),
   ];
   NSInteger index = [PushNotificationLevelArray indexOfObject:@(PushNotificationLevel)];
+  return index;
+}
+
++ (RCIMIWTranslateMode)convertTranslateModeFromInteger:(NSInteger)integer {
+  NSArray *TranslateModeArray = @[
+    @(RCIMIWTranslateModeMechanical),
+    @(RCIMIWTranslateModeIntelligent),
+  ];
+  RCIMIWTranslateMode TranslateMode = [[TranslateModeArray objectAtIndex:integer] integerValue];
+  return TranslateMode;
+}
++ (NSInteger)convertTranslateModeToInteger:(RCIMIWTranslateMode)TranslateMode {
+  NSArray *TranslateModeArray = @[
+    @(RCIMIWTranslateModeMechanical),
+    @(RCIMIWTranslateModeIntelligent),
+  ];
+  NSInteger index = [TranslateModeArray indexOfObject:@(TranslateMode)];
+  return index;
+}
+
++ (RCIMIWTranslateResultType)convertTranslateResultTypeFromInteger:(NSInteger)integer {
+  NSArray *TranslateResultTypeArray = @[
+    @(RCIMIWTranslateResultTypeMessage),
+    @(RCIMIWTranslateResultTypeCustomText),
+  ];
+  RCIMIWTranslateResultType TranslateResultType = [[TranslateResultTypeArray objectAtIndex:integer] integerValue];
+  return TranslateResultType;
+}
++ (NSInteger)convertTranslateResultTypeToInteger:(RCIMIWTranslateResultType)TranslateResultType {
+  NSArray *TranslateResultTypeArray = @[
+    @(RCIMIWTranslateResultTypeMessage),
+    @(RCIMIWTranslateResultTypeCustomText),
+  ];
+  NSInteger index = [TranslateResultTypeArray indexOfObject:@(TranslateResultType)];
   return index;
 }
 

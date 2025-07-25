@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import <RongIMWrapper/RCIMIWDefines.h>
+#import <RongIMWrapper/RCIMIWTranslateStrategy.h>
 
 @class RCIMIWMessage;
 
@@ -75,5 +76,9 @@
 
 /// 对应原生会话对象的 sentTime
 @property (nonatomic, assign, readonly) long long operationTime;
+
+/// 会话翻译策略
+/// - Since: 5.24.0
+@property (nonatomic, assign, readonly) RCIMIWTranslateStrategy translateStrategy;
 
 @end

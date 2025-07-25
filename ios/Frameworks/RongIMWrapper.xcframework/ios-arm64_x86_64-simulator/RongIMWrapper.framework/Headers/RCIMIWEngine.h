@@ -33,6 +33,10 @@
 #import <RongIMWrapper/RCIMIWChatRoomSyncEvent.h>
 #import <RongIMWrapper/RCIMIWChatRoomMemberBlockEvent.h>
 #import <RongIMWrapper/RCIMIWChatRoomMemberBanEvent.h>
+#import <RongIMWrapper/RCIMIWTranslateMessagesParams.h>
+#import <RongIMWrapper/RCIMIWTranslateTextParams.h>
+
+
 @class RCIMIWEngineOptions;
 @class RCIMIWCompressOptions;
 
@@ -2026,19 +2030,6 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
  @param moduleName             包名
  @param version                    版本号
  */
-- (NSInteger)setModuleName:(NSString *)moduleName version:(NSString *)version;
-
-/*!
- 上报运行日志
- 
- @param method             方法名
- @param callMethod    即将调用方法名
- @param codeValue      错误号，没有错误填0
- @param message           上报消息内容
- */
-- (NSInteger)writeLog:(NSString *)method callMethod:(NSString *)callMethod codeValue:(int)codeValue message:(NSString *)message;
-
-
 #pragma mark - 群信息托管
 
 /// 创建群组
@@ -2322,6 +2313,70 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
 - (NSInteger)getGroupFollows:(NSString *)groupId
                 success:(void (^)(NSArray<RCIMIWFollowInfo *> *followInfos))successBlock
                   error:(void (^)(NSInteger errorCode))errorBlock;
+
+#pragma mark - 翻译功能
+
+/// 批量翻译文本消息
+/// - Parameter params: 翻译的消息参数
+/// - Parameter completionHandler: 结果回调
+/// - Since: 5.24.0
+- (NSInteger)translateMessagesWithParams:(RCIMIWTranslateMessagesParams *)params
+                       completionHandler:(nullable void (^)(NSInteger code))completionHandler;
+
+/// 批量翻译文本内容
+/// - Parameter params: 翻译的文本参数
+/// - Parameter completionHandler: 结果回调
+/// - Since: 5.24.0
+- (NSInteger)translateTextsWithParams:(RCIMIWTranslateTextParams *)params
+                    completionHandler:(nullable void (^)(NSInteger code))completionHandler;
+
+/// 设置用户级别的翻译语言
+/// - Parameter language: 语言
+/// - Parameter completionHandler: 结果回调
+/// - Note: 设置的 `language`，请使用开发者文档中支持的语言设置
+/// - Since: 5.24.0
+- (NSInteger)setTranslationLanguage:(NSString *)language
+                  completionHandler:(void (^)(NSInteger code))completionHandler;
+
+/// 获取用户级别的翻译语言
+/// - Parameter successBlock: 成功回调
+/// - Parameter errorBlock: 失败回调
+/// - Since: 5.24.0
+- (NSInteger)getTranslationLanguage:(nullable void (^)(NSString *language))successBlock
+                              error:(nullable void (^)(NSInteger code))errorBlock;
+
+/// 设置用户级别的自动翻译是否开启
+/// - Parameter isEnable: 是否自动翻译
+/// - Parameter completionHandler: 结果回调
+/// - Since: 5.24.0
+- (NSInteger)setAutoTranslateEnable:(BOOL)isEnable
+                 completionHandler:(void (^)(NSInteger code))completionHandler;
+
+/// 获取用户级别的自动翻译是否开启
+/// - Parameter successBlock: 成功回调
+/// - Parameter errorBlock: 失败回调
+/// - Since: 5.24.0
+- (NSInteger)getAutoTranslateEnabled:(nullable void (^)(BOOL isEnable))successBlock
+                               error:(nullable void (^)(NSInteger code))errorBlock;
+
+/// 批量设置会话翻译策略
+/// - Parameter types: 会话类型列表
+/// - Parameter targetIds: 会话ID列表
+/// - Parameter channelIds: 频道ID列表
+/// - Parameter strategy: 翻译策略
+/// - Parameter completionHandler: 结果回调
+/// - Since: 5.24.0
+- (NSInteger)batchSetConversationTranslateStrategy:(NSArray<NSNumber *> *)types
+                                          targetIds:(NSArray<NSString *> *)targetIds
+                                          channelIds:(NSArray<NSString *> *)channelIds
+                                           strategy:(RCIMIWTranslateStrategy)strategy
+                                  completionHandler:(void (^)(NSInteger code))completionHandler;
+
+/// 计算文本MD5值
+/// - Parameter text: 需要计算MD5的文本
+/// - Returns: MD5字符串，计算失败返回nil
+/// - Since: 5.24.0
+- (nullable NSString *)calculateTextMD5:(NSString *)text;
 
 ///// 创建本地会话
 ///// - Parameters:

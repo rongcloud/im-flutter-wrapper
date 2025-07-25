@@ -10,6 +10,8 @@
 #import <RongIMWrapper/RCIMIWChatRoomMemberAction.h>
 #import <RongIMWrapper/RCIMIWDefines.h>
 #import <RongIMWrapper/RCIMIWGroupInfo.h>
+#import <RongIMWrapper/RCIMIWTranslateItem.h>
+#import <RongIMWrapper/RCIMIWTranslateStrategy.h>
 
 @class RCIMIWMessage;
 @class RCIMIWMediaMessage;
@@ -290,6 +292,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onConversationTypeNotificationLevelLoaded:(NSInteger)code
                                              type:(RCIMIWConversationType)type
                                             level:(RCIMIWPushNotificationLevel)level;
+
+- (void)onConversationTranslationStrategySynced:(RCIMIWConversationType)type
+                                       targetId:(NSString *)targetId
+                                      channelId:(NSString *)channelId
+                                       strategy:(RCIMIWTranslateStrategy)strategy;
 
 #pragma mark - 会话置顶
 
@@ -704,6 +711,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onChatRoomNotifyBlock:(RCIMIWChatRoomMemberBlockEvent *)event;
 
 - (void)onChatRoomNotifyBan:(RCIMIWChatRoomMemberBanEvent *)event;
+
+#pragma mark - 翻译功能回调
+
+/// 翻译完成回调
+/// - Parameter items: 翻译内容
+/// - Since: 5.24.0
+- (void)onTranslationDidFinished:(NSArray<RCIMIWTranslateItem *> *)items;
+
+/// 用户级别翻译语言更新
+/// - Parameter language: 用户级别翻译语言
+/// - Since: 5.24.0
+- (void)onTranslationLanguageDidChange:(NSString *)language;
+
+/// 用户级别自动翻译状态更新
+/// - Parameter isEnable: 是否开启自动翻译
+/// - Since: 5.24.0
+- (void)onAutoTranslateStateDidChange:(BOOL)isEnable;
 
 @end
 

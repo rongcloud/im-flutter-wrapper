@@ -146,6 +146,17 @@ enum RCIMIWGroupApplicationType {
   invitation,
 }
 
+enum RCIMIWTranslateStrategy {
+  /// 跟随用户级配置
+  defaultFollowUser,
+
+  /// 开启自动翻译
+  autoOn,
+
+  /// 关闭自动翻译
+  autoOff,
+}
+
 enum RCIMIWImportanceHW {
   /// 表示消息为服务与通讯类。消息提醒方式为锁屏+铃声+震动。
   normal,
@@ -231,6 +242,8 @@ enum RCIMIWMessageDirection {
   receive,
 }
 
+enum RCIMIWTranslateStatus { none, translating, success, failed }
+
 enum RCIMIWReceivedStatus {
   /// 未读
   unread,
@@ -281,6 +294,16 @@ enum RCIMIWPushNotificationLevel {
   /// 当前用户针对指定类型的会话中的任何消息都不接收推送通知。
   blocked,
 }
+
+enum RCIMIWTranslateMode {
+  /// 机械翻译
+  mechanical,
+
+  /// 智能翻译
+  intelligent,
+}
+
+enum RCIMIWTranslateResultType { message, customText }
 
 enum RCIMIWMessageType {
   /// 无效类型

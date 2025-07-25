@@ -122,6 +122,33 @@ engine?.onConversationNotificationLevelSynced = (RCIMIWConversationType? type, S
 //callback_onConversationNotificationLevelSynced_call
 */
 
+    engine?.onConversationTranslationStrategySynced = (
+      RCIMIWConversationType? type,
+      String? targetId,
+      String? channelId,
+      RCIMIWTranslateStrategy? strategy,
+    ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onConversationTranslationStrategySynced";
+      arg["timestamp"] = timeStr;
+      arg["type"] = type.toString();
+      arg["targetId"] = targetId ?? "";
+      arg["channelId"] = channelId ?? "";
+      arg["strategy"] = strategy.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onConversationTranslationStrategySynced_call
+engine?.onConversationTranslationStrategySynced = (RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWTranslateStrategy? strategy) {
+    //...
+};
+//callback_onConversationTranslationStrategySynced_call
+*/
+
     engine?.onRemoteMessageRecalled = (RCIMIWMessage? message) {
       DateTime now = DateTime.now();
       String timeStr =
@@ -3110,6 +3137,70 @@ engine?.onChatRoomNotifyBan = (RCIMIWChatRoomMemberBanEvent? event) {
     //...
 };
 //callback_onChatRoomNotifyBan_call
+*/
+
+    engine?.onTranslationDidFinished = (List<RCIMIWTranslateItem>? items) {
+      List itemsJson = [];
+      if (items != null) {
+        for (var temp in items) {
+          itemsJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onTranslationDidFinished";
+      arg["timestamp"] = timeStr;
+      arg["items"] = itemsJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onTranslationDidFinished_call
+engine?.onTranslationDidFinished = (List<RCIMIWTranslateItem>? items) {
+    //...
+};
+//callback_onTranslationDidFinished_call
+*/
+
+    engine?.onTranslationLanguageDidChange = (String? language) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onTranslationLanguageDidChange";
+      arg["timestamp"] = timeStr;
+      arg["language"] = language ?? "";
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onTranslationLanguageDidChange_call
+engine?.onTranslationLanguageDidChange = (String? language) {
+    //...
+};
+//callback_onTranslationLanguageDidChange_call
+*/
+
+    engine?.onAutoTranslateStateDidChange = (bool? isEnable) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onAutoTranslateStateDidChange";
+      arg["timestamp"] = timeStr;
+      arg["isEnable"] = isEnable.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onAutoTranslateStateDidChange_call
+engine?.onAutoTranslateStateDidChange = (bool? isEnable) {
+    //...
+};
+//callback_onAutoTranslateStateDidChange_call
 */
   }
 

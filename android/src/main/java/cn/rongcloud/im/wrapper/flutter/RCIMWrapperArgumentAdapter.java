@@ -30,6 +30,10 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationQuietHoursLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWReceivedStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWSentStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWTimeOrder;
+import cn.rongcloud.im.wrapper.constants.RCIMIWTranslateMode;
+import cn.rongcloud.im.wrapper.constants.RCIMIWTranslateResultType;
+import cn.rongcloud.im.wrapper.constants.RCIMIWTranslateStatus;
+import cn.rongcloud.im.wrapper.constants.RCIMIWTranslateStrategy;
 import cn.rongcloud.im.wrapper.constants.RCIMIWUltraGroupTypingStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWVIVOPushType;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationDirection;
@@ -93,6 +97,10 @@ public class RCIMWrapperArgumentAdapter {
     return RCIMIWGroupApplicationType.values()[type];
   }
 
+  static RCIMIWTranslateStrategy toRCIMIWTranslateStrategy(@NonNull Integer type) {
+    return RCIMIWTranslateStrategy.values()[type];
+  }
+
   static RCIMIWImportanceHW toRCIMIWImportanceHW(@NonNull Integer type) {
     return RCIMIWImportanceHW.values()[type];
   }
@@ -127,6 +135,10 @@ public class RCIMWrapperArgumentAdapter {
     return RCIMIWMessageDirection.values()[type];
   }
 
+  static RCIMIWTranslateStatus toRCIMIWTranslateStatus(@NonNull Integer type) {
+    return RCIMIWTranslateStatus.values()[type];
+  }
+
   static RCIMIWReceivedStatus toRCIMIWReceivedStatus(@NonNull Integer type) {
     return RCIMIWReceivedStatus.values()[type];
   }
@@ -137,6 +149,14 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWPushNotificationLevel toRCIMIWPushNotificationLevel(@NonNull Integer type) {
     return RCIMIWPushNotificationLevel.values()[type];
+  }
+
+  static RCIMIWTranslateMode toRCIMIWTranslateMode(@NonNull Integer type) {
+    return RCIMIWTranslateMode.values()[type];
+  }
+
+  static RCIMIWTranslateResultType toRCIMIWTranslateResultType(@NonNull Integer type) {
+    return RCIMIWTranslateResultType.values()[type];
   }
 
   static RCIMIWMessageType toRCIMIWMessageType(@NonNull Integer type) {

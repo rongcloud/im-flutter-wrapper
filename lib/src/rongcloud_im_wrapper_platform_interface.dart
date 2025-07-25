@@ -2536,6 +2536,83 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('setCheckChatRoomDuplicateMessage() has not been implemented.');
   }
 
+  /// 批量翻译消息
+  /// - [params] 需要翻译的消息
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> translateMessagesWithParams(
+    RCIMIWTranslateMessagesParams params, {
+    IRCIMIWTranslateResponseCallback? callback,
+  }) async {
+    throw UnimplementedError('translateMessagesWithParams() has not been implemented.');
+  }
+
+  /// 批量翻译内容
+  /// - [params] 需要翻译的内容
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> translateTextsWithParams(
+    RCIMIWTranslateTextParams params, {
+    IRCIMIWTranslateResponseCallback? callback,
+  }) async {
+    throw UnimplementedError('translateTextsWithParams() has not been implemented.');
+  }
+
+  /// 设置翻译语言
+  /// SDK 不校验字符串有效性
+  /// - [language] 翻译语言
+  /// - [callback] 参数校验回调结果
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> setTranslationLanguage(String language, {IRCIMIWTranslateResponseCallback? callback}) async {
+    throw UnimplementedError('setTranslationLanguage() has not been implemented.');
+  }
+
+  /// 获取翻译目标语言
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getTranslationLanguage({IRCIMIWTranslateGetLanguageCallback? callback}) async {
+    throw UnimplementedError('getTranslationLanguage() has not been implemented.');
+  }
+
+  /// 设置自动翻译开关
+  /// - [isEnable] 是否开启自动翻译
+  /// - [callback] 参数校验回调结果
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> setAutoTranslateEnable(bool isEnable, {IRCIMIWTranslateResponseCallback? callback}) async {
+    throw UnimplementedError('setAutoTranslateEnable() has not been implemented.');
+  }
+
+  /// 获取自动翻译开关状态
+  /// - [callback] 参数校验回调结果
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> getAutoTranslateEnabled({IRCIMIWGetAutoTranslateEnabledCallback? callback}) async {
+    throw UnimplementedError('getAutoTranslateEnabled() has not been implemented.');
+  }
+
+  /// 批量设置会话翻译策略
+  /// - [types] 会话类型列表
+  /// - [targetIds] 会话ID列表
+  /// - [channelIds] 频道ID列表
+  /// - [strategy] 翻译策略
+  /// - [callback] 参数校验回调结果
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  Future<int> batchSetConversationTranslateStrategy(
+    List<RCIMIWConversationType> types,
+    List<String> targetIds,
+    List<String> channelIds,
+    RCIMIWTranslateStrategy strategy, {
+    IRCIMIWTranslateResponseCallback? callback,
+  }) async {
+    throw UnimplementedError('batchSetConversationTranslateStrategy() has not been implemented.');
+  }
+
+  /// 计算文本MD5值
+  /// - [text] 需要计算MD5的文本
+  /// - [返回值] MD5字符串，计算失败返回null
+  Future<String> calculateTextMD5(String text) async {
+    throw UnimplementedError('calculateTextMD5() has not been implemented.');
+  }
+
   // -------- web 专有的方法 --------
 
   /// 构建语音消息 (高清语音)，发送成功后会根据文件自动生成 duration

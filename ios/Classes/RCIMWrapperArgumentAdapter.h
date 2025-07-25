@@ -57,6 +57,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertGroupApplicationTypeToInteger:(RCIMIWGroupApplicationType)GroupApplicationType;
 
 
++ (RCIMIWTranslateStrategy)convertTranslateStrategyFromInteger:(NSInteger)integer;
++ (NSInteger)convertTranslateStrategyToInteger:(RCIMIWTranslateStrategy)TranslateStrategy;
+
+
 + (RCIMIWImportanceHW)convertImportanceHWFromInteger:(NSInteger)integer;
 + (NSInteger)convertImportanceHWToInteger:(RCIMIWImportanceHW)ImportanceHW;
 
@@ -89,6 +93,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertMessageDirectionToInteger:(RCIMIWMessageDirection)MessageDirection;
 
 
++ (RCIMIWTranslateStatus)convertTranslateStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertTranslateStatusToInteger:(RCIMIWTranslateStatus)TranslateStatus;
+
+
 + (RCIMIWReceivedStatus)convertReceivedStatusFromInteger:(NSInteger)integer;
 + (NSInteger)convertReceivedStatusToInteger:(RCIMIWReceivedStatus)ReceivedStatus;
 
@@ -99,6 +107,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (RCIMIWPushNotificationLevel)convertPushNotificationLevelFromInteger:(NSInteger)integer;
 + (NSInteger)convertPushNotificationLevelToInteger:(RCIMIWPushNotificationLevel)PushNotificationLevel;
+
+
++ (RCIMIWTranslateMode)convertTranslateModeFromInteger:(NSInteger)integer;
++ (NSInteger)convertTranslateModeToInteger:(RCIMIWTranslateMode)TranslateMode;
+
+
++ (RCIMIWTranslateResultType)convertTranslateResultTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertTranslateResultTypeToInteger:(RCIMIWTranslateResultType)TranslateResultType;
 
 
 + (RCIMIWMessageType)convertMessageTypeFromInteger:(NSInteger)integer;

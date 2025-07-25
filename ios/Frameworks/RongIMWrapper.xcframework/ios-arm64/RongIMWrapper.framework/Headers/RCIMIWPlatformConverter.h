@@ -35,6 +35,9 @@
 @class RCIMIWChatRoomSyncEvent;
 @class RCIMIWChatRoomMemberBlockEvent;
 @class RCIMIWChatRoomMemberBanEvent;
+@class RCIMIWTranslateMessagesParams;
+@class RCIMIWTranslateTextParams;
+@class RCIMIWTranslateItem;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -126,6 +129,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSDictionary *)convertChatRoomMemberBlockEventToDict:(RCIMIWChatRoomMemberBlockEvent *)event;
 
 + (NSDictionary *)convertChatRoomMemberBanEventToDict:(RCIMIWChatRoomMemberBanEvent *)event;
+
+// TranslateMessagesParams
++ (RCIMIWTranslateMessagesParams *)convertTranslateMessagesParamsFromDict:(NSDictionary *)dict;
+
+// TranslateTextParams
++ (RCIMIWTranslateTextParams *)convertTranslateTextParamsFromDict:(NSDictionary *)dict;
+
+// TranslateItem
++ (NSDictionary *)convertTranslateItemToDict:(RCIMIWTranslateItem *)item;
 
 @end
 

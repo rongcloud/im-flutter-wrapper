@@ -438,6 +438,22 @@ static RCIMWrapperEngine *instance = nil;
     [self getGroupFollows:call result:result];
   } else if ([@"engine:setCheckChatRoomDuplicateMessage" isEqualToString:call.method]) {
     [self setCheckChatRoomDuplicateMessage:call result:result];
+  } else if ([@"engine:translateMessagesWithParams" isEqualToString:call.method]) {
+    [self translateMessagesWithParams:call result:result];
+  } else if ([@"engine:translateTextsWithParams" isEqualToString:call.method]) {
+    [self translateTextsWithParams:call result:result];
+  } else if ([@"engine:setTranslationLanguage" isEqualToString:call.method]) {
+    [self setTranslationLanguage:call result:result];
+  } else if ([@"engine:getTranslationLanguage" isEqualToString:call.method]) {
+    [self getTranslationLanguage:call result:result];
+  } else if ([@"engine:setAutoTranslateEnable" isEqualToString:call.method]) {
+    [self setAutoTranslateEnable:call result:result];
+  } else if ([@"engine:getAutoTranslateEnabled" isEqualToString:call.method]) {
+    [self getAutoTranslateEnabled:call result:result];
+  } else if ([@"engine:batchSetConversationTranslateStrategy" isEqualToString:call.method]) {
+    [self batchSetConversationTranslateStrategy:call result:result];
+  } else if ([@"engine:calculateTextMD5" isEqualToString:call.method]) {
+    [self calculateTextMD5:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -6192,6 +6208,233 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)translateMessagesWithParams:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWTranslateMessagesParams *params = [RCIMIWPlatformConverter convertTranslateMessagesParamsFromDict:arguments[@"params"]];
+    void (^completionHandler)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      completionHandler = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWTranslateResponseCallback_onTranslateResponse" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine translateMessagesWithParams:params completionHandler:completionHandler];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)translateTextsWithParams:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWTranslateTextParams *params = [RCIMIWPlatformConverter convertTranslateTextParamsFromDict:arguments[@"params"]];
+    void (^completionHandler)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      completionHandler = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWTranslateResponseCallback_onTranslateResponse" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine translateTextsWithParams:params completionHandler:completionHandler];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)setTranslationLanguage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *language = arguments[@"language"];
+    void (^completionHandler)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      completionHandler = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWTranslateResponseCallback_onTranslateResponse" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine setTranslationLanguage:language completionHandler:completionHandler];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getTranslationLanguage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    void (^successBlock)(NSString *language) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      successBlock = ^(NSString *language) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:language forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWTranslateGetLanguageCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWTranslateGetLanguageCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getTranslationLanguage:successBlock error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)setAutoTranslateEnable:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    BOOL isEnable = [(NSNumber *)arguments[@"isEnable"] boolValue];
+    void (^completionHandler)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      completionHandler = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWTranslateResponseCallback_onTranslateResponse" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine setAutoTranslateEnable:isEnable completionHandler:completionHandler];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getAutoTranslateEnabled:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    void (^successBlock)(BOOL isEnable) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      successBlock = ^(BOOL isEnable) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(isEnable) forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getAutoTranslateEnabled:successBlock error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)batchSetConversationTranslateStrategy:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSArray<NSNumber *> *types = arguments[@"types"];
+    NSArray<NSString *> *targetIds = arguments[@"targetIds"];
+    NSArray<NSString *> *channelIds = arguments[@"channelIds"];
+    RCIMIWTranslateStrategy strategy = [RCIMWrapperArgumentAdapter convertTranslateStrategyFromInteger:[(NSNumber *)arguments[@"strategy"] integerValue]];
+    void (^completionHandler)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      completionHandler = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWTranslateResponseCallback_onTranslateResponse" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine batchSetConversationTranslateStrategy:types targetIds:targetIds channelIds:channelIds strategy:strategy completionHandler:completionHandler];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)calculateTextMD5:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSString *code;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *text = arguments[@"text"];
+
+    code = [self.engine calculateTextMD5:text];
+  }
+  dispatch_to_main_queue(^{
+    result(code);
+  });
+}
+
 - (void)onMessageReceived:(RCIMIWMessage *)message left:(NSInteger)left offline:(BOOL)offline hasPackage:(BOOL)hasPackage {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];
@@ -6252,6 +6495,20 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onConversationNotificationLevelSynced" arguments:arguments.copy];
+  });
+}
+
+- (void)onConversationTranslationStrategySynced:(RCIMIWConversationType)type targetId:(NSString *)targetId channelId:(NSString *)channelId strategy:(RCIMIWTranslateStrategy)strategy {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertConversationTypeToInteger:type]) forKey:@"type"];
+  [arguments setValue:targetId forKey:@"targetId"];
+  [arguments setValue:channelId forKey:@"channelId"];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertTranslateStrategyToInteger:strategy]) forKey:@"strategy"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onConversationTranslationStrategySynced" arguments:arguments.copy];
   });
 }
 
@@ -7964,6 +8221,44 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onChatRoomNotifyBan" arguments:arguments.copy];
+  });
+}
+
+- (void)onTranslationDidFinished:(NSArray<RCIMIWTranslateItem *> *)items {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+
+  NSMutableArray *items_arr = [NSMutableArray array];
+  for (RCIMIWTranslateItem *element in items) {
+    [items_arr addObject:[RCIMIWPlatformConverter convertTranslateItemToDict:element]];
+  }
+  [arguments setValue:items_arr.copy forKey:@"items"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onTranslationDidFinished" arguments:arguments.copy];
+  });
+}
+
+- (void)onTranslationLanguageDidChange:(NSString *)language {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:language forKey:@"language"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onTranslationLanguageDidChange" arguments:arguments.copy];
+  });
+}
+
+- (void)onAutoTranslateStateDidChange:(BOOL)isEnable {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@(isEnable) forKey:@"isEnable"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onAutoTranslateStateDidChange" arguments:arguments.copy];
   });
 }
 

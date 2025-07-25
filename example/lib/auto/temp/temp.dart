@@ -1360,4 +1360,68 @@ const setCheckChatRoomDuplicateMessage = {
   "action": engine_fun.setCheckChatRoomDuplicateMessage,
 };
 
+const translateMessagesWithParams = {
+  "title": "translateMessagesWithParams",
+  "params": [
+    {"key": "params", "type": "String", "hint": "", "lable": "请输入params",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.translateMessagesWithParams,
+};
+
+const translateTextsWithParams = {
+  "title": "translateTextsWithParams",
+  "params": [
+    {"key": "params", "type": "String", "hint": "", "lable": "请输入params",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.translateTextsWithParams,
+};
+
+const setTranslationLanguage = {
+  "title": "setTranslationLanguage",
+  "params": [
+    {"key": "language", "type": "String", "hint": "", "lable": "请输入language",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.setTranslationLanguage,
+};
+
+const getTranslationLanguage = {
+  "title": "getTranslationLanguage",
+  "params": [
+    {"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getTranslationLanguage,
+};
+
+const setAutoTranslateEnable = {
+  "title": "setAutoTranslateEnable",
+  "params": [
+    {"key": "isEnable", "type": "String", "hint": "", "lable": "请输入isEnable",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.setAutoTranslateEnable,
+};
+
+const getAutoTranslateEnabled = {
+  "title": "getAutoTranslateEnabled",
+  "params": [
+    {"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getAutoTranslateEnabled,
+};
+
+const batchSetConversationTranslateStrategy = {
+  "title": "batchSetConversationTranslateStrategy",
+  "params": [
+    {"key": "types", "type": "String", "hint": "", "lable": "请输入types",},{"key": "targetIds", "type": "String", "hint": "", "lable": "请输入targetIds",},{"key": "channelIds", "type": "String", "hint": "", "lable": "请输入channelIds",},{"key": "strategy", "type": "String", "hint": "", "lable": "请输入strategy",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.batchSetConversationTranslateStrategy,
+};
+
+const calculateTextMD5 = {
+  "title": "calculateTextMD5",
+  "params": [
+    {"key": "text", "type": "String", "hint": "", "lable": "请输入text",},
+  ],
+  "action": engine_fun.calculateTextMD5,
+};
+
 */

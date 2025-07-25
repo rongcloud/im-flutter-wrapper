@@ -62,6 +62,17 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 
 #import <RongIMWrapper/RCIMIWDefines.h>
 
+#import <RongIMWrapper/RCIMIWTranslateMode.h>
+#import <RongIMWrapper/RCIMIWTranslateStatus.h>
+#import <RongIMWrapper/RCIMIWTranslateStrategy.h>
+#import <RongIMWrapper/RCIMIWTranslateInfo.h>
+#import <RongIMWrapper/RCIMIWTranslateItem.h>
+#import <RongIMWrapper/RCIMIWTranslateMessageParam.h>
+#import <RongIMWrapper/RCIMIWTranslateMessagesParams.h>
+#import <RongIMWrapper/RCIMIWTranslateTextParam.h>
+#import <RongIMWrapper/RCIMIWTranslateTextParams.h>
+#import <RongIMWrapper/RCIMIWTranslateConverter.h>
+
 #import <RongIMWrapper/RCIMIWGroupInfo.h>
 #import <RongIMWrapper/RCIMIWQuitGroupConfig.h>
 #import <RongIMWrapper/RCIMIWPagingQueryOption.h>
