@@ -81,4 +81,15 @@
 /// - Since: 5.24.0
 @property (nonatomic, assign, readonly) RCIMIWTranslateStrategy translateStrategy;
 
+/*!
+ 初始化方法
+
+ @param type      会话类型
+ @param targetId  会话 ID
+ @param channelId 频道 ID
+ */
+- (instancetype)initWithType:(RCIMIWConversationType)type
+                    targetId:(NSString *)targetId
+                   channelId:(NSString *)channelId;
+
 @end

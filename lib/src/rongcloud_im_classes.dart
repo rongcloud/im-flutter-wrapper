@@ -1992,6 +1992,22 @@ class RCIMIWConversation {
   /// 获取会话翻译策略
   RCIMIWTranslateStrategy? translateStrategy;
 
+  RCIMIWConversation.create({
+    this.conversationType,
+    this.targetId,
+    this.channelId,
+    this.unreadCount,
+    this.mentionedCount,
+    this.mentionedMeCount,
+    this.top,
+    this.draft,
+    this.lastMessage,
+    this.notificationLevel,
+    this.firstUnreadMsgSendTime,
+    this.operationTime,
+    this.translateStrategy,
+  });
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     json['conversationType'] = conversationType?.index;

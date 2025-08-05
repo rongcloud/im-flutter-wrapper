@@ -1,3 +1,7 @@
+# 5.24.1
+* 更新 Android IMLib SDK 依赖为 5.24.1。
+* 更新 iOS IMLib SDK 依赖为 5.24.1。
+
 # 5.24.0
 * 更新 Android IMLib SDK 依赖为 5.24.0。
 * 更新 iOS IMLib SDK 依赖为 5.24.0。
