@@ -33,6 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// - Warning: 仅限独立数据中心使用，使用前必须先联系商务开通。
 @property (nonatomic, copy) NSString *logServer;
 
+/// 云控服务器地址
+@property (nonatomic, copy) NSString *cloudControlServer;
+
 /// 区域码
 ///
 /// 默认为北京数据中心，用户可以根据实际情况设置区域码，设置之后，SDK 将会使用特定区域的服务地址

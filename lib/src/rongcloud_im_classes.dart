@@ -236,13 +236,19 @@ class RCIMIWMessagePushOptions {
     templateId = json['templateId'];
     voIPPush = json['voIPPush'];
     if (json['iOSPushOptions'] != null) {
-      iOSPushOptions = RCIMIWIOSPushOptions.fromJson(Map<String, dynamic>.from(json['iOSPushOptions']));
+      iOSPushOptions = RCIMIWIOSPushOptions.fromJson(
+        (json['iOSPushOptions'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     if (json['androidPushOptions'] != null) {
-      androidPushOptions = RCIMIWAndroidPushOptions.fromJson(Map<String, dynamic>.from(json['androidPushOptions']));
+      androidPushOptions = RCIMIWAndroidPushOptions.fromJson(
+        (json['androidPushOptions'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     if (json['harmonyPushOptions'] != null) {
-      harmonyPushOptions = RCIMIWHarmonyPushOptions.fromJson(Map<String, dynamic>.from(json['harmonyPushOptions']));
+      harmonyPushOptions = RCIMIWHarmonyPushOptions.fromJson(
+        (json['harmonyPushOptions'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
   }
 }
@@ -387,6 +393,9 @@ class RCIMIWEngineOptions {
   /// 配置日志上传地址
   String? logServer;
 
+  /// 配置云控服务器地址
+  String? cloudControlServer;
+
   /// 数据中心区域码
   RCIMIWAreaCode? areaCode;
 
@@ -412,6 +421,7 @@ class RCIMIWEngineOptions {
     this.fileServer,
     this.statisticServer,
     this.logServer,
+    this.cloudControlServer,
     this.areaCode,
     this.environment,
     this.kickReconnectDevice,
@@ -428,6 +438,7 @@ class RCIMIWEngineOptions {
     json['fileServer'] = fileServer;
     json['statisticServer'] = statisticServer;
     json['logServer'] = logServer;
+    json['cloudControlServer'] = cloudControlServer;
     json['areaCode'] = areaCode?.index;
     json['environment'] = environment;
     json['kickReconnectDevice'] = kickReconnectDevice;
@@ -444,15 +455,20 @@ class RCIMIWEngineOptions {
     fileServer = json['fileServer'];
     statisticServer = json['statisticServer'];
     logServer = json['logServer'];
+    cloudControlServer = json['cloudControlServer'];
     areaCode = json['areaCode'] == null ? null : RCIMIWAreaCode.values[json['areaCode']];
     environment = json['environment'];
     kickReconnectDevice = json['kickReconnectDevice'];
     if (json['compressOptions'] != null) {
-      compressOptions = RCIMIWCompressOptions.fromJson(Map<String, dynamic>.from(json['compressOptions']));
+      compressOptions = RCIMIWCompressOptions.fromJson(
+        (json['compressOptions'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     logLevel = json['logLevel'] == null ? null : RCIMIWLogLevel.values[json['logLevel']];
     if (json['pushOptions'] != null) {
-      pushOptions = RCIMIWPushOptions.fromJson(Map<String, dynamic>.from(json['pushOptions']));
+      pushOptions = RCIMIWPushOptions.fromJson(
+        (json['pushOptions'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     enablePush = json['enablePush'];
     enableIPC = json['enableIPC'];
@@ -713,7 +729,7 @@ class RCIMIWMessage {
     offLine = json['offLine'];
     if (json['groupReadReceiptInfo'] != null) {
       groupReadReceiptInfo = RCIMIWGroupReadReceiptInfo.fromJson(
-        Map<String, dynamic>.from(json['groupReadReceiptInfo']),
+        (json['groupReadReceiptInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
       );
     }
     receivedTime = json['receivedTime'];
@@ -721,26 +737,36 @@ class RCIMIWMessage {
     destructDuration = json['destructDuration'];
     receivedStatus = json['receivedStatus'] == null ? null : RCIMIWReceivedStatus.values[json['receivedStatus']];
     if (json['receivedStatusInfo'] != null) {
-      receivedStatusInfo = RCIMIWReceivedStatusInfo.fromJson(Map<String, dynamic>.from(json['receivedStatusInfo']));
+      receivedStatusInfo = RCIMIWReceivedStatusInfo.fromJson(
+        (json['receivedStatusInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     sentStatus = json['sentStatus'] == null ? null : RCIMIWSentStatus.values[json['sentStatus']];
     senderUserId = json['senderUserId'];
     direction = json['direction'] == null ? null : RCIMIWMessageDirection.values[json['direction']];
     if (json['userInfo'] != null) {
-      userInfo = RCIMIWUserInfo.fromJson(Map<String, dynamic>.from(json['userInfo']));
+      userInfo = RCIMIWUserInfo.fromJson(
+        (json['userInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     if (json['mentionedInfo'] != null) {
-      mentionedInfo = RCIMIWMentionedInfo.fromJson(Map<String, dynamic>.from(json['mentionedInfo']));
+      mentionedInfo = RCIMIWMentionedInfo.fromJson(
+        (json['mentionedInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     if (json['pushOptions'] != null) {
-      pushOptions = RCIMIWMessagePushOptions.fromJson(Map<String, dynamic>.from(json['pushOptions']));
+      pushOptions = RCIMIWMessagePushOptions.fromJson(
+        (json['pushOptions'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     extra = json['extra'];
     localExtra = json['localExtra'];
     expansion = json['expansion'];
     canIncludeExpansion = json['canIncludeExpansion'];
     if (json['auditInfo'] != null) {
-      auditInfo = RCIMIWMessageAuditInfo.fromJson(Map<String, dynamic>.from(json['auditInfo']));
+      auditInfo = RCIMIWMessageAuditInfo.fromJson(
+        (json['auditInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     directedUserIds = json['directedUserIds']?.cast<String>();
   }
@@ -889,7 +915,9 @@ class RCIMIWRecallNotificationMessage extends RCIMIWMessage {
     recallActionTime = json['recallActionTime'];
     operatorId = json['operatorId'];
     if (json['originalMessage'] != null) {
-      originalMessage = RCIMConverter.convertMessage(Map<String, dynamic>.from(json['originalMessage']));
+      originalMessage = RCIMConverter.convertMessage(
+        (json['originalMessage'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
   }
 }
@@ -934,7 +962,9 @@ class RCIMIWTextMessage extends RCIMIWMessage {
   RCIMIWTextMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     text = json['text'];
     if (json['translateInfo'] != null) {
-      translateInfo = RCIMIWTranslateInfo.fromJson(Map<String, dynamic>.from(json['translateInfo']));
+      translateInfo = RCIMIWTranslateInfo.fromJson(
+        (json['translateInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
   }
 }
@@ -1157,7 +1187,9 @@ class RCIMIWReferenceMessage extends RCIMIWMessage {
   RCIMIWReferenceMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     text = json['text'];
     if (json['referenceMessage'] != null) {
-      referenceMessage = RCIMConverter.convertMessage(Map<String, dynamic>.from(json['referenceMessage']));
+      referenceMessage = RCIMConverter.convertMessage(
+        (json['referenceMessage'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
   }
 }
@@ -1201,7 +1233,13 @@ class RCIMIWTranslateTextParams {
 
   RCIMIWTranslateTextParams.fromJson(Map<String, dynamic> json) {
     mode = json['mode'] == null ? null : RCIMIWTranslateMode.values[json['mode']];
-    list = json['list']?.map<RCIMIWTranslateTextParam>((item) => RCIMIWTranslateTextParam.fromJson(item)).toList();
+    list =
+        json['list']
+            ?.map<RCIMIWTranslateTextParam>(
+              (item) =>
+                  RCIMIWTranslateTextParam.fromJson((item as Map).map((key, value) => MapEntry(key.toString(), value))),
+            )
+            .toList();
   }
 }
 
@@ -1225,7 +1263,13 @@ class RCIMIWTranslateMessagesParams {
     force = json['force'];
     mode = json['mode'] == null ? null : RCIMIWTranslateMode.values[json['mode']];
     list =
-        json['list']?.map<RCIMIWTranslateMessageParam>((item) => RCIMIWTranslateMessageParam.fromJson(item)).toList();
+        json['list']
+            ?.map<RCIMIWTranslateMessageParam>(
+              (item) => RCIMIWTranslateMessageParam.fromJson(
+                (item as Map).map((key, value) => MapEntry(key.toString(), value)),
+              ),
+            )
+            .toList();
   }
 }
 
@@ -1297,7 +1341,9 @@ class RCIMIWTranslateItem {
   RCIMIWTranslateItem.fromJson(Map<String, dynamic> json) {
     identifier = json['identifier'];
     if (json['translateInfo'] != null) {
-      translateInfo = RCIMIWTranslateInfo.fromJson(Map<String, dynamic>.from(json['translateInfo']));
+      translateInfo = RCIMIWTranslateInfo.fromJson(
+        (json['translateInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     errorCode = json['errorCode'];
     resultType = json['resultType'] == null ? null : RCIMIWTranslateResultType.values[json['resultType']];
@@ -1640,13 +1686,19 @@ class RCIMIWGroupApplicationInfo {
   RCIMIWGroupApplicationInfo.fromJson(Map<String, dynamic> json) {
     groupId = json['groupId'];
     if (json['joinMemberInfo'] != null) {
-      joinMemberInfo = RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(json['joinMemberInfo']));
+      joinMemberInfo = RCIMIWGroupMemberInfo.fromJson(
+        (json['joinMemberInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     if (json['inviterInfo'] != null) {
-      inviterInfo = RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(json['inviterInfo']));
+      inviterInfo = RCIMIWGroupMemberInfo.fromJson(
+        (json['inviterInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     if (json['operatorInfo'] != null) {
-      operatorInfo = RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(json['operatorInfo']));
+      operatorInfo = RCIMIWGroupMemberInfo.fromJson(
+        (json['operatorInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     status = json['status'] == null ? null : RCIMIWGroupApplicationStatus.values[json['status']];
     direction = json['direction'] == null ? null : RCIMIWGroupApplicationDirection.values[json['direction']];
@@ -1886,6 +1938,172 @@ class RCIMIWChatRoomMemberBlockEvent {
   }
 }
 
+class RCIMIWSubscribeEvent {
+  String? userId;
+  RCIMIWSubscribeType? subscribeType;
+  RCIMIWSubscribeOperationType? operationType;
+  int? subscribeTime;
+  int? expiry;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['subscribeType'] = subscribeType?.index;
+    json['operationType'] = operationType?.index;
+    json['subscribeTime'] = subscribeTime;
+    json['expiry'] = expiry;
+    return json;
+  }
+
+  RCIMIWSubscribeEvent.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    subscribeType = json['subscribeType'] == null ? null : RCIMIWSubscribeType.values[json['subscribeType']];
+    operationType = json['operationType'] == null ? null : RCIMIWSubscribeOperationType.values[json['operationType']];
+    subscribeTime = json['subscribeTime'];
+    expiry = json['expiry'];
+  }
+}
+
+class RCIMIWSubscribeInfoEvent {
+  String? userId;
+  RCIMIWSubscribeType? subscribeType;
+  int? subscribeTime;
+  int? expiry;
+  List<RCIMIWSubscribeEventDetail>? details;
+  RCIMIWUserProfile? userProfile;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['subscribeType'] = subscribeType?.index;
+    json['subscribeTime'] = subscribeTime;
+    json['expiry'] = expiry;
+    json['details'] = details?.map((item) => item.toJson()).toList();
+    json['userProfile'] = userProfile?.toJson();
+    return json;
+  }
+
+  RCIMIWSubscribeInfoEvent.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    subscribeType = json['subscribeType'] == null ? null : RCIMIWSubscribeType.values[json['subscribeType']];
+    subscribeTime = json['subscribeTime'];
+    expiry = json['expiry'];
+    details =
+        json['details']
+            ?.map<RCIMIWSubscribeEventDetail>(
+              (item) => RCIMIWSubscribeEventDetail.fromJson(
+                (item as Map).map((key, value) => MapEntry(key.toString(), value)),
+              ),
+            )
+            .toList();
+    if (json['userProfile'] != null) {
+      userProfile = RCIMIWUserProfile.fromJson(
+        (json['userProfile'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
+  }
+}
+
+class RCIMIWSubscribeEventDetail {
+  int? eventValue;
+  int? changeTime;
+  RCIMIWPlatform? platform;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['eventValue'] = eventValue;
+    json['changeTime'] = changeTime;
+    json['platform'] = platform?.index;
+    return json;
+  }
+
+  RCIMIWSubscribeEventDetail.fromJson(Map<String, dynamic> json) {
+    eventValue = json['eventValue'];
+    changeTime = json['changeTime'];
+    platform = json['platform'] == null ? null : RCIMIWPlatform.values[json['platform']];
+  }
+}
+
+class RCIMIWSubscribeEventRequest {
+  RCIMIWSubscribeType? subscribeType;
+  int? expiry;
+  List<String>? userIds;
+
+  RCIMIWSubscribeEventRequest.create({this.subscribeType, this.expiry, this.userIds});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['subscribeType'] = subscribeType?.index;
+    json['expiry'] = expiry;
+    json['userIds'] = userIds;
+    return json;
+  }
+
+  RCIMIWSubscribeEventRequest.fromJson(Map<String, dynamic> json) {
+    subscribeType = json['subscribeType'] == null ? null : RCIMIWSubscribeType.values[json['subscribeType']];
+    expiry = json['expiry'];
+    userIds = json['userIds']?.cast<String>();
+  }
+}
+
+class RCIMIWUserProfile {
+  String? userId;
+  String? name;
+  String? portraitUri;
+  String? uniqueId;
+  String? email;
+  String? birthday;
+  RCIMIWUserGender? gender;
+  String? location;
+  int? role;
+  int? level;
+  Map? userExtProfile;
+
+  RCIMIWUserProfile.create({
+    this.userId,
+    this.name,
+    this.portraitUri,
+    this.uniqueId,
+    this.email,
+    this.birthday,
+    this.gender,
+    this.location,
+    this.role,
+    this.level,
+    this.userExtProfile,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['name'] = name;
+    json['portraitUri'] = portraitUri;
+    json['uniqueId'] = uniqueId;
+    json['email'] = email;
+    json['birthday'] = birthday;
+    json['gender'] = gender?.index;
+    json['location'] = location;
+    json['role'] = role;
+    json['level'] = level;
+    json['userExtProfile'] = userExtProfile;
+    return json;
+  }
+
+  RCIMIWUserProfile.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    name = json['name'];
+    portraitUri = json['portraitUri'];
+    uniqueId = json['uniqueId'];
+    email = json['email'];
+    birthday = json['birthday'];
+    gender = json['gender'] == null ? null : RCIMIWUserGender.values[json['gender']];
+    location = json['location'];
+    role = json['role'];
+    level = json['level'];
+    userExtProfile = json['userExtProfile'];
+  }
+}
+
 class RCIMIWConversationTagInfo {
   RCIMIWTagInfo? tagInfo;
   bool? top;
@@ -1899,7 +2117,7 @@ class RCIMIWConversationTagInfo {
 
   RCIMIWConversationTagInfo.fromJson(Map<String, dynamic> json) {
     if (json['tagInfo'] != null) {
-      tagInfo = RCIMIWTagInfo.fromJson(Map<String, dynamic>.from(json['tagInfo']));
+      tagInfo = RCIMIWTagInfo.fromJson((json['tagInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)));
     }
     top = json['top'];
   }
@@ -1921,7 +2139,9 @@ class RCIMIWSearchConversationResult {
 
   RCIMIWSearchConversationResult.fromJson(Map<String, dynamic> json) {
     if (json['conversation'] != null) {
-      conversation = RCIMIWConversation.fromJson(Map<String, dynamic>.from(json['conversation']));
+      conversation = RCIMIWConversation.fromJson(
+        (json['conversation'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     count = json['count'];
   }
@@ -2037,7 +2257,9 @@ class RCIMIWConversation {
     top = json['top'];
     draft = json['draft'];
     if (json['lastMessage'] != null) {
-      lastMessage = RCIMConverter.convertMessage(Map<String, dynamic>.from(json['lastMessage']));
+      lastMessage = RCIMConverter.convertMessage(
+        (json['lastMessage'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
     }
     notificationLevel =
         json['notificationLevel'] == null ? null : RCIMIWPushNotificationLevel.values[json['notificationLevel']];

@@ -193,6 +193,26 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertConnectionStatusToInteger:(RCIMIWConnectionStatus)ConnectionStatus;
 
 
++ (RCIMIWPlatform)convertPlatformFromInteger:(NSInteger)integer;
++ (NSInteger)convertPlatformToInteger:(RCIMIWPlatform)Platform;
+
+
++ (RCIMIWSubscribeOperationType)convertSubscribeOperationTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertSubscribeOperationTypeToInteger:(RCIMIWSubscribeOperationType)SubscribeOperationType;
+
+
++ (RCIMIWSubscribeType)convertSubscribeTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertSubscribeTypeToInteger:(RCIMIWSubscribeType)SubscribeType;
+
+
++ (RCIMIWUserProfileVisibility)convertUserProfileVisibilityFromInteger:(NSInteger)integer;
++ (NSInteger)convertUserProfileVisibilityToInteger:(RCIMIWUserProfileVisibility)UserProfileVisibility;
+
+
++ (RCIMIWUserGender)convertUserGenderFromInteger:(NSInteger)integer;
++ (NSInteger)convertUserGenderToInteger:(RCIMIWUserGender)UserGender;
+
+
 
 @end
 

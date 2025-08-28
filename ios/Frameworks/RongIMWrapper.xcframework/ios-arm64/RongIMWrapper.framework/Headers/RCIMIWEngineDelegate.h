@@ -12,6 +12,8 @@
 #import <RongIMWrapper/RCIMIWGroupInfo.h>
 #import <RongIMWrapper/RCIMIWTranslateItem.h>
 #import <RongIMWrapper/RCIMIWTranslateStrategy.h>
+#import <RongIMWrapper/RCIMIWSubscribeEvent.h>
+#import <RongIMWrapper/RCIMIWSubscribeInfoEvent.h>
 
 @class RCIMIWMessage;
 @class RCIMIWMediaMessage;
@@ -728,6 +730,31 @@ NS_ASSUME_NONNULL_BEGIN
 /// - Parameter isEnable: 是否开启自动翻译
 /// - Since: 5.24.0
 - (void)onAutoTranslateStateDidChange:(BOOL)isEnable;
+
+#pragma mark - 订阅事件回调
+
+/// 当订阅事件发生变化时调用此方法。
+/// 功能说明：当任何订阅的事件发生变化时，此方法将被触发。
+/// 可以通过实现此方法来处理事件的变化，例如更新用户界面或处理新的数据。
+/// 通常，该方法在后台线程中被调用，因此更新 UI 时需要切换到主线程。
+///
+/// @param subscribeEvents 订阅事件的列表，包含所有发生变化的事件。
+/// @remark 订阅过期没有通知，开发者需自行关注过期时间
+/// @since 5.8.1
+- (void)onEventChange:(NSArray<RCIMIWSubscribeInfoEvent *> *)subscribeEvents;
+
+/// 订阅数据同步完成。
+/// 该方法在订阅数据成功同步到设备或系统后调用，用于执行后续处理。
+/// @param type 订阅事件的类型
+/// @since 5.10.0
+- (void)onSubscriptionSyncCompleted:(RCIMIWSubscribeType)type;
+
+/// 当用户在其他设备上的订阅信息发生变更时调用此方法。
+/// 这可以用于更新当前设备上的用户状态，确保订阅信息的一致性。
+///
+/// @param subscribeEvents 订阅事件的列表。
+/// @since 5.8.1
+- (void)onSubscriptionChangedOnOtherDevices:(NSArray<RCIMIWSubscribeEvent *> *)subscribeEvents;
 
 @end
 

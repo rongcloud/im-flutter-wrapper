@@ -454,6 +454,26 @@ static RCIMWrapperEngine *instance = nil;
     [self batchSetConversationTranslateStrategy:call result:result];
   } else if ([@"engine:calculateTextMD5" isEqualToString:call.method]) {
     [self calculateTextMD5:call result:result];
+  } else if ([@"engine:updateMyUserProfileVisibility" isEqualToString:call.method]) {
+    [self updateMyUserProfileVisibility:call result:result];
+  } else if ([@"engine:getMyUserProfileVisibility" isEqualToString:call.method]) {
+    [self getMyUserProfileVisibility:call result:result];
+  } else if ([@"engine:updateMyUserProfile" isEqualToString:call.method]) {
+    [self updateMyUserProfile:call result:result];
+  } else if ([@"engine:getMyUserProfile" isEqualToString:call.method]) {
+    [self getMyUserProfile:call result:result];
+  } else if ([@"engine:getUserProfiles" isEqualToString:call.method]) {
+    [self getUserProfiles:call result:result];
+  } else if ([@"engine:searchUserProfileByUniqueId" isEqualToString:call.method]) {
+    [self searchUserProfileByUniqueId:call result:result];
+  } else if ([@"engine:subscribeEvent" isEqualToString:call.method]) {
+    [self subscribeEvent:call result:result];
+  } else if ([@"engine:unSubscribeEvent" isEqualToString:call.method]) {
+    [self unSubscribeEvent:call result:result];
+  } else if ([@"engine:querySubscribeEvent" isEqualToString:call.method]) {
+    [self querySubscribeEvent:call result:result];
+  } else if ([@"engine:querySubscribeEventByPage" isEqualToString:call.method]) {
+    [self querySubscribeEventByPage:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -505,7 +525,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *token = arguments[@"token"];
     int timeout = [(NSNumber *)arguments[@"timeout"] intValue];
     void (^databaseOpened)(NSInteger code) = nil;
-    void (^connected)(NSInteger code, NSString *userId) = nil;
+    void (^connected)(NSInteger code, NSString *_Nullable userId) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       databaseOpened = ^(NSInteger code) {
@@ -755,8 +775,8 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMessage *message = [RCIMIWPlatformConverter convertMessageFromDict:arguments[@"message"]];
-    void (^messageSaved)(RCIMIWMessage *message) = nil;
-    void (^messageSent)(NSInteger code, RCIMIWMessage *message) = nil;
+    void (^messageSaved)(RCIMIWMessage *_Nullable message) = nil;
+    void (^messageSent)(NSInteger code, RCIMIWMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       messageSaved = ^(RCIMIWMessage *message) {
@@ -795,10 +815,10 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMediaMessage *message = [RCIMIWPlatformConverter convertMediaMessageFromDict:arguments[@"message"]];
-    void (^messageSaved)(RCIMIWMediaMessage *message) = nil;
-    void (^messageSending)(RCIMIWMediaMessage *message, NSInteger progress) = nil;
-    void (^sendingMediaMessageCanceled)(RCIMIWMediaMessage *message) = nil;
-    void (^messageSent)(NSInteger code, RCIMIWMediaMessage *message) = nil;
+    void (^messageSaved)(RCIMIWMediaMessage *_Nullable message) = nil;
+    void (^messageSending)(RCIMIWMediaMessage *_Nullable message, NSInteger progress) = nil;
+    void (^sendingMediaMessageCanceled)(RCIMIWMediaMessage *_Nullable message) = nil;
+    void (^messageSent)(NSInteger code, RCIMIWMediaMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       messageSaved = ^(RCIMIWMediaMessage *message) {
@@ -860,7 +880,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMediaMessage *message = [RCIMIWPlatformConverter convertMediaMessageFromDict:arguments[@"message"]];
-    void (^cancelSendingMediaMessageCalled)(NSInteger code, RCIMIWMediaMessage *message) = nil;
+    void (^cancelSendingMediaMessageCalled)(NSInteger code, RCIMIWMediaMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       cancelSendingMediaMessageCalled = ^(NSInteger code, RCIMIWMediaMessage *message) {
@@ -888,9 +908,9 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMediaMessage *message = [RCIMIWPlatformConverter convertMediaMessageFromDict:arguments[@"message"]];
-    void (^mediaMessageDownloading)(RCIMIWMediaMessage *message, NSInteger progress) = nil;
-    void (^downloadingMediaMessageCanceled)(RCIMIWMediaMessage *message) = nil;
-    void (^mediaMessageDownloaded)(NSInteger code, RCIMIWMediaMessage *message) = nil;
+    void (^mediaMessageDownloading)(RCIMIWMediaMessage *_Nullable message, NSInteger progress) = nil;
+    void (^downloadingMediaMessageCanceled)(RCIMIWMediaMessage *_Nullable message) = nil;
+    void (^mediaMessageDownloaded)(NSInteger code, RCIMIWMediaMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       mediaMessageDownloading = ^(RCIMIWMediaMessage *message, NSInteger progress) {
@@ -941,7 +961,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMediaMessage *message = [RCIMIWPlatformConverter convertMediaMessageFromDict:arguments[@"message"]];
-    void (^cancelDownloadingMediaMessageCalled)(NSInteger code, RCIMIWMediaMessage *message) = nil;
+    void (^cancelDownloadingMediaMessageCalled)(NSInteger code, RCIMIWMediaMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       cancelDownloadingMediaMessageCalled = ^(NSInteger code, RCIMIWMediaMessage *message) {
@@ -986,7 +1006,7 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
     NSString *channelId = arguments[@"channelId"];
-    void (^success)(RCIMIWConversation *t) = nil;
+    void (^success)(RCIMIWConversation *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -1044,7 +1064,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *channelId = arguments[@"channelId"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWConversation *> *t) = nil;
+    void (^success)(NSArray<RCIMIWConversation *> *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -1092,7 +1112,7 @@ static RCIMWrapperEngine *instance = nil;
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
     BOOL topPriority = [(NSNumber *)arguments[@"topPriority"] boolValue];
-    void (^success)(NSArray<RCIMIWConversation *> *t) = nil;
+    void (^success)(NSArray<RCIMIWConversation *> *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -1136,7 +1156,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    void (^success)(NSArray<RCIMIWConversation *> *t) = nil;
+    void (^success)(NSArray<RCIMIWConversation *> *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -1776,14 +1796,14 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
     NSString *channelId = arguments[@"channelId"];
-    void (^success)(NSString *t) = nil;
+    void (^success)(NSString *_Nullable draft) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
-      success = ^(NSString *t) {
+      success = ^(NSString *draft) {
         NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
         [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
-        [arguments setValue:t forKey:@"t"];
+        [arguments setValue:draft forKey:@"t"];
 
         __weak typeof(self.channel) weak = self.channel;
         dispatch_to_main_queue(^{
@@ -1859,7 +1879,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
     NSString *channelId = arguments[@"channelId"];
-    void (^success)(NSArray<RCIMIWConversation *> *conversations) = nil;
+    void (^success)(NSArray<RCIMIWConversation *> *_Nullable conversations) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -2091,7 +2111,7 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWTimeOrder order = [RCIMWrapperArgumentAdapter convertTimeOrderFromInteger:[(NSNumber *)arguments[@"order"] integerValue]];
     RCIMIWMessageOperationPolicy policy = [RCIMWrapperArgumentAdapter convertMessageOperationPolicyFromInteger:[(NSNumber *)arguments[@"policy"] integerValue]];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWMessage *> *t) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -2135,7 +2155,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     long messageId = [(NSNumber *)arguments[@"messageId"] longValue];
-    void (^success)(RCIMIWMessage *message) = nil;
+    void (^success)(RCIMIWMessage *_Nullable message) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -2174,7 +2194,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *messageUId = arguments[@"messageUId"];
-    void (^success)(RCIMIWMessage *message) = nil;
+    void (^success)(RCIMIWMessage *_Nullable message) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -2218,7 +2238,7 @@ static RCIMWrapperEngine *instance = nil;
     long long sentTime = [(NSNumber *)arguments[@"sentTime"] longLongValue];
     int beforeCount = [(NSNumber *)arguments[@"beforeCount"] intValue];
     int afterCount = [(NSNumber *)arguments[@"afterCount"] intValue];
-    void (^success)(NSArray<RCIMIWMessage *> *t) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -2268,7 +2288,7 @@ static RCIMWrapperEngine *instance = nil;
     long long sentTime = [(NSNumber *)arguments[@"sentTime"] longLongValue];
     RCIMIWTimeOrder order = [RCIMWrapperArgumentAdapter convertTimeOrderFromInteger:[(NSNumber *)arguments[@"order"] integerValue]];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -2329,7 +2349,7 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
     NSString *channelId = arguments[@"channelId"];
-    void (^success)(RCIMIWMessage *t) = nil;
+    void (^success)(RCIMIWMessage *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -2385,7 +2405,7 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
     NSString *channelId = arguments[@"channelId"];
-    void (^success)(NSArray<RCIMIWMessage *> *t) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -2429,7 +2449,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMessage *message = [RCIMIWPlatformConverter convertMessageFromDict:arguments[@"message"]];
-    void (^messageInserted)(NSInteger code, RCIMIWMessage *message) = nil;
+    void (^messageInserted)(NSInteger code, RCIMIWMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       messageInserted = ^(NSInteger code, RCIMIWMessage *message) {
@@ -2463,7 +2483,7 @@ static RCIMWrapperEngine *instance = nil;
       [messages addObject:[RCIMIWPlatformConverter convertMessageFromDict:element]];
     }
 
-    void (^messagesInserted)(NSInteger code, NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^messagesInserted)(NSInteger code, NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       messagesInserted = ^(NSInteger code, NSArray<RCIMIWMessage *> *messages) {
@@ -2533,7 +2553,7 @@ static RCIMWrapperEngine *instance = nil;
       [messages addObject:[RCIMIWPlatformConverter convertMessageFromDict:element]];
     }
 
-    void (^localMessagesDeleted)(NSInteger code, NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^localMessagesDeleted)(NSInteger code, NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       localMessagesDeleted = ^(NSInteger code, NSArray<RCIMIWMessage *> *messages) {
@@ -2602,7 +2622,7 @@ static RCIMWrapperEngine *instance = nil;
       [messages addObject:[RCIMIWPlatformConverter convertMessageFromDict:element]];
     }
 
-    void (^messagesDeleted)(NSInteger code, NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^messagesDeleted)(NSInteger code, NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       messagesDeleted = ^(NSInteger code, NSArray<RCIMIWMessage *> *messages) {
@@ -2635,7 +2655,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMessage *message = [RCIMIWPlatformConverter convertMessageFromDict:arguments[@"message"]];
-    void (^messageRecalled)(NSInteger code, RCIMIWMessage *message) = nil;
+    void (^messageRecalled)(NSInteger code, RCIMIWMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       messageRecalled = ^(NSInteger code, RCIMIWMessage *message) {
@@ -2692,7 +2712,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMessage *message = [RCIMIWPlatformConverter convertMessageFromDict:arguments[@"message"]];
-    void (^groupReadReceiptRequestSent)(NSInteger code, RCIMIWMessage *message) = nil;
+    void (^groupReadReceiptRequestSent)(NSInteger code, RCIMIWMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       groupReadReceiptRequestSent = ^(NSInteger code, RCIMIWMessage *message) {
@@ -2728,7 +2748,7 @@ static RCIMWrapperEngine *instance = nil;
       [messages addObject:[RCIMIWPlatformConverter convertMessageFromDict:element]];
     }
 
-    void (^groupReadReceiptResponseSent)(NSInteger code, NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^groupReadReceiptResponseSent)(NSInteger code, NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       groupReadReceiptResponseSent = ^(NSInteger code, NSArray<RCIMIWMessage *> *messages) {
@@ -2931,7 +2951,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *targetId = arguments[@"targetId"];
     int messageCount = [(NSNumber *)arguments[@"messageCount"] intValue];
     BOOL autoCreate = [(NSNumber *)arguments[@"autoCreate"] boolValue];
-    void (^chatRoomJoined)(NSInteger code, NSString *targetId) = nil;
+    void (^chatRoomJoined)(NSInteger code, NSString *_Nullable targetId) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       chatRoomJoined = ^(NSInteger code, NSString *targetId) {
@@ -2959,7 +2979,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    void (^chatRoomLeft)(NSInteger code, NSString *targetId) = nil;
+    void (^chatRoomLeft)(NSInteger code, NSString *_Nullable targetId) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       chatRoomLeft = ^(NSInteger code, NSString *targetId) {
@@ -3006,7 +3026,7 @@ static RCIMWrapperEngine *instance = nil;
     long long timestamp = [(NSNumber *)arguments[@"timestamp"] longLongValue];
     RCIMIWTimeOrder order = [RCIMWrapperArgumentAdapter convertTimeOrderFromInteger:[(NSNumber *)arguments[@"order"] integerValue]];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -3087,7 +3107,7 @@ static RCIMWrapperEngine *instance = nil;
     void (^chatRoomEntriesAdded)(NSInteger code, NSDictionary<NSString *, NSNumber *> *_Nullable errors) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
-      chatRoomEntriesAdded = ^(NSInteger code, NSDictionary<NSString *, NSNumber *> *_Nullable errors) {
+      chatRoomEntriesAdded = ^(NSInteger code, NSDictionary<NSString *, NSNumber *> *errors) {
         NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
         [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
         [arguments setValue:@(code) forKey:@"code"];
@@ -3127,7 +3147,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
     NSString *key = arguments[@"key"];
-    void (^success)(NSDictionary<NSString *, NSString *> *entry) = nil;
+    void (^success)(NSDictionary<NSString *, NSString *> *_Nullable entry) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -3179,7 +3199,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    void (^success)(NSDictionary<NSString *, NSString *> *entries) = nil;
+    void (^success)(NSDictionary<NSString *, NSString *> *_Nullable entries) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -3276,7 +3296,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *userId = arguments[@"userId"];
-    void (^blacklistAdded)(NSInteger code, NSString *userId) = nil;
+    void (^blacklistAdded)(NSInteger code, NSString *_Nullable userId) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       blacklistAdded = ^(NSInteger code, NSString *userId) {
@@ -3304,7 +3324,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *userId = arguments[@"userId"];
-    void (^blacklistRemoved)(NSInteger code, NSString *userId) = nil;
+    void (^blacklistRemoved)(NSInteger code, NSString *_Nullable userId) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       blacklistRemoved = ^(NSInteger code, NSString *userId) {
@@ -3394,7 +3414,7 @@ static RCIMWrapperEngine *instance = nil;
   NSInteger code = -1;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
-    void (^successBlock)(NSArray<NSString *> *userIds) = nil;
+    void (^successBlock)(NSArray<NSString *> *_Nullable userIds) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -3438,7 +3458,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *keyword = arguments[@"keyword"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -3489,7 +3509,7 @@ static RCIMWrapperEngine *instance = nil;
     long long endTime = [(NSNumber *)arguments[@"endTime"] longLongValue];
     int offset = [(NSNumber *)arguments[@"offset"] intValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -3538,7 +3558,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *channelId = arguments[@"channelId"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -3588,7 +3608,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *keyword = arguments[@"keyword"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWMessage *> *messages) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -3635,7 +3655,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *channelId = arguments[@"channelId"];
     NSArray<NSNumber *> *messageTypes = arguments[@"messageTypes"];
     NSString *keyword = arguments[@"keyword"];
-    void (^success)(NSArray<RCIMIWSearchConversationResult *> *results) = nil;
+    void (^success)(NSArray<RCIMIWSearchConversationResult *> *_Nullable results) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -3744,7 +3764,7 @@ static RCIMWrapperEngine *instance = nil;
   NSInteger code = -1;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
-    void (^successBlock)(NSString *startTime, int spanMinutes, RCIMIWPushNotificationQuietHoursLevel level) = nil;
+    void (^successBlock)(NSString *_Nullable startTime, int spanMinutes, RCIMIWPushNotificationQuietHoursLevel level) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -4196,8 +4216,8 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMessage *message = [RCIMIWPlatformConverter convertMessageFromDict:arguments[@"message"]];
     NSArray<NSString *> *userIds = arguments[@"userIds"];
-    void (^messageSaved)(RCIMIWMessage *message) = nil;
-    void (^messageSent)(NSInteger code, RCIMIWMessage *message) = nil;
+    void (^messageSaved)(RCIMIWMessage *_Nullable message) = nil;
+    void (^messageSent)(NSInteger code, RCIMIWMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       messageSaved = ^(RCIMIWMessage *message) {
@@ -4307,7 +4327,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
     NSString *channelId = arguments[@"channelId"];
-    void (^success)(NSArray<RCIMIWConversation *> *conversations) = nil;
+    void (^success)(NSArray<RCIMIWConversation *> *_Nullable conversations) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -4395,7 +4415,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    void (^success)(NSArray<RCIMIWConversation *> *conversations) = nil;
+    void (^success)(NSArray<RCIMIWConversation *> *_Nullable conversations) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -4610,7 +4630,7 @@ static RCIMWrapperEngine *instance = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
-      success = ^(NSArray<RCIMIWMessage *> *_Nullable matchedMessages, NSArray<RCIMIWMessage *> *_Nullable notMatchedMessages) {
+      success = ^(NSArray<RCIMIWMessage *> *matchedMessages, NSArray<RCIMIWMessage *> *notMatchedMessages) {
         NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
         [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
 
@@ -4818,7 +4838,7 @@ static RCIMWrapperEngine *instance = nil;
   NSInteger code = -1;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
-    void (^successBlock)(NSArray<RCIMIWTagInfo *> *results) = nil;
+    void (^successBlock)(NSArray<RCIMIWTagInfo *> *_Nullable results) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -4950,7 +4970,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    void (^success)(NSArray<RCIMIWConversationTagInfo *> *conversations) = nil;
+    void (^success)(NSArray<RCIMIWConversationTagInfo *> *_Nullable conversations) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -4996,7 +5016,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *tagId = arguments[@"tagId"];
     long long timestamp = [(NSNumber *)arguments[@"timestamp"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWConversation *> *conversations) = nil;
+    void (^success)(NSArray<RCIMIWConversation *> *_Nullable conversations) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -5262,7 +5282,7 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWGroupInfo *groupInfo = [RCIMIWPlatformConverter convertGroupInfoFromDict:arguments[@"groupInfo"]];
     NSArray<NSString *> *inviteeUserIds = arguments[@"inviteeUserIds"];
     void (^success)(NSInteger processCode) = nil;
-    void (^error)(NSInteger errorCode, NSString *errorInfo) = nil;
+    void (^error)(NSInteger errorCode, NSString *_Nullable errorInfo) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       success = ^(NSInteger processCode) {
@@ -5301,7 +5321,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWGroupInfo *groupInfo = [RCIMIWPlatformConverter convertGroupInfoFromDict:arguments[@"groupInfo"]];
-    void (^groupInfoUpdated)(NSInteger code, NSString *errorInfo) = nil;
+    void (^groupInfoUpdated)(NSInteger code, NSString *_Nullable errorInfo) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
       groupInfoUpdated = ^(NSInteger code, NSString *errorInfo) {
@@ -5329,7 +5349,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSString *> *groupIds = arguments[@"groupIds"];
-    void (^success)(NSArray<RCIMIWGroupInfo *> *groupInfos) = nil;
+    void (^success)(NSArray<RCIMIWGroupInfo *> *_Nullable groupInfos) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -5527,7 +5547,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *groupId = arguments[@"groupId"];
     NSArray<NSString *> *userIds = arguments[@"userIds"];
-    void (^success)(NSArray<RCIMIWGroupMemberInfo *> *groupMembers) = nil;
+    void (^success)(NSArray<RCIMIWGroupMemberInfo *> *_Nullable groupMembers) = nil;
     void (^error)(NSInteger errorCode) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -5573,7 +5593,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *groupId = arguments[@"groupId"];
     RCIMIWGroupMemberRole role = [RCIMWrapperArgumentAdapter convertGroupMemberRoleFromInteger:[(NSNumber *)arguments[@"role"] integerValue]];
     RCIMIWPagingQueryOption *option = [RCIMIWPlatformConverter convertPagingQueryOptionFromDict:arguments[@"option"]];
-    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo *> *result) = nil;
+    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo *> *_Nullable result) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -5613,7 +5633,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWGroupMemberRole role = [RCIMWrapperArgumentAdapter convertGroupMemberRoleFromInteger:[(NSNumber *)arguments[@"role"] integerValue]];
     RCIMIWPagingQueryOption *option = [RCIMIWPlatformConverter convertPagingQueryOptionFromDict:arguments[@"option"]];
-    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupInfo *> *result) = nil;
+    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupInfo *> *_Nullable result) = nil;
     void (^error)(NSInteger errorCode) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -5652,7 +5672,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSString *> *groupIds = arguments[@"groupIds"];
-    void (^success)(NSArray<RCIMIWGroupInfo *> *groupInfos) = nil;
+    void (^success)(NSArray<RCIMIWGroupInfo *> *_Nullable groupInfos) = nil;
     void (^error)(NSInteger errorCode) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -5755,7 +5775,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *groupName = arguments[@"groupName"];
     RCIMIWPagingQueryOption *option = [RCIMIWPlatformConverter convertPagingQueryOptionFromDict:arguments[@"option"]];
-    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupInfo *> *result) = nil;
+    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupInfo *> *_Nullable result) = nil;
     void (^error)(NSInteger errorCode) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -5796,7 +5816,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *groupId = arguments[@"groupId"];
     NSString *name = arguments[@"name"];
     RCIMIWPagingQueryOption *option = [RCIMIWPlatformConverter convertPagingQueryOptionFromDict:arguments[@"option"]];
-    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo *> *result) = nil;
+    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo *> *_Nullable result) = nil;
     void (^error)(NSInteger errorCode) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -6061,7 +6081,7 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWPagingQueryOption *option = [RCIMIWPlatformConverter convertPagingQueryOptionFromDict:arguments[@"option"]];
     NSArray<NSNumber *> *directions = arguments[@"directions"];
     NSArray<NSNumber *> *status = arguments[@"status"];
-    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo *> *result) = nil;
+    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo *> *_Nullable result) = nil;
     void (^error)(NSInteger errorCode) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -6156,7 +6176,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *groupId = arguments[@"groupId"];
-    void (^success)(NSArray<RCIMIWFollowInfo *> *followInfos) = nil;
+    void (^success)(NSArray<RCIMIWFollowInfo *> *_Nullable followInfos) = nil;
     void (^error)(NSInteger errorCode) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -6293,7 +6313,7 @@ static RCIMWrapperEngine *instance = nil;
   NSInteger code = -1;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
-    void (^successBlock)(NSString *language) = nil;
+    void (^successBlock)(NSString *_Nullable language) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -6432,6 +6452,410 @@ static RCIMWrapperEngine *instance = nil;
   }
   dispatch_to_main_queue(^{
     result(code);
+  });
+}
+
+- (void)updateMyUserProfileVisibility:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWUserProfileVisibility visibility = [RCIMWrapperArgumentAdapter convertUserProfileVisibilityFromInteger:[(NSNumber *)arguments[@"visibility"] integerValue]];
+    void (^success)() = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWUpdateMyUserProfileVisibilityCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"errorCode"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWUpdateMyUserProfileVisibilityCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine updateMyUserProfileVisibility:visibility success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getMyUserProfileVisibility:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    void (^successBlock)(NSInteger visibility) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      successBlock = ^(NSInteger visibility) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(visibility) forKey:@"visibility"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMyUserProfileVisibilityCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"errorCode"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMyUserProfileVisibilityCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getMyUserProfileVisibility:successBlock error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)updateMyUserProfile:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWUserProfile *profile = [RCIMIWPlatformConverter convertUserProfileFromDict:arguments[@"profile"]];
+    void (^successBlock)() = nil;
+    void (^errorBlock)(NSInteger errorCode, NSArray<NSString *> *_Nullable errorKeys) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      successBlock = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWUpdateMyUserProfileCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      errorBlock = ^(NSInteger errorCode, NSArray<NSString *> *errorKeys) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"errorCode"];
+        [arguments setValue:errorKeys forKey:@"errorKeys"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWUpdateMyUserProfileCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine updateMyUserProfile:profile successBlock:successBlock errorBlock:errorBlock];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getMyUserProfile:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    void (^successBlock)(RCIMIWUserProfile *_Nullable userProfile) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      successBlock = ^(RCIMIWUserProfile *userProfile) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertUserProfileToDict:userProfile] forKey:@"userProfile"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMyUserProfileCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"errorCode"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMyUserProfileCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getMyUserProfile:successBlock error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getUserProfiles:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSArray<NSString *> *userIds = arguments[@"userIds"];
+    void (^success)(NSArray<RCIMIWUserProfile *> *_Nullable userProfiles) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWUserProfile *> *userProfiles) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *userProfiles_arr = [NSMutableArray array];
+        for (RCIMIWUserProfile *element in userProfiles) {
+          [userProfiles_arr addObject:[RCIMIWPlatformConverter convertUserProfileToDict:element]];
+        }
+        [arguments setValue:userProfiles_arr.copy forKey:@"userProfiles"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetUserProfilesCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"errorCode"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetUserProfilesCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getUserProfiles:userIds success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)searchUserProfileByUniqueId:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *uniqueId = arguments[@"uniqueId"];
+    void (^success)(RCIMIWUserProfile *_Nullable userProfile) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(RCIMIWUserProfile *userProfile) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertUserProfileToDict:userProfile] forKey:@"userProfile"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSearchUserProfileByUniqueIdCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"errorCode"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSearchUserProfileByUniqueIdCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine searchUserProfileByUniqueId:uniqueId success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)subscribeEvent:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWSubscribeEventRequest *request = [RCIMIWPlatformConverter convertSubscribeEventRequestFromDict:arguments[@"request"]];
+    void (^success)() = nil;
+    void (^error)(NSInteger code, NSArray<NSString *> *_Nullable failedUserIds) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSubscribeEventCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code, NSArray<NSString *> *failedUserIds) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+        [arguments setValue:failedUserIds forKey:@"failedUserIds"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSubscribeEventCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine subscribeEvent:request success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)unSubscribeEvent:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWSubscribeEventRequest *request = [RCIMIWPlatformConverter convertSubscribeEventRequestFromDict:arguments[@"request"]];
+    void (^success)() = nil;
+    void (^error)(NSInteger code, NSArray<NSString *> *_Nullable failedUserIds) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSubscribeEventCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code, NSArray<NSString *> *failedUserIds) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+        [arguments setValue:failedUserIds forKey:@"failedUserIds"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSubscribeEventCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine unSubscribeEvent:request success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)querySubscribeEvent:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWSubscribeEventRequest *request = [RCIMIWPlatformConverter convertSubscribeEventRequestFromDict:arguments[@"request"]];
+    void (^success)(NSArray<RCIMIWSubscribeInfoEvent *> *_Nullable subscribeEvents) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWSubscribeInfoEvent *> *subscribeEvents) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *events_arr = [NSMutableArray array];
+        for (RCIMIWSubscribeInfoEvent *element in subscribeEvents) {
+          [events_arr addObject:[RCIMIWPlatformConverter convertSubscribeInfoEventToDict:element]];
+        }
+        [arguments setValue:events_arr.copy forKey:@"events"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWQuerySubscribeEventCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWQuerySubscribeEventCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine querySubscribeEvent:request success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)querySubscribeEventByPage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWSubscribeEventRequest *request = [RCIMIWPlatformConverter convertSubscribeEventRequestFromDict:arguments[@"request"]];
+    NSInteger pageSize = [(NSNumber *)arguments[@"pageSize"] intValue];
+    NSInteger startIndex = [(NSNumber *)arguments[@"startIndex"] intValue];
+    void (^success)(NSArray<RCIMIWSubscribeInfoEvent *> *_Nullable subscribeEvents) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWSubscribeInfoEvent *> *subscribeEvents) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *events_arr = [NSMutableArray array];
+        for (RCIMIWSubscribeInfoEvent *element in subscribeEvents) {
+          [events_arr addObject:[RCIMIWPlatformConverter convertSubscribeInfoEventToDict:element]];
+        }
+        [arguments setValue:events_arr.copy forKey:@"events"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWQuerySubscribeEventCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWQuerySubscribeEventCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine querySubscribeEventByPage:request pageSize:pageSize startIndex:startIndex success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
   });
 }
 
@@ -8259,6 +8683,49 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onAutoTranslateStateDidChange" arguments:arguments.copy];
+  });
+}
+
+- (void)onEventChange:(NSArray<RCIMIWSubscribeInfoEvent *> *)subscribeEvents {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+
+  NSMutableArray *subscribeEvents_arr = [NSMutableArray array];
+  for (RCIMIWSubscribeInfoEvent *element in subscribeEvents) {
+    [subscribeEvents_arr addObject:[RCIMIWPlatformConverter convertSubscribeInfoEventToDict:element]];
+  }
+  [arguments setValue:subscribeEvents_arr.copy forKey:@"subscribeEvents"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onEventChange" arguments:arguments.copy];
+  });
+}
+
+- (void)onSubscriptionSyncCompleted:(RCIMIWSubscribeType)type {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertSubscribeTypeToInteger:type]) forKey:@"type"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onSubscriptionSyncCompleted" arguments:arguments.copy];
+  });
+}
+
+- (void)onSubscriptionChangedOnOtherDevices:(NSArray<RCIMIWSubscribeEvent *> *)subscribeEvents {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+
+  NSMutableArray *subscribeEvents_arr = [NSMutableArray array];
+  for (RCIMIWSubscribeEvent *element in subscribeEvents) {
+    [subscribeEvents_arr addObject:[RCIMIWPlatformConverter convertSubscribeEventToDict:element]];
+  }
+  [arguments setValue:subscribeEvents_arr.copy forKey:@"subscribeEvents"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onSubscriptionChangedOnOtherDevices" arguments:arguments.copy];
   });
 }
 

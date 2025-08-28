@@ -70,6 +70,8 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesAroundTimeCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMyUserProfileCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMyUserProfileVisibilityCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetNotificationQuietHoursCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetTagsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetTagsFromConversationCallback;
@@ -87,6 +89,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadCountByLevelsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadMentionedCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUnreadMentionedMessagesCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetUserProfilesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGroupInfoUpdatedCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWInsertMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWInsertMessagesCallback;
@@ -96,6 +99,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWJoinGroupCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWKickGroupMembersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWLeaveChatRoomCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWModifyUltraGroupMessageCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWQuerySubscribeEventCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWQuitGroupCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRecallMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRecallUltraGroupMessageCallback;
@@ -122,6 +126,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchMessagesByMessageTypesCallb
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchMessagesByTimeRangeCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchMessagesByUserIdCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchMessagesCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchUserProfileByUniqueIdCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendGroupMessageToDesignatedUsersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendGroupReadReceiptRequestCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendGroupReadReceiptResponseCallback;
@@ -130,6 +135,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWSendPrivateReadReceiptMessageCall
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendUltraGroupTypingStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupMemberInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupRemarkCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSubscribeEventCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncConversationReadStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncUltraGroupReadStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWTransferGroupOwnerCallback;
@@ -137,6 +143,8 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWTranslateGetLanguageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWTranslateResponseCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateMessageExpansionCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateMessageLocalExtraCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateMyUserProfileCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateMyUserProfileVisibilityCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateTagNameByIdCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWUpdateUltraGroupMessageExpansionCallback;
 import cn.rongcloud.im.wrapper.callback.RCIMIWConnectCallback;
@@ -201,9 +209,15 @@ import cn.rongcloud.im.wrapper.messages.RCIMIWTextMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWVoiceMessage;
 import cn.rongcloud.im.wrapper.options.RCIMIWEngineOptions;
 import cn.rongcloud.im.wrapper.platform.RCIMIWPlatformConverter;
+import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeEvent;
+import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeEventRequest;
+import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeInfoEvent;
+import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeType;
 import cn.rongcloud.im.wrapper.translate.RCIMIWTranslateItem;
 import cn.rongcloud.im.wrapper.translate.RCIMIWTranslateMessagesParams;
 import cn.rongcloud.im.wrapper.translate.RCIMIWTranslateTextParams;
+import cn.rongcloud.im.wrapper.userprofile.RCIMIWUserProfile;
+import cn.rongcloud.im.wrapper.userprofile.RCIMIWUserProfileVisibility;
 import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterAssets;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
@@ -1056,6 +1070,46 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:calculateTextMD5":
         calculateTextMD5(call, result);
+        break;
+
+      case "engine:updateMyUserProfileVisibility":
+        updateMyUserProfileVisibility(call, result);
+        break;
+
+      case "engine:getMyUserProfileVisibility":
+        getMyUserProfileVisibility(call, result);
+        break;
+
+      case "engine:updateMyUserProfile":
+        updateMyUserProfile(call, result);
+        break;
+
+      case "engine:getMyUserProfile":
+        getMyUserProfile(call, result);
+        break;
+
+      case "engine:getUserProfiles":
+        getUserProfiles(call, result);
+        break;
+
+      case "engine:searchUserProfileByUniqueId":
+        searchUserProfileByUniqueId(call, result);
+        break;
+
+      case "engine:subscribeEvent":
+        subscribeEvent(call, result);
+        break;
+
+      case "engine:unSubscribeEvent":
+        unSubscribeEvent(call, result);
+        break;
+
+      case "engine:querySubscribeEvent":
+        querySubscribeEvent(call, result);
+        break;
+
+      case "engine:querySubscribeEventByPage":
+        querySubscribeEventByPage(call, result);
         break;
     }
   }
@@ -4393,6 +4447,167 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void updateMyUserProfileVisibility(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWUserProfileVisibility visibility =
+          RCIMWrapperArgumentAdapter.toRCIMIWUserProfileVisibility(call.argument("visibility"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWUpdateMyUserProfileVisibilityCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWUpdateMyUserProfileVisibilityCallbackImpl(cb_handler);
+      }
+
+      code = engine.updateMyUserProfileVisibility(visibility, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getMyUserProfileVisibility(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMyUserProfileVisibilityCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMyUserProfileVisibilityCallbackImpl(cb_handler);
+      }
+
+      code = engine.getMyUserProfileVisibility(callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void updateMyUserProfile(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWUserProfile profile =
+          RCIMIWPlatformConverter.convertUserProfile(
+              (HashMap<String, Object>) call.argument("profile"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWUpdateMyUserProfileCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWUpdateMyUserProfileCallbackImpl(cb_handler);
+      }
+
+      code = engine.updateMyUserProfile(profile, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getMyUserProfile(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMyUserProfileCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMyUserProfileCallbackImpl(cb_handler);
+      }
+
+      code = engine.getMyUserProfile(callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getUserProfiles(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<String> userIds = call.argument("userIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetUserProfilesCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetUserProfilesCallbackImpl(cb_handler);
+      }
+
+      code = engine.getUserProfiles(userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void searchUserProfileByUniqueId(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String uniqueId = (String) call.argument("uniqueId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSearchUserProfileByUniqueIdCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSearchUserProfileByUniqueIdCallbackImpl(cb_handler);
+      }
+
+      code = engine.searchUserProfileByUniqueId(uniqueId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void subscribeEvent(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWSubscribeEventRequest request =
+          RCIMIWPlatformConverter.convertSubscribeEventRequest(
+              (HashMap<String, Object>) call.argument("request"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSubscribeEventCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSubscribeEventCallbackImpl(cb_handler);
+      }
+
+      code = engine.subscribeEvent(request, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void unSubscribeEvent(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWSubscribeEventRequest request =
+          RCIMIWPlatformConverter.convertSubscribeEventRequest(
+              (HashMap<String, Object>) call.argument("request"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSubscribeEventCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSubscribeEventCallbackImpl(cb_handler);
+      }
+
+      code = engine.unSubscribeEvent(request, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void querySubscribeEvent(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWSubscribeEventRequest request =
+          RCIMIWPlatformConverter.convertSubscribeEventRequest(
+              (HashMap<String, Object>) call.argument("request"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWQuerySubscribeEventCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWQuerySubscribeEventCallbackImpl(cb_handler);
+      }
+
+      code = engine.querySubscribeEvent(request, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void querySubscribeEventByPage(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWSubscribeEventRequest request =
+          RCIMIWPlatformConverter.convertSubscribeEventRequest(
+              (HashMap<String, Object>) call.argument("request"));
+      int pageSize = ((Number) call.argument("pageSize")).intValue();
+      int startIndex = ((Number) call.argument("startIndex")).intValue();
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWQuerySubscribeEventCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWQuerySubscribeEventCallbackImpl(cb_handler);
+      }
+
+      code = engine.querySubscribeEventByPage(request, pageSize, startIndex, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   class RCIMIWListenerImpl extends RCIMIWListener {
 
     @Override
@@ -7038,6 +7253,67 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine:onAutoTranslateStateDidChange", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onEventChange(List<RCIMIWSubscribeInfoEvent> subscribeEvents) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List subscribeEvents_str = new ArrayList();
+
+      if (subscribeEvents != null) {
+        for (RCIMIWSubscribeInfoEvent element : subscribeEvents) {
+          subscribeEvents_str.add(RCIMIWPlatformConverter.convertSubscribeInfoEvent(element));
+        }
+      }
+
+      arguments.put("subscribeEvents", subscribeEvents_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onEventChange", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onSubscriptionSyncCompleted(RCIMIWSubscribeType type) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("type", type.ordinal());
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onSubscriptionSyncCompleted", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onSubscriptionChangedOnOtherDevices(List<RCIMIWSubscribeEvent> subscribeEvents) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List subscribeEvents_str = new ArrayList();
+
+      if (subscribeEvents != null) {
+        for (RCIMIWSubscribeEvent element : subscribeEvents) {
+          subscribeEvents_str.add(RCIMIWPlatformConverter.convertSubscribeEvent(element));
+        }
+      }
+
+      arguments.put("subscribeEvents", subscribeEvents_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onSubscriptionChangedOnOtherDevices", arguments);
             }
           });
     }
@@ -11904,6 +12180,352 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWUpdateMyUserProfileVisibilityCallbackImpl
+      implements IRCIMIWUpdateMyUserProfileVisibilityCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWUpdateMyUserProfileVisibilityCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess() {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWUpdateMyUserProfileVisibilityCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int errorCode) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("errorCode", errorCode);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWUpdateMyUserProfileVisibilityCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetMyUserProfileVisibilityCallbackImpl
+      implements IRCIMIWGetMyUserProfileVisibilityCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetMyUserProfileVisibilityCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(int visibility) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("visibility", visibility);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMyUserProfileVisibilityCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int errorCode) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("errorCode", errorCode);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMyUserProfileVisibilityCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWUpdateMyUserProfileCallbackImpl implements IRCIMIWUpdateMyUserProfileCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWUpdateMyUserProfileCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess() {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWUpdateMyUserProfileCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int errorCode, List<String> errorKeys) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("errorCode", errorCode);
+      arguments.put("errorKeys", errorKeys);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWUpdateMyUserProfileCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetMyUserProfileCallbackImpl implements IRCIMIWGetMyUserProfileCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetMyUserProfileCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWUserProfile userProfile) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("userProfile", RCIMIWPlatformConverter.convertUserProfile(userProfile));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMyUserProfileCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int errorCode) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("errorCode", errorCode);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetMyUserProfileCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetUserProfilesCallbackImpl implements IRCIMIWGetUserProfilesCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetUserProfilesCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWUserProfile> userProfiles) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List userProfiles_str = new ArrayList();
+
+      if (userProfiles != null) {
+        for (RCIMIWUserProfile element : userProfiles) {
+          userProfiles_str.add(RCIMIWPlatformConverter.convertUserProfile(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("userProfiles", userProfiles_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetUserProfilesCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int errorCode) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("errorCode", errorCode);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetUserProfilesCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSearchUserProfileByUniqueIdCallbackImpl
+      implements IRCIMIWSearchUserProfileByUniqueIdCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSearchUserProfileByUniqueIdCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWUserProfile userProfile) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("userProfile", RCIMIWPlatformConverter.convertUserProfile(userProfile));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSearchUserProfileByUniqueIdCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int errorCode) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("errorCode", errorCode);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSearchUserProfileByUniqueIdCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSubscribeEventCallbackImpl implements IRCIMIWSubscribeEventCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSubscribeEventCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess() {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWSubscribeEventCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code, List<String> failedUserIds) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+      arguments.put("failedUserIds", failedUserIds);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWSubscribeEventCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWQuerySubscribeEventCallbackImpl implements IRCIMIWQuerySubscribeEventCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWQuerySubscribeEventCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWSubscribeInfoEvent> events) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List events_str = new ArrayList();
+
+      if (events != null) {
+        for (RCIMIWSubscribeInfoEvent element : events) {
+          events_str.add(RCIMIWPlatformConverter.convertSubscribeInfoEvent(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("events", events_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWQuerySubscribeEventCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWQuerySubscribeEventCallback_onError", arguments);
             }
           });
     }

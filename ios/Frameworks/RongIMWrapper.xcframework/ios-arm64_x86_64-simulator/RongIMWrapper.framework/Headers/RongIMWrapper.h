@@ -47,6 +47,7 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWBlockedMessageInfo.h>
 #import <RongIMWrapper/RCIMIWMentionedInfo.h>
 #import <RongIMWrapper/RCIMIWUserInfo.h>
+#import <RongIMWrapper/RCIMIWUserProfile.h>
 #import <RongIMWrapper/RCIMIWTypingStatus.h>
 #import <RongIMWrapper/RCIMIWTagInfo.h>
 #import <RongIMWrapper/RCIMIWConversationTagInfo.h>
@@ -72,6 +73,13 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWTranslateTextParam.h>
 #import <RongIMWrapper/RCIMIWTranslateTextParams.h>
 #import <RongIMWrapper/RCIMIWTranslateConverter.h>
+
+#import <RongIMWrapper/RCIMIWSubscribeEvent.h>
+#import <RongIMWrapper/RCIMIWSubscribeInfoEvent.h>
+#import <RongIMWrapper/RCIMIWSubscribeEventDetail.h>
+#import <RongIMWrapper/RCIMIWSubscribeEventConverter.h>
+#import <RongIMWrapper/RCIMIWSubscribeEventRequest.h>
+#import <RongIMWrapper/RCIMIWPlatform.h>
 
 #import <RongIMWrapper/RCIMIWGroupInfo.h>
 #import <RongIMWrapper/RCIMIWQuitGroupConfig.h>

@@ -1424,4 +1424,84 @@ const calculateTextMD5 = {
   "action": engine_fun.calculateTextMD5,
 };
 
+const updateMyUserProfileVisibility = {
+  "title": "updateMyUserProfileVisibility",
+  "params": [
+    {"key": "visibility", "type": "String", "hint": "", "lable": "请输入visibility",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.updateMyUserProfileVisibility,
+};
+
+const getMyUserProfileVisibility = {
+  "title": "getMyUserProfileVisibility",
+  "params": [
+    {"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getMyUserProfileVisibility,
+};
+
+const updateMyUserProfile = {
+  "title": "updateMyUserProfile",
+  "params": [
+    {"key": "profile", "type": "String", "hint": "", "lable": "请输入profile",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.updateMyUserProfile,
+};
+
+const getMyUserProfile = {
+  "title": "getMyUserProfile",
+  "params": [
+    {"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getMyUserProfile,
+};
+
+const getUserProfiles = {
+  "title": "getUserProfiles",
+  "params": [
+    {"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getUserProfiles,
+};
+
+const searchUserProfileByUniqueId = {
+  "title": "searchUserProfileByUniqueId",
+  "params": [
+    {"key": "uniqueId", "type": "String", "hint": "", "lable": "请输入uniqueId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.searchUserProfileByUniqueId,
+};
+
+const subscribeEvent = {
+  "title": "subscribeEvent",
+  "params": [
+    {"key": "request", "type": "String", "hint": "", "lable": "请输入request",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.subscribeEvent,
+};
+
+const unSubscribeEvent = {
+  "title": "unSubscribeEvent",
+  "params": [
+    {"key": "request", "type": "String", "hint": "", "lable": "请输入request",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.unSubscribeEvent,
+};
+
+const querySubscribeEvent = {
+  "title": "querySubscribeEvent",
+  "params": [
+    {"key": "request", "type": "String", "hint": "", "lable": "请输入request",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.querySubscribeEvent,
+};
+
+const querySubscribeEventByPage = {
+  "title": "querySubscribeEventByPage",
+  "params": [
+    {"key": "request", "type": "String", "hint": "", "lable": "请输入request",},{"key": "pageSize", "type": "String", "hint": "", "lable": "请输入pageSize",},{"key": "startIndex", "type": "String", "hint": "", "lable": "请输入startIndex",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.querySubscribeEventByPage,
+};
+
 */

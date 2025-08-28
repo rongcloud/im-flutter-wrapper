@@ -8,8 +8,9 @@ import 'other/other.dart' as other;
 import 'tag/tag.dart' as tag;
 import 'group/group.dart' as group;
 import 'translate/translate.dart' as translate;
+import 'userprofile/userprofile.dart' as userprofile;
 
-const titleList = ["链接相关", "会话相关", "消息相关", "群组相关", "未读数相关", "聊天室相关", "超级群相关", "会话标签", "翻译相关", "其他配置"];
+const titleList = ["链接相关", "会话相关", "消息相关", "群组相关", "未读数相关", "聊天室相关", "超级群相关", "会话标签", "翻译相关", "用户信息托管", "其他配置"];
 
 const subList = {
   "其他配置": [
@@ -187,6 +188,18 @@ const subList = {
     translate.getAutoTranslateEnabled,
     translate.batchSetConversationTranslateStrategy,
   ],
+  "用户信息托管": [
+    userprofile.updateMyUserProfileVisibility,
+    userprofile.getMyUserProfileVisibility,
+    userprofile.updateMyUserProfile,
+    userprofile.getMyUserProfile,
+    userprofile.getUserProfiles,
+    userprofile.searchUserProfileByUniqueId,
+    userprofile.subscribeEvent,
+    userprofile.unSubscribeEvent,
+    userprofile.querySubscribeEvent,
+    userprofile.querySubscribeEventByPage,
+  ],
   "临时接口": [],
 };
 
@@ -337,5 +350,15 @@ const cbList = [
   "setAutoTranslateEnable",
   "getAutoTranslateEnabled",
   "batchSetConversationTranslateStrategy",
+  "updateMyUserProfileVisibility",
+  "getMyUserProfileVisibility",
+  "updateMyUserProfile",
+  "getMyUserProfile",
+  "getUserProfiles",
+  "searchUserProfileByUniqueId",
+  "subscribeEvent",
+  "unSubscribeEvent",
+  "querySubscribeEvent",
+  "querySubscribeEventByPage",
 ];
 const cbParam = {"key": "use_cb", "type": "number", "hint": "0为不使用 1为使用,默认不填为使用", "lable": "请输入是否使用callback"};

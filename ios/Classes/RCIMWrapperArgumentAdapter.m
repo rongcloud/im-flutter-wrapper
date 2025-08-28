@@ -954,4 +954,111 @@
   return index;
 }
 
++ (RCIMIWPlatform)convertPlatformFromInteger:(NSInteger)integer {
+  NSArray *PlatformArray = @[
+    @(RCIMIWPlatformOther),
+    @(RCIMIWPlatformIOS),
+    @(RCIMIWPlatformAndroid),
+    @(RCIMIWPlatformWeb),
+    @(RCIMIWPlatformPC),
+    @(RCIMIWPlatformMiniWeb),
+    @(RCIMIWPlatformHarmonyOS),
+  ];
+  RCIMIWPlatform Platform = [[PlatformArray objectAtIndex:integer] integerValue];
+  return Platform;
+}
++ (NSInteger)convertPlatformToInteger:(RCIMIWPlatform)Platform {
+  NSArray *PlatformArray = @[
+    @(RCIMIWPlatformOther),
+    @(RCIMIWPlatformIOS),
+    @(RCIMIWPlatformAndroid),
+    @(RCIMIWPlatformWeb),
+    @(RCIMIWPlatformPC),
+    @(RCIMIWPlatformMiniWeb),
+    @(RCIMIWPlatformHarmonyOS),
+  ];
+  NSInteger index = [PlatformArray indexOfObject:@(Platform)];
+  return index;
+}
+
++ (RCIMIWSubscribeOperationType)convertSubscribeOperationTypeFromInteger:(NSInteger)integer {
+  NSArray *SubscribeOperationTypeArray = @[
+    @(RCIMIWSubscribeOperationTypeSubscribe),
+    @(RCIMIWSubscribeOperationTypeUnSubscribe),
+  ];
+  RCIMIWSubscribeOperationType SubscribeOperationType = [[SubscribeOperationTypeArray objectAtIndex:integer] integerValue];
+  return SubscribeOperationType;
+}
++ (NSInteger)convertSubscribeOperationTypeToInteger:(RCIMIWSubscribeOperationType)SubscribeOperationType {
+  NSArray *SubscribeOperationTypeArray = @[
+    @(RCIMIWSubscribeOperationTypeSubscribe),
+    @(RCIMIWSubscribeOperationTypeUnSubscribe),
+  ];
+  NSInteger index = [SubscribeOperationTypeArray indexOfObject:@(SubscribeOperationType)];
+  return index;
+}
+
++ (RCIMIWSubscribeType)convertSubscribeTypeFromInteger:(NSInteger)integer {
+  NSArray *SubscribeTypeArray = @[
+    @(RCIMIWSubscribeTypeInvalid),
+    @(RCIMIWSubscribeTypeOnlineStatus),
+    @(RCIMIWSubscribeTypeUserProfile),
+    @(RCIMIWSubscribeTypeFriendOnlineStatus),
+    @(RCIMIWSubscribeTypeFriendUserProfile),
+  ];
+  RCIMIWSubscribeType SubscribeType = [[SubscribeTypeArray objectAtIndex:integer] integerValue];
+  return SubscribeType;
+}
++ (NSInteger)convertSubscribeTypeToInteger:(RCIMIWSubscribeType)SubscribeType {
+  NSArray *SubscribeTypeArray = @[
+    @(RCIMIWSubscribeTypeInvalid),
+    @(RCIMIWSubscribeTypeOnlineStatus),
+    @(RCIMIWSubscribeTypeUserProfile),
+    @(RCIMIWSubscribeTypeFriendOnlineStatus),
+    @(RCIMIWSubscribeTypeFriendUserProfile),
+  ];
+  NSInteger index = [SubscribeTypeArray indexOfObject:@(SubscribeType)];
+  return index;
+}
+
++ (RCIMIWUserProfileVisibility)convertUserProfileVisibilityFromInteger:(NSInteger)integer {
+  NSArray *UserProfileVisibilityArray = @[
+    @(RCIMIWUserProfileVisibilityNotSet),
+    @(RCIMIWUserProfileVisibilityInvisible),
+    @(RCIMIWUserProfileVisibilityEveryone),
+    @(RCIMIWUserProfileVisibilityFriendVisible),
+  ];
+  RCIMIWUserProfileVisibility UserProfileVisibility = [[UserProfileVisibilityArray objectAtIndex:integer] integerValue];
+  return UserProfileVisibility;
+}
++ (NSInteger)convertUserProfileVisibilityToInteger:(RCIMIWUserProfileVisibility)UserProfileVisibility {
+  NSArray *UserProfileVisibilityArray = @[
+    @(RCIMIWUserProfileVisibilityNotSet),
+    @(RCIMIWUserProfileVisibilityInvisible),
+    @(RCIMIWUserProfileVisibilityEveryone),
+    @(RCIMIWUserProfileVisibilityFriendVisible),
+  ];
+  NSInteger index = [UserProfileVisibilityArray indexOfObject:@(UserProfileVisibility)];
+  return index;
+}
+
++ (RCIMIWUserGender)convertUserGenderFromInteger:(NSInteger)integer {
+  NSArray *UserGenderArray = @[
+    @(RCIMIWUserGenderUnknown),
+    @(RCIMIWUserGenderMale),
+    @(RCIMIWUserGenderFemale),
+  ];
+  RCIMIWUserGender UserGender = [[UserGenderArray objectAtIndex:integer] integerValue];
+  return UserGender;
+}
++ (NSInteger)convertUserGenderToInteger:(RCIMIWUserGender)UserGender {
+  NSArray *UserGenderArray = @[
+    @(RCIMIWUserGenderUnknown),
+    @(RCIMIWUserGenderMale),
+    @(RCIMIWUserGenderFemale),
+  ];
+  NSInteger index = [UserGenderArray indexOfObject:@(UserGender)];
+  return index;
+}
+
 @end

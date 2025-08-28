@@ -588,3 +588,76 @@ enum RCIMIWConnectionStatus {
   /// 异常情况
   unknown,
 }
+
+enum RCIMIWPlatform {
+  /// 其它平台
+  other,
+
+  /// iOS
+  ios,
+
+  /// Android
+  android,
+
+  /// Web
+  web,
+
+  /// PC
+  pc,
+
+  /// 小程序
+  miniweb,
+
+  /// 鸿蒙
+  harmonyos,
+}
+
+enum RCIMIWSubscribeOperationType {
+  /// 订阅
+  subscribe,
+
+  /// 取消订阅
+  unsubscribe,
+}
+
+enum RCIMIWSubscribeType {
+  /// 无效类型
+  invalid,
+
+  /// 在线状态
+  onlineStatus,
+
+  /// 用户信息
+  userProfile,
+
+  /// 好友在线状态
+  friendOnlineStatus,
+
+  /// 好友用户信息
+  friendUserProfile,
+}
+
+enum RCIMIWUserProfileVisibility {
+  /// 未设置
+  notSet,
+
+  /// 不可见
+  invisible,
+
+  /// 所有人可见
+  everyone,
+
+  /// 仅好友可见
+  friendVisible,
+}
+
+enum RCIMIWUserGender {
+  /// 未知
+  unknown,
+
+  /// 男
+  male,
+
+  /// 女
+  female,
+}

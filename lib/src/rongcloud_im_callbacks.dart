@@ -907,6 +907,62 @@ class IRCIMIWGetAutoTranslateEnabledCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWUpdateMyUserProfileVisibilityCallback {
+  IRCIMIWUpdateMyUserProfileVisibilityCallback({required this.onSuccess, required this.onError});
+
+  Function() onSuccess;
+  Function(int? errorCode) onError;
+}
+
+class IRCIMIWGetMyUserProfileVisibilityCallback {
+  IRCIMIWGetMyUserProfileVisibilityCallback({required this.onSuccess, required this.onError});
+
+  Function(int? visibility) onSuccess;
+  Function(int? errorCode) onError;
+}
+
+class IRCIMIWUpdateMyUserProfileCallback {
+  IRCIMIWUpdateMyUserProfileCallback({required this.onSuccess, required this.onError});
+
+  Function() onSuccess;
+  Function(int? errorCode, List<String>? errorKeys) onError;
+}
+
+class IRCIMIWGetMyUserProfileCallback {
+  IRCIMIWGetMyUserProfileCallback({required this.onSuccess, required this.onError});
+
+  Function(RCIMIWUserProfile? userProfile) onSuccess;
+  Function(int? errorCode) onError;
+}
+
+class IRCIMIWGetUserProfilesCallback {
+  IRCIMIWGetUserProfilesCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWUserProfile>? userProfiles) onSuccess;
+  Function(int? errorCode) onError;
+}
+
+class IRCIMIWSearchUserProfileByUniqueIdCallback {
+  IRCIMIWSearchUserProfileByUniqueIdCallback({required this.onSuccess, required this.onError});
+
+  Function(RCIMIWUserProfile? userProfile) onSuccess;
+  Function(int? errorCode) onError;
+}
+
+class IRCIMIWSubscribeEventCallback {
+  IRCIMIWSubscribeEventCallback({required this.onSuccess, required this.onError});
+
+  Function() onSuccess;
+  Function(int? code, List<String>? failedUserIds) onError;
+}
+
+class IRCIMIWQuerySubscribeEventCallback {
+  IRCIMIWQuerySubscribeEventCallback({required this.onSuccess, required this.onError});
+
+  Function(List<RCIMIWSubscribeInfoEvent>? events) onSuccess;
+  Function(int? code) onError;
+}
+
 class RCIMIWConnectCallback {
   RCIMIWConnectCallback({this.onDatabaseOpened, required this.onConnected});
 

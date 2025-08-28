@@ -3091,6 +3091,125 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     return result;
   }
 
+  @override
+  Future<int> updateMyUserProfileVisibility(
+    RCIMIWUserProfileVisibility visibility, {
+    IRCIMIWUpdateMyUserProfileVisibilityCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"visibility": visibility.index, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:updateMyUserProfileVisibility arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:updateMyUserProfileVisibility', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getMyUserProfileVisibility({IRCIMIWGetMyUserProfileVisibilityCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getMyUserProfileVisibility arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getMyUserProfileVisibility', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> updateMyUserProfile(RCIMIWUserProfile profile, {IRCIMIWUpdateMyUserProfileCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"profile": profile.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:updateMyUserProfile arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:updateMyUserProfile', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getMyUserProfile({IRCIMIWGetMyUserProfileCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getMyUserProfile arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getMyUserProfile', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getUserProfiles(List<String> userIds, {IRCIMIWGetUserProfilesCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"userIds": userIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getUserProfiles arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getUserProfiles', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> searchUserProfileByUniqueId(
+    String uniqueId, {
+    IRCIMIWSearchUserProfileByUniqueIdCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"uniqueId": uniqueId, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:searchUserProfileByUniqueId arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:searchUserProfileByUniqueId', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> subscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"request": request.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:subscribeEvent arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:subscribeEvent', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> unSubscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"request": request.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:unSubscribeEvent arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:unSubscribeEvent', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> querySubscribeEvent(
+    RCIMIWSubscribeEventRequest request, {
+    IRCIMIWQuerySubscribeEventCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"request": request.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:querySubscribeEvent arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:querySubscribeEvent', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> querySubscribeEventByPage(
+    RCIMIWSubscribeEventRequest request,
+    int pageSize,
+    int startIndex, {
+    IRCIMIWQuerySubscribeEventCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "request": request.toJson(),
+      "pageSize": pageSize,
+      "startIndex": startIndex,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:querySubscribeEventByPage arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:querySubscribeEventByPage', arguments);
+    return result;
+  }
+
   Future<dynamic> _handler(MethodCall call) async {
     log("[RC:Flutter] " + call.method + " arguments:" + call.arguments.toString());
     switch (call.method) {
@@ -3220,7 +3339,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWChatRoomMemberAction> actionsStr = [];
         arguments['actions'].forEach((element) {
-          actionsStr.add(RCIMIWChatRoomMemberAction.fromJson(Map<String, dynamic>.from(element)));
+          actionsStr.add(
+            RCIMIWChatRoomMemberAction.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         String? targetId = arguments['targetId'];
@@ -3234,7 +3355,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWTypingStatus> userTypingStatusStr = [];
         arguments['userTypingStatus'].forEach((element) {
-          userTypingStatusStr.add(RCIMIWTypingStatus.fromJson(Map<String, dynamic>.from(element)));
+          userTypingStatusStr.add(
+            RCIMIWTypingStatus.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         RCIMIWConversationType? type =
@@ -3336,7 +3459,11 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWUltraGroupTypingStatusInfo> infoStr = [];
         arguments['info'].forEach((element) {
-          infoStr.add(RCIMIWUltraGroupTypingStatusInfo.fromJson(Map<String, dynamic>.from(element)));
+          infoStr.add(
+            RCIMIWUltraGroupTypingStatusInfo.fromJson(
+              (element as Map).map((key, value) => MapEntry(key.toString(), value)),
+            ),
+          );
         });
 
         List<RCIMIWUltraGroupTypingStatusInfo>? info = infoStr;
@@ -3433,7 +3560,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
         List<RCIMIWConversation> conversationsStr = [];
         arguments['conversations'].forEach((element) {
-          conversationsStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+          conversationsStr.add(
+            RCIMIWConversation.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         int? code = arguments['code'];
@@ -3621,7 +3750,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
         List<RCIMIWConversation> conversationsStr = [];
         arguments['conversations'].forEach((element) {
-          conversationsStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+          conversationsStr.add(
+            RCIMIWConversation.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         int? code = arguments['code'];
@@ -4227,7 +4358,11 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
         List<RCIMIWSearchConversationResult> conversationsStr = [];
         arguments['conversations'].forEach((element) {
-          conversationsStr.add(RCIMIWSearchConversationResult.fromJson(Map<String, dynamic>.from(element)));
+          conversationsStr.add(
+            RCIMIWSearchConversationResult.fromJson(
+              (element as Map).map((key, value) => MapEntry(key.toString(), value)),
+            ),
+          );
         });
 
         int? code = arguments['code'];
@@ -4463,7 +4598,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
         List<RCIMIWConversation> conversationsStr = [];
         arguments['conversations'].forEach((element) {
-          conversationsStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+          conversationsStr.add(
+            RCIMIWConversation.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         int? code = arguments['code'];
@@ -4516,7 +4653,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWConversation> conversationsStr = [];
         arguments['conversations'].forEach((element) {
-          conversationsStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+          conversationsStr.add(
+            RCIMIWConversation.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         int? code = arguments['code'];
@@ -4658,7 +4797,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWGroupMemberInfo> memberInfosStr = [];
         arguments['memberInfos'].forEach((element) {
-          memberInfosStr.add(RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(element)));
+          memberInfosStr.add(
+            RCIMIWGroupMemberInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         String? groupId = arguments['groupId'];
@@ -4796,7 +4937,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWTranslateItem> itemsStr = [];
         arguments['items'].forEach((element) {
-          itemsStr.add(RCIMIWTranslateItem.fromJson(Map<String, dynamic>.from(element)));
+          itemsStr.add(
+            RCIMIWTranslateItem.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         List<RCIMIWTranslateItem>? items = itemsStr;
@@ -4821,6 +4964,45 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         engine?.onAutoTranslateStateDidChange?.call(isEnable);
         log("[RC:Flutter] engine:onAutoTranslateStateDidChange invoke finished");
+        break;
+
+      case 'engine:onEventChange':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWSubscribeInfoEvent> subscribeEventsStr = [];
+        arguments['subscribeEvents'].forEach((element) {
+          subscribeEventsStr.add(
+            RCIMIWSubscribeInfoEvent.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
+        });
+
+        List<RCIMIWSubscribeInfoEvent>? subscribeEvents = subscribeEventsStr;
+
+        engine?.onEventChange?.call(subscribeEvents);
+        log("[RC:Flutter] engine:onEventChange invoke finished");
+        break;
+
+      case 'engine:onSubscriptionSyncCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWSubscribeType? type = arguments['type'] == null ? null : RCIMIWSubscribeType.values[arguments['type']];
+
+        engine?.onSubscriptionSyncCompleted?.call(type);
+        log("[RC:Flutter] engine:onSubscriptionSyncCompleted invoke finished");
+        break;
+
+      case 'engine:onSubscriptionChangedOnOtherDevices':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWSubscribeEvent> subscribeEventsStr = [];
+        arguments['subscribeEvents'].forEach((element) {
+          subscribeEventsStr.add(
+            RCIMIWSubscribeEvent.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
+        });
+
+        List<RCIMIWSubscribeEvent>? subscribeEvents = subscribeEventsStr;
+
+        engine?.onSubscriptionChangedOnOtherDevices?.call(subscribeEvents);
+        log("[RC:Flutter] engine:onSubscriptionChangedOnOtherDevices invoke finished");
         break;
 
       case 'engine_cb:RCIMIWConnectCallback_onDatabaseOpened':
@@ -5225,7 +5407,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWConversation> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(RCIMIWConversation.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -5252,7 +5434,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWConversation> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(RCIMIWConversation.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -5554,7 +5736,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWConversation> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(RCIMIWConversation.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -6307,7 +6489,11 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWSearchConversationResult> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWSearchConversationResult.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(
+            RCIMIWSearchConversationResult.fromJson(
+              (element as Map).map((key, value) => MapEntry(key.toString(), value)),
+            ),
+          );
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -6619,7 +6805,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWConversation> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(RCIMIWConversation.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -6659,7 +6845,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWConversation> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWConversation.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(RCIMIWConversation.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -6842,7 +7028,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWTagInfo> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWTagInfo.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(RCIMIWTagInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -6906,7 +7092,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWConversationTagInfo> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWConversationTagInfo.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(
+            RCIMIWConversationTagInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -7047,7 +7235,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWGroupInfo> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(RCIMIWGroupInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -7140,7 +7328,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWGroupMemberInfo> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(
+            RCIMIWGroupMemberInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -7217,7 +7407,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWGroupInfo> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(RCIMIWGroupInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -7464,7 +7654,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         List<RCIMIWFollowInfo> tStr = [];
         arguments['t'].forEach((element) {
-          tStr.add(RCIMIWFollowInfo.fromJson(Map<String, dynamic>.from(element)));
+          tStr.add(RCIMIWFollowInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
         });
 
         int rongcloudHandler = arguments['cb_handler'];
@@ -7540,6 +7730,201 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWGetAutoTranslateEnabledCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWUpdateMyUserProfileVisibilityCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+
+        IRCIMIWUpdateMyUserProfileVisibilityCallback? callback = takeCallback(rongcloudHandler);
+        Function()? method = callback?.onSuccess;
+        method?.call();
+        log("[RC:Flutter] engine_cb:IRCIMIWUpdateMyUserProfileVisibilityCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWUpdateMyUserProfileVisibilityCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? errorCode = arguments['errorCode'];
+
+        IRCIMIWUpdateMyUserProfileVisibilityCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(errorCode);
+        log("[RC:Flutter] engine_cb:IRCIMIWUpdateMyUserProfileVisibilityCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMyUserProfileVisibilityCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? visibility = arguments['visibility'];
+
+        IRCIMIWGetMyUserProfileVisibilityCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onSuccess;
+        method?.call(visibility);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMyUserProfileVisibilityCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMyUserProfileVisibilityCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? errorCode = arguments['errorCode'];
+
+        IRCIMIWGetMyUserProfileVisibilityCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(errorCode);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMyUserProfileVisibilityCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWUpdateMyUserProfileCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+
+        IRCIMIWUpdateMyUserProfileCallback? callback = takeCallback(rongcloudHandler);
+        Function()? method = callback?.onSuccess;
+        method?.call();
+        log("[RC:Flutter] engine_cb:IRCIMIWUpdateMyUserProfileCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWUpdateMyUserProfileCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? errorCode = arguments['errorCode'];
+        List<String>? errorKeys = List.from(arguments['errorKeys']);
+
+        IRCIMIWUpdateMyUserProfileCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?, List<String>?)? method = callback?.onError;
+        method?.call(errorCode, errorKeys);
+        log("[RC:Flutter] engine_cb:IRCIMIWUpdateMyUserProfileCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMyUserProfileCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWUserProfile? userProfile =
+            arguments['userProfile'] != null
+                ? RCIMIWUserProfile.fromJson(Map<String, dynamic>.from(arguments['userProfile']))
+                : null;
+
+        IRCIMIWGetMyUserProfileCallback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWUserProfile?)? method = callback?.onSuccess;
+        method?.call(userProfile);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMyUserProfileCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMyUserProfileCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? errorCode = arguments['errorCode'];
+
+        IRCIMIWGetMyUserProfileCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(errorCode);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMyUserProfileCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetUserProfilesCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWUserProfile> userProfilesStr = [];
+        arguments['userProfiles'].forEach((element) {
+          userProfilesStr.add(
+            RCIMIWUserProfile.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWUserProfile>? userProfiles = userProfilesStr;
+
+        IRCIMIWGetUserProfilesCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWUserProfile>?)? method = callback?.onSuccess;
+        method?.call(userProfiles);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetUserProfilesCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetUserProfilesCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? errorCode = arguments['errorCode'];
+
+        IRCIMIWGetUserProfilesCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(errorCode);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetUserProfilesCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchUserProfileByUniqueIdCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWUserProfile? userProfile =
+            arguments['userProfile'] != null
+                ? RCIMIWUserProfile.fromJson(Map<String, dynamic>.from(arguments['userProfile']))
+                : null;
+
+        IRCIMIWSearchUserProfileByUniqueIdCallback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWUserProfile?)? method = callback?.onSuccess;
+        method?.call(userProfile);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchUserProfileByUniqueIdCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchUserProfileByUniqueIdCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? errorCode = arguments['errorCode'];
+
+        IRCIMIWSearchUserProfileByUniqueIdCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(errorCode);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchUserProfileByUniqueIdCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSubscribeEventCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+
+        IRCIMIWSubscribeEventCallback? callback = takeCallback(rongcloudHandler);
+        Function()? method = callback?.onSuccess;
+        method?.call();
+        log("[RC:Flutter] engine_cb:IRCIMIWSubscribeEventCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSubscribeEventCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+        List<String>? failedUserIds = List.from(arguments['failedUserIds']);
+
+        IRCIMIWSubscribeEventCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?, List<String>?)? method = callback?.onError;
+        method?.call(code, failedUserIds);
+        log("[RC:Flutter] engine_cb:IRCIMIWSubscribeEventCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWQuerySubscribeEventCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWSubscribeInfoEvent> eventsStr = [];
+        arguments['events'].forEach((element) {
+          eventsStr.add(
+            RCIMIWSubscribeInfoEvent.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWSubscribeInfoEvent>? events = eventsStr;
+
+        IRCIMIWQuerySubscribeEventCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWSubscribeInfoEvent>?)? method = callback?.onSuccess;
+        method?.call(events);
+        log("[RC:Flutter] engine_cb:IRCIMIWQuerySubscribeEventCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWQuerySubscribeEventCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWQuerySubscribeEventCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWQuerySubscribeEventCallback_onError invoke finished");
         break;
     }
   }

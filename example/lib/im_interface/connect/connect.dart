@@ -4,29 +4,20 @@ import '../../auto/engine_auto_funtion.dart' as engine_fun;
 const initEngine = {
   "title": "初始化引擎",
   "params": [
-    {
-      "key": "appkey",
-      "type": "String",
-      "hint": "必填",
-      "lable": "请输入 AppKey",
-    },
-    {
-      "key": "naviServer",
-      "type": "String",
-      "hint": "非必填",
-      "lable": "请输入导航地址",
-    },
-    {
-      "key": "fileServer",
-      "type": "String",
-      "hint": "非必填",
-      "lable": "请输入文件地址",
-    },
+    {"key": "appkey", "type": "String", "hint": "必填", "lable": "请输入 AppKey"},
+    {"key": "naviServer", "type": "String", "hint": "非必填", "lable": "请输入导航地址"},
+    {"key": "fileServer", "type": "String", "hint": "非必填", "lable": "请输入文件地址"},
     {
       "key": "statisticServer",
       "type": "String",
       "hint": "非必填",
       "lable": "请输入状态上传地址",
+    },
+    {
+      "key": "cloudControlServer",
+      "type": "String",
+      "hint": "非必填",
+      "lable": "请输入云控地址",
     },
     {
       "key": "kickReconnectDevice",
@@ -122,25 +113,14 @@ const initEngine = {
   "action": engine_cus_fun.initEngine,
 };
 
-const destroy = {
-  "title": "销毁引擎",
-  "action": engine_cus_fun.destroy,
-};
+const destroy = {"title": "销毁引擎", "action": engine_cus_fun.destroy};
 
-const setListener = {
-  "title": "设置监听",
-  "action": engine_cus_fun.setListener,
-};
+const setListener = {"title": "设置监听", "action": engine_cus_fun.setListener};
 
 const connect = {
   "title": "连接",
   "params": [
-    {
-      "key": "token",
-      "type": "String",
-      "hint": "必填",
-      "lable": "请输入 Token",
-    },
+    {"key": "token", "type": "String", "hint": "必填", "lable": "请输入 Token"},
     {
       "key": "timeout",
       "type": "number",

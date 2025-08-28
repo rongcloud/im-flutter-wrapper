@@ -2613,6 +2613,100 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('calculateTextMD5() has not been implemented.');
   }
 
+  /// 设置自己的信息访问权限
+  /// - [visibility] 权限设置
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> updateMyUserProfileVisibility(
+    RCIMIWUserProfileVisibility visibility, {
+    IRCIMIWUpdateMyUserProfileVisibilityCallback? callback,
+  }) async {
+    throw UnimplementedError('updateMyUserProfileVisibility() has not been implemented.');
+  }
+
+  /// 获取自己的信息访问权限
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> getMyUserProfileVisibility({IRCIMIWGetMyUserProfileVisibilityCallback? callback}) async {
+    throw UnimplementedError('getMyUserProfileVisibility() has not been implemented.');
+  }
+
+  /// 修改自己的用户信息
+  /// - [profile] 用户信息
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> updateMyUserProfile(RCIMIWUserProfile profile, {IRCIMIWUpdateMyUserProfileCallback? callback}) async {
+    throw UnimplementedError('updateMyUserProfile() has not been implemented.');
+  }
+
+  /// 查询自己的用户信息
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> getMyUserProfile({IRCIMIWGetMyUserProfileCallback? callback}) async {
+    throw UnimplementedError('getMyUserProfile() has not been implemented.');
+  }
+
+  /// 批量获取用户信息
+  /// - [userIds] 用户 ID 列表
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> getUserProfiles(List<String> userIds, {IRCIMIWGetUserProfilesCallback? callback}) async {
+    throw UnimplementedError('getUserProfiles() has not been implemented.');
+  }
+
+  /// 按用户应用号精确搜索
+  /// - [uniqueId] 用户应用号
+  /// - [callback] 事件回调，如果搜不到用户，会返回错误码 RC_USER_PROFILE_USER_NOT_EXIST (24366)
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> searchUserProfileByUniqueId(
+    String uniqueId, {
+    IRCIMIWSearchUserProfileByUniqueIdCallback? callback,
+  }) async {
+    throw UnimplementedError('searchUserProfileByUniqueId() has not been implemented.');
+  }
+
+  /// 订阅个人信息变更事件
+  /// - [request] 订阅事件请求参数
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> subscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
+    throw UnimplementedError('subscribeEvent() has not been implemented.');
+  }
+
+  /// 取消订阅个人信息变更事件
+  /// - [request] 取消订阅事件请求参数
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> unSubscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
+    throw UnimplementedError('unSubscribeEvent() has not been implemented.');
+  }
+
+  /// 查询已订阅的个人信息变更事件
+  /// - [request] 查询订阅事件请求参数
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> querySubscribeEvent(
+    RCIMIWSubscribeEventRequest request, {
+    IRCIMIWQuerySubscribeEventCallback? callback,
+  }) async {
+    throw UnimplementedError('querySubscribeEvent() has not been implemented.');
+  }
+
+  /// 分页查询已订阅的个人信息变更事件
+  /// - [request] 查询订阅事件请求参数
+  /// - [pageSize] 每页条数
+  /// - [startIndex] 起始索引
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> querySubscribeEventByPage(
+    RCIMIWSubscribeEventRequest request,
+    int pageSize,
+    int startIndex, {
+    IRCIMIWQuerySubscribeEventCallback? callback,
+  }) async {
+    throw UnimplementedError('querySubscribeEventByPage() has not been implemented.');
+  }
+
   // -------- web 专有的方法 --------
 
   /// 构建语音消息 (高清语音)，发送成功后会根据文件自动生成 duration

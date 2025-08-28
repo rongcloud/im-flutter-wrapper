@@ -3023,6 +3023,100 @@ class RCIMIWEngine {
     return RCIMWrapperPlatform.instance.calculateTextMD5(text);
   }
 
+  /// 设置自己的信息访问权限
+  /// - [visibility] 权限设置
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> updateMyUserProfileVisibility(
+    RCIMIWUserProfileVisibility visibility, {
+    IRCIMIWUpdateMyUserProfileVisibilityCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.updateMyUserProfileVisibility(visibility, callback: callback);
+  }
+
+  /// 获取自己的信息访问权限
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> getMyUserProfileVisibility({IRCIMIWGetMyUserProfileVisibilityCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getMyUserProfileVisibility(callback: callback);
+  }
+
+  /// 修改自己的用户信息
+  /// - [profile] 用户信息
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> updateMyUserProfile(RCIMIWUserProfile profile, {IRCIMIWUpdateMyUserProfileCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.updateMyUserProfile(profile, callback: callback);
+  }
+
+  /// 查询自己的用户信息
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> getMyUserProfile({IRCIMIWGetMyUserProfileCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getMyUserProfile(callback: callback);
+  }
+
+  /// 批量获取用户信息
+  /// - [userIds] 用户 ID 列表
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> getUserProfiles(List<String> userIds, {IRCIMIWGetUserProfilesCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getUserProfiles(userIds, callback: callback);
+  }
+
+  /// 按用户应用号精确搜索
+  /// - [uniqueId] 用户应用号
+  /// - [callback] 事件回调，如果搜不到用户，会返回错误码 RC_USER_PROFILE_USER_NOT_EXIST (24366)
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> searchUserProfileByUniqueId(
+    String uniqueId, {
+    IRCIMIWSearchUserProfileByUniqueIdCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.searchUserProfileByUniqueId(uniqueId, callback: callback);
+  }
+
+  /// 订阅个人信息变更事件
+  /// - [request] 订阅事件请求参数
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> subscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.subscribeEvent(request, callback: callback);
+  }
+
+  /// 取消订阅个人信息变更事件
+  /// - [request] 取消订阅事件请求参数
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> unSubscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.unSubscribeEvent(request, callback: callback);
+  }
+
+  /// 查询已订阅的个人信息变更事件
+  /// - [request] 查询订阅事件请求参数
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> querySubscribeEvent(
+    RCIMIWSubscribeEventRequest request, {
+    IRCIMIWQuerySubscribeEventCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.querySubscribeEvent(request, callback: callback);
+  }
+
+  /// 分页查询已订阅的个人信息变更事件
+  /// - [request] 查询订阅事件请求参数
+  /// - [pageSize] 每页条数
+  /// - [startIndex] 起始索引
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  Future<int> querySubscribeEventByPage(
+    RCIMIWSubscribeEventRequest request,
+    int pageSize,
+    int startIndex, {
+    IRCIMIWQuerySubscribeEventCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.querySubscribeEventByPage(request, pageSize, startIndex, callback: callback);
+  }
+
   /// 收到消息的监听
   /// - [message] 接收到的消息对象
   /// - [left]  当客户端连接成功后，服务端会将所有补偿消息以消息包的形式下发给客户端，最多每 200 条消息为一个消息包，即一个 Package, 客户端接受到消息包后，会逐条解析并通知应用。left 为当前消息包（Package）里还剩余的消息条数
@@ -4140,4 +4234,16 @@ class RCIMIWEngine {
   Function(String? language)? onTranslationLanguageDidChange;
 
   Function(bool? isEnable)? onAutoTranslateStateDidChange;
+
+  /// 订阅事件变化监听
+  /// - [subscribeEvents] 订阅事件的列表，包含所有发生变化的事件
+  Function(List<RCIMIWSubscribeInfoEvent>? subscribeEvents)? onEventChange;
+
+  /// 订阅数据同步完成监听
+  /// - [type] 订阅事件的类型
+  Function(RCIMIWSubscribeType? type)? onSubscriptionSyncCompleted;
+
+  /// 其他设备订阅变更监听
+  /// - [subscribeEvents] 订阅事件的列表
+  Function(List<RCIMIWSubscribeEvent>? subscribeEvents)? onSubscriptionChangedOnOtherDevices;
 }

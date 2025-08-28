@@ -35,6 +35,9 @@
 #import <RongIMWrapper/RCIMIWChatRoomMemberBanEvent.h>
 #import <RongIMWrapper/RCIMIWTranslateMessagesParams.h>
 #import <RongIMWrapper/RCIMIWTranslateTextParams.h>
+#import <RongIMWrapper/RCIMIWUserProfile.h>
+#import <RongIMWrapper/RCIMIWSubscribeEvent.h>
+#import <RongIMWrapper/RCIMIWSubscribeEventRequest.h>
 
 
 @class RCIMIWEngineOptions;
@@ -2030,6 +2033,55 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
  @param moduleName             包名
  @param version                    版本号
  */
+
+#pragma mark - 用户信息托管
+
+/// 设置自己的信息访问权限
+/// - Parameter visibility: 用户信息的访问权限
+/// - Parameter success: 成功的回调
+/// - Parameter error: 失败的回调
+- (NSInteger)updateMyUserProfileVisibility:(RCIMIWUserProfileVisibility)visibility
+                                   success:(nullable void (^)(void))successBlock
+                                     error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+/// 获取自己的信息访问权限
+/// - Parameter success: 成功的回调
+/// - Parameter error: 失败的回调
+- (NSInteger)getMyUserProfileVisibility:(nullable void (^)(NSInteger visibility))successBlock
+                                  error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+/// 修改自己的用户信息
+/// - Parameter profile: 用户信息
+/// - Parameter success: 成功的回调
+/// - Parameter error: 失败的回调
+- (NSInteger)updateMyUserProfile:(RCIMIWUserProfile *)profile
+                    successBlock:(nullable void (^)(void))successBlock
+                      errorBlock:(nullable void (^)(NSInteger errorCode, NSArray<NSString *> *_Nullable errorKeys))errorBlock;
+
+/// 查询自己的用户信息
+/// - Parameter success: 成功的回调
+/// - Parameter error: 失败的回调
+- (NSInteger)getMyUserProfile:(nullable void (^)(RCIMIWUserProfile *userProfile))successBlock
+                        error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+/// 批量获取用户信息
+/// - Parameter userIds: 用户 ID 列表
+/// - Parameter success: 成功的回调
+/// - Parameter error: 失败的回调
+- (NSInteger)getUserProfiles:(NSArray<NSString *> *)userIds
+                     success:(nullable void (^)(NSArray<RCIMIWUserProfile *> *userProfiles))successBlock
+                       error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+/// 按用户应用号精确搜索
+/// - Parameter uniqueId: 用户应用号
+/// - Parameter success: 成功的回调
+/// - Parameter error: 失败的回调，如果搜不到用户，会返回错误码 RC_USER_PROFILE_USER_NOT_EXIST (24366)
+- (NSInteger)searchUserProfileByUniqueId:(NSString *)uniqueId
+                                 success:(nullable void (^)(RCIMIWUserProfile *userProfile))successBlock
+                                   error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+
+
 #pragma mark - 群信息托管
 
 /// 创建群组
@@ -2408,6 +2460,56 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
 //                  userIds:(NSArray <NSString *>*)userIds
 //                  success:(nullable void (^)(NSArray <NSString *> * existUserIds))successBlock
 //                    error:(nullable void (^)(NSInteger code))errorBlock;
+
+#pragma mark - 订阅功能
+
+/*!
+ 订阅事件
+ 
+ @param request 订阅请求对象，包含订阅类型、有效期和用户ID列表
+ @param successBlock 成功回调
+ @param errorBlock 失败回调, 返回状态码和失败的用户ID列表
+ */
+- (NSInteger)subscribeEvent:(RCIMIWSubscribeEventRequest *)request
+                    success:(void (^)(void))successBlock
+                      error:(void (^)(NSInteger code, NSArray<NSString *> * _Nullable failedUserIds))errorBlock;
+
+/*!
+ 取消订阅事件
+ 
+ @param request 取消订阅请求对象，包含订阅类型和用户ID列表
+ @param successBlock 成功回调
+ @param errorBlock 失败回调, 返回状态码和失败的用户ID列表
+ */
+- (NSInteger)unSubscribeEvent:(RCIMIWSubscribeEventRequest *)request
+                      success:(void (^)(void))successBlock
+                        error:(void (^)(NSInteger code, NSArray<NSString *> * _Nullable failedUserIds))errorBlock;
+
+/*!
+ 查询订阅事件
+ 
+ @param request 查询请求对象，包含订阅类型和用户ID列表
+ @param successBlock 成功回调，返回订阅事件信息列表
+ @param errorBlock 失败回调, 返回状态码
+ */
+- (NSInteger)querySubscribeEvent:(RCIMIWSubscribeEventRequest *)request
+                         success:(void (^)(NSArray<RCIMIWSubscribeInfoEvent *> * _Nullable subscribeEvents))successBlock
+                           error:(void (^)(NSInteger code))errorBlock;
+
+/*!
+ 分页查询订阅事件
+ 
+ @param request 查询请求对象，包含订阅类型和用户ID列表
+ @Param pageSize 分页大小 [1~200]。
+ @Param startIndex 第一页传 0，下一页取返回所有数据的数组数量（比如 pageSize = 20，第二页传 20，第三页传 40）。
+ @param successBlock 成功回调，返回订阅事件信息列表
+ @param errorBlock 失败回调, 返回状态码
+ */
+- (NSInteger)querySubscribeEventByPage:(RCIMIWSubscribeEventRequest *)request
+                              pageSize:(NSInteger)pageSize
+                            startIndex:(NSInteger)startIndex
+                              success:(void (^)(NSArray<RCIMIWSubscribeInfoEvent *> * _Nullable subscribeEvents))successBlock
+                                error:(void (^)(NSInteger code))errorBlock;
 
 @end
 

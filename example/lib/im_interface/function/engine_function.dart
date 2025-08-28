@@ -45,6 +45,9 @@ Future initEngine(Map arg) async {
     if (arg['statisticServer'] != null) {
       options.statisticServer = arg['statisticServer'];
     }
+    if (arg['cloudControlServer'] != null) {
+      options.cloudControlServer = arg['cloudControlServer'];
+    }
     if (arg['kickReconnectDevice'] != null) {
       bool kickReconnectDevice = arg['kickReconnectDevice'] == 0 ? false : true;
       options.kickReconnectDevice = kickReconnectDevice;
@@ -2864,6 +2867,367 @@ batchSetConversationTranslateStrategy(Map arg) async {
       "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "batchSetConversationTranslateStrategy";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+updateMyUserProfile(Map arg) async {
+  String userId = arg['userId'] ?? "";
+  String name = arg['name'] ?? "";
+  String portraitUri = arg['portraitUri'] ?? "";
+  String email = arg['email'] ?? "";
+  String birthday = arg['birthday'] ?? "";
+  int gender = int.parse(arg['gender'] ?? "0");
+  if (gender < 0 || gender > 2) {
+    RCIWToast.showToast("gender 为非法值");
+    return;
+  }
+  RCIMIWUserGender genderEnum = RCIMIWUserGender.values[gender];
+  String location = arg['location'] ?? "";
+  int role = int.parse(arg['role'] ?? "0");
+  int level = int.parse(arg['level'] ?? "0");
+  String extProfile = arg['userExtProfile'] ?? "{}";
+
+  // 将 JSON 字符串解析为 Map
+  Map<String, dynamic> userExtProfileMap = {};
+  try {
+    userExtProfileMap = jsonDecode(extProfile);
+  } catch (e) {
+    RCIWToast.showToast("userExtProfileMap 解析失败，请检查格式");
+    return;
+  }
+
+  RCIMIWUserProfile profile = RCIMIWUserProfile.create(
+    userId: userId,
+    name: name,
+    portraitUri: portraitUri,
+    email: email,
+    birthday: birthday,
+    gender: genderEnum,
+    location: location,
+    role: role,
+    level: level,
+    userExtProfile: userExtProfileMap,
+  );
+
+  IRCIMIWUpdateMyUserProfileCallback callback;
+  callback = IRCIMIWUpdateMyUserProfileCallback(
+    onSuccess: () {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "updateMyUserProfile-onSuccess";
+      arg["timestamp"] = timeStr;
+
+      bus.emit("rong_im_listener", arg);
+    },
+    onError: (int? errorCode, List<String>? errorKeys) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "updateMyUserProfile-onError";
+      arg["timestamp"] = timeStr;
+      arg["errorCode"] = errorCode.toString();
+      arg["errorKeys"] = errorKeys.toString();
+
+      bus.emit("rong_im_listener", arg);
+    },
+  );
+
+  int? code = await IMEngineManager().engine?.updateMyUserProfile(
+    profile,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "updateMyUserProfile";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+subscribeEvent(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWSubscribeType subscribeType =
+      RCIMIWSubscribeType.values[int.parse(arg['subscribeType'] ?? "0")];
+  int expiry = int.parse(arg['expiry'] ?? "0");
+  List<String> userIds = (arg['userIds'] ?? "").split(",");
+
+  RCIMIWSubscribeEventRequest request = RCIMIWSubscribeEventRequest.create(
+    subscribeType: subscribeType,
+    expiry: expiry,
+    userIds: userIds,
+  );
+  IRCIMIWSubscribeEventCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSubscribeEventCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "subscribeEvent-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code, List<String>? failedUserIds) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "subscribeEvent-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+        arg["failedUserIds"] = failedUserIds.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.subscribeEvent(
+    request,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "subscribeEvent";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+unSubscribeEvent(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWSubscribeType subscribeType =
+      RCIMIWSubscribeType.values[int.parse(arg['subscribeType'] ?? "0")];
+  int expiry = int.parse(arg['expiry'] ?? "0");
+  List<String> userIds = (arg['userIds'] ?? "").split(",");
+
+  RCIMIWSubscribeEventRequest request = RCIMIWSubscribeEventRequest.create(
+    subscribeType: subscribeType,
+    expiry: expiry,
+    userIds: userIds,
+  );
+  IRCIMIWSubscribeEventCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSubscribeEventCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "unSubscribeEvent-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code, List<String>? failedUserIds) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "unSubscribeEvent-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+        arg["failedUserIds"] = failedUserIds.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.unSubscribeEvent(
+    request,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "unSubscribeEvent";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+querySubscribeEvent(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWSubscribeType subscribeType =
+      RCIMIWSubscribeType.values[int.parse(arg['subscribeType'] ?? "0")];
+  int expiry = int.parse(arg['expiry'] ?? "0");
+  List<String> userIds = (arg['userIds'] ?? "").split(",");
+
+  RCIMIWSubscribeEventRequest request = RCIMIWSubscribeEventRequest.create(
+    subscribeType: subscribeType,
+    expiry: expiry,
+    userIds: userIds,
+  );
+  IRCIMIWQuerySubscribeEventCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWQuerySubscribeEventCallback(
+      onSuccess: (List<RCIMIWSubscribeInfoEvent>? events) {
+        List eventsJson = [];
+        if (events != null) {
+          for (var temp in events) {
+            eventsJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "querySubscribeEvent-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["events"] = eventsJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "querySubscribeEvent-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.querySubscribeEvent(
+    request,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "querySubscribeEvent";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+querySubscribeEventByPage(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+  int pageSize = int.parse(arg['pageSize'] ?? "0");
+  int startIndex = int.parse(arg['startIndex'] ?? "0");
+  RCIMIWSubscribeType subscribeType =
+      RCIMIWSubscribeType.values[int.parse(arg['subscribeType'] ?? "0")];
+  int expiry = int.parse(arg['expiry'] ?? "0");
+  List<String> userIds = (arg['userIds'] ?? "").split(",");
+
+  RCIMIWSubscribeEventRequest request = RCIMIWSubscribeEventRequest.create(
+    subscribeType: subscribeType,
+    expiry: expiry,
+    userIds: userIds,
+  );
+  IRCIMIWQuerySubscribeEventCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWQuerySubscribeEventCallback(
+      onSuccess: (List<RCIMIWSubscribeInfoEvent>? events) {
+        List eventsJson = [];
+        if (events != null) {
+          for (var temp in events) {
+            eventsJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "querySubscribeEventByPage-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["events"] = eventsJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "querySubscribeEventByPage-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.querySubscribeEventByPage(
+    request,
+    pageSize,
+    startIndex,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "querySubscribeEventByPage";
   resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 

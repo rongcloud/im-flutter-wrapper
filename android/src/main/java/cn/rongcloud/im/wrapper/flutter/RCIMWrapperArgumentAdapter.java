@@ -47,6 +47,11 @@ import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperation;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationPermission;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationType;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupStatus;
+import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWPlatform;
+import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeOperationType;
+import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeType;
+import cn.rongcloud.im.wrapper.userprofile.RCIMIWUserGender;
+import cn.rongcloud.im.wrapper.userprofile.RCIMIWUserProfileVisibility;
 
 public class RCIMWrapperArgumentAdapter {
   private RCIMWrapperArgumentAdapter() {}
@@ -234,5 +239,25 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWConnectionStatus toRCIMIWConnectionStatus(@NonNull Integer type) {
     return RCIMIWConnectionStatus.values()[type];
+  }
+
+  static RCIMIWPlatform toRCIMIWPlatform(@NonNull Integer type) {
+    return RCIMIWPlatform.values()[type];
+  }
+
+  static RCIMIWSubscribeOperationType toRCIMIWSubscribeOperationType(@NonNull Integer type) {
+    return RCIMIWSubscribeOperationType.values()[type];
+  }
+
+  static RCIMIWSubscribeType toRCIMIWSubscribeType(@NonNull Integer type) {
+    return RCIMIWSubscribeType.values()[type];
+  }
+
+  static RCIMIWUserProfileVisibility toRCIMIWUserProfileVisibility(@NonNull Integer type) {
+    return RCIMIWUserProfileVisibility.values()[type];
+  }
+
+  static RCIMIWUserGender toRCIMIWUserGender(@NonNull Integer type) {
+    return RCIMIWUserGender.values()[type];
   }
 }

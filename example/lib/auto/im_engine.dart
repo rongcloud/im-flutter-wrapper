@@ -3202,6 +3202,77 @@ engine?.onAutoTranslateStateDidChange = (bool? isEnable) {
 };
 //callback_onAutoTranslateStateDidChange_call
 */
+
+    engine?.onEventChange = (List<RCIMIWSubscribeInfoEvent>? subscribeEvents) {
+      List subscribeEventsJson = [];
+      if (subscribeEvents != null) {
+        for (var temp in subscribeEvents) {
+          subscribeEventsJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onEventChange";
+      arg["timestamp"] = timeStr;
+      arg["subscribeEvents"] = subscribeEventsJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onEventChange_call
+engine?.onEventChange = (List<RCIMIWSubscribeInfoEvent>? subscribeEvents) {
+    //...
+};
+//callback_onEventChange_call
+*/
+
+    engine?.onSubscriptionSyncCompleted = (RCIMIWSubscribeType? type) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onSubscriptionSyncCompleted";
+      arg["timestamp"] = timeStr;
+      arg["type"] = type.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onSubscriptionSyncCompleted_call
+engine?.onSubscriptionSyncCompleted = (RCIMIWSubscribeType? type) {
+    //...
+};
+//callback_onSubscriptionSyncCompleted_call
+*/
+
+    engine?.onSubscriptionChangedOnOtherDevices = (List<RCIMIWSubscribeEvent>? subscribeEvents) {
+      List subscribeEventsJson = [];
+      if (subscribeEvents != null) {
+        for (var temp in subscribeEvents) {
+          subscribeEventsJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onSubscriptionChangedOnOtherDevices";
+      arg["timestamp"] = timeStr;
+      arg["subscribeEvents"] = subscribeEventsJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onSubscriptionChangedOnOtherDevices_call
+engine?.onSubscriptionChangedOnOtherDevices = (List<RCIMIWSubscribeEvent>? subscribeEvents) {
+    //...
+};
+//callback_onSubscriptionChangedOnOtherDevices_call
+*/
   }
 
   String formatJson(jsonObject) {

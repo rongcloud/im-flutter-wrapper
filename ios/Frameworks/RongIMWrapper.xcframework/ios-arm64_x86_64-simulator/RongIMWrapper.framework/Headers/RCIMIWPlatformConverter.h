@@ -38,6 +38,11 @@
 @class RCIMIWTranslateMessagesParams;
 @class RCIMIWTranslateTextParams;
 @class RCIMIWTranslateItem;
+@class RCIMIWUserProfile;
+@class RCIMIWSubscribeEvent;
+@class RCIMIWSubscribeInfoEvent;
+@class RCIMIWSubscribeEventDetail;
+@class RCIMIWSubscribeEventRequest;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -138,6 +143,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 // TranslateItem
 + (NSDictionary *)convertTranslateItemToDict:(RCIMIWTranslateItem *)item;
+
+// UserProfile
++ (NSDictionary *)convertUserProfileToDict:(RCIMIWUserProfile *)userProfile;
++ (RCIMIWUserProfile *)convertUserProfileFromDict:(NSDictionary *)dict;
+
+// SubscribeEvent
++ (NSDictionary *)convertSubscribeEventToDict:(RCIMIWSubscribeEvent *)subscribeEvent;
++ (RCIMIWSubscribeEvent *)convertSubscribeEventFromDict:(NSDictionary *)dict;
+
+// SubscribeInfoEvent  
++ (NSDictionary *)convertSubscribeInfoEventToDict:(RCIMIWSubscribeInfoEvent *)subscribeInfoEvent;
++ (RCIMIWSubscribeInfoEvent *)convertSubscribeInfoEventFromDict:(NSDictionary *)dict;
+
+// SubscribeEventDetail
++ (NSDictionary *)convertSubscribeEventDetailToDict:(RCIMIWSubscribeEventDetail *)subscribeEventDetail;
++ (RCIMIWSubscribeEventDetail *)convertSubscribeEventDetailFromDict:(NSDictionary *)dict;
+
+// SubscribeEventRequest
++ (NSDictionary *)convertSubscribeEventRequestToDict:(RCIMIWSubscribeEventRequest *)subscribeEventRequest;
++ (RCIMIWSubscribeEventRequest *)convertSubscribeEventRequestFromDict:(NSDictionary *)dict;
 
 @end
 
