@@ -33,10 +33,24 @@ abstract class RCIMIWUserCustomMessage extends RCIMIWMessage {
 }
 
 class RCIMIWHarmonyPushOptions {
+  /// [ZH]
+  /// ---
   /// 通知栏右侧图片，格式支持 png、jpg、jpeg、heif、gif、bmp，图片长宽<25000像素，图片不满足要求的情况下，终端不能显示通知消息。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Notification icon (right side). Supports png, jpg, jpeg, heif, gif, bmp. Max pixel area: 25,000. Invalid images won't display.
+  /// ---
   String? imageUrl;
 
+  /// [ZH]
+  /// ---
   /// 消息自分类标识，默认为空。category 取值必须为大写字母，例如 IM。消息自分类标识，默认为空。category 取值必须为大写字母，例如 IM。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message self-classification ID (empty by default). Use uppercase letters like IM.
+  /// ---
   String? category;
 
   RCIMIWHarmonyPushOptions.create({this.imageUrl, this.category});
@@ -55,50 +69,147 @@ class RCIMIWHarmonyPushOptions {
 }
 
 class RCIMIWAndroidPushOptions {
+  /// [ZH]
+  /// ---
   /// Android 平台 Push 唯一标识。
   /// 目前支持小米、华为推送平台，默认开发者不需要进行设置。
   /// 当消息产生推送时，消息的 messageUId 作为 notificationId 使用。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The unique identifier for Push on the Android platform.
+  /// Currently supports Xiaomi and Huawei push platforms. Developers do not need to configure this by default.
+  /// When a message triggers a push notification, the message's messageUId is used as the notificationId.
+  /// ---
   String? notificationId;
 
+  /// [ZH]
+  /// ---
   /// 小米的渠道 ID
   /// 该条消息针对小米使用的推送渠道。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Xiaomi Channel ID
+  /// This message is targeted at the push notification channel used by Xiaomi.
+  /// ---
   String? channelIdMi;
 
+  /// [ZH]
+  /// ---
   /// 华为的渠道 ID
   /// 该条消息针对华为使用的推送渠道，如开发者集成了华为推送，需要指定 channelId 时，可向 Android 端研发人员获取，channelId 由开发者自行创建。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Huawei Channel ID
+  /// This message is specific to the push channel used by Huawei. If you have integrated Huawei Push and need to specify the `channelId`, you can obtain it from the Android development team. The `channelId` is created by the developer.
+  /// ---
   String? channelIdHW;
   String? categoryHW;
 
+  /// [ZH]
+  /// ---
   /// OPPO 的渠道 ID。
   /// 该条消息针对 OPPO 使用的推送渠道，如开发者集成了 OPPO 推送，需要指定 channelId 时，可向 Android 端研发人员获取，channelId 由开发者自行创建。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Channel ID for OPPO.
+  /// This message is specific to the push channel used by OPPO. If developers have integrated OPPO push and need to specify the `channelId`, they can obtain it from the Android development team. The `channelId` is created by the developers themselves.
+  /// ---
   String? channelIdOPPO;
 
+  /// [ZH]
+  /// ---
   /// VIVO 推送通道类型 开发者集成了 VIVO 推送，需要指定推送类型时，可进行设置。
+  /// ---
+  /// [EN]
+  /// ---
+  /// VIVO Push Channel Type
+  /// Developers who have integrated VIVO Push can configure the push type when specifying it.
+  /// ---
   RCIMIWVIVOPushType? pushTypeVIVO;
 
+  /// [ZH]
+  /// ---
   /// FCM 通知类型推送时所使用的分组 id
+  /// ---
+  /// [EN]
+  /// ---
+  /// FCM notification group ID used for push notifications
+  /// ---
   String? collapseKeyFCM;
 
+  /// [ZH]
+  /// ---
   /// FCM 通知类型的推送所使用的通知图片 url
+  /// ---
+  /// [EN]
+  /// ---
+  /// The URL of the notification image used for FCM notification-type push notifications.
+  /// ---
   String? imageUrlFCM;
 
+  /// [ZH]
+  /// ---
   /// 华为推送消息级别
+  /// ---
+  /// [EN]
+  /// ---
+  /// Huawei Push Notification Priority
+  /// ---
   RCIMIWImportanceHW? importanceHW;
 
+  /// [ZH]
+  /// ---
   /// 华为通知栏消息右侧大图标 URL，如果不设置，则不展示通知栏右侧图标。
   /// URL使用的协议必须是HTTPS协议，取值样例：https://example.com/image.png。图标文件须小于 512KB，图标建议规格大小：40dp x 40dp，弧角大小为 8dp，超出建议规格大小的图标会存在图片压缩或显示不全的情况。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Huawei notification bar message large icon URL on the right. If not set, the icon on the right side of the notification bar will not be displayed.
+  /// The URL must use the HTTPS protocol. Example value: `https://example.com/image.png`.
+  /// The icon file must be smaller than 512KB. Recommended icon size: 40dp x 40dp, with rounded corners of 8dp. Icons exceeding the recommended size may be compressed or displayed incompletely.
+  /// ---
   String? imageUrlHW;
 
+  /// [ZH]
+  /// ---
   /// FCM 通知的频道 ID，该应用程序必须使用此频道 ID 创建一个频道，然后才能收到带有该频道 ID 的任何通知。
   /// 如果您未在请求中发送此频道 ID，或者如果应用尚未创建提供的频道 ID，则 FCM 使用应用清单中指定的频道 ID。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Channel ID for FCM Notifications
+  /// The app must create a channel using this channel ID before it can receive any notifications with this channel ID.
+  /// If you do not send this channel ID in the request, or if the app has not yet created the provided channel ID, FCM uses the channel ID specified in the app manifest.
+  /// ---
   String? channelIdFCM;
   String? categoryVivo;
 
+  /// [ZH]
+  /// ---
   /// 荣耀推送消息级别
+  /// ---
+  /// [EN]
+  /// ---
+  /// Honor Push Notification Priority
+  /// ---
   RCIMIWImportanceHonor? importanceHonor;
 
+  /// [ZH]
+  /// ---
   /// 荣耀通知栏消息右侧大图标 URL，如果不设置，则不展示通知栏右侧图标。
   /// URL使用的协议必须是HTTPS协议，取值样例：https://example.com/image.png。图标文件须小于 512KB，图标建议规格大小：40dp x 40dp，弧角大小为 8dp，超出建议规格大小的图标会存在图片压缩或显示不全的情况。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Notification Bar Message Large Icon URL on the Right (Honor)
+  /// If not set, the icon on the right side of the notification bar will not be displayed.
+  /// The URL must use the HTTPS protocol. Example value: `https://example.com/image.png`.
+  /// The icon file must be smaller than 512KB. Recommended icon size: 40dp x 40dp with a corner radius of 8dp. Icons exceeding the recommended size may be compressed or partially displayed.
+  /// ---
   String? imageUrlHonor;
 
   RCIMIWAndroidPushOptions.create({
@@ -156,44 +267,133 @@ class RCIMIWAndroidPushOptions {
 }
 
 class RCIMIWMessagePushOptions {
+  /// [ZH]
+  /// ---
   /// 是否发送通知
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether to send a notification
+  /// ---
   bool? disableNotification;
 
+  /// [ZH]
+  /// ---
   /// 通知栏是否屏蔽通知标题
   /// true 不显示通知标题，false 显示通知标题
   /// 默认情况下融云单聊消息通知标题为用户名、群聊消息为群名称，设置后不会再显示通知标题。
   /// 此属性只针目标用户为iOS 平台时有效，Android 第三方推送平台的通知标题为必填项，所以暂不支持。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Hide Notification Title in Notification Bar
+  /// `true`: Hide the notification title.
+  /// `false`: Show the notification title.
+  /// By default, RongCloud displays the sender's username as the notification title for one-to-one chat messages and the group name for group chat messages. When this property is enabled, the notification title will no longer be displayed.
+  /// Note: This property is only effective for iOS users. For Android, the notification title is a required field for third-party push platforms and is therefore not supported at this time.
+  /// ---
   bool? disablePushTitle;
 
+  /// [ZH]
+  /// ---
   /// 推送标题
   /// 默认标题显示规则：内置消息：单聊通知标题显示为发送者名称，群聊通知标题显示为群名称。 自定义消息：默认不显示标题。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Push Notification Title
+  /// Default Title Display Rules:
+  /// - Built-in Messages:
+  /// - For one-to-one chat, the notification title displays the sender's name.
+  /// - For group chat, the notification title displays the group name.
+  /// - Custom Messages:
+  /// By default, no title is displayed.
+  /// ---
   String? pushTitle;
 
+  /// [ZH]
+  /// ---
   /// 推送内容。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Push notification content.
+  /// ---
   String? pushContent;
 
+  /// [ZH]
+  /// ---
   /// 远程推送附加信息.
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remote Notification Additional Information.
+  /// ---
   String? pushData;
 
+  /// [ZH]
+  /// ---
   /// 是否强制显示通知详情。 当目标用户设置推送不显示消息详情时， 可通过此功能，强制设置该条消息显示推送详情。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether to force the display of notification details. When the target user has set push notifications to hide message details, this function can be used to forcibly set the push notification details to be displayed for this message.
+  /// ---
   bool? forceShowDetailContent;
 
+  /// [ZH]
+  /// ---
   /// 推送模板 ID
   /// 设置后根据目标用户通过 setPushLanguageCode 设置的语言环境，匹配模板中设置的语言内容进行推送
   /// 未匹配成功时使用默认内容进行推送,模板内容在“开发者后台-自定义推送文案”中进行设置 注：RCMessagePushConfig 中的 Title 和 PushContent
   /// 优先级高于模板 ID（templateId）中对应的标题和推送内容
+  /// ---
+  /// [EN]
+  /// ---
+  /// Push Template ID
+  /// After setting the push template ID, the system will match the language content configured in the template based on the locale set by the target user through `setPushLanguageCode`. If no match is found, the default content will be used for the push. The template content can be configured in the "Developer Console - Custom Push Copywriting" section.
+  /// Note: The `Title` and `PushContent` in `RCMessagePushConfig` take precedence over the corresponding title and push content in the `templateId`.
+  /// ---
   String? templateId;
 
+  /// [ZH]
+  /// ---
   /// 如果对端设备是 iOS，设置 isVoIPPush 为 True，会走 VoIP 通道推送 Push。
+  /// ---
+  /// [EN]
+  /// ---
+  /// If the peer device is iOS, setting `isVoIPPush` to `True` will route the push notification through the VoIP channel.
+  /// ---
   bool? voIPPush;
 
+  /// [ZH]
+  /// ---
   /// iOS 平台相关配置
+  /// ---
+  /// [EN]
+  /// ---
+  /// iOS Platform Configuration
+  /// ---
   RCIMIWIOSPushOptions? iOSPushOptions;
 
+  /// [ZH]
+  /// ---
   /// Android 平台相关配置
+  /// ---
+  /// [EN]
+  /// ---
+  /// Android Platform Configuration
+  /// ---
   RCIMIWAndroidPushOptions? androidPushOptions;
 
+  /// [ZH]
+  /// ---
   /// 鸿蒙推送配置
+  /// ---
+  /// [EN]
+  /// ---
+  /// HarmonyOS push notification setup
+  /// ---
   RCIMIWHarmonyPushOptions? harmonyPushOptions;
 
   RCIMIWMessagePushOptions.create({
@@ -254,24 +454,64 @@ class RCIMIWMessagePushOptions {
 }
 
 class RCIMIWIOSPushOptions {
+  /// [ZH]
+  /// ---
   /// iOS 平台通知栏分组 ID 相同的 thread-id 推送分为一组 iOS10 开始支持
+  /// ---
+  /// [EN]
+  /// ---
+  /// iOS platform notification grouping: Push notifications with the same thread-id are grouped together. Supported starting from iOS 10.
+  /// ---
   String? threadId;
 
+  /// [ZH]
+  /// ---
   /// iOS 富文本推送的类型开发者自己定义，自己在 App 端进行解析判断，与 richMediaUri 一起使用，当设置 category 后，推送时默认携带 mutable-content 进行推送，属性值为 1。
   /// 如果不设置后台默认取消息类型字符串，如RC:TxtMsg
+  /// ---
+  /// [EN]
+  /// ---
+  /// The type of rich text push notifications in iOS is defined by the developer and parsed and judged on the App side. It is used together with `richMediaUri`. When `category` is set, the push notification will carry `mutable-content` by default with a property value of 1.
+  /// If not set, the background will default to the message type string, such as `RC:TxtMsg`.
+  /// ---
   String? category;
 
+  /// [ZH]
+  /// ---
   /// iOS 平台通知覆盖 ID apnsCollapseId 相同时，新收到的通知会覆盖老的通知，最大 64 字节 iOS10 开始支持
+  /// ---
+  /// [EN]
+  /// ---
+  /// When the apnsCollapseId for iOS platform notifications is the same, newly received notifications will replace the old ones. The maximum length is 64 bytes, supported starting from iOS 10.
+  /// ---
   String? apnsCollapseId;
 
+  /// [ZH]
+  /// ---
   /// iOS 富文本推送内容的 URL，与 category 一起使用。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The URL for iOS rich text push notification content, used in conjunction with the category.
+  /// ---
   String? richMediaUri;
 
+  /// [ZH]
+  /// ---
   /// iOS 推送级别。默认值 "active"。
   /// "passive" 被动通知：即并不需要及时关注的通知，类似餐馆推荐通知。
   /// "active" 主动通知（默认的）：默认的通知，即人们可能想知道的，类似最喜欢的体育比赛的最新比分。
   /// "time-sensitive" 时效性通知：需要人们立刻注意的通知，类似账户安全问题或快递动态。
   /// "critical" 重要通知：关于个人健康或直接影响到设备拥有者的公共安全事件且需要立刻关注的，这类通知很少，一般是来自公共政府机构或健康 App。
+  /// ---
+  /// [EN]
+  /// ---
+  /// iOS push notification levels. Default: "active".
+  /// "passive" Not urgent, like restaurant recommendations
+  /// "active" (default) Regular alerts, like sports scores
+  /// "time-sensitive" Requires immediate attention, like security alerts
+  /// "critical" Health/safety emergencies from official sources
+  /// ---
   String? interruptionLevel;
 
   RCIMIWIOSPushOptions.create({
@@ -302,37 +542,115 @@ class RCIMIWIOSPushOptions {
 }
 
 class RCIMIWCompressOptions {
+  /// [ZH]
+  /// ---
   /// 原图压缩比
+  /// ---
+  /// [EN]
+  /// ---
+  /// Original Image Compression Ratio
+  /// ---
   int? originalImageQuality;
 
+  /// [ZH]
+  /// ---
   /// 原图最长边的最大宽度
+  /// ---
+  /// [EN]
+  /// ---
+  /// Maximum width of the longest side of the original image
+  /// ---
   int? originalImageSize;
 
+  /// [ZH]
+  /// ---
   /// 原图大小限制 配置发送图片时，如果图片大小不超过则发送原图
+  /// ---
+  /// [EN]
+  /// ---
+  /// Original Image Size Limit
+  /// When sending an image, if the image size does not exceed the limit, the original image will be sent.
+  /// ---
   int? originalImageMaxSize;
 
+  /// [ZH]
+  /// ---
   /// 缩略图压缩比例
+  /// ---
+  /// [EN]
+  /// ---
+  /// Thumbnail Compression Ratio
+  /// ---
   int? thumbnailQuality;
 
+  /// [ZH]
+  /// ---
   /// 缩略图压缩宽、高
+  /// ---
+  /// [EN]
+  /// ---
+  /// Thumbnail compression width and height
+  /// ---
   int? thumbnailMaxSize;
 
+  /// [ZH]
+  /// ---
   /// 缩略图压缩最小宽、高
+  /// ---
+  /// [EN]
+  /// ---
+  /// Thumbnail compression minimum width and height
+  /// ---
   int? thumbnailMinSize;
 
+  /// [ZH]
+  /// ---
   /// 小视频压缩宽度,建议使用16的倍数
+  /// ---
+  /// [EN]
+  /// ---
+  /// Video compression width, recommended to use multiples of 16.
+  /// ---
   int? sightCompressWidth;
 
+  /// [ZH]
+  /// ---
   /// 小视频压缩高度，建议使用16的倍数
+  /// ---
+  /// [EN]
+  /// ---
+  /// Short video compression height, recommended to use multiples of 16.
+  /// ---
   int? sightCompressHeight;
 
+  /// [ZH]
+  /// ---
   /// 位置消息缩略图压缩比例
+  /// ---
+  /// [EN]
+  /// ---
+  /// Thumbnail Compression Ratio for Location Messages
+  /// ---
   int? locationThumbnailQuality;
 
+  /// [ZH]
+  /// ---
   /// 位置消息压缩的宽度
+  /// ---
+  /// [EN]
+  /// ---
+  /// Width of the compressed location message
+  /// ---
   int? locationThumbnailWidth;
 
+  /// [ZH]
+  /// ---
   /// 位置消息压缩的高度
+  /// ---
+  /// [EN]
+  /// ---
+  /// Height of the location message compression
+  /// ---
   int? locationThumbnailHeight;
 
   RCIMIWCompressOptions.create({
@@ -381,36 +699,108 @@ class RCIMIWCompressOptions {
 }
 
 class RCIMIWEngineOptions {
+  /// [ZH]
+  /// ---
   /// 私有部署的导航服务器地址。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Private deployment navigation server address.
+  /// ---
   String? naviServer;
 
+  /// [ZH]
+  /// ---
   /// 私有部署的媒体服务器地址，即文件和图片的上传地址。使用私有云时必须填写。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The media server address for private deployment, which is the upload address for files and images. This field is mandatory when using a private cloud.
+  /// ---
   String? fileServer;
 
+  /// [ZH]
+  /// ---
   /// 配置数据上传地址
+  /// ---
+  /// [EN]
+  /// ---
+  /// Configure Data Upload URL
+  /// ---
   String? statisticServer;
 
+  /// [ZH]
+  /// ---
   /// 配置日志上传地址
+  /// ---
+  /// [EN]
+  /// ---
+  /// Set log upload URL
+  /// ---
   String? logServer;
 
+  /// [ZH]
+  /// ---
   /// 配置云控服务器地址
+  /// ---
+  /// [EN]
+  /// ---
+  /// Configure cloud control server address
+  /// ---
   String? cloudControlServer;
 
+  /// [ZH]
+  /// ---
   /// 数据中心区域码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Data Center Area Code
+  /// ---
   RCIMIWAreaCode? areaCode;
 
+  /// [ZH]
+  /// ---
   /// 网络环境标识
   /// 标识客户端所在当前网络环境，例如 intranet 内网，private 专网。如果不配置，使用对应于的默认环境配置
+  /// ---
+  /// [EN]
+  /// ---
+  /// Network environment identifier
+  /// Shows client's current network (e.g., intranet, private). Uses default config if not set
+  /// ---
   String? environment;
 
+  /// [ZH]
+  /// ---
   /// 设置断线重连时是否踢出重连设备。
   /// 用户没有开通多设备登录功能的前提下，同一个账号在一台新设备上登录的时候，会把这个账号在之前登录的设备上踢出。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Set whether to kick out the reconnecting device during reconnection.
+  /// When a user has not enabled the multi-device login feature, if the same account logs in on a new device, the account will be kicked out from the previously logged-in device.
+  /// ---
   bool? kickReconnectDevice;
 
+  /// [ZH]
+  /// ---
   /// 压缩项配置
+  /// ---
+  /// [EN]
+  /// ---
+  /// Compression Configuration
+  /// ---
   RCIMIWCompressOptions? compressOptions;
 
+  /// [ZH]
+  /// ---
   /// 日志级别
+  /// ---
+  /// [EN]
+  /// ---
+  /// Log Level
+  /// ---
   RCIMIWLogLevel? logLevel;
   RCIMIWPushOptions? pushOptions;
   bool? enablePush;
@@ -476,13 +866,34 @@ class RCIMIWEngineOptions {
 }
 
 class RCIMIWMessageAuditInfo {
+  /// [ZH]
+  /// ---
   /// 是否送审，消息回调是否送给三方审核
+  /// ---
+  /// [EN]
+  /// ---
+  /// Send for review? Route callbacks to third-party audit
+  /// ---
   RCIMIWMessageAuditType? auditType;
 
+  /// [ZH]
+  /// ---
   /// 项目名称 默认为 空字符串
+  /// ---
+  /// [EN]
+  /// ---
+  /// Project name defaults to empty string
+  /// ---
   String? project;
 
+  /// [ZH]
+  /// ---
   /// 审核策略
+  /// ---
+  /// [EN]
+  /// ---
+  /// Audit policy
+  /// ---
   String? strategy;
 
   RCIMIWMessageAuditInfo.create({this.auditType, this.project, this.strategy});
@@ -503,10 +914,24 @@ class RCIMIWMessageAuditInfo {
 }
 
 class RCIMIWUnknownMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 消息数据
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message Data
+  /// ---
   String? rawData;
 
+  /// [ZH]
+  /// ---
   /// 消息的标识
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message Identifier
+  /// ---
   String? objectName;
 
   @override
@@ -524,19 +949,54 @@ class RCIMIWUnknownMessage extends RCIMIWMessage {
 }
 
 class RCIMIWUserInfo {
+  /// [ZH]
+  /// ---
   /// 用户 id。
+  /// ---
+  /// [EN]
+  /// ---
+  /// User ID.
+  /// ---
   String? userId;
 
+  /// [ZH]
+  /// ---
   /// 名称（昵称）。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Name (Nickname).
+  /// ---
   String? name;
 
+  /// [ZH]
+  /// ---
   /// 用户头像地址。
+  /// ---
+  /// [EN]
+  /// ---
+  /// User avatar URL.
+  /// ---
   String? portrait;
 
+  /// [ZH]
+  /// ---
   /// 备注
+  /// ---
+  /// [EN]
+  /// ---
+  /// Note
+  /// ---
   String? alias;
 
+  /// [ZH]
+  /// ---
   /// 附加信息。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Additional Information.
+  /// ---
   String? extra;
 
   RCIMIWUserInfo.create({this.userId, this.name, this.portrait, this.alias, this.extra});
@@ -561,13 +1021,34 @@ class RCIMIWUserInfo {
 }
 
 class RCIMIWCustomMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 自定义消息的标识符
+  /// ---
+  /// [EN]
+  /// ---
+  /// Custom message identifier
+  /// ---
   String? identifier;
 
+  /// [ZH]
+  /// ---
   /// 自定义的消息存储策略
+  /// ---
+  /// [EN]
+  /// ---
+  /// Custom Message Storage Strategy
+  /// ---
   RCIMIWCustomMessagePolicy? policy;
 
+  /// [ZH]
+  /// ---
   /// 自定义消息的键值对
+  /// ---
+  /// [EN]
+  /// ---
+  /// Custom message key-value pairs
+  /// ---
   Map? fields;
 
   @override
@@ -587,13 +1068,37 @@ class RCIMIWCustomMessage extends RCIMIWMessage {
 }
 
 class RCIMIWNativeCustomMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 自定义消息的内容
+  /// ---
+  /// [EN]
+  /// ---
+  /// Custom Message Content
+  /// <p>
+  /// ---
   Map? fields;
 
+  /// [ZH]
+  /// ---
   /// 自定义消息的搜索关键字
+  /// ---
+  /// [EN]
+  /// ---
+  /// Custom Message Search Keywords
+  /// <p>
+  /// ---
   List<String>? searchableWords;
 
+  /// [ZH]
+  /// ---
   /// 自定义消息的唯一标识
+  /// ---
+  /// [EN]
+  /// ---
+  /// Custom Message Unique Identifier
+  /// <p>
+  /// ---
   String? messageIdentifier;
 
   @override
@@ -613,79 +1118,260 @@ class RCIMIWNativeCustomMessage extends RCIMIWMessage {
 }
 
 class RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 会话类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation Type
+  /// ---
   RCIMIWConversationType? conversationType;
 
+  /// [ZH]
+  /// ---
   /// 消息的类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// ### Message Type
+  /// ---
   RCIMIWMessageType? messageType;
 
+  /// [ZH]
+  /// ---
   /// 会话 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation ID
+  /// ---
   String? targetId;
 
+  /// [ZH]
+  /// ---
   /// 所属会话的业务标识，长度限制 20 字符
+  /// ---
+  /// [EN]
+  /// ---
+  /// Business identifier of the associated conversation, with a length limit of 20 characters.
+  /// ---
   String? channelId;
 
+  /// [ZH]
+  /// ---
   /// 本地数据库中存储的消息的唯一 ID 值。发送新消息时无需指定该 ID，否则会导致消息入库失败。在失败重发消息时，可以填入已入库的消息的 ID，请确保使用上一次发送失败的消息实例。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The unique ID value of the message stored in the local database. This ID does not need to be specified when sending a new message; otherwise, it will cause the message to fail to be stored in the database. When retrying a failed message, you can fill in the ID of the message that has already been stored. Ensure that you use the message instance from the previous failed attempt.
+  /// ---
   int? messageId;
 
+  /// [ZH]
+  /// ---
   /// 服务器消息唯一 ID（在同一个 Appkey 下全局唯一）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Server message unique ID (globally unique within the same Appkey)
+  /// ---
   String? messageUId;
 
+  /// [ZH]
+  /// ---
   /// 是否是离线消息，只在接收消息的回调方法中有效，如果消息为离线消息，则为 YES ，其他情况均为 NO
+  /// ---
+  /// [EN]
+  /// ---
+  /// Indicates whether the message is an offline message. This is only valid in the message received callback method. If the message is an offline message, the value is YES; otherwise, it is NO.
+  /// ---
   bool? offLine;
 
+  /// [ZH]
+  /// ---
   /// 群阅读回执状态
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group Read Receipt Status
+  /// ---
   RCIMIWGroupReadReceiptInfo? groupReadReceiptInfo;
 
+  /// [ZH]
+  /// ---
   /// 消息的接收时间（Unix 时间戳、毫秒）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message received time (Unix timestamp in milliseconds)
+  /// ---
   int? receivedTime;
 
+  /// [ZH]
+  /// ---
   /// 消息的发送时间（Unix 时间戳、毫秒）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message sending time (Unix timestamp, milliseconds)
+  /// ---
   int? sentTime;
 
+  /// [ZH]
+  /// ---
   /// 设置焚烧时间，默认是 0，0 代表该消息非阅后即焚消息。若此值大于 0，则消息为已读状态后，经过 destructDuration 时间后销毁。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Set self-destruct timer (default: 0). 0 means no auto-deletion. If >0, message destroys after being read for destructDuration.
+  /// ---
   int? destructDuration;
 
+  /// [ZH]
+  /// ---
   /// 消息的接收状态，只能为单一某个状态
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message Receipt Status
+  /// ---
   RCIMIWReceivedStatus? receivedStatus;
 
+  /// [ZH]
+  /// ---
   /// 消息的接收状态，可同时设为已读、已听、已下载、已收取
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message receipt status—set as read, listened, downloaded, or received
+  /// ---
   RCIMIWReceivedStatusInfo? receivedStatusInfo;
 
+  /// [ZH]
+  /// ---
   /// 消息的发送状态
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message Sending Status
+  /// ---
   RCIMIWSentStatus? sentStatus;
 
+  /// [ZH]
+  /// ---
   /// 消息的发送者 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// The sender ID of the message.
+  /// ---
   String? senderUserId;
 
+  /// [ZH]
+  /// ---
   /// 消息的方向
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message Direction
+  /// ---
   RCIMIWMessageDirection? direction;
 
+  /// [ZH]
+  /// ---
   /// 消息携带的用户信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message-bearing User Information
+  /// ---
   RCIMIWUserInfo? userInfo;
 
+  /// [ZH]
+  /// ---
   /// 消息的 @ 信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message @ Information
+  /// ---
   RCIMIWMentionedInfo? mentionedInfo;
 
+  /// [ZH]
+  /// ---
   /// 消息推送配置
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message Push Configuration
+  /// ---
   RCIMIWMessagePushOptions? pushOptions;
 
+  /// [ZH]
+  /// ---
   /// 消息的附加字段，可以随着消息发送给远端
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message Additional Fields
+  /// ---
   String? extra;
 
+  /// [ZH]
+  /// ---
   /// 消息的本地扩展字段，不会随着消息发送给远端，只会保存在本地数据库中
+  /// ---
+  /// [EN]
+  /// ---
+  /// Local message extensions, stored only in local database without being sent to remote
+  /// ---
   String? localExtra;
 
-  /// 消息扩展信息列表，该属性在消息发送时确定，发送之后不能再做修改。扩展信息只支持单聊、群聊、超级群，其它会话类型不能设置扩展信息。默认消息扩展字典 key 长度不超过 32 ，value 长度不超过 4096 ，单次设置扩展数量最大为 20，消息的扩展总数不能超过 300
+  /// [ZH]
+  /// ---
+  /// 消息扩展信息，发消息前设置该属性可打开消息扩展功能，否则无法使用消息扩展功能。
+  /// 发送成功后需使用 `updateMessageExpansion` 接口更新扩展信息。
+  /// 消息扩展 key 长度不超过 32 ，value 长度不超过 4096 ，单次设置扩展数量最大为 20，消息的扩展总数不能超过 300
+  /// *注*： 扩展信息只支持单聊和群组，其它会话类型不能设置扩展信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message expansion information. Set this property before sending a message to enable the message expansion feature; otherwise, the message expansion feature cannot be used.
+  /// After sending a message successfully, use the `updateMessageExpansion` interface to update the expansion information.
+  /// Message extension key length should not exceed 32 characters, and value length should not exceed 4096 characters. The maximum number of extensions that can be set at one time is 20, and the total number of extensions for a message cannot exceed 300."
+  /// *Note*: Extension information is only supported for private chats and groups; extension information cannot be set for other conversation types.
+  /// ---
   Map? expansion;
 
-  /// 消息是否可以包含扩展信息。
+  /// [ZH]
+  /// ---
+  /// 消息是否可以包含扩展消息。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Can messages include Extended Information
+  /// ---
   bool? canIncludeExpansion;
 
+  /// [ZH]
+  /// ---
   /// 消息送审配置
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message review settings
+  /// ---
   RCIMIWMessageAuditInfo? auditInfo;
 
+  /// [ZH]
+  /// ---
   /// 定向用户列表，单聊会话类型返回空
+  /// ---
+  /// [EN]
+  /// ---
+  /// Target user list (returns empty for one-to-one chat type)
+  /// ---
   List<String>? directedUserIds;
 
   Map<String, dynamic> toJson() {
@@ -773,13 +1459,34 @@ class RCIMIWMessage {
 }
 
 class RCIMIWNativeCustomMediaMessage extends RCIMIWMediaMessage {
+  /// [ZH]
+  /// ---
   /// 自定义消息的内容
+  /// ---
+  /// [EN]
+  /// ---
+  /// Custom Message Content
+  /// ---
   Map? fields;
 
+  /// [ZH]
+  /// ---
   /// 自定义消息的搜索关键字
+  /// ---
+  /// [EN]
+  /// ---
+  /// Custom Message Search Keywords
+  /// ---
   List<String>? searchableWords;
 
+  /// [ZH]
+  /// ---
   /// 自定义消息的唯一标识
+  /// ---
+  /// [EN]
+  /// ---
+  /// Unique identifier for custom messages
+  /// ---
   String? messageIdentifier;
 
   @override
@@ -799,16 +1506,44 @@ class RCIMIWNativeCustomMediaMessage extends RCIMIWMediaMessage {
 }
 
 class RCIMIWReceivedStatusInfo {
+  /// [ZH]
+  /// ---
   /// 获取是否已读取的状态。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get read status
+  /// ---
   bool? read;
 
+  /// [ZH]
+  /// ---
   /// 获取是否已被收听的状态。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Check if already listened
+  /// ---
   bool? listened;
 
+  /// [ZH]
+  /// ---
   /// 获取文件是否已经下载的状态。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Check if file is downloaded
+  /// ---
   bool? downloaded;
 
+  /// [ZH]
+  /// ---
   /// 获取消息是否已经被收取过。该消息已被同时在线或之前登录的其他设备接收。只要任何其他设备先收到该消息，当前设备该状态值就会为 true。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Checks if the message was already received by another device. True if any other online or previously logged-in device got it first.
+  /// ---
   bool? retrieved;
 
   RCIMIWReceivedStatusInfo.create({this.read, this.listened, this.downloaded, this.retrieved});
@@ -831,10 +1566,24 @@ class RCIMIWReceivedStatusInfo {
 }
 
 class RCIMIWImageMessage extends RCIMIWMediaMessage {
+  /// [ZH]
+  /// ---
   /// 图片的缩略图数据
+  /// ---
+  /// [EN]
+  /// ---
+  /// The thumbnail data of the image.
+  /// ---
   String? thumbnailBase64String;
 
+  /// [ZH]
+  /// ---
   /// 是否为原图
+  /// ---
+  /// [EN]
+  /// ---
+  /// Is it the original image?
+  /// ---
   bool? original;
 
   @override
@@ -852,13 +1601,34 @@ class RCIMIWImageMessage extends RCIMIWMediaMessage {
 }
 
 class RCIMIWFileMessage extends RCIMIWMediaMessage {
+  /// [ZH]
+  /// ---
   /// 文件名
+  /// ---
+  /// [EN]
+  /// ---
+  /// File Name
+  /// ---
   String? name;
 
+  /// [ZH]
+  /// ---
   /// 文件类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// File Type
+  /// ---
   String? fileType;
 
+  /// [ZH]
+  /// ---
   /// 文件大小，单位为 Byte
+  /// ---
+  /// [EN]
+  /// ---
+  /// File size, in bytes.
+  /// ---
   int? size;
 
   @override
@@ -878,22 +1648,64 @@ class RCIMIWFileMessage extends RCIMIWMediaMessage {
 }
 
 class RCIMIWRecallNotificationMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 是否是管理员操作
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether it is an administrator operation
+  /// ---
   bool? admin;
 
+  /// [ZH]
+  /// ---
   /// 是否删除
+  /// ---
+  /// [EN]
+  /// ---
+  /// Delete?
+  /// ---
   bool? deleted;
 
+  /// [ZH]
+  /// ---
   /// 被撤回的原始消息的发送时间（毫秒）
+  /// ---
+  /// [EN]
+  /// ---
+  /// The send time of the original message that was recalled (in milliseconds)
+  /// ---
   int? recallTime;
 
+  /// [ZH]
+  /// ---
   /// 撤回动作的时间（毫秒）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Withdrawal action time (milliseconds)
+  /// ---
   int? recallActionTime;
 
+  /// [ZH]
+  /// ---
   /// 撤回操作者的用户 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// User ID of the operator who revoked
+  /// ---
   String? operatorId;
 
+  /// [ZH]
+  /// ---
   /// 被撤回的原消息
+  /// ---
+  /// [EN]
+  /// ---
+  /// The original message that was recalled
+  /// ---
   RCIMIWMessage? originalMessage;
 
   @override
@@ -923,10 +1735,24 @@ class RCIMIWRecallNotificationMessage extends RCIMIWMessage {
 }
 
 class RCIMIWMediaMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 本地路径
+  /// ---
+  /// [EN]
+  /// ---
+  /// Local Path
+  /// ---
   String? local;
 
+  /// [ZH]
+  /// ---
   /// 远端路径
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remote Path
+  /// ---
   String? remote;
 
   /// Flutter For Web 端选取的文件（移动端使用无效）
@@ -947,7 +1773,14 @@ class RCIMIWMediaMessage extends RCIMIWMessage {
 }
 
 class RCIMIWTextMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 文本内容
+  /// ---
+  /// [EN]
+  /// ---
+  /// Text content
+  /// ---
   String? text;
   RCIMIWTranslateInfo? translateInfo;
 
@@ -970,13 +1803,34 @@ class RCIMIWTextMessage extends RCIMIWMessage {
 }
 
 class RCIMIWGIFMessage extends RCIMIWMediaMessage {
+  /// [ZH]
+  /// ---
   /// GIF 图的大小，单位字节
+  /// ---
+  /// [EN]
+  /// ---
+  /// Size of the GIF image in bytes
+  /// ---
   int? dataSize;
 
+  /// [ZH]
+  /// ---
   /// GIF 图的宽
+  /// ---
+  /// [EN]
+  /// ---
+  /// Width of the GIF image
+  /// ---
   int? width;
 
+  /// [ZH]
+  /// ---
   /// GIF 图的高
+  /// ---
+  /// [EN]
+  /// ---
+  /// GIF height
+  /// ---
   int? height;
 
   @override
@@ -996,10 +1850,24 @@ class RCIMIWGIFMessage extends RCIMIWMediaMessage {
 }
 
 class RCIMIWCommandMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 命令的名称
+  /// ---
+  /// [EN]
+  /// ---
+  /// Command Name
+  /// ---
   String? name;
 
+  /// [ZH]
+  /// ---
   /// 命令的扩展数据，可以为任意字符串，如存放您定义的json数据。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The extension data of the command, which can be any string, such as storing your custom JSON data.
+  /// ---
   String? data;
 
   @override
@@ -1017,7 +1885,14 @@ class RCIMIWCommandMessage extends RCIMIWMessage {
 }
 
 class RCIMIWVoiceMessage extends RCIMIWMediaMessage {
+  /// [ZH]
+  /// ---
   /// 语音的长度，单位：秒
+  /// ---
+  /// [EN]
+  /// ---
+  /// The duration of the voice message, in seconds.
+  /// ---
   int? duration;
 
   @override
@@ -1033,13 +1908,34 @@ class RCIMIWVoiceMessage extends RCIMIWMediaMessage {
 }
 
 class RCIMIWMentionedInfo {
+  /// [ZH]
+  /// ---
   /// @ 提醒的类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// @ Reminder Type
+  /// ---
   RCIMIWMentionedType? type;
 
+  /// [ZH]
+  /// ---
   /// @ 的用户 ID 列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// @User ID List
+  /// ---
   List<String>? userIdList;
 
+  /// [ZH]
+  /// ---
   /// 包含 @ 提醒的消息，本地通知和远程推送显示的内容
+  /// ---
+  /// [EN]
+  /// ---
+  /// Messages containing @ mentions, content displayed in local notifications and remote push notifications.
+  /// ---
   String? mentionedContent;
 
   RCIMIWMentionedInfo.create({this.type, this.userIdList, this.mentionedContent});
@@ -1060,10 +1956,24 @@ class RCIMIWMentionedInfo {
 }
 
 class RCIMIWCommandNotificationMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 命令提醒的名称
+  /// ---
+  /// [EN]
+  /// ---
+  /// Command Reminder Name
+  /// ---
   String? name;
 
+  /// [ZH]
+  /// ---
   /// 命令提醒消息的扩展数据，可以为任意字符串，如存放您定义的 json 数据。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The extension data for the command reminder message, which can be any string, such as JSON data defined by you.
+  /// ---
   String? data;
 
   @override
@@ -1081,16 +1991,44 @@ class RCIMIWCommandNotificationMessage extends RCIMIWMessage {
 }
 
 class RCIMIWSightMessage extends RCIMIWMediaMessage {
+  /// [ZH]
+  /// ---
   /// 视频时长
+  /// ---
+  /// [EN]
+  /// ---
+  /// Video Duration
+  /// ---
   int? duration;
 
+  /// [ZH]
+  /// ---
   /// 视频大小
+  /// ---
+  /// [EN]
+  /// ---
+  /// Video Size
+  /// ---
   int? size;
 
+  /// [ZH]
+  /// ---
   /// 视频的名称
+  /// ---
+  /// [EN]
+  /// ---
+  /// Video Name
+  /// ---
   String? name;
 
+  /// [ZH]
+  /// ---
   /// 缩略图数据
+  /// ---
+  /// [EN]
+  /// ---
+  /// Thumbnail data
+  /// ---
   String? thumbnailBase64String;
 
   @override
@@ -1112,16 +2050,44 @@ class RCIMIWSightMessage extends RCIMIWMediaMessage {
 }
 
 class RCIMIWLocationMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 经度信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Longitude Information
+  /// ---
   double? longitude;
 
+  /// [ZH]
+  /// ---
   /// 纬度信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Latitude Information
+  /// ---
   double? latitude;
 
+  /// [ZH]
+  /// ---
   /// POI 信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// POI Information
+  /// ---
   String? poiName;
 
+  /// [ZH]
+  /// ---
   /// 缩略图地址
+  /// ---
+  /// [EN]
+  /// ---
+  /// Thumbnail URL
+  /// ---
   String? thumbnailPath;
 
   /// 缩略图 base64 字符串 （仅限 Flutter For Web 端使用）
@@ -1170,10 +2136,24 @@ class RCIMIWGroupNotificationMessage extends RCIMIWMessage {
 }
 
 class RCIMIWReferenceMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
   /// 引用文本
+  /// ---
+  /// [EN]
+  /// ---
+  /// Reference text
+  /// ---
   String? text;
 
+  /// [ZH]
+  /// ---
   /// 被引用的消息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Referenced Message
+  /// ---
   RCIMIWMessage? referenceMessage;
 
   @override
@@ -1197,7 +2177,14 @@ class RCIMIWReferenceMessage extends RCIMIWMessage {
 class RCIMIWTranslateMessageParam {
   String? messageUId;
 
+  /// [ZH]
+  /// ---
   /// Getters
+  /// ---
+  /// [EN]
+  /// ---
+  /// Getter methods
+  /// ---
   String? sourceLanguage;
   String? targetLanguage;
 
@@ -1244,7 +2231,14 @@ class RCIMIWTranslateTextParams {
 }
 
 class RCIMIWTranslateMessagesParams {
+  /// [ZH]
+  /// ---
   /// Getters
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get methods
+  /// ---
   bool? force;
   RCIMIWTranslateMode? mode;
   List<RCIMIWTranslateMessageParam>? list;
@@ -1274,7 +2268,14 @@ class RCIMIWTranslateMessagesParams {
 }
 
 class RCIMIWTranslateInfo {
+  /// [ZH]
+  /// ---
   /// Getters
+  /// ---
+  /// [EN]
+  /// ---
+  /// Getter methods
+  /// ---
   String? translatedText;
   String? targetLanguage;
   RCIMIWTranslateStatus? status;
@@ -1299,7 +2300,14 @@ class RCIMIWTranslateInfo {
 class RCIMIWTranslateTextParam {
   String? text;
 
+  /// [ZH]
+  /// ---
   /// Getters
+  /// ---
+  /// [EN]
+  /// ---
+  /// Getters
+  /// ---
   String? sourceLanguage;
   String? targetLanguage;
 
@@ -1321,7 +2329,14 @@ class RCIMIWTranslateTextParam {
 }
 
 class RCIMIWTranslateItem {
+  /// [ZH]
+  /// ---
   /// Getters
+  /// ---
+  /// [EN]
+  /// ---
+  /// Getter methods
+  /// ---
   String? identifier;
   RCIMIWTranslateInfo? translateInfo;
   int? errorCode;
@@ -1388,10 +2403,24 @@ class RCIMIWPagingQueryResult<T> {
 }
 
 class RCIMIWFollowInfo {
+  /// [ZH]
+  /// ---
   /// 用户 Id
+  /// ---
+  /// [EN]
+  /// ---
+  /// User ID
+  /// ---
   String? userId;
 
+  /// [ZH]
+  /// ---
   /// 关注时间戳，当前用户关注此用户的时间戳。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Timestamp when current user followed
+  /// ---
   int? time;
 
   Map<String, dynamic> toJson() {
@@ -1408,67 +2437,214 @@ class RCIMIWFollowInfo {
 }
 
 class RCIMIWGroupInfo {
+  /// [ZH]
+  /// ---
   /// 群Id。最大长度 64 个字符。支持大小写英文字母与数字的组合。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group ID. Up to 64 chars. Supports alphanumeric case-sensitive combinations.
+  /// ---
   String? groupId;
 
-  /// 群名称。最长不超过 64 个字符，创建群组时群名称可以重复。
+  /// [ZH]
+  /// ---
+  /// group name。最长不超过 64 个字符，创建群组时群名称可以重复。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group name. Up to 64 chars, can be duplicated when creating groups.
+  /// ---
   String? groupName;
 
+  /// [ZH]
+  /// ---
   /// 群头像 URL 地址。长度不超过 128 个字符
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group avatar URL (max 128 chars)
+  /// ---
   String? portraitUri;
 
+  /// [ZH]
+  /// ---
   /// 群简介。最大长度不超过 512 个字符
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group intro. Max 512 chars
+  /// ---
   String? introduction;
 
+  /// [ZH]
+  /// ---
   /// 群公告。最大长度不超过 1024 个字符
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group announcement. Max length: 1024 chars
+  /// ---
   String? notice;
 
+  /// [ZH]
+  /// ---
   /// 群扩展信息。默认最多可设置 10 个扩展信息。注意：需要通过开发者后台或 API 设置后才能使用，否则返回设置失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group extended info. Supports up to 10 entries by default. Note: Must be configured via dev console or API first
+  /// ---
   Map? extProfile;
 
+  /// [ZH]
+  /// ---
   /// 主动加入群权限权限
+  /// ---
+  /// [EN]
+  /// ---
+  /// Join group permission proactively
+  /// ---
   RCIMIWGroupJoinPermission? joinPermission;
 
+  /// [ZH]
+  /// ---
   /// 将群成员移出群组设置权限
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remove member and revoke group permissions
+  /// ---
   RCIMIWGroupOperationPermission? removeMemberPermission;
 
+  /// [ZH]
+  /// ---
   /// 邀请他人入群权限
+  /// ---
+  /// [EN]
+  /// ---
+  /// Invite others to group
+  /// ---
   RCIMIWGroupOperationPermission? invitePermission;
 
+  /// [ZH]
+  /// ---
   /// 被邀请入群权限
+  /// ---
+  /// [EN]
+  /// ---
+  /// Invited to group permissions
+  /// ---
   RCIMIWGroupInviteHandlePermission? inviteHandlePermission;
 
+  /// [ZH]
+  /// ---
   /// 群信息更新权限
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group info update permissions
+  /// ---
   RCIMIWGroupOperationPermission? groupInfoEditPermission;
 
+  /// [ZH]
+  /// ---
   /// 群成员信息更新权限
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group member info update permissions
+  /// ---
   RCIMIWGroupMemberInfoEditPermission? memberInfoEditPermission;
 
+  /// [ZH]
+  /// ---
   /// 创建者ID。 注意：此属性只读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Creator ID. Note: Read-only property
+  /// ---
   String? creatorId;
 
-  /// 群主ID。注意：此属性只读
+  /// [ZH]
+  /// ---
+  /// 群主 ID。注意：此属性只读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group OwnerID. Note: Read-only property
+  /// ---
   String? ownerId;
 
+  /// [ZH]
+  /// ---
   /// 当前群名称备注名。注意：此属性只读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Current group display name. Note: Read-only
+  /// ---
   String? remark;
 
+  /// [ZH]
+  /// ---
   /// 群组创建时间。注意：此属性只读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group creation time (read-only)
+  /// ---
   int? createTime;
 
+  /// [ZH]
+  /// ---
   /// 群当前成员人数。注意：此属性只读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Current group member count (read-only)
+  /// ---
   int? membersCount;
 
+  /// [ZH]
+  /// ---
   /// 当前用户加入时间：用户多次加入群组时，以最后一次加入时间为准。注意：此属性只读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Join time (latest if rejoined). Read-only.
+  /// ---
   int? joinedTime;
 
+  /// [ZH]
+  /// ---
   /// 当前用户群身份：群主、群管理员、群成员。注意：此属性只读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Current user roles: Group Owner, Group Administrator, or member. Note: Read-only property
+  /// ---
   RCIMIWGroupMemberRole? role;
 
+  /// [ZH]
+  /// ---
   /// 群组状态 (默认为使用中)。注意：此属性只读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group status (active by default). Note: Read-only
+  /// ---
   RCIMIWGroupStatus? groupStatus;
 
+  /// [ZH]
+  /// ---
   /// 群组状态更新时间: 如果是使用中，则为创建时间；如果是已解散，则为解散时间。注意：此属性只读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group status update time: Creation time if active, disband time if inactive. Note: Read-only
+  /// ---
   int? groupStatusUpdateTime;
 
   RCIMIWGroupInfo.create({
@@ -1560,25 +2736,74 @@ class RCIMIWGroupInfo {
 }
 
 class RCIMIWGroupMemberInfo {
+  /// [ZH]
+  /// ---
   /// 群成员用户Id。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group member user ID
+  /// ---
   String? userId;
 
+  /// [ZH]
+  /// ---
   /// 群成员头像 URL 地址。长度不超过 128 个字符
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group member avatar URL (max 128 chars)
+  /// ---
   String? portraitUri;
 
+  /// [ZH]
+  /// ---
   /// 群成员名称。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group member name
+  /// ---
   String? name;
 
+  /// [ZH]
+  /// ---
   /// 群成员群昵称：默认未设置时为用户名称，最大长度不超过 64 个字符
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group nickname: Shows user name if not set, max 64 chars
+  /// ---
   String? nickname;
 
+  /// [ZH]
+  /// ---
   /// 群成员附加信息。长度不超过 128 个字符
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group member extra info. Max 128 chars
+  /// ---
   String? extra;
 
+  /// [ZH]
+  /// ---
   /// 入群时间：时间戳，精确到毫秒
+  /// ---
+  /// [EN]
+  /// ---
+  /// Join time: Timestamp in milliseconds
+  /// ---
   int? joinedTime;
 
+  /// [ZH]
+  /// ---
   /// 群成员角色
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group member role
+  /// ---
   RCIMIWGroupMemberRole? role;
 
   Map<String, dynamic> toJson() {
@@ -1605,13 +2830,34 @@ class RCIMIWGroupMemberInfo {
 }
 
 class RCIMIWPagingQueryOption {
+  /// [ZH]
+  /// ---
   /// 当前页数标识，表示当前查询到的位置。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Current page indicator showing query position
+  /// ---
   String? pageToken;
 
+  /// [ZH]
+  /// ---
   /// 每页条数。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Items per page
+  /// ---
   int? count;
 
+  /// [ZH]
+  /// ---
   /// 排序类型：支持设置正序、倒序获取。true：正序；false：倒序。默认值为false，倒序返回。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Sort order: ascending (true) or descending (false). Defaults to descending.
+  /// ---
   bool? order;
 
   RCIMIWPagingQueryOption.create({this.pageToken, this.count, this.order});
@@ -1632,13 +2878,34 @@ class RCIMIWPagingQueryOption {
 }
 
 class RCIMIWQuitGroupConfig {
+  /// [ZH]
+  /// ---
   /// 是否移除群成员禁言状态，true代表移除，false代表不移除。默认为true
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remove group member mute status? true=remove, false=keep. Defaults to true
+  /// ---
   bool? removeMuteStatus;
 
+  /// [ZH]
+  /// ---
   /// 是否移除群成员白名单，true代表移除，false代表不移除。默认为true
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remove member allowlist? true for yes (default), false for no
+  /// ---
   bool? removeWhiteList;
 
-  /// 是否移除特别关注群成员，true代表移除，false代表不移除。默认为true
+  /// [ZH]
+  /// ---
+  /// 是否移除除特别关注群成员，true代表移除，false代表不移除。默认为true
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remove Members I Follow? true for yes, false for no. Defaults to true
+  /// ---
   bool? removeFollow;
 
   RCIMIWQuitGroupConfig.create({this.removeMuteStatus, this.removeWhiteList, this.removeFollow});
@@ -1709,19 +2976,54 @@ class RCIMIWGroupApplicationInfo {
 }
 
 class RCIMIWBlockedMessageInfo {
+  /// [ZH]
+  /// ---
   /// 封禁的会话类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// Banned Conversation Types
+  /// ---
   RCIMIWConversationType? conversationType;
 
+  /// [ZH]
+  /// ---
   /// 封禁的会话 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Banned conversation ID
+  /// ---
   String? targetId;
 
+  /// [ZH]
+  /// ---
   /// 封禁的消息 Uid
+  /// ---
+  /// [EN]
+  /// ---
+  /// Banned Message UID
+  /// ---
   String? blockedMsgUId;
 
+  /// [ZH]
+  /// ---
   /// 封禁的类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// Ban Type
+  /// ---
   RCIMIWMessageBlockType? blockType;
 
+  /// [ZH]
+  /// ---
   /// 封禁的附加信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Additional Information for Banning
+  /// ---
   String? extra;
 
   Map<String, dynamic> toJson() {
@@ -1745,13 +3047,34 @@ class RCIMIWBlockedMessageInfo {
 }
 
 class RCIMIWTypingStatus {
+  /// [ZH]
+  /// ---
   /// 当前正在输入的用户 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// The ID of the user currently typing.
+  /// ---
   String? userId;
 
+  /// [ZH]
+  /// ---
   /// 当前正在输入的消息类型名，为发送方调用发送接口时传入的 currentType
+  /// ---
+  /// [EN]
+  /// ---
+  /// The type name of the message currently being entered, which is the `currentType` passed by the sender when calling the send interface.
+  /// ---
   String? contentType;
 
+  /// [ZH]
+  /// ---
   /// 输入时间
+  /// ---
+  /// [EN]
+  /// ---
+  /// Input Time
+  /// ---
   int? sentTime;
 
   Map<String, dynamic> toJson() {
@@ -1770,22 +3093,64 @@ class RCIMIWTypingStatus {
 }
 
 class RCIMIWUltraGroupTypingStatusInfo {
+  /// [ZH]
+  /// ---
   /// 会话 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation ID
+  /// ---
   String? targetId;
 
+  /// [ZH]
+  /// ---
   /// 所属会话的业务标识
+  /// ---
+  /// [EN]
+  /// ---
+  /// The business identifier of the associated conversation.
+  /// ---
   String? channelId;
 
+  /// [ZH]
+  /// ---
   /// 用户id
+  /// ---
+  /// [EN]
+  /// ---
+  /// User ID
+  /// ---
   String? userId;
 
+  /// [ZH]
+  /// ---
   /// 用户数
+  /// ---
+  /// [EN]
+  /// ---
+  /// User Count
+  /// ---
   int? userNums;
 
+  /// [ZH]
+  /// ---
   /// 输入状态
+  /// ---
+  /// [EN]
+  /// ---
+  /// Input Status
+  /// ---
   RCIMIWUltraGroupTypingStatus? status;
 
-  /// 服务端收到用户操作的上行时间.
+  /// [ZH]
+  /// ---
+  /// 服务端收到用户操作的上行时间
+  /// ---
+  /// [EN]
+  /// ---
+  /// The server receives the uplink timestamp of user operations.
+  /// ---
   int? timestamp;
 
   Map<String, dynamic> toJson() {
@@ -1810,13 +3175,34 @@ class RCIMIWUltraGroupTypingStatusInfo {
 }
 
 class RCIMIWGroupReadReceiptInfo {
+  /// [ZH]
+  /// ---
   /// 是否为需要回执的消息。 true: 需要回执的消息。 false: 普通消息。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Indicates whether the message requires a receipt. true: The message requires a receipt. false: A regular message.
+  /// ---
   bool? readReceiptMessage;
 
+  /// [ZH]
+  /// ---
   /// 是否发送过消息回执响应。 仅对消息接收方有效。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Indicates whether a message receipt response has been sent. This is only valid for the message receiver.
+  /// ---
   bool? hasRespond;
 
+  /// [ZH]
+  /// ---
   /// 会话中响应过该消息回执的成员 userId 列表。 key: userId value: respondTime
+  /// ---
+  /// [EN]
+  /// ---
+  /// List of user IDs of members who have responded to the message receipt in the conversation. key: userId value: respondTime
+  /// ---
   Map? respondUserIds;
 
   Map<String, dynamic> toJson() {
@@ -1890,10 +3276,24 @@ class RCIMIWChatRoomSyncEvent {
 }
 
 class RCIMIWChatRoomMemberAction {
+  /// [ZH]
+  /// ---
   /// 操作的用户
+  /// ---
+  /// [EN]
+  /// ---
+  /// The user performing the operation
+  /// ---
   String? userId;
 
+  /// [ZH]
+  /// ---
   /// 事件类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// Event Type
+  /// ---
   RCIMIWChatRoomMemberActionType? actionType;
 
   Map<String, dynamic> toJson() {
@@ -2105,7 +3505,24 @@ class RCIMIWUserProfile {
 }
 
 class RCIMIWConversationTagInfo {
+  /// [ZH]
+  /// ---
+  /// 会话标签信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation Tag Information
+  /// ---
   RCIMIWTagInfo? tagInfo;
+
+  /// [ZH]
+  /// ---
+  /// 是否置顶
+  /// ---
+  /// [EN]
+  /// ---
+  /// Pin to Top
+  /// ---
   bool? top;
 
   Map<String, dynamic> toJson() {
@@ -2124,10 +3541,24 @@ class RCIMIWConversationTagInfo {
 }
 
 class RCIMIWSearchConversationResult {
+  /// [ZH]
+  /// ---
   /// 获取会话的实体，用来容纳和存储客户端的会话信息，对应会话列表中的会话。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Retrieves the conversation entity, which is used to contain and store client-side conversation information, corresponding to the conversation in the conversation list.
+  /// ---
   RCIMIWConversation? conversation;
 
-  /// 获取匹配会话数量
+  /// [ZH]
+  /// ---
+  /// 获取会话匹配的消息数量
+  /// ---
+  /// [EN]
+  /// ---
+  /// Retrieve the number of messages matching the conversation
+  /// ---
   int? count;
 
   Map<String, dynamic> toJson() {
@@ -2148,9 +3579,44 @@ class RCIMIWSearchConversationResult {
 }
 
 class RCIMIWTagInfo {
+  /// [ZH]
+  /// ---
+  /// 获取标签 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get Tag ID
+  /// ---
   String? tagId;
+
+  /// [ZH]
+  /// ---
+  /// 获取标签名
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get Tag Name
+  /// ---
   String? tagName;
+
+  /// [ZH]
+  /// ---
+  /// 获取数量
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get Count
+  /// ---
   int? count;
+
+  /// [ZH]
+  /// ---
+  /// 获取时间戳
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get Timestamp
+  /// ---
   int? timestamp;
 
   RCIMIWTagInfo.create({this.tagId, this.tagName, this.count, this.timestamp});
@@ -2173,43 +3639,134 @@ class RCIMIWTagInfo {
 }
 
 class RCIMIWConversation {
+  /// [ZH]
+  /// ---
   /// 获取会话类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// Retrieve Conversation Type
+  /// ---
   RCIMIWConversationType? conversationType;
 
+  /// [ZH]
+  /// ---
   /// 会话 ID，单聊时为接收方 ID，群组会话中为群组 ID，聊天室会话中为聊天室 ID，系统会话为开发者指定的系统账号 Id
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation ID. For one-to-one chats, it is the recipient ID; for group chats, it is the group ID; for chatrooms, it is the chatroom ID; for system conversations, it is the system account ID specified by the developer.
+  /// ---
   String? targetId;
 
+  /// [ZH]
+  /// ---
   /// 频道 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Channel ID
+  /// ---
   String? channelId;
 
+  /// [ZH]
+  /// ---
   /// 当前会话未读消息数量
+  /// ---
+  /// [EN]
+  /// ---
+  /// Number of Unread Messages in the Current Conversation
+  /// ---
   int? unreadCount;
 
+  /// [ZH]
+  /// ---
   /// 会话中 @ 消息的总未读个数
+  /// ---
+  /// [EN]
+  /// ---
+  /// The number of unread @ mentions in this conversation.
+  /// ---
   int? mentionedCount;
 
+  /// [ZH]
+  /// ---
   /// 超级群会话中 @ 我的消息的未读个数，只有超级群获取频道列表时有效。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Unread @mention count in ultra group chats. Only valid when fetching channel lists for ultra groups.
+  /// ---
   int? mentionedMeCount;
 
+  /// [ZH]
+  /// ---
   /// 本会话是否置顶
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether the conversation is pinned
+  /// ---
   bool? top;
 
+  /// [ZH]
+  /// ---
   /// 会话里保存的草稿信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// The draft information saved in the conversation.
+  /// ---
   String? draft;
 
+  /// [ZH]
+  /// ---
   /// 获取最后一条消息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get the last message
+  /// ---
   RCIMIWMessage? lastMessage;
 
+  /// [ZH]
+  /// ---
   /// 会话的通知级别
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation Notification Level
+  /// ---
   RCIMIWPushNotificationLevel? notificationLevel;
 
+  /// [ZH]
+  /// ---
   /// 获取会话第一条未读消息的时间戳，仅对超级群生效
+  /// ---
+  /// [EN]
+  /// ---
+  /// Retrieves the timestamp of the first unread message in the conversation. This method is only applicable to ultra groups.
+  /// ---
   int? firstUnreadMsgSendTime;
 
+  /// [ZH]
+  /// ---
   /// 获取会话最后的操作时间
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get the last operation time of the conversation
+  /// ---
   int? operationTime;
 
+  /// [ZH]
+  /// ---
   /// 获取会话翻译策略
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get conversation translation policy
+  /// ---
   RCIMIWTranslateStrategy? translateStrategy;
 
   RCIMIWConversation.create({

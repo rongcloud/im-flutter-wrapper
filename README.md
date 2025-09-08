@@ -1,265 +1,181 @@
-本教程是为了让新手快速了解融云 Flutter 即时通讯能力库。在本教程中，您可以体验集成 SDK 的基本流程和基础通信能力。
+# 融云 Flutter IMLib
 
-## 融云开发者账户
+融云 IMLib 是即时通讯核心 SDK，支持单聊、群聊、聊天室、系统通知、超级群等功能。通过集成 IM Wrapper Plugin，您可以在 Flutter 应用中快速实现完整的即时通讯功能。
 
-融云开发者账户是使用融云 SDK 产品的必要条件。
+[融云 iOS IMLib 文档](https://docs.rongcloud.cn/ios-imlib)
 
-在开始之前，请先[前往融云官网注册开发者账户]。注册后，开发者后台将自动为您创建一个应用，默认为开发环境应用，使用国内数据中心。请获取该应用的 App Key，在本教程中使用。
+[融云 Android IMLib 文档](https://docs.rongcloud.cn/android-imlib)
 
->App Secret 用于生成数据签名，仅在请求融云服务端 API 接口时使用。本教程中暂不涉及。
+## 准备工作
 
-如果您已拥有融云开发者账户，您可以直接选择合适的环境，创建应用。
+1. 如果您还没有融云开发者账号，在[融云控制台](https://console.rongcloud.cn/)注册一个。
+2. 在控制台，通过**应用配置**>**基本信息**>**App Key**，获取您的 App Key。
+3. 通过服务端 API，[获取用户 Token](https://docs.rongcloud.cn/platform-chat-api/user/register)。
 
-应用的 App Key / Secret 是获取连接融云服务器身份凭证的必要条件，请注意不要泄露。
+> App Secret 用于生成数据签名，仅在请求融云服务端 API 接口时使用。
 
-### 导入 SDK {#import}
+## 依赖 IM Wrapper Plugin
 
-1. 在项目的 `pubspec.yaml` 中添加依赖
+在项目的 `pubspec.yaml` 中写如下依赖：
 
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
-
-rongcloud_im_wrapper_plugin: 5.24.3
+  rongcloud_im_wrapper_plugin: 5.24.4
 ```
 
+## 快速开始
 
-2. 在项目路径执行 `flutter pub get` 来下载相关插件
+详细的集成步骤、API 使用说明、功能配置等内容，请参考 [融云 IMLib Flutter 完整开发文档](https://docs.rongcloud.cn/flutter-imlib)。
 
-### 初始化 {#init}
+文档包含以下完整内容：
+- [初始化](https://docs.rongcloud.cn/flutter-imlib/init) - SDK 初始化和引擎创建
+- [连接与断开](https://docs.rongcloud.cn/flutter-imlib/connect) - 建立和断开 IM 连接
+- [消息管理](https://docs.rongcloud.cn/flutter-imlib/message) - 发送、接收、存储消息
+- [会话管理](https://docs.rongcloud.cn/flutter-imlib/conversation) - 会话列表和会话操作
+- [群组管理](https://docs.rongcloud.cn/flutter-imlib/group) - 群组创建、管理和操作
+- [聊天室管理](https://docs.rongcloud.cn/flutter-imlib/chatroom) - 聊天室加入和管理
+- [推送服务](https://docs.rongcloud.cn/flutter-imlib/push) - 离线推送配置
+- 完整的 API 参考和错误码说明
 
-1. 使用 SDK 功能前，需要 `import` 下面的头文件
+## 基本使用示例
 
+### 1. 初始化和连接
 ```dart
+// 导入 SDK
 import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
-```
 
-
-2. 开发者在使用融云 SDK 所有功能之前，开发者必须先调用此方法初始化 SDK 并配置相关引擎参数。
-
-```dart
+// 初始化 SDK
 RCIMIWEngineOptions options = RCIMIWEngineOptions.create();
 RCIMIWEngine engine = await RCIMIWEngine.create(appkey, options);
+
+// 连接 IM 服务
+engine.connect(token, timeout);
 ```
 
-注意：请使用开发功能之前从[融云开发者后台](https://developer.rongcloud.cn/app/appkey/iwj1eg7Wb9M437VP1w==)注册得到的 `Appkey`
-
-### 连接融云 {#connect}
-
-
-1. `Token` 即用户令牌，相当于您 APP 上当前用户连接融云的身份凭证。在您连接融云服务器之前，您需要请求您的 App Server，您的 App Server 通过融云 [Server API 获取 Token](/imserver/server/v1/user/register) 并返回给您的客户端，客户端获取到这个 Token 即可连接融云服务器。
-2. `timeout` 连接超时时间，单位：秒。
-
-注：如果 `code == 31004` 即过 `Token` 无效，是因为您在开发者后台设置了 `Token` 过期时间或者 `Token` 和初始化的 `AppKey` 不同环境，您需要请求您的服务器重新获取 `Token` 并再次用新的 `Token` 建立连接。
-
+### 2. 监听连接状态
 ```dart
-engine.connect(
-        token,
-        timeout,
-      );
+engine.onConnected = (int? code, String? userId) {
+  if (code == 0) {
+    // 连接成功
+  }
+};
 ```
 
-1. `code` 连接状态码，0 代表连接成功。
-2. `userId` 连接成功的用户 id。
-
+### 3. 发送和接收消息
 ```dart
-engine.onConnected = (
-  int? code,
-  String? userId,
-) {};
-```
+// 发送文本消息
+RCIMIWTextMessage? textMessage = await engine.createTextMessage(
+  conversationType, targetId, channelId, text,
+);
+engine.sendMessage(textMessage);
 
-### 监听消息 {#msg-listener}
-
-实现此功能需要开发者实现消息监听回调。
-
-##### 代码示例 {#msg-code}
-
-设置消息接收监听器，用于接收所有类型的实时或者离线消息。
-
-1. `message` 接收到的消息对象
-2. `left`  当客户端连接成功后，服务端会将所有补偿消息以消息包的形式下发给客户端，最多每 200 条消息为一个消息包，即一个 Package, 客户端接受到消息包后，会逐条解析并通知应用。left 为当前消息包（Package）里还剩余的消息条数
-3. `offline` 消息是否离线消息
-4. `hasPackage` 是否在服务端还存在未下发的消息包
-
-```dart
+// 监听接收消息
 engine.onMessageReceived = (
   RCIMIWMessage? message,
   int? left,
   bool? offline,
   bool? hasPackage,
 ) {
+  // 处理接收到的消息
 };
 ```
 
-### 发送消息 {#sendmessage}
+## 支持
 
-```dart
-RCIMIWTextMessage? textMessage = await engine.createTextMessage(
-        conversationType,
-        targetId,
-        channelId,
-        text,
-      );
-engine.sendMessage(textMessage);
-```
+如有任何问题，请通过以下方式获取帮助：
+- 查阅[官方完整文档](https://docs.rongcloud.cn/flutter-imlib)
+- [提交工单](https://console.rongcloud.cn/agile/formwork/ticket/create)，联系融云技术支持
 
-### 监听消息发送结果 {#msgreceiver}
+---
 
-```dart
-engine.onMessageAttached = (
-  RCIMIWMessage? message,
-) {};
+# Introducing RC IMLib for Flutter
 
-engine.onMessageSent = (
-  int? code,
-  RCIMIWMessage? message,
-) {};
-```
+RC IMLib is the core instant messaging SDK, supporting private chat, group chat, chatroom, system notifications, ultra groups, and more. By integrating the IM Wrapper Plugin, you can quickly implement complete instant messaging functionality in your Flutter applications.
 
-### 退出登录
+[RC iOS IMLib Documentation](https://docs.rongcloud.io/ios-imlib)
 
-```dart
-engine.disconnect(receivePush);
-```
+[RC Android IMLib Documentation](https://docs.rongcloud.io/android-imlib)
 
-### 引擎销毁
+## Preparations
 
-```dart
-engine.destroy();
-```
+1. If you don't have a RC developer account yet, register one at [RongCloud Console](https://console.rongcloud.io/).
+2. In the console, get your App Key through **Application Configuration** > **Basic Information** > **App Key**.
+3. Get user Token through server-side API, [register user](https://docs.rongcloud.io/platform-chat-api/user/register).
 
+> App Secret is used to generate data signatures and is only required when calling RC's server API.
 
-------
+## Dependencies on IM Wrapper Plugin
 
-
-This tutorial helps beginners quickly get started with RongCloud’s Flutter Instant Messaging SDK. You’ll learn the basic integration process and core communication features.
-
-## RongCloud developer account
-
-You need a RongCloud developer account to use the SDK.
-
-Before you start, register a developer account on RongCloud’s website. After registration, a default development environment app will be created for you in the Singapore Data Center. Get the App Key for this app to use in this tutorial.
-
->App Secret is used to generate data signatures and is only required when calling RongCloud’s server API. It’s not needed for this tutorial.
-
-If you already have a RongCloud developer account, you can create an app in the appropriate environment.
-
-The App Key/Secret is essential for connecting to RongCloud’s servers. Keep it secure.
-
-### Import the SDK {#import}
-
-1. Add the dependency to your project’s `pubspec.yaml`
+Add the following dependencies to your project's `pubspec.yaml`:
 
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
-
-rongcloud_im_wrapper_plugin: 5.24.3
+  rongcloud_im_wrapper_plugin: 5.24.4
 ```
 
-2. Run `flutter pub get` in your project directory to download the plugin
+## Quick Start
 
-### Initialize {#init}
+For detailed integration steps, API usage instructions, feature configurations, and more, please refer to [RC IMLib Flutter Complete Development Documentation](https://docs.rongcloud.io/flutter-imlib).
 
-1. Import the header file before using the SDK
+The documentation includes comprehensive content on:
+- [Initialization](https://docs.rongcloud.io/flutter-imlib/init) - SDK initialization and engine creation
+- [Connect & Disconnect](https://docs.rongcloud.io/flutter-imlib/connect) - Establish and disconnect IM connections
+- [Message Management](https://docs.rongcloud.io/flutter-imlib/message) - Send, receive, and store messages
+- [Conversation Management](https://docs.rongcloud.io/flutter-imlib/conversation) - Conversation lists and operations
+- [Group Management](https://docs.rongcloud.io/flutter-imlib/group) - Group creation, management, and operations
+- [Chatroom Management](https://docs.rongcloud.io/flutter-imlib/chatroom) - Join and manage chatrooms
+- [Push Service](https://docs.rongcloud.io/flutter-imlib/push) - Offline push configuration
+- Complete API reference and error code explanations
 
+## Basic Usage Examples
+
+### 1. Initialize and Connect
 ```dart
+// Import SDK
 import 'package:rongcloud_im_wrapper_plugin/rongcloud_im_wrapper_plugin.dart';
-```
 
-2. Initialize the SDK and configure engine parameters before using any features
-
-```dart
+// Initialize SDK
 RCIMIWEngineOptions options = RCIMIWEngineOptions.create();
 RCIMIWEngine engine = await RCIMIWEngine.create(appkey, options);
+
+// Connect to IM service
+engine.connect(token, timeout);
 ```
 
-Note: Use the App Key obtained from the [RongCloud Developer Console](https://developer.rongcloud.cn/app/appkey/iwj1eg7Wb9M437VP1w==).
-
-### Connect to RongCloud {#connect}
-
-1. A `Token` is the user’s credential for connecting to RongCloud. Before connecting, request a Token from your App Server using RongCloud’s [Server API](/imserver/server/v1/user/register). The client uses this Token to connect.
-2. `timeout` is the connection timeout in seconds.
-
-Note: If `code == 31004`, the Token is invalid. This happens if the Token has expired or if the Token and App Key are from different environments. Request a new Token from your server and reconnect.
-
+### 2. Listen for Connection Status
 ```dart
-engine.connect(
-        token,
-        timeout,
-      );
+engine.onConnected = (int? code, String? userId) {
+  if (code == 0) {
+    // Connection successful
+  }
+};
 ```
 
-1. `code` is the connection status code. 0 means success.
-2. `userId` is the ID of the connected user.
-
+### 3. Send and Receive Messages
 ```dart
-engine.onConnected = (
-  int? code,
-  String? userId,
-) {};
-```
+// Send text message
+RCIMIWTextMessage? textMessage = await engine.createTextMessage(
+  conversationType, targetId, channelId, text,
+);
+engine.sendMessage(textMessage);
 
-### Listen for messages {#msg-listener}
-
-Implement the message listener callback to receive messages.
-
-##### Code example {#msg-code}
-
-Set up a message listener to receive real-time or offline messages.
-
-1. `message` is the received message object
-2. `left` is the number of remaining messages in the current package (up to 200 messages per package)
-3. `offline` indicates if the message is offline
-4. `hasPackage` indicates if there are more message packages on the server
-
-```dart
+// Listen for received messages
 engine.onMessageReceived = (
   RCIMIWMessage? message,
   int? left,
   bool? offline,
   bool? hasPackage,
 ) {
+  // Handle received message
 };
 ```
 
-### Send a message {#sendmessage}
+## Support
 
-```dart
-RCIMIWTextMessage? textMessage = await engine.createTextMessage(
-        conversationType,
-        targetId,
-        channelId,
-        text,
-      );
-engine.sendMessage(textMessage);
-```
-
-### Listen for message sending results {#msgreceiver}
-
-```dart
-engine.onMessageAttached = (
-  RCIMIWMessage? message,
-) {};
-
-engine.onMessageSent = (
-  int? code,
-  RCIMIWMessage? message,
-) {};
-```
-
-### Log out
-
-```dart
-engine.disconnect(receivePush);
-```
-
-### Destroy the engine
-
-```dart
-engine.destroy();
-```
-
+For any questions, please get help through:
+- Consult the [Official Complete Documentation](https://docs.rongcloud.io/flutter-imlib)
+- [Submit a ticket](https://console.rongcloud.io/agile/formwork/ticket/create) to contact RC technical support
