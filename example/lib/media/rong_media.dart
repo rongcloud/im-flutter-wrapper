@@ -16,32 +16,20 @@ class RCIWMediaUlits {
   //选择本地文件，成功返回文件信息
   static Future<List<File>?> pickFiles(
       {List<String>? allowedExtensions}) async {
-    PermissionStatus status;
-    if (Platform.isAndroid) {
-      status = await Permission.storage.request();
-    } else if (Platform.isIOS) {
-      status = await Permission.photos.request();
+
+    FilePickerResult? result;
+    if (allowedExtensions != null) {
+      result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowMultiple: false,
+          allowedExtensions: allowedExtensions);
     } else {
-      return null;
+      result = await FilePicker.platform.pickFiles(allowMultiple: false);
     }
 
-    if (status.isGranted) {
-      FilePickerResult? result;
-      if (allowedExtensions != null) {
-        result = await FilePicker.platform.pickFiles(
-            type: FileType.custom,
-            allowMultiple: false,
-            allowedExtensions: allowedExtensions);
-      } else {
-        result = await FilePicker.platform.pickFiles(allowMultiple: false);
-      }
+    List<File>? files = result?.paths.map((path) => File(path!)).toList();
+    return files;
 
-      List<File>? files = result?.paths.map((path) => File(path!)).toList();
-      return files;
-    } else if (status.isPermanentlyDenied) {
-      openAppSettings();
-      return null;
-    }
   }
 
   static showVideoPicker(BuildContext context, Function(String path) callback) {
