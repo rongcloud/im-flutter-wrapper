@@ -270,8 +270,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Register Native Custom Message
-  /// @param messageIdentifier The unique identifier of the message
-  /// @param persistentFlag The storage strategy of the message
+  /// - [messageIdentifier] The unique identifier of the message
+  /// - [persistentFlag] The storage strategy of the message
   /// ---
   Future<int> registerNativeCustomMessage(
     String messageIdentifier,
@@ -290,8 +290,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Register Native Custom Media Message
-  /// @param messageIdentifier The unique identifier of the message.
-  /// @param persistentFlag The storage strategy of the message.
+  /// - [messageIdentifier] The unique identifier of the message.
+  /// - [persistentFlag] The storage strategy of the message.
   /// ---
   Future<int> registerNativeCustomMediaMessage(
     String messageIdentifier,
@@ -315,12 +315,12 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Connect to the RongCloud server. This interface should be called only once globally throughout the application. When this interface returns a non-business error code, the SDK will initiate a reconnection mechanism. If the connection is still unsuccessful, the SDK will attempt to reconnect when the device's network status changes.
-  /// @param token The token obtained by calling the server API.
-  /// @param timeout Connection timeout duration in seconds.
+  /// - [token] The token obtained by calling the server API.
+  /// - [timeout] Connection timeout duration in seconds.
   /// If timeout ≤ 0, the IM will keep trying to connect until it succeeds or fails (e.g., due to an invalid token).
   /// If timeout > 0, the IM will attempt to connect for a maximum of timeout seconds.
   /// If the connection is successful within timeLimit seconds, the SDK will automatically reconnect in case of network changes or app state transitions. If the connection fails within timeLimit seconds, no further reconnection attempts will be made, and the listener will notify of a connection timeout. You will need to manually call the connect interface again.
-  /// @param callback Connection event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Connection event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener The interface callback can listen to [onConnected].
   /// ---
   Future<int> connect(String token, int timeout, {RCIMIWConnectCallback? callback}) async {
@@ -338,7 +338,7 @@ class RCIMIWEngine {
   /// ---
   /// Disconnect
   /// Note: Since the SDK automatically reconnects when the app switches between foreground and background or when network exceptions occur, ensuring connection reliability, this method is generally not required for manual disconnection unless your app logic requires logout.
-  /// @param receivePush Specifies whether to receive push notifications after disconnection. true: continue receiving remote push notifications after disconnection; false: stop receiving remote push notifications after disconnection.
+  /// - [receivePush] Specifies whether to receive push notifications after disconnection. true: continue receiving remote push notifications after disconnection; false: stop receiving remote push notifications after disconnection.
   /// ---
   Future<int> disconnect(bool receivePush) async {
     return RCIMWrapperPlatform.instance.disconnect(receivePush);
@@ -369,10 +369,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Build Text Message
-  /// @param type Specifies the conversation type.
-  /// @param targetId Specifies the conversation ID.
-  /// @param channelId Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass `null`.
-  /// @param text Specifies the text content.
+  /// - [type] Specifies the conversation type.
+  /// - [targetId] Specifies the conversation ID.
+  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass `null`.
+  /// - [text] Specifies the text content.
   /// ---
   Future<RCIMIWTextMessage?> createTextMessage(
     RCIMIWConversationType type,
@@ -395,10 +395,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Create an Image Message
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param path Local path of the image message. Must be a valid path.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [path] Local path of the image message. Must be a valid path.
   /// ---
   Future<RCIMIWImageMessage?> createImageMessage(
     RCIMIWConversationType type,
@@ -421,10 +421,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Build File Message
-  /// @param type Specifies the conversation type.
-  /// @param targetId Specifies the conversation ID.
-  /// @param channelId Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
-  /// @param path Specifies the local path of the file message, which must be a valid path.
+  /// - [type] Specifies the conversation type.
+  /// - [targetId] Specifies the conversation ID.
+  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
+  /// - [path] Specifies the local path of the file message, which must be a valid path.
   /// ---
   Future<RCIMIWFileMessage?> createFileMessage(
     RCIMIWConversationType type,
@@ -448,11 +448,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Build Short Video Message
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param path Local path of the short video message. Must be a valid path.
-  /// @param duration Duration of the short video message
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [path] Local path of the short video message. Must be a valid path.
+  /// - [duration] Duration of the short video message
   /// ---
   Future<RCIMIWSightMessage?> createSightMessage(
     RCIMIWConversationType type,
@@ -477,11 +477,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Build a Voice Message (HD Voice)
-  /// @param type Specifies the conversation type.
-  /// @param targetId Specifies the conversation ID.
-  /// @param channelId Specifies the channel ID. Only supported for ultra groups. For other conversation types, pass null.
-  /// @param path Specifies the local path of the voice message. Must be a valid path.
-  /// @param duration Specifies the duration of the voice message.
+  /// - [type] Specifies the conversation type.
+  /// - [targetId] Specifies the conversation ID.
+  /// - [channelId] Specifies the channel ID. Only supported for ultra groups. For other conversation types, pass null.
+  /// - [path] Specifies the local path of the voice message. Must be a valid path.
+  /// - [duration] Specifies the duration of the voice message.
   /// ---
   Future<RCIMIWVoiceMessage?> createVoiceMessage(
     RCIMIWConversationType type,
@@ -506,11 +506,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Construct a reference message
-  /// @param type   Conversation type
-  /// @param targetId    Conversation ID
-  /// @param channelId   Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param referenceMessage The referenced message
-  /// @param text   The referenced text content
+  /// - [type]   Conversation type
+  /// - [targetId]    Conversation ID
+  /// - [channelId]   Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [referenceMessage] The referenced message
+  /// - [text]   The referenced text content
   /// ---
   Future<RCIMIWReferenceMessage?> createReferenceMessage(
     RCIMIWConversationType type,
@@ -534,10 +534,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Build GIF Message
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param path Local path of the GIF message
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [path] Local path of the GIF message
   /// ---
   Future<RCIMIWGIFMessage?> createGIFMessage(
     RCIMIWConversationType type,
@@ -562,12 +562,12 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Build Custom Message
-  /// @param type    Conversation type
-  /// @param targetId     Conversation ID
-  /// @param channelId    Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param policy  Message storage policy
-  /// @param messageIdentifier Message identifier, must be unique
-  /// @param fields  Key-value pairs of message content
+  /// - [type]    Conversation type
+  /// - [targetId]     Conversation ID
+  /// - [channelId]    Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [policy]  Message storage policy
+  /// - [messageIdentifier] Message identifier, must be unique
+  /// - [fields]  Key-value pairs of message content
   /// ---
   Future<RCIMIWCustomMessage?> createCustomMessage(
     RCIMIWConversationType type,
@@ -602,13 +602,13 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Construct Location Message
-  /// @param type     Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param longitude Longitude
-  /// @param latitude Latitude
-  /// @param poiName  POI information
-  /// @param thumbnailPath Local path of the thumbnail, must be a valid path
+  /// - [type]     Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [longitude] Longitude
+  /// - [latitude] Latitude
+  /// - [poiName]  POI information
+  /// - [thumbnailPath] Local path of the thumbnail, must be a valid path
   /// ---
   Future<RCIMIWLocationMessage?> createLocationMessage(
     RCIMIWConversationType type,
@@ -643,11 +643,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Build Native Custom Regular Message
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param messageIdentifier Unique identifier for the message
-  /// @param fields Key-value pairs for the message content
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [messageIdentifier] Unique identifier for the message
+  /// - [fields] Key-value pairs for the message content
   /// ---
   Future<RCIMIWNativeCustomMessage?> createNativeCustomMessage(
     RCIMIWConversationType type,
@@ -673,12 +673,12 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Build Native Custom Media Message
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param messageIdentifier Unique identifier for the message
-  /// @param path Local path of the media file, must be a valid path
-  /// @param fields Key-value pairs for the message content
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [messageIdentifier] Unique identifier for the message
+  /// - [path] Local path of the media file, must be a valid path
+  /// - [fields] Key-value pairs for the message content
   /// ---
   Future<RCIMIWNativeCustomMediaMessage?> createNativeCustomMediaMessage(
     RCIMIWConversationType type,
@@ -709,8 +709,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Send a Normal Message
-  /// @param message The message object to be sent.
-  /// @param callback The event callback for sending the message. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [message] The message object to be sent.
+  /// - [callback] The event callback for sending the message. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener The interface callback can listen to [onMessageAttached], [onMessageSent].
   /// ---
   Future<int> sendMessage(RCIMIWMessage message, {RCIMIWSendMessageCallback? callback}) async {
@@ -728,8 +728,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Send Media Message
-  /// @param message The media message object to be sent
-  /// @param listener Event listener for sending media messages
+  /// - [message] The media message object to be sent
+  /// - [listener] Event listener for sending media messages
   /// @listener The interface callback can listen to [onMediaMessageSending], [onMediaMessageAttached], [onMediaMessageSent]
   /// ---
   Future<int> sendMediaMessage(RCIMIWMediaMessage message, {RCIMIWSendMediaMessageListener? listener}) async {
@@ -747,8 +747,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Cancel Sending Media Message
-  /// @param message The media message entity to be canceled
-  /// @param callback The event callback for canceling the media message. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [message] The media message entity to be canceled
+  /// - [callback] The event callback for canceling the media message. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener The interface callback can be monitored via [onSendingMediaMessageCanceled]
   /// ---
   /// 此接口不支持 Flutter For Web 端
@@ -770,8 +770,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Download Media Message
-  /// @param message The media message entity to be downloaded
-  /// @param listener The event listener for media message download
+  /// - [message] The media message entity to be downloaded
+  /// - [listener] The event listener for media message download
   /// @listener  [onMediaMessageDownloaded], [onMediaMessageDownloading]
   /// ---
   /// 此接口不支持 Flutter For Web 端
@@ -790,8 +790,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Cancel Media Message Download
-  /// @param message The media message entity for which the download needs to be canceled.
-  /// @param callback The event callback for canceling the media message download. The SDK supports callback-based notifications starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [message] The media message entity for which the download needs to be canceled.
+  /// - [callback] The event callback for canceling the media message download. The SDK supports callback-based notifications starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> cancelDownloadingMediaMessage(
@@ -813,9 +813,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load a Conversation
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups; pass null for other conversation types
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups; pass null for other conversation types
   /// @deprecated Use {@link #getConversation(RCIMIWConversationType, String, String, IRCIMIWGetConversationCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversation] 代替')
@@ -834,10 +834,10 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve a Conversation
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param callback Callback for retrieving the conversation. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [callback] Callback for retrieving the conversation. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// @listener [onConversationLoaded]
   Future<int> getConversation(
     RCIMIWConversationType type,
@@ -861,10 +861,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load specific conversations
-  /// @param conversationTypes Conversation types
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param startTime Timestamp (in milliseconds). Retrieve conversations with timestamps earlier than this value. Pass 0 to query the latest data.
-  /// @param count Number of conversations to query, 0 < count ≤ 50
+  /// - [conversationTypes] Conversation types
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [startTime] Timestamp (in milliseconds). Retrieve conversations with timestamps earlier than this value. Pass 0 to query the latest data.
+  /// - [count] Number of conversations to query, 0 < count ≤ 50
   /// @deprecated Use {@link #getConversations(List, String, long, int, IRCIMIWGetConversationsCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversations] 代替')
@@ -889,11 +889,11 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve Certain Conversations
-  /// @param conversationTypes Specifies the conversation types.
-  /// @param channelId Indicates the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
-  /// @param startTime Represents the timestamp (in milliseconds) for retrieving conversations before this time. Pass 0 to query the latest data.
-  /// @param count Specifies the number of conversations to retrieve, where 0 < count ≤ 50.
-  /// @param callback Indicates the callback for retrieving the conversation list. The SDK supports callback-based retrieval starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [conversationTypes] Specifies the conversation types.
+  /// - [channelId] Indicates the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
+  /// - [startTime] Represents the timestamp (in milliseconds) for retrieving conversations before this time. Pass 0 to query the latest data.
+  /// - [count] Specifies the number of conversations to retrieve, where 0 < count ≤ 50.
+  /// - [callback] Indicates the callback for retrieving the conversation list. The SDK supports callback-based retrieval starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// @listener [onConversationsLoaded]
   Future<int> getConversations(
     List<RCIMIWConversationType> conversationTypes,
@@ -925,12 +925,12 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get conversations with optional pin priority
-  /// @param conversationTypes Conversation type
-  /// @param channelId  Channel ID (ultra group only), set null for other types
-  /// @param startTime    Timestamp in ms (0 for latest data)
-  /// @param count   Number to query (0 < count ≤ 50)
-  /// @param topPriority  Pin priority: true/false
-  /// @param callback     Callback for conversation list
+  /// - [conversationTypes] Conversation type
+  /// - [channelId]  Channel ID (ultra group only), set null for other types
+  /// - [startTime]    Timestamp in ms (0 for latest data)
+  /// - [count]   Number to query (0 < count ≤ 50)
+  /// - [topPriority]  Pin priority: true/false
+  /// - [callback]     Callback for conversation list
   /// ---
   Future<int> getConversationsWithPriority(
     List<RCIMIWConversationType> conversationTypes,
@@ -960,8 +960,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Retrieve the conversation list with unread messages of the specified type.
-  /// @param conversationTypes Supported conversation types include one-to-one chat, group chat, and system conversation.
-  /// @param callback Callback function for retrieving the conversation list.
+  /// - [conversationTypes] Supported conversation types include one-to-one chat, group chat, and system conversation.
+  /// - [callback] Callback function for retrieving the conversation list.
   /// ---
   Future<int> getUnreadConversations(
     List<RCIMIWConversationType> conversationTypes, {
@@ -983,10 +983,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove a Conversation
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types
-  /// @param callback Callback for the conversation removal event. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types
+  /// - [callback] Callback for the conversation removal event. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> removeConversation(
     RCIMIWConversationType type,
@@ -1009,9 +1009,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove conversations based on conversation type
-  /// @param conversationTypes A collection of conversation types
-  /// @param channelId    Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param callback     Callback for the conversation removal event. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [conversationTypes] A collection of conversation types
+  /// - [channelId]    Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [callback]     Callback for the conversation removal event. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> removeConversations(
@@ -1036,9 +1036,9 @@ class RCIMIWEngine {
   /// ---
   /// Load the unread count of a conversation
   /// Note: Chatrooms are not supported!
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
   /// @deprecated Use {@link #getUnreadCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadCountCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUnreadCount] 代替')
@@ -1059,10 +1059,10 @@ class RCIMIWEngine {
   /// [EN]
   /// Get the unread count of a conversation
   /// Note: Not supported for chatrooms!
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param callback Callback for retrieving the unread count of the conversation. SDK supports callback-based retrieval starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [callback] Callback for retrieving the unread count of the conversation. SDK supports callback-based retrieval starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onUnreadCountLoaded]
   Future<int> getUnreadCount(
     RCIMIWConversationType type,
@@ -1083,7 +1083,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load All Unread Counts
-  /// @param channelId Indicates the channel ID. This parameter is only supported for ultra groups. For other conversation types, pass `null`.
+  /// - [channelId] Indicates the channel ID. This parameter is only supported for ultra groups. For other conversation types, pass `null`.
   /// @deprecated Use {@link #getTotalUnreadCount(String, IRCIMIWGetTotalUnreadCountCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
@@ -1101,8 +1101,8 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Get Total Unread Count
-  /// @param channelId Channel ID, supported only for ultra groups. For other conversation types, pass null.
-  /// @param callback Callback for the total unread count event. The SDK supports callback-based handling starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in the 6.x version. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, supported only for ultra groups. For other conversation types, pass null.
+  /// - [callback] Callback for the total unread count event. The SDK supports callback-based handling starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in the 6.x version. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onTotalUnreadCountLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   Future<int> getTotalUnreadCount(String? channelId, {IRCIMIWGetTotalUnreadCountCallback? callback}) async {
@@ -1123,9 +1123,9 @@ class RCIMIWEngine {
   /// ---
   /// Load the count of unread @ messages in the conversation.
   /// Note: Not supported for chatrooms!
-  /// @param type Specifies the conversation type.
-  /// @param targetId Specifies the conversation ID.
-  /// @param channelId Specifies the channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [type] Specifies the conversation type.
+  /// - [targetId] Specifies the conversation ID.
+  /// - [channelId] Specifies the channel ID, only supported for ultra groups. Pass null for other conversation types.
   /// @deprecated Use {@link #getUnreadMentionedCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedCountCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUnreadMentionedCount] 代替')
@@ -1146,10 +1146,10 @@ class RCIMIWEngine {
   /// [EN]
   /// Get the count of unread @ messages in a conversation.
   /// Note: This feature is not supported in chatrooms!
-  /// @param type Specifies the conversation type.
-  /// @param targetId Specifies the conversation ID.
-  /// @param channelId Specifies the channel ID. This is only supported for ultra groups. For other conversation types, pass `null`.
-  /// @param callback Callback triggered when the count of unread @ messages is retrieved. The SDK has supported callback mode since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
+  /// - [type] Specifies the conversation type.
+  /// - [targetId] Specifies the conversation ID.
+  /// - [channelId] Specifies the channel ID. This is only supported for ultra groups. For other conversation types, pass `null`.
+  /// - [callback] Callback triggered when the count of unread @ messages is retrieved. The SDK has supported callback mode since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
   /// @listener [onUnreadMentionedCountLoaded]
   Future<int> getUnreadMentionedCount(
     RCIMIWConversationType type,
@@ -1184,7 +1184,7 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Get the total count of unread messages from all ultra group conversations the current user has joined.
-  /// @param callback Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If a callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If a callback parameter is provided, only the callback will be triggered.
   /// @listener [onUltraGroupAllUnreadCountLoaded]
   Future<int> getUltraGroupAllUnreadCount({IRCIMIWGetUltraGroupAllUnreadCountCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getUltraGroupAllUnreadCount(callback: callback);
@@ -1214,7 +1214,7 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve the total count of unread @ mentions across all ultra group conversations the current user has joined.
-  /// @param callback Event callback. SDK supports callback-based events starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback event will be triggered.
+  /// - [callback] Event callback. SDK supports callback-based events starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback event will be triggered.
   /// @listener [onUltraGroupAllUnreadMentionedCountLoaded]
   Future<int> getUltraGroupAllUnreadMentionedCount({
     IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback? callback,
@@ -1232,7 +1232,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get the unread message count for a specified conversation
-  /// @param targetId The conversation ID
+  /// - [targetId] The conversation ID
   /// @deprecated Use {@link #getUltraGroupUnreadCount(String, IRCIMIWGetUltraGroupUnreadCountCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupUnreadCount] 代替')
@@ -1249,8 +1249,8 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Get the unread message count for a specified conversation
-  /// @param targetId Conversation ID
-  /// @param callback Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [targetId] Conversation ID
+  /// - [callback] Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// @listener [onUltraGroupUnreadCountLoaded]
   Future<int> getUltraGroupUnreadCount(String targetId, {IRCIMIWGetUltraGroupUnreadCountCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getUltraGroupUnreadCount(targetId, callback: callback);
@@ -1266,7 +1266,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get the count of unread mentioned messages in an ultra group conversation.
-  /// @param targetId The conversation ID.
+  /// - [targetId] The conversation ID.
   /// @deprecated Use {@link #getUltraGroupUnreadMentionedCount(String, IRCIMIWGetUltraGroupUnreadMentionedCountCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupUnreadMentionedCount] 代替')
@@ -1283,8 +1283,8 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve the count of mentioned messages in an ultra group conversation
-  /// @param targetId The conversation ID
-  /// @param callback The event callback. SDK supports callback-style events starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If a callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The conversation ID
+  /// - [callback] The event callback. SDK supports callback-style events starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If a callback parameter is provided, only the callback will be triggered.
   /// @listener [onUltraGroupUnreadMentionedCountLoaded]
   Future<int> getUltraGroupUnreadMentionedCount(
     String targetId, {
@@ -1307,9 +1307,9 @@ class RCIMIWEngine {
   /// ---
   /// Load Unread Count by Conversation Type
   /// Note: Not supported for chatrooms!
-  /// @param conversationTypes Specifies the collection of conversation types.
-  /// @param channelId Indicates the channel ID. This parameter is only supported for ultra groups. For other conversation types, pass `null`.
-  /// @param contain Indicates whether to include unread messages from muted conversations.
+  /// - [conversationTypes] Specifies the collection of conversation types.
+  /// - [channelId] Indicates the channel ID. This parameter is only supported for ultra groups. For other conversation types, pass `null`.
+  /// - [contain] Indicates whether to include unread messages from muted conversations.
   /// @deprecated Use {@link #getUnreadCountByConversationTypes(List, String, boolean, IRCIMIWGetUnreadCountByConversationTypesCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
@@ -1335,10 +1335,10 @@ class RCIMIWEngine {
   /// [EN]
   /// Load unread count based on conversation type
   /// Note: Chatrooms are not supported!
-  /// @param conversationTypes Specifies the collection of conversation types.
-  /// @param channelId Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
-  /// @param contain Indicates whether to include unread messages from muted conversations.
-  /// @param callback Specifies the event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [conversationTypes] Specifies the collection of conversation types.
+  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
+  /// - [contain] Indicates whether to include unread messages from muted conversations.
+  /// - [callback] Specifies the event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// @listener [onUnreadCountByConversationTypesLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   Future<int> getUnreadCountByConversationTypes(
@@ -1366,9 +1366,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load unread count by conversation's DND level
-  /// @param conversationTypes List of conversation types
-  /// @param levels List of DND levels
-  /// @param callback Callback for unread message count
+  /// - [conversationTypes] List of conversation types
+  /// - [levels] List of DND levels
+  /// - [callback] Callback for unread message count
   /// ---
   Future<int> getUnreadCountByLevels(
     List<RCIMIWConversationType> conversationTypes,
@@ -1394,11 +1394,11 @@ class RCIMIWEngine {
   /// ---
   /// Clear the unread message count for a specific conversation.
   /// Note: Not supported for chatrooms!
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param timestamp The timestamp of the last read message in the conversation. Pass the latest timestamp to clear all.
-  /// @param callback Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in the 6.x version. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [timestamp] The timestamp of the last read message in the conversation. Pass the latest timestamp to clear all.
+  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in the 6.x version. If the callback parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> clearUnreadCount(
     RCIMIWConversationType type,
@@ -1424,11 +1424,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Save conversation draft information.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param draft The text content of the draft.
-  /// @param callback Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [draft] The text content of the draft.
+  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> saveDraftMessage(
     RCIMIWConversationType type,
@@ -1452,9 +1452,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Loads the draft message in the conversation.
-  /// @param type The type of the conversation.
-  /// @param targetId The ID of the conversation.
-  /// @param channelId The channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [type] The type of the conversation.
+  /// - [targetId] The ID of the conversation.
+  /// - [channelId] The channel ID, only supported for ultra groups. Pass null for other conversation types.
   /// @deprecated Use {@link #getDraftMessage(RCIMIWConversationType, String, String, IRCIMIWGetDraftMessageCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getDraftMessage] 代替')
@@ -1473,10 +1473,10 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve draft information from a conversation.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, supported only for ultra groups. Pass null for other conversation types.
-  /// @param callback Event callback. The SDK supports callback-based event handling starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, supported only for ultra groups. Pass null for other conversation types.
+  /// - [callback] Event callback. The SDK supports callback-based event handling starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onDraftMessageLoaded]
   Future<int> getDraftMessage(
     RCIMIWConversationType type,
@@ -1500,10 +1500,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Deletes draft information from the specified conversation.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param callback Event callback. SDK supports callback mode from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [callback] Event callback. SDK supports callback mode from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// @listener [onDraftMessageCleared]
   /// ---
   Future<int> clearDraftMessage(
@@ -1526,8 +1526,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load the list of conversations with Do Not Disturb enabled.
-  /// @param conversationTypes Collection of conversation types
-  /// @param channelId Channel ID, only supported for ultra groups. Pass `null` for other conversation types.
+  /// - [conversationTypes] Collection of conversation types
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass `null` for other conversation types.
   /// @deprecated Use {@link #getBlockedConversations(List, String, IRCIMIWGetBlockedConversationsCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 在 Flutter For Web 端，此接口返回的会话对象数据中只有 targetId,channelId,conversationType 是正确的，其他值均为默认值
@@ -1546,9 +1546,9 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve the list of conversations with Do Not Disturb enabled.
-  /// @param conversationTypes A collection of conversation types.
-  /// @param channelId    The channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param callback     The event callback. The SDK has supported callback-based responses since version 5.3.1. Other callback methods for this interface have been deprecated since version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [conversationTypes] A collection of conversation types.
+  /// - [channelId]    The channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [callback]     The event callback. The SDK has supported callback-based responses since version 5.3.1. Other callback methods for this interface have been deprecated since version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onBlockedConversationsLoaded]
   /// 在 Flutter For Web 端，此接口返回的会话对象数据中只有 targetId,channelId,conversationType 是正确的，其他值均为默认值
   Future<int> getBlockedConversations(
@@ -1573,11 +1573,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Sets the pinned status of a conversation. If the conversation does not exist, calling this method will automatically create and pin the conversation.
-  /// @param type Specifies the conversation type.
-  /// @param targetId Specifies the conversation ID.
-  /// @param channelId Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
-  /// @param top  Indicates whether to pin the conversation.
-  /// @param callback Specifies the event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Specifies the conversation type.
+  /// - [targetId] Specifies the conversation ID.
+  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
+  /// - [top]  Indicates whether to pin the conversation.
+  /// - [callback] Specifies the event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口在 Flutter For Web 端不支持超级群
   Future<int> changeConversationTopStatus(
@@ -1605,12 +1605,12 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Pin or unpin a conversation. SDK auto-creates missing conversations.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID (ultra group only, set null for others)
-  /// @param top Pin status
-  /// @param updateOperationTime Update operation timestamp (default: false)
-  /// @param callback Event callback (supported since v5.3.1). Other callback methods deprecated in v5.4.0 and will be removed in v6.x. Callback param overrides all other callbacks.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID (ultra group only, set null for others)
+  /// - [top] Pin status
+  /// - [updateOperationTime] Update operation timestamp (default: false)
+  /// - [callback] Event callback (supported since v5.3.1). Other callback methods deprecated in v5.4.0 and will be removed in v6.x. Callback param overrides all other callbacks.
   /// @listener [onConversationTopStatusChanged]
   /// ---
   Future<int> changeConversationTopStatusWithUpdateTme(
@@ -1643,9 +1643,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load the pinned status of a conversation
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
   /// @deprecated Use {@link #getConversationTopStatus(RCIMIWConversationType, String, String, IRCIMIWGetConversationTopStatusCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口在 Flutter For Web 端不支持超级群
@@ -1665,10 +1665,10 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Get the pinned status of a conversation
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param callback Event callback. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [callback] Event callback. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onConversationTopStatusLoaded]
   /// 此接口在 Flutter For Web 端不支持超级群
   Future<int> getConversationTopStatus(
@@ -1694,11 +1694,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Synchronize conversation read status.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param timestamp Timestamp of the last read message in the conversation
-  /// @param callback Event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [timestamp] Timestamp of the last read message in the conversation
+  /// - [callback] Event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> syncConversationReadStatus(
     RCIMIWConversationType type,
@@ -1728,10 +1728,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Send a typing status to the conversation. Currently, this feature is only supported in one-to-one chats.
-  /// @param type   Specifies the conversation type
-  /// @param targetId Specifies the conversation ID
-  /// @param channelId Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
-  /// @param currentType Specifies the current status
+  /// - [type]   Specifies the conversation type
+  /// - [targetId] Specifies the conversation ID
+  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
+  /// - [currentType] Specifies the current status
   /// ---
   Future<int> sendTypingStatus(
     RCIMIWConversationType type,
@@ -1758,13 +1758,13 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load Historical Messages
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, supported only for ultra groups. Pass `null` for other conversation types.
-  /// @param sentTime Timestamp of the current message
-  /// @param order Direction of message retrieval. `BEFORE`: Retrieve messages before `sentTime` (in descending order). `AFTER`: Retrieve messages after `sentTime` (in ascending order).
-  /// @param policy Message loading policy. `LOCAL`: Load only local messages. `REMOTE`: Load only remote messages. `LOCAL_REMOTE`: Load both local and remote messages.
-  /// @param count Number of messages to retrieve. Must satisfy `0 < count ≤ 20`.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, supported only for ultra groups. Pass `null` for other conversation types.
+  /// - [sentTime] Timestamp of the current message
+  /// - [order] Direction of message retrieval. `BEFORE`: Retrieve messages before `sentTime` (in descending order). `AFTER`: Retrieve messages after `sentTime` (in ascending order).
+  /// - [policy] Message loading policy. `LOCAL`: Load only local messages. `REMOTE`: Load only remote messages. `LOCAL_REMOTE`: Load both local and remote messages.
+  /// - [count] Number of messages to retrieve. Must satisfy `0 < count ≤ 20`.
   /// @deprecated Use {@link #getMessages(RCIMIWConversationType, String, String, long, RCIMIWTimeOrder, RCIMIWMessageOperationPolicy, int, IRCIMIWGetMessagesCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getMessages] 代替')
@@ -1795,14 +1795,14 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Load Historical Messages
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param sentTime Timestamp of the current message
-  /// @param order Direction to fetch messages. BEFORE: Fetch messages before sentTime (in descending order). AFTER: Fetch messages after sentTime (in ascending order).
-  /// @param policy Message loading strategy. LOCAL: Load only local messages. REMOTE: Load only remote messages. LOCAL_REMOTE: Load both local and remote messages.
-  /// @param count Number of messages to fetch, where 0 < count ≤ 20
-  /// @param callback Event callback. SDK supports callback starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [sentTime] Timestamp of the current message
+  /// - [order] Direction to fetch messages. BEFORE: Fetch messages before sentTime (in descending order). AFTER: Fetch messages after sentTime (in ascending order).
+  /// - [policy] Message loading strategy. LOCAL: Load only local messages. REMOTE: Load only remote messages. LOCAL_REMOTE: Load both local and remote messages.
+  /// - [count] Number of messages to fetch, where 0 < count ≤ 20
+  /// - [callback] Event callback. SDK supports callback starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onMessagesLoaded]
   Future<int> getMessages(
     RCIMIWConversationType type,
@@ -1836,8 +1836,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Retrieve the message body based on the message ID (unique value in the local database index).
-  /// @param messageId The messageId of the message, which can be obtained from the message object.
-  /// @param callback The event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageId] The messageId of the message, which can be obtained from the message object.
+  /// - [callback] The event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageById(int messageId, {IRCIMIWGetMessageCallback? callback}) async {
@@ -1854,8 +1854,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Retrieve the message entity by its globally unique ID.
-  /// @param messageUId The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// @param callback The event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
+  /// - [callback] The event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageByUId(String messageUId, {IRCIMIWGetMessageCallback? callback}) async {
@@ -1877,13 +1877,13 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get messages around a specified one in conversation. The returned list includes the target message, sorted from newest to oldest.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Business identifier for the conversation
-  /// @param sentTime Target message's timestamp (in milliseconds), can't be 0
-  /// @param beforeCount Number of messages before the target
-  /// @param afterCount Number of messages after the target
-  /// @param callback Result callback
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Business identifier for the conversation
+  /// - [sentTime] Target message's timestamp (in milliseconds), can't be 0
+  /// - [beforeCount] Number of messages before the target
+  /// - [afterCount] Number of messages after the target
+  /// - [callback] Result callback
   /// ---
   Future<int> getMessagesAroundTime(
     RCIMIWConversationType type,
@@ -1921,14 +1921,14 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Fetch messages of specified types in conversation
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Business identifier for the conversation
-  /// @param messageTypes List of message types
-  /// @param sentTime Message timestamp (0 for latest)
-  /// @param order Fetch direction: BEFORE for messages prior to sentTime (descending), AFTER for messages after sentTime (ascending)
-  /// @param count Number of messages to fetch
-  /// @param callback Result callback
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Business identifier for the conversation
+  /// - [messageTypes] List of message types
+  /// - [sentTime] Message timestamp (0 for latest)
+  /// - [order] Fetch direction: BEFORE for messages prior to sentTime (descending), AFTER for messages after sentTime (ascending)
+  /// - [count] Number of messages to fetch
+  /// - [callback] Result callback
   /// ---
   Future<int> getLocalMessagesByMessageTypes(
     RCIMIWConversationType type,
@@ -1964,9 +1964,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load the first unread message.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
   /// @deprecated Use {@link #getFirstUnreadMessage(RCIMIWConversationType, String, String, IRCIMIWGetFirstUnreadMessageCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
@@ -1986,10 +1986,10 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve the first unread message.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param callback Event callback. The SDK has supported callback-based responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [callback] Event callback. The SDK has supported callback-based responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onFirstUnreadMessageLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getFirstUnreadMessage(
@@ -2013,9 +2013,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load unread @ messages in the conversation.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass `null` for other conversation types.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass `null` for other conversation types.
   /// @deprecated Use {@link #getUnreadMentionedMessages(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedMessagesCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
@@ -2035,10 +2035,10 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Fetch unread @ messages in a conversation.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param callback Event callback. SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [callback] Event callback. SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onUnreadMentionedMessagesLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getUnreadMentionedMessages(
@@ -2061,8 +2061,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Insert a Message
-  /// @param message The message to be inserted.
-  /// @param callback Event callback. The SDK has supported callback-based event handling since version 5.3.1. Other callback methods for this interface have been deprecated since version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [message] The message to be inserted.
+  /// - [callback] Event callback. The SDK has supported callback-based event handling since version 5.3.1. Other callback methods for this interface have been deprecated since version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> insertMessage(RCIMIWMessage message, {IRCIMIWInsertMessageCallback? callback}) async {
@@ -2080,8 +2080,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Insert multiple messages. Ultra groups are not supported.
-  /// @param messages The collection of messages to be inserted.
-  /// @param callback The event callback. Starting from version 5.3.1, the SDK supports callback for event handling. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messages] The collection of messages to be inserted.
+  /// - [callback] The event callback. Starting from version 5.3.1, the SDK supports callback for event handling. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> insertMessages(List<RCIMIWMessage> messages, {IRCIMIWInsertMessagesCallback? callback}) async {
@@ -2103,12 +2103,12 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Clear Messages
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param timestamp Timestamp for clearing messages up to a certain time. 0 ≤ timestamp ≤ sentTime of the last message in the current conversation. 0 clears all messages, other values clear messages with sentTime ≤ timestamp.
-  /// @param policy Clearing policy
-  /// @param callback Event callback. SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [timestamp] Timestamp for clearing messages up to a certain time. 0 ≤ timestamp ≤ sentTime of the last message in the current conversation. 0 clears all messages, other values clear messages with sentTime ≤ timestamp.
+  /// - [policy] Clearing policy
+  /// - [callback] Event callback. SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> clearMessages(
     RCIMIWConversationType type,
@@ -2132,8 +2132,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Delete Local Messages
-  /// @param messages The collection of messages to be deleted.
-  /// @param callback The event callback. Starting from version 5.3.1, the SDK supports callback-based event handling. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in the 6.x release. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messages] The collection of messages to be deleted.
+  /// - [callback] The event callback. Starting from version 5.3.1, the SDK supports callback-based event handling. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in the 6.x release. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> deleteLocalMessages(List<RCIMIWMessage> messages, {IRCIMIWDeleteLocalMessagesCallback? callback}) async {
@@ -2150,8 +2150,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Delete local messages in batch by messageId
-  /// @param messageIds Set of message IDs
-  /// @param callback Event callback
+  /// - [messageIds] Set of message IDs
+  /// - [callback] Event callback
   /// ---
   Future<int> deleteLocalMessageByIds(List<int> messageIds, {IRCIMIWDeleteLocalMessageByIdsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.deleteLocalMessageByIds(messageIds, callback: callback);
@@ -2171,11 +2171,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Delete Messages
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param messages Message collection
-  /// @param callback Event callback. SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [messages] Message collection
+  /// - [callback] Event callback. SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> deleteMessages(
     RCIMIWConversationType type,
@@ -2198,8 +2198,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Recall Message
-  /// @param message The message to be recalled.
-  /// @param callback Event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface have been deprecated since version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [message] The message to be recalled.
+  /// - [callback] Event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface have been deprecated since version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> recallMessage(RCIMIWMessage message, {IRCIMIWRecallMessageCallback? callback}) async {
     return RCIMWrapperPlatform.instance.recallMessage(message, callback: callback);
@@ -2218,10 +2218,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Send a read receipt for messages in a specific conversation.
-  /// @param targetId The conversation ID.
-  /// @param channelId The channel ID, only supported for ultra groups. Pass `null` for other conversation types.
-  /// @param timestamp The timestamp of the last read message in the conversation.
-  /// @param callback The event callback. SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
+  /// - [targetId] The conversation ID.
+  /// - [channelId] The channel ID, only supported for ultra groups. Pass `null` for other conversation types.
+  /// - [timestamp] The timestamp of the last read message in the conversation.
+  /// - [callback] The event callback. SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> sendPrivateReadReceiptMessage(
     String targetId,
@@ -2248,8 +2248,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Send Group Message Read Receipt Request
-  /// @param message The message for which the read receipt is requested.
-  /// @param callback Event callback. Starting from SDK version 5.3.1, callback mode is supported. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [message] The message for which the read receipt is requested.
+  /// - [callback] Event callback. Starting from SDK version 5.3.1, callback mode is supported. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> sendGroupReadReceiptRequest(
     RCIMIWMessage message, {
@@ -2271,10 +2271,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Send Group Read Receipt
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param messages List of messages in the conversation for which read receipts need to be sent
-  /// @param callback Event callback. SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [messages] List of messages in the conversation for which read receipts need to be sent
+  /// - [callback] Event callback. SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> sendGroupReadReceiptResponse(
     String targetId,
@@ -2299,9 +2299,9 @@ class RCIMIWEngine {
   /// ---
   /// Update Message Extension Information
   /// Each message can carry a maximum of 300 key-value pairs of extension information, and a single update can set a maximum of 20 key-value pairs.
-  /// @param messageUId The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// @param expansion The key-value pairs of message extension information to be updated, of type HashMap. The Key supports a combination of uppercase and lowercase English letters, numbers, and some special symbols + = - _. Chinese characters are not supported. The Value can include spaces.
-  /// @param callback The event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
+  /// - [expansion] The key-value pairs of message extension information to be updated, of type HashMap. The Key supports a combination of uppercase and lowercase English letters, numbers, and some special symbols + = - _. Chinese characters are not supported. The Value can include spaces.
+  /// - [callback] The event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> updateMessageExpansion(
     String messageUId,
@@ -2323,9 +2323,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Delete specific key-value pairs from message extension information
-  /// @param messageUId The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// @param keys The list of keys to be deleted from the message extension information. The type is ArrayList.
-  /// @param callback Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
+  /// - [keys] The list of keys to be deleted from the message extension information. The type is ArrayList.
+  /// - [callback] Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> removeMessageExpansionForKeys(
     String messageUId,
@@ -2347,9 +2347,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set the message sending status.
-  /// @param messageId The messageId of the message, which can be obtained from the message object.
-  /// @param sentStatus The status to be modified.
-  /// @param callback Event callback. The SDK supports callback-based notification starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageId] The messageId of the message, which can be obtained from the message object.
+  /// - [sentStatus] The status to be modified.
+  /// - [callback] Event callback. The SDK supports callback-based notification starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeMessageSentStatus(
@@ -2372,9 +2372,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set the message received status.
-  /// @param messageId The messageId of the message, which can be obtained from the message object.
-  /// @param receivedStatus The status to be modified.
-  /// @param callback  Event callback. The SDK has supported callback-style responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageId] The messageId of the message, which can be obtained from the message object.
+  /// - [receivedStatus] The status to be modified.
+  /// - [callback]  Event callback. The SDK has supported callback-style responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeMessageReceiveStatus(
@@ -2397,9 +2397,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set message received status
-  /// @param messageId Message ID from Message Object
-  /// @param receivedStatusInfo Status to modify
-  /// @param callback  Event callback. Supported since SDK 5.3.1. Other callback methods deprecated in 5.4.0 and will be removed in 6.x. If callback is provided, only triggers callback response.
+  /// - [messageId] Message ID from Message Object
+  /// - [receivedStatusInfo] Status to modify
+  /// - [callback]  Event callback. Supported since SDK 5.3.1. Other callback methods deprecated in 5.4.0 and will be removed in 6.x. If callback is provided, only triggers callback response.
   /// ---
   Future<int> changeMessageReceiveStatusInfo(
     int messageId,
@@ -2424,9 +2424,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set message extras for local use only (won't sync to server)
-  /// @param messageId Message ID from Message Object
-  /// @param extra Additional data
-  /// @param callback Event callback
+  /// - [messageId] Message ID from Message Object
+  /// - [extra] Additional data
+  /// - [callback] Event callback
   /// ---
   Future<int> updateMessageLocalExtra(
     int messageId,
@@ -2449,10 +2449,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Join a chatroom.
-  /// @param targetId The chatroom conversation ID
-  /// @param messageCount The number of messages to fetch upon entering the chatroom. -1 means no messages will be fetched, 0 means fetching 10 messages, with a maximum of 50 messages allowed.
-  /// @param autoCreate Whether to create the chatroom. If TRUE and the chatroom does not exist, the SDK will create the chatroom and join it. If the chatroom already exists, the SDK will directly join it.
-  /// @param callback Event callback. The SDK supports callback-based events starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The chatroom conversation ID
+  /// - [messageCount] The number of messages to fetch upon entering the chatroom. -1 means no messages will be fetched, 0 means fetching 10 messages, with a maximum of 50 messages allowed.
+  /// - [autoCreate] Whether to create the chatroom. If TRUE and the chatroom does not exist, the SDK will create the chatroom and join it. If the chatroom already exists, the SDK will directly join it.
+  /// - [callback] Event callback. The SDK supports callback-based events starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> joinChatRoom(
     String targetId,
@@ -2474,8 +2474,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Exit the chatroom.
-  /// @param targetId The conversation ID of the chatroom.
-  /// @param callback The event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The conversation ID of the chatroom.
+  /// - [callback] The event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> leaveChatRoom(String targetId, {IRCIMIWLeaveChatRoomCallback? callback}) async {
     return RCIMWrapperPlatform.instance.leaveChatRoom(targetId, callback: callback);
@@ -2496,10 +2496,10 @@ class RCIMIWEngine {
   /// ---
   /// Load chatroom historical messages.
   /// Note: The chatroom message cloud storage feature must be enabled first.
-  /// @param targetId The conversation ID of the chatroom
-  /// @param timestamp The timestamp of the starting message
-  /// @param order The order of fetching messages: 0 for descending, 1 for ascending
-  /// @param count The number of messages to fetch, where 0 < count ≤ 50
+  /// - [targetId] The conversation ID of the chatroom
+  /// - [timestamp] The timestamp of the starting message
+  /// - [order] The order of fetching messages: 0 for descending, 1 for ascending
+  /// - [count] The number of messages to fetch, where 0 < count ≤ 50
   /// @deprecated Use {@link #getChatRoomMessages(String, long, RCIMIWTimeOrder, int, IRCIMIWGetChatRoomMessagesCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getChatRoomMessages] 代替')
@@ -2521,11 +2521,11 @@ class RCIMIWEngine {
   /// [EN]
   /// Retrieve chatroom historical messages.
   /// Note: The chatroom message cloud storage feature must be enabled first.
-  /// @param targetId The chatroom conversation ID
-  /// @param timestamp The starting message timestamp
-  /// @param order The order of retrieval: 0 for descending, 1 for ascending
-  /// @param count The number of messages to retrieve, where 0 < count ≤ 50
-  /// @param callback The event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The chatroom conversation ID
+  /// - [timestamp] The starting message timestamp
+  /// - [order] The order of retrieval: 0 for descending, 1 for ascending
+  /// - [count] The number of messages to retrieve, where 0 < count ≤ 50
+  /// - [callback] The event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onChatRoomMessagesLoaded]
   Future<int> getChatRoomMessages(
     String targetId,
@@ -2552,12 +2552,12 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set chatroom custom attributes.
-  /// @param targetId  The conversation ID of the chatroom.
-  /// @param key  The name of the chatroom attribute. The key supports a combination of uppercase and lowercase letters, numbers, and special characters + = - _. The maximum length is 128 characters.
-  /// @param value     The value corresponding to the chatroom attribute. The maximum length is 4096 characters.
-  /// @param deleteWhenLeft Whether to automatically delete the key-value pair when the user goes offline or exits the chatroom.
-  /// @param overwrite Whether to overwrite the existing key if it already exists.
-  /// @param callback  The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [targetId]  The conversation ID of the chatroom.
+  /// - [key]  The name of the chatroom attribute. The key supports a combination of uppercase and lowercase letters, numbers, and special characters + = - _. The maximum length is 128 characters.
+  /// - [value]     The value corresponding to the chatroom attribute. The maximum length is 4096 characters.
+  /// - [deleteWhenLeft] Whether to automatically delete the key-value pair when the user goes offline or exits the chatroom.
+  /// - [overwrite] Whether to overwrite the existing key if it already exists.
+  /// - [callback]  The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> addChatRoomEntry(
     String targetId,
@@ -2591,11 +2591,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Batch Set Chatroom Custom Attributes
-  /// @param targetId  Chatroom conversation ID
-  /// @param entries   Chatroom attributes
-  /// @param deleteWhenLeft Whether to automatically delete the Key and Value when the user goes offline or exits
-  /// @param overwrite Whether to force overwrite
-  /// @param callback  Event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId]  Chatroom conversation ID
+  /// - [entries]   Chatroom attributes
+  /// - [deleteWhenLeft] Whether to automatically delete the Key and Value when the user goes offline or exits
+  /// - [overwrite] Whether to force overwrite
+  /// - [callback]  Event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> addChatRoomEntries(
     String targetId,
@@ -2624,8 +2624,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load a single chatroom attribute.
-  /// @param targetId The conversation ID of the chatroom
-  /// @param key The key of the chatroom attribute
+  /// - [targetId] The conversation ID of the chatroom
+  /// - [key] The key of the chatroom attribute
   /// @deprecated Use {@link #getChatRoomEntry(String, String, IRCIMIWGetChatRoomEntryCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getChatRoomEntry] 代替')
@@ -2643,9 +2643,9 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve a single chatroom attribute.
-  /// @param targetId The conversation ID of the chatroom
-  /// @param key The key of the chatroom attribute
-  /// @param callback The event callback. SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The conversation ID of the chatroom
+  /// - [key] The key of the chatroom attribute
+  /// - [callback] The event callback. SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onChatRoomEntryLoaded]
   Future<int> getChatRoomEntry(String targetId, String key, {IRCIMIWGetChatRoomEntryCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getChatRoomEntry(targetId, key, callback: callback);
@@ -2661,7 +2661,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load all chatroom attributes.
-  /// @param targetId The conversation ID of the chatroom
+  /// - [targetId] The conversation ID of the chatroom
   /// @deprecated Use {@link #getChatRoomAllEntries(String, IRCIMIWGetChatRoomAllEntriesCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getChatRoomAllEntries] 代替')
@@ -2678,8 +2678,8 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve all attributes of a chatroom.
-  /// @param targetId The conversation ID of the chatroom.
-  /// @param callback The event callback. Starting from SDK version 5.3.1, the callback method is supported. From version 5.4.0, other callback methods for this interface are deprecated and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The conversation ID of the chatroom.
+  /// - [callback] The event callback. Starting from SDK version 5.3.1, the callback method is supported. From version 5.4.0, other callback methods for this interface are deprecated and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onChatRoomAllEntriesLoaded]
   Future<int> getChatRoomAllEntries(String targetId, {IRCIMIWGetChatRoomAllEntriesCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getChatRoomAllEntries(targetId, callback: callback);
@@ -2698,10 +2698,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove chatroom custom attributes.
-  /// @param targetId The chatroom conversation ID
-  /// @param key The chatroom attribute key
-  /// @param force Whether to force deletion
-  /// @param callback The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [targetId] The chatroom conversation ID
+  /// - [key] The chatroom attribute key
+  /// - [force] Whether to force deletion
+  /// - [callback] The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> removeChatRoomEntry(
     String targetId,
@@ -2725,10 +2725,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Batch Delete Chatroom Custom Attributes
-  /// @param targetId The chatroom conversation ID
-  /// @param keys The chatroom attributes
-  /// @param force Specifies whether to force overwrite
-  /// @param callback The event callback. SDK supports callback mode from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The chatroom conversation ID
+  /// - [keys] The chatroom attributes
+  /// - [force] Specifies whether to force overwrite
+  /// - [callback] The event callback. SDK supports callback mode from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> removeChatRoomEntries(
     String targetId,
@@ -2752,8 +2752,8 @@ class RCIMIWEngine {
   /// ---
   /// Add a user to the blocklist.
   /// When you add a user to the blocklist, they will receive a notification stating "You have been added to the blocklist, message sending failed" when attempting to send you a message. However, you can still send messages to them.
-  /// @param userId User ID
-  /// @param callback Event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [userId] User ID
+  /// - [callback] Event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> addToBlacklist(String userId, {IRCIMIWAddToBlacklistCallback? callback}) async {
@@ -2771,8 +2771,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove a user from the blocklist.
-  /// @param userId User ID
-  /// @param callback Event callback. The SDK supports callback-based event handling starting from version 5.3.1. Other callback methods for this interface have been deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If a callback parameter is provided, only the callback will be triggered.
+  /// - [userId] User ID
+  /// - [callback] Event callback. The SDK supports callback-based event handling starting from version 5.3.1. Other callback methods for this interface have been deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If a callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> removeFromBlacklist(String userId, {IRCIMIWRemoveFromBlacklistCallback? callback}) async {
@@ -2789,7 +2789,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Check if a user is in the blocklist.
-  /// @param userId The user ID
+  /// - [userId] The user ID
   /// @deprecated Use {@link #getBlacklistStatus(String, IRCIMIWGetBlacklistStatusCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
@@ -2807,8 +2807,8 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Check if a user is in the blocklist.
-  /// @param userId User ID
-  /// @param callback Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [userId] User ID
+  /// - [callback] Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onBlacklistStatusLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getBlacklistStatus(String userId, {IRCIMIWGetBlacklistStatusCallback? callback}) async {
@@ -2840,7 +2840,7 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve the current user's blocklist.
-  /// @param callback Event callback. The SDK has supported callback-style responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-style responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onBlacklistLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getBlacklist({IRCIMIWGetBlacklistCallback? callback}) async {
@@ -2863,13 +2863,13 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Search for messages in a specified conversation based on keywords.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param keyword Keyword to search for
-  /// @param startTime Search for messages before this timestamp. Pass 0 to start searching from the latest message and move backward in time.
-  /// @param count Number of messages to query, where 0 < count ≤ 50.
-  /// @param callback Event callback. The SDK has supported callback-based responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [keyword] Keyword to search for
+  /// - [startTime] Search for messages before this timestamp. Pass 0 to start searching from the latest message and move backward in time.
+  /// - [count] Number of messages to query, where 0 < count ≤ 50.
+  /// - [callback] Event callback. The SDK has supported callback-based responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchMessages(
@@ -2910,15 +2910,15 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Search for messages within a specified time range in a conversation based on a keyword.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param keyword Keyword to search for
-  /// @param startTime Start time
-  /// @param endTime End time
-  /// @param offset Offset
-  /// @param count Number of search results to return, where 0 < count ≤ 50.
-  /// @param callback Event callback. The SDK supports callback-style event handling starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [keyword] Keyword to search for
+  /// - [startTime] Start time
+  /// - [endTime] End time
+  /// - [offset] Offset
+  /// - [count] Number of search results to return, where 0 < count ≤ 50.
+  /// - [callback] Event callback. The SDK supports callback-style event handling starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchMessagesByTimeRange(
@@ -2961,13 +2961,13 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Search for messages in a specified conversation based on user ID.
-  /// @param userId User ID
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass `null` for other conversation types.
-  /// @param startTime Start time for the query. Pass `0` to start searching from the latest message and search backward from that time.
-  /// @param count Number of search results to return. Must be in the range 0 < count ≤ 50.
-  /// @param callback Event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback will be triggered.
+  /// - [userId] User ID
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass `null` for other conversation types.
+  /// - [startTime] Start time for the query. Pass `0` to start searching from the latest message and search backward from that time.
+  /// - [count] Number of search results to return. Must be in the range 0 < count ≤ 50.
+  /// - [callback] Event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchMessagesByUserId(
@@ -3006,14 +3006,14 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Search local message history by keyword in specified conversation
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel identifier for messages
-  /// @param messageTypes Set of message types
-  /// @param keyword Search keyword (required)
-  /// @param startTime Search messages before this timestamp (0 means start from latest) in milliseconds
-  /// @param count Max results (up to 100)
-  /// @param callback Callback for search results
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel identifier for messages
+  /// - [messageTypes] Set of message types
+  /// - [keyword] Search keyword (required)
+  /// - [startTime] Search messages before this timestamp (0 means start from latest) in milliseconds
+  /// - [count] Max results (up to 100)
+  /// - [callback] Callback for search results
   /// ---
   Future<int> searchMessagesByMessageTypes(
     RCIMIWConversationType type,
@@ -3051,11 +3051,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Search conversations by keyword.
-  /// @param conversationTypes Collection of conversation types
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param messageTypes Message types to search for
-  /// @param keyword Keyword to search for
-  /// @param callback Event callback. SDK supports callback mode from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [conversationTypes] Collection of conversation types
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [messageTypes] Message types to search for
+  /// - [keyword] Keyword to search for
+  /// - [callback] Event callback. SDK supports callback mode from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchConversations(
@@ -3087,14 +3087,14 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// ### Mute Message Notifications for a Specific Time Period
-  /// @param startTime
+  /// - [startTime]
   /// Specifies the start time for muting message notifications, in the format `HH:MM:SS`.
-  /// @param spanMinutes
+  /// - [spanMinutes]
   /// The duration in minutes for muting message notifications, where `0 < spanMinutes < 1440`.
   /// For example, if the start time is `00:00` and the end time is `01:00`, then `spanMinutes` would be `60`. Setting it to `1439` represents a full day of muting (`23 60 + 59 = 1439`).
-  /// @param level
+  /// - [level]
   /// The notification level for messages.
-  /// @param callback
+  /// - [callback]
   /// The event callback. Starting from SDK version 5.3.1, the callback method is supported. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
   /// The status code for the current operation. `0` indicates a successful call, and the specific result requires implementing the callback interface. Non-zero values indicate that the current operation failed, and the callback will not be triggered. Refer to the error codes for detailed error information.
   /// ---
@@ -3118,7 +3118,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove the globally set time period message reminder mute
-  /// @param callback Event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> removeNotificationQuietHours({IRCIMIWRemoveNotificationQuietHoursCallback? callback}) async {
@@ -3150,7 +3150,7 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// ### Get the Set Time Period for Message Reminder Blocking
-  /// @param callback Event callback. The SDK has supported callback-based event handling since version 5.3.1. Starting from version 5.4.0, other callback methods for this interface have been deprecated and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-based event handling since version 5.3.1. Starting from version 5.4.0, other callback methods for this interface have been deprecated and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
   /// @listener [onNotificationQuietHoursLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getNotificationQuietHours({IRCIMIWGetNotificationQuietHoursCallback? callback}) async {
@@ -3173,15 +3173,15 @@ class RCIMIWEngine {
   /// ---
   /// Set the message notification level for a conversation
   /// Note: When calling this API for an ultra group, if `channelId` is empty, it sets the Do Not Disturb level for messages not belonging to any channel within the specified ultra group conversation. This does not affect the Do Not Disturb settings for all channels within the ultra group conversation.
-  /// @param type The conversation type. Please note the following restrictions:
+  /// - [type] The conversation type. Please note the following restrictions:
   /// Ultra group conversation type: For ultra group services activated before 2022.09.01, setting the Do Not Disturb level for all messages in a single ultra group conversation (where "all messages" refers to messages across all channels and messages not belonging to any channel) is not supported by default. This API only sets the Do Not Disturb level for messages not belonging to any channel within the specified ultra group conversation (`targetId`). To modify this behavior, submit a ticket.
   /// Chatroom conversation type: Not supported, as chatroom messages do not support push notifications by default.
-  /// @param targetId The conversation ID.
-  /// @param channelId The channel ID for the ultra group conversation. Pass `null` for other types.
+  /// - [targetId] The conversation ID.
+  /// - [channelId] The channel ID for the ultra group conversation. Pass `null` for other types.
   /// If a channel ID is provided, the Do Not Disturb level is set for the specified channel. If no channel ID is specified, it applies to all messages in the ultra group.
   /// Note: For ultra group services activated before 2022.09.01, if no channel ID is specified, pass an empty string `""`, which sets the Do Not Disturb level only for messages not belonging to any channel within the specified ultra group conversation (`targetId`). To modify this behavior, submit a ticket.
-  /// @param level The message notification level.
-  /// @param callback The event callback. Starting from SDK version 5.3.1, callback is supported. Other callback methods for this API are deprecated as of version 5.4.0 and will be removed in version 6.x. If the `callback` parameter is provided, only the callback will be triggered.
+  /// - [level] The message notification level.
+  /// - [callback] The event callback. Starting from SDK version 5.3.1, callback is supported. Other callback methods for this API are deprecated as of version 5.4.0 and will be removed in version 6.x. If the `callback` parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> changeConversationNotificationLevel(
     RCIMIWConversationType type,
@@ -3211,9 +3211,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load the notification level of a conversation
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
   /// @deprecated Use {@link #getConversationNotificationLevel(RCIMIWConversationType, String, String, IRCIMIWGetConversationNotificationLevelCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversationNotificationLevel] 代替')
@@ -3232,12 +3232,12 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Get Conversation Notification Level
-  /// @param type Conversation type. Please note the following restrictions:
+  /// - [type] Conversation type. Please note the following restrictions:
   /// Ultra group conversation type: If the ultra group service was activated before 2022.09.01, it does not support setting the Do Not Disturb level for all messages in a single ultra group conversation by default ("all messages" refers to messages in all channels and messages not belonging to any channel). This API only sets the Do Not Disturb level for messages in the specified ultra group conversation (`targetId`) that do not belong to any channel. Submit a ticket if modification is required.Chatroom conversation type: Not supported, as chatroom messages do not support push notifications by default.
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID of the ultra group conversation. Pass `null` for other types.
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID of the ultra group conversation. Pass `null` for other types.
   /// If a channel ID is provided, the Do Not Disturb level will be set for messages in that specific channel. If no channel ID is specified, it will apply to all ultra group messages.Note: For customers who activated the ultra group service before 2022.09.01, if no channel ID is specified, pass an empty string `""` by default, which means the Do Not Disturb level will only be set for messages in the specified ultra group conversation (`targetId`) that do not belong to any channel. Submit a ticket if modification is required.
-  /// @param callback Event callback. The SDK supports callback-style response starting from version 5.3.1. Other callback methods for this API are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-style response starting from version 5.3.1. Other callback methods for this API are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback will be triggered.
   /// @listener [onConversationNotificationLevelLoaded]
   Future<int> getConversationNotificationLevel(
     RCIMIWConversationType type,
@@ -3262,9 +3262,9 @@ class RCIMIWEngine {
   /// ---
   /// Set the message notification level for a conversation type
   /// Note: To remove the message notification level, set the level to `RCIMIWPushNotificationLevelDefault`.
-  /// @param type The conversation type
-  /// @param level The message notification level
-  /// @param callback The event callback. The SDK supports callback-based event handling starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
+  /// - [type] The conversation type
+  /// - [level] The message notification level
+  /// - [callback] The event callback. The SDK supports callback-based event handling starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> changeConversationTypeNotificationLevel(
     RCIMIWConversationType type,
@@ -3283,7 +3283,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get the message notification status for a conversation type.
-  /// @param type The conversation type.
+  /// - [type] The conversation type.
   /// @deprecated Use {@link #getConversationTypeNotificationLevel(RCIMIWConversationType, IRCIMIWGetConversationTypeNotificationLevelCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversationTypeNotificationLevel] 代替')
@@ -3301,8 +3301,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get the notification level for a specific conversation type.
-  /// @param type Specifies the conversation type.
-  /// @param callback Event callback. The SDK has supported callback-based event handling since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Specifies the conversation type.
+  /// - [callback] Event callback. The SDK has supported callback-based event handling since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> getConversationTypeNotificationLevel(
     RCIMIWConversationType type, {
@@ -3325,9 +3325,9 @@ class RCIMIWEngine {
   /// ---
   /// Set the default message status for ultra groups
   /// This interface is typically used by administrators and applies to all members of the ultra group and all channels under the ultra group, with a lower priority. If a group member sets their own Do Not Disturb level for the ultra group, the member's setting takes precedence.
-  /// @param targetId The conversation ID
-  /// @param level The message notification level
-  /// @param callback The event callback. Starting from SDK version 5.3.1, callback method is supported. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in the 6.x version. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [targetId] The conversation ID
+  /// - [level] The message notification level
+  /// - [callback] The event callback. Starting from SDK version 5.3.1, callback method is supported. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in the 6.x version. If the callback parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> changeUltraGroupDefaultNotificationLevel(
     String targetId,
@@ -3347,7 +3347,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get the default message status of an ultra group
-  /// @param targetId The conversation ID
+  /// - [targetId] The conversation ID
   /// @deprecated Use {@link #getUltraGroupDefaultNotificationLevel(String, IRCIMIWGetUltraGroupDefaultNotificationLevelCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupDefaultNotificationLevel] 代替')
@@ -3364,8 +3364,8 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Get the default message status of an ultra group
-  /// @param targetId The conversation ID
-  /// @param callback The event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The conversation ID
+  /// - [callback] The event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onUltraGroupDefaultNotificationLevelLoaded]
   Future<int> getUltraGroupDefaultNotificationLevel(
     String targetId, {
@@ -3387,10 +3387,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set the default message status for an ultra group channel
-  /// @param targetId The conversation ID
-  /// @param channelId The channel ID, only supported for ultra groups
-  /// @param level The message notification level
-  /// @param callback The event callback. The SDK has supported callback-based event handling since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [targetId] The conversation ID
+  /// - [channelId] The channel ID, only supported for ultra groups
+  /// - [level] The message notification level
+  /// - [callback] The event callback. The SDK has supported callback-based event handling since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> changeUltraGroupChannelDefaultNotificationLevel(
     String targetId,
@@ -3417,8 +3417,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get the default message status of an ultra group channel
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups.
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups.
   /// @deprecated Use {@link #getUltraGroupChannelDefaultNotificationLevel(String, String, IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupChannelDefaultNotificationLevel] 代替')
@@ -3436,9 +3436,9 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Get the default message status of an ultra group channel
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups.
-  /// @param callback Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups.
+  /// - [callback] Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// @listener [onUltraGroupChannelDefaultNotificationLevelLoaded]
   Future<int> getUltraGroupChannelDefaultNotificationLevel(
     String targetId,
@@ -3463,8 +3463,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set whether to display the details of remote push notifications. This feature requires enabling user settings from the server side.
-  /// @param showContent Indicates whether to display the content of remote push notifications.
-  /// @param callback The event callback. SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [showContent] Indicates whether to display the content of remote push notifications.
+  /// - [callback] The event callback. SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> changePushContentShowStatus(
     bool showContent, {
@@ -3484,8 +3484,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set Push Language
-  /// @param language The push language. Currently supports en_us, zh_cn, and ar_sa.
-  /// @param callback The event callback. The SDK has supported callback-based notifications since version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [language] The push language. Currently supports en_us, zh_cn, and ar_sa.
+  /// - [callback] The event callback. The SDK has supported callback-based notifications since version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changePushLanguage(String language, {IRCIMIWChangePushLanguageCallback? callback}) async {
@@ -3507,8 +3507,8 @@ class RCIMIWEngine {
   /// Set whether to receive remote push notifications.
   /// Prerequisite: When the mobile client is offline, and Web or MAC/PC clients are online, determine whether the mobile client receives remote push notifications.
   /// This feature requires enabling user settings from the server side.
-  /// @param receive Indicates whether to receive push notifications.
-  /// @param callback Event callback. The SDK supports callback mode starting from version 5.3.1. Other callback modes for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [receive] Indicates whether to receive push notifications.
+  /// - [callback] Event callback. The SDK supports callback mode starting from version 5.3.1. Other callback modes for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changePushReceiveStatus(bool receive, {IRCIMIWChangePushReceiveStatusCallback? callback}) async {
@@ -3527,9 +3527,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Send a message to specified group members
-  /// @param message The message to be sent
-  /// @param userIds The collection of group members
-  /// @param callback The event callback. The SDK supports callback-based response starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in the 6.x release. If the callback parameter is provided, only the callback will be triggered.
+  /// - [message] The message to be sent
+  /// - [userIds] The collection of group members
+  /// - [callback] The event callback. The SDK supports callback-based response starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in the 6.x release. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> sendGroupMessageToDesignatedUsers(
     RCIMIWMessage message,
@@ -3551,9 +3551,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Loads the total message count for the specified conversation.
-  /// @param type The type of the conversation.
-  /// @param targetId The ID of the conversation.
-  /// @param channelId The channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [type] The type of the conversation.
+  /// - [targetId] The ID of the conversation.
+  /// - [channelId] The channel ID, only supported for ultra groups. Pass null for other conversation types.
   /// @deprecated Use {@link #getMessageCount(RCIMIWConversationType, String, String, IRCIMIWGetMessageCountCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
@@ -3573,10 +3573,10 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Get the total number of messages for a specified conversation.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @param callback Event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [callback] Event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onMessageCountLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageCount(
@@ -3599,8 +3599,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Load the pinned conversation list based on the conversation type.
-  /// @param conversationTypes A collection of conversation types.
-  /// @param channelId    The channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [conversationTypes] A collection of conversation types.
+  /// - [channelId]    The channel ID, only supported for ultra groups. Pass null for other conversation types.
   /// @deprecated Use {@link #getTopConversations(List, String, IRCIMIWGetTopConversationsCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getTopConversations] 代替')
@@ -3618,9 +3618,9 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve the list of pinned conversations based on conversation type.
-  /// @param conversationTypes A collection of conversation types.
-  /// @param channelId    The channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @param callback     The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [conversationTypes] A collection of conversation types.
+  /// - [channelId]    The channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [callback]     The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// @listener [onTopConversationsLoaded]
   Future<int> getTopConversations(
     List<RCIMIWConversationType> conversationTypes,
@@ -3643,10 +3643,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Report the read time of an ultra group.
-  /// @param targetId The conversation ID.
-  /// @param channelId The channel ID, only supported for ultra groups.
-  /// @param timestamp The read time.
-  /// @param callback The event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The conversation ID.
+  /// - [channelId] The channel ID, only supported for ultra groups.
+  /// - [timestamp] The read time.
+  /// - [callback] The event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   /// [timestamp] 在 Flutter For Web 端无效
   Future<int> syncUltraGroupReadStatus(
@@ -3669,8 +3669,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Retrieve the conversation list of all channels under a specific conversation. Only supported for ultra groups.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
   /// @deprecated Use {@link #getConversationsForAllChannel(RCIMIWConversationType, String, IRCIMIWGetConversationsForAllChannelCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversationsForAllChannel] 代替')
@@ -3688,9 +3688,9 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve the conversation list for all channels under a specific conversation. Only supported for ultra groups.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param callback Event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [callback] Event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// @listener [onConversationsLoadedForAllChannel]
   Future<int> getConversationsForAllChannel(
     RCIMIWConversationType type,
@@ -3712,9 +3712,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Modify Ultra Group Message
-  /// @param messageUId The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// @param message The message to be modified.
-  /// @param callback Event callback. SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
+  /// - [message] The message to be modified.
+  /// - [callback] Event callback. SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> modifyUltraGroupMessage(
     String messageUId,
@@ -3736,9 +3736,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Recall Ultra Group Message
-  /// @param message The message to be recalled
-  /// @param deleteRemote Whether to delete the remote message
-  /// @param callback Event callback. SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [message] The message to be recalled
+  /// - [deleteRemote] Whether to delete the remote message
+  /// - [callback] Event callback. SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> recallUltraGroupMessage(
     RCIMIWMessage message,
@@ -3762,11 +3762,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Delete messages in an ultra group before a specified time
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, only supported for ultra groups.
-  /// @param timestamp Unix timestamp
-  /// @param policy Clear policy
-  /// @param callback Event callback. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups.
+  /// - [timestamp] Unix timestamp
+  /// - [policy] Clear policy
+  /// - [callback] Event callback. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
   /// ---
   Future<int> clearUltraGroupMessages(
     String targetId,
@@ -3797,10 +3797,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Send Ultra Group Typing Status
-  /// @param targetId Conversation ID
-  /// @param channelId Channel ID, supported only for ultra groups.
-  /// @param typingStatus Typing status
-  /// @param callback Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in the 6.x release. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, supported only for ultra groups.
+  /// - [typingStatus] Typing status
+  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in the 6.x release. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> sendUltraGroupTypingStatus(
     String targetId,
@@ -3828,9 +3828,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Delete messages in all channels of an ultra group before a specified timestamp.
-  /// @param targetId The conversation ID.
-  /// @param timestamp The timestamp.
-  /// @param callback The event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [targetId] The conversation ID.
+  /// - [timestamp] The timestamp.
+  /// - [callback] The event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> clearUltraGroupMessagesForAllChannel(
     String targetId,
@@ -3850,7 +3850,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Retrieve Batch Messages from Service
-  /// @param messages The collection of messages to be retrieved
+  /// - [messages] The collection of messages to be retrieved
   /// @deprecated Use {@link #getBatchRemoteUltraGroupMessages(List, IRCIMIWGetBatchRemoteUltraGroupMessagesCallback)} instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getBatchRemoteUltraGroupMessages] 代替')
@@ -3867,8 +3867,8 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve Batch Messages from Service
-  /// @param messages The collection of messages retrieved.
-  /// @param callback The event callback. Starting from SDK version 5.3.1, callback is supported. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messages] The collection of messages retrieved.
+  /// - [callback] The event callback. Starting from SDK version 5.3.1, callback is supported. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// @listener [onBatchRemoteUltraGroupMessagesLoaded]
   Future<int> getBatchRemoteUltraGroupMessages(
     List<RCIMIWMessage> messages, {
@@ -3889,9 +3889,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Update Ultra Group Message Extension Information
-  /// @param messageUId The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// @param expansion The key-value pairs for the updated message extension information, of type HashMap. Key supports a combination of uppercase and lowercase English letters, numbers, and special characters + = - _. Chinese characters are not supported. Value can include spaces.
-  /// @param callback The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
+  /// - [expansion] The key-value pairs for the updated message extension information, of type HashMap. Key supports a combination of uppercase and lowercase English letters, numbers, and special characters + = - _. Chinese characters are not supported. Value can include spaces.
+  /// - [callback] The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> updateUltraGroupMessageExpansion(
     String messageUId,
@@ -3913,9 +3913,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Delete specific key-value pairs from the message extension information of an ultra group.
-  /// @param messageUId The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// @param keys  The list of keys to be deleted from the message extension information, of type ArrayList.
-  /// @param callback Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
+  /// - [keys]  The list of keys to be deleted from the message extension information, of type ArrayList.
+  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
   /// ---
   Future<int> removeUltraGroupMessageExpansionForKeys(
     String messageUId,
@@ -3934,7 +3934,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Modify Log Level
-  /// @param level The log level
+  /// - [level] The log level
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeLogLevel(RCIMIWLogLevel level) async {
@@ -3957,6 +3957,10 @@ class RCIMIWEngine {
     return RCIMWrapperPlatform.instance.getDeltaTime();
   }
 
+  Future<RCIMIWAppSettings?> getAppSettings() async {
+    return RCIMWrapperPlatform.instance.getAppSettings();
+  }
+
   /// [ZH]
   /// ---
   /// 创建标签信息
@@ -3968,9 +3972,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Create Tag Information
-  /// @param tagId The unique identifier of the tag, string type, with a maximum length of 10 characters.
-  /// @param tagName The name of the tag, with a maximum length of 15 characters. Tag names can be duplicated.
-  /// @param callback Event callback.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// - [tagName] The name of the tag, with a maximum length of 15 characters. Tag names can be duplicated.
+  /// - [callback] Event callback.
   /// ---
   Future<int> createTag(String tagId, String tagName, {IRCIMIWCreateTagCallback? callback}) async {
     return RCIMWrapperPlatform.instance.createTag(tagId, tagName, callback: callback);
@@ -3986,8 +3990,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove Tag
-  /// @param tagId The unique identifier of the tag, string type, with a maximum length of 10 characters.
-  /// @param callback The event callback.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// - [callback] The event callback.
   /// ---
   Future<int> removeTag(String tagId, {IRCIMIWRemoveTagCallback? callback}) async {
     return RCIMWrapperPlatform.instance.removeTag(tagId, callback: callback);
@@ -4004,9 +4008,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Update Tag Information
-  /// @param tagId The unique identifier of the tag, string type, with a maximum length of 10 characters.
-  /// @param newName The new name of the tag, with a maximum length of 15 characters. Tag names can be duplicated.
-  /// @param callback The event callback.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// - [newName] The new name of the tag, with a maximum length of 15 characters. Tag names can be duplicated.
+  /// - [callback] The event callback.
   /// ---
   Future<int> updateTagNameById(String tagId, String newName, {IRCIMIWUpdateTagNameByIdCallback? callback}) async {
     return RCIMWrapperPlatform.instance.updateTagNameById(tagId, newName, callback: callback);
@@ -4021,7 +4025,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Retrieve the tag information created by the current user.
-  /// @param callback The event callback.
+  /// - [callback] The event callback.
   /// ---
   Future<int> getTags({IRCIMIWGetTagsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getTags(callback: callback);
@@ -4039,10 +4043,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Add a conversation to a specified tag
-  /// @param tagId The unique identifier of the tag, string type, with a maximum length of 10 characters.
-  /// @param type The type of the conversation
-  /// @param targetId The ID of the conversation
-  /// @param callback The event callback.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// - [type] The type of the conversation
+  /// - [targetId] The ID of the conversation
+  /// - [callback] The event callback.
   /// ---
   Future<int> addConversationToTag(
     String tagId,
@@ -4065,10 +4069,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove a conversation from a tag
-  /// @param tagId Unique identifier of the tag, string type, with a maximum length of 10 characters.
-  /// @param type Conversation type
-  /// @param targetId Conversation ID
-  /// @param callback Event callback.
+  /// - [tagId] Unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [callback] Event callback.
   /// ---
   Future<int> removeConversationFromTag(
     String tagId,
@@ -4091,10 +4095,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove one or more tags for a specified conversation
-  /// @param type Specifies the conversation type
-  /// @param targetId Indicates the conversation ID
-  /// @param tagIds Represents the collection of tags
-  /// @param callback Specifies the event callback.
+  /// - [type] Specifies the conversation type
+  /// - [targetId] Indicates the conversation ID
+  /// - [tagIds] Represents the collection of tags
+  /// - [callback] Specifies the event callback.
   /// ---
   Future<int> removeTagsFromConversation(
     RCIMIWConversationType type,
@@ -4116,9 +4120,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// ### Get All Tags Associated with a Specified Conversation
-  /// @param type Specifies the conversation type.
-  /// @param targetId Indicates the conversation ID.
-  /// @param callback Represents the event callback.
+  /// - [type] Specifies the conversation type.
+  /// - [targetId] Indicates the conversation ID.
+  /// - [callback] Represents the event callback.
   /// ---
   Future<int> getTagsFromConversation(
     RCIMIWConversationType type,
@@ -4140,10 +4144,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Retrieve the local conversation list under a specified tag, paginated by the timestamp of the last message in the conversation.
-  /// @param tagId The unique identifier of the tag, a string type with a maximum length of 10 characters.
-  /// @param timestamp The timestamp of the conversation. Retrieves the conversation list before this timestamp. For the first query, pass 0. For subsequent queries, use the operationTime property value from the returned RCConversation object as the startTime for the next query.
-  /// @param count The number of conversations to retrieve. If the number of conversations retrieved is less than the count value, it indicates that all data has been fetched.
-  /// @param callback The event callback.
+  /// - [tagId] The unique identifier of the tag, a string type with a maximum length of 10 characters.
+  /// - [timestamp] The timestamp of the conversation. Retrieves the conversation list before this timestamp. For the first query, pass 0. For subsequent queries, use the operationTime property value from the returned RCConversation object as the startTime for the next query.
+  /// - [count] The number of conversations to retrieve. If the number of conversations retrieved is less than the count value, it indicates that all data has been fetched.
+  /// - [callback] The event callback.
   /// ---
   Future<int> getConversationsFromTagByPage(
     String tagId,
@@ -4165,9 +4169,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get the unread message count for all conversations with the specified tag.
-  /// @param tagId The unique identifier of the tag. It is a string type and its length should not exceed 10 characters.
-  /// @param contain Indicates whether to include conversations with Do Not Disturb enabled.
-  /// @param callback The event callback.
+  /// - [tagId] The unique identifier of the tag. It is a string type and its length should not exceed 10 characters.
+  /// - [contain] Indicates whether to include conversations with Do Not Disturb enabled.
+  /// - [callback] The event callback.
   /// ---
   Future<int> getUnreadCountByTag(String tagId, bool contain, {IRCIMIWGetUnreadCountCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getUnreadCountByTag(tagId, contain, callback: callback);
@@ -4186,11 +4190,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set the specified conversation as top in all conversations with the specified tag. For example, pin the private chat with "Tom" to the top among all conversations tagged with "Training Class".
-  /// @param tagId The unique identifier of the tag, character type, with a maximum length of 10 characters.
-  /// @param type The type of conversation.
-  /// @param targetId The ID of the conversation.
-  /// @param top Whether to pin the conversation to the top.
-  /// @param callback The event callback.
+  /// - [tagId] The unique identifier of the tag, character type, with a maximum length of 10 characters.
+  /// - [type] The type of conversation.
+  /// - [targetId] The ID of the conversation.
+  /// - [top] Whether to pin the conversation to the top.
+  /// - [callback] The event callback.
   /// ---
   Future<int> changeConversationTopStatusInTag(
     String tagId,
@@ -4220,10 +4224,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Checks whether the specified conversation is pinned among all conversations with the same tag. Returns the pinned status upon successful retrieval.
-  /// @param tagId The unique identifier of the tag. String type, with a maximum length of 10 characters.
-  /// @param type The type of the conversation.
-  /// @param targetId The ID of the conversation.
-  /// @param callback The event callback.
+  /// - [tagId] The unique identifier of the tag. String type, with a maximum length of 10 characters.
+  /// - [type] The type of the conversation.
+  /// - [targetId] The ID of the conversation.
+  /// - [callback] The event callback.
   /// ---
   Future<int> getConversationTopStatusInTag(
     String tagId,
@@ -4244,8 +4248,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Clear the unread message count for all conversations carrying the specified tag.
-  /// @param tagId The unique identifier of the tag, string type, with a maximum length of 10 characters.
-  /// @param callback The event callback.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// - [callback] The event callback.
   /// ---
   Future<int> clearMessagesUnreadStatusByTag(
     String tagId, {
@@ -4265,9 +4269,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove all conversations under the specified tag and unbind these conversations from the tag. After successful deletion, the conversations will no longer carry the specified tag. When these conversations receive new messages, new conversations will be created.
-  /// @param tagId The unique identifier of the tag, character type, with a length not exceeding 10 characters.
-  /// @param deleteMessage Specifies whether to delete the messages.
-  /// @param callback Event callback.
+  /// - [tagId] The unique identifier of the tag, character type, with a length not exceeding 10 characters.
+  /// - [deleteMessage] Specifies whether to delete the messages.
+  /// - [callback] Event callback.
   /// ---
   Future<int> clearConversationsByTag(
     String tagId,
@@ -4303,8 +4307,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Update group info
-  /// @param groupInfo Group details (only modified parameters required)
-  /// @param callback Event callback
+  /// - [groupInfo] Group details (only modified parameters required)
+  /// - [callback] Event callback
   /// ---
   Future<int> updateGroupInfo(RCIMIWGroupInfo groupInfo, {IRCIMIWGroupInfoUpdatedCallback? callback}) async {
     return RCIMWrapperPlatform.instance.updateGroupInfo(groupInfo, callback: callback);
@@ -4335,10 +4339,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove members from group
-  /// @param groupId Group identifier
-  /// @param userIds Array of member IDs (supports batch operations, max 100 per call)
-  /// @param config Removal config (optional, uses default when empty)
-  /// @param callback Event callback
+  /// - [groupId] Group identifier
+  /// - [userIds] Array of member IDs (supports batch operations, max 100 per call)
+  /// - [config] Removal config (optional, uses default when empty)
+  /// - [callback] Event callback
   /// ---
   Future<int> kickGroupMembers(
     String groupId,
@@ -4359,8 +4363,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Join group actively
-  /// @param groupId Group ID
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [callback] Event callback
   /// ---
   Future<int> joinGroup(String groupId, {IRCIMIWJoinGroupCallback? callback}) async {
     return RCIMWrapperPlatform.instance.joinGroup(groupId, callback: callback);
@@ -4377,9 +4381,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Leave group actively
-  /// @param groupId group ID
-  /// @param config Exit config (optional, defaults apply if null)
-  /// @param callback Event callback
+  /// - [groupId] group ID
+  /// - [config] Exit config (optional, defaults apply if null)
+  /// - [callback] Event callback
   /// ---
   Future<int> quitGroup(String groupId, RCIMIWQuitGroupConfig config, {IRCIMIWQuitGroupCallback? callback}) async {
     return RCIMWrapperPlatform.instance.quitGroup(groupId, config, callback: callback);
@@ -4395,8 +4399,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Dismiss group
-  /// @param groupId Group ID
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [callback] Event callback
   /// ---
   Future<int> dismissGroup(String groupId, {IRCIMIWDismissGroupCallback? callback}) async {
     return RCIMWrapperPlatform.instance.dismissGroup(groupId, callback: callback);
@@ -4415,11 +4419,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Transfer group ownership
-  /// @param groupId Group ID
-  /// @param newOwnerId New owner ID
-  /// @param quitGroup Whether to leave group
-  /// @param config Transfer config (optional, defaults apply if null)
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [newOwnerId] New owner ID
+  /// - [quitGroup] Whether to leave group
+  /// - [config] Transfer config (optional, defaults apply if null)
+  /// - [callback] Event callback
   /// ---
   Future<int> transferGroupOwner(
     String groupId,
@@ -4442,9 +4446,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get group member info
-  /// @param groupId Group ID
-  /// @param userIds User ID list (max 100 per request)
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [userIds] User ID list (max 100 per request)
+  /// - [callback] Event callback
   /// ---
   Future<int> getGroupMembers(String groupId, List<String> userIds, {IRCIMIWGetGroupMembersCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getGroupMembers(groupId, userIds, callback: callback);
@@ -4462,10 +4466,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get group members with pagination
-  /// @param groupId group ID
-  /// @param role member role
-  /// @param option query options including page token (optional, returns first page if empty), page size (max 100), and ascending order (default desc)
-  /// @param callback event callback
+  /// - [groupId] group ID
+  /// - [role] member role
+  /// - [option] query options including page token (optional, returns first page if empty), page size (max 100), and ascending order (default desc)
+  /// - [callback] event callback
   /// ---
   Future<int> getGroupMembersByRole(
     String groupId,
@@ -4487,9 +4491,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get joined group info by role
-  /// @param role Group member role
-  /// @param option Query options including page token (optional, returns first page if empty), page size (max 100), and ascending order (default desc)
-  /// @param callback Event callback
+  /// - [role] Group member role
+  /// - [option] Query options including page token (optional, returns first page if empty), page size (max 100), and ascending order (default desc)
+  /// - [callback] Event callback
   /// ---
   Future<int> getJoinedGroupsByRole(
     RCIMIWGroupMemberRole role,
@@ -4509,8 +4513,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get joined group details
-  /// @param groupIds List of group IDs
-  /// @param callback Event callback
+  /// - [groupIds] List of group IDs
+  /// - [callback] Event callback
   /// ---
   Future<int> getJoinedGroups(List<String> groupIds, {IRCIMIWGetJoinedGroupsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getJoinedGroups(groupIds, callback: callback);
@@ -4527,9 +4531,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set group remark name
-  /// @param groupId Group ID
-  /// @param remark Group remark (max 64 chars). Pass empty string to remove remark
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [remark] Group remark (max 64 chars). Pass empty string to remove remark
+  /// - [callback] Event callback
   /// ---
   Future<int> setGroupRemark(String groupId, String remark, {IRCIMIWSetGroupRemarkCallback? callback}) async {
     return RCIMWrapperPlatform.instance.setGroupRemark(groupId, remark, callback: callback);
@@ -4548,11 +4552,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set group member profile
-  /// @param groupId Group ID
-  /// @param userId Required user ID (supports current logged-in user ID)
-  /// @param nickname Optional nickname (max 64 chars). Empty string removes nickname
-  /// @param extra Optional additional info (max 128 chars)
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [userId] Required user ID (supports current logged-in user ID)
+  /// - [nickname] Optional nickname (max 64 chars). Empty string removes nickname
+  /// - [extra] Optional additional info (max 128 chars)
+  /// - [callback] Event callback
   /// ---
   Future<int> setGroupMemberInfo(
     String groupId,
@@ -4575,9 +4579,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Search joined groups by name
-  /// @param groupName Group name (required, max 64 chars)
-  /// @param option Query options including page token (optional, first page by default), page size (max 200), and sort order (descending by default)
-  /// @param callback Event callback
+  /// - [groupName] Group name (required, max 64 chars)
+  /// - [option] Query options including page token (optional, first page by default), page size (max 200), and sort order (descending by default)
+  /// - [callback] Event callback
   /// ---
   Future<int> searchJoinedGroups(
     String groupName,
@@ -4600,10 +4604,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Search group members by nickname
-  /// @param groupId groupID
-  /// @param name Member nickname (required, max 64 chars)
-  /// @param option Search options including page token (optional, first page by default), page size (max 200), and sort order (descending by default)
-  /// @param callback Event callback
+  /// - [groupId] groupID
+  /// - [name] Member nickname (required, max 64 chars)
+  /// - [option] Search options including page token (optional, first page by default), page size (max 200), and sort order (descending by default)
+  /// - [callback] Event callback
   /// @note Searches nickname first, then username. Returns results if either field matches
   /// ---
   Future<int> searchGroupMembers(
@@ -4626,9 +4630,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Add group admin
-  /// @param groupId Required group ID
-  /// @param userIds Required user ID array. Must be group members. Max 10 admins per group (owner excluded)
-  /// @param callback Event callback
+  /// - [groupId] Required group ID
+  /// - [userIds] Required user ID array. Must be group members. Max 10 admins per group (owner excluded)
+  /// - [callback] Event callback
   /// ---
   Future<int> addGroupManagers(
     String groupId,
@@ -4649,9 +4653,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove group admin
-  /// @param groupId Required group ID
-  /// @param userIds Required user ID array (max 10 admins per operation)
-  /// @param callback Event callback
+  /// - [groupId] Required group ID
+  /// - [userIds] Required user ID array (max 10 admins per operation)
+  /// - [callback] Event callback
   /// ---
   Future<int> removeGroupManagers(
     String groupId,
@@ -4676,9 +4680,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Invite users to join a group
-  /// @param groupId Group ID
-  /// @param userIds User ID list (max 30 per request)
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [userIds] User ID list (max 30 per request)
+  /// - [callback] Event callback
   /// @note
   /// *About `processCode` in callback*
   /// - When group's `joinPermission` requires owner/admin approval, returns `RC_GROUP_JOIN_GROUP_NEED_MANAGER_ACCEPT` (25424) - pending approval
@@ -4703,9 +4707,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Accept group invitation
-  /// @param groupId Group ID
-  /// @param inviterId Inviter's ID
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [inviterId] Inviter's ID
+  /// - [callback] Event callback
   /// ---
   Future<int> acceptGroupInvite(String groupId, String inviterId, {IRCIMIWAcceptGroupInviteCallback? callback}) async {
     return RCIMWrapperPlatform.instance.acceptGroupInvite(groupId, inviterId, callback: callback);
@@ -4723,10 +4727,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// User declines group invitation
-  /// @param groupId Group ID
-  /// @param inviterId Inviter's ID
-  /// @param reason Optional decline reason (max 128 chars)
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [inviterId] Inviter's ID
+  /// - [reason] Optional decline reason (max 128 chars)
+  /// - [callback] Event callback
   /// ---
   Future<int> refuseGroupInvite(
     String groupId,
@@ -4754,10 +4758,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Approve user's request to join group
-  /// @param groupId Group ID
-  /// @param inviterId Inviter's user ID (optional). Required for invited joins, empty for direct requests.
-  /// @param applicantId Applicant's user ID
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [inviterId] Inviter's user ID (optional). Required for invited joins, empty for direct requests.
+  /// - [applicantId] Applicant's user ID
+  /// - [callback] Event callback
   /// @note
   /// *About `callback`'s `processCode`:*
   /// - When group's `inviteHandlePermission` requires invitee consent, `RC_GROUP_NEED_INVITEE_ACCEPT` (25427) means waiting for approval.
@@ -4786,11 +4790,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Reject user's group join request
-  /// @param groupId Group ID
-  /// @param inviterId Inviter's user ID (optional). Required for invited joins, empty for self-requested joins
-  /// @param applicantId Applicant's ID
-  /// @param reason Rejection reason (max 128 chars)
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [inviterId] Inviter's user ID (optional). Required for invited joins, empty for self-requested joins
+  /// - [applicantId] Applicant's ID
+  /// - [reason] Rejection reason (max 128 chars)
+  /// - [callback] Event callback
   /// ---
   Future<int> refuseGroupApplication(
     String groupId,
@@ -4820,10 +4824,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get group applications by page
-  /// @param option Query options including page token (optional, returns first page if empty), page size (max 200), and sort order (descending by default)
-  /// @param directions Array of `RCGroupApplicationDirection` for application directions
-  /// @param status Array of `RCGroupApplicationStatus` for status types
-  /// @param callback Event callback. Total count isn't supported
+  /// - [option] Query options including page token (optional, returns first page if empty), page size (max 200), and sort order (descending by default)
+  /// - [directions] Array of `RCGroupApplicationDirection` for application directions
+  /// - [status] Array of `RCGroupApplicationStatus` for status types
+  /// - [callback] Event callback. Total count isn't supported
   /// ---
   Future<int> getGroupApplications(
     RCIMIWPagingQueryOption option,
@@ -4845,9 +4849,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Follow group users
-  /// @param groupId Group ID
-  /// @param userIds User IDs to follow (max 100 per request)
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [userIds] User IDs to follow (max 100 per request)
+  /// - [callback] Event callback
   /// ---
   Future<int> addGroupFollows(String groupId, List<String> userIds, {IRCIMIWAddGroupFollowsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.addGroupFollows(groupId, userIds, callback: callback);
@@ -4864,9 +4868,9 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Unfollow groupUsers
-  /// @param groupId Group ID
-  /// @param userIds List of user IDs (max 100 per request)
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [userIds] List of user IDs (max 100 per request)
+  /// - [callback] Event callback
   /// ---
   Future<int> removeGroupFollows(
     String groupId,
@@ -4886,8 +4890,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get groupUsers I follow
-  /// @param groupId Group ID
-  /// @param callback Event callback
+  /// - [groupId] Group ID
+  /// - [callback] Event callback
   /// ---
   Future<int> getGroupFollows(String groupId, {IRCIMIWGetGroupFollowsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getGroupFollows(groupId, callback: callback);
@@ -4907,8 +4911,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Batch translate messages
-  /// @param params Messages to translate
-  /// @param callback Event callback
+  /// - [params] Messages to translate
+  /// - [callback] Event callback
   /// ---
   Future<int> translateMessagesWithParams(
     RCIMIWTranslateMessagesParams params, {
@@ -4927,8 +4931,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Batch translate content
-  /// @param params Content to translate
-  /// @param callback Event callback
+  /// - [params] Content to translate
+  /// - [callback] Event callback
   /// ---
   Future<int> translateTextsWithParams(
     RCIMIWTranslateTextParams params, {
@@ -4949,8 +4953,8 @@ class RCIMIWEngine {
   /// ---
   /// Set translation language
   /// SDK won't validate string format
-  /// @param language Target language
-  /// @param callback Parameter validation callback
+  /// - [language] Target language
+  /// - [callback] Parameter validation callback
   /// ---
   Future<int> setTranslationLanguage(String language, {IRCIMIWTranslateResponseCallback? callback}) async {
     return RCIMWrapperPlatform.instance.setTranslationLanguage(language, callback: callback);
@@ -4965,7 +4969,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get target translation language
-  /// @param callback Event callback
+  /// - [callback] Event callback
   /// ---
   Future<int> getTranslationLanguage({IRCIMIWTranslateGetLanguageCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getTranslationLanguage(callback: callback);
@@ -4981,8 +4985,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Toggle auto-translation
-  /// @param isEnable Enable auto-translation
-  /// @param callback Parameter validation callback
+  /// - [isEnable] Enable auto-translation
+  /// - [callback] Parameter validation callback
   /// ---
   Future<int> setAutoTranslateEnable(bool isEnable, {IRCIMIWTranslateResponseCallback? callback}) async {
     return RCIMWrapperPlatform.instance.setAutoTranslateEnable(isEnable, callback: callback);
@@ -4997,7 +5001,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get auto-translation toggle status
-  /// @param callback Callback for parameter validation
+  /// - [callback] Callback for parameter validation
   /// ---
   Future<int> getAutoTranslateEnabled({IRCIMIWGetAutoTranslateEnabledCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getAutoTranslateEnabled(callback: callback);
@@ -5016,11 +5020,11 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set translation strategies in bulk
-  /// @param types List of conversation types
-  /// @param targetIds List of conversation IDs
-  /// @param channelIds List of channel IDs
-  /// @param strategy Translation strategy
-  /// @param callback Parameter validation callback result
+  /// - [types] List of conversation types
+  /// - [targetIds] List of conversation IDs
+  /// - [channelIds] List of channel IDs
+  /// - [strategy] Translation strategy
+  /// - [callback] Parameter validation callback result
   /// ---
   Future<int> batchSetConversationTranslateStrategy(
     List<RCIMIWConversationType> types,
@@ -5047,7 +5051,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Calculate MD5 hash of text
-  /// @param text Input text for hashing
+  /// - [text] Input text for hashing
   /// ---
   Future<String> calculateTextMD5(String text) async {
     return RCIMWrapperPlatform.instance.calculateTextMD5(text);
@@ -5063,8 +5067,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Set info access permissions
-  /// @param visibility Privacy settings
-  /// @param callback Event callback
+  /// - [visibility] Privacy settings
+  /// - [callback] Event callback
   /// ---
   Future<int> updateMyUserProfileVisibility(
     RCIMIWUserProfileVisibility visibility, {
@@ -5082,7 +5086,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get self-info access
-  /// @param callback Event callback
+  /// - [callback] Event callback
   /// ---
   Future<int> getMyUserProfileVisibility({IRCIMIWGetMyUserProfileVisibilityCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getMyUserProfileVisibility(callback: callback);
@@ -5098,8 +5102,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Update your profile info
-  /// @param profile User profile data
-  /// @param callback Event callback
+  /// - [profile] User profile data
+  /// - [callback] Event callback
   /// ---
   Future<int> updateMyUserProfile(RCIMIWUserProfile profile, {IRCIMIWUpdateMyUserProfileCallback? callback}) async {
     return RCIMWrapperPlatform.instance.updateMyUserProfile(profile, callback: callback);
@@ -5114,7 +5118,7 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get your profile info
-  /// @param callback Event callback
+  /// - [callback] Event callback
   /// ---
   Future<int> getMyUserProfile({IRCIMIWGetMyUserProfileCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getMyUserProfile(callback: callback);
@@ -5130,8 +5134,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get user info in batch
-  /// @param userIds List of user IDs
-  /// @param callback Event callback
+  /// - [userIds] List of user IDs
+  /// - [callback] Event callback
   /// ---
   Future<int> getUserProfiles(List<String> userIds, {IRCIMIWGetUserProfilesCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getUserProfiles(userIds, callback: callback);
@@ -5147,8 +5151,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Search by user app ID
-  /// @param uniqueId User app ID
-  /// @param callback Event callback, returns error code RC_USER_PROFILE_USER_NOT_EXIST (24366) if user not found
+  /// - [uniqueId] User app ID
+  /// - [callback] Event callback, returns error code RC_USER_PROFILE_USER_NOT_EXIST (24366) if user not found
   /// ---
   Future<int> searchUserProfileByUniqueId(
     String uniqueId, {
@@ -5167,8 +5171,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Subscribe to personal info change events
-  /// @param request Subscription request params
-  /// @param callback Event callback
+  /// - [request] Subscription request params
+  /// - [callback] Event callback
   /// ---
   Future<int> subscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
     return RCIMWrapperPlatform.instance.subscribeEvent(request, callback: callback);
@@ -5184,8 +5188,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Unsubscribe from personal info change events
-  /// @param request Unsubscription request params
-  /// @param callback Event callback
+  /// - [request] Unsubscription request params
+  /// - [callback] Event callback
   /// ---
   Future<int> unSubscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
     return RCIMWrapperPlatform.instance.unSubscribeEvent(request, callback: callback);
@@ -5201,8 +5205,8 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get subscribed personal info change events
-  /// @param request Query parameters
-  /// @param callback Event callback
+  /// - [request] Query parameters
+  /// - [callback] Event callback
   /// ---
   Future<int> querySubscribeEvent(
     RCIMIWSubscribeEventRequest request, {
@@ -5223,10 +5227,10 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get subscribed personal info change events by page
-  /// @param request Query params
-  /// @param pageSize Items per page
-  /// @param startIndex Start index
-  /// @param callback Event callback
+  /// - [request] Query params
+  /// - [pageSize] Items per page
+  /// - [startIndex] Start index
+  /// - [callback] Event callback
   /// ---
   Future<int> querySubscribeEventByPage(
     RCIMIWSubscribeEventRequest request,
@@ -5235,6 +5239,23 @@ class RCIMIWEngine {
     IRCIMIWQuerySubscribeEventCallback? callback,
   }) async {
     return RCIMWrapperPlatform.instance.querySubscribeEventByPage(request, pageSize, startIndex, callback: callback);
+  }
+
+  /// 请求将指定消息的语音转为文字
+  /// - [messageUId] 消息唯一 ID
+  /// - [callback] 事件回调
+  /// - [返回值] 调用状态码，0 表示发起成功
+  Future<int> requestSpeechToTextForMessage(String messageUId, {IRCIMIWOperationCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.requestSpeechToTextForMessage(messageUId, callback: callback);
+  }
+
+  /// 设置指定消息的语音转文字可见性
+  /// - [messageId] 消息本地 ID
+  /// - [visible] 是否可见
+  /// - [callback] 事件回调
+  /// - [返回值] 调用状态码，0 表示发起成功
+  Future<int> setMessageSpeechToTextVisible(int messageId, bool visible, {IRCIMIWOperationCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.setMessageSpeechToTextVisible(messageId, visible, callback: callback);
   }
 
   /// [ZH]
@@ -5541,6 +5562,12 @@ class RCIMIWEngine {
   /// - [info] List of RCUltraGroupTypingStatusInfo indicating users currently typing (nil indicates no users are currently typing)
   /// ---
   Function(List<RCIMIWUltraGroupTypingStatusInfo>? info)? onUltraGroupTypingStatusChanged;
+
+  /// 语音转文字完成回调
+  /// - [info] 语音转文字信息
+  /// - [messageUId] 消息唯一 ID
+  /// - [code] 错误码，0 代表成功
+  Function(RCIMIWSpeechToTextInfo? info, String? messageUId, int? code)? onSpeechToTextCompleted;
 
   /// [ZH]
   /// ---

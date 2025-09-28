@@ -35,9 +35,11 @@
 #import <RongIMWrapper/RCIMIWChatRoomMemberBanEvent.h>
 #import <RongIMWrapper/RCIMIWTranslateMessagesParams.h>
 #import <RongIMWrapper/RCIMIWTranslateTextParams.h>
+#import <RongIMWrapper/RCIMIWSpeechToTextInfo.h>
 #import <RongIMWrapper/RCIMIWUserProfile.h>
 #import <RongIMWrapper/RCIMIWSubscribeEvent.h>
 #import <RongIMWrapper/RCIMIWSubscribeEventRequest.h>
+#import <RongIMWrapper/RCIMIWAppSettings.h>
 
 
 @class RCIMIWEngineOptions;
@@ -2008,6 +2010,10 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
  */
 - (long long)getDeltaTime;
 
+/// 连接成功后，AppKey 对应的配置。
+/// - Since: 5.22.0
+- (nullable RCIMIWAppSettings *)getAppSettings;
+
 /*!
  设置包名和版本号，埋点使用
  
@@ -2429,6 +2435,28 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
 /// - Returns: MD5字符串，计算失败返回nil
 /// - Since: 5.24.0
 - (nullable NSString *)calculateTextMD5:(NSString *)text;
+
+#pragma mark - 语音转文字
+
+/// 请求将指定消息进行语音转文字
+/// - Parameters:
+///   - messageUId: 消息唯一 ID
+///   - successBlock: 成功回调
+///   - errorBlock: 失败回调
+- (NSInteger)requestSpeechToTextForMessage:(NSString *)messageUId
+                                   success:(nullable void (^)(void))successBlock
+                                     error:(nullable void (^)(NSInteger code))errorBlock;
+
+/// 设置消息的语音转文字可见性
+/// - Parameters:
+///   - messageId: 消息本地 ID
+///   - visible: 是否可见
+///   - successBlock: 成功回调
+///   - errorBlock: 失败回调
+- (NSInteger)setMessageSpeechToTextVisible:(NSInteger)messageId
+                                   visible:(BOOL)visible
+                                    success:(nullable void (^)(void))successBlock
+                                      error:(nullable void (^)(NSInteger code))errorBlock;
 
 ///// 创建本地会话
 ///// - Parameters:

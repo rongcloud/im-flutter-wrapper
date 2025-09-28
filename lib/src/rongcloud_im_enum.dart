@@ -298,6 +298,8 @@ enum RCIMIWVIVOPushType {
   system,
 }
 
+enum RCIMIWSpeechToTextStatus { notConverted, converting, success, failed }
+
 enum RCIMIWSentStatus {
   /// [ZH]
   /// ---

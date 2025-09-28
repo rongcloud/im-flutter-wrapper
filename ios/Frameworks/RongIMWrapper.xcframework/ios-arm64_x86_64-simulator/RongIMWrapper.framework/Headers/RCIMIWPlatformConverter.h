@@ -43,6 +43,8 @@
 @class RCIMIWSubscribeInfoEvent;
 @class RCIMIWSubscribeEventDetail;
 @class RCIMIWSubscribeEventRequest;
+@class RCIMIWSpeechToTextInfo;
+@class RCIMIWAppSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -163,6 +165,14 @@ NS_ASSUME_NONNULL_BEGIN
 // SubscribeEventRequest
 + (NSDictionary *)convertSubscribeEventRequestToDict:(RCIMIWSubscribeEventRequest *)subscribeEventRequest;
 + (RCIMIWSubscribeEventRequest *)convertSubscribeEventRequestFromDict:(NSDictionary *)dict;
+
+// SpeechToText
++ (NSDictionary *)convertSpeechToTextInfoToDict:(RCIMIWSpeechToTextInfo *)info;
++ (RCIMIWSpeechToTextInfo *)convertSpeechToTextInfoFromDict:(NSDictionary *)dict;
+
+// AppSettings
++ (NSDictionary *)convertAppSettingsToDict:(RCIMIWAppSettings *)settings;
++ (RCIMIWAppSettings *)convertAppSettingsFromDict:(NSDictionary *)dict;
 
 @end
 

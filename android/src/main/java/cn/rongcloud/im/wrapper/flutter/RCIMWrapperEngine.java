@@ -99,6 +99,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWJoinGroupCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWKickGroupMembersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWLeaveChatRoomCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWModifyUltraGroupMessageCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWOperationCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWQuerySubscribeEventCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWQuitGroupCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRecallMessageCallback;
@@ -209,6 +210,8 @@ import cn.rongcloud.im.wrapper.messages.RCIMIWTextMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWVoiceMessage;
 import cn.rongcloud.im.wrapper.options.RCIMIWEngineOptions;
 import cn.rongcloud.im.wrapper.platform.RCIMIWPlatformConverter;
+import cn.rongcloud.im.wrapper.settings.RCIMIWAppSettings;
+import cn.rongcloud.im.wrapper.speechtotext.RCIMIWSpeechToTextInfo;
 import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeEvent;
 import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeEventRequest;
 import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeInfoEvent;
@@ -864,6 +867,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         getDeltaTime(call, result);
         break;
 
+      case "engine:getAppSettings":
+        getAppSettings(call, result);
+        break;
+
       case "engine:createTag":
         createTag(call, result);
         break;
@@ -1110,6 +1117,14 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:querySubscribeEventByPage":
         querySubscribeEventByPage(call, result);
+        break;
+
+      case "engine:requestSpeechToTextForMessage":
+        requestSpeechToTextForMessage(call, result);
+        break;
+
+      case "engine:setMessageSpeechToTextVisible":
+        setMessageSpeechToTextVisible(call, result);
         break;
     }
   }
@@ -3579,6 +3594,15 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void getAppSettings(@NonNull MethodCall call, @NonNull Result result) {
+    RCIMIWAppSettings res = null;
+    if (engine != null) {
+
+      res = engine.getAppSettings();
+    }
+    RCIMWrapperMainThreadPoster.success(result, RCIMIWPlatformConverter.convertAppSettings(res));
+  }
+
   private void createTag(@NonNull MethodCall call, @NonNull Result result) {
     int code = -1;
     if (engine != null) {
@@ -4608,6 +4632,37 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void requestSpeechToTextForMessage(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String messageUId = (String) call.argument("messageUId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.requestSpeechToTextForMessage(messageUId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setMessageSpeechToTextVisible(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int messageId = ((Number) call.argument("messageId")).intValue();
+      Boolean visible = (Boolean) call.argument("visible");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.setMessageSpeechToTextVisible(messageId, visible, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   class RCIMIWListenerImpl extends RCIMIWListener {
 
     @Override
@@ -4997,6 +5052,23 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine:onUltraGroupTypingStatusChanged", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onSpeechToTextCompleted(RCIMIWSpeechToTextInfo info, String messageUId, int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("info", RCIMIWPlatformConverter.convertSpeechToTextInfo(info));
+      arguments.put("messageUId", messageUId);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onSpeechToTextCompleted", arguments);
             }
           });
     }
@@ -12526,6 +12598,44 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWQuerySubscribeEventCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWOperationCallbackImpl implements IRCIMIWOperationCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWOperationCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess() {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWOperationCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWOperationCallback_onError", arguments);
             }
           });
     }

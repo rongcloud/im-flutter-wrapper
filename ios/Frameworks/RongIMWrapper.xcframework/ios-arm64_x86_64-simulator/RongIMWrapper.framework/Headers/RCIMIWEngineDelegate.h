@@ -14,6 +14,7 @@
 #import <RongIMWrapper/RCIMIWTranslateStrategy.h>
 #import <RongIMWrapper/RCIMIWSubscribeEvent.h>
 #import <RongIMWrapper/RCIMIWSubscribeInfoEvent.h>
+#import <RongIMWrapper/RCIMIWSpeechToTextInfo.h>
 
 @class RCIMIWMessage;
 @class RCIMIWMediaMessage;
@@ -755,6 +756,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param subscribeEvents 订阅事件的列表。
 /// @since 5.8.1
 - (void)onSubscriptionChangedOnOtherDevices:(NSArray<RCIMIWSubscribeEvent *> *)subscribeEvents;
+
+#pragma mark - 语音转文字回调
+
+/// 语音转文字完成回调
+/// - Parameters:
+///   - info: 转写信息
+///   - messageUId: 消息唯一 ID
+///   - code: 结果码
+- (void)onSpeechToTextCompleted:(nullable RCIMIWSpeechToTextInfo *)info
+                     messageUId:(NSString *)messageUId
+                           code:(NSInteger)code;
 
 @end
 

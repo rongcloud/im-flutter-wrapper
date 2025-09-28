@@ -963,6 +963,13 @@ class IRCIMIWQuerySubscribeEventCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWOperationCallback {
+  IRCIMIWOperationCallback({required this.onSuccess, required this.onError});
+
+  Function() onSuccess;
+  Function(int? code) onError;
+}
+
 class RCIMIWConnectCallback {
   RCIMIWConnectCallback({this.onDatabaseOpened, required this.onConnected});
 

@@ -7612,6 +7612,28 @@ getDeltaTime() async {
 }
 
 /*
+//fun_getAppSettings_call
+RCIMIWAppSettings? ret = await engine?.getAppSettings();
+//fun_getAppSettings_call
+*/
+
+getAppSettings() async {
+  RCIMIWAppSettings? code = await IMEngineManager().engine?.getAppSettings();
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getAppSettings";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
 //fun_createTag_call
 IRCIMIWCreateTagCallback? callback = IRCIMIWCreateTagCallback(onTagCreated: (int? code) {
     //...
@@ -10935,6 +10957,147 @@ querySubscribeEventByPage(Map arg) async {
       "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "querySubscribeEventByPage";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_requestSpeechToTextForMessage_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.requestSpeechToTextForMessage(messageUId, callback:callback);
+//fun_requestSpeechToTextForMessage_call
+*/
+
+requestSpeechToTextForMessage(Map arg) async {
+  if (arg['messageUId'] == null) {
+    RCIWToast.showToast("messageUId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String messageUId = arg['messageUId'];
+  IRCIMIWOperationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWOperationCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "requestSpeechToTextForMessage-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "requestSpeechToTextForMessage-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.requestSpeechToTextForMessage(messageUId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "requestSpeechToTextForMessage";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_setMessageSpeechToTextVisible_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.setMessageSpeechToTextVisible(messageId, visible, callback:callback);
+//fun_setMessageSpeechToTextVisible_call
+*/
+
+setMessageSpeechToTextVisible(Map arg) async {
+  if (arg['messageId'] == null) {
+    RCIWToast.showToast("messageId 为空");
+    return;
+  }
+
+  if (arg['visible'] == null) {
+    RCIWToast.showToast("visible 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int messageId = int.parse(arg['messageId']);
+  int visibleInt = int.parse(arg['visible']);
+  bool visible = visibleInt == 0 ? false : true;
+  IRCIMIWOperationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWOperationCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setMessageSpeechToTextVisible-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setMessageSpeechToTextVisible-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.setMessageSpeechToTextVisible(messageId, visible, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "setMessageSpeechToTextVisible";
   resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 

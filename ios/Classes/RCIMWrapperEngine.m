@@ -350,6 +350,8 @@ static RCIMWrapperEngine *instance = nil;
     [self changeLogLevel:call result:result];
   } else if ([@"engine:getDeltaTime" isEqualToString:call.method]) {
     [self getDeltaTime:call result:result];
+  } else if ([@"engine:getAppSettings" isEqualToString:call.method]) {
+    [self getAppSettings:call result:result];
   } else if ([@"engine:createTag" isEqualToString:call.method]) {
     [self createTag:call result:result];
   } else if ([@"engine:removeTag" isEqualToString:call.method]) {
@@ -474,6 +476,10 @@ static RCIMWrapperEngine *instance = nil;
     [self querySubscribeEvent:call result:result];
   } else if ([@"engine:querySubscribeEventByPage" isEqualToString:call.method]) {
     [self querySubscribeEventByPage:call result:result];
+  } else if ([@"engine:requestSpeechToTextForMessage" isEqualToString:call.method]) {
+    [self requestSpeechToTextForMessage:call result:result];
+  } else if ([@"engine:setMessageSpeechToTextVisible" isEqualToString:call.method]) {
+    [self setMessageSpeechToTextVisible:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -4751,6 +4757,17 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)getAppSettings:(FlutterMethodCall *)call result:(FlutterResult)result {
+  RCIMIWAppSettings *res = nil;
+  if (self.engine != nil) {
+
+    res = [self.engine getAppSettings];
+  }
+  dispatch_to_main_queue(^{
+    result([RCIMIWPlatformConverter convertAppSettingsToDict:res]);
+  });
+}
+
 - (void)createTag:(FlutterMethodCall *)call result:(FlutterResult)result {
   NSInteger code = -1;
   if (self.engine != nil) {
@@ -6859,6 +6876,83 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)requestSpeechToTextForMessage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *messageUId = arguments[@"messageUId"];
+    void (^success)() = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine requestSpeechToTextForMessage:messageUId success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)setMessageSpeechToTextVisible:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSInteger messageId = [(NSNumber *)arguments[@"messageId"] intValue];
+    BOOL visible = [(NSNumber *)arguments[@"visible"] boolValue];
+    void (^success)() = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine setMessageSpeechToTextVisible:messageId visible:visible success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
 - (void)onMessageReceived:(RCIMIWMessage *)message left:(NSInteger)left offline:(BOOL)offline hasPackage:(BOOL)hasPackage {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];
@@ -7131,6 +7225,19 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onUltraGroupTypingStatusChanged" arguments:arguments.copy];
+  });
+}
+
+- (void)onSpeechToTextCompleted:(nullable RCIMIWSpeechToTextInfo *)info messageUId:(NSString *)messageUId code:(NSInteger)code {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:[RCIMIWPlatformConverter convertSpeechToTextInfoToDict:info] forKey:@"info"];
+  [arguments setValue:messageUId forKey:@"messageUId"];
+  [arguments setValue:@(code) forKey:@"code"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onSpeechToTextCompleted" arguments:arguments.copy];
   });
 }
 

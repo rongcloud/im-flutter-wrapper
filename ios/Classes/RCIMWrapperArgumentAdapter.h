@@ -77,6 +77,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertVIVOPushTypeToInteger:(RCIMIWVIVOPushType)VIVOPushType;
 
 
++ (RCIMIWSpeechToTextStatus)convertSpeechToTextStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertSpeechToTextStatusToInteger:(RCIMIWSpeechToTextStatus)SpeechToTextStatus;
+
+
 + (RCIMIWSentStatus)convertSentStatusFromInteger:(NSInteger)integer;
 + (NSInteger)convertSentStatusToInteger:(RCIMIWSentStatus)SentStatus;
 

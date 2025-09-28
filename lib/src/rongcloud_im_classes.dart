@@ -32,6 +32,20 @@ abstract class RCIMIWUserCustomMessage extends RCIMIWMessage {
   String messageObjectName();
 }
 
+class RCIMIWAppSettings {
+  bool? speechToTextEnable;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['speechToTextEnable'] = speechToTextEnable;
+    return json;
+  }
+
+  RCIMIWAppSettings.fromJson(Map<String, dynamic> json) {
+    speechToTextEnable = json['speechToTextEnable'];
+  }
+}
+
 class RCIMIWHarmonyPushOptions {
   /// [ZH]
   /// ---
@@ -1894,16 +1908,32 @@ class RCIMIWVoiceMessage extends RCIMIWMediaMessage {
   /// The duration of the voice message, in seconds.
   /// ---
   int? duration;
+  RCIMIWSpeechToTextInfo? speechToTextInfo;
+  int? numberOfChannels;
+  int? sampleRate;
+  String? format;
 
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = super.toJson();
     json['duration'] = duration;
+    json['speechToTextInfo'] = speechToTextInfo?.toJson();
+    json['numberOfChannels'] = numberOfChannels;
+    json['sampleRate'] = sampleRate;
+    json['format'] = format;
     return json;
   }
 
   RCIMIWVoiceMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     duration = json['duration'];
+    if (json['speechToTextInfo'] != null) {
+      speechToTextInfo = RCIMIWSpeechToTextInfo.fromJson(
+        (json['speechToTextInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
+    numberOfChannels = json['numberOfChannels'];
+    sampleRate = json['sampleRate'];
+    format = json['format'];
   }
 }
 
@@ -3217,6 +3247,28 @@ class RCIMIWGroupReadReceiptInfo {
     readReceiptMessage = json['readReceiptMessage'];
     hasRespond = json['hasRespond'];
     respondUserIds = json['respondUserIds'];
+  }
+}
+
+class RCIMIWSpeechToTextInfo {
+  RCIMIWSpeechToTextStatus? status;
+  String? text;
+  bool? visible;
+
+  RCIMIWSpeechToTextInfo.create({this.status, this.text, this.visible});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['status'] = status?.index;
+    json['text'] = text;
+    json['visible'] = visible;
+    return json;
+  }
+
+  RCIMIWSpeechToTextInfo.fromJson(Map<String, dynamic> json) {
+    status = json['status'] == null ? null : RCIMIWSpeechToTextStatus.values[json['status']];
+    text = json['text'];
+    visible = json['visible'];
   }
 }
 

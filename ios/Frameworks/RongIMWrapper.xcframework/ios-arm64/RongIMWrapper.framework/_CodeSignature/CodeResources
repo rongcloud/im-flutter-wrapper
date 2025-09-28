@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Headers/RCIMIWAppSettings.h</key>
+		<data>
+		Zues9J3vaNGrQk/AlsI4OEVA8LI=
+		</data>
 		<key>Headers/RCIMIWBlockedMessageInfo.h</key>
 		<data>
 		oFtw97CuFfdFacaQCYa0vlc7X8w=
@@ -54,11 +58,11 @@
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		TMi7kaPveOUMtFmUfiopHXLctDA=
+		hPGobPNwkgMFcFcYOD9FKNjj0Fc=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
-		UX5Kbkpy+lhZd6c9K98VxtgLg/8=
+		eMAUk9t3pOz+3IoOL43Um2bc/Lc=
 		</data>
 		<key>Headers/RCIMIWEngineOptions.h</key>
 		<data>
@@ -150,7 +154,7 @@
 		</data>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
 		<data>
-		0ZxuXcxvTqHYdIkNRTREnU8rpS4=
+		tPk0KtWzVB4dIbFxfEi6T8Cb3C0=
 		</data>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
 		<data>
@@ -183,6 +187,14 @@
 		<key>Headers/RCIMIWSightMessage.h</key>
 		<data>
 		sHEoJgaWKxvOUA1AsuPuaXTQZOM=
+		</data>
+		<key>Headers/RCIMIWSpeechToTextInfo.h</key>
+		<data>
+		qb7r7F5NpVUuqCxjqGHp8GmhkW8=
+		</data>
+		<key>Headers/RCIMIWSpeechToTextStatus.h</key>
+		<data>
+		QND/MODH3ZSPzgYcGh/+RlFOIEU=
 		</data>
 		<key>Headers/RCIMIWSubscribeEvent.h</key>
 		<data>
@@ -282,11 +294,11 @@
 		</data>
 		<key>Headers/RCIMIWVoiceMessage.h</key>
 		<data>
-		qsVZR8GP7n2O5FqQcKtBfAChfbM=
+		jFOWh6gsbrWpaCqLzOCO+cNUx3o=
 		</data>
 		<key>Headers/RongIMWrapper.h</key>
 		<data>
-		o0alTLrUo+Fg1iITzf/zaK1ly70=
+		15RdBY0630Zwnh6HnUJpPWx3X/I=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -303,6 +315,17 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Headers/RCIMIWAppSettings.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Zues9J3vaNGrQk/AlsI4OEVA8LI=
+			</data>
+			<key>hash2</key>
+			<data>
+			9iBNqqgzVuRy6X/TTHX45laCnsO+eDKcK6ReonogzxA=
+			</data>
+		</dict>
 		<key>Headers/RCIMIWBlockedMessageInfo.h</key>
 		<dict>
 			<key>hash</key>
@@ -439,22 +462,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			TMi7kaPveOUMtFmUfiopHXLctDA=
+			hPGobPNwkgMFcFcYOD9FKNjj0Fc=
 			</data>
 			<key>hash2</key>
 			<data>
-			jpH+VfGdqGjI0XP1h0yAmFrhaZOFtO8RmwGgDKomQzs=
+			BXNQPsujtLCFe+PW8ZpwLtmZhIITiUKPTgWAz7F3xCY=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			UX5Kbkpy+lhZd6c9K98VxtgLg/8=
+			eMAUk9t3pOz+3IoOL43Um2bc/Lc=
 			</data>
 			<key>hash2</key>
 			<data>
-			kdZ+wP1BREd67rWpFIBMdOJlr8LJsqe2u6YbZ6h1xNw=
+			P58OLFAy005663X4NUmJ/R9OV0Oe5JnT+k15LY5VCvI=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineOptions.h</key>
@@ -703,11 +726,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0ZxuXcxvTqHYdIkNRTREnU8rpS4=
+			tPk0KtWzVB4dIbFxfEi6T8Cb3C0=
 			</data>
 			<key>hash2</key>
 			<data>
-			EQSxWfNbtS33+lHzY+Yw4hsCJ/OgaKItyvTdiM15d1k=
+			hWcOd3zF4dUS8+qEsmjwxZ6sC2AlxKYWKfMDZjHtqq8=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
@@ -796,6 +819,28 @@
 			<key>hash2</key>
 			<data>
 			4CmK0XgLeudMWN1ykqHcl7IdgL02aWI+jYabboUNE1M=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWSpeechToTextInfo.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			qb7r7F5NpVUuqCxjqGHp8GmhkW8=
+			</data>
+			<key>hash2</key>
+			<data>
+			YhZXfd5lDgN0gBOIdvVUMdHQtGLhdCQBTEzz4HdfwYs=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWSpeechToTextStatus.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			QND/MODH3ZSPzgYcGh/+RlFOIEU=
+			</data>
+			<key>hash2</key>
+			<data>
+			+IRX+o90VkWUeG+MvhJ+n2U8oezql2sJIW3Q3sQlIT8=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWSubscribeEvent.h</key>
@@ -1066,22 +1111,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qsVZR8GP7n2O5FqQcKtBfAChfbM=
+			jFOWh6gsbrWpaCqLzOCO+cNUx3o=
 			</data>
 			<key>hash2</key>
 			<data>
-			b6rItb69TZZsbwvHeE4AtW3UE1msdPiF/u+hCT1jJ9k=
+			uqEry61sccywsBpxK2YD7F8KnMVfHAyl+odOrye/6tM=
 			</data>
 		</dict>
 		<key>Headers/RongIMWrapper.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			o0alTLrUo+Fg1iITzf/zaK1ly70=
+			15RdBY0630Zwnh6HnUJpPWx3X/I=
 			</data>
 			<key>hash2</key>
 			<data>
-			5Ro8hY4w8sSGztLKgfEYBr4Eb2DJ+8SU7/FlJtambns=
+			Po5yIAozRjHZI1z4WPV15+pftsEm4WBlE3ZfHgRr9w8=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

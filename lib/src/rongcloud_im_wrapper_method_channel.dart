@@ -2339,6 +2339,13 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<RCIMIWAppSettings?> getAppSettings() async {
+    log("[RC:Flutter] engine:getAppSettings");
+    Map<dynamic, dynamic> result = await _channel.invokeMethod('engine:getAppSettings');
+    return RCIMIWAppSettings.fromJson(Map<String, dynamic>.from(result));
+  }
+
+  @override
   Future<int> createTag(String tagId, String tagName, {IRCIMIWCreateTagCallback? callback}) async {
     int rongcloudHandler = addCallback(callback);
 
@@ -3210,6 +3217,26 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     return result;
   }
 
+  @override
+  Future<int> requestSpeechToTextForMessage(String messageUId, {IRCIMIWOperationCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"messageUId": messageUId, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:requestSpeechToTextForMessage arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:requestSpeechToTextForMessage', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> setMessageSpeechToTextVisible(int messageId, bool visible, {IRCIMIWOperationCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"messageId": messageId, "visible": visible, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:setMessageSpeechToTextVisible arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:setMessageSpeechToTextVisible', arguments);
+    return result;
+  }
+
   Future<dynamic> _handler(MethodCall call) async {
     log("[RC:Flutter] " + call.method + " arguments:" + call.arguments.toString());
     switch (call.method) {
@@ -3470,6 +3497,20 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         engine?.onUltraGroupTypingStatusChanged?.call(info);
         log("[RC:Flutter] engine:onUltraGroupTypingStatusChanged invoke finished");
+        break;
+
+      case 'engine:onSpeechToTextCompleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWSpeechToTextInfo? info =
+            arguments['info'] != null
+                ? RCIMIWSpeechToTextInfo.fromJson(Map<String, dynamic>.from(arguments['info']))
+                : null;
+        String? messageUId = arguments['messageUId'];
+        int? code = arguments['code'];
+
+        engine?.onSpeechToTextCompleted?.call(info, messageUId, code);
+        log("[RC:Flutter] engine:onSpeechToTextCompleted invoke finished");
         break;
 
       case 'engine:onMessageBlocked':
@@ -7925,6 +7966,27 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWQuerySubscribeEventCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWOperationCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+
+        IRCIMIWOperationCallback? callback = takeCallback(rongcloudHandler);
+        Function()? method = callback?.onSuccess;
+        method?.call();
+        log("[RC:Flutter] engine_cb:IRCIMIWOperationCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWOperationCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWOperationCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWOperationCallback_onError invoke finished");
         break;
     }
   }

@@ -29,6 +29,7 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationQuietHoursLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWReceivedStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWSentStatus;
+import cn.rongcloud.im.wrapper.constants.RCIMIWSpeechToTextStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWTimeOrder;
 import cn.rongcloud.im.wrapper.constants.RCIMIWTranslateMode;
 import cn.rongcloud.im.wrapper.constants.RCIMIWTranslateResultType;
@@ -121,6 +122,10 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWVIVOPushType toRCIMIWVIVOPushType(@NonNull Integer type) {
     return RCIMIWVIVOPushType.values()[type];
+  }
+
+  static RCIMIWSpeechToTextStatus toRCIMIWSpeechToTextStatus(@NonNull Integer type) {
+    return RCIMIWSpeechToTextStatus.values()[type];
   }
 
   static RCIMIWSentStatus toRCIMIWSentStatus(@NonNull Integer type) {

@@ -329,6 +329,27 @@
   return index;
 }
 
++ (RCIMIWSpeechToTextStatus)convertSpeechToTextStatusFromInteger:(NSInteger)integer {
+  NSArray *SpeechToTextStatusArray = @[
+    @(RCIMIWSpeechToTextStatusNotConverted),
+    @(RCIMIWSpeechToTextStatusConverting),
+    @(RCIMIWSpeechToTextStatusSuccess),
+    @(RCIMIWSpeechToTextStatusFailed),
+  ];
+  RCIMIWSpeechToTextStatus SpeechToTextStatus = [[SpeechToTextStatusArray objectAtIndex:integer] integerValue];
+  return SpeechToTextStatus;
+}
++ (NSInteger)convertSpeechToTextStatusToInteger:(RCIMIWSpeechToTextStatus)SpeechToTextStatus {
+  NSArray *SpeechToTextStatusArray = @[
+    @(RCIMIWSpeechToTextStatusNotConverted),
+    @(RCIMIWSpeechToTextStatusConverting),
+    @(RCIMIWSpeechToTextStatusSuccess),
+    @(RCIMIWSpeechToTextStatusFailed),
+  ];
+  NSInteger index = [SpeechToTextStatusArray indexOfObject:@(SpeechToTextStatus)];
+  return index;
+}
+
 + (RCIMIWSentStatus)convertSentStatusFromInteger:(NSInteger)integer {
   NSArray *SentStatusArray = @[
     @(RCIMIWSentStatusSending),

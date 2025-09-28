@@ -484,6 +484,27 @@ engine?.onUltraGroupTypingStatusChanged = (List<RCIMIWUltraGroupTypingStatusInfo
 //callback_onUltraGroupTypingStatusChanged_call
 */
 
+    engine?.onSpeechToTextCompleted = (RCIMIWSpeechToTextInfo? info, String? messageUId, int? code) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onSpeechToTextCompleted";
+      arg["timestamp"] = timeStr;
+      arg["info"] = formatJson(info?.toJson());
+      arg["messageUId"] = messageUId ?? "";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onSpeechToTextCompleted_call
+engine?.onSpeechToTextCompleted = (RCIMIWSpeechToTextInfo? info, String? messageUId, int? code) {
+    //...
+};
+//callback_onSpeechToTextCompleted_call
+*/
+
     engine?.onMessageBlocked = (RCIMIWBlockedMessageInfo? info) {
       DateTime now = DateTime.now();
       String timeStr =

@@ -1032,6 +1032,14 @@ const getDeltaTime = {
   "action": engine_fun.getDeltaTime,
 };
 
+const getAppSettings = {
+  "title": "getAppSettings",
+  "params": [
+    
+  ],
+  "action": engine_fun.getAppSettings,
+};
+
 const createTag = {
   "title": "createTag",
   "params": [
@@ -1502,6 +1510,22 @@ const querySubscribeEventByPage = {
     {"key": "request", "type": "String", "hint": "", "lable": "请输入request",},{"key": "pageSize", "type": "String", "hint": "", "lable": "请输入pageSize",},{"key": "startIndex", "type": "String", "hint": "", "lable": "请输入startIndex",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
   ],
   "action": engine_fun.querySubscribeEventByPage,
+};
+
+const requestSpeechToTextForMessage = {
+  "title": "requestSpeechToTextForMessage",
+  "params": [
+    {"key": "messageUId", "type": "String", "hint": "", "lable": "请输入messageUId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.requestSpeechToTextForMessage,
+};
+
+const setMessageSpeechToTextVisible = {
+  "title": "setMessageSpeechToTextVisible",
+  "params": [
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入messageId",},{"key": "visible", "type": "String", "hint": "", "lable": "请输入visible",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.setMessageSpeechToTextVisible,
 };
 
 */

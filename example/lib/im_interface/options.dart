@@ -9,8 +9,22 @@ import 'tag/tag.dart' as tag;
 import 'group/group.dart' as group;
 import 'translate/translate.dart' as translate;
 import 'userprofile/userprofile.dart' as userprofile;
+import 'speechtotext/speechtotext.dart' as speechtotext;
 
-const titleList = ["链接相关", "会话相关", "消息相关", "群组相关", "未读数相关", "聊天室相关", "超级群相关", "会话标签", "翻译相关", "用户信息托管", "其他配置"];
+const titleList = [
+  "链接相关",
+  "会话相关",
+  "消息相关",
+  "群组相关",
+  "未读数相关",
+  "聊天室相关",
+  "超级群相关",
+  "会话标签",
+  "翻译相关",
+  "用户信息托管",
+  "语音转文字",
+  "其他配置",
+];
 
 const subList = {
   "其他配置": [
@@ -200,6 +214,7 @@ const subList = {
     userprofile.querySubscribeEvent,
     userprofile.querySubscribeEventByPage,
   ],
+  "语音转文字": [speechtotext.requestSpeechToTextForMessage, speechtotext.setMessageSpeechToTextVisible],
   "临时接口": [],
 };
 
@@ -360,5 +375,7 @@ const cbList = [
   "unSubscribeEvent",
   "querySubscribeEvent",
   "querySubscribeEventByPage",
+  "requestSpeechToTextForMessage",
+  "setMessageSpeechToTextVisible",
 ];
 const cbParam = {"key": "use_cb", "type": "number", "hint": "0为不使用 1为使用,默认不填为使用", "lable": "请输入是否使用callback"};

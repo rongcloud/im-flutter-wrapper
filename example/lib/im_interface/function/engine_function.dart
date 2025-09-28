@@ -49,15 +49,15 @@ Future initEngine(Map arg) async {
       options.cloudControlServer = arg['cloudControlServer'];
     }
     if (arg['kickReconnectDevice'] != null) {
-      bool kickReconnectDevice = arg['kickReconnectDevice'] == 0 ? false : true;
+      bool kickReconnectDevice = arg['kickReconnectDevice'] == '0' ? false : true;
       options.kickReconnectDevice = kickReconnectDevice;
     }
     if (arg['enablePush'] != null) {
-      bool enablePush = arg['enablePush'] == 0 ? false : true;
+      bool enablePush = arg['enablePush'] == '0' ? false : true;
       options.enablePush = enablePush;
     }
     if (arg['enableIPC'] != null) {
-      bool enableIPC = arg['enableIPC'] == 0 ? false : true;
+      bool enableIPC = arg['enableIPC'] == '0' ? false : true;
       options.enableIPC = enableIPC;
     }
 
@@ -268,7 +268,7 @@ Future sendTextMessage(Map arg) async {
 
   if (arg['canIncludeExpansion'] != null) {
     textMessage.canIncludeExpansion =
-        arg['canIncludeExpansion'] == 0 ? false : true;
+        arg['canIncludeExpansion'] == '0' ? false : true;
   }
 
   RCIMIWUserInfo? userInfo;

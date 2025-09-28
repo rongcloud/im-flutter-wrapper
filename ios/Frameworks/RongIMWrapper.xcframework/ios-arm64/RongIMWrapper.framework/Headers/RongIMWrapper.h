@@ -20,6 +20,7 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 
 #import <RongIMWrapper/RCIMIWEngineOptions.h>
 #import <RongIMWrapper/RCIMIWMessagePushOptions.h>
+#import <RongIMWrapper/RCIMIWAppSettings.h>
 #import <RongIMWrapper/RCIMIWCompressOptions.h>
 
 #import <RongIMWrapper/RCIMIWMessage.h>
@@ -91,3 +92,5 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWChatRoomSyncEvent.h>
 #import <RongIMWrapper/RCIMIWChatRoomMemberBlockEvent.h>
 #import <RongIMWrapper/RCIMIWChatRoomMemberBanEvent.h>
+#import <RongIMWrapper/RCIMIWSpeechToTextStatus.h>
+#import <RongIMWrapper/RCIMIWSpeechToTextInfo.h>
