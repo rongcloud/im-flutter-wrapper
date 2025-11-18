@@ -49,7 +49,9 @@ Future initEngine(Map arg) async {
       options.cloudControlServer = arg['cloudControlServer'];
     }
     if (arg['kickReconnectDevice'] != null) {
-      bool kickReconnectDevice = arg['kickReconnectDevice'] == '0' ? false : true;
+      bool kickReconnectDevice = arg['kickReconnectDevice'] == '0'
+          ? false
+          : true;
       options.kickReconnectDevice = kickReconnectDevice;
     }
     if (arg['enablePush'] != null) {
@@ -267,8 +269,9 @@ Future sendTextMessage(Map arg) async {
   }
 
   if (arg['canIncludeExpansion'] != null) {
-    textMessage.canIncludeExpansion =
-        arg['canIncludeExpansion'] == '0' ? false : true;
+    textMessage.canIncludeExpansion = arg['canIncludeExpansion'] == '0'
+        ? false
+        : true;
   }
 
   RCIMIWUserInfo? userInfo;
@@ -316,8 +319,9 @@ Future sendImageMessage(Map arg) async {
       RCIMIWConversationType.values[int.parse(arg['type'])];
   String targetId = arg['targetId'];
   String channelId = arg['channelId'] ?? "";
-  bool original =
-      arg['original'] == null ? false : int.parse(arg['original']) == 1;
+  bool original = arg['original'] == null
+      ? false
+      : int.parse(arg['original']) == 1;
 
   BuildContext context = arg['context'];
   RCIWMediaUlits.showImagePicker(context, (XFile? file) async {
@@ -923,18 +927,16 @@ Future cancelSendingMediaMessage(Map arg) async {
   IRCIMIWCancelSendingMediaMessageCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWCancelSendingMediaMessageCallback(
-      onCancelSendingMediaMessageCalled: (
-        int? code,
-        RCIMIWMediaMessage? message,
-      ) {
-        Map<String, String> arg = {};
-        arg["listener"] =
-            "cancelSendingMediaMessage-onCancelSendingMediaMessageCalled";
-        arg["code"] = code.toString();
-        arg["message"] = formatJson(message?.toJson());
+      onCancelSendingMediaMessageCalled:
+          (int? code, RCIMIWMediaMessage? message) {
+            Map<String, String> arg = {};
+            arg["listener"] =
+                "cancelSendingMediaMessage-onCancelSendingMediaMessageCalled";
+            arg["code"] = code.toString();
+            arg["message"] = formatJson(message?.toJson());
 
-        bus.emit("rong_im_listener", arg);
-      },
+            bus.emit("rong_im_listener", arg);
+          },
     );
   }
   IMEngineManager().engine?.cancelSendingMediaMessage(
@@ -1773,40 +1775,39 @@ Future createGroup(Map arg) async {
     return;
   }
 
-  RCIMIWGroupJoinPermission? joinPermission =
-      arg['joinPermission'] != null
-          ? RCIMIWGroupJoinPermission.values[int.parse(arg['joinPermission'])]
-          : null;
+  RCIMIWGroupJoinPermission? joinPermission = arg['joinPermission'] != null
+      ? RCIMIWGroupJoinPermission.values[int.parse(arg['joinPermission'])]
+      : null;
   RCIMIWGroupOperationPermission? removeMemberPermission =
       arg['removeMemberPermission'] != null
-          ? RCIMIWGroupOperationPermission.values[int.parse(
-            arg['removeMemberPermission'],
-          )]
-          : null;
+      ? RCIMIWGroupOperationPermission.values[int.parse(
+          arg['removeMemberPermission'],
+        )]
+      : null;
   RCIMIWGroupOperationPermission? invitePermission =
       arg['invitePermission'] != null
-          ? RCIMIWGroupOperationPermission.values[int.parse(
-            arg['invitePermission'],
-          )]
-          : null;
+      ? RCIMIWGroupOperationPermission.values[int.parse(
+          arg['invitePermission'],
+        )]
+      : null;
   RCIMIWGroupInviteHandlePermission? inviteHandlePermission =
       arg['inviteHandlePermission'] != null
-          ? RCIMIWGroupInviteHandlePermission.values[int.parse(
-            arg['inviteHandlePermission'],
-          )]
-          : null;
+      ? RCIMIWGroupInviteHandlePermission.values[int.parse(
+          arg['inviteHandlePermission'],
+        )]
+      : null;
   RCIMIWGroupOperationPermission? groupInfoEditPermission =
       arg['groupInfoEditPermission'] != null
-          ? RCIMIWGroupOperationPermission.values[int.parse(
-            arg['groupInfoEditPermission'],
-          )]
-          : null;
+      ? RCIMIWGroupOperationPermission.values[int.parse(
+          arg['groupInfoEditPermission'],
+        )]
+      : null;
   RCIMIWGroupMemberInfoEditPermission? memberInfoEditPermission =
       arg['memberInfoEditPermission'] != null
-          ? RCIMIWGroupMemberInfoEditPermission.values[int.parse(
-            arg['memberInfoEditPermission'],
-          )]
-          : null;
+      ? RCIMIWGroupMemberInfoEditPermission.values[int.parse(
+          arg['memberInfoEditPermission'],
+        )]
+      : null;
 
   RCIMIWGroupInfo groupInfo = RCIMIWGroupInfo.create(
     groupId: groupId,
@@ -1896,40 +1897,39 @@ Future updateGroupInfo(Map arg) async {
     return;
   }
 
-  RCIMIWGroupJoinPermission? joinPermission =
-      arg['joinPermission'] != null
-          ? RCIMIWGroupJoinPermission.values[int.parse(arg['joinPermission'])]
-          : null;
+  RCIMIWGroupJoinPermission? joinPermission = arg['joinPermission'] != null
+      ? RCIMIWGroupJoinPermission.values[int.parse(arg['joinPermission'])]
+      : null;
   RCIMIWGroupOperationPermission? removeMemberPermission =
       arg['removeMemberPermission'] != null
-          ? RCIMIWGroupOperationPermission.values[int.parse(
-            arg['removeMemberPermission'],
-          )]
-          : null;
+      ? RCIMIWGroupOperationPermission.values[int.parse(
+          arg['removeMemberPermission'],
+        )]
+      : null;
   RCIMIWGroupOperationPermission? invitePermission =
       arg['invitePermission'] != null
-          ? RCIMIWGroupOperationPermission.values[int.parse(
-            arg['invitePermission'],
-          )]
-          : null;
+      ? RCIMIWGroupOperationPermission.values[int.parse(
+          arg['invitePermission'],
+        )]
+      : null;
   RCIMIWGroupInviteHandlePermission? inviteHandlePermission =
       arg['inviteHandlePermission'] != null
-          ? RCIMIWGroupInviteHandlePermission.values[int.parse(
-            arg['inviteHandlePermission'],
-          )]
-          : null;
+      ? RCIMIWGroupInviteHandlePermission.values[int.parse(
+          arg['inviteHandlePermission'],
+        )]
+      : null;
   RCIMIWGroupOperationPermission? groupInfoEditPermission =
       arg['groupInfoEditPermission'] != null
-          ? RCIMIWGroupOperationPermission.values[int.parse(
-            arg['groupInfoEditPermission'],
-          )]
-          : null;
+      ? RCIMIWGroupOperationPermission.values[int.parse(
+          arg['groupInfoEditPermission'],
+        )]
+      : null;
   RCIMIWGroupMemberInfoEditPermission? memberInfoEditPermission =
       arg['memberInfoEditPermission'] != null
-          ? RCIMIWGroupMemberInfoEditPermission.values[int.parse(
-            arg['memberInfoEditPermission'],
-          )]
-          : null;
+      ? RCIMIWGroupMemberInfoEditPermission.values[int.parse(
+          arg['memberInfoEditPermission'],
+        )]
+      : null;
 
   RCIMIWGroupInfo groupInfo = RCIMIWGroupInfo.create(
     groupId: groupId,
@@ -2632,10 +2632,9 @@ translateMessagesWithParams(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   bool force = (arg['force'] ?? "0") == "0" ? false : true;
-  RCIMIWTranslateMode mode =
-      (arg['mode'] ?? "0") == "0"
-          ? RCIMIWTranslateMode.mechanical
-          : RCIMIWTranslateMode.intelligent;
+  RCIMIWTranslateMode mode = (arg['mode'] ?? "0") == "0"
+      ? RCIMIWTranslateMode.mechanical
+      : RCIMIWTranslateMode.intelligent;
 
   // 解析参数并组装 RCIMIWTranslateMessagesParams 的 list
   List<String> messageUids = (arg['messageUid'] ?? '').toString().split(',');
@@ -2649,10 +2648,12 @@ translateMessagesWithParams(Map arg) async {
   List<RCIMIWTranslateMessageParam> paramList = [];
   for (int i = 0; i < messageUids.length; i++) {
     String messageUid = messageUids[i];
-    String? sourceLanguage =
-        sourceLanguages.length > i ? sourceLanguages[i] : null;
-    String? targetLanguage =
-        targetLanguages.length > i ? targetLanguages[i] : null;
+    String? sourceLanguage = sourceLanguages.length > i
+        ? sourceLanguages[i]
+        : null;
+    String? targetLanguage = targetLanguages.length > i
+        ? targetLanguages[i]
+        : null;
     if (messageUid.isNotEmpty) {
       paramList.add(
         RCIMIWTranslateMessageParam.create(
@@ -2718,10 +2719,9 @@ translateTextsWithParams(Map arg) async {
 
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWTranslateMode mode =
-      (arg['mode'] ?? "0") == "0"
-          ? RCIMIWTranslateMode.mechanical
-          : RCIMIWTranslateMode.intelligent;
+  RCIMIWTranslateMode mode = (arg['mode'] ?? "0") == "0"
+      ? RCIMIWTranslateMode.mechanical
+      : RCIMIWTranslateMode.intelligent;
 
   // 解析参数并组装 RCIMIWTranslateTextParams 的 list
   List<String> texts = (arg['text'] ?? '').toString().split(',');
@@ -2735,10 +2735,12 @@ translateTextsWithParams(Map arg) async {
   List<RCIMIWTranslateTextParam> paramList = [];
   for (int i = 0; i < texts.length; i++) {
     String text = texts[i];
-    String? sourceLanguage =
-        sourceLanguages.length > i ? sourceLanguages[i] : null;
-    String? targetLanguage =
-        targetLanguages.length > i ? targetLanguages[i] : null;
+    String? sourceLanguage = sourceLanguages.length > i
+        ? sourceLanguages[i]
+        : null;
+    String? targetLanguage = targetLanguages.length > i
+        ? targetLanguages[i]
+        : null;
     if (text.isNotEmpty) {
       paramList.add(
         RCIMIWTranslateTextParam.create(
@@ -2820,12 +2822,11 @@ batchSetConversationTranslateStrategy(Map arg) async {
 
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  List<RCIMIWConversationType> types =
-      (arg["types"] ?? "")
-          .split(",")
-          .map((e) => RCIMIWConversationType.values[int.parse(e)])
-          .toList()
-          .cast<RCIMIWConversationType>();
+  List<RCIMIWConversationType> types = (arg["types"] ?? "")
+      .split(",")
+      .map((e) => RCIMIWConversationType.values[int.parse(e)])
+      .toList()
+      .cast<RCIMIWConversationType>();
   List<String> targetIds = (arg["targetIds"] ?? "").split(",");
   List<String> channelIds = (arg["channelIds"] ?? "").split(",");
 
@@ -3228,6 +3229,414 @@ querySubscribeEventByPage(Map arg) async {
       "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "querySubscribeEventByPage";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+addFriend(Map arg) async {
+  if (arg['userId'] == null) {
+    RCIWToast.showToast("userId 为空");
+    return;
+  }
+
+  if (arg['friendType'] == null) {
+    RCIWToast.showToast("friendType 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String userId = arg['userId'];
+  int? friendTypeValue = int.tryParse(arg['friendType']);
+  if (friendTypeValue == null ||
+      friendTypeValue < 0 ||
+      friendTypeValue >= RCIMIWFriendType.values.length) {
+    RCIWToast.showToast("friendType 超出范围");
+    return;
+  }
+  RCIMIWFriendType friendType = RCIMIWFriendType.values[friendTypeValue];
+  String extra = arg['extra'] ?? "";
+  IRCIMIWAddFriendCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWAddFriendCallback(
+      onSuccess: (int? processCode) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "addFriend-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["processCode"] = processCode.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "addFriend-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.addFriend(
+    userId,
+    friendType,
+    extra,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "addFriend";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+setFriendInfo(Map arg) async {
+  if (arg['userId'] == null) {
+    RCIWToast.showToast("userId 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String userId = arg['userId'];
+  String name = "";
+  String portrait = "";
+  String remark = arg['remark'] ?? "";
+  String extFields = arg['extFields'] ?? "";
+
+  // 将 JSON 字符串解析为 Map
+  Map<String, dynamic> extFieldsMap = {};
+  try {
+    extFieldsMap = jsonDecode(extFields);
+  } catch (e) {
+    extFieldsMap = {};
+  }
+
+  RCIMIWFriendInfo friendInfo = RCIMIWFriendInfo.create(
+    userId: userId,
+    name: name,
+    portrait: portrait,
+    remark: remark,
+    extFields: extFieldsMap,
+  );
+  IRCIMIWSetFriendInfoCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSetFriendInfoCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setFriendInfo-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code, List<String>? errorKeys) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setFriendInfo-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+        arg["errorKeys"] = errorKeys.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.setFriendInfo(
+    friendInfo,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "setFriendInfo";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+getFriends(Map arg) async {
+  if (arg['friendType'] == null) {
+    RCIWToast.showToast("friendType 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int? friendTypeValue = int.tryParse(arg['friendType']);
+  if (friendTypeValue == null ||
+      friendTypeValue < 0 ||
+      friendTypeValue >= RCIMIWFriendType.values.length) {
+    RCIWToast.showToast("friendType 超出范围");
+    return;
+  }
+  RCIMIWFriendType friendType = RCIMIWFriendType.values[friendTypeValue];
+
+  IRCIMIWGetFriendsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetFriendsCallback(
+      onSuccess: (List<RCIMIWFriendInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriends-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriends-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getFriends(
+    friendType,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getFriends";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+getFriendApplications(Map arg) async {
+  if (arg['applicationTypes'] == null) {
+    RCIWToast.showToast("applicationTypes 为空");
+    return;
+  }
+
+  if (arg['status'] == null) {
+    RCIWToast.showToast("status 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List<String> applicationTypesInput =
+      (arg["applicationTypes"] as String).split(",");
+  List<RCIMIWFriendApplicationType> applicationTypes = [];
+  for (var element in applicationTypesInput) {
+    String trimmed = element.trim();
+    if (trimmed.isEmpty) {
+      continue;
+    }
+    int? value = int.tryParse(trimmed);
+    if (value == null ||
+        value < 0 ||
+        value >= RCIMIWFriendApplicationType.values.length) {
+      RCIWToast.showToast("applicationTypes 超出范围");
+      return;
+    }
+    applicationTypes.add(RCIMIWFriendApplicationType.values[value]);
+  }
+  if (applicationTypes.isEmpty) {
+    RCIWToast.showToast("applicationTypes 不能为空");
+    return;
+  }
+
+  List status = (arg["status"]).split(",");
+  List<RCIMIWFriendApplicationStatus> statusInt = [];
+  for (var element in status) {
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null ||
+        elementValue < 0 ||
+        elementValue >= RCIMIWFriendApplicationStatus.values.length) {
+      RCIWToast.showToast("status 超出范围");
+      return;
+    }
+    statusInt.add(RCIMIWFriendApplicationStatus.values[elementValue]);
+  }
+
+  String pageToken = arg['pageToken'] ?? "";
+  int count = int.tryParse(arg['count'] ?? "0") ?? 0;
+  bool order = (arg['order'] ?? "0") == "0" ? false : true;
+
+  RCIMIWPagingQueryOption queryOption = RCIMIWPagingQueryOption.create(
+    pageToken: pageToken,
+    count: count,
+    order: order,
+  );
+  IRCIMIWGetFriendApplicationsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetFriendApplicationsCallback(
+      onSuccess: (RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriendApplications-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = formatJson(t?.toJson());
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriendApplications-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getFriendApplications(
+    applicationTypes,
+    statusInt,
+    queryOption,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getFriendApplications";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+searchFriendsInfo(Map arg) async {
+  if (arg['keyword'] == null) {
+    RCIWToast.showToast("keyword 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String keyword = arg['keyword'];
+  IRCIMIWSearchFriendsInfoCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSearchFriendsInfoCallback(
+      onSuccess: (List<RCIMIWFriendInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "searchFriendsInfo-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "searchFriendsInfo-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.searchFriendsInfo(
+    keyword,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "searchFriendsInfo";
   resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 

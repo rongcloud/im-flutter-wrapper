@@ -34,15 +34,22 @@ abstract class RCIMIWUserCustomMessage extends RCIMIWMessage {
 
 class RCIMIWAppSettings {
   bool? speechToTextEnable;
+  int? messageModifiableMinutes;
+  RCIMIWGroupReadReceiptVersion? readReceiptVersion;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     json['speechToTextEnable'] = speechToTextEnable;
+    json['messageModifiableMinutes'] = messageModifiableMinutes;
+    json['readReceiptVersion'] = readReceiptVersion?.index;
     return json;
   }
 
   RCIMIWAppSettings.fromJson(Map<String, dynamic> json) {
     speechToTextEnable = json['speechToTextEnable'];
+    messageModifiableMinutes = json['messageModifiableMinutes'];
+    readReceiptVersion =
+        json['readReceiptVersion'] == null ? null : RCIMIWGroupReadReceiptVersion.values[json['readReceiptVersion']];
   }
 }
 
@@ -876,6 +883,265 @@ class RCIMIWEngineOptions {
     }
     enablePush = json['enablePush'];
     enableIPC = json['enableIPC'];
+  }
+}
+
+class RCIMIWFriendApplicationInfo {
+  /// [ZH]
+  /// ---
+  /// 申请发起者的用户 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Applicant user ID
+  /// ---
+  String? userId;
+
+  /// [ZH]
+  /// ---
+  /// 申请发起者的昵称
+  /// ---
+  /// [EN]
+  /// ---
+  /// Applicant display name
+  /// ---
+  String? name;
+
+  /// [ZH]
+  /// ---
+  /// 申请发起者的头像地址
+  /// ---
+  /// [EN]
+  /// ---
+  /// Applicant portrait URL
+  /// ---
+  String? portrait;
+
+  /// [ZH]
+  /// ---
+  /// 申请的类型（如我发出的申请、收到的申请）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Application type (such as sent or received)
+  /// ---
+  RCIMIWFriendApplicationType? applicationType;
+
+  /// [ZH]
+  /// ---
+  /// 申请当前所处的状态
+  /// ---
+  /// [EN]
+  /// ---
+  /// Application status
+  /// ---
+  RCIMIWFriendApplicationStatus? applicationStatus;
+
+  /// [ZH]
+  /// ---
+  /// 好友关系类型（单聊、群成员等）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend relation type (single, group member, etc.)
+  /// ---
+  RCIMIWFriendType? friendType;
+
+  /// [ZH]
+  /// ---
+  /// 申请或处理的时间戳（毫秒）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Operation timestamp in milliseconds
+  /// ---
+  int? operationTime;
+
+  /// [ZH]
+  /// ---
+  /// 申请附带的备注信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remark provided with the application
+  /// ---
+  String? remark;
+
+  RCIMIWFriendApplicationInfo.create({
+    this.userId,
+    this.name,
+    this.portrait,
+    this.applicationType,
+    this.applicationStatus,
+    this.friendType,
+    this.operationTime,
+    this.remark,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['name'] = name;
+    json['portrait'] = portrait;
+    json['applicationType'] = applicationType?.index;
+    json['applicationStatus'] = applicationStatus?.index;
+    json['friendType'] = friendType?.index;
+    json['operationTime'] = operationTime;
+    json['remark'] = remark;
+    return json;
+  }
+
+  RCIMIWFriendApplicationInfo.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    name = json['name'];
+    portrait = json['portrait'];
+    applicationType =
+        json['applicationType'] == null ? null : RCIMIWFriendApplicationType.values[json['applicationType']];
+    applicationStatus =
+        json['applicationStatus'] == null ? null : RCIMIWFriendApplicationStatus.values[json['applicationStatus']];
+    friendType = json['friendType'] == null ? null : RCIMIWFriendType.values[json['friendType']];
+    operationTime = json['operationTime'];
+    remark = json['remark'];
+  }
+}
+
+class RCIMIWFriendInfo {
+  /// [ZH]
+  /// ---
+  /// 好友的用户 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend user ID
+  /// ---
+  String? userId;
+
+  /// [ZH]
+  /// ---
+  /// 好友昵称
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend display name
+  /// ---
+  String? name;
+
+  /// [ZH]
+  /// ---
+  /// 好友头像地址
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend portrait URL
+  /// ---
+  String? portrait;
+
+  /// [ZH]
+  /// ---
+  /// 好友备注
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend remark
+  /// ---
+  String? remark;
+
+  /// [ZH]
+  /// ---
+  /// 自定义扩展字段集合
+  /// ---
+  /// [EN]
+  /// ---
+  /// Custom extension fields
+  /// ---
+  Map? extFields;
+
+  /// [ZH]
+  /// ---
+  /// 成为好友的时间戳（毫秒）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Timestamp when friendship was established (ms)
+  /// ---
+  int? addTime;
+
+  /// [ZH]
+  /// ---
+  /// 好友类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend type
+  /// ---
+  RCIMIWFriendType? friendType;
+
+  RCIMIWFriendInfo.create({
+    this.userId,
+    this.name,
+    this.portrait,
+    this.remark,
+    this.extFields,
+    this.addTime,
+    this.friendType,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['name'] = name;
+    json['portrait'] = portrait;
+    json['remark'] = remark;
+    json['extFields'] = extFields;
+    json['addTime'] = addTime;
+    json['friendType'] = friendType?.index;
+    return json;
+  }
+
+  RCIMIWFriendInfo.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    name = json['name'];
+    portrait = json['portrait'];
+    remark = json['remark'];
+    extFields = json['extFields'];
+    addTime = json['addTime'];
+    friendType = json['friendType'] == null ? null : RCIMIWFriendType.values[json['friendType']];
+  }
+}
+
+class RCIMIWFriendRelationInfo {
+  /// [ZH]
+  /// ---
+  /// 目标用户 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Target user ID
+  /// ---
+  String? userId;
+
+  /// [ZH]
+  /// ---
+  /// 当前与目标用户的关系类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// Current relation with target user
+  /// ---
+  RCIMIWFriendRelationType? relation;
+
+  RCIMIWFriendRelationInfo.create({this.userId, this.relation});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['relation'] = relation?.index;
+    return json;
+  }
+
+  RCIMIWFriendRelationInfo.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    relation = json['relation'] == null ? null : RCIMIWFriendRelationType.values[json['relation']];
   }
 }
 
@@ -2424,6 +2690,8 @@ class RCIMIWPagingQueryResult<T> {
               return RCIMIWGroupInfo.fromJson(map) as T;
             } else if (T == RCIMIWGroupApplicationInfo) {
               return RCIMIWGroupApplicationInfo.fromJson(map) as T;
+            } else if (T == RCIMIWFriendApplicationInfo) {
+              return RCIMIWFriendApplicationInfo.fromJson(map) as T;
             } else {
               throw UnsupportedError('Unsupported type: $T');
             }

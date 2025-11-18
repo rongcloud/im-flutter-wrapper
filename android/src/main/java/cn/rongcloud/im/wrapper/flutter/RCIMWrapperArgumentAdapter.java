@@ -37,6 +37,11 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWTranslateStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWTranslateStrategy;
 import cn.rongcloud.im.wrapper.constants.RCIMIWUltraGroupTypingStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWVIVOPushType;
+import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendAllowType;
+import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendApplicationStatus;
+import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendApplicationType;
+import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendRelationType;
+import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendType;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationDirection;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationStatus;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationType;
@@ -48,6 +53,7 @@ import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperation;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationPermission;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationType;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupStatus;
+import cn.rongcloud.im.wrapper.settings.RCIMIWGroupReadReceiptVersion;
 import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWPlatform;
 import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeOperationType;
 import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeType;
@@ -56,6 +62,30 @@ import cn.rongcloud.im.wrapper.userprofile.RCIMIWUserProfileVisibility;
 
 public class RCIMWrapperArgumentAdapter {
   private RCIMWrapperArgumentAdapter() {}
+
+  static RCIMIWGroupReadReceiptVersion toRCIMIWGroupReadReceiptVersion(@NonNull Integer type) {
+    return RCIMIWGroupReadReceiptVersion.values()[type];
+  }
+
+  static RCIMIWFriendType toRCIMIWFriendType(@NonNull Integer type) {
+    return RCIMIWFriendType.values()[type];
+  }
+
+  static RCIMIWFriendApplicationType toRCIMIWFriendApplicationType(@NonNull Integer type) {
+    return RCIMIWFriendApplicationType.values()[type];
+  }
+
+  static RCIMIWFriendAllowType toRCIMIWFriendAllowType(@NonNull Integer type) {
+    return RCIMIWFriendAllowType.values()[type];
+  }
+
+  static RCIMIWFriendApplicationStatus toRCIMIWFriendApplicationStatus(@NonNull Integer type) {
+    return RCIMIWFriendApplicationStatus.values()[type];
+  }
+
+  static RCIMIWFriendRelationType toRCIMIWFriendRelationType(@NonNull Integer type) {
+    return RCIMIWFriendRelationType.values()[type];
+  }
 
   static RCIMIWGroupInviteHandlePermission toRCIMIWGroupInviteHandlePermission(
       @NonNull Integer type) {

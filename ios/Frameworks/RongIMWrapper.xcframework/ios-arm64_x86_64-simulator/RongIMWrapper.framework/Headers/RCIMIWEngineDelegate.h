@@ -676,6 +676,29 @@ NS_ASSUME_NONNULL_BEGIN
                                       targetId:(NSString *)targetId
                                          count:(NSInteger)count;
 
+#pragma mark - 好友事件
+
+- (void)onFriendAdded:(RCIMIWFriendType)friendType
+                userId:(NSString *)userId
+                  name:(NSString *)name
+           portraitUri:(NSString *)portraitUri
+        operationTime:(long long)operationTime;
+
+- (void)onFriendDeleted:(RCIMIWFriendType)friendType
+                userIds:(NSArray<NSString *> *)userIds
+          operationTime:(long long)operationTime;
+
+- (void)onFriendsClearedFromServer:(long long)operationTime;
+
+- (void)onFriendInfoChangedSync:(NSString *)userId remark:(NSString *)remark extProfile:(NSDictionary<NSString *, NSString *> *)extProfile operationTime:(long long)operationTime;
+
+- (void)onFriendApplicationStatusChanged:(NSString *)userId
+                         applicationType:(RCIMIWFriendApplicationType)applicationType
+                                  status:(RCIMIWFriendApplicationStatus)status
+                              friendType:(RCIMIWFriendType)friendType
+                           operationTime:(long long)operationTime
+                                   extra:(nullable NSString *)extra;
+
 #pragma mark Group Event
 
 - (void)onGroupOperation:(NSString *)groupId

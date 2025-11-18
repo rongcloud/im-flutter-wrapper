@@ -9,6 +9,124 @@
 
 @implementation RCIMWrapperArgumentAdapter
 
++ (RCIMIWGroupReadReceiptVersion)convertGroupReadReceiptVersionFromInteger:(NSInteger)integer {
+  NSArray *GroupReadReceiptVersionArray = @[
+    @(RCIMIWGroupReadReceiptVersionUnknown),
+    @(RCIMIWGroupReadReceiptVersion1),
+    @(RCIMIWGroupReadReceiptVersion2),
+    @(RCIMIWGroupReadReceiptVersion4),
+    @(RCIMIWGroupReadReceiptVersion5),
+  ];
+  RCIMIWGroupReadReceiptVersion GroupReadReceiptVersion = [[GroupReadReceiptVersionArray objectAtIndex:integer] integerValue];
+  return GroupReadReceiptVersion;
+}
++ (NSInteger)convertGroupReadReceiptVersionToInteger:(RCIMIWGroupReadReceiptVersion)GroupReadReceiptVersion {
+  NSArray *GroupReadReceiptVersionArray = @[
+    @(RCIMIWGroupReadReceiptVersionUnknown),
+    @(RCIMIWGroupReadReceiptVersion1),
+    @(RCIMIWGroupReadReceiptVersion2),
+    @(RCIMIWGroupReadReceiptVersion4),
+    @(RCIMIWGroupReadReceiptVersion5),
+  ];
+  NSInteger index = [GroupReadReceiptVersionArray indexOfObject:@(GroupReadReceiptVersion)];
+  return index;
+}
+
++ (RCIMIWFriendType)convertFriendTypeFromInteger:(NSInteger)integer {
+  NSArray *FriendTypeArray = @[
+    @(RCIMIWFriendTypeBoth),
+  ];
+  RCIMIWFriendType FriendType = [[FriendTypeArray objectAtIndex:integer] integerValue];
+  return FriendType;
+}
++ (NSInteger)convertFriendTypeToInteger:(RCIMIWFriendType)FriendType {
+  NSArray *FriendTypeArray = @[
+    @(RCIMIWFriendTypeBoth),
+  ];
+  NSInteger index = [FriendTypeArray indexOfObject:@(FriendType)];
+  return index;
+}
+
++ (RCIMIWFriendApplicationType)convertFriendApplicationTypeFromInteger:(NSInteger)integer {
+  NSArray *FriendApplicationTypeArray = @[
+    @(RCIMIWFriendApplicationTypeSent),
+    @(RCIMIWFriendApplicationTypeReceived),
+  ];
+  RCIMIWFriendApplicationType FriendApplicationType = [[FriendApplicationTypeArray objectAtIndex:integer] integerValue];
+  return FriendApplicationType;
+}
++ (NSInteger)convertFriendApplicationTypeToInteger:(RCIMIWFriendApplicationType)FriendApplicationType {
+  NSArray *FriendApplicationTypeArray = @[
+    @(RCIMIWFriendApplicationTypeSent),
+    @(RCIMIWFriendApplicationTypeReceived),
+  ];
+  NSInteger index = [FriendApplicationTypeArray indexOfObject:@(FriendApplicationType)];
+  return index;
+}
+
++ (RCIMIWFriendAllowType)convertFriendAllowTypeFromInteger:(NSInteger)integer {
+  NSArray *FriendAllowTypeArray = @[
+    @(RCIMIWFriendAllowTypeNotSet),
+    @(RCIMIWFriendAllowTypeFree),
+    @(RCIMIWFriendAllowTypeNeedVerify),
+    @(RCIMIWFriendAllowTypeNoOneAllowed),
+  ];
+  RCIMIWFriendAllowType FriendAllowType = [[FriendAllowTypeArray objectAtIndex:integer] integerValue];
+  return FriendAllowType;
+}
++ (NSInteger)convertFriendAllowTypeToInteger:(RCIMIWFriendAllowType)FriendAllowType {
+  NSArray *FriendAllowTypeArray = @[
+    @(RCIMIWFriendAllowTypeNotSet),
+    @(RCIMIWFriendAllowTypeFree),
+    @(RCIMIWFriendAllowTypeNeedVerify),
+    @(RCIMIWFriendAllowTypeNoOneAllowed),
+  ];
+  NSInteger index = [FriendAllowTypeArray indexOfObject:@(FriendAllowType)];
+  return index;
+}
+
++ (RCIMIWFriendApplicationStatus)convertFriendApplicationStatusFromInteger:(NSInteger)integer {
+  NSArray *FriendApplicationStatusArray = @[
+    @(RCIMIWFriendApplicationStatusUnHandled),
+    @(RCIMIWFriendApplicationStatusAccepted),
+    @(RCIMIWFriendApplicationStatusRefused),
+    @(RCIMIWFriendApplicationStatusExpired),
+  ];
+  RCIMIWFriendApplicationStatus FriendApplicationStatus = [[FriendApplicationStatusArray objectAtIndex:integer] integerValue];
+  return FriendApplicationStatus;
+}
++ (NSInteger)convertFriendApplicationStatusToInteger:(RCIMIWFriendApplicationStatus)FriendApplicationStatus {
+  NSArray *FriendApplicationStatusArray = @[
+    @(RCIMIWFriendApplicationStatusUnHandled),
+    @(RCIMIWFriendApplicationStatusAccepted),
+    @(RCIMIWFriendApplicationStatusRefused),
+    @(RCIMIWFriendApplicationStatusExpired),
+  ];
+  NSInteger index = [FriendApplicationStatusArray indexOfObject:@(FriendApplicationStatus)];
+  return index;
+}
+
++ (RCIMIWFriendRelationType)convertFriendRelationTypeFromInteger:(NSInteger)integer {
+  NSArray *FriendRelationTypeArray = @[
+    @(RCIMIWFriendRelationTypeNone),
+    @(RCIMIWFriendRelationTypeInMyFriendList),
+    @(RCIMIWFriendRelationTypeInOtherFriendList),
+    @(RCIMIWFriendRelationTypeBothWay),
+  ];
+  RCIMIWFriendRelationType FriendRelationType = [[FriendRelationTypeArray objectAtIndex:integer] integerValue];
+  return FriendRelationType;
+}
++ (NSInteger)convertFriendRelationTypeToInteger:(RCIMIWFriendRelationType)FriendRelationType {
+  NSArray *FriendRelationTypeArray = @[
+    @(RCIMIWFriendRelationTypeNone),
+    @(RCIMIWFriendRelationTypeInMyFriendList),
+    @(RCIMIWFriendRelationTypeInOtherFriendList),
+    @(RCIMIWFriendRelationTypeBothWay),
+  ];
+  NSInteger index = [FriendRelationTypeArray indexOfObject:@(FriendRelationType)];
+  return index;
+}
+
 + (RCIMIWGroupInviteHandlePermission)convertGroupInviteHandlePermissionFromInteger:(NSInteger)integer {
   NSArray *GroupInviteHandlePermissionArray = @[
     @(RCIMIWGroupInviteHandlePermissionFree),

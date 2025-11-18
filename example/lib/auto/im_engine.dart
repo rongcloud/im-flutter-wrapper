@@ -3294,6 +3294,128 @@ engine?.onSubscriptionChangedOnOtherDevices = (List<RCIMIWSubscribeEvent>? subsc
 };
 //callback_onSubscriptionChangedOnOtherDevices_call
 */
+
+    engine?.onFriendAdded = (
+      RCIMIWFriendType? friendType,
+      String? userId,
+      String? name,
+      String? portraitUri,
+      int? operationTime,
+    ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onFriendAdded";
+      arg["timestamp"] = timeStr;
+      arg["friendType"] = friendType.toString();
+      arg["userId"] = userId ?? "";
+      arg["name"] = name ?? "";
+      arg["portraitUri"] = portraitUri ?? "";
+      arg["operationTime"] = operationTime.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onFriendAdded_call
+engine?.onFriendAdded = (RCIMIWFriendType? friendType, String? userId, String? name, String? portraitUri, int? operationTime) {
+    //...
+};
+//callback_onFriendAdded_call
+*/
+
+    engine?.onFriendDeleted = (RCIMIWFriendType? friendType, List<String>? userIds, int? operationTime) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onFriendDeleted";
+      arg["timestamp"] = timeStr;
+      arg["friendType"] = friendType.toString();
+      arg["userIds"] = userIds.toString();
+      arg["operationTime"] = operationTime.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onFriendDeleted_call
+engine?.onFriendDeleted = (RCIMIWFriendType? friendType, List<String>? userIds, int? operationTime) {
+    //...
+};
+//callback_onFriendDeleted_call
+*/
+
+    engine?.onFriendsClearedFromServer = (int? operationTime) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onFriendsClearedFromServer";
+      arg["timestamp"] = timeStr;
+      arg["operationTime"] = operationTime.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onFriendsClearedFromServer_call
+engine?.onFriendsClearedFromServer = (int? operationTime) {
+    //...
+};
+//callback_onFriendsClearedFromServer_call
+*/
+
+    engine?.onFriendInfoChangedSync = (String? userId, String? remark, Map? extProfile, int? operationTime) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onFriendInfoChangedSync";
+      arg["timestamp"] = timeStr;
+      arg["userId"] = userId ?? "";
+      arg["remark"] = remark ?? "";
+      arg["extProfile"] = extProfile.toString();
+      arg["operationTime"] = operationTime.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onFriendInfoChangedSync_call
+engine?.onFriendInfoChangedSync = (String? userId, String? remark, Map? extProfile, int? operationTime) {
+    //...
+};
+//callback_onFriendInfoChangedSync_call
+*/
+
+    engine?.onFriendApplicationStatusChanged = (
+      String? userId,
+      RCIMIWFriendApplicationType? applicationType,
+      RCIMIWFriendApplicationStatus? status,
+      RCIMIWFriendType? friendType,
+      int? operationTime,
+      String? extra,
+    ) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onFriendApplicationStatusChanged";
+      arg["timestamp"] = timeStr;
+      arg["userId"] = userId ?? "";
+      arg["applicationType"] = applicationType.toString();
+      arg["status"] = status.toString();
+      arg["friendType"] = friendType.toString();
+      arg["operationTime"] = operationTime.toString();
+      arg["extra"] = extra ?? "";
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onFriendApplicationStatusChanged_call
+engine?.onFriendApplicationStatusChanged = (String? userId, RCIMIWFriendApplicationType? applicationType, RCIMIWFriendApplicationStatus? status, RCIMIWFriendType? friendType, int? operationTime, String? extra) {
+    //...
+};
+//callback_onFriendApplicationStatusChanged_call
+*/
   }
 
   String formatJson(jsonObject) {

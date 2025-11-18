@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/RCIMIWAppSettings.h</key>
 		<data>
-		Zues9J3vaNGrQk/AlsI4OEVA8LI=
+		7sxAJJJyyA8QVwmD/9MDwMgxrOI=
 		</data>
 		<key>Headers/RCIMIWBlockedMessageInfo.h</key>
 		<data>
@@ -54,15 +54,15 @@
 		</data>
 		<key>Headers/RCIMIWDefines.h</key>
 		<data>
-		nTDD/ICkEQIn6ZPFmPs6gtqVgEo=
+		hqDJo025Wg0azgBeAMcBRjBAkmg=
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		hPGobPNwkgMFcFcYOD9FKNjj0Fc=
+		zjT+4L0nyi2ngw/oi7lkt7/wYxs=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
-		eMAUk9t3pOz+3IoOL43Um2bc/Lc=
+		4S8KODOeu2Q572zCeQAlnwlTHdo=
 		</data>
 		<key>Headers/RCIMIWEngineOptions.h</key>
 		<data>
@@ -75,6 +75,18 @@
 		<key>Headers/RCIMIWFollowInfo.h</key>
 		<data>
 		6szMaRnwCVefZpi+huZ0UPL9yz4=
+		</data>
+		<key>Headers/RCIMIWFriendApplicationInfo.h</key>
+		<data>
+		EOmvKqRJtzbPP00M3EIJUorsTDk=
+		</data>
+		<key>Headers/RCIMIWFriendInfo.h</key>
+		<data>
+		OPBWJZya1z2OYr/jk3UDgWAnmWo=
+		</data>
+		<key>Headers/RCIMIWFriendRelationInfo.h</key>
+		<data>
+		ufgIjAz2MnBJglBuXxrntDlw5tk=
 		</data>
 		<key>Headers/RCIMIWGIFMessage.h</key>
 		<data>
@@ -154,7 +166,7 @@
 		</data>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
 		<data>
-		tPk0KtWzVB4dIbFxfEi6T8Cb3C0=
+		mfUjxLHVsbE49lehpEKxXQPyKQY=
 		</data>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
 		<data>
@@ -298,7 +310,7 @@
 		</data>
 		<key>Headers/RongIMWrapper.h</key>
 		<data>
-		15RdBY0630Zwnh6HnUJpPWx3X/I=
+		WeFW5bmrOEhsCPiW/IBhxt6GLdQ=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -319,11 +331,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Zues9J3vaNGrQk/AlsI4OEVA8LI=
+			7sxAJJJyyA8QVwmD/9MDwMgxrOI=
 			</data>
 			<key>hash2</key>
 			<data>
-			9iBNqqgzVuRy6X/TTHX45laCnsO+eDKcK6ReonogzxA=
+			O1HpJSEoFPCkT9g0QGJyh4p2dQjrSrNOnz9D769BR1Q=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWBlockedMessageInfo.h</key>
@@ -451,33 +463,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			nTDD/ICkEQIn6ZPFmPs6gtqVgEo=
+			hqDJo025Wg0azgBeAMcBRjBAkmg=
 			</data>
 			<key>hash2</key>
 			<data>
-			8vLKi55uNfmzO1DObJ7rs1xLlAJYCSBdnTuofMld4wc=
+			/WP0TrpUqyASKVnW4Uqx9joykXLRutama0nADkxq9Oc=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngine.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			hPGobPNwkgMFcFcYOD9FKNjj0Fc=
+			zjT+4L0nyi2ngw/oi7lkt7/wYxs=
 			</data>
 			<key>hash2</key>
 			<data>
-			BXNQPsujtLCFe+PW8ZpwLtmZhIITiUKPTgWAz7F3xCY=
+			ZrEWhKL3Gf9TVMK79957W9UyhI3tq1B4Zeb48z4X/fU=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			eMAUk9t3pOz+3IoOL43Um2bc/Lc=
+			4S8KODOeu2Q572zCeQAlnwlTHdo=
 			</data>
 			<key>hash2</key>
 			<data>
-			P58OLFAy005663X4NUmJ/R9OV0Oe5JnT+k15LY5VCvI=
+			VZQhxAcEEANaNg1N/ywl8SxAxa2HJReAi02OLR6otf0=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineOptions.h</key>
@@ -511,6 +523,39 @@
 			<key>hash2</key>
 			<data>
 			CYtHuNvslOtHqEv72ywyW2UUJpNJV0ikxiKlTu2J+GQ=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWFriendApplicationInfo.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			EOmvKqRJtzbPP00M3EIJUorsTDk=
+			</data>
+			<key>hash2</key>
+			<data>
+			+5AZfTLLIASFeiO8IaStqXwsd4UKBGRo/6i3H8OupzM=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWFriendInfo.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			OPBWJZya1z2OYr/jk3UDgWAnmWo=
+			</data>
+			<key>hash2</key>
+			<data>
+			WjDKfjXC56imrMcJNffe7zGU7zqqZ/YRW30T+EPY1WE=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWFriendRelationInfo.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ufgIjAz2MnBJglBuXxrntDlw5tk=
+			</data>
+			<key>hash2</key>
+			<data>
+			Tiu5nMWR4Xr4feHuhLhL26PS/oybEk2gfTiyfHE5ZWQ=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWGIFMessage.h</key>
@@ -726,11 +771,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tPk0KtWzVB4dIbFxfEi6T8Cb3C0=
+			mfUjxLHVsbE49lehpEKxXQPyKQY=
 			</data>
 			<key>hash2</key>
 			<data>
-			hWcOd3zF4dUS8+qEsmjwxZ6sC2AlxKYWKfMDZjHtqq8=
+			PQOsE1FWUedZa8OndjVs4kwMa/sSK+chFZ9rOkOjrMc=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
@@ -1122,11 +1167,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			15RdBY0630Zwnh6HnUJpPWx3X/I=
+			WeFW5bmrOEhsCPiW/IBhxt6GLdQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			Po5yIAozRjHZI1z4WPV15+pftsEm4WBlE3ZfHgRr9w8=
+			KQfrYfkUAoLonLnKAbqETDDZvQqHuZ3Kh7m4Jb+rwuM=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

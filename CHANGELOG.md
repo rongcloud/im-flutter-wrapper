@@ -1,3 +1,9 @@
+# 5.30.0
+* 更新了 Android IMLib SDK 依赖为 5.30.1。
+* 更新了 iOS IMLib SDK 依赖为 5.30.0。
+* 修复了 Google 商店 16KB 问题。
+* 增加了好友信息托管功能。
+
 # 5.24.6
 * 更新了 Android IMLib SDK 依赖为 5.24.5。
 * 增加了语音转文字功能。

@@ -24,7 +24,7 @@ apply plugin: 'com.android.library'
 
 android {
     namespace "cn.rongcloud.im.wrapper.flutter"
-    compileSdkVersion 35
+    compileSdkVersion 36
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

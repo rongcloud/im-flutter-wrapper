@@ -9,6 +9,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWAcceptGroupInviteCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddChatRoomEntriesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddChatRoomEntryCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddConversationToTagCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWAddFriendCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddGroupFollowsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddGroupManagersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddToBlacklistCallback;
@@ -27,6 +28,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWChangePushLanguageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangePushReceiveStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWCheckFriendsRelationCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearConversationsByTagCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearDraftMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWClearMessagesCallback;
@@ -59,6 +61,10 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetConversationsForAllChannelCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetDraftMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetFirstUnreadMessageCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetFriendAllowTypeCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetFriendApplicationsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetFriendsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetFriendsInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupApplicationsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupFollowsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupMembersByRoleCallback;
@@ -121,6 +127,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveTagsFromConversationCallbac
 import cn.rongcloud.im.wrapper.callback.IRCIMIWRemoveUltraGroupMessageExpansionForKeysCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSaveDraftMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchConversationsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchFriendsInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchGroupMembersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchJoinedGroupsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSearchMessagesByMessageTypesCallback;
@@ -134,6 +141,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWSendGroupReadReceiptResponseCallb
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendPrivateReadReceiptMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendUltraGroupTypingStatusCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSetFriendInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupMemberInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupRemarkCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSubscribeEventCallback;
@@ -179,6 +187,13 @@ import cn.rongcloud.im.wrapper.conversation.RCIMIWConversation;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWConversationTagInfo;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWSearchConversationResult;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWTagInfo;
+import cn.rongcloud.im.wrapper.friend.RCIMIWFriendApplicationInfo;
+import cn.rongcloud.im.wrapper.friend.RCIMIWFriendInfo;
+import cn.rongcloud.im.wrapper.friend.RCIMIWFriendRelationInfo;
+import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendAllowType;
+import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendApplicationStatus;
+import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendApplicationType;
+import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendType;
 import cn.rongcloud.im.wrapper.group.RCIMIWFollowInfo;
 import cn.rongcloud.im.wrapper.group.RCIMIWGroupApplicationInfo;
 import cn.rongcloud.im.wrapper.group.RCIMIWGroupInfo;
@@ -1125,6 +1140,54 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:setMessageSpeechToTextVisible":
         setMessageSpeechToTextVisible(call, result);
+        break;
+
+      case "engine:addFriend":
+        addFriend(call, result);
+        break;
+
+      case "engine:deleteFriends":
+        deleteFriends(call, result);
+        break;
+
+      case "engine:acceptFriendApplication":
+        acceptFriendApplication(call, result);
+        break;
+
+      case "engine:refuseFriendApplication":
+        refuseFriendApplication(call, result);
+        break;
+
+      case "engine:setFriendInfo":
+        setFriendInfo(call, result);
+        break;
+
+      case "engine:checkFriendsRelation":
+        checkFriendsRelation(call, result);
+        break;
+
+      case "engine:getFriends":
+        getFriends(call, result);
+        break;
+
+      case "engine:getFriendApplications":
+        getFriendApplications(call, result);
+        break;
+
+      case "engine:getFriendsInfo":
+        getFriendsInfo(call, result);
+        break;
+
+      case "engine:searchFriendsInfo":
+        searchFriendsInfo(call, result);
+        break;
+
+      case "engine:setFriendAllowType":
+        setFriendAllowType(call, result);
+        break;
+
+      case "engine:getFriendAllowType":
+        getFriendAllowType(call, result);
         break;
     }
   }
@@ -4663,6 +4726,212 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void addFriend(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String userId = (String) call.argument("userId");
+      RCIMIWFriendType friendType =
+          RCIMWrapperArgumentAdapter.toRCIMIWFriendType(call.argument("friendType"));
+      String extra = (String) call.argument("extra");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWAddFriendCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWAddFriendCallbackImpl(cb_handler);
+      }
+
+      code = engine.addFriend(userId, friendType, extra, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void deleteFriends(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<String> userIds = call.argument("userIds");
+      RCIMIWFriendType friendType =
+          RCIMWrapperArgumentAdapter.toRCIMIWFriendType(call.argument("friendType"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.deleteFriends(userIds, friendType, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void acceptFriendApplication(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String userId = (String) call.argument("userId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.acceptFriendApplication(userId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void refuseFriendApplication(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String userId = (String) call.argument("userId");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.refuseFriendApplication(userId, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setFriendInfo(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWFriendInfo friendInfo =
+          RCIMIWPlatformConverter.convertFriendInfo(
+              (HashMap<String, Object>) call.argument("friendInfo"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSetFriendInfoCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSetFriendInfoCallbackImpl(cb_handler);
+      }
+
+      code = engine.setFriendInfo(friendInfo, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void checkFriendsRelation(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<String> userIds = call.argument("userIds");
+      RCIMIWFriendType friendType =
+          RCIMWrapperArgumentAdapter.toRCIMIWFriendType(call.argument("friendType"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWCheckFriendsRelationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWCheckFriendsRelationCallbackImpl(cb_handler);
+      }
+
+      code = engine.checkFriendsRelation(userIds, friendType, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getFriends(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWFriendType friendType =
+          RCIMWrapperArgumentAdapter.toRCIMIWFriendType(call.argument("friendType"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetFriendsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetFriendsCallbackImpl(cb_handler);
+      }
+
+      code = engine.getFriends(friendType, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getFriendApplications(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<Number> applicationTypes = call.argument("applicationTypes");
+      List<Number> status = call.argument("status");
+      RCIMIWPagingQueryOption queryOption =
+          RCIMIWPlatformConverter.convertPagingQueryOption(
+              (HashMap<String, Object>) call.argument("queryOption"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetFriendApplicationsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetFriendApplicationsCallbackImpl(cb_handler);
+      }
+
+      List applicationTypes_str = new ArrayList();
+      for (Number element : applicationTypes) {
+        applicationTypes_str.add(
+            RCIMWrapperArgumentAdapter.toRCIMIWFriendApplicationType((Integer) element));
+      }
+
+      List status_str = new ArrayList();
+      for (Number element : status) {
+        status_str.add(
+            RCIMWrapperArgumentAdapter.toRCIMIWFriendApplicationStatus((Integer) element));
+      }
+
+      code = engine.getFriendApplications(applicationTypes_str, status_str, queryOption, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getFriendsInfo(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<String> userIds = call.argument("userIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetFriendsInfoCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetFriendsInfoCallbackImpl(cb_handler);
+      }
+
+      code = engine.getFriendsInfo(userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void searchFriendsInfo(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      String keyword = (String) call.argument("keyword");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSearchFriendsInfoCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSearchFriendsInfoCallbackImpl(cb_handler);
+      }
+
+      code = engine.searchFriendsInfo(keyword, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setFriendAllowType(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWFriendAllowType allowType =
+          RCIMWrapperArgumentAdapter.toRCIMIWFriendAllowType(call.argument("allowType"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.setFriendAllowType(allowType, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getFriendAllowType(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetFriendAllowTypeCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetFriendAllowTypeCallbackImpl(cb_handler);
+      }
+
+      code = engine.getFriendAllowType(callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   class RCIMIWListenerImpl extends RCIMIWListener {
 
     @Override
@@ -7386,6 +7655,108 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine:onSubscriptionChangedOnOtherDevices", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onFriendAdded(
+        RCIMIWFriendType friendType,
+        String userId,
+        String name,
+        String portraitUri,
+        long operationTime) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("friendType", friendType.ordinal());
+      arguments.put("userId", userId);
+      arguments.put("name", name);
+      arguments.put("portraitUri", portraitUri);
+      arguments.put("operationTime", operationTime);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onFriendAdded", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onFriendDeleted(
+        RCIMIWFriendType friendType, List<String> userIds, long operationTime) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("friendType", friendType.ordinal());
+      arguments.put("userIds", userIds);
+      arguments.put("operationTime", operationTime);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onFriendDeleted", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onFriendsClearedFromServer(long operationTime) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("operationTime", operationTime);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onFriendsClearedFromServer", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onFriendInfoChangedSync(
+        String userId, String remark, Map<String, String> extProfile, long operationTime) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("userId", userId);
+      arguments.put("remark", remark);
+      arguments.put("extProfile", extProfile);
+      arguments.put("operationTime", operationTime);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onFriendInfoChangedSync", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onFriendApplicationStatusChanged(
+        String userId,
+        RCIMIWFriendApplicationType applicationType,
+        RCIMIWFriendApplicationStatus status,
+        RCIMIWFriendType friendType,
+        long operationTime,
+        String extra) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("userId", userId);
+      arguments.put("applicationType", applicationType.ordinal());
+      arguments.put("status", status.ordinal());
+      arguments.put("friendType", friendType.ordinal());
+      arguments.put("operationTime", operationTime);
+      arguments.put("extra", extra);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onFriendApplicationStatusChanged", arguments);
             }
           });
     }
@@ -12636,6 +13007,364 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine_cb:IRCIMIWOperationCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWAddFriendCallbackImpl implements IRCIMIWAddFriendCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWAddFriendCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(int processCode) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("processCode", processCode);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWAddFriendCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWAddFriendCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSetFriendInfoCallbackImpl implements IRCIMIWSetFriendInfoCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSetFriendInfoCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess() {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWSetFriendInfoCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code, List<String> errorKeys) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+      arguments.put("errorKeys", errorKeys);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWSetFriendInfoCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWCheckFriendsRelationCallbackImpl implements IRCIMIWCheckFriendsRelationCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWCheckFriendsRelationCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWFriendRelationInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWFriendRelationInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertFriendRelationInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWCheckFriendsRelationCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWCheckFriendsRelationCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetFriendsCallbackImpl implements IRCIMIWGetFriendsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetFriendsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWFriendInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWFriendInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertFriendInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetFriendsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetFriendsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetFriendApplicationsCallbackImpl implements IRCIMIWGetFriendApplicationsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetFriendApplicationsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertPagingQueryResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetFriendApplicationsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetFriendApplicationsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetFriendsInfoCallbackImpl implements IRCIMIWGetFriendsInfoCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetFriendsInfoCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWFriendInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWFriendInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertFriendInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetFriendsInfoCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWGetFriendsInfoCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSearchFriendsInfoCallbackImpl implements IRCIMIWSearchFriendsInfoCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSearchFriendsInfoCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWFriendInfo> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWFriendInfo element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertFriendInfo(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSearchFriendsInfoCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWSearchFriendsInfoCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetFriendAllowTypeCallbackImpl implements IRCIMIWGetFriendAllowTypeCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetFriendAllowTypeCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWFriendAllowType t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t.ordinal());
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetFriendAllowTypeCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetFriendAllowTypeCallback_onError", arguments);
             }
           });
     }

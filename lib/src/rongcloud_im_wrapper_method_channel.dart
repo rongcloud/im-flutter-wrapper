@@ -3237,6 +3237,171 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     return result;
   }
 
+  @override
+  Future<int> addFriend(
+    String userId,
+    RCIMIWFriendType friendType,
+    String extra, {
+    IRCIMIWAddFriendCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "userId": userId,
+      "friendType": friendType.index,
+      "extra": extra,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:addFriend arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:addFriend', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> deleteFriends(
+    List<String> userIds,
+    RCIMIWFriendType friendType, {
+    IRCIMIWOperationCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "userIds": userIds,
+      "friendType": friendType.index,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:deleteFriends arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:deleteFriends', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> acceptFriendApplication(String userId, {IRCIMIWOperationCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"userId": userId, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:acceptFriendApplication arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:acceptFriendApplication', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> refuseFriendApplication(String userId, {IRCIMIWOperationCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"userId": userId, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:refuseFriendApplication arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:refuseFriendApplication', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> setFriendInfo(RCIMIWFriendInfo friendInfo, {IRCIMIWSetFriendInfoCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"friendInfo": friendInfo.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:setFriendInfo arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:setFriendInfo', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> checkFriendsRelation(
+    List<String> userIds,
+    RCIMIWFriendType friendType, {
+    IRCIMIWCheckFriendsRelationCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "userIds": userIds,
+      "friendType": friendType.index,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:checkFriendsRelation arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:checkFriendsRelation', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getFriends(RCIMIWFriendType friendType, {IRCIMIWGetFriendsCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"friendType": friendType.index, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getFriends arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getFriends', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getFriendApplications(
+    List<RCIMIWFriendApplicationType> applicationTypes,
+    List<RCIMIWFriendApplicationStatus> status,
+    RCIMIWPagingQueryOption queryOption, {
+    IRCIMIWGetFriendApplicationsCallback? callback,
+  }) async {
+    List applicationTypesStr = [];
+    for (var element in applicationTypes) {
+      applicationTypesStr.add(element.index);
+    }
+
+    List statusStr = [];
+    for (var element in status) {
+      statusStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "applicationTypes": applicationTypesStr,
+      "status": statusStr,
+      "queryOption": queryOption.toJson(),
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getFriendApplications arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getFriendApplications', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getFriendsInfo(List<String> userIds, {IRCIMIWGetFriendsInfoCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"userIds": userIds, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getFriendsInfo arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getFriendsInfo', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> searchFriendsInfo(String keyword, {IRCIMIWSearchFriendsInfoCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"keyword": keyword, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:searchFriendsInfo arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:searchFriendsInfo', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> setFriendAllowType(RCIMIWFriendAllowType allowType, {IRCIMIWOperationCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"allowType": allowType.index, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:setFriendAllowType arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:setFriendAllowType', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getFriendAllowType({IRCIMIWGetFriendAllowTypeCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getFriendAllowType arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getFriendAllowType', arguments);
+    return result;
+  }
+
   Future<dynamic> _handler(MethodCall call) async {
     log("[RC:Flutter] " + call.method + " arguments:" + call.arguments.toString());
     switch (call.method) {
@@ -3356,7 +3521,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
             arguments['message'] != null
                 ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
                 : null;
-        List<String>? keys = List.from(arguments['keys']);
+        List<String>? keys = arguments['keys'] != null ? List<String>.from(arguments['keys']) : null;
 
         engine?.onRemoteMessageExpansionForKeyRemoved?.call(message, keys);
         log("[RC:Flutter] engine:onRemoteMessageExpansionForKeyRemoved invoke finished");
@@ -4131,7 +4296,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         int? code = arguments['code'];
         String? messageUId = arguments['messageUId'];
-        List<String>? keys = List.from(arguments['keys']);
+        List<String>? keys = arguments['keys'] != null ? List<String>.from(arguments['keys']) : null;
 
         engine?.onMessageExpansionForKeysRemoved?.call(code, messageUId, keys);
         log("[RC:Flutter] engine:onMessageExpansionForKeysRemoved invoke finished");
@@ -4263,7 +4428,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         int? code = arguments['code'];
         String? targetId = arguments['targetId'];
-        List<String>? keys = List.from(arguments['keys']);
+        List<String>? keys = arguments['keys'] != null ? List<String>.from(arguments['keys']) : null;
 
         engine?.onChatRoomEntriesRemoved?.call(code, targetId, keys);
         log("[RC:Flutter] engine:onChatRoomEntriesRemoved invoke finished");
@@ -4305,7 +4470,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        List<String>? userIds = List.from(arguments['userIds']);
+        List<String>? userIds = arguments['userIds'] != null ? List<String>.from(arguments['userIds']) : null;
 
         engine?.onBlacklistLoaded?.call(code, userIds);
         log("[RC:Flutter] engine:onBlacklistLoaded invoke finished");
@@ -4828,7 +4993,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         int? code = arguments['code'];
         String? messageUId = arguments['messageUId'];
-        List<String>? keys = List.from(arguments['keys']);
+        List<String>? keys = arguments['keys'] != null ? List<String>.from(arguments['keys']) : null;
 
         engine?.onUltraGroupMessageExpansionForKeysRemoved?.call(code, messageUId, keys);
         log("[RC:Flutter] engine:onUltraGroupMessageExpansionForKeysRemoved invoke finished");
@@ -4931,7 +5096,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         String? groupId = arguments['groupId'];
         RCIMIWGroupOperationType? operationType =
             arguments['operationType'] == null ? null : RCIMIWGroupOperationType.values[arguments['operationType']];
-        List<String>? userIds = List.from(arguments['userIds']);
+        List<String>? userIds = arguments['userIds'] != null ? List<String>.from(arguments['userIds']) : null;
         int? operationTime = arguments['operationTime'];
 
         engine?.onGroupFollowsChangedSync?.call(groupId, operationType, userIds, operationTime);
@@ -5044,6 +5209,79 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         engine?.onSubscriptionChangedOnOtherDevices?.call(subscribeEvents);
         log("[RC:Flutter] engine:onSubscriptionChangedOnOtherDevices invoke finished");
+        break;
+
+      case 'engine:onFriendAdded':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWFriendType? friendType =
+            arguments['friendType'] == null ? null : RCIMIWFriendType.values[arguments['friendType']];
+        String? userId = arguments['userId'];
+        String? name = arguments['name'];
+        String? portraitUri = arguments['portraitUri'];
+        int? operationTime = arguments['operationTime'];
+
+        engine?.onFriendAdded?.call(friendType, userId, name, portraitUri, operationTime);
+        log("[RC:Flutter] engine:onFriendAdded invoke finished");
+        break;
+
+      case 'engine:onFriendDeleted':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWFriendType? friendType =
+            arguments['friendType'] == null ? null : RCIMIWFriendType.values[arguments['friendType']];
+        List<String>? userIds = arguments['userIds'] != null ? List<String>.from(arguments['userIds']) : null;
+        int? operationTime = arguments['operationTime'];
+
+        engine?.onFriendDeleted?.call(friendType, userIds, operationTime);
+        log("[RC:Flutter] engine:onFriendDeleted invoke finished");
+        break;
+
+      case 'engine:onFriendsClearedFromServer':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        int? operationTime = arguments['operationTime'];
+
+        engine?.onFriendsClearedFromServer?.call(operationTime);
+        log("[RC:Flutter] engine:onFriendsClearedFromServer invoke finished");
+        break;
+
+      case 'engine:onFriendInfoChangedSync':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        String? userId = arguments['userId'];
+        String? remark = arguments['remark'];
+        Map? extProfile = arguments['extProfile'];
+        int? operationTime = arguments['operationTime'];
+
+        engine?.onFriendInfoChangedSync?.call(userId, remark, extProfile, operationTime);
+        log("[RC:Flutter] engine:onFriendInfoChangedSync invoke finished");
+        break;
+
+      case 'engine:onFriendApplicationStatusChanged':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        String? userId = arguments['userId'];
+        RCIMIWFriendApplicationType? applicationType =
+            arguments['applicationType'] == null
+                ? null
+                : RCIMIWFriendApplicationType.values[arguments['applicationType']];
+        RCIMIWFriendApplicationStatus? status =
+            arguments['status'] == null ? null : RCIMIWFriendApplicationStatus.values[arguments['status']];
+        RCIMIWFriendType? friendType =
+            arguments['friendType'] == null ? null : RCIMIWFriendType.values[arguments['friendType']];
+        int? operationTime = arguments['operationTime'];
+        String? extra = arguments['extra'];
+
+        engine?.onFriendApplicationStatusChanged?.call(
+          userId,
+          applicationType,
+          status,
+          friendType,
+          operationTime,
+          extra,
+        );
+        log("[RC:Flutter] engine:onFriendApplicationStatusChanged invoke finished");
         break;
 
       case 'engine_cb:RCIMIWConnectCallback_onDatabaseOpened':
@@ -6399,7 +6637,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetBlacklistCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        List<String>? t = List.from(arguments['t']);
+        List<String>? t = arguments['t'] != null ? List<String>.from(arguments['t']) : null;
 
         IRCIMIWGetBlacklistCallback? callback = takeCallback(rongcloudHandler);
         Function(List<String>?)? method = callback?.onSuccess;
@@ -7830,7 +8068,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? errorCode = arguments['errorCode'];
-        List<String>? errorKeys = List.from(arguments['errorKeys']);
+        List<String>? errorKeys = arguments['errorKeys'] != null ? List<String>.from(arguments['errorKeys']) : null;
 
         IRCIMIWUpdateMyUserProfileCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, List<String>?)? method = callback?.onError;
@@ -7931,7 +8169,8 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        List<String>? failedUserIds = List.from(arguments['failedUserIds']);
+        List<String>? failedUserIds =
+            arguments['failedUserIds'] != null ? List<String>.from(arguments['failedUserIds']) : null;
 
         IRCIMIWSubscribeEventCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, List<String>?)? method = callback?.onError;
@@ -7987,6 +8226,209 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWOperationCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWAddFriendCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? processCode = arguments['processCode'];
+
+        IRCIMIWAddFriendCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onSuccess;
+        method?.call(processCode);
+        log("[RC:Flutter] engine_cb:IRCIMIWAddFriendCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWAddFriendCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWAddFriendCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWAddFriendCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSetFriendInfoCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+
+        IRCIMIWSetFriendInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function()? method = callback?.onSuccess;
+        method?.call();
+        log("[RC:Flutter] engine_cb:IRCIMIWSetFriendInfoCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSetFriendInfoCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+        List<String>? errorKeys = arguments['errorKeys'] != null ? List<String>.from(arguments['errorKeys']) : null;
+
+        IRCIMIWSetFriendInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?, List<String>?)? method = callback?.onError;
+        method?.call(code, errorKeys);
+        log("[RC:Flutter] engine_cb:IRCIMIWSetFriendInfoCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWCheckFriendsRelationCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWFriendRelationInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(
+            RCIMIWFriendRelationInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWFriendRelationInfo>? t = tStr;
+
+        IRCIMIWCheckFriendsRelationCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWFriendRelationInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWCheckFriendsRelationCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWCheckFriendsRelationCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWCheckFriendsRelationCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWCheckFriendsRelationCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetFriendsCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWFriendInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWFriendInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWFriendInfo>? t = tStr;
+
+        IRCIMIWGetFriendsCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWFriendInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetFriendsCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetFriendsCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetFriendsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetFriendsCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetFriendApplicationsCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>? t =
+            arguments['t'] != null
+                ? RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>.fromJson(
+                  Map<String, dynamic>.from(arguments['t']),
+                )
+                : null;
+
+        IRCIMIWGetFriendApplicationsCallback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetFriendApplicationsCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetFriendApplicationsCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetFriendApplicationsCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetFriendApplicationsCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetFriendsInfoCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWFriendInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWFriendInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWFriendInfo>? t = tStr;
+
+        IRCIMIWGetFriendsInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWFriendInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetFriendsInfoCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetFriendsInfoCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetFriendsInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetFriendsInfoCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchFriendsInfoCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWFriendInfo> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMIWFriendInfo.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWFriendInfo>? t = tStr;
+
+        IRCIMIWSearchFriendsInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWFriendInfo>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchFriendsInfoCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSearchFriendsInfoCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWSearchFriendsInfoCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWSearchFriendsInfoCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetFriendAllowTypeCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWFriendAllowType? t = arguments['t'] == null ? null : RCIMIWFriendAllowType.values[arguments['t']];
+
+        IRCIMIWGetFriendAllowTypeCallback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWFriendAllowType?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetFriendAllowTypeCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetFriendAllowTypeCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetFriendAllowTypeCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetFriendAllowTypeCallback_onError invoke finished");
         break;
     }
   }

@@ -5260,6 +5260,243 @@ class RCIMIWEngine {
 
   /// [ZH]
   /// ---
+  /// 添加好友
+  /// - [userId] 对方用户 ID
+  /// - [friendType] 好友关系方向
+  /// - [extra] 附加信息，长度不超过 128 个字符
+  /// - [callback] 操作回调，返回处理状态码
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Add friend
+  /// - [userId] Target user ID
+  /// - [friendType] Friend relation direction
+  /// - [extra] Extra information (up to 128 characters)
+  /// - [callback] Operation callback returning process code
+  /// ---
+  Future<int> addFriend(
+    String userId,
+    RCIMIWFriendType friendType,
+    String extra, {
+    IRCIMIWAddFriendCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.addFriend(userId, friendType, extra, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 解除好友
+  /// - [userIds] 待解除好友的用户 ID 列表
+  /// - [friendType] 好友关系方向
+  /// - [callback] 操作回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Delete friends
+  /// - [userIds] User IDs to delete
+  /// - [friendType] Friend relation direction
+  /// - [callback] Operation callback
+  /// ---
+  Future<int> deleteFriends(
+    List<String> userIds,
+    RCIMIWFriendType friendType, {
+    IRCIMIWOperationCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.deleteFriends(userIds, friendType, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 同意好友申请
+  /// - [userId] 申请者用户 ID
+  /// - [callback] 操作回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Accept friend application
+  /// - [userId] Applicant user ID
+  /// - [callback] Operation callback
+  /// ---
+  Future<int> acceptFriendApplication(String userId, {IRCIMIWOperationCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.acceptFriendApplication(userId, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 拒绝好友申请
+  /// - [userId] 申请者用户 ID
+  /// - [callback] 操作回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Refuse friend application
+  /// - [userId] Applicant user ID
+  /// - [callback] Operation callback
+  /// ---
+  Future<int> refuseFriendApplication(String userId, {IRCIMIWOperationCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.refuseFriendApplication(userId, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 设置好友信息
+  /// - [friendInfo] 好友信息实体
+  /// - [callback] 操作回调，返回失败键列表
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Set friend info
+  /// - [friendInfo] Friend info entity
+  /// - [callback] Operation callback returning failed keys
+  /// ---
+  Future<int> setFriendInfo(RCIMIWFriendInfo friendInfo, {IRCIMIWSetFriendInfoCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.setFriendInfo(friendInfo, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 检查好友关系
+  /// - [userIds] 用户 ID 列表
+  /// - [friendType] 好友关系方向
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Check friend relationship
+  /// - [userIds] User ID list
+  /// - [friendType] Friend relation direction
+  /// - [callback] Result callback
+  /// ---
+  Future<int> checkFriendsRelation(
+    List<String> userIds,
+    RCIMIWFriendType friendType, {
+    IRCIMIWCheckFriendsRelationCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.checkFriendsRelation(userIds, friendType, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 获取好友列表
+  /// - [friendType] 好友关系方向
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get friends
+  /// - [friendType] Friend relation direction
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getFriends(RCIMIWFriendType friendType, {IRCIMIWGetFriendsCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getFriends(friendType, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 分页获取好友申请列表
+  /// - [applicationTypes] 申请类型集合
+  /// - [status] 过滤的申请状态
+  /// - [queryOption] 分页查询配置
+  /// - [callback] 分页结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get friend applications with pagination
+  /// - [applicationTypes] Application types
+  /// - [status] Filtered application statuses
+  /// - [queryOption] Paging query option
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getFriendApplications(
+    List<RCIMIWFriendApplicationType> applicationTypes,
+    List<RCIMIWFriendApplicationStatus> status,
+    RCIMIWPagingQueryOption queryOption, {
+    IRCIMIWGetFriendApplicationsCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.getFriendApplications(
+      applicationTypes,
+      status,
+      queryOption,
+      callback: callback,
+    );
+  }
+
+  /// [ZH]
+  /// ---
+  /// 根据用户 ID 获取好友信息
+  /// - [userIds] 用户 ID 列表
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get friend info by user IDs
+  /// - [userIds] User ID list
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getFriendsInfo(List<String> userIds, {IRCIMIWGetFriendsInfoCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getFriendsInfo(userIds, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 搜索好友信息
+  /// - [keyword] 搜索关键字
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Search friend info
+  /// - [keyword] Search keyword
+  /// - [callback] Result callback
+  /// ---
+  Future<int> searchFriendsInfo(String keyword, {IRCIMIWSearchFriendsInfoCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.searchFriendsInfo(keyword, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 设置加好友权限
+  /// - [allowType] 加好友权限
+  /// - [callback] 操作回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Set friend allow type
+  /// - [allowType] Friend allow type
+  /// - [callback] Operation callback
+  /// ---
+  Future<int> setFriendAllowType(RCIMIWFriendAllowType allowType, {IRCIMIWOperationCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.setFriendAllowType(allowType, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 获取加好友权限
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get friend allow type
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getFriendAllowType({IRCIMIWGetFriendAllowTypeCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getFriendAllowType(callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
   /// 收到消息的监听
   /// - [message] 接收到的消息对象
   /// - [left]  当客户端连接成功后，服务端会将所有补偿消息以消息包的形式下发给客户端，最多每 200 条消息为一个消息包，即一个 Package, 客户端接受到消息包后，会逐条解析并通知应用。left 为当前消息包（Package）里还剩余的消息条数
@@ -7798,4 +8035,96 @@ class RCIMIWEngine {
   /// - [subscribeEvents] List of subscription events
   /// ---
   Function(List<RCIMIWSubscribeEvent>? subscribeEvents)? onSubscriptionChangedOnOtherDevices;
+
+  /// [ZH] 好友添加回调
+  /// ---
+  /// - [friendType] 好友类型
+  /// - [userId]   目标用户 ID
+  /// - [name]     好友昵称
+  /// - [portraitUri] 好友头像
+  /// - [operationTime] 操作时间
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend added callback
+  /// - [friendType] Friend type
+  /// - [userId] Target user ID
+  /// - [name] Friend nickname
+  /// - [portraitUri] Friend portrait URI
+  /// - [operationTime] Operation time
+  /// ---
+  Function(RCIMIWFriendType? friendType, String? userId, String? name, String? portraitUri, int? operationTime)?
+  onFriendAdded;
+
+  /// [ZH] 好友删除回调
+  /// ---
+  /// - [friendType] 好友类型
+  /// - [userIds]  被删除的用户列表
+  /// - [operationTime] 操作时间
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend deleted callback
+  /// - [friendType] Friend type
+  /// - [userIds] Deleted user IDs
+  /// - [operationTime] Operation time
+  /// ---
+  Function(RCIMIWFriendType? friendType, List<String>? userIds, int? operationTime)? onFriendDeleted;
+
+  /// [ZH] 好友全部清理回调事件
+  /// ---
+  /// - [operationTime] 操作时间
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend all cleared callback
+  /// - [operationTime] Operation time
+  /// ---
+  Function(int? operationTime)? onFriendsClearedFromServer;
+
+  /// [ZH] 好友信息变更多端回调事件
+  /// ---
+  /// - [userId] 好友的用户ID
+  /// - [remark] 好友备注名。
+  /// - [extProfile] 扩展信息。
+  /// - [operationTime] 操作时间
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend info changed callback
+  /// - [userId] Friend user ID
+  /// - [remark] Friend remark name
+  /// - [extProfile] Extension information
+  /// - [operationTime] Operation time
+  /// ---
+  Function(String? userId, String? remark, Map? extProfile, int? operationTime)? onFriendInfoChangedSync;
+
+  /// [ZH] 好友申请状态变更回调
+  /// ---
+  /// - [userId] 用户 ID
+  /// - [applicationType] 申请类型
+  /// - [status]    状态
+  /// - [friendType] 好友类型
+  /// - [operationTime] 操作时间
+  /// - [extra]     附加信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Friend application status changed callback
+  /// - [userId] User ID
+  /// - [applicationType] Application type
+  /// - [status] Application status
+  /// - [friendType] Friend type
+  /// - [operationTime] Operation time
+  /// - [extra] Extra information
+  /// ---
+  Function(
+    String? userId,
+    RCIMIWFriendApplicationType? applicationType,
+    RCIMIWFriendApplicationStatus? status,
+    RCIMIWFriendType? friendType,
+    int? operationTime,
+    String? extra,
+  )?
+  onFriendApplicationStatusChanged;
 }

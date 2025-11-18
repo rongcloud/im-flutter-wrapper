@@ -1528,4 +1528,100 @@ const setMessageSpeechToTextVisible = {
   "action": engine_fun.setMessageSpeechToTextVisible,
 };
 
+const addFriend = {
+  "title": "addFriend",
+  "params": [
+    {"key": "userId", "type": "String", "hint": "", "lable": "请输入userId",},{"key": "friendType", "type": "String", "hint": "", "lable": "请输入friendType",},{"key": "extra", "type": "String", "hint": "", "lable": "请输入extra",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.addFriend,
+};
+
+const deleteFriends = {
+  "title": "deleteFriends",
+  "params": [
+    {"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "friendType", "type": "String", "hint": "", "lable": "请输入friendType",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.deleteFriends,
+};
+
+const acceptFriendApplication = {
+  "title": "acceptFriendApplication",
+  "params": [
+    {"key": "userId", "type": "String", "hint": "", "lable": "请输入userId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.acceptFriendApplication,
+};
+
+const refuseFriendApplication = {
+  "title": "refuseFriendApplication",
+  "params": [
+    {"key": "userId", "type": "String", "hint": "", "lable": "请输入userId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.refuseFriendApplication,
+};
+
+const setFriendInfo = {
+  "title": "setFriendInfo",
+  "params": [
+    {"key": "friendInfo", "type": "String", "hint": "", "lable": "请输入friendInfo",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.setFriendInfo,
+};
+
+const checkFriendsRelation = {
+  "title": "checkFriendsRelation",
+  "params": [
+    {"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "friendType", "type": "String", "hint": "", "lable": "请输入friendType",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.checkFriendsRelation,
+};
+
+const getFriends = {
+  "title": "getFriends",
+  "params": [
+    {"key": "friendType", "type": "String", "hint": "", "lable": "请输入friendType",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getFriends,
+};
+
+const getFriendApplications = {
+  "title": "getFriendApplications",
+  "params": [
+    {"key": "applicationTypes", "type": "String", "hint": "", "lable": "请输入applicationTypes",},{"key": "status", "type": "String", "hint": "", "lable": "请输入status",},{"key": "queryOption", "type": "String", "hint": "", "lable": "请输入queryOption",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getFriendApplications,
+};
+
+const getFriendsInfo = {
+  "title": "getFriendsInfo",
+  "params": [
+    {"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getFriendsInfo,
+};
+
+const searchFriendsInfo = {
+  "title": "searchFriendsInfo",
+  "params": [
+    {"key": "keyword", "type": "String", "hint": "", "lable": "请输入keyword",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.searchFriendsInfo,
+};
+
+const setFriendAllowType = {
+  "title": "setFriendAllowType",
+  "params": [
+    {"key": "allowType", "type": "String", "hint": "", "lable": "请输入allowType",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.setFriendAllowType,
+};
+
+const getFriendAllowType = {
+  "title": "getFriendAllowType",
+  "params": [
+    {"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getFriendAllowType,
+};
+
 */

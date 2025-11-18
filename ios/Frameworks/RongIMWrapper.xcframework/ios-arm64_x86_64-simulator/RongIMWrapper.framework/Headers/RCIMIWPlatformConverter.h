@@ -45,6 +45,9 @@
 @class RCIMIWSubscribeEventRequest;
 @class RCIMIWSpeechToTextInfo;
 @class RCIMIWAppSettings;
+@class RCIMIWFriendInfo;
+@class RCIMIWFriendRelationInfo;
+@class RCIMIWFriendApplicationInfo;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -173,6 +176,14 @@ NS_ASSUME_NONNULL_BEGIN
 // AppSettings
 + (NSDictionary *)convertAppSettingsToDict:(RCIMIWAppSettings *)settings;
 + (RCIMIWAppSettings *)convertAppSettingsFromDict:(NSDictionary *)dict;
+
+// Friend
++ (NSDictionary *)convertFriendInfoToDict:(RCIMIWFriendInfo *)friendInfo;
++ (RCIMIWFriendInfo *)convertFriendInfoFromDict:(NSDictionary *)dict;
++ (NSDictionary *)convertFriendRelationInfoToDict:(RCIMIWFriendRelationInfo *)relationInfo;
++ (RCIMIWFriendRelationInfo *)convertFriendRelationInfoFromDict:(NSDictionary *)dict;
++ (NSDictionary *)convertFriendApplicationInfoToDict:(RCIMIWFriendApplicationInfo *)applicationInfo;
++ (RCIMIWFriendApplicationInfo *)convertFriendApplicationInfoFromDict:(NSDictionary *)dict;
 
 @end
 

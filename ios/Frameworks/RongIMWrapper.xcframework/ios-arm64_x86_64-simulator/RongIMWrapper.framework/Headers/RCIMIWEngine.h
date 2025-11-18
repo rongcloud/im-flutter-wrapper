@@ -40,6 +40,9 @@
 #import <RongIMWrapper/RCIMIWSubscribeEvent.h>
 #import <RongIMWrapper/RCIMIWSubscribeEventRequest.h>
 #import <RongIMWrapper/RCIMIWAppSettings.h>
+#import <RongIMWrapper/RCIMIWFriendInfo.h>
+#import <RongIMWrapper/RCIMIWFriendRelationInfo.h>
+#import <RongIMWrapper/RCIMIWFriendApplicationInfo.h>
 
 
 @class RCIMIWEngineOptions;
@@ -2085,6 +2088,68 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
 - (NSInteger)searchUserProfileByUniqueId:(NSString *)uniqueId
                                  success:(nullable void (^)(RCIMIWUserProfile *userProfile))successBlock
                                    error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+#pragma mark - 好友管理
+
+- (NSInteger)addFriend:(NSString *)userId
+           friendType:(RCIMIWFriendType)friendType
+                extra:(nullable NSString *)extra
+              success:(nullable void (^)(NSInteger processCode))successBlock
+                error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)deleteFriends:(NSArray<NSString *> *)userIds
+                friendType:(RCIMIWFriendType)friendType
+                   success:(nullable void (^)(void))successBlock
+                     error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)acceptFriendApplication:(NSString *)userId
+                             success:(nullable void (^)(void))successBlock
+                               error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)refuseFriendApplication:(NSString *)userId
+                             success:(nullable void (^)(void))successBlock
+                               error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)setFriendInfo:(RCIMIWFriendInfo *)friendInfo
+                   success:(nullable void (^)(void))successBlock
+                     error:(nullable void (^)(NSInteger errorCode, NSArray<NSString *> *_Nullable errorKeys))errorBlock;
+
+- (NSInteger)checkFriendsRelation:(NSArray<NSString *> *)userIds
+                       friendType:(RCIMIWFriendType)friendType
+                          success:(nullable void (^)(NSArray<RCIMIWFriendRelationInfo *> *relationInfos))successBlock
+                            error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)getFriends:(RCIMIWFriendType)friendType
+                success:(nullable void (^)(NSArray<RCIMIWFriendInfo *> *friendInfos))successBlock
+                  error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)getFriendApplications:(nullable NSArray<NSNumber *> *)applicationTypes
+                            status:(nullable NSArray<NSNumber *> *)statusList
+                       queryOption:(nullable RCIMIWPagingQueryOption *)option
+                           success:(nullable void (^)(RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo *> *result))successBlock
+                             error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+// - (NSInteger)deleteFriendApplication:(NSString *)userId
+//                      applicationType:(RCIMIWFriendApplicationType)applicationType
+//                        operationTime:(long long)operationTime
+//                              success:(nullable void (^)(void))successBlock
+//                                error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)getFriendsInfo:(NSArray<NSString *> *)userIds
+                    success:(nullable void (^)(NSArray<RCIMIWFriendInfo *> *friendInfos))successBlock
+                      error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)searchFriendsInfo:(NSString *)keyword
+                       success:(nullable void (^)(NSArray<RCIMIWFriendInfo *> *friendInfos))successBlock
+                         error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)setFriendAllowType:(RCIMIWFriendAllowType)allowType
+                        success:(nullable void (^)(void))successBlock
+                          error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
+- (NSInteger)getFriendAllowType:(nullable void (^)(RCIMIWFriendAllowType allowType))successBlock
+                          error:(nullable void (^)(NSInteger errorCode))errorBlock;
+
 
 
 

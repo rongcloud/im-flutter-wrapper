@@ -13,6 +13,30 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RCIMWrapperArgumentAdapter : NSObject
 
 
++ (RCIMIWGroupReadReceiptVersion)convertGroupReadReceiptVersionFromInteger:(NSInteger)integer;
++ (NSInteger)convertGroupReadReceiptVersionToInteger:(RCIMIWGroupReadReceiptVersion)GroupReadReceiptVersion;
+
+
++ (RCIMIWFriendType)convertFriendTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertFriendTypeToInteger:(RCIMIWFriendType)FriendType;
+
+
++ (RCIMIWFriendApplicationType)convertFriendApplicationTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertFriendApplicationTypeToInteger:(RCIMIWFriendApplicationType)FriendApplicationType;
+
+
++ (RCIMIWFriendAllowType)convertFriendAllowTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertFriendAllowTypeToInteger:(RCIMIWFriendAllowType)FriendAllowType;
+
+
++ (RCIMIWFriendApplicationStatus)convertFriendApplicationStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertFriendApplicationStatusToInteger:(RCIMIWFriendApplicationStatus)FriendApplicationStatus;
+
+
++ (RCIMIWFriendRelationType)convertFriendRelationTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertFriendRelationTypeToInteger:(RCIMIWFriendRelationType)FriendRelationType;
+
+
 + (RCIMIWGroupInviteHandlePermission)convertGroupInviteHandlePermissionFromInteger:(NSInteger)integer;
 + (NSInteger)convertGroupInviteHandlePermissionToInteger:(RCIMIWGroupInviteHandlePermission)GroupInviteHandlePermission;
 

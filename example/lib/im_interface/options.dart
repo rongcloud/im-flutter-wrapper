@@ -9,6 +9,7 @@ import 'tag/tag.dart' as tag;
 import 'group/group.dart' as group;
 import 'translate/translate.dart' as translate;
 import 'userprofile/userprofile.dart' as userprofile;
+import 'friend/friend.dart' as friend;
 import 'speechtotext/speechtotext.dart' as speechtotext;
 
 const titleList = [
@@ -21,6 +22,7 @@ const titleList = [
   "超级群相关",
   "会话标签",
   "翻译相关",
+  "好友托管",
   "用户信息托管",
   "语音转文字",
   "其他配置",
@@ -201,6 +203,21 @@ const subList = {
     translate.setAutoTranslateEnable,
     translate.getAutoTranslateEnabled,
     translate.batchSetConversationTranslateStrategy,
+  ],
+  "好友托管": [
+    friend.addFriend,
+    friend.deleteFriends,
+    friend.acceptFriendApplication,
+    friend.refuseFriendApplication,
+    friend.setFriendInfo,
+    friend.checkFriendsRelation,
+    friend.getFriends,
+    friend.getFriendApplications,
+    // friend.deleteFriendApplication,
+    friend.getFriendsInfo,
+    friend.searchFriendsInfo,
+    friend.setFriendAllowType,
+    friend.getFriendAllowType,
   ],
   "用户信息托管": [
     userprofile.updateMyUserProfileVisibility,

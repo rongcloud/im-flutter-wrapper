@@ -1,3 +1,180 @@
+enum RCIMIWGroupReadReceiptVersion {
+  /// 未知版本
+  unknown,
+
+  /// 群已读回执功能版本1
+  version1,
+
+  /// 群已读回执功能版本2
+  version2,
+
+  /// 群已读回执功能版本4
+  version4,
+
+  /// 已读回执功能版本5
+  version5,
+}
+
+enum RCIMIWFriendType {
+  /// [ZH]
+  /// ---
+  /// 双向好友
+  /// ---
+  /// [EN]
+  /// ---
+  /// Mutual friend
+  /// ---
+  both,
+}
+
+enum RCIMIWFriendApplicationType {
+  /// [ZH]
+  /// ---
+  /// 发送的请求
+  /// ---
+  /// [EN]
+  /// ---
+  /// Sent request
+  /// ---
+  sent,
+
+  /// [ZH]
+  /// ---
+  /// 接收的请求
+  /// ---
+  /// [EN]
+  /// ---
+  /// Received request
+  /// ---
+  received,
+}
+
+enum RCIMIWFriendAllowType {
+  /// [ZH]
+  /// ---
+  /// 未设置（仅占位，调用 `setFriendAllowType` 时不可使用该值）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Not set (placeholder only, must not be passed to `setFriendAllowType`)
+  /// ---
+  notSet,
+
+  /// [ZH]
+  /// ---
+  /// 任何人可加好友
+  /// ---
+  /// [EN]
+  /// ---
+  /// Anyone can add friend
+  /// ---
+  free,
+
+  /// [ZH]
+  /// ---
+  /// 需验证
+  /// ---
+  /// [EN]
+  /// ---
+  /// Need verification
+  /// ---
+  needVerify,
+
+  /// [ZH]
+  /// ---
+  /// 不允许添加
+  /// ---
+  /// [EN]
+  /// ---
+  /// Nobody allowed
+  /// ---
+  noOneAllowed,
+}
+
+enum RCIMIWFriendApplicationStatus {
+  /// [ZH]
+  /// ---
+  /// 未处理
+  /// ---
+  /// [EN]
+  /// ---
+  /// Pending
+  /// ---
+  unhandled,
+
+  /// [ZH]
+  /// ---
+  /// 已同意
+  /// ---
+  /// [EN]
+  /// ---
+  /// Accepted
+  /// ---
+  accepted,
+
+  /// [ZH]
+  /// ---
+  /// 已拒绝
+  /// ---
+  /// [EN]
+  /// ---
+  /// Refused
+  /// ---
+  refused,
+
+  /// [ZH]
+  /// ---
+  /// 已过期
+  /// ---
+  /// [EN]
+  /// ---
+  /// Expired
+  /// ---
+  expired,
+}
+
+enum RCIMIWFriendRelationType {
+  /// [ZH]
+  /// ---
+  /// 不在好友列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// Not friends
+  /// ---
+  none,
+
+  /// [ZH]
+  /// ---
+  /// 在我的好友列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// In my list
+  /// ---
+  inMyFriendList,
+
+  /// [ZH]
+  /// ---
+  /// 仅在对方列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// Only in other's list
+  /// ---
+  inOtherFriendList,
+
+  /// [ZH]
+  /// ---
+  /// 双方互为好友
+  /// ---
+  /// [EN]
+  /// ---
+  /// Mutual friends
+  /// ---
+  inBothFriendList,
+}
+
 enum RCIMIWGroupInviteHandlePermission {
   /// 不需要被邀请人同意（默认）。
   free,

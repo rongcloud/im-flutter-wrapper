@@ -827,5 +827,57 @@ typedef NS_ENUM(NSInteger, RCIMIWChatRoomMemberBanType) {
     RCIMIWChatRoomMemberBanTypeMuteGlobal = 7
 };
 
+#pragma mark - 好友管理
+
+/// 好友类型
+typedef NS_ENUM(NSInteger, RCIMIWFriendType) {
+    /// 双向好友
+    RCIMIWFriendTypeBoth = 2,
+};
+
+/// 好友关系类型
+typedef NS_ENUM(NSInteger, RCIMIWFriendRelationType) {
+    /// 不在双方的好友列表中
+    RCIMIWFriendRelationTypeNone = 0,
+    /// 在我的好友列表中
+    RCIMIWFriendRelationTypeInMyFriendList = 1,
+    /// 仅在对方的好友列表中
+    RCIMIWFriendRelationTypeInOtherFriendList = 2,
+    /// 在双方的好友列表中
+    RCIMIWFriendRelationTypeBothWay = 3,
+};
+
+/// 好友申请类型
+typedef NS_ENUM(NSInteger, RCIMIWFriendApplicationType) {
+    /// 发送的好友请求
+    RCIMIWFriendApplicationTypeSent = 1,
+    /// 接收的好友请求
+    RCIMIWFriendApplicationTypeReceived = 2,
+};
+
+/// 好友申请状态
+typedef NS_ENUM(NSInteger, RCIMIWFriendApplicationStatus) {
+    /// 未处理
+    RCIMIWFriendApplicationStatusUnHandled = 0,
+    /// 已同意
+    RCIMIWFriendApplicationStatusAccepted = 1,
+    /// 已拒绝
+    RCIMIWFriendApplicationStatusRefused = 2,
+    /// 已过期
+    RCIMIWFriendApplicationStatusExpired = 3,
+};
+
+/// 加好友权限
+typedef NS_ENUM(NSInteger, RCIMIWFriendAllowType) {
+    /// 未设置
+    RCIMIWFriendAllowTypeNotSet = 0,
+    /// 任何人可加好友
+    RCIMIWFriendAllowTypeFree = 1,
+    /// 需验证
+    RCIMIWFriendAllowTypeNeedVerify = 2,
+    /// 不允许任何人添加
+    RCIMIWFriendAllowTypeNoOneAllowed = 3,
+};
+
 
 #endif /* RCIMIWDefines_h */

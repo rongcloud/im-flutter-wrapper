@@ -49,6 +49,9 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWMentionedInfo.h>
 #import <RongIMWrapper/RCIMIWUserInfo.h>
 #import <RongIMWrapper/RCIMIWUserProfile.h>
+#import <RongIMWrapper/RCIMIWFriendInfo.h>
+#import <RongIMWrapper/RCIMIWFriendRelationInfo.h>
+#import <RongIMWrapper/RCIMIWFriendApplicationInfo.h>
 #import <RongIMWrapper/RCIMIWTypingStatus.h>
 #import <RongIMWrapper/RCIMIWTagInfo.h>
 #import <RongIMWrapper/RCIMIWConversationTagInfo.h>

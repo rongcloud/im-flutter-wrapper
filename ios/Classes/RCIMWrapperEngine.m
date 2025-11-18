@@ -480,6 +480,30 @@ static RCIMWrapperEngine *instance = nil;
     [self requestSpeechToTextForMessage:call result:result];
   } else if ([@"engine:setMessageSpeechToTextVisible" isEqualToString:call.method]) {
     [self setMessageSpeechToTextVisible:call result:result];
+  } else if ([@"engine:addFriend" isEqualToString:call.method]) {
+    [self addFriend:call result:result];
+  } else if ([@"engine:deleteFriends" isEqualToString:call.method]) {
+    [self deleteFriends:call result:result];
+  } else if ([@"engine:acceptFriendApplication" isEqualToString:call.method]) {
+    [self acceptFriendApplication:call result:result];
+  } else if ([@"engine:refuseFriendApplication" isEqualToString:call.method]) {
+    [self refuseFriendApplication:call result:result];
+  } else if ([@"engine:setFriendInfo" isEqualToString:call.method]) {
+    [self setFriendInfo:call result:result];
+  } else if ([@"engine:checkFriendsRelation" isEqualToString:call.method]) {
+    [self checkFriendsRelation:call result:result];
+  } else if ([@"engine:getFriends" isEqualToString:call.method]) {
+    [self getFriends:call result:result];
+  } else if ([@"engine:getFriendApplications" isEqualToString:call.method]) {
+    [self getFriendApplications:call result:result];
+  } else if ([@"engine:getFriendsInfo" isEqualToString:call.method]) {
+    [self getFriendsInfo:call result:result];
+  } else if ([@"engine:searchFriendsInfo" isEqualToString:call.method]) {
+    [self searchFriendsInfo:call result:result];
+  } else if ([@"engine:setFriendAllowType" isEqualToString:call.method]) {
+    [self setFriendAllowType:call result:result];
+  } else if ([@"engine:getFriendAllowType" isEqualToString:call.method]) {
+    [self getFriendAllowType:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -3427,7 +3451,7 @@ static RCIMWrapperEngine *instance = nil;
       successBlock = ^(NSArray<NSString *> *userIds) {
         NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
         [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
-        [arguments setValue:userIds forKey:@"t"];
+        [arguments setValue:userIds ?: @[] forKey:@"t"];
 
         __weak typeof(self.channel) weak = self.channel;
         dispatch_to_main_queue(^{
@@ -6571,7 +6595,7 @@ static RCIMWrapperEngine *instance = nil;
         NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
         [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
         [arguments setValue:@(errorCode) forKey:@"errorCode"];
-        [arguments setValue:errorKeys forKey:@"errorKeys"];
+        [arguments setValue:errorKeys ?: @[] forKey:@"errorKeys"];
 
         __weak typeof(self.channel) weak = self.channel;
         dispatch_to_main_queue(^{
@@ -6731,7 +6755,7 @@ static RCIMWrapperEngine *instance = nil;
         NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
         [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
         [arguments setValue:@(code) forKey:@"code"];
-        [arguments setValue:failedUserIds forKey:@"failedUserIds"];
+        [arguments setValue:failedUserIds ?: @[] forKey:@"failedUserIds"];
 
         __weak typeof(self.channel) weak = self.channel;
         dispatch_to_main_queue(^{
@@ -6770,7 +6794,7 @@ static RCIMWrapperEngine *instance = nil;
         NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
         [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
         [arguments setValue:@(code) forKey:@"code"];
-        [arguments setValue:failedUserIds forKey:@"failedUserIds"];
+        [arguments setValue:failedUserIds ?: @[] forKey:@"failedUserIds"];
 
         __weak typeof(self.channel) weak = self.channel;
         dispatch_to_main_queue(^{
@@ -6953,6 +6977,495 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)addFriend:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *userId = arguments[@"userId"];
+    RCIMIWFriendType friendType = [RCIMWrapperArgumentAdapter convertFriendTypeFromInteger:[(NSNumber *)arguments[@"friendType"] integerValue]];
+    NSString *extra = arguments[@"extra"];
+    void (^success)(NSInteger processCode) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSInteger processCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(processCode) forKey:@"processCode"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWAddFriendCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWAddFriendCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine addFriend:userId friendType:friendType extra:extra success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)deleteFriends:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSArray<NSString *> *userIds = arguments[@"userIds"];
+    RCIMIWFriendType friendType = [RCIMWrapperArgumentAdapter convertFriendTypeFromInteger:[(NSNumber *)arguments[@"friendType"] integerValue]];
+    void (^success)() = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine deleteFriends:userIds friendType:friendType success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)acceptFriendApplication:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *userId = arguments[@"userId"];
+    void (^success)() = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine acceptFriendApplication:userId success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)refuseFriendApplication:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *userId = arguments[@"userId"];
+    void (^success)() = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine refuseFriendApplication:userId success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)setFriendInfo:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWFriendInfo *friendInfo = [RCIMIWPlatformConverter convertFriendInfoFromDict:arguments[@"friendInfo"]];
+    void (^success)() = nil;
+    void (^error)(NSInteger errorCode, NSArray<NSString *> *_Nullable errorKeys) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSetFriendInfoCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode, NSArray<NSString *> *errorKeys) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+        [arguments setValue:errorKeys ?: @[] forKey:@"errorKeys"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSetFriendInfoCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine setFriendInfo:friendInfo success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)checkFriendsRelation:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSArray<NSString *> *userIds = arguments[@"userIds"];
+    RCIMIWFriendType friendType = [RCIMWrapperArgumentAdapter convertFriendTypeFromInteger:[(NSNumber *)arguments[@"friendType"] integerValue]];
+    void (^success)(NSArray<RCIMIWFriendRelationInfo *> *_Nullable relationInfos) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWFriendRelationInfo *> *relationInfos) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWFriendRelationInfo *element in relationInfos) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertFriendRelationInfoToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWCheckFriendsRelationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWCheckFriendsRelationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine checkFriendsRelation:userIds friendType:friendType success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getFriends:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWFriendType friendType = [RCIMWrapperArgumentAdapter convertFriendTypeFromInteger:[(NSNumber *)arguments[@"friendType"] integerValue]];
+    void (^success)(NSArray<RCIMIWFriendInfo *> *_Nullable friendInfos) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWFriendInfo *> *friendInfos) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWFriendInfo *element in friendInfos) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertFriendInfoToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetFriendsCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetFriendsCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getFriends:friendType success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getFriendApplications:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSArray<NSNumber *> *applicationTypes = arguments[@"applicationTypes"];
+    NSArray<NSNumber *> *status = arguments[@"status"];
+    RCIMIWPagingQueryOption *queryOption = [RCIMIWPlatformConverter convertPagingQueryOptionFromDict:arguments[@"queryOption"]];
+    void (^success)(RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo *> *_Nullable result) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo *> *result) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertPagingQueryResultToDict:result] forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetFriendApplicationsCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetFriendApplicationsCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getFriendApplications:applicationTypes status:status queryOption:queryOption success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getFriendsInfo:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSArray<NSString *> *userIds = arguments[@"userIds"];
+    void (^success)(NSArray<RCIMIWFriendInfo *> *_Nullable friendInfos) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWFriendInfo *> *friendInfos) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWFriendInfo *element in friendInfos) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertFriendInfoToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetFriendsInfoCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetFriendsInfoCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getFriendsInfo:userIds success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)searchFriendsInfo:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *keyword = arguments[@"keyword"];
+    void (^success)(NSArray<RCIMIWFriendInfo *> *_Nullable friendInfos) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWFriendInfo *> *friendInfos) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWFriendInfo *element in friendInfos) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertFriendInfoToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSearchFriendsInfoCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSearchFriendsInfoCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine searchFriendsInfo:keyword success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)setFriendAllowType:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWFriendAllowType allowType = [RCIMWrapperArgumentAdapter convertFriendAllowTypeFromInteger:[(NSNumber *)arguments[@"allowType"] integerValue]];
+    void (^success)() = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine setFriendAllowType:allowType success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getFriendAllowType:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    void (^successBlock)(RCIMIWFriendAllowType allowType) = nil;
+    void (^error)(NSInteger errorCode) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      successBlock = ^(RCIMIWFriendAllowType allowType) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@([RCIMWrapperArgumentAdapter convertFriendAllowTypeToInteger:allowType]) forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetFriendAllowTypeCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger errorCode) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(errorCode) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetFriendAllowTypeCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getFriendAllowType:successBlock error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
 - (void)onMessageReceived:(RCIMIWMessage *)message left:(NSInteger)left offline:(BOOL)offline hasPackage:(BOOL)hasPackage {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];
@@ -7069,7 +7582,7 @@ static RCIMWrapperEngine *instance = nil;
 - (void)onRemoteMessageExpansionForKeyRemoved:(RCIMIWMessage *)message keys:(NSArray<NSString *> *)keys {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];
-  [arguments setValue:keys forKey:@"keys"];
+  [arguments setValue:keys ?: @[] forKey:@"keys"];
 
   __weak typeof(self.channel) weak = self.channel;
   dispatch_to_main_queue(^{
@@ -7330,7 +7843,7 @@ static RCIMWrapperEngine *instance = nil;
 - (void)onConversationsLoaded:(NSInteger)code conversationTypes:(NSArray<NSNumber *> *)conversationTypes channelId:(NSString *)channelId startTime:(long long)startTime count:(int)count conversations:(nullable NSArray<RCIMIWConversation *> *)conversations {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
-  [arguments setValue:conversationTypes forKey:@"conversationTypes"];
+  [arguments setValue:conversationTypes ?: @[] forKey:@"conversationTypes"];
   [arguments setValue:channelId forKey:@"channelId"];
   [arguments setValue:@(startTime) forKey:@"startTime"];
   [arguments setValue:@(count) forKey:@"count"];
@@ -7365,7 +7878,7 @@ static RCIMWrapperEngine *instance = nil;
 - (void)onConversationsRemoved:(NSInteger)code conversationTypes:(NSArray<NSNumber *> *)conversationTypes channelId:(NSString *)channelId {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
-  [arguments setValue:conversationTypes forKey:@"conversationTypes"];
+  [arguments setValue:conversationTypes ?: @[] forKey:@"conversationTypes"];
   [arguments setValue:channelId forKey:@"channelId"];
 
   __weak typeof(self.channel) weak = self.channel;
@@ -7406,7 +7919,7 @@ static RCIMWrapperEngine *instance = nil;
 - (void)onUnreadCountByConversationTypesLoaded:(NSInteger)code conversationTypes:(NSArray<NSNumber *> *)conversationTypes channelId:(NSString *)channelId contain:(BOOL)contain count:(NSInteger)count {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
-  [arguments setValue:conversationTypes forKey:@"conversationTypes"];
+  [arguments setValue:conversationTypes ?: @[] forKey:@"conversationTypes"];
   [arguments setValue:channelId forKey:@"channelId"];
   [arguments setValue:@(contain) forKey:@"contain"];
   [arguments setValue:@(count) forKey:@"count"];
@@ -7529,7 +8042,7 @@ static RCIMWrapperEngine *instance = nil;
 - (void)onBlockedConversationsLoaded:(NSInteger)code conversationTypes:(NSArray<NSNumber *> *)conversationTypes channelId:(NSString *)channelId conversations:(nullable NSArray<RCIMIWConversation *> *)conversations {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
-  [arguments setValue:conversationTypes forKey:@"conversationTypes"];
+  [arguments setValue:conversationTypes ?: @[] forKey:@"conversationTypes"];
   [arguments setValue:channelId forKey:@"channelId"];
 
   NSMutableArray *conversations_arr = [NSMutableArray array];
@@ -7877,7 +8390,7 @@ static RCIMWrapperEngine *instance = nil;
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
   [arguments setValue:messageUId forKey:@"messageUId"];
-  [arguments setValue:keys forKey:@"keys"];
+  [arguments setValue:keys ?: @[] forKey:@"keys"];
 
   __weak typeof(self.channel) weak = self.channel;
   dispatch_to_main_queue(^{
@@ -8035,7 +8548,7 @@ static RCIMWrapperEngine *instance = nil;
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
   [arguments setValue:targetId forKey:@"targetId"];
-  [arguments setValue:keys forKey:@"keys"];
+  [arguments setValue:keys ?: @[] forKey:@"keys"];
 
   __weak typeof(self.channel) weak = self.channel;
   dispatch_to_main_queue(^{
@@ -8084,7 +8597,7 @@ static RCIMWrapperEngine *instance = nil;
 - (void)onBlacklistLoaded:(NSInteger)code userIds:(NSArray<NSString *> *)userIds {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
-  [arguments setValue:userIds forKey:@"userIds"];
+  [arguments setValue:userIds ?: @[] forKey:@"userIds"];
 
   __weak typeof(self.channel) weak = self.channel;
   dispatch_to_main_queue(^{
@@ -8167,9 +8680,9 @@ static RCIMWrapperEngine *instance = nil;
 - (void)onConversationsSearched:(NSInteger)code conversationTypes:(NSArray<NSNumber *> *)conversationTypes channelId:(NSString *)channelId messageTypes:(NSArray<NSNumber *> *)messageTypes keyword:(NSString *)keyword conversations:(NSArray<RCIMIWSearchConversationResult *> *)conversations {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
-  [arguments setValue:conversationTypes forKey:@"conversationTypes"];
+  [arguments setValue:conversationTypes ?: @[] forKey:@"conversationTypes"];
   [arguments setValue:channelId forKey:@"channelId"];
-  [arguments setValue:messageTypes forKey:@"messageTypes"];
+  [arguments setValue:messageTypes ?: @[] forKey:@"messageTypes"];
   [arguments setValue:keyword forKey:@"keyword"];
 
   NSMutableArray *conversations_arr = [NSMutableArray array];
@@ -8419,7 +8932,7 @@ static RCIMWrapperEngine *instance = nil;
 - (void)onTopConversationsLoaded:(NSInteger)code conversationTypes:(NSArray<NSNumber *> *)conversationTypes channelId:(NSString *)channelId conversations:(nullable NSArray<RCIMIWConversation *> *)conversations {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
-  [arguments setValue:conversationTypes forKey:@"conversationTypes"];
+  [arguments setValue:conversationTypes ?: @[] forKey:@"conversationTypes"];
   [arguments setValue:channelId forKey:@"channelId"];
 
   NSMutableArray *conversations_arr = [NSMutableArray array];
@@ -8624,7 +9137,7 @@ static RCIMWrapperEngine *instance = nil;
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
   [arguments setValue:messageUId forKey:@"messageUId"];
-  [arguments setValue:keys forKey:@"keys"];
+  [arguments setValue:keys ?: @[] forKey:@"keys"];
 
   __weak typeof(self.channel) weak = self.channel;
   dispatch_to_main_queue(^{
@@ -8712,7 +9225,7 @@ static RCIMWrapperEngine *instance = nil;
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:groupId forKey:@"groupId"];
   [arguments setValue:@([RCIMWrapperArgumentAdapter convertGroupOperationTypeToInteger:operationType]) forKey:@"operationType"];
-  [arguments setValue:userIds forKey:@"userIds"];
+  [arguments setValue:userIds ?: @[] forKey:@"userIds"];
   [arguments setValue:@(operationTime) forKey:@"operationTime"];
 
   __weak typeof(self.channel) weak = self.channel;
@@ -8833,6 +9346,75 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onSubscriptionChangedOnOtherDevices" arguments:arguments.copy];
+  });
+}
+
+- (void)onFriendAdded:(RCIMIWFriendType)friendType userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri operationTime:(long long)operationTime {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertFriendTypeToInteger:friendType]) forKey:@"friendType"];
+  [arguments setValue:userId forKey:@"userId"];
+  [arguments setValue:name forKey:@"name"];
+  [arguments setValue:portraitUri forKey:@"portraitUri"];
+  [arguments setValue:@(operationTime) forKey:@"operationTime"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onFriendAdded" arguments:arguments.copy];
+  });
+}
+
+- (void)onFriendDeleted:(RCIMIWFriendType)friendType userIds:(NSArray<NSString *> *)userIds operationTime:(long long)operationTime {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertFriendTypeToInteger:friendType]) forKey:@"friendType"];
+  [arguments setValue:userIds ?: @[] forKey:@"userIds"];
+  [arguments setValue:@(operationTime) forKey:@"operationTime"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onFriendDeleted" arguments:arguments.copy];
+  });
+}
+
+- (void)onFriendsClearedFromServer:(long long)operationTime {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@(operationTime) forKey:@"operationTime"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onFriendsClearedFromServer" arguments:arguments.copy];
+  });
+}
+
+- (void)onFriendInfoChangedSync:(NSString *)userId remark:(NSString *)remark extProfile:(NSDictionary<NSString *, NSString *> *)extProfile operationTime:(long long)operationTime {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:userId forKey:@"userId"];
+  [arguments setValue:remark forKey:@"remark"];
+  [arguments setValue:extProfile forKey:@"extProfile"];
+  [arguments setValue:@(operationTime) forKey:@"operationTime"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onFriendInfoChangedSync" arguments:arguments.copy];
+  });
+}
+
+- (void)onFriendApplicationStatusChanged:(NSString *)userId applicationType:(RCIMIWFriendApplicationType)applicationType status:(RCIMIWFriendApplicationStatus)status friendType:(RCIMIWFriendType)friendType operationTime:(long long)operationTime extra:(nullable NSString *)extra {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:userId forKey:@"userId"];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertFriendApplicationTypeToInteger:applicationType]) forKey:@"applicationType"];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertFriendApplicationStatusToInteger:status]) forKey:@"status"];
+  [arguments setValue:@([RCIMWrapperArgumentAdapter convertFriendTypeToInteger:friendType]) forKey:@"friendType"];
+  [arguments setValue:@(operationTime) forKey:@"operationTime"];
+  [arguments setValue:extra forKey:@"extra"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onFriendApplicationStatusChanged" arguments:arguments.copy];
   });
 }
 

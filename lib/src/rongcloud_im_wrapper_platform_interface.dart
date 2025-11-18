@@ -4848,6 +4848,238 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('setMessageSpeechToTextVisible() has not been implemented.');
   }
 
+  /// [ZH]
+  /// ---
+  /// 添加好友
+  /// - [userId] 对方用户 ID
+  /// - [friendType] 好友关系方向
+  /// - [extra] 附加信息，长度不超过 128 个字符
+  /// - [callback] 操作回调，返回处理状态码
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Add friend
+  /// - [userId] Target user ID
+  /// - [friendType] Friend relation direction
+  /// - [extra] Extra information (up to 128 characters)
+  /// - [callback] Operation callback returning process code
+  /// ---
+  Future<int> addFriend(
+    String userId,
+    RCIMIWFriendType friendType,
+    String extra, {
+    IRCIMIWAddFriendCallback? callback,
+  }) async {
+    throw UnimplementedError('addFriend() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 解除好友
+  /// - [userIds] 待解除好友的用户 ID 列表
+  /// - [friendType] 好友关系方向
+  /// - [callback] 操作回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Delete friends
+  /// - [userIds] User IDs to delete
+  /// - [friendType] Friend relation direction
+  /// - [callback] Operation callback
+  /// ---
+  Future<int> deleteFriends(
+    List<String> userIds,
+    RCIMIWFriendType friendType, {
+    IRCIMIWOperationCallback? callback,
+  }) async {
+    throw UnimplementedError('deleteFriends() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 同意好友申请
+  /// - [userId] 申请者用户 ID
+  /// - [callback] 操作回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Accept friend application
+  /// - [userId] Applicant user ID
+  /// - [callback] Operation callback
+  /// ---
+  Future<int> acceptFriendApplication(String userId, {IRCIMIWOperationCallback? callback}) async {
+    throw UnimplementedError('acceptFriendApplication() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 拒绝好友申请
+  /// - [userId] 申请者用户 ID
+  /// - [callback] 操作回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Refuse friend application
+  /// - [userId] Applicant user ID
+  /// - [callback] Operation callback
+  /// ---
+  Future<int> refuseFriendApplication(String userId, {IRCIMIWOperationCallback? callback}) async {
+    throw UnimplementedError('refuseFriendApplication() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 设置好友信息
+  /// - [friendInfo] 好友信息实体
+  /// - [callback] 操作回调，返回失败键列表
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Set friend info
+  /// - [friendInfo] Friend info entity
+  /// - [callback] Operation callback returning failed keys
+  /// ---
+  Future<int> setFriendInfo(RCIMIWFriendInfo friendInfo, {IRCIMIWSetFriendInfoCallback? callback}) async {
+    throw UnimplementedError('setFriendInfo() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 检查好友关系
+  /// - [userIds] 用户 ID 列表
+  /// - [friendType] 好友关系方向
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Check friend relationship
+  /// - [userIds] User ID list
+  /// - [friendType] Friend relation direction
+  /// - [callback] Result callback
+  /// ---
+  Future<int> checkFriendsRelation(
+    List<String> userIds,
+    RCIMIWFriendType friendType, {
+    IRCIMIWCheckFriendsRelationCallback? callback,
+  }) async {
+    throw UnimplementedError('checkFriendsRelation() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 获取好友列表
+  /// - [friendType] 好友关系方向
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get friends
+  /// - [friendType] Friend relation direction
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getFriends(RCIMIWFriendType friendType, {IRCIMIWGetFriendsCallback? callback}) async {
+    throw UnimplementedError('getFriends() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 分页获取好友申请列表
+  /// - [applicationTypes] 申请类型集合
+  /// - [status] 过滤的申请状态
+  /// - [queryOption] 分页查询配置
+  /// - [callback] 分页结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get friend applications with pagination
+  /// - [applicationTypes] Application types
+  /// - [status] Filtered application statuses
+  /// - [queryOption] Paging query option
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getFriendApplications(
+    List<RCIMIWFriendApplicationType> applicationTypes,
+    List<RCIMIWFriendApplicationStatus> status,
+    RCIMIWPagingQueryOption queryOption, {
+    IRCIMIWGetFriendApplicationsCallback? callback,
+  }) async {
+    throw UnimplementedError('getFriendApplications() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 根据用户 ID 获取好友信息
+  /// - [userIds] 用户 ID 列表
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get friend info by user IDs
+  /// - [userIds] User ID list
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getFriendsInfo(List<String> userIds, {IRCIMIWGetFriendsInfoCallback? callback}) async {
+    throw UnimplementedError('getFriendsInfo() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 搜索好友信息
+  /// - [keyword] 搜索关键字
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Search friend info
+  /// - [keyword] Search keyword
+  /// - [callback] Result callback
+  /// ---
+  Future<int> searchFriendsInfo(String keyword, {IRCIMIWSearchFriendsInfoCallback? callback}) async {
+    throw UnimplementedError('searchFriendsInfo() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 设置加好友权限
+  /// - [allowType] 加好友权限
+  /// - [callback] 操作回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Set friend allow type
+  /// - [allowType] Friend allow type
+  /// - [callback] Operation callback
+  /// ---
+  Future<int> setFriendAllowType(RCIMIWFriendAllowType allowType, {IRCIMIWOperationCallback? callback}) async {
+    throw UnimplementedError('setFriendAllowType() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 获取加好友权限
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get friend allow type
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getFriendAllowType({IRCIMIWGetFriendAllowTypeCallback? callback}) async {
+    throw UnimplementedError('getFriendAllowType() has not been implemented.');
+  }
+
   // -------- web 专有的方法 --------
 
   /// 构建语音消息 (高清语音)，发送成功后会根据文件自动生成 duration

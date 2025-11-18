@@ -23,8 +23,16 @@ registerNativeCustomMessage(Map arg) async {
   }
 
   String messageIdentifier = arg['messageIdentifier'];
+  int? persistentFlagValue = int.tryParse(arg['persistentFlag']);
+  if (persistentFlagValue == null ||
+      persistentFlagValue < 0 ||
+      persistentFlagValue >= RCIMIWNativeCustomMessagePersistentFlag.values.length) {
+    RCIWToast.showToast("persistentFlag 超出范围");
+    return;
+  }
   RCIMIWNativeCustomMessagePersistentFlag persistentFlag =
-      RCIMIWNativeCustomMessagePersistentFlag.values[int.parse(arg['persistentFlag'])];
+      RCIMIWNativeCustomMessagePersistentFlag.values[persistentFlagValue];
+
   int? code = await IMEngineManager().engine?.registerNativeCustomMessage(messageIdentifier, persistentFlag);
   DateTime now = DateTime.now();
   String timeStr =
@@ -63,8 +71,16 @@ registerNativeCustomMediaMessage(Map arg) async {
   }
 
   String messageIdentifier = arg['messageIdentifier'];
+  int? persistentFlagValue = int.tryParse(arg['persistentFlag']);
+  if (persistentFlagValue == null ||
+      persistentFlagValue < 0 ||
+      persistentFlagValue >= RCIMIWNativeCustomMessagePersistentFlag.values.length) {
+    RCIWToast.showToast("persistentFlag 超出范围");
+    return;
+  }
   RCIMIWNativeCustomMessagePersistentFlag persistentFlag =
-      RCIMIWNativeCustomMessagePersistentFlag.values[int.parse(arg['persistentFlag'])];
+      RCIMIWNativeCustomMessagePersistentFlag.values[persistentFlagValue];
+
   int? code = await IMEngineManager().engine?.registerNativeCustomMediaMessage(messageIdentifier, persistentFlag);
   DateTime now = DateTime.now();
   String timeStr =
@@ -328,7 +344,12 @@ loadConversation(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadConversation(type, targetId, channelId);
@@ -375,7 +396,12 @@ getConversation(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWGetConversationCallback? callback;
@@ -451,7 +477,12 @@ loadConversations(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   int startTime = int.parse(arg['startTime']);
@@ -508,7 +539,12 @@ getConversations(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   int startTime = int.parse(arg['startTime']);
@@ -611,7 +647,12 @@ getConversationsWithPriority(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   int startTime = int.parse(arg['startTime']);
@@ -702,7 +743,12 @@ getUnreadConversations(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   IRCIMIWGetUnreadConversationsCallback? callback;
   if (useCallback == 1) {
@@ -781,7 +827,12 @@ removeConversation(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWRemoveConversationCallback? callback;
@@ -841,7 +892,12 @@ removeConversations(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   IRCIMIWRemoveConversationsCallback? callback;
@@ -898,7 +954,12 @@ loadUnreadCount(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadUnreadCount(type, targetId, channelId);
@@ -945,7 +1006,12 @@ getUnreadCount(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWGetUnreadCountCallback? callback;
@@ -1105,7 +1171,12 @@ loadUnreadMentionedCount(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadUnreadMentionedCount(type, targetId, channelId);
@@ -1152,7 +1223,12 @@ getUnreadMentionedCount(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWGetUnreadMentionedCountCallback? callback;
@@ -1595,7 +1671,12 @@ loadUnreadCountByConversationTypes(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   int containInt = int.parse(arg['contain']);
@@ -1651,7 +1732,12 @@ getUnreadCountByConversationTypes(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   int containInt = int.parse(arg['contain']);
@@ -1736,13 +1822,23 @@ getUnreadCountByLevels(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
 
   List levels = (arg["levels"]).split(",");
   List<RCIMIWPushNotificationLevel> levelsInt = [];
   for (var element in levels) {
-    levelsInt.add(RCIMIWPushNotificationLevel.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWPushNotificationLevel.values.length) {
+      RCIWToast.showToast("levels 超出范围");
+      return;
+    }
+    levelsInt.add(RCIMIWPushNotificationLevel.values[elementValue]);
   }
   IRCIMIWGetUnreadCountByLevelsCallback? callback;
   if (useCallback == 1) {
@@ -1823,7 +1919,12 @@ clearUnreadCount(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int timestamp = int.parse(arg['timestamp']);
@@ -1897,7 +1998,12 @@ saveDraftMessage(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   String draft = arg['draft'];
@@ -1955,7 +2061,12 @@ loadDraftMessage(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadDraftMessage(type, targetId, channelId);
@@ -2002,7 +2113,12 @@ getDraftMessage(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWGetDraftMessageCallback? callback;
@@ -2075,7 +2191,12 @@ clearDraftMessage(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWClearDraftMessageCallback? callback;
@@ -2130,7 +2251,12 @@ loadBlockedConversations(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadBlockedConversations(conversationTypesInt, channelId);
@@ -2175,7 +2301,12 @@ getBlockedConversations(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   IRCIMIWGetBlockedConversationsCallback? callback;
@@ -2264,7 +2395,12 @@ changeConversationTopStatus(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int topInt = int.parse(arg['top']);
@@ -2344,7 +2480,12 @@ changeConversationTopStatusWithUpdateTme(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int topInt = int.parse(arg['top']);
@@ -2412,7 +2553,12 @@ loadConversationTopStatus(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadConversationTopStatus(type, targetId, channelId);
@@ -2459,7 +2605,12 @@ getConversationTopStatus(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWGetConversationTopStatusCallback? callback;
@@ -2537,7 +2688,12 @@ syncConversationReadStatus(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int timestamp = int.parse(arg['timestamp']);
@@ -2606,7 +2762,12 @@ sendTypingStatus(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   String currentType = arg['currentType'];
@@ -2667,12 +2828,27 @@ loadMessages(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int sentTime = int.parse(arg['sentTime']);
-  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[int.parse(arg['order'])];
-  RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[int.parse(arg['policy'])];
+  int? orderValue = int.tryParse(arg['order']);
+  if (orderValue == null || orderValue < 0 || orderValue >= RCIMIWTimeOrder.values.length) {
+    RCIWToast.showToast("order 超出范围");
+    return;
+  }
+  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[orderValue];
+  int? policyValue = int.tryParse(arg['policy']);
+  if (policyValue == null || policyValue < 0 || policyValue >= RCIMIWMessageOperationPolicy.values.length) {
+    RCIWToast.showToast("policy 超出范围");
+    return;
+  }
+  RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[policyValue];
   int count = int.parse(arg['count']);
   int? code = await IMEngineManager().engine?.loadMessages(type, targetId, channelId, sentTime, order, policy, count);
   DateTime now = DateTime.now();
@@ -2738,12 +2914,27 @@ getMessages(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int sentTime = int.parse(arg['sentTime']);
-  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[int.parse(arg['order'])];
-  RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[int.parse(arg['policy'])];
+  int? orderValue = int.tryParse(arg['order']);
+  if (orderValue == null || orderValue < 0 || orderValue >= RCIMIWTimeOrder.values.length) {
+    RCIWToast.showToast("order 超出范围");
+    return;
+  }
+  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[orderValue];
+  int? policyValue = int.tryParse(arg['policy']);
+  if (policyValue == null || policyValue < 0 || policyValue >= RCIMIWMessageOperationPolicy.values.length) {
+    RCIWToast.showToast("policy 超出范围");
+    return;
+  }
+  RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[policyValue];
   int count = int.parse(arg['count']);
   IRCIMIWGetMessagesCallback? callback;
   if (useCallback == 1) {
@@ -2870,7 +3061,12 @@ getMessagesAroundTime(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int sentTime = int.parse(arg['sentTime']);
@@ -2983,16 +3179,31 @@ getLocalMessagesByMessageTypes(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   List messageTypes = (arg["messageTypes"]).split(",");
   List<RCIMIWMessageType> messageTypesInt = [];
   for (var element in messageTypes) {
-    messageTypesInt.add(RCIMIWMessageType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWMessageType.values.length) {
+      RCIWToast.showToast("messageTypes 超出范围");
+      return;
+    }
+    messageTypesInt.add(RCIMIWMessageType.values[elementValue]);
   }
   int sentTime = int.parse(arg['sentTime']);
-  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[int.parse(arg['order'])];
+  int? orderValue = int.tryParse(arg['order']);
+  if (orderValue == null || orderValue < 0 || orderValue >= RCIMIWTimeOrder.values.length) {
+    RCIWToast.showToast("order 超出范围");
+    return;
+  }
+  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[orderValue];
   int count = int.parse(arg['count']);
   IRCIMIWGetMessagesCallback? callback;
   if (useCallback == 1) {
@@ -3075,7 +3286,12 @@ loadFirstUnreadMessage(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadFirstUnreadMessage(type, targetId, channelId);
@@ -3122,7 +3338,12 @@ getFirstUnreadMessage(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWGetFirstUnreadMessageCallback? callback;
@@ -3190,7 +3411,12 @@ loadUnreadMentionedMessages(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadUnreadMentionedMessages(type, targetId, channelId);
@@ -3237,7 +3463,12 @@ getUnreadMentionedMessages(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWGetUnreadMentionedMessagesCallback? callback;
@@ -3345,11 +3576,21 @@ clearMessages(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int timestamp = int.parse(arg['timestamp']);
-  RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[int.parse(arg['policy'])];
+  int? policyValue = int.tryParse(arg['policy']);
+  if (policyValue == null || policyValue < 0 || policyValue >= RCIMIWMessageOperationPolicy.values.length) {
+    RCIWToast.showToast("policy 超出范围");
+    return;
+  }
+  RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[policyValue];
   IRCIMIWClearMessagesCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWClearMessagesCallback(
@@ -3715,7 +3956,12 @@ changeMessageSentStatus(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   int messageId = int.parse(arg['messageId']);
-  RCIMIWSentStatus sentStatus = RCIMIWSentStatus.values[int.parse(arg['sentStatus'])];
+  int? sentStatusValue = int.tryParse(arg['sentStatus']);
+  if (sentStatusValue == null || sentStatusValue < 0 || sentStatusValue >= RCIMIWSentStatus.values.length) {
+    RCIWToast.showToast("sentStatus 超出范围");
+    return;
+  }
+  RCIMIWSentStatus sentStatus = RCIMIWSentStatus.values[sentStatusValue];
   IRCIMIWChangeMessageSentStatusCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWChangeMessageSentStatusCallback(
@@ -3776,7 +4022,14 @@ changeMessageReceiveStatus(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   int messageId = int.parse(arg['messageId']);
-  RCIMIWReceivedStatus receivedStatus = RCIMIWReceivedStatus.values[int.parse(arg['receivedStatus'])];
+  int? receivedStatusValue = int.tryParse(arg['receivedStatus']);
+  if (receivedStatusValue == null ||
+      receivedStatusValue < 0 ||
+      receivedStatusValue >= RCIMIWReceivedStatus.values.length) {
+    RCIWToast.showToast("receivedStatus 超出范围");
+    return;
+  }
+  RCIMIWReceivedStatus receivedStatus = RCIMIWReceivedStatus.values[receivedStatusValue];
   IRCIMIWChangeMessageReceivedStatusCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWChangeMessageReceivedStatusCallback(
@@ -4094,7 +4347,12 @@ loadChatRoomMessages(Map arg) async {
 
   String targetId = arg['targetId'];
   int timestamp = int.parse(arg['timestamp']);
-  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[int.parse(arg['order'])];
+  int? orderValue = int.tryParse(arg['order']);
+  if (orderValue == null || orderValue < 0 || orderValue >= RCIMIWTimeOrder.values.length) {
+    RCIWToast.showToast("order 超出范围");
+    return;
+  }
+  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[orderValue];
   int count = int.parse(arg['count']);
   int? code = await IMEngineManager().engine?.loadChatRoomMessages(targetId, timestamp, order, count);
   DateTime now = DateTime.now();
@@ -4152,7 +4410,12 @@ getChatRoomMessages(Map arg) async {
 
   String targetId = arg['targetId'];
   int timestamp = int.parse(arg['timestamp']);
-  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[int.parse(arg['order'])];
+  int? orderValue = int.tryParse(arg['order']);
+  if (orderValue == null || orderValue < 0 || orderValue >= RCIMIWTimeOrder.values.length) {
+    RCIWToast.showToast("order 超出范围");
+    return;
+  }
+  RCIMIWTimeOrder order = RCIMIWTimeOrder.values[orderValue];
   int count = int.parse(arg['count']);
   IRCIMIWGetChatRoomMessagesCallback? callback;
   if (useCallback == 1) {
@@ -5081,7 +5344,12 @@ searchMessages(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   String keyword = arg['keyword'];
@@ -5199,7 +5467,12 @@ searchMessagesByTimeRange(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   String keyword = arg['keyword'];
@@ -5312,7 +5585,12 @@ searchMessagesByUserId(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   String userId = arg['userId'];
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int startTime = int.parse(arg['startTime']);
@@ -5424,13 +5702,23 @@ searchMessagesByMessageTypes(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   List messageTypes = (arg["messageTypes"]).split(",");
   List<RCIMIWMessageType> messageTypesInt = [];
   for (var element in messageTypes) {
-    messageTypesInt.add(RCIMIWMessageType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWMessageType.values.length) {
+      RCIWToast.showToast("messageTypes 超出范围");
+      return;
+    }
+    messageTypesInt.add(RCIMIWMessageType.values[elementValue]);
   }
   String keyword = arg['keyword'];
   int startTime = int.parse(arg['startTime']);
@@ -5531,13 +5819,23 @@ searchConversations(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   List messageTypes = (arg["messageTypes"]).split(",");
   List<RCIMIWMessageType> messageTypesInt = [];
   for (var element in messageTypes) {
-    messageTypesInt.add(RCIMIWMessageType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWMessageType.values.length) {
+      RCIWToast.showToast("messageTypes 超出范围");
+      return;
+    }
+    messageTypesInt.add(RCIMIWMessageType.values[elementValue]);
   }
   String keyword = arg['keyword'];
   IRCIMIWSearchConversationsCallback? callback;
@@ -5630,7 +5928,12 @@ changeNotificationQuietHours(Map arg) async {
 
   String startTime = arg['startTime'];
   int spanMinutes = int.parse(arg['spanMinutes']);
-  RCIMIWPushNotificationQuietHoursLevel level = RCIMIWPushNotificationQuietHoursLevel.values[int.parse(arg['level'])];
+  int? levelValue = int.tryParse(arg['level']);
+  if (levelValue == null || levelValue < 0 || levelValue >= RCIMIWPushNotificationQuietHoursLevel.values.length) {
+    RCIWToast.showToast("level 超出范围");
+    return;
+  }
+  RCIMIWPushNotificationQuietHoursLevel level = RCIMIWPushNotificationQuietHoursLevel.values[levelValue];
   IRCIMIWChangeNotificationQuietHoursCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWChangeNotificationQuietHoursCallback(
@@ -5837,10 +6140,20 @@ changeConversationNotificationLevel(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  RCIMIWPushNotificationLevel level = RCIMIWPushNotificationLevel.values[int.parse(arg['level'])];
+  int? levelValue = int.tryParse(arg['level']);
+  if (levelValue == null || levelValue < 0 || levelValue >= RCIMIWPushNotificationLevel.values.length) {
+    RCIWToast.showToast("level 超出范围");
+    return;
+  }
+  RCIMIWPushNotificationLevel level = RCIMIWPushNotificationLevel.values[levelValue];
   IRCIMIWChangeConversationNotificationLevelCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWChangeConversationNotificationLevelCallback(
@@ -5901,7 +6214,12 @@ loadConversationNotificationLevel(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadConversationNotificationLevel(type, targetId, channelId);
@@ -5948,7 +6266,12 @@ getConversationNotificationLevel(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWGetConversationNotificationLevelCallback? callback;
@@ -6026,8 +6349,18 @@ changeConversationTypeNotificationLevel(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
-  RCIMIWPushNotificationLevel level = RCIMIWPushNotificationLevel.values[int.parse(arg['level'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
+  int? levelValue = int.tryParse(arg['level']);
+  if (levelValue == null || levelValue < 0 || levelValue >= RCIMIWPushNotificationLevel.values.length) {
+    RCIWToast.showToast("level 超出范围");
+    return;
+  }
+  RCIMIWPushNotificationLevel level = RCIMIWPushNotificationLevel.values[levelValue];
   IRCIMIWChangeConversationTypeNotificationLevelCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWChangeConversationTypeNotificationLevelCallback(
@@ -6077,7 +6410,13 @@ loadConversationTypeNotificationLevel(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
+
   int? code = await IMEngineManager().engine?.loadConversationTypeNotificationLevel(type);
   DateTime now = DateTime.now();
   String timeStr =
@@ -6117,7 +6456,12 @@ getConversationTypeNotificationLevel(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   IRCIMIWGetConversationTypeNotificationLevelCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWGetConversationTypeNotificationLevelCallback(
@@ -6189,7 +6533,12 @@ changeUltraGroupDefaultNotificationLevel(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   String targetId = arg['targetId'];
-  RCIMIWPushNotificationLevel level = RCIMIWPushNotificationLevel.values[int.parse(arg['level'])];
+  int? levelValue = int.tryParse(arg['level']);
+  if (levelValue == null || levelValue < 0 || levelValue >= RCIMIWPushNotificationLevel.values.length) {
+    RCIWToast.showToast("level 超出范围");
+    return;
+  }
+  RCIMIWPushNotificationLevel level = RCIMIWPushNotificationLevel.values[levelValue];
   IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWChangeUltraGroupDefaultNotificationLevelCallback(
@@ -6356,7 +6705,12 @@ changeUltraGroupChannelDefaultNotificationLevel(Map arg) async {
 
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  RCIMIWPushNotificationLevel level = RCIMIWPushNotificationLevel.values[int.parse(arg['level'])];
+  int? levelValue = int.tryParse(arg['level']);
+  if (levelValue == null || levelValue < 0 || levelValue >= RCIMIWPushNotificationLevel.values.length) {
+    RCIWToast.showToast("level 超出范围");
+    return;
+  }
+  RCIMIWPushNotificationLevel level = RCIMIWPushNotificationLevel.values[levelValue];
   IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWChangeUltraGroupChannelDefaultNotificationLevelCallback(
@@ -6702,7 +7056,12 @@ loadMessageCount(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadMessageCount(type, targetId, channelId);
@@ -6749,7 +7108,12 @@ getMessageCount(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   IRCIMIWGetMessageCountCallback? callback;
@@ -6815,7 +7179,12 @@ loadTopConversations(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   int? code = await IMEngineManager().engine?.loadTopConversations(conversationTypesInt, channelId);
@@ -6860,7 +7229,12 @@ getTopConversations(Map arg) async {
   List conversationTypes = (arg["conversationTypes"]).split(",");
   List<RCIMIWConversationType> conversationTypesInt = [];
   for (var element in conversationTypes) {
-    conversationTypesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   String? channelId = arg['channelId'];
   IRCIMIWGetTopConversationsCallback? callback;
@@ -7002,7 +7376,12 @@ loadConversationsForAllChannel(Map arg) async {
     return;
   }
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   int? code = await IMEngineManager().engine?.loadConversationsForAllChannel(type, targetId);
   DateTime now = DateTime.now();
@@ -7048,7 +7427,12 @@ getConversationsForAllChannel(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   IRCIMIWGetConversationsForAllChannelCallback? callback;
   if (useCallback == 1) {
@@ -7153,7 +7537,12 @@ clearUltraGroupMessages(Map arg) async {
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
   int timestamp = int.parse(arg['timestamp']);
-  RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[int.parse(arg['policy'])];
+  int? policyValue = int.tryParse(arg['policy']);
+  if (policyValue == null || policyValue < 0 || policyValue >= RCIMIWMessageOperationPolicy.values.length) {
+    RCIWToast.showToast("policy 超出范围");
+    return;
+  }
+  RCIMIWMessageOperationPolicy policy = RCIMIWMessageOperationPolicy.values[policyValue];
   IRCIMIWClearUltraGroupMessagesCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWClearUltraGroupMessagesCallback(
@@ -7221,7 +7610,14 @@ sendUltraGroupTypingStatus(Map arg) async {
 
   String targetId = arg['targetId'];
   String? channelId = arg['channelId'];
-  RCIMIWUltraGroupTypingStatus typingStatus = RCIMIWUltraGroupTypingStatus.values[int.parse(arg['typingStatus'])];
+  int? typingStatusValue = int.tryParse(arg['typingStatus']);
+  if (typingStatusValue == null ||
+      typingStatusValue < 0 ||
+      typingStatusValue >= RCIMIWUltraGroupTypingStatus.values.length) {
+    RCIWToast.showToast("typingStatus 超出范围");
+    return;
+  }
+  RCIMIWUltraGroupTypingStatus typingStatus = RCIMIWUltraGroupTypingStatus.values[typingStatusValue];
   IRCIMIWSendUltraGroupTypingStatusCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWSendUltraGroupTypingStatusCallback(
@@ -7568,7 +7964,13 @@ changeLogLevel(Map arg) async {
     return;
   }
 
-  RCIMIWLogLevel level = RCIMIWLogLevel.values[int.parse(arg['level'])];
+  int? levelValue = int.tryParse(arg['level']);
+  if (levelValue == null || levelValue < 0 || levelValue >= RCIMIWLogLevel.values.length) {
+    RCIWToast.showToast("level 超出范围");
+    return;
+  }
+  RCIMIWLogLevel level = RCIMIWLogLevel.values[levelValue];
+
   int? code = await IMEngineManager().engine?.changeLogLevel(level);
   DateTime now = DateTime.now();
   String timeStr =
@@ -7908,7 +8310,12 @@ addConversationToTag(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   String tagId = arg['tagId'];
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   IRCIMIWAddConversationToTagCallback? callback;
   if (useCallback == 1) {
@@ -7975,7 +8382,12 @@ removeConversationFromTag(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   String tagId = arg['tagId'];
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   IRCIMIWRemoveConversationFromTagCallback? callback;
   if (useCallback == 1) {
@@ -8041,7 +8453,12 @@ removeTagsFromConversation(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   List<String> tagIds = (arg["tagIds"]).split(",");
   IRCIMIWRemoveTagsFromConversationCallback? callback;
@@ -8105,7 +8522,12 @@ getTagsFromConversation(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   IRCIMIWGetTagsFromConversationCallback? callback;
   if (useCallback == 1) {
@@ -8362,7 +8784,12 @@ changeConversationTopStatusInTag(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   String tagId = arg['tagId'];
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   int topInt = int.parse(arg['top']);
   bool top = topInt == 0 ? false : true;
@@ -8439,7 +8866,12 @@ getConversationTopStatusInTag(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   String tagId = arg['tagId'];
-  RCIMIWConversationType type = RCIMIWConversationType.values[int.parse(arg['type'])];
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
   String targetId = arg['targetId'];
   IRCIMIWGetConversationTopStatusInTagCallback? callback;
   if (useCallback == 1) {
@@ -10183,11 +10615,21 @@ batchSetConversationTranslateStrategy(Map arg) async {
   List types = (arg["types"]).split(",");
   List<RCIMIWConversationType> typesInt = [];
   for (var element in types) {
-    typesInt.add(RCIMIWConversationType.values[int.parse(element)]);
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("types 超出范围");
+      return;
+    }
+    typesInt.add(RCIMIWConversationType.values[elementValue]);
   }
   List<String> targetIds = (arg["targetIds"]).split(",");
   List<String> channelIds = (arg["channelIds"]).split(",");
-  RCIMIWTranslateStrategy strategy = RCIMIWTranslateStrategy.values[int.parse(arg['strategy'])];
+  int? strategyValue = int.tryParse(arg['strategy']);
+  if (strategyValue == null || strategyValue < 0 || strategyValue >= RCIMIWTranslateStrategy.values.length) {
+    RCIWToast.showToast("strategy 超出范围");
+    return;
+  }
+  RCIMIWTranslateStrategy strategy = RCIMIWTranslateStrategy.values[strategyValue];
   IRCIMIWTranslateResponseCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWTranslateResponseCallback(
@@ -10283,7 +10725,12 @@ updateMyUserProfileVisibility(Map arg) async {
   }
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  RCIMIWUserProfileVisibility visibility = RCIMIWUserProfileVisibility.values[int.parse(arg['visibility'])];
+  int? visibilityValue = int.tryParse(arg['visibility']);
+  if (visibilityValue == null || visibilityValue < 0 || visibilityValue >= RCIMIWUserProfileVisibility.values.length) {
+    RCIWToast.showToast("visibility 超出范围");
+    return;
+  }
+  RCIMIWUserProfileVisibility visibility = RCIMIWUserProfileVisibility.values[visibilityValue];
   IRCIMIWUpdateMyUserProfileVisibilityCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWUpdateMyUserProfileVisibilityCallback(
@@ -11098,6 +11545,926 @@ setMessageSpeechToTextVisible(Map arg) async {
       "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "setMessageSpeechToTextVisible";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_addFriend_call
+IRCIMIWAddFriendCallback? callback = IRCIMIWAddFriendCallback(onSuccess: (int? processCode) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.addFriend(userId, friendType, extra, callback:callback);
+//fun_addFriend_call
+*/
+
+addFriend(Map arg) async {
+  if (arg['userId'] == null) {
+    RCIWToast.showToast("userId 为空");
+    return;
+  }
+
+  if (arg['friendType'] == null) {
+    RCIWToast.showToast("friendType 为空");
+    return;
+  }
+
+  if (arg['extra'] == null) {
+    RCIWToast.showToast("extra 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String userId = arg['userId'];
+  int? friendTypeValue = int.tryParse(arg['friendType']);
+  if (friendTypeValue == null || friendTypeValue < 0 || friendTypeValue >= RCIMIWFriendType.values.length) {
+    RCIWToast.showToast("friendType 超出范围");
+    return;
+  }
+  RCIMIWFriendType friendType = RCIMIWFriendType.values[friendTypeValue];
+  String extra = arg['extra'];
+  IRCIMIWAddFriendCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWAddFriendCallback(
+      onSuccess: (int? processCode) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "addFriend-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["processCode"] = processCode.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "addFriend-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.addFriend(userId, friendType, extra, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "addFriend";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_deleteFriends_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.deleteFriends(userIds, friendType, callback:callback);
+//fun_deleteFriends_call
+*/
+
+deleteFriends(Map arg) async {
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+
+  if (arg['friendType'] == null) {
+    RCIWToast.showToast("friendType 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List<String> userIds = (arg["userIds"]).split(",");
+  int? friendTypeValue = int.tryParse(arg['friendType']);
+  if (friendTypeValue == null || friendTypeValue < 0 || friendTypeValue >= RCIMIWFriendType.values.length) {
+    RCIWToast.showToast("friendType 超出范围");
+    return;
+  }
+  RCIMIWFriendType friendType = RCIMIWFriendType.values[friendTypeValue];
+  IRCIMIWOperationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWOperationCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "deleteFriends-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "deleteFriends-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.deleteFriends(userIds, friendType, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "deleteFriends";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_acceptFriendApplication_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.acceptFriendApplication(userId, callback:callback);
+//fun_acceptFriendApplication_call
+*/
+
+acceptFriendApplication(Map arg) async {
+  if (arg['userId'] == null) {
+    RCIWToast.showToast("userId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String userId = arg['userId'];
+  IRCIMIWOperationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWOperationCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "acceptFriendApplication-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "acceptFriendApplication-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.acceptFriendApplication(userId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "acceptFriendApplication";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_refuseFriendApplication_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.refuseFriendApplication(userId, callback:callback);
+//fun_refuseFriendApplication_call
+*/
+
+refuseFriendApplication(Map arg) async {
+  if (arg['userId'] == null) {
+    RCIWToast.showToast("userId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String userId = arg['userId'];
+  IRCIMIWOperationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWOperationCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "refuseFriendApplication-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "refuseFriendApplication-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.refuseFriendApplication(userId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "refuseFriendApplication";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_setFriendInfo_call
+IRCIMIWSetFriendInfoCallback? callback = IRCIMIWSetFriendInfoCallback(onSuccess: () {
+    //...
+}, onError: (int? code, List<String>? errorKeys) {
+    //...
+});
+
+int? ret = await engine?.setFriendInfo(friendInfo, callback:callback);
+//fun_setFriendInfo_call
+*/
+
+setFriendInfo(Map arg) async {
+  if (arg['friendInfo'] == null) {
+    RCIWToast.showToast("friendInfo 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWFriendInfo friendInfo = arg['friendInfo'];
+  IRCIMIWSetFriendInfoCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSetFriendInfoCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setFriendInfo-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code, List<String>? errorKeys) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setFriendInfo-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+        arg["errorKeys"] = errorKeys.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.setFriendInfo(friendInfo, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "setFriendInfo";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_checkFriendsRelation_call
+IRCIMIWCheckFriendsRelationCallback? callback = IRCIMIWCheckFriendsRelationCallback(onSuccess: (List<RCIMIWFriendRelationInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.checkFriendsRelation(userIds, friendType, callback:callback);
+//fun_checkFriendsRelation_call
+*/
+
+checkFriendsRelation(Map arg) async {
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+
+  if (arg['friendType'] == null) {
+    RCIWToast.showToast("friendType 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List<String> userIds = (arg["userIds"]).split(",");
+  int? friendTypeValue = int.tryParse(arg['friendType']);
+  if (friendTypeValue == null || friendTypeValue < 0 || friendTypeValue >= RCIMIWFriendType.values.length) {
+    RCIWToast.showToast("friendType 超出范围");
+    return;
+  }
+  RCIMIWFriendType friendType = RCIMIWFriendType.values[friendTypeValue];
+  IRCIMIWCheckFriendsRelationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWCheckFriendsRelationCallback(
+      onSuccess: (List<RCIMIWFriendRelationInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "checkFriendsRelation-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "checkFriendsRelation-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.checkFriendsRelation(userIds, friendType, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "checkFriendsRelation";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getFriends_call
+IRCIMIWGetFriendsCallback? callback = IRCIMIWGetFriendsCallback(onSuccess: (List<RCIMIWFriendInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getFriends(friendType, callback:callback);
+//fun_getFriends_call
+*/
+
+getFriends(Map arg) async {
+  if (arg['friendType'] == null) {
+    RCIWToast.showToast("friendType 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int? friendTypeValue = int.tryParse(arg['friendType']);
+  if (friendTypeValue == null || friendTypeValue < 0 || friendTypeValue >= RCIMIWFriendType.values.length) {
+    RCIWToast.showToast("friendType 超出范围");
+    return;
+  }
+  RCIMIWFriendType friendType = RCIMIWFriendType.values[friendTypeValue];
+  IRCIMIWGetFriendsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetFriendsCallback(
+      onSuccess: (List<RCIMIWFriendInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriends-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriends-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getFriends(friendType, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getFriends";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getFriendApplications_call
+IRCIMIWGetFriendApplicationsCallback? callback = IRCIMIWGetFriendApplicationsCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getFriendApplications(applicationTypesInt, statusInt, queryOption, callback:callback);
+//fun_getFriendApplications_call
+*/
+
+getFriendApplications(Map arg) async {
+  if (arg['applicationTypes'] == null) {
+    RCIWToast.showToast("applicationTypes 为空");
+    return;
+  }
+
+  if (arg['status'] == null) {
+    RCIWToast.showToast("status 为空");
+    return;
+  }
+
+  if (arg['queryOption'] == null) {
+    RCIWToast.showToast("queryOption 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List applicationTypes = (arg["applicationTypes"]).split(",");
+  List<RCIMIWFriendApplicationType> applicationTypesInt = [];
+  for (var element in applicationTypes) {
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWFriendApplicationType.values.length) {
+      RCIWToast.showToast("applicationTypes 超出范围");
+      return;
+    }
+    applicationTypesInt.add(RCIMIWFriendApplicationType.values[elementValue]);
+  }
+
+  List status = (arg["status"]).split(",");
+  List<RCIMIWFriendApplicationStatus> statusInt = [];
+  for (var element in status) {
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWFriendApplicationStatus.values.length) {
+      RCIWToast.showToast("status 超出范围");
+      return;
+    }
+    statusInt.add(RCIMIWFriendApplicationStatus.values[elementValue]);
+  }
+  RCIMIWPagingQueryOption queryOption = arg['queryOption'];
+  IRCIMIWGetFriendApplicationsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetFriendApplicationsCallback(
+      onSuccess: (RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriendApplications-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = formatJson(t?.toJson());
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriendApplications-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getFriendApplications(
+    applicationTypesInt,
+    statusInt,
+    queryOption,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getFriendApplications";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getFriendsInfo_call
+IRCIMIWGetFriendsInfoCallback? callback = IRCIMIWGetFriendsInfoCallback(onSuccess: (List<RCIMIWFriendInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getFriendsInfo(userIds, callback:callback);
+//fun_getFriendsInfo_call
+*/
+
+getFriendsInfo(Map arg) async {
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List<String> userIds = (arg["userIds"]).split(",");
+  IRCIMIWGetFriendsInfoCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetFriendsInfoCallback(
+      onSuccess: (List<RCIMIWFriendInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriendsInfo-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriendsInfo-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getFriendsInfo(userIds, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getFriendsInfo";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_searchFriendsInfo_call
+IRCIMIWSearchFriendsInfoCallback? callback = IRCIMIWSearchFriendsInfoCallback(onSuccess: (List<RCIMIWFriendInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.searchFriendsInfo(keyword, callback:callback);
+//fun_searchFriendsInfo_call
+*/
+
+searchFriendsInfo(Map arg) async {
+  if (arg['keyword'] == null) {
+    RCIWToast.showToast("keyword 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String keyword = arg['keyword'];
+  IRCIMIWSearchFriendsInfoCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSearchFriendsInfoCallback(
+      onSuccess: (List<RCIMIWFriendInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "searchFriendsInfo-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "searchFriendsInfo-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.searchFriendsInfo(keyword, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "searchFriendsInfo";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_setFriendAllowType_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.setFriendAllowType(allowType, callback:callback);
+//fun_setFriendAllowType_call
+*/
+
+setFriendAllowType(Map arg) async {
+  if (arg['allowType'] == null) {
+    RCIWToast.showToast("allowType 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int? allowTypeValue = int.tryParse(arg['allowType']);
+  if (allowTypeValue == null || allowTypeValue < 0 || allowTypeValue >= RCIMIWFriendAllowType.values.length) {
+    RCIWToast.showToast("allowType 超出范围");
+    return;
+  }
+  RCIMIWFriendAllowType allowType = RCIMIWFriendAllowType.values[allowTypeValue];
+  IRCIMIWOperationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWOperationCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setFriendAllowType-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "setFriendAllowType-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.setFriendAllowType(allowType, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "setFriendAllowType";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getFriendAllowType_call
+IRCIMIWGetFriendAllowTypeCallback? callback = IRCIMIWGetFriendAllowTypeCallback(onSuccess: (RCIMIWFriendAllowType? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getFriendAllowType(callback:callback);
+//fun_getFriendAllowType_call
+*/
+
+getFriendAllowType(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  IRCIMIWGetFriendAllowTypeCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetFriendAllowTypeCallback(
+      onSuccess: (RCIMIWFriendAllowType? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriendAllowType-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = t.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getFriendAllowType-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getFriendAllowType(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getFriendAllowType";
   resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 
