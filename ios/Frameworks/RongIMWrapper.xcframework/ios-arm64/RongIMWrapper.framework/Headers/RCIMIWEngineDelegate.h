@@ -15,6 +15,7 @@
 #import <RongIMWrapper/RCIMIWSubscribeEvent.h>
 #import <RongIMWrapper/RCIMIWSubscribeInfoEvent.h>
 #import <RongIMWrapper/RCIMIWSpeechToTextInfo.h>
+#import <RongIMWrapper/RCIMIWStreamMessageChunkInfo.h>
 
 @class RCIMIWMessage;
 @class RCIMIWMediaMessage;
@@ -30,6 +31,7 @@
 @class RCIMIWChatRoomSyncEvent;
 @class RCIMIWChatRoomMemberBlockEvent;
 @class RCIMIWChatRoomMemberBanEvent;
+@class RCIMIWStreamMessageChunkInfo;
 
 #ifndef RCIMIWEngineDelegate_h
 #define RCIMIWEngineDelegate_h
@@ -96,6 +98,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onGroupMessageToDesignatedUsersAttached:(RCIMIWMessage *)message;
 
 - (void)onGroupMessageToDesignatedUsersSent:(NSInteger)code message:(RCIMIWMessage *)message;
+
+#pragma mark - Stream Message
+
+/// 流式消息请求初始化回调
+- (void)onStreamMessageRequestInit:(NSString *)messageUId;
+
+/// 流式消息增量数据回调
+- (void)onStreamMessageRequestData:(RCIMIWMessage *)message
+                         chunkInfo:(RCIMIWStreamMessageChunkInfo *)chunkInfo;
+
+/// 流式消息请求结束回调
+- (void)onStreamMessageRequestComplete:(NSString *)messageUId code:(NSInteger)code;
 
 #pragma mark - 获取历史消息
 

@@ -28,6 +28,14 @@
 		<data>
 		MuJgue62bVdALF9piwiMboWuMKU=
 		</data>
+		<key>Headers/RCIMIWCombineMsgInfo.h</key>
+		<data>
+		UVYnJVU2ggGrUeWGmcx9pcqA1NU=
+		</data>
+		<key>Headers/RCIMIWCombineV2Message.h</key>
+		<data>
+		yrog5B2kMDl3oKmgnXd19iLUF74=
+		</data>
 		<key>Headers/RCIMIWCommandMessage.h</key>
 		<data>
 		Qx757Ked5q26cEvzSx+fAp6GI9M=
@@ -54,15 +62,15 @@
 		</data>
 		<key>Headers/RCIMIWDefines.h</key>
 		<data>
-		hqDJo025Wg0azgBeAMcBRjBAkmg=
+		UgiGu0Inc1Eja9YHyx2dvFFApOM=
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		zjT+4L0nyi2ngw/oi7lkt7/wYxs=
+		z2liZwT7durgr1K7mljZdZUIaxc=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
-		4S8KODOeu2Q572zCeQAlnwlTHdo=
+		lJpVdHj28VDjJzWVAungV0lkWM8=
 		</data>
 		<key>Headers/RCIMIWEngineOptions.h</key>
 		<data>
@@ -118,7 +126,7 @@
 		</data>
 		<key>Headers/RCIMIWImageMessage.h</key>
 		<data>
-		KYDTFZHSu5lEYa4l+lg1KBxDKOs=
+		hwfMFCoulAsw66giDcxQ/vAYIbQ=
 		</data>
 		<key>Headers/RCIMIWLocationMessage.h</key>
 		<data>
@@ -166,7 +174,7 @@
 		</data>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
 		<data>
-		mfUjxLHVsbE49lehpEKxXQPyKQY=
+		mVS1QVI3JH/jaS54oOr+BU7XNkc=
 		</data>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
 		<data>
@@ -188,6 +196,10 @@
 		<data>
 		HSHUm9I3Bo1d1lJpgFIq/DVc+SA=
 		</data>
+		<key>Headers/RCIMIWReferenceInfo.h</key>
+		<data>
+		A+EeNWBfduxuF9LuQ3XTx+P4TdY=
+		</data>
 		<key>Headers/RCIMIWReferenceMessage.h</key>
 		<data>
 		grgrdiQxBQgcjcv5n0veJ+CAziI=
@@ -207,6 +219,18 @@
 		<key>Headers/RCIMIWSpeechToTextStatus.h</key>
 		<data>
 		QND/MODH3ZSPzgYcGh/+RlFOIEU=
+		</data>
+		<key>Headers/RCIMIWStreamMessage.h</key>
+		<data>
+		/554KKGNq/ZD5wyZTqNKWt18wQ8=
+		</data>
+		<key>Headers/RCIMIWStreamMessageChunkInfo.h</key>
+		<data>
+		pBZD80ZqiNS0aOe4yDbm5Mt6jnA=
+		</data>
+		<key>Headers/RCIMIWStreamMessageRequestParams.h</key>
+		<data>
+		eOm/EK9RkGzkkIBARMujDq7jDgg=
 		</data>
 		<key>Headers/RCIMIWSubscribeEvent.h</key>
 		<data>
@@ -310,7 +334,7 @@
 		</data>
 		<key>Headers/RongIMWrapper.h</key>
 		<data>
-		WeFW5bmrOEhsCPiW/IBhxt6GLdQ=
+		zUP4uM9zswXIB2QUXHG/yOlWJPM=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -319,6 +343,14 @@
 		<key>Modules/module.modulemap</key>
 		<data>
 		Vh9vdNQkaXreFCi1krLgoYVDvCg=
+		</data>
+		<key>PrivateHeaders/RCIMIWStreamMessageChunkInfo+Private.h</key>
+		<data>
+		dlYFGkrJtdLBl52x+lGSb/NNqU0=
+		</data>
+		<key>PrivateHeaders/RCIMIWStreamMessageRequestParams+Private.h</key>
+		<data>
+		jP8ZUuOnuAHPY2lt6tht7KXUGEo=
 		</data>
 		<key>RCConfig.plist</key>
 		<data>
@@ -393,6 +425,28 @@
 			3qyNB0H5upaGoS13Y4x/qqFvn2Af/gKWkWbvQ63eDlE=
 			</data>
 		</dict>
+		<key>Headers/RCIMIWCombineMsgInfo.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			UVYnJVU2ggGrUeWGmcx9pcqA1NU=
+			</data>
+			<key>hash2</key>
+			<data>
+			ELBY12Cvn9V85LKIip6uqJbVcTGWRIaCrgJSBliT5G0=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWCombineV2Message.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			yrog5B2kMDl3oKmgnXd19iLUF74=
+			</data>
+			<key>hash2</key>
+			<data>
+			8EJXoS7IOHWNj1vMQANIdvcU5rBQps5ud+tHvdxSOUA=
+			</data>
+		</dict>
 		<key>Headers/RCIMIWCommandMessage.h</key>
 		<dict>
 			<key>hash</key>
@@ -463,33 +517,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			hqDJo025Wg0azgBeAMcBRjBAkmg=
+			UgiGu0Inc1Eja9YHyx2dvFFApOM=
 			</data>
 			<key>hash2</key>
 			<data>
-			/WP0TrpUqyASKVnW4Uqx9joykXLRutama0nADkxq9Oc=
+			LLZftidFmgFj+ixTAmlXbCpkepaAvV/0HVsCXSN5Ukk=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngine.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zjT+4L0nyi2ngw/oi7lkt7/wYxs=
+			z2liZwT7durgr1K7mljZdZUIaxc=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZrEWhKL3Gf9TVMK79957W9UyhI3tq1B4Zeb48z4X/fU=
+			h23Ek9e0nc2Lp1UF7yAg7Nzm3xp4FtkYRcPISVlwYuk=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4S8KODOeu2Q572zCeQAlnwlTHdo=
+			lJpVdHj28VDjJzWVAungV0lkWM8=
 			</data>
 			<key>hash2</key>
 			<data>
-			VZQhxAcEEANaNg1N/ywl8SxAxa2HJReAi02OLR6otf0=
+			dBf73jtigPPHHqcOr2TJS/HYpaWQvJYUB1lNr6014Yo=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineOptions.h</key>
@@ -639,11 +693,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KYDTFZHSu5lEYa4l+lg1KBxDKOs=
+			hwfMFCoulAsw66giDcxQ/vAYIbQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			9vSrnft9SHddZuUKxnqwi3dqhwEcDSeDqpGrXGPjWy4=
+			gwjR7HZULbHEFT9HTZ+co72ERbJtIGHUgBb8wS2tm0U=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWLocationMessage.h</key>
@@ -771,11 +825,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			mfUjxLHVsbE49lehpEKxXQPyKQY=
+			mVS1QVI3JH/jaS54oOr+BU7XNkc=
 			</data>
 			<key>hash2</key>
 			<data>
-			PQOsE1FWUedZa8OndjVs4kwMa/sSK+chFZ9rOkOjrMc=
+			HqckqM2cYiDUo9fE1DiGapvzcysZzpghz4n1ngVH8UI=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
@@ -833,6 +887,17 @@
 			VAtEpwrT4z62jaovPsqE2nlYwLwvTwcacfyjUk4VVIc=
 			</data>
 		</dict>
+		<key>Headers/RCIMIWReferenceInfo.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			A+EeNWBfduxuF9LuQ3XTx+P4TdY=
+			</data>
+			<key>hash2</key>
+			<data>
+			j70jeeSmKOg2CfWMcW3FZKTnJ3sZFCMmLCHX5uQUT5Y=
+			</data>
+		</dict>
 		<key>Headers/RCIMIWReferenceMessage.h</key>
 		<dict>
 			<key>hash</key>
@@ -886,6 +951,39 @@
 			<key>hash2</key>
 			<data>
 			+IRX+o90VkWUeG+MvhJ+n2U8oezql2sJIW3Q3sQlIT8=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWStreamMessage.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			/554KKGNq/ZD5wyZTqNKWt18wQ8=
+			</data>
+			<key>hash2</key>
+			<data>
+			Zqlu5kaUmv1d1DyjUWJ1E9epLK+SgYplZJQpObSocx4=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWStreamMessageChunkInfo.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			pBZD80ZqiNS0aOe4yDbm5Mt6jnA=
+			</data>
+			<key>hash2</key>
+			<data>
+			KQ84v/Q1LDH420M097Q1KxmEu9k1UG+q1i5PsH9rkk8=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWStreamMessageRequestParams.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			eOm/EK9RkGzkkIBARMujDq7jDgg=
+			</data>
+			<key>hash2</key>
+			<data>
+			uQKi/LY2AE+AJnj0/1YKyquskN6833GmQlVq2y1+AIs=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWSubscribeEvent.h</key>
@@ -1167,11 +1265,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			WeFW5bmrOEhsCPiW/IBhxt6GLdQ=
+			zUP4uM9zswXIB2QUXHG/yOlWJPM=
 			</data>
 			<key>hash2</key>
 			<data>
-			KQfrYfkUAoLonLnKAbqETDDZvQqHuZ3Kh7m4Jb+rwuM=
+			26HzI0caAohw9LExTSzmfN5rt/gY939FkCma+dPLAUM=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -1183,6 +1281,28 @@
 			<key>hash2</key>
 			<data>
 			6yfqbvnbVio5ptAdCyz4sU2INYt+rvxvT8q9gkJ+AkQ=
+			</data>
+		</dict>
+		<key>PrivateHeaders/RCIMIWStreamMessageChunkInfo+Private.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			dlYFGkrJtdLBl52x+lGSb/NNqU0=
+			</data>
+			<key>hash2</key>
+			<data>
+			otmafU4S3AbLjb0E4fhXD7CTBAA3TH7Yx18sYCAXAgk=
+			</data>
+		</dict>
+		<key>PrivateHeaders/RCIMIWStreamMessageRequestParams+Private.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			jP8ZUuOnuAHPY2lt6tht7KXUGEo=
+			</data>
+			<key>hash2</key>
+			<data>
+			aNeo+5uh4ilNesuJACu/cOH4Bu5gR+DdRaFMKMmxLnE=
 			</data>
 		</dict>
 		<key>RCConfig.plist</key>

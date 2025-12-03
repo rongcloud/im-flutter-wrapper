@@ -940,6 +940,16 @@ enum RCIMIWMessageType {
 
   /// [ZH]
   /// ---
+  /// 流式消息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Stream Message
+  /// ---
+  stream,
+
+  /// [ZH]
+  /// ---
   /// 原生自定义媒体消息
   /// ---
   /// [EN]
@@ -948,8 +958,25 @@ enum RCIMIWMessageType {
   /// ---
   nativeCustomMedia,
 
+  /// [ZH]
+  /// ---
   /// 群通知消息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group Notification Message
+  /// ---
   groupNotification,
+
+  /// [ZH]
+  /// ---
+  /// 合并转发V2消息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Combine V2 Message
+  /// ---
+  combineV2,
 }
 
 enum RCIMIWMessageBlockType {
@@ -1341,6 +1368,16 @@ enum RCIMIWAreaCode {
   /// China (Beijing) Data Center
   /// ---
   sa,
+
+  /// [ZH]
+  /// ---
+  /// 阿曼数据中心
+  /// ---
+  /// [EN]
+  /// ---
+  /// Oman Data Center
+  /// ---
+  om,
 }
 
 enum RCIMIWChatRoomEntriesOperationType {

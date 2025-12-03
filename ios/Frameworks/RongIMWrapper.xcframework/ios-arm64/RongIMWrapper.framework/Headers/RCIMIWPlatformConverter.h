@@ -15,6 +15,9 @@
 @class RCIMIWUltraGroupTypingStatusInfo;
 @class RCIMIWMessage;
 @class RCIMIWMediaMessage;
+@class RCIMIWStreamMessage;
+@class RCIMIWReferenceInfo;
+@class RCIMIWStreamMessageChunkInfo;
 @class RCIMIWMessagePushOptions;
 @class RCIMIWCompressOptions;
 @class RCIMIWEngineOptions;
@@ -48,6 +51,9 @@
 @class RCIMIWFriendInfo;
 @class RCIMIWFriendRelationInfo;
 @class RCIMIWFriendApplicationInfo;
+@class RCIMIWStreamMessageRequestParams;
+@class RCIMIWCombineV2Message;
+@class RCIMIWCombineMsgInfo;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -82,6 +88,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary *)convertMediaMessageToDict:(RCIMIWMediaMessage *)message;
 + (RCIMIWMediaMessage *)convertMediaMessageFromDict:(NSDictionary *)message;
+
+// StreamMessage
++ (NSDictionary *)convertStreamMessageToDict:(RCIMIWStreamMessage *)message;
++ (RCIMIWStreamMessage *)convertStreamMessageFromDict:(NSDictionary *)message;
+
+// ReferenceInfo
++ (NSDictionary *)convertReferenceInfoToDict:(RCIMIWReferenceInfo *)referenceInfo;
++ (RCIMIWReferenceInfo *)convertReferenceInfoFromDict:(NSDictionary *)referenceInfo;
+
+// StreamMessageChunkInfo
++ (NSDictionary *)convertStreamMessageChunkInfoToDict:(RCIMIWStreamMessageChunkInfo *)chunkInfo;
++ (RCIMIWStreamMessageChunkInfo *)convertStreamMessageChunkInfoFromDict:(NSDictionary *)chunkInfo;
+
+// StreamMessageRequestParams
++ (NSDictionary *)convertStreamMessageRequestParamsToDict:(RCIMIWStreamMessageRequestParams *)params;
++ (RCIMIWStreamMessageRequestParams *)convertStreamMessageRequestParamsFromDict:(NSDictionary *)params;
 
 
 // AndroidPushOptions
@@ -184,6 +206,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (RCIMIWFriendRelationInfo *)convertFriendRelationInfoFromDict:(NSDictionary *)dict;
 + (NSDictionary *)convertFriendApplicationInfoToDict:(RCIMIWFriendApplicationInfo *)applicationInfo;
 + (RCIMIWFriendApplicationInfo *)convertFriendApplicationInfoFromDict:(NSDictionary *)dict;
+
+// CombineV2
++ (NSDictionary *)convertCombineV2MessageToDict:(RCIMIWCombineV2Message *)msg;
++ (RCIMIWCombineV2Message *)convertCombineV2MessageFromDict:(NSDictionary *)dic;
++ (NSDictionary *)convertCombineMsgInfoToDict:(RCIMIWCombineMsgInfo *)info;
++ (RCIMIWCombineMsgInfo *)convertCombineMsgInfoFromDict:(NSDictionary *)dic;
 
 @end
 

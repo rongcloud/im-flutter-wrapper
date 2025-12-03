@@ -272,6 +272,8 @@ class RCIMIWEngine {
   /// Register Native Custom Message
   /// - [messageIdentifier] The unique identifier of the message
   /// - [persistentFlag] The storage strategy of the message
+  /// non-zero indicates failure. Refer to the error codes for detailed
+  /// error information.
   /// ---
   Future<int> registerNativeCustomMessage(
     String messageIdentifier,
@@ -292,6 +294,8 @@ class RCIMIWEngine {
   /// Register Native Custom Media Message
   /// - [messageIdentifier] The unique identifier of the message.
   /// - [persistentFlag] The storage strategy of the message.
+  /// while non-zero values indicate failure. Refer to the error codes for
+  /// detailed error information.
   /// ---
   Future<int> registerNativeCustomMediaMessage(
     String messageIdentifier,
@@ -302,25 +306,50 @@ class RCIMIWEngine {
 
   /// [ZH]
   /// ---
-  /// 连接融云服务器，在整个应用程序全局，只需要调用一次。调用此接口返回非业务错误码时，SDK 会启动重连机制进行重连；如果仍没有连接成功，会在设备网络状态变化时再次进行重连。
+  /// 连接融云服务器，在整个应用程序全局，只需要调用一次。调用此接口返回非业务错误码时，SDK
+  /// 会启动重连机制进行重连；如果仍没有连接成功，会在设备网络状态变化时再次进行重连。
   /// - [token] 调用 server api 获取到的 token
   /// - [timeout] 连接超时时间，单位：秒。
   /// timeout ≤ 0，则 IM 将一直连接，直到连接成功或者无法连接（如 token 非法）
   /// timeout > 0，则 IM 将最多连接 timeout 秒
-  /// 如果在 timeout 秒内连接成功，后面再发生了网络变化或前后台切换，SDK 会自动重连； 如果在 timeout 秒无法连接成功则不再进行重连，通过 listener 告知连接超时，您需要再自行调用 connect 接口
-  /// - [callback] 链接事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// 如果在 timeout 秒内连接成功，后面再发生了网络变化或前后台切换，SDK 会自动重连； 如果在 timeout
+  /// 秒无法连接成功则不再进行重连，通过 listener 告知连接超时，您需要再自行调用 connect 接口
+  /// - [callback] 链接事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] 接口回调可以监听 [onConnected]
   /// ---
   /// [EN]
   /// ---
-  /// Connect to the RongCloud server. This interface should be called only once globally throughout the application. When this interface returns a non-business error code, the SDK will initiate a reconnection mechanism. If the connection is still unsuccessful, the SDK will attempt to reconnect when the device's network status changes.
+  /// Connect to the RongCloud server. This interface should be called
+  /// only once globally throughout the application. When this interface
+  /// returns a non-business error code, the SDK will initiate a
+  /// reconnection mechanism. If the connection is still unsuccessful,
+  /// the SDK will attempt to reconnect when the device's network status
+  /// changes.
   /// - [token] The token obtained by calling the server API.
   /// - [timeout] Connection timeout duration in seconds.
-  /// If timeout ≤ 0, the IM will keep trying to connect until it succeeds or fails (e.g., due to an invalid token).
-  /// If timeout > 0, the IM will attempt to connect for a maximum of timeout seconds.
-  /// If the connection is successful within timeLimit seconds, the SDK will automatically reconnect in case of network changes or app state transitions. If the connection fails within timeLimit seconds, no further reconnection attempts will be made, and the listener will notify of a connection timeout. You will need to manually call the connect interface again.
-  /// - [callback] Connection event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// If timeout ≤ 0, the IM will keep trying to connect until it
+  /// succeeds or fails (e.g., due to an invalid token).
+  /// If timeout > 0, the IM will attempt to connect for a maximum
+  /// of timeout seconds.
+  /// If the connection is successful within timeLimit seconds, the
+  /// SDK will automatically reconnect in case of network changes
+  /// or app state transitions. If the connection fails within
+  /// timeLimit seconds, no further reconnection attempts will be
+  /// made, and the listener will notify of a connection timeout.
+  /// You will need to manually call the connect interface again.
+  /// - [callback] Connection event callback. The SDK has supported
+  /// callback-style callbacks since version 5.3.1. Other callback
+  /// methods for this interface were deprecated in version 5.4.0
+  /// and are expected to be removed in version 6.x. If the
+  /// callback parameter is provided, only the callback will be
+  /// triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. A non-zero value indicates that the current
+  /// interface call operation failed, and no interface callback will be
+  /// triggered. Refer to the error codes for detailed error information.
   /// @listener The interface callback can listen to [onConnected].
   /// ---
   Future<int> connect(String token, int timeout, {RCIMIWConnectCallback? callback}) async {
@@ -337,8 +366,19 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Disconnect
-  /// Note: Since the SDK automatically reconnects when the app switches between foreground and background or when network exceptions occur, ensuring connection reliability, this method is generally not required for manual disconnection unless your app logic requires logout.
-  /// - [receivePush] Specifies whether to receive push notifications after disconnection. true: continue receiving remote push notifications after disconnection; false: stop receiving remote push notifications after disconnection.
+  /// Note: Since the SDK automatically reconnects when the app switches
+  /// between foreground and background or when network exceptions occur,
+  /// ensuring connection reliability, this method is generally not
+  /// required for manual disconnection unless your app logic requires
+  /// logout.
+  /// - [receivePush] Specifies whether to receive push notifications after
+  /// disconnection. true: continue receiving remote push
+  /// notifications after disconnection; false: stop receiving
+  /// remote push notifications after disconnection.
+  /// call, and the specific result needs to be handled through the
+  /// interface callback. Non-zero indicates that the current operation
+  /// failed, and the interface callback will not be triggered. Refer to
+  /// the error codes for detailed error information.
   /// ---
   Future<int> disconnect(bool receivePush) async {
     return RCIMWrapperPlatform.instance.disconnect(receivePush);
@@ -371,7 +411,8 @@ class RCIMIWEngine {
   /// Build Text Message
   /// - [type] Specifies the conversation type.
   /// - [targetId] Specifies the conversation ID.
-  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass `null`.
+  /// - [channelId] Specifies the channel ID, which is only supported for ultra
+  /// groups. For other conversation types, pass `null`.
   /// - [text] Specifies the text content.
   /// ---
   Future<RCIMIWTextMessage?> createTextMessage(
@@ -397,7 +438,8 @@ class RCIMIWEngine {
   /// Create an Image Message
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
   /// - [path] Local path of the image message. Must be a valid path.
   /// ---
   Future<RCIMIWImageMessage?> createImageMessage(
@@ -423,8 +465,10 @@ class RCIMIWEngine {
   /// Build File Message
   /// - [type] Specifies the conversation type.
   /// - [targetId] Specifies the conversation ID.
-  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
-  /// - [path] Specifies the local path of the file message, which must be a valid path.
+  /// - [channelId] Specifies the channel ID, which is only supported for ultra
+  /// groups. For other conversation types, pass null.
+  /// - [path] Specifies the local path of the file message, which must be
+  /// a valid path.
   /// ---
   Future<RCIMIWFileMessage?> createFileMessage(
     RCIMIWConversationType type,
@@ -450,7 +494,8 @@ class RCIMIWEngine {
   /// Build Short Video Message
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
   /// - [path] Local path of the short video message. Must be a valid path.
   /// - [duration] Duration of the short video message
   /// ---
@@ -479,8 +524,10 @@ class RCIMIWEngine {
   /// Build a Voice Message (HD Voice)
   /// - [type] Specifies the conversation type.
   /// - [targetId] Specifies the conversation ID.
-  /// - [channelId] Specifies the channel ID. Only supported for ultra groups. For other conversation types, pass null.
-  /// - [path] Specifies the local path of the voice message. Must be a valid path.
+  /// - [channelId] Specifies the channel ID. Only supported for ultra groups.
+  /// For other conversation types, pass null.
+  /// - [path] Specifies the local path of the voice message. Must be a
+  /// valid path.
   /// - [duration] Specifies the duration of the voice message.
   /// ---
   Future<RCIMIWVoiceMessage?> createVoiceMessage(
@@ -495,22 +542,70 @@ class RCIMIWEngine {
 
   /// [ZH]
   /// ---
+  /// 构建合并转发消息
+  /// - [type] 目标会话类型，消息要发送到的会话类型
+  /// - [targetId] 目标会话 ID，消息要发送到的会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [conversationType] 被转发消息的原始会话类型，用于消息标题展示（如"A和B的聊天记录"或"群聊的聊天记录"）
+  /// - [summaryList] 转发的消息展示的缩略内容列表
+  /// - [nameList] 转发的全部消息的发送者名称列表
+  /// - [msgList] 转发的消息体内容列表
+  /// - [返回值] 合并转发消息实体
+  /// ---
+  /// [EN]
+  /// ---
+  /// Build combine forward message
+  /// - [type]    Target conversation type, the type of conversation to
+  /// send the message to
+  /// - [targetId] Target conversation ID, the ID of the conversation to
+  /// send the message to
+  /// - [channelId] Channel ID, only supported for ultra groups. For
+  /// other conversation types, pass null.
+  /// - [conversationType] The original conversation type of the forwarded
+  /// messages, used for message title display
+  /// - [summaryList] Summary list of forwarded messages
+  /// - [nameList] Name list of all message senders
+  /// - [msgList] List of forwarded message content
+  /// ---
+  Future<RCIMIWCombineV2Message?> createCombineV2Message(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    RCIMIWConversationType conversationType,
+    List<String> summaryList,
+    List<String> nameList,
+    List<RCIMIWCombineMsgInfo> msgList,
+  ) async {
+    return RCIMWrapperPlatform.instance.createCombineV2Message(
+      type,
+      targetId,
+      channelId,
+      conversationType,
+      summaryList,
+      nameList,
+      msgList,
+    );
+  }
+
+  /// [ZH]
+  /// ---
   /// 构建引用消息
   /// - [type] 会话类型
-  /// - [targetId]    会话 ID
-  /// - [channelId]   频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [referenceMessage] 引用的消息
-  /// - [text]   引用的文本内容
+  /// - [text]    引用的文本内容
   /// - [返回值] 引用消息实体
   /// ---
   /// [EN]
   /// ---
   /// Construct a reference message
-  /// - [type]   Conversation type
-  /// - [targetId]    Conversation ID
-  /// - [channelId]   Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [type]    Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. For
+  /// other conversation types, pass null.
   /// - [referenceMessage] The referenced message
-  /// - [text]   The referenced text content
+  /// - [text]    The referenced text content
   /// ---
   Future<RCIMIWReferenceMessage?> createReferenceMessage(
     RCIMIWConversationType type,
@@ -536,7 +631,8 @@ class RCIMIWEngine {
   /// Build GIF Message
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
   /// - [path] Local path of the GIF message
   /// ---
   Future<RCIMIWGIFMessage?> createGIFMessage(
@@ -552,22 +648,23 @@ class RCIMIWEngine {
   /// ---
   /// 构建自定义消息
   /// - [type] 会话类型
-  /// - [targetId]     会话 ID
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [policy]  消息的存储策略
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [policy]   消息的存储策略
   /// - [messageIdentifier] 消息的标识符，需唯一
-  /// - [fields]  消息的内容键值对
+  /// - [fields]   消息的内容键值对
   /// - [返回值] 自定义消息实体
   /// ---
   /// [EN]
   /// ---
   /// Build Custom Message
-  /// - [type]    Conversation type
-  /// - [targetId]     Conversation ID
-  /// - [channelId]    Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [policy]  Message storage policy
+  /// - [type]     Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass
+  /// null for other conversation types.
+  /// - [policy]   Message storage policy
   /// - [messageIdentifier] Message identifier, must be unique
-  /// - [fields]  Key-value pairs of message content
+  /// - [fields]   Key-value pairs of message content
   /// ---
   Future<RCIMIWCustomMessage?> createCustomMessage(
     RCIMIWConversationType type,
@@ -595,19 +692,20 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [longitude] 经度
   /// - [latitude] 纬度
-  /// - [poiName]  POI 信息
+  /// - [poiName] POI 信息
   /// - [thumbnailPath] 缩略图本地路径，必须为有效路径
   /// - [返回值] 位置消息实体
   /// ---
   /// [EN]
   /// ---
   /// Construct Location Message
-  /// - [type]     Conversation type
+  /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null
+  /// for other conversation types.
   /// - [longitude] Longitude
   /// - [latitude] Latitude
-  /// - [poiName]  POI information
+  /// - [poiName] POI information
   /// - [thumbnailPath] Local path of the thumbnail, must be a valid path
   /// ---
   Future<RCIMIWLocationMessage?> createLocationMessage(
@@ -637,17 +735,18 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messageIdentifier] 消息的标识符，需唯一
-  /// - [fields] 消息的内容键值对
+  /// - [fields]   消息的内容键值对
   /// - [返回值] 原生自定义普通消息
   /// ---
   /// [EN]
   /// ---
   /// Build Native Custom Regular Message
-  /// - [type] Conversation type
+  /// - [type]     Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass
+  /// null for other conversation types.
   /// - [messageIdentifier] Unique identifier for the message
-  /// - [fields] Key-value pairs for the message content
+  /// - [fields]   Key-value pairs for the message content
   /// ---
   Future<RCIMIWNativeCustomMessage?> createNativeCustomMessage(
     RCIMIWConversationType type,
@@ -666,19 +765,20 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messageIdentifier] 消息的标识符，需唯一
-  /// - [path] 媒体文件的本地路径，必须为有效路径
-  /// - [fields] 消息的内容键值对
+  /// - [path]     媒体文件的本地路径，必须为有效路径
+  /// - [fields]   消息的内容键值对
   /// - [返回值] 原生自定义媒体消息
   /// ---
   /// [EN]
   /// ---
   /// Build Native Custom Media Message
-  /// - [type] Conversation type
+  /// - [type]     Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass
+  /// null for other conversation types.
   /// - [messageIdentifier] Unique identifier for the message
-  /// - [path] Local path of the media file, must be a valid path
-  /// - [fields] Key-value pairs for the message content
+  /// - [path]     Local path of the media file, must be a valid path
+  /// - [fields]   Key-value pairs for the message content
   /// ---
   Future<RCIMIWNativeCustomMediaMessage?> createNativeCustomMediaMessage(
     RCIMIWConversationType type,
@@ -702,7 +802,9 @@ class RCIMIWEngine {
   /// ---
   /// 发送普通消息
   /// - [message] 发送的消息实体
-  /// - [callback] 发送消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 发送消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] 接口回调可以监听 [onMessageAttached],[onMessageSent]
   /// ---
@@ -710,8 +812,18 @@ class RCIMIWEngine {
   /// ---
   /// Send a Normal Message
   /// - [message] The message object to be sent.
-  /// - [callback] The event callback for sending the message. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
-  /// @listener The interface callback can listen to [onMessageAttached], [onMessageSent].
+  /// - [callback] The event callback for sending the message. The SDK supports
+  /// callback-based responses starting from version 5.3.1. Other
+  /// callback methods for this interface are deprecated as of
+  /// version 5.4.0 and are expected to be removed in version 6.x.
+  /// If the callback parameter is provided, only the callback will
+  /// be triggered.
+  /// successful call, and the specific result needs to be handled via the
+  /// interface callback. A non-zero value indicates that the current
+  /// operation failed, and no interface callback will be triggered. Refer
+  /// to the error codes for detailed error information.
+  /// @listener The interface callback can listen to [onMessageAttached],
+  /// [onMessageSent].
   /// ---
   Future<int> sendMessage(RCIMIWMessage message, {RCIMIWSendMessageCallback? callback}) async {
     return RCIMWrapperPlatform.instance.sendMessage(message, callback: callback);
@@ -723,14 +835,20 @@ class RCIMIWEngine {
   /// - [message] 发送的媒体消息实体
   /// - [listener] 发送媒体消息的事件监听
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] 接口回调可以监听 [onMediaMessageSending],[onMediaMessageAttached],[onMediaMessageSent]
+  /// - [接口回调] 接口回调可以监听
+  /// [onMediaMessageSending],[onMediaMessageAttached],[onMediaMessageSent]
   /// ---
   /// [EN]
   /// ---
   /// Send Media Message
   /// - [message] The media message object to be sent
   /// - [listener] Event listener for sending media messages
-  /// @listener The interface callback can listen to [onMediaMessageSending], [onMediaMessageAttached], [onMediaMessageSent]
+  /// call, and the specific result needs to be implemented through the
+  /// interface callback. Non-zero indicates that the current API call
+  /// operation failed, and no interface callback will be triggered. Refer
+  /// to the error codes for detailed errors.
+  /// @listener The interface callback can listen to [onMediaMessageSending],
+  /// [onMediaMessageAttached], [onMediaMessageSent]
   /// ---
   Future<int> sendMediaMessage(RCIMIWMediaMessage message, {RCIMIWSendMediaMessageListener? listener}) async {
     return RCIMWrapperPlatform.instance.sendMediaMessage(message, listener: listener);
@@ -740,7 +858,9 @@ class RCIMIWEngine {
   /// ---
   /// 取消发送媒体消息
   /// - [message] 需要取消发送的媒体消息实体
-  /// - [callback] 取消发送媒体消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 取消发送媒体消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] 接口回调可以监听 [onSendingMediaMessageCanceled]
   /// ---
@@ -748,8 +868,18 @@ class RCIMIWEngine {
   /// ---
   /// Cancel Sending Media Message
   /// - [message] The media message entity to be canceled
-  /// - [callback] The event callback for canceling the media message. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
-  /// @listener The interface callback can be monitored via [onSendingMediaMessageCanceled]
+  /// - [callback] The event callback for canceling the media message. The SDK
+  /// supports callback mode starting from version 5.3.1. Other
+  /// callback methods for this interface are deprecated in version
+  /// 5.4.0 and are expected to be removed in version 6.x. If the
+  /// callback parameter is provided, only the callback will be
+  /// triggered.
+  /// successful, and the specific result requires implementing the
+  /// interface callback. Non-zero indicates the current operation failed,
+  /// and no interface callback will be triggered. Refer to the error codes
+  /// for detailed error information.
+  /// @listener The interface callback can be monitored via
+  /// [onSendingMediaMessageCanceled]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> cancelSendingMediaMessage(
@@ -772,7 +902,10 @@ class RCIMIWEngine {
   /// Download Media Message
   /// - [message] The media message entity to be downloaded
   /// - [listener] The event listener for media message download
-  /// @listener  [onMediaMessageDownloaded], [onMediaMessageDownloading]
+  /// the specific result needs to be obtained through the interface
+  /// callback. Non-zero indicates that the current operation failed, and
+  /// no callback will be triggered. Refer to the error codes for detailed
+  /// error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> downloadMediaMessage(RCIMIWMediaMessage message, {RCIMIWDownloadMediaMessageListener? listener}) async {
@@ -783,15 +916,27 @@ class RCIMIWEngine {
   /// ---
   /// 取消下载媒体消息
   /// - [message] 需要取消下载的媒体消息实体
-  /// - [callback] 取消下载媒体消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 取消下载媒体消息的事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDownloadingMediaMessageCanceled]
   /// ---
   /// [EN]
   /// ---
   /// Cancel Media Message Download
-  /// - [message] The media message entity for which the download needs to be canceled.
-  /// - [callback] The event callback for canceling the media message download. The SDK supports callback-based notifications starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [message] The media message entity for which the download needs to be
+  /// canceled.
+  /// - [callback] The event callback for canceling the media message download.
+  /// The SDK supports callback-based notifications starting from
+  /// version 5.3.1. Other callback methods for this interface are
+  /// deprecated as of version 5.4.0 and are expected to be removed
+  /// in version 6.x. If the callback parameter is provided, only
+  /// the callback will be triggered.
+  /// call, and the specific result needs to be handled by the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no callback will be triggered. Refer to the error codes for
+  /// detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> cancelDownloadingMediaMessage(
@@ -809,14 +954,23 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationLoaded]
+  /// {@link #getConversation(RCIMIWConversationType, String, String, IRCIMIWGetConversationCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load a Conversation
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups; pass null for other conversation types
-  /// @deprecated Use {@link #getConversation(RCIMIWConversationType, String, String, IRCIMIWGetConversationCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Channel ID, only supported for ultra groups; pass null for
+  /// other conversation types
+  /// the specific result needs to be implemented via the callback
+  /// interface. Non-zero values indicate that the current API operation
+  /// failed, and the callback will not be triggered. Refer to the error
+  /// codes for detailed error information.
+  /// @deprecated Use
+  /// {@link #getConversation(RCIMIWConversationType, String, String, IRCIMIWGetConversationCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversation] 代替')
   Future<int> loadConversation(RCIMIWConversationType type, String targetId, String? channelId) async {
@@ -836,8 +990,18 @@ class RCIMIWEngine {
   /// Retrieve a Conversation
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// - [callback] Callback for retrieving the conversation. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
+  /// - [callback] Callback for retrieving the conversation. SDK supports
+  /// callback method from version 5.3.1. Other callback methods
+  /// for this interface are deprecated starting from version
+  /// 5.4.0 and will be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback method will be
+  /// triggered.
+  /// and the specific result needs to be handled in the interface
+  /// callback. Non-zero values indicate a failure in the current
+  /// operation, and no callback will be triggered. Refer to the error
+  /// codes for detailed error information.
   /// @listener [onConversationLoaded]
   Future<int> getConversation(
     RCIMIWConversationType type,
@@ -852,20 +1016,31 @@ class RCIMIWEngine {
   /// ---
   /// 加载某些会话
   /// - [conversationTypes] 会话类型
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可
-  /// - [startTime]    时间戳（毫秒），获取小于此时间戳的会话，传 0 为查询最新数据
-  /// - [count]   查询的数量， 0 < count ≤ 50
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
+  /// - [startTime] 时间戳（毫秒），获取小于此时间戳的会话，传 0 为查询最新数据
+  /// - [count]    查询的数量， 0 < count ≤ 50
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoaded]
+  /// {@link #getConversations(List, String, long, int, IRCIMIWGetConversationsCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load specific conversations
   /// - [conversationTypes] Conversation types
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [startTime] Timestamp (in milliseconds). Retrieve conversations with timestamps earlier than this value. Pass 0 to query the latest data.
-  /// - [count] Number of conversations to query, 0 < count ≤ 50
-  /// @deprecated Use {@link #getConversations(List, String, long, int, IRCIMIWGetConversationsCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass
+  /// null for other conversation types.
+  /// - [startTime] Timestamp (in milliseconds). Retrieve conversations
+  /// with timestamps earlier than this value. Pass 0 to
+  /// query the latest data.
+  /// - [count]    Number of conversations to query, 0 < count ≤ 50
+  /// specific result requires implementing the callback interface.
+  /// Non-zero values indicate that the current operation failed, and the
+  /// callback will not be triggered. Refer to the error codes for detailed
+  /// error information.
+  /// @deprecated Use
+  /// {@link #getConversations(List, String, long, int, IRCIMIWGetConversationsCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversations] 代替')
   Future<int> loadConversations(
@@ -881,19 +1056,34 @@ class RCIMIWEngine {
   /// ---
   /// 获取某些会话
   /// - [conversationTypes] 会话类型
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可
-  /// - [startTime]    时间戳（毫秒），获取小于此时间戳的会话，传 0 为查询最新数据
-  /// - [count]   查询的数量， 0 < count ≤ 50
-  /// - [callback]     获取会话列表事件回调。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
+  /// - [startTime] 时间戳（毫秒），获取小于此时间戳的会话，传 0 为查询最新数据
+  /// - [count]    查询的数量， 0 < count ≤ 50
+  /// - [callback] 获取会话列表事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// Retrieve Certain Conversations
   /// - [conversationTypes] Specifies the conversation types.
-  /// - [channelId] Indicates the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
-  /// - [startTime] Represents the timestamp (in milliseconds) for retrieving conversations before this time. Pass 0 to query the latest data.
-  /// - [count] Specifies the number of conversations to retrieve, where 0 < count ≤ 50.
-  /// - [callback] Indicates the callback for retrieving the conversation list. The SDK supports callback-based retrieval starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [channelId] Indicates the channel ID, which is only supported
+  /// for ultra groups. For other conversation types, pass
+  /// null.
+  /// - [startTime] Represents the timestamp (in milliseconds) for
+  /// retrieving conversations before this time. Pass 0 to
+  /// query the latest data.
+  /// - [count]    Specifies the number of conversations to retrieve,
+  /// where 0 < count ≤ 50.
+  /// - [callback] Indicates the callback for retrieving the
+  /// conversation list. The SDK supports callback-based
+  /// retrieval starting from version 5.3.1. Other
+  /// callback methods for this interface were deprecated
+  /// in version 5.4.0 and are expected to be removed in
+  /// version 6.x. If the callback parameter is provided,
+  /// only the callback method will be triggered.
+  /// indicates a successful call, and specific results need to be handled
+  /// through the interface callback. A non-zero value indicates that the
+  /// current operation failed, and no interface callback will be
+  /// triggered. Refer to the error codes for detailed error information.
   /// @listener [onConversationsLoaded]
   Future<int> getConversations(
     List<RCIMIWConversationType> conversationTypes,
@@ -915,22 +1105,24 @@ class RCIMIWEngine {
   /// ---
   /// 获取某些会话，可设置是否优先置顶
   /// - [conversationTypes] 会话类型
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可
-  /// - [startTime]    时间戳（毫秒），获取小于此时间戳的会话，传 0 为查询最新数据
-  /// - [count]   查询的数量， 0 < count <= 50
-  /// - [topPriority]  是否优先置顶，true: 优先置顶，false: 不优先置顶
-  /// - [callback]     获取会话列表事件回调。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
+  /// - [startTime] 时间戳（毫秒），获取小于此时间戳的会话，传 0 为查询最新数据
+  /// - [count]    查询的数量， 0 < count <= 50
+  /// - [topPriority] 是否优先置顶，true: 优先置顶，false: 不优先置顶
+  /// - [callback] 获取会话列表事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
   /// Get conversations with optional pin priority
   /// - [conversationTypes] Conversation type
-  /// - [channelId]  Channel ID (ultra group only), set null for other types
-  /// - [startTime]    Timestamp in ms (0 for latest data)
-  /// - [count]   Number to query (0 < count ≤ 50)
-  /// - [topPriority]  Pin priority: true/false
-  /// - [callback]     Callback for conversation list
+  /// - [channelId] Channel ID (ultra group only), set null for other
+  /// types
+  /// - [startTime] Timestamp in ms (0 for latest data)
+  /// - [count]    Number to query (0 < count ≤ 50)
+  /// - [topPriority] Pin priority: true/false
+  /// - [callback] Callback for conversation list
+  /// failure, no callback)
   /// ---
   Future<int> getConversationsWithPriority(
     List<RCIMIWConversationType> conversationTypes,
@@ -959,9 +1151,16 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// ---
-  /// Retrieve the conversation list with unread messages of the specified type.
-  /// - [conversationTypes] Supported conversation types include one-to-one chat, group chat, and system conversation.
-  /// - [callback] Callback function for retrieving the conversation list.
+  /// Retrieve the conversation list with unread messages of the specified
+  /// type.
+  /// - [conversationTypes] Supported conversation types include one-to-one
+  /// chat, group chat, and system conversation.
+  /// - [callback] Callback function for retrieving the conversation
+  /// list.
+  /// and the specific result needs to be obtained through the callback.
+  /// Non-zero values indicate a failed operation, and the callback will
+  /// not be triggered. Refer to the error codes for detailed error
+  /// information.
   /// ---
   Future<int> getUnreadConversations(
     List<RCIMIWConversationType> conversationTypes, {
@@ -976,7 +1175,9 @@ class RCIMIWEngine {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
-  /// - [callback] 移除会话事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 移除会话事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationRemoved]
   /// ---
@@ -985,8 +1186,18 @@ class RCIMIWEngine {
   /// Remove a Conversation
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types
-  /// - [callback] Callback for the conversation removal event. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types
+  /// - [callback] Callback for the conversation removal event. SDK supports
+  /// callback method starting from version 5.3.1. Other callback
+  /// methods for this interface are deprecated as of version
+  /// 5.4.0 and are expected to be removed in version 6.x. If the
+  /// callback parameter is provided, only the callback method
+  /// will be triggered.
+  /// and the specific result needs to be implemented in the interface
+  /// callback. Non-zero values indicate that the current operation failed
+  /// and the interface callback will not be triggered. Refer to the error
+  /// codes for detailed error information.
   /// ---
   Future<int> removeConversation(
     RCIMIWConversationType type,
@@ -1001,8 +1212,10 @@ class RCIMIWEngine {
   /// ---
   /// 根据会话类型移除会话
   /// - [conversationTypes] 会话类型集合
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback]     移除会话列表事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [callback] 移除会话列表事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback
+  /// 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsRemoved]
   /// ---
@@ -1010,8 +1223,18 @@ class RCIMIWEngine {
   /// ---
   /// Remove conversations based on conversation type
   /// - [conversationTypes] A collection of conversation types
-  /// - [channelId]    Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [callback]     Callback for the conversation removal event. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass
+  /// null for other conversation types.
+  /// - [callback] Callback for the conversation removal event. SDK
+  /// supports callback method from version 5.3.1. Other
+  /// callback methods for this interface are deprecated
+  /// starting from version 5.4.0 and will be removed in
+  /// version 6.x. If the callback parameter is provided,
+  /// only the callback method will be triggered.
+  /// and the specific result needs to be handled in the interface
+  /// callback. Non-zero values indicate a failure in the current
+  /// operation, and no callback will be triggered. Refer to the error
+  /// codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> removeConversations(
@@ -1031,6 +1254,8 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountLoaded]
+  /// {@link #getUnreadCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadCountCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
@@ -1038,8 +1263,14 @@ class RCIMIWEngine {
   /// Note: Chatrooms are not supported!
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @deprecated Use {@link #getUnreadCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadCountCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
+  /// specific result requires implementing the callback interface.
+  /// Non-zero indicates failure, and no callback will be triggered. Refer
+  /// to the error codes for detailed errors.
+  /// @deprecated Use
+  /// {@link #getUnreadCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadCountCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUnreadCount] 代替')
   Future<int> loadUnreadCount(RCIMIWConversationType type, String targetId, String? channelId) async {
@@ -1061,8 +1292,18 @@ class RCIMIWEngine {
   /// Note: Not supported for chatrooms!
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// - [callback] Callback for retrieving the unread count of the conversation. SDK supports callback-based retrieval starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
+  /// - [callback] Callback for retrieving the unread count of the
+  /// conversation. SDK supports callback-based retrieval starting
+  /// from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented via the
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no callback will be triggered. Refer to the error codes for
+  /// detailed error information.
   /// @listener [onUnreadCountLoaded]
   Future<int> getUnreadCount(
     RCIMIWConversationType type,
@@ -1079,12 +1320,21 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onTotalUnreadCountLoaded]
+  /// {@link #getTotalUnreadCount(String, IRCIMIWGetTotalUnreadCountCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load All Unread Counts
-  /// - [channelId] Indicates the channel ID. This parameter is only supported for ultra groups. For other conversation types, pass `null`.
-  /// @deprecated Use {@link #getTotalUnreadCount(String, IRCIMIWGetTotalUnreadCountCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Indicates the channel ID. This parameter is only supported
+  /// for ultra groups. For other conversation types, pass `null`.
+  /// `0` indicates the call was successful, and the specific result
+  /// requires implementing the interface callback. A non-zero value
+  /// indicates the API call failed, and the interface callback will not be
+  /// triggered. Refer to the error codes for detailed error information.
+  /// @deprecated Use
+  /// {@link #getTotalUnreadCount(String, IRCIMIWGetTotalUnreadCountCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   @Deprecated('请使用 [getTotalUnreadCount] 代替')
@@ -1101,8 +1351,17 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Get Total Unread Count
-  /// - [channelId] Channel ID, supported only for ultra groups. For other conversation types, pass null.
-  /// - [callback] Callback for the total unread count event. The SDK supports callback-based handling starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in the 6.x version. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, supported only for ultra groups. For other
+  /// conversation types, pass null.
+  /// - [callback] Callback for the total unread count event. The SDK supports
+  /// callback-based handling starting from version 5.3.1. Other
+  /// callback methods for this interface were deprecated in
+  /// version 5.4.0 and are expected to be removed in the 6.x
+  /// version. If the callback parameter is provided, only the
+  /// callback will be triggered.
+  /// and the specific result needs to be handled in the callback. Non-zero
+  /// values indicate a failed operation, and no callback will be
+  /// triggered. Refer to the error codes for detailed error information.
   /// @listener [onTotalUnreadCountLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   Future<int> getTotalUnreadCount(String? channelId, {IRCIMIWGetTotalUnreadCountCallback? callback}) async {
@@ -1118,6 +1377,8 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadMentionedCountLoaded]
+  /// {@link #getUnreadMentionedCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedCountCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
@@ -1125,8 +1386,14 @@ class RCIMIWEngine {
   /// Note: Not supported for chatrooms!
   /// - [type] Specifies the conversation type.
   /// - [targetId] Specifies the conversation ID.
-  /// - [channelId] Specifies the channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @deprecated Use {@link #getUnreadMentionedCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedCountCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Specifies the channel ID, only supported for ultra groups.
+  /// Pass null for other conversation types.
+  /// success, and the specific result requires implementing the interface
+  /// callback. Non-zero indicates failure, and no callback will be
+  /// triggered. Refer to the error codes for detailed error information.
+  /// @deprecated Use
+  /// {@link #getUnreadMentionedCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedCountCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUnreadMentionedCount] 代替')
   Future<int> loadUnreadMentionedCount(RCIMIWConversationType type, String targetId, String? channelId) async {
@@ -1148,8 +1415,18 @@ class RCIMIWEngine {
   /// Note: This feature is not supported in chatrooms!
   /// - [type] Specifies the conversation type.
   /// - [targetId] Specifies the conversation ID.
-  /// - [channelId] Specifies the channel ID. This is only supported for ultra groups. For other conversation types, pass `null`.
-  /// - [callback] Callback triggered when the count of unread @ messages is retrieved. The SDK has supported callback mode since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
+  /// - [channelId] Specifies the channel ID. This is only supported for ultra
+  /// groups. For other conversation types, pass `null`.
+  /// - [callback] Callback triggered when the count of unread @ messages is
+  /// retrieved. The SDK has supported callback mode since version
+  /// 5.3.1. Other callback methods for this interface were
+  /// deprecated in version 5.4.0 and are expected to be removed
+  /// in version 6.x. If the `callback` parameter is provided,
+  /// only the callback method will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// callback. A non-zero value indicates that the operation failed, and
+  /// the callback will not be triggered. Refer to the error codes for
+  /// detailed error information.
   /// @listener [onUnreadMentionedCountLoaded]
   Future<int> getUnreadMentionedCount(
     RCIMIWConversationType type,
@@ -1165,11 +1442,20 @@ class RCIMIWEngine {
   /// 加载当前用户加入的所有超级群会话的未读消息数的总和。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupAllUnreadCountLoaded]
+  /// {@link #getUltraGroupAllUnreadCount(IRCIMIWGetUltraGroupAllUnreadCountCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
-  /// Load the total count of unread messages from all ultra group conversations the current user has joined.
-  /// @deprecated Use {@link #getUltraGroupAllUnreadCount(IRCIMIWGetUltraGroupAllUnreadCountCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// Load the total count of unread messages from all ultra group
+  /// conversations the current user has joined.
+  /// was successful, and the specific result requires implementing the
+  /// interface callback. Non-zero indicates the current API call failed,
+  /// and no interface callback will be triggered. For detailed errors,
+  /// refer to the error codes.
+  /// @deprecated Use
+  /// {@link #getUltraGroupAllUnreadCount(IRCIMIWGetUltraGroupAllUnreadCountCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupAllUnreadCount] 代替')
   Future<int> loadUltraGroupAllUnreadCount() async {
@@ -1183,8 +1469,17 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
-  /// Get the total count of unread messages from all ultra group conversations the current user has joined.
-  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If a callback parameter is provided, only the callback will be triggered.
+  /// Get the total count of unread messages from all ultra group
+  /// conversations the current user has joined.
+  /// - [callback] Event callback. The SDK supports callback-based responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface were deprecated in version 5.4.0 and are expected
+  /// to be removed in version 6.x. If a callback parameter is
+  /// provided, only the callback will be triggered.
+  /// successful call, and the specific result needs to be obtained through
+  /// the interface callback. Non-zero values indicate that the current
+  /// interface call failed, and no callback will be triggered. Refer to
+  /// the error codes for detailed error information.
   /// @listener [onUltraGroupAllUnreadCountLoaded]
   Future<int> getUltraGroupAllUnreadCount({IRCIMIWGetUltraGroupAllUnreadCountCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getUltraGroupAllUnreadCount(callback: callback);
@@ -1195,11 +1490,20 @@ class RCIMIWEngine {
   /// 加载当前用户加入的所有超级群会话中的未读 @ 消息数的总和。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupAllUnreadMentionedCountLoaded]
+  /// {@link #getUltraGroupAllUnreadMentionedCount(IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
-  /// Load the total count of unread mentions in all ultra group conversations that the current user has joined.
-  /// @deprecated Use {@link #getUltraGroupAllUnreadMentionedCount(IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// Load the total count of unread mentions in all ultra group
+  /// conversations that the current user has joined.
+  /// successful call, and the specific result needs to be handled by the
+  /// interface callback. Non-zero values indicate that the current API
+  /// call failed, and no callback will be triggered. For detailed error
+  /// information, refer to the error codes.
+  /// @deprecated Use
+  /// {@link #getUltraGroupAllUnreadMentionedCount(IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupAllUnreadMentionedCount] 代替')
   Future<int> loadUltraGroupAllUnreadMentionedCount() async {
@@ -1213,8 +1517,17 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
-  /// Retrieve the total count of unread @ mentions across all ultra group conversations the current user has joined.
-  /// - [callback] Event callback. SDK supports callback-based events starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback event will be triggered.
+  /// Retrieve the total count of unread @ mentions across all ultra group
+  /// conversations the current user has joined.
+  /// - [callback] Event callback. SDK supports callback-based events starting
+  /// from version 5.3.1. Other callback methods for this interface
+  /// were deprecated in version 5.4.0 and are expected to be
+  /// removed in version 6.x. If the callback parameter is
+  /// provided, only the callback event will be triggered.
+  /// successful call, and specific results need to be handled through the
+  /// interface callback. Non-zero values indicate that the current
+  /// interface call operation failed, and no interface callback will be
+  /// triggered. Refer to the error codes for detailed error information.
   /// @listener [onUltraGroupAllUnreadMentionedCountLoaded]
   Future<int> getUltraGroupAllUnreadMentionedCount({
     IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback? callback,
@@ -1228,12 +1541,20 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupUnreadCountLoaded]
+  /// {@link #getUltraGroupUnreadCount(String, IRCIMIWGetUltraGroupUnreadCountCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Get the unread message count for a specified conversation
   /// - [targetId] The conversation ID
-  /// @deprecated Use {@link #getUltraGroupUnreadCount(String, IRCIMIWGetUltraGroupUnreadCountCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// successful call, and the specific result needs to be handled by the
+  /// interface callback. Non-zero indicates that the current API call
+  /// failed, and no interface callback will be triggered. For detailed
+  /// error information, refer to the error codes.
+  /// @deprecated Use
+  /// {@link #getUltraGroupUnreadCount(String, IRCIMIWGetUltraGroupUnreadCountCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupUnreadCount] 代替')
   Future<int> loadUltraGroupUnreadCount(String targetId) async {
@@ -1250,7 +1571,15 @@ class RCIMIWEngine {
   /// [EN]
   /// Get the unread message count for a specified conversation
   /// - [targetId] Conversation ID
-  /// - [callback] Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-style responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are expected
+  /// to be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback method will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. A non-zero value indicates that the current
+  /// operation failed, and no callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// @listener [onUltraGroupUnreadCountLoaded]
   Future<int> getUltraGroupUnreadCount(String targetId, {IRCIMIWGetUltraGroupUnreadCountCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getUltraGroupUnreadCount(targetId, callback: callback);
@@ -1262,12 +1591,21 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupUnreadMentionedCountLoaded]
+  /// {@link #getUltraGroupUnreadMentionedCount(String, IRCIMIWGetUltraGroupUnreadMentionedCountCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
-  /// Get the count of unread mentioned messages in an ultra group conversation.
+  /// Get the count of unread mentioned messages in an ultra group
+  /// conversation.
   /// - [targetId] The conversation ID.
-  /// @deprecated Use {@link #getUltraGroupUnreadMentionedCount(String, IRCIMIWGetUltraGroupUnreadMentionedCountCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no callback will be triggered. Refer to the error codes for
+  /// detailed error information.
+  /// @deprecated Use
+  /// {@link #getUltraGroupUnreadMentionedCount(String, IRCIMIWGetUltraGroupUnreadMentionedCountCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupUnreadMentionedCount] 代替')
   Future<int> loadUltraGroupUnreadMentionedCount(String targetId) async {
@@ -1282,9 +1620,18 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
-  /// Retrieve the count of mentioned messages in an ultra group conversation
+  /// Retrieve the count of mentioned messages in an ultra group
+  /// conversation
   /// - [targetId] The conversation ID
-  /// - [callback] The event callback. SDK supports callback-style events starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If a callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. SDK supports callback-style events
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are expected
+  /// to be removed in version 6.x. If a callback parameter is
+  /// provided, only the callback will be triggered.
+  /// call, and specific results need to be handled via the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no callback will be triggered. Refer to the error codes for
+  /// detailed error information.
   /// @listener [onUltraGroupUnreadMentionedCountLoaded]
   Future<int> getUltraGroupUnreadMentionedCount(
     String targetId, {
@@ -1298,19 +1645,29 @@ class RCIMIWEngine {
   /// 根据会话类型加载未读数
   /// 注：不支持聊天室！
   /// - [conversationTypes] 会话类型集合
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [contain]      是否包含免打扰消息的未读消息数。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [contain]  是否包含免打扰消息的未读消息数。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountByConversationTypesLoaded]
+  /// {@link #getUnreadCountByConversationTypes(List, String, boolean, IRCIMIWGetUnreadCountByConversationTypesCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load Unread Count by Conversation Type
   /// Note: Not supported for chatrooms!
   /// - [conversationTypes] Specifies the collection of conversation types.
-  /// - [channelId] Indicates the channel ID. This parameter is only supported for ultra groups. For other conversation types, pass `null`.
-  /// - [contain] Indicates whether to include unread messages from muted conversations.
-  /// @deprecated Use {@link #getUnreadCountByConversationTypes(List, String, boolean, IRCIMIWGetUnreadCountByConversationTypesCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Indicates the channel ID. This parameter is only
+  /// supported for ultra groups. For other conversation
+  /// types, pass `null`.
+  /// - [contain]  Indicates whether to include unread messages from
+  /// muted conversations.
+  /// success, and the specific result requires implementing the callback
+  /// interface. Non-zero values indicate failure, and no callback will be
+  /// triggered. Refer to the error codes for detailed information.
+  /// @deprecated Use
+  /// {@link #getUnreadCountByConversationTypes(List, String, boolean, IRCIMIWGetUnreadCountByConversationTypesCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   @Deprecated('请使用 [getUnreadCountByConversationTypes] 代替')
@@ -1327,18 +1684,31 @@ class RCIMIWEngine {
   /// 根据会话类型加载未读数
   /// 注：不支持聊天室！
   /// - [conversationTypes] 会话类型集合
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [contain]      是否包含免打扰消息的未读消息数。
-  /// - [callback]     事件回调。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [contain]  是否包含免打扰消息的未读消息数。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// Load unread count based on conversation type
   /// Note: Chatrooms are not supported!
   /// - [conversationTypes] Specifies the collection of conversation types.
-  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
-  /// - [contain] Indicates whether to include unread messages from muted conversations.
-  /// - [callback] Specifies the event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [channelId] Specifies the channel ID, which is only supported
+  /// for ultra groups. For other conversation types, pass
+  /// null.
+  /// - [contain]  Indicates whether to include unread messages from
+  /// muted conversations.
+  /// - [callback] Specifies the event callback. The SDK supports
+  /// callback mode starting from version 5.3.1. Other
+  /// callback methods for this interface are deprecated
+  /// as of version 5.4.0 and are expected to be removed
+  /// in version 6.x. If the callback parameter is
+  /// provided, only the callback method will be
+  /// triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. Non-zero indicates that the current operation
+  /// failed, and the interface callback will not be triggered. Refer to
+  /// the error codes for detailed error information.
   /// @listener [onUnreadCountByConversationTypesLoaded]
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   Future<int> getUnreadCountByConversationTypes(
@@ -1359,16 +1729,18 @@ class RCIMIWEngine {
   /// ---
   /// 根据会话的免打扰级别加载未读数
   /// - [conversationTypes] 会话类型列表
-  /// - [levels] 免打扰级别列表
+  /// - [levels]   免打扰级别列表
   /// - [callback] 获取会话未读消息数回调
-  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0
+  /// 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
   /// Load unread count by conversation's DND level
   /// - [conversationTypes] List of conversation types
-  /// - [levels] List of DND levels
+  /// - [levels]   List of DND levels
   /// - [callback] Callback for unread message count
+  /// failure (no callback triggered). See error codes for details
   /// ---
   Future<int> getUnreadCountByLevels(
     List<RCIMIWConversationType> conversationTypes,
@@ -1386,7 +1758,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [timestamp] 该会话已阅读的最后一条消息的发送时间戳，清除所有传入当前最新时间戳
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountCleared]
   /// ---
@@ -1396,9 +1770,18 @@ class RCIMIWEngine {
   /// Note: Not supported for chatrooms!
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [timestamp] The timestamp of the last read message in the conversation. Pass the latest timestamp to clear all.
-  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in the 6.x version. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
+  /// - [timestamp] The timestamp of the last read message in the conversation.
+  /// Pass the latest timestamp to clear all.
+  /// - [callback] Event callback. The SDK supports callback-based responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and will be
+  /// removed in the 6.x version. If the callback parameter is
+  /// provided, only the callback method will be triggered.
+  /// call, and the specific result needs to be handled by the callback.
+  /// Non-zero values indicate the operation failed, and no callback will
+  /// be triggered. Refer to the error codes for details.
   /// ---
   Future<int> clearUnreadCount(
     RCIMIWConversationType type,
@@ -1417,7 +1800,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [draft] 草稿的文字内容。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageSaved]
   /// ---
@@ -1426,9 +1811,18 @@ class RCIMIWEngine {
   /// Save conversation draft information.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
   /// - [draft] The text content of the draft.
-  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-based responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero values indicate that the current
+  /// operation failed, and no interface callback will be triggered. For
+  /// detailed error information, refer to the error codes.
   /// ---
   Future<int> saveDraftMessage(
     RCIMIWConversationType type,
@@ -1448,14 +1842,22 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageLoaded]
+  /// {@link #getDraftMessage(RCIMIWConversationType, String, String, IRCIMIWGetDraftMessageCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Loads the draft message in the conversation.
   /// - [type] The type of the conversation.
   /// - [targetId] The ID of the conversation.
-  /// - [channelId] The channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @deprecated Use {@link #getDraftMessage(RCIMIWConversationType, String, String, IRCIMIWGetDraftMessageCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] The channel ID, only supported for ultra groups. Pass null
+  /// for other conversation types.
+  /// the specific result requires implementing the callback interface.
+  /// Non-zero indicates failure, and the callback will not be triggered.
+  /// Refer to the error codes for detailed error information.
+  /// @deprecated Use
+  /// {@link #getDraftMessage(RCIMIWConversationType, String, String, IRCIMIWGetDraftMessageCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getDraftMessage] 代替')
   Future<int> loadDraftMessage(RCIMIWConversationType type, String targetId, String? channelId) async {
@@ -1475,8 +1877,17 @@ class RCIMIWEngine {
   /// Retrieve draft information from a conversation.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, supported only for ultra groups. Pass null for other conversation types.
-  /// - [callback] Event callback. The SDK supports callback-based event handling starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, supported only for ultra groups. Pass null for
+  /// other conversation types.
+  /// - [callback] Event callback. The SDK supports callback-based event
+  /// handling starting from version 5.3.1. Other callback methods
+  /// for this interface are deprecated as of version 5.4.0 and
+  /// are expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. Non-zero values indicate a failed operation, and no
+  /// callback will be triggered. Refer to the error codes for detailed
+  /// error information.
   /// @listener [onDraftMessageLoaded]
   Future<int> getDraftMessage(
     RCIMIWConversationType type,
@@ -1493,7 +1904,9 @@ class RCIMIWEngine {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageCleared]
   /// ---
@@ -1502,9 +1915,17 @@ class RCIMIWEngine {
   /// Deletes draft information from the specified conversation.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// - [callback] Event callback. SDK supports callback mode from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
-  /// @listener [onDraftMessageCleared]
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
+  /// - [callback] Event callback. SDK supports callback mode from version
+  /// 5.3.1. Other callback methods for this interface are
+  /// deprecated starting from version 5.4.0 and are expected to
+  /// be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback method will be triggered.
+  /// results need to be implemented via the callback interface. Non-zero
+  /// values indicate that the current operation failed and the callback
+  /// will not be triggered. Refer to the error codes for detailed error
+  /// information.
   /// ---
   Future<int> clearDraftMessage(
     RCIMIWConversationType type,
@@ -1519,16 +1940,25 @@ class RCIMIWEngine {
   /// ---
   /// 加载免打扰的会话列表。
   /// - [conversationTypes] 会话类型集合
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlockedConversationsLoaded]
+  /// {@link #getBlockedConversations(List, String, IRCIMIWGetBlockedConversationsCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load the list of conversations with Do Not Disturb enabled.
   /// - [conversationTypes] Collection of conversation types
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass `null` for other conversation types.
-  /// @deprecated Use {@link #getBlockedConversations(List, String, IRCIMIWGetBlockedConversationsCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass
+  /// `null` for other conversation types.
+  /// call, and the specific result requires implementing the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no callback will be triggered. Refer to the error codes for
+  /// detailed information.
+  /// @deprecated Use
+  /// {@link #getBlockedConversations(List, String, IRCIMIWGetBlockedConversationsCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 在 Flutter For Web 端，此接口返回的会话对象数据中只有 targetId,channelId,conversationType 是正确的，其他值均为默认值
   @Deprecated('请使用 [getBlockedConversations] 代替')
@@ -1540,15 +1970,25 @@ class RCIMIWEngine {
   /// ---
   /// 获取免打扰的会话列表。
   /// - [conversationTypes] 会话类型集合
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback]     事件回调。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// Retrieve the list of conversations with Do Not Disturb enabled.
   /// - [conversationTypes] A collection of conversation types.
-  /// - [channelId]    The channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [callback]     The event callback. The SDK has supported callback-based responses since version 5.3.1. Other callback methods for this interface have been deprecated since version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] The channel ID, only supported for ultra groups.
+  /// Pass null for other conversation types.
+  /// - [callback] The event callback. The SDK has supported
+  /// callback-based responses since version 5.3.1. Other
+  /// callback methods for this interface have been
+  /// deprecated since version 5.4.0 and are expected to
+  /// be removed in version 6.x. If the callback parameter
+  /// is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no callback will be triggered. Refer to the error codes for
+  /// detailed error information.
   /// @listener [onBlockedConversationsLoaded]
   /// 在 Flutter For Web 端，此接口返回的会话对象数据中只有 targetId,channelId,conversationType 是正确的，其他值均为默认值
   Future<int> getBlockedConversations(
@@ -1565,19 +2005,33 @@ class RCIMIWEngine {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [top]  是否置顶
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [top] 是否置顶
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTopStatusChanged]
   /// ---
   /// [EN]
   /// ---
-  /// Sets the pinned status of a conversation. If the conversation does not exist, calling this method will automatically create and pin the conversation.
+  /// Sets the pinned status of a conversation. If the conversation does
+  /// not exist, calling this method will automatically create and pin
+  /// the conversation.
   /// - [type] Specifies the conversation type.
   /// - [targetId] Specifies the conversation ID.
-  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
-  /// - [top]  Indicates whether to pin the conversation.
-  /// - [callback] Specifies the event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Specifies the channel ID, which is only supported for ultra
+  /// groups. For other conversation types, pass null.
+  /// - [top] Indicates whether to pin the conversation.
+  /// - [callback] Specifies the event callback. The SDK supports
+  /// callback-style callbacks starting from version 5.3.1. Other
+  /// callback methods for this interface were deprecated in
+  /// version 5.4.0 and are expected to be removed in version 6.x.
+  /// If the callback parameter is provided, only the callback
+  /// will be triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. Non-zero values indicate that the current
+  /// operation failed, and no interface callback will be triggered. Refer
+  /// to the error codes for detailed error information.
   /// ---
   /// 此接口在 Flutter For Web 端不支持超级群
   Future<int> changeConversationTopStatus(
@@ -1594,24 +2048,31 @@ class RCIMIWEngine {
   /// ---
   /// 设置会话的置顶状态。若会话不存在，调用此方法 SDK 自动创建会话并置顶。
   /// - [type] conversation type
-  /// - [targetId] conversation ID
-  /// - [channelId] 频道 ID，仅支持ultra group使用，其他conversation type传 null 即可。
-  /// - [top]  是否置顶
+  /// - [targetId]   conversation ID
+  /// - [channelId]  频道 ID，仅支持ultra group使用，其他conversation type传 null
+  /// 即可。
+  /// - [top]        是否置顶
   /// - [updateOperationTime] 是否更新操作事件，默认不更新，如果需要更新请传 true
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback]   事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback
+  /// 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTopStatusChanged]
   /// ---
   /// [EN]
   /// ---
-  /// Pin or unpin a conversation. SDK auto-creates missing conversations.
-  /// - [type] Conversation type
-  /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID (ultra group only, set null for others)
-  /// - [top] Pin status
+  /// Pin or unpin a conversation. SDK auto-creates missing
+  /// conversations.
+  /// - [type]       Conversation type
+  /// - [targetId]   Conversation ID
+  /// - [channelId]  Channel ID (ultra group only, set null for others)
+  /// - [top]        Pin status
   /// - [updateOperationTime] Update operation timestamp (default: false)
-  /// - [callback] Event callback (supported since v5.3.1). Other callback methods deprecated in v5.4.0 and will be removed in v6.x. Callback param overrides all other callbacks.
-  /// @listener [onConversationTopStatusChanged]
+  /// - [callback]   Event callback (supported since v5.3.1). Other
+  /// callback methods deprecated in v5.4.0 and will be
+  /// removed in v6.x. Callback param overrides all
+  /// other callbacks.
+  /// failure, no callback)
   /// ---
   Future<int> changeConversationTopStatusWithUpdateTme(
     RCIMIWConversationType type,
@@ -1639,14 +2100,23 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTopStatusLoaded]
+  /// {@link #getConversationTopStatus(RCIMIWConversationType, String, String, IRCIMIWGetConversationTopStatusCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load the pinned status of a conversation
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @deprecated Use {@link #getConversationTopStatus(RCIMIWConversationType, String, String, IRCIMIWGetConversationTopStatusCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
+  /// the specific result requires implementing the interface callback.
+  /// Non-zero indicates the current operation failed, and the interface
+  /// callback will not be triggered. Refer to the error codes for detailed
+  /// error information.
+  /// @deprecated Use
+  /// {@link #getConversationTopStatus(RCIMIWConversationType, String, String, IRCIMIWGetConversationTopStatusCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口在 Flutter For Web 端不支持超级群
   @Deprecated('请使用 [getConversationTopStatus] 代替')
@@ -1667,8 +2137,17 @@ class RCIMIWEngine {
   /// Get the pinned status of a conversation
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// - [callback] Event callback. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
+  /// - [callback] Event callback. SDK supports callback method from version
+  /// 5.3.1. Other callback methods for this interface are
+  /// deprecated starting from version 5.4.0 and are expected to
+  /// be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback will be triggered.
+  /// successful call, and specific results need to be implemented through
+  /// the interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and the interface callback will not be
+  /// triggered. Refer to the error codes for detailed errors.
   /// @listener [onConversationTopStatusLoaded]
   /// 此接口在 Flutter For Web 端不支持超级群
   Future<int> getConversationTopStatus(
@@ -1687,7 +2166,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [timestamp] 会话中已读的最后一条消息的发送时间戳
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationReadStatusSynced]
   /// ---
@@ -1696,9 +2177,18 @@ class RCIMIWEngine {
   /// Synchronize conversation read status.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
   /// - [timestamp] Timestamp of the last read message in the conversation
-  /// - [callback] Event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [callback] Event callback. SDK supports callback method starting from
+  /// version 5.3.1. Other callback methods for this interface are
+  /// deprecated as of version 5.4.0 and are expected to be
+  /// removed in version 6.x. If the callback parameter is
+  /// provided, only the callback method will be triggered.
+  /// invocation, and specific results need to be handled via the interface
+  /// callback. Non-zero values indicate failure of the current operation,
+  /// and no callback will be triggered. Refer to the error codes for
+  /// detailed error information.
   /// ---
   Future<int> syncConversationReadStatus(
     RCIMIWConversationType type,
@@ -1727,11 +2217,17 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// ---
-  /// Send a typing status to the conversation. Currently, this feature is only supported in one-to-one chats.
-  /// - [type]   Specifies the conversation type
+  /// Send a typing status to the conversation. Currently, this feature is
+  /// only supported in one-to-one chats.
+  /// - [type] Specifies the conversation type
   /// - [targetId] Specifies the conversation ID
-  /// - [channelId] Specifies the channel ID, which is only supported for ultra groups. For other conversation types, pass null.
+  /// - [channelId] Specifies the channel ID, which is only supported for
+  /// ultra groups. For other conversation types, pass null.
   /// - [currentType] Specifies the current status
+  /// call, and the specific result needs to be implemented through the
+  /// callback interface. A non-zero value indicates that the call failed
+  /// and will not trigger the callback. Refer to the error codes for
+  /// detailed error information.
   /// ---
   Future<int> sendTypingStatus(
     RCIMIWConversationType type,
@@ -1749,23 +2245,37 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [sentTime] 当前消息时间戳
-  /// - [order] 获取消息的方向。BEFORE：获取 sentTime 之前的消息 （时间递减），AFTER：获取 sentTime 之后的消息 （时间递增）
+  /// - [order] 获取消息的方向。BEFORE：获取 sentTime 之前的消息 （时间递减），AFTER：获取 sentTime
+  /// 之后的消息 （时间递增）
   /// - [policy] 消息的加载策略。LOCAL：只加载本地，REMOTE：只加载远端，LOCAL_REMOTE：本地远端都加载
   /// - [count] 获取的消息数量，0 < count ≤ 20
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesLoaded]
+  /// {@link #getMessages(RCIMIWConversationType, String, String, long, RCIMIWTimeOrder, RCIMIWMessageOperationPolicy, int, IRCIMIWGetMessagesCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load Historical Messages
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, supported only for ultra groups. Pass `null` for other conversation types.
+  /// - [channelId] Channel ID, supported only for ultra groups. Pass `null` for
+  /// other conversation types.
   /// - [sentTime] Timestamp of the current message
-  /// - [order] Direction of message retrieval. `BEFORE`: Retrieve messages before `sentTime` (in descending order). `AFTER`: Retrieve messages after `sentTime` (in ascending order).
-  /// - [policy] Message loading policy. `LOCAL`: Load only local messages. `REMOTE`: Load only remote messages. `LOCAL_REMOTE`: Load both local and remote messages.
-  /// - [count] Number of messages to retrieve. Must satisfy `0 < count ≤ 20`.
-  /// @deprecated Use {@link #getMessages(RCIMIWConversationType, String, String, long, RCIMIWTimeOrder, RCIMIWMessageOperationPolicy, int, IRCIMIWGetMessagesCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [order] Direction of message retrieval. `BEFORE`: Retrieve messages
+  /// before `sentTime` (in descending order). `AFTER`: Retrieve
+  /// messages after `sentTime` (in ascending order).
+  /// - [policy] Message loading policy. `LOCAL`: Load only local messages.
+  /// `REMOTE`: Load only remote messages. `LOCAL_REMOTE`: Load
+  /// both local and remote messages.
+  /// - [count] Number of messages to retrieve. Must satisfy `0 < count ≤
+  /// 20`.
+  /// result requires implementing the callback interface. Non-zero values
+  /// indicate failure, and no callback will be triggered. Refer to error
+  /// codes for details.
+  /// @deprecated Use
+  /// {@link #getMessages(RCIMIWConversationType, String, String, long, RCIMIWTimeOrder, RCIMIWMessageOperationPolicy, int, IRCIMIWGetMessagesCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getMessages] 代替')
   Future<int> loadMessages(
@@ -1787,7 +2297,8 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [sentTime] 当前消息时间戳
-  /// - [order] 获取消息的方向。BEFORE：获取 sentTime 之前的消息 （时间递减），AFTER：获取 sentTime 之后的消息 （时间递增）
+  /// - [order] 获取消息的方向。BEFORE：获取 sentTime 之前的消息 （时间递减），AFTER：获取 sentTime
+  /// 之后的消息 （时间递增）
   /// - [policy] 消息的加载策略。LOCAL：只加载本地，REMOTE：只加载远端，LOCAL_REMOTE：本地远端都加载
   /// - [count] 获取的消息数量，0 < count ≤ 20
   /// - [callback] 事件回调。
@@ -1797,12 +2308,25 @@ class RCIMIWEngine {
   /// Load Historical Messages
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
   /// - [sentTime] Timestamp of the current message
-  /// - [order] Direction to fetch messages. BEFORE: Fetch messages before sentTime (in descending order). AFTER: Fetch messages after sentTime (in ascending order).
-  /// - [policy] Message loading strategy. LOCAL: Load only local messages. REMOTE: Load only remote messages. LOCAL_REMOTE: Load both local and remote messages.
+  /// - [order] Direction to fetch messages. BEFORE: Fetch messages before
+  /// sentTime (in descending order). AFTER: Fetch messages after
+  /// sentTime (in ascending order).
+  /// - [policy] Message loading strategy. LOCAL: Load only local messages.
+  /// REMOTE: Load only remote messages. LOCAL_REMOTE: Load both
+  /// local and remote messages.
   /// - [count] Number of messages to fetch, where 0 < count ≤ 20
-  /// - [callback] Event callback. SDK supports callback starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. SDK supports callback starting from version
+  /// 5.3.1. Other callback methods for this interface are
+  /// deprecated as of version 5.4.0 and will be removed in
+  /// version 6.x. If the callback parameter is provided, only the
+  /// callback will be triggered.
+  /// results need to be implemented via the interface callback. Non-zero
+  /// indicates the current operation failed, and no interface callback
+  /// will be triggered. Refer to the error codes for detailed error
+  /// information.
   /// @listener [onMessagesLoaded]
   Future<int> getMessages(
     RCIMIWConversationType type,
@@ -1830,14 +2354,27 @@ class RCIMIWEngine {
   /// ---
   /// 根据消息 id 获取消息体（本地数据库索引唯一值）。
   /// - [messageId] 消息的 messageId，可在消息对象中获取
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
-  /// Retrieve the message body based on the message ID (unique value in the local database index).
-  /// - [messageId] The messageId of the message, which can be obtained from the message object.
-  /// - [callback] The event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// Retrieve the message body based on the message ID (unique value in
+  /// the local database index).
+  /// - [messageId] The messageId of the message, which can be obtained from the
+  /// message object.
+  /// - [callback] The event callback. The SDK supports callback-style
+  /// callbacks starting from version 5.3.1. Other callback
+  /// methods for this interface are deprecated as of version
+  /// 5.4.0 and are expected to be removed in version 6.x. If the
+  /// callback parameter is provided, only the callback will be
+  /// triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and the interface callback will not be
+  /// triggered. For detailed errors, refer to the error codes.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageById(int messageId, {IRCIMIWGetMessageCallback? callback}) async {
@@ -1848,14 +2385,27 @@ class RCIMIWEngine {
   /// ---
   /// 通过全局唯一 id 获取消息实体。
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
   /// Retrieve the message entity by its globally unique ID.
-  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// - [callback] The event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageUId] The messageUid of the message, which can be obtained from
+  /// the message object. Only successfully sent messages will
+  /// have a value.
+  /// - [callback] The event callback. The SDK supports callback-style
+  /// callbacks starting from version 5.3.1. Other callback
+  /// methods for this interface are deprecated as of version
+  /// 5.4.0 and are expected to be removed in version 6.x. If the
+  /// callback parameter is provided, only the callback will be
+  /// triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. Non-zero values indicate that the current
+  /// interface call operation failed, and no interface callback will be
+  /// triggered. Refer to the error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageByUId(String messageUId, {IRCIMIWGetMessageCallback? callback}) async {
@@ -1872,11 +2422,13 @@ class RCIMIWEngine {
   /// - [beforeCount] 指定消息的前部分消息数量。
   /// - [afterCount] 指定消息的后部分消息数量。
   /// - [callback] 获取结果回调。
-  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0
+  /// 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
-  /// Get messages around a specified one in conversation. The returned list includes the target message, sorted from newest to oldest.
+  /// Get messages around a specified one in conversation. The returned
+  /// list includes the target message, sorted from newest to oldest.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
   /// - [channelId] Business identifier for the conversation
@@ -1884,6 +2436,7 @@ class RCIMIWEngine {
   /// - [beforeCount] Number of messages before the target
   /// - [afterCount] Number of messages after the target
   /// - [callback] Result callback
+  /// failure (check error codes)
   /// ---
   Future<int> getMessagesAroundTime(
     RCIMIWConversationType type,
@@ -1913,10 +2466,12 @@ class RCIMIWEngine {
   /// - [channelId] 消息所属会话的业务标识。
   /// - [messageTypes] 消息类型列表。
   /// - [sentTime] 消息发送时间戳，0 表示最新的消息
-  /// - [order] 获取消息的方向。BEFORE：获取 sentTime 之前的消息 （时间递减），AFTER：获取 sentTime 之后的消息 （时间递增）
+  /// - [order] 获取消息的方向。BEFORE：获取 sentTime 之前的消息 （时间递减），AFTER：获取 sentTime
+  /// 之后的消息 （时间递增）
   /// - [count] 获取的消息数量
   /// - [callback] 获取结果回调。
-  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0
+  /// 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
@@ -1926,9 +2481,12 @@ class RCIMIWEngine {
   /// - [channelId] Business identifier for the conversation
   /// - [messageTypes] List of message types
   /// - [sentTime] Message timestamp (0 for latest)
-  /// - [order] Fetch direction: BEFORE for messages prior to sentTime (descending), AFTER for messages after sentTime (ascending)
+  /// - [order] Fetch direction: BEFORE for messages prior to sentTime
+  /// (descending), AFTER for messages after sentTime
+  /// (ascending)
   /// - [count] Number of messages to fetch
   /// - [callback] Result callback
+  /// failure—check error codes)
   /// ---
   Future<int> getLocalMessagesByMessageTypes(
     RCIMIWConversationType type,
@@ -1960,14 +2518,22 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onFirstUnreadMessageLoaded]
+  /// {@link #getFirstUnreadMessage(RCIMIWConversationType, String, String, IRCIMIWGetFirstUnreadMessageCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load the first unread message.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @deprecated Use {@link #getFirstUnreadMessage(RCIMIWConversationType, String, String, IRCIMIWGetFirstUnreadMessageCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
+  /// the specific result needs to be handled in the interface callback.
+  /// Non-zero indicates failure, and no callback will be triggered. Refer
+  /// to the error codes for detailed information.
+  /// @deprecated Use
+  /// {@link #getFirstUnreadMessage(RCIMIWConversationType, String, String, IRCIMIWGetFirstUnreadMessageCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   @Deprecated('请使用 [getFirstUnreadMessage] 代替')
@@ -1988,8 +2554,16 @@ class RCIMIWEngine {
   /// Retrieve the first unread message.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [callback] Event callback. The SDK has supported callback-based responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
+  /// - [callback] Event callback. The SDK has supported callback-based
+  /// responses since version 5.3.1. Other callback methods for
+  /// this interface were deprecated in version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// and the specific result needs to be handled in the callback. Non-zero
+  /// values indicate that the operation failed, and no callback will be
+  /// triggered. Refer to the error codes for detailed error information.
   /// @listener [onFirstUnreadMessageLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getFirstUnreadMessage(
@@ -2009,14 +2583,22 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadMentionedMessagesLoaded]
+  /// {@link #getUnreadMentionedMessages(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedMessagesCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load unread @ messages in the conversation.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass `null` for other conversation types.
-  /// @deprecated Use {@link #getUnreadMentionedMessages(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedMessagesCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass `null` for
+  /// other conversation types.
+  /// specific result requires implementing the interface callback.
+  /// Non-zero values indicate failure, and no callback will be triggered.
+  /// Refer to the error codes for details.
+  /// @deprecated Use
+  /// {@link #getUnreadMentionedMessages(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedMessagesCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   @Deprecated('请使用 [getUnreadMentionedMessages] 代替')
@@ -2037,8 +2619,17 @@ class RCIMIWEngine {
   /// Fetch unread @ messages in a conversation.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [callback] Event callback. SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
+  /// - [callback] Event callback. SDK supports callback-style responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// and specific results need to be handled in the interface callback.
+  /// Non-zero values indicate that the current operation failed and will
+  /// not trigger the interface callback. Refer to the error codes for
+  /// detailed error information.
   /// @listener [onUnreadMentionedMessagesLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getUnreadMentionedMessages(
@@ -2054,7 +2645,9 @@ class RCIMIWEngine {
   /// ---
   /// 插入一条消息
   /// - [message] 插入的消息
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageInserted]
   /// ---
@@ -2062,7 +2655,15 @@ class RCIMIWEngine {
   /// ---
   /// Insert a Message
   /// - [message] The message to be inserted.
-  /// - [callback] Event callback. The SDK has supported callback-based event handling since version 5.3.1. Other callback methods for this interface have been deprecated since version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-based event
+  /// handling since version 5.3.1. Other callback methods for this
+  /// interface have been deprecated since version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no interface callback will be triggered. Refer to the error codes
+  /// for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> insertMessage(RCIMIWMessage message, {IRCIMIWInsertMessageCallback? callback}) async {
@@ -2073,7 +2674,9 @@ class RCIMIWEngine {
   /// ---
   /// 插入多条消息，不支持超级群
   /// - [messages] 插入的消息集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesInserted]
   /// ---
@@ -2081,7 +2684,15 @@ class RCIMIWEngine {
   /// ---
   /// Insert multiple messages. Ultra groups are not supported.
   /// - [messages] The collection of messages to be inserted.
-  /// - [callback] The event callback. Starting from version 5.3.1, the SDK supports callback for event handling. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. Starting from version 5.3.1, the SDK
+  /// supports callback for event handling. Other callback methods
+  /// for this interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be handled by implementing the
+  /// interface callback. A non-zero value indicates that the current
+  /// operation failed, and no interface callback will be triggered. Refer
+  /// to the error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> insertMessages(List<RCIMIWMessage> messages, {IRCIMIWInsertMessagesCallback? callback}) async {
@@ -2094,9 +2705,12 @@ class RCIMIWEngine {
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [timestamp] 清除消息截止时间戳，0 ≤ timestamp ≤ 当前会话最后一条消息的 sentTime, 0 清除所有消息，其他值清除小于等于 timestamp 的消息
+  /// - [timestamp] 清除消息截止时间戳，0 ≤ timestamp ≤ 当前会话最后一条消息的 sentTime, 0
+  /// 清除所有消息，其他值清除小于等于 timestamp 的消息
   /// - [policy] 清除的策略
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesCleared]
   /// ---
@@ -2105,10 +2719,21 @@ class RCIMIWEngine {
   /// Clear Messages
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [timestamp] Timestamp for clearing messages up to a certain time. 0 ≤ timestamp ≤ sentTime of the last message in the current conversation. 0 clears all messages, other values clear messages with sentTime ≤ timestamp.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
+  /// - [timestamp] Timestamp for clearing messages up to a certain time. 0 ≤
+  /// timestamp ≤ sentTime of the last message in the current
+  /// conversation. 0 clears all messages, other values clear
+  /// messages with sentTime ≤ timestamp.
   /// - [policy] Clearing policy
-  /// - [callback] Event callback. SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. SDK supports callback mode starting from
+  /// version 5.3.1. Other callback methods for this interface are
+  /// deprecated as of version 5.4.0 and will be removed in
+  /// version 6.x. If the callback parameter is provided, only the
+  /// callback will be triggered.
+  /// Specific results need to be handled in the interface callback.
+  /// Non-zero indicates the current operation failed and no callback will
+  /// be triggered. Refer to the error code for details.
   /// ---
   Future<int> clearMessages(
     RCIMIWConversationType type,
@@ -2125,7 +2750,9 @@ class RCIMIWEngine {
   /// ---
   /// 删除本地消息
   /// - [messages] 消息集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onLocalMessagesDeleted]
   /// ---
@@ -2133,7 +2760,16 @@ class RCIMIWEngine {
   /// ---
   /// Delete Local Messages
   /// - [messages] The collection of messages to be deleted.
-  /// - [callback] The event callback. Starting from version 5.3.1, the SDK supports callback-based event handling. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in the 6.x release. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. Starting from version 5.3.1, the SDK
+  /// supports callback-based event handling. Other callback
+  /// methods for this interface were deprecated in version 5.4.0
+  /// and are expected to be removed in the 6.x release. If the
+  /// callback parameter is provided, only the callback will be
+  /// triggered.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. A non-zero value indicates that the current operation
+  /// failed, and no interface callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> deleteLocalMessages(List<RCIMIWMessage> messages, {IRCIMIWDeleteLocalMessagesCallback? callback}) async {
@@ -2152,6 +2788,7 @@ class RCIMIWEngine {
   /// Delete local messages in batch by messageId
   /// - [messageIds] Set of message IDs
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> deleteLocalMessageByIds(List<int> messageIds, {IRCIMIWDeleteLocalMessageByIdsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.deleteLocalMessageByIds(messageIds, callback: callback);
@@ -2164,7 +2801,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messages] 消息集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesDeleted]
   /// ---
@@ -2173,9 +2812,18 @@ class RCIMIWEngine {
   /// Delete Messages
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
   /// - [messages] Message collection
-  /// - [callback] Event callback. SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. SDK supports callback mode starting from
+  /// version 5.3.1. Other callback methods for this interface are
+  /// deprecated in version 5.4.0 and are expected to be removed
+  /// in version 6.x. If the callback parameter is provided, only
+  /// the callback will be triggered.
+  /// invocation. Specific results need to be implemented through the
+  /// interface callback. Non-zero values indicate failure in the current
+  /// operation, and no interface callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// ---
   Future<int> deleteMessages(
     RCIMIWConversationType type,
@@ -2191,7 +2839,9 @@ class RCIMIWEngine {
   /// ---
   /// 撤回消息
   /// - [message] 需要被撤回的消息
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageRecalled]
   /// ---
@@ -2199,7 +2849,15 @@ class RCIMIWEngine {
   /// ---
   /// Recall Message
   /// - [message] The message to be recalled.
-  /// - [callback] Event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface have been deprecated since version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-style
+  /// callbacks since version 5.3.1. Other callback methods for
+  /// this interface have been deprecated since version 5.4.0 and
+  /// are expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. Non-zero values indicate that the current
+  /// interface call operation failed, and no interface callback will be
+  /// triggered. For detailed error information, refer to the error codes.
   /// ---
   Future<int> recallMessage(RCIMIWMessage message, {IRCIMIWRecallMessageCallback? callback}) async {
     return RCIMWrapperPlatform.instance.recallMessage(message, callback: callback);
@@ -2211,7 +2869,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [timestamp] 该会话中已读的最后一条消息的发送时间戳
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPrivateReadReceiptMessageSent]
   /// ---
@@ -2219,9 +2879,19 @@ class RCIMIWEngine {
   /// ---
   /// Send a read receipt for messages in a specific conversation.
   /// - [targetId] The conversation ID.
-  /// - [channelId] The channel ID, only supported for ultra groups. Pass `null` for other conversation types.
+  /// - [channelId] The channel ID, only supported for ultra groups. Pass `null`
+  /// for other conversation types.
   /// - [timestamp] The timestamp of the last read message in the conversation.
-  /// - [callback] The event callback. SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
+  /// - [callback] The event callback. SDK supports callback-based responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the `callback`
+  /// parameter is provided, only the callback method will be
+  /// triggered.
+  /// call, and the specific result needs to be implemented via the
+  /// interface callback. Non-zero values indicate that the current
+  /// operation failed, and no interface callback will be triggered. Refer
+  /// to the error codes for detailed error information.
   /// ---
   Future<int> sendPrivateReadReceiptMessage(
     String targetId,
@@ -2241,7 +2911,9 @@ class RCIMIWEngine {
   /// ---
   /// 发起群聊消息已读回执请求
   /// - [message] 需要请求已读回执的消息
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onGroupReadReceiptRequestSent]
   /// ---
@@ -2249,7 +2921,15 @@ class RCIMIWEngine {
   /// ---
   /// Send Group Message Read Receipt Request
   /// - [message] The message for which the read receipt is requested.
-  /// - [callback] Event callback. Starting from SDK version 5.3.1, callback mode is supported. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. Starting from SDK version 5.3.1, callback
+  /// mode is supported. Other callback methods for this interface
+  /// are deprecated as of version 5.4.0 and are expected to be
+  /// removed in version 6.x. If the callback parameter is
+  /// provided, only the callback will be triggered.
+  /// call, and the specific result needs to be handled through the
+  /// interface callback. A non-zero value indicates that the current
+  /// operation failed, and no interface callback will be triggered. Refer
+  /// to the error codes for detailed error information.
   /// ---
   Future<int> sendGroupReadReceiptRequest(
     RCIMIWMessage message, {
@@ -2264,7 +2944,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messages] 会话中需要发送已读回执的消息列表
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onGroupReadReceiptResponseSent]
   /// ---
@@ -2272,9 +2954,19 @@ class RCIMIWEngine {
   /// ---
   /// Send Group Read Receipt
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [messages] List of messages in the conversation for which read receipts need to be sent
-  /// - [callback] Event callback. SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
+  /// - [messages] List of messages in the conversation for which read receipts
+  /// need to be sent
+  /// - [callback] Event callback. SDK supports callback-based responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// and the specific result requires implementing the interface callback.
+  /// Non-zero values indicate that the current operation failed, and no
+  /// callback will be triggered. Refer to the error codes for detailed
+  /// error information.
   /// ---
   Future<int> sendGroupReadReceiptResponse(
     String targetId,
@@ -2290,18 +2982,38 @@ class RCIMIWEngine {
   /// 更新消息扩展信息
   /// 每条消息携带扩展信息键值对最大值 300个，单次设置扩展信息键值对最大值 20个
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
-  /// - [expansion] 要更新的消息扩展信息键值对，类型是 HashMap；Key 支持大小写英文字母、数字、部分特殊符号 + = - _ 的组合方式，不支持汉字。Value 可以输入空格
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [expansion] 要更新的消息扩展信息键值对，类型是 HashMap；Key 支持大小写英文字母、数字、部分特殊符号 + = - _
+  /// 的组合方式，不支持汉字。Value 可以输入空格
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageExpansionUpdated]
   /// ---
   /// [EN]
   /// ---
   /// Update Message Extension Information
-  /// Each message can carry a maximum of 300 key-value pairs of extension information, and a single update can set a maximum of 20 key-value pairs.
-  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// - [expansion] The key-value pairs of message extension information to be updated, of type HashMap. The Key supports a combination of uppercase and lowercase English letters, numbers, and some special symbols + = - _. Chinese characters are not supported. The Value can include spaces.
-  /// - [callback] The event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// Each message can carry a maximum of 300 key-value pairs of
+  /// extension information, and a single update can set a maximum of 20
+  /// key-value pairs.
+  /// - [messageUId] The messageUid of the message, which can be obtained from
+  /// the message object. Only successfully sent messages will
+  /// have a value.
+  /// - [expansion] The key-value pairs of message extension information to be
+  /// updated, of type HashMap. The Key supports a combination of
+  /// uppercase and lowercase English letters, numbers, and some
+  /// special symbols + = - _. Chinese characters are not
+  /// supported. The Value can include spaces.
+  /// - [callback] The event callback. The SDK supports callback-style
+  /// callbacks starting from version 5.3.1. Other callback
+  /// methods for this interface are deprecated starting from
+  /// version 5.4.0 and are expected to be removed in version
+  /// 6.x. If the callback parameter is provided, only the
+  /// callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero indicates that the current operation
+  /// failed, and no interface callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// ---
   Future<int> updateMessageExpansion(
     String messageUId,
@@ -2315,17 +3027,30 @@ class RCIMIWEngine {
   /// ---
   /// 删除消息扩展信息中特定的键值对
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
-  /// - [keys]  消息扩展信息中待删除的 key 的列表，类型是 ArrayList
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [keys] 消息扩展信息中待删除的 key 的列表，类型是 ArrayList
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageExpansionForKeysRemoved]
   /// ---
   /// [EN]
   /// ---
   /// Delete specific key-value pairs from message extension information
-  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// - [keys] The list of keys to be deleted from the message extension information. The type is ArrayList.
-  /// - [callback] Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageUId] The messageUid of the message, which can be obtained from
+  /// the message object. Only successfully sent messages will
+  /// have a value.
+  /// - [keys] The list of keys to be deleted from the message extension
+  /// information. The type is ArrayList.
+  /// - [callback] Event callback. The SDK supports callback-style responses
+  /// starting from version 5.3.1. Other callback methods for
+  /// this interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented through the
+  /// interface callback. Non-zero indicates that the current interface
+  /// call failed and will not trigger the interface callback. Refer to the
+  /// error codes for detailed error information.
   /// ---
   Future<int> removeMessageExpansionForKeys(
     String messageUId,
@@ -2340,16 +3065,28 @@ class RCIMIWEngine {
   /// 设置消息发送状态。
   /// - [messageId] 消息的 messageId，可在消息对象中获取
   /// - [sentStatus] 要修改的状态
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageSentStatusChanged]
   /// ---
   /// [EN]
   /// ---
   /// Set the message sending status.
-  /// - [messageId] The messageId of the message, which can be obtained from the message object.
+  /// - [messageId] The messageId of the message, which can be obtained from
+  /// the message object.
   /// - [sentStatus] The status to be modified.
-  /// - [callback] Event callback. The SDK supports callback-based notification starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-based
+  /// notification starting from version 5.3.1. Other callback
+  /// methods for this interface are deprecated in version 5.4.0
+  /// and are expected to be removed in version 6.x. If the
+  /// callback parameter is provided, only the callback will be
+  /// triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero values indicate that the current
+  /// operation failed, and no interface callback will be triggered. Refer
+  /// to the error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeMessageSentStatus(
@@ -2365,16 +3102,28 @@ class RCIMIWEngine {
   /// 设置消息接收状态。
   /// - [messageId] 消息的 messageId，可在消息对象中获取
   /// - [receivedStatus] 要修改的状态
-  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback
+  /// 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageReceiveStatusChanged]
   /// ---
   /// [EN]
   /// ---
   /// Set the message received status.
-  /// - [messageId] The messageId of the message, which can be obtained from the message object.
+  /// - [messageId] The messageId of the message, which can be obtained
+  /// from the message object.
   /// - [receivedStatus] The status to be modified.
-  /// - [callback]  Event callback. The SDK has supported callback-style responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-style
+  /// responses since version 5.3.1. Other callback methods
+  /// for this interface were deprecated in version 5.4.0 and
+  /// are expected to be removed in version 6.x. If the
+  /// callback parameter is provided, only the callback will
+  /// be triggered.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no interface callback will be triggered. Refer to the error codes
+  /// for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeMessageReceiveStatus(
@@ -2390,7 +3139,9 @@ class RCIMIWEngine {
   /// 设置消息接收状态。
   /// - [messageId] 消息的 messageId，可在消息对象中获取
   /// - [receivedStatusInfo] 要修改的状态
-  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback
+  /// 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageReceiveStatusChanged]
   /// ---
@@ -2399,7 +3150,12 @@ class RCIMIWEngine {
   /// Set message received status
   /// - [messageId] Message ID from Message Object
   /// - [receivedStatusInfo] Status to modify
-  /// - [callback]  Event callback. Supported since SDK 5.3.1. Other callback methods deprecated in 5.4.0 and will be removed in 6.x. If callback is provided, only triggers callback response.
+  /// - [callback]  Event callback. Supported since SDK 5.3.1. Other
+  /// callback methods deprecated in 5.4.0 and will be
+  /// removed in 6.x. If callback is provided, only
+  /// triggers callback response.
+  /// result). Non-zero means failure (no callback triggered). See error
+  /// codes for details.
   /// ---
   Future<int> changeMessageReceiveStatusInfo(
     int messageId,
@@ -2427,6 +3183,7 @@ class RCIMIWEngine {
   /// - [messageId] Message ID from Message Object
   /// - [extra] Additional data
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> updateMessageLocalExtra(
     int messageId,
@@ -2442,7 +3199,9 @@ class RCIMIWEngine {
   /// - [targetId] 聊天室会话 ID
   /// - [messageCount] 进入聊天室拉取消息数目，-1 时不拉取任何消息，0 时拉取 10 条消息，最多只能拉取 50
   /// - [autoCreate] 是否创建聊天室，TRUE 如果聊天室不存在，sdk 会创建聊天室并加入，如果已存在，则直接加入
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomJoined]
   /// ---
@@ -2450,9 +3209,24 @@ class RCIMIWEngine {
   /// ---
   /// Join a chatroom.
   /// - [targetId] The chatroom conversation ID
-  /// - [messageCount] The number of messages to fetch upon entering the chatroom. -1 means no messages will be fetched, 0 means fetching 10 messages, with a maximum of 50 messages allowed.
-  /// - [autoCreate] Whether to create the chatroom. If TRUE and the chatroom does not exist, the SDK will create the chatroom and join it. If the chatroom already exists, the SDK will directly join it.
-  /// - [callback] Event callback. The SDK supports callback-based events starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageCount] The number of messages to fetch upon entering the
+  /// chatroom. -1 means no messages will be fetched, 0 means
+  /// fetching 10 messages, with a maximum of 50 messages
+  /// allowed.
+  /// - [autoCreate] Whether to create the chatroom. If TRUE and the chatroom
+  /// does not exist, the SDK will create the chatroom and join
+  /// it. If the chatroom already exists, the SDK will directly
+  /// join it.
+  /// - [callback] Event callback. The SDK supports callback-based events
+  /// starting from version 5.3.1. Other callback methods for
+  /// this interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be
+  /// triggered.
+  /// call, and the specific result needs to be handled by the interface
+  /// callback. Non-zero values indicate a failure in the current
+  /// operation, and no interface callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// ---
   Future<int> joinChatRoom(
     String targetId,
@@ -2467,7 +3241,9 @@ class RCIMIWEngine {
   /// ---
   /// 退出聊天室。
   /// - [targetId] 聊天室会话 ID
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomLeft]
   /// ---
@@ -2475,7 +3251,15 @@ class RCIMIWEngine {
   /// ---
   /// Exit the chatroom.
   /// - [targetId] The conversation ID of the chatroom.
-  /// - [callback] The event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. The SDK has supported callback-style
+  /// callbacks since version 5.3.1. Other callback methods for
+  /// this interface were deprecated in version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and the interface callback will not be
+  /// triggered. Refer to the error codes for detailed errors.
   /// ---
   Future<int> leaveChatRoom(String targetId, {IRCIMIWLeaveChatRoomCallback? callback}) async {
     return RCIMWrapperPlatform.instance.leaveChatRoom(targetId, callback: callback);
@@ -2491,16 +3275,25 @@ class RCIMIWEngine {
   /// - [count] 要获取的消息数量，0 < count ≤ 50。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomMessagesLoaded]
+  /// {@link #getChatRoomMessages(String, long, RCIMIWTimeOrder, int, IRCIMIWGetChatRoomMessagesCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load chatroom historical messages.
-  /// Note: The chatroom message cloud storage feature must be enabled first.
+  /// Note: The chatroom message cloud storage feature must be enabled
+  /// first.
   /// - [targetId] The conversation ID of the chatroom
   /// - [timestamp] The timestamp of the starting message
-  /// - [order] The order of fetching messages: 0 for descending, 1 for ascending
+  /// - [order] The order of fetching messages: 0 for descending, 1 for
+  /// ascending
   /// - [count] The number of messages to fetch, where 0 < count ≤ 50
-  /// @deprecated Use {@link #getChatRoomMessages(String, long, RCIMIWTimeOrder, int, IRCIMIWGetChatRoomMessagesCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// and the specific result needs to be handled in the callback. Non-zero
+  /// indicates failure, and no callback will be triggered. Refer to the
+  /// error codes for detailed errors.
+  /// @deprecated Use
+  /// {@link #getChatRoomMessages(String, long, RCIMIWTimeOrder, int, IRCIMIWGetChatRoomMessagesCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getChatRoomMessages] 代替')
   Future<int> loadChatRoomMessages(String targetId, int timestamp, RCIMIWTimeOrder order, int count) async {
@@ -2520,12 +3313,22 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve chatroom historical messages.
-  /// Note: The chatroom message cloud storage feature must be enabled first.
+  /// Note: The chatroom message cloud storage feature must be enabled
+  /// first.
   /// - [targetId] The chatroom conversation ID
   /// - [timestamp] The starting message timestamp
   /// - [order] The order of retrieval: 0 for descending, 1 for ascending
   /// - [count] The number of messages to retrieve, where 0 < count ≤ 50
-  /// - [callback] The event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. The SDK supports callback-style
+  /// responses starting from version 5.3.1. Other callback
+  /// methods for this interface are deprecated as of version
+  /// 5.4.0 and are expected to be removed in version 6.x. If the
+  /// callback parameter is provided, only the callback will be
+  /// triggered.
+  /// call, and the specific result requires implementing the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no interface callback will be triggered. Refer to the error codes
+  /// for detailed error information.
   /// @listener [onChatRoomMessagesLoaded]
   Future<int> getChatRoomMessages(
     String targetId,
@@ -2541,23 +3344,41 @@ class RCIMIWEngine {
   /// ---
   /// 设置聊天室自定义属性。
   /// - [targetId] 聊天室会话 ID
-  /// - [key]  聊天室属性名称，Key 支持大小写英文字母、数字、部分特殊符号 + = - _ 的组合方式，最大长度 128 个字符
-  /// - [value]     聊天室属性对应的值，最大长度 4096 个字符
+  /// - [key]   聊天室属性名称，Key 支持大小写英文字母、数字、部分特殊符号 + = - _ 的组合方式，最大长度 128
+  /// 个字符
+  /// - [value] 聊天室属性对应的值，最大长度 4096 个字符
   /// - [deleteWhenLeft] 用户掉线或退出时，是否自动删除该 Key、Value 值
   /// - [overwrite] 如果当前 key 存在，是否进行覆盖
-  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback
+  /// 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntryAdded]
   /// ---
   /// [EN]
   /// ---
   /// Set chatroom custom attributes.
-  /// - [targetId]  The conversation ID of the chatroom.
-  /// - [key]  The name of the chatroom attribute. The key supports a combination of uppercase and lowercase letters, numbers, and special characters + = - _. The maximum length is 128 characters.
-  /// - [value]     The value corresponding to the chatroom attribute. The maximum length is 4096 characters.
-  /// - [deleteWhenLeft] Whether to automatically delete the key-value pair when the user goes offline or exits the chatroom.
-  /// - [overwrite] Whether to overwrite the existing key if it already exists.
-  /// - [callback]  The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [targetId] The conversation ID of the chatroom.
+  /// - [key]   The name of the chatroom attribute. The key supports a
+  /// combination of uppercase and lowercase letters,
+  /// numbers, and special characters + = - _. The maximum
+  /// length is 128 characters.
+  /// - [value] The value corresponding to the chatroom attribute. The
+  /// maximum length is 4096 characters.
+  /// - [deleteWhenLeft] Whether to automatically delete the key-value pair when
+  /// the user goes offline or exits the chatroom.
+  /// - [overwrite] Whether to overwrite the existing key if it already
+  /// exists.
+  /// - [callback] The event callback. SDK supports callback method
+  /// starting from version 5.3.1. Other callback methods for
+  /// this interface are deprecated starting from version
+  /// 5.4.0 and are expected to be removed in version 6.x. If
+  /// the callback parameter is provided, only the callback
+  /// method will be triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and the interface callback will not be
+  /// triggered. Refer to the error codes for detailed error information.
   /// ---
   Future<int> addChatRoomEntry(
     String targetId,
@@ -2581,21 +3402,33 @@ class RCIMIWEngine {
   /// ---
   /// 批量设置聊天室自定义属性
   /// - [targetId] 聊天室会话 ID
-  /// - [entries]   聊天室属性
+  /// - [entries] 聊天室属性
   /// - [deleteWhenLeft] 用户掉线或退出时，是否自动删除该 Key、Value 值
   /// - [overwrite] 是否强制覆盖
-  /// - [callback]  事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback
+  /// 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntriesAdded]
   /// ---
   /// [EN]
   /// ---
   /// Batch Set Chatroom Custom Attributes
-  /// - [targetId]  Chatroom conversation ID
-  /// - [entries]   Chatroom attributes
-  /// - [deleteWhenLeft] Whether to automatically delete the Key and Value when the user goes offline or exits
+  /// - [targetId] Chatroom conversation ID
+  /// - [entries] Chatroom attributes
+  /// - [deleteWhenLeft] Whether to automatically delete the Key and Value when
+  /// the user goes offline or exits
   /// - [overwrite] Whether to force overwrite
-  /// - [callback]  Event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-style
+  /// callbacks starting from version 5.3.1. Other callback
+  /// methods for this interface are deprecated as of version
+  /// 5.4.0 and are expected to be removed in version 6.x. If
+  /// the callback parameter is provided, only the callback
+  /// will be triggered.
+  /// call, and the specific result needs to be implemented through the
+  /// interface callback. A non-zero value indicates that the current
+  /// interface call failed, and the interface callback will not be
+  /// triggered. For detailed errors, refer to the error codes.
   /// ---
   Future<int> addChatRoomEntries(
     String targetId,
@@ -2620,13 +3453,21 @@ class RCIMIWEngine {
   /// - [key] 聊天室属性键值
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntryLoaded]
+  /// {@link #getChatRoomEntry(String, String, IRCIMIWGetChatRoomEntryCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load a single chatroom attribute.
   /// - [targetId] The conversation ID of the chatroom
   /// - [key] The key of the chatroom attribute
-  /// @deprecated Use {@link #getChatRoomEntry(String, String, IRCIMIWGetChatRoomEntryCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// the specific result requires implementing the interface callback.
+  /// Non-zero indicates that the current operation failed, and the
+  /// interface callback will not be triggered. Refer to the error codes
+  /// for detailed error information.
+  /// @deprecated Use
+  /// {@link #getChatRoomEntry(String, String, IRCIMIWGetChatRoomEntryCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getChatRoomEntry] 代替')
   Future<int> loadChatRoomEntry(String targetId, String key) async {
@@ -2645,7 +3486,15 @@ class RCIMIWEngine {
   /// Retrieve a single chatroom attribute.
   /// - [targetId] The conversation ID of the chatroom
   /// - [key] The key of the chatroom attribute
-  /// - [callback] The event callback. SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. SDK supports callback-style callbacks
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are expected
+  /// to be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback will be triggered.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no interface callback will be triggered. Refer to the error codes
+  /// for detailed error information.
   /// @listener [onChatRoomEntryLoaded]
   Future<int> getChatRoomEntry(String targetId, String key, {IRCIMIWGetChatRoomEntryCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getChatRoomEntry(targetId, key, callback: callback);
@@ -2657,12 +3506,20 @@ class RCIMIWEngine {
   /// - [targetId] 聊天室会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomAllEntriesLoaded]
+  /// {@link #getChatRoomAllEntries(String, IRCIMIWGetChatRoomAllEntriesCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load all chatroom attributes.
   /// - [targetId] The conversation ID of the chatroom
-  /// @deprecated Use {@link #getChatRoomAllEntries(String, IRCIMIWGetChatRoomAllEntriesCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// the specific result requires implementing the interface callback.
+  /// Non-zero indicates the current operation failed, and no callback will
+  /// be triggered. Refer to the error codes for detailed error
+  /// information.
+  /// @deprecated Use
+  /// {@link #getChatRoomAllEntries(String, IRCIMIWGetChatRoomAllEntriesCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getChatRoomAllEntries] 代替')
   Future<int> loadChatRoomAllEntries(String targetId) async {
@@ -2679,7 +3536,15 @@ class RCIMIWEngine {
   /// [EN]
   /// Retrieve all attributes of a chatroom.
   /// - [targetId] The conversation ID of the chatroom.
-  /// - [callback] The event callback. Starting from SDK version 5.3.1, the callback method is supported. From version 5.4.0, other callback methods for this interface are deprecated and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. Starting from SDK version 5.3.1, the
+  /// callback method is supported. From version 5.4.0, other
+  /// callback methods for this interface are deprecated and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero values indicate that the current
+  /// interface call failed, and no interface callback will be triggered.
+  /// For detailed error information, refer to the error codes.
   /// @listener [onChatRoomAllEntriesLoaded]
   Future<int> getChatRoomAllEntries(String targetId, {IRCIMIWGetChatRoomAllEntriesCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getChatRoomAllEntries(targetId, callback: callback);
@@ -2691,7 +3556,9 @@ class RCIMIWEngine {
   /// - [targetId] 聊天室会话 ID
   /// - [key] 聊天室属性键值
   /// - [force] 是否强制删除
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntryRemoved]
   /// ---
@@ -2701,7 +3568,15 @@ class RCIMIWEngine {
   /// - [targetId] The chatroom conversation ID
   /// - [key] The chatroom attribute key
   /// - [force] Whether to force deletion
-  /// - [callback] The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [callback] The event callback. SDK supports callback method starting
+  /// from version 5.3.1. Other callback methods for this interface
+  /// are deprecated as of version 5.4.0 and are expected to be
+  /// removed in version 6.x. If the callback parameter is
+  /// provided, only the callback method will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero indicates that the current operation
+  /// failed, and no interface callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// ---
   Future<int> removeChatRoomEntry(
     String targetId,
@@ -2718,7 +3593,9 @@ class RCIMIWEngine {
   /// - [targetId] 聊天室会话 ID
   /// - [keys] 聊天室属性
   /// - [force] 是否强制覆盖
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntriesRemoved]
   /// ---
@@ -2728,7 +3605,15 @@ class RCIMIWEngine {
   /// - [targetId] The chatroom conversation ID
   /// - [keys] The chatroom attributes
   /// - [force] Specifies whether to force overwrite
-  /// - [callback] The event callback. SDK supports callback mode from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. SDK supports callback mode from version
+  /// 5.3.1. Other callback methods for this interface are
+  /// deprecated starting from version 5.4.0 and will be removed in
+  /// version 6.x. If the callback parameter is provided, only the
+  /// callback will be triggered.
+  /// successful invocation, and specific results need to be handled in the
+  /// interface callback. Non-zero values indicate that the current
+  /// interface invocation failed, and no callback will be triggered. Refer
+  /// to the error codes for detailed error information.
   /// ---
   Future<int> removeChatRoomEntries(
     String targetId,
@@ -2744,16 +3629,29 @@ class RCIMIWEngine {
   /// 将某个用户加入黑名单。
   /// 当你把对方加入黑名单后，对方再发消息时，就会提示“已被加入黑名单，消息发送失败”。 但你依然可以发消息个对方。
   /// - [userId] 用户 Id
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistAdded]
   /// ---
   /// [EN]
   /// ---
   /// Add a user to the blocklist.
-  /// When you add a user to the blocklist, they will receive a notification stating "You have been added to the blocklist, message sending failed" when attempting to send you a message. However, you can still send messages to them.
+  /// When you add a user to the blocklist, they will receive a
+  /// notification stating "You have been added to the blocklist, message
+  /// sending failed" when attempting to send you a message. However, you
+  /// can still send messages to them.
   /// - [userId] User ID
-  /// - [callback] Event callback. The SDK has supported callback-style callbacks since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-style
+  /// callbacks since version 5.3.1. Other callback methods for
+  /// this interface were deprecated in version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and no interface callback will be triggered.
+  /// Refer to the error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> addToBlacklist(String userId, {IRCIMIWAddToBlacklistCallback? callback}) async {
@@ -2764,7 +3662,9 @@ class RCIMIWEngine {
   /// ---
   /// 将某个用户从黑名单中移出。
   /// - [userId] 用户 Id
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistRemoved]
   /// ---
@@ -2772,7 +3672,15 @@ class RCIMIWEngine {
   /// ---
   /// Remove a user from the blocklist.
   /// - [userId] User ID
-  /// - [callback] Event callback. The SDK supports callback-based event handling starting from version 5.3.1. Other callback methods for this interface have been deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If a callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-based event
+  /// handling starting from version 5.3.1. Other callback methods
+  /// for this interface have been deprecated as of version 5.4.0
+  /// and are expected to be removed in version 6.x. If a callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented through the
+  /// interface callback. Non-zero values indicate that the current
+  /// operation failed, and no callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> removeFromBlacklist(String userId, {IRCIMIWRemoveFromBlacklistCallback? callback}) async {
@@ -2785,12 +3693,19 @@ class RCIMIWEngine {
   /// - [userId] 用户 Id
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistStatusLoaded]
+  /// {@link #getBlacklistStatus(String, IRCIMIWGetBlacklistStatusCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Check if a user is in the blocklist.
   /// - [userId] The user ID
-  /// @deprecated Use {@link #getBlacklistStatus(String, IRCIMIWGetBlacklistStatusCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// the specific result requires implementing the callback interface.
+  /// Non-zero indicates that the current operation failed and will not
+  /// trigger the callback. For detailed errors, refer to the error codes.
+  /// @deprecated Use
+  /// {@link #getBlacklistStatus(String, IRCIMIWGetBlacklistStatusCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   @Deprecated('请使用 [getBlacklistStatus] 代替')
@@ -2808,7 +3723,15 @@ class RCIMIWEngine {
   /// [EN]
   /// Check if a user is in the blocklist.
   /// - [userId] User ID
-  /// - [callback] Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-style responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are expected
+  /// to be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback will be triggered.
+  /// and the specific result needs to be obtained through the interface
+  /// callback. Non-zero values indicate a failure in the current
+  /// operation, and no interface callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// @listener [onBlacklistStatusLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getBlacklistStatus(String userId, {IRCIMIWGetBlacklistStatusCallback? callback}) async {
@@ -2820,11 +3743,17 @@ class RCIMIWEngine {
   /// 加载当前用户设置的黑名单列表。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistLoaded]
+  /// 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Loads the blocklist of the current user.
-  /// @deprecated Use {@link #getBlacklist(IRCIMIWGetBlacklistCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// successful call, and the specific result requires implementing the
+  /// interface callback. Non-zero values indicate that the current API
+  /// call operation failed, and no interface callback will be triggered.
+  /// For detailed error information, refer to the error codes.
+  /// @deprecated Use {@link #getBlacklist(IRCIMIWGetBlacklistCallback)} instead.
+  /// This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   @Deprecated('请使用 [getBlacklist] 代替')
@@ -2840,7 +3769,15 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// Retrieve the current user's blocklist.
-  /// - [callback] Event callback. The SDK has supported callback-style responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-style
+  /// responses since version 5.3.1. Other callback methods for
+  /// this interface were deprecated in version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// successful call, and the specific result needs to be handled in the
+  /// interface callback. Non-zero values indicate that the current
+  /// interface call failed, and no interface callback will be triggered.
+  /// For detailed error information, refer to the error codes.
   /// @listener [onBlacklistLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getBlacklist({IRCIMIWGetBlacklistCallback? callback}) async {
@@ -2856,7 +3793,9 @@ class RCIMIWEngine {
   /// - [keyword] 搜索的关键字
   /// - [startTime] 查询 beginTime 之前的消息， 传 0 时从最新消息开始搜索，从该时间往前搜索。
   /// - [count] 查询的数量，0 < count ≤ 50。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesSearched]
   /// ---
@@ -2865,11 +3804,21 @@ class RCIMIWEngine {
   /// Search for messages in a specified conversation based on keywords.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
   /// - [keyword] Keyword to search for
-  /// - [startTime] Search for messages before this timestamp. Pass 0 to start searching from the latest message and move backward in time.
+  /// - [startTime] Search for messages before this timestamp. Pass 0 to start
+  /// searching from the latest message and move backward in time.
   /// - [count] Number of messages to query, where 0 < count ≤ 50.
-  /// - [callback] Event callback. The SDK has supported callback-based responses since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-based
+  /// responses since version 5.3.1. Other callback methods for
+  /// this interface were deprecated in version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and specific results need to be handled in the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no interface callback will be triggered. Refer to the error codes
+  /// for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchMessages(
@@ -2903,22 +3852,34 @@ class RCIMIWEngine {
   /// - [endTime] 结束时间
   /// - [offset] 偏移量
   /// - [count] 返回的搜索结果数量，0 < count ≤ 50。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesSearchedByTimeRange]
   /// ---
   /// [EN]
   /// ---
-  /// Search for messages within a specified time range in a conversation based on a keyword.
+  /// Search for messages within a specified time range in a conversation
+  /// based on a keyword.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
   /// - [keyword] Keyword to search for
   /// - [startTime] Start time
   /// - [endTime] End time
   /// - [offset] Offset
   /// - [count] Number of search results to return, where 0 < count ≤ 50.
-  /// - [callback] Event callback. The SDK supports callback-style event handling starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-style event
+  /// handling starting from version 5.3.1. Other callback methods
+  /// for this interface are deprecated as of version 5.4.0 and
+  /// will be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback will be triggered.
+  /// and specific results need to be handled in the callback. Non-zero
+  /// values indicate a failure in the current operation, and no callback
+  /// will be triggered. Refer to the error codes for detailed error
+  /// information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchMessagesByTimeRange(
@@ -2954,7 +3915,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [startTime] 查询记录的起始时间， 传 0 时从最新消息开始搜索，从该时间往前搜索。
   /// - [count] 返回的搜索结果数量 0 < count ≤ 50。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesSearchedByUserId]
   /// ---
@@ -2964,10 +3927,21 @@ class RCIMIWEngine {
   /// - [userId] User ID
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass `null` for other conversation types.
-  /// - [startTime] Start time for the query. Pass `0` to start searching from the latest message and search backward from that time.
-  /// - [count] Number of search results to return. Must be in the range 0 < count ≤ 50.
-  /// - [callback] Event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass `null` for
+  /// other conversation types.
+  /// - [startTime] Start time for the query. Pass `0` to start searching from
+  /// the latest message and search backward from that time.
+  /// - [count] Number of search results to return. Must be in the range 0 <
+  /// count ≤ 50.
+  /// - [callback] Event callback. The SDK supports callback mode starting from
+  /// version 5.3.1. Other callback methods for this interface are
+  /// deprecated as of version 5.4.0 and are expected to be
+  /// removed in version 6.x. If the `callback` parameter is
+  /// provided, only the callback will be triggered.
+  /// call, and specific results need to be implemented in the interface
+  /// callback. Non-zero values indicate a failure in the current
+  /// operation, and no interface callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchMessagesByUserId(
@@ -3001,7 +3975,8 @@ class RCIMIWEngine {
   /// - [startTime] 查询 startTime 之前的消息（传 0 表示从最新消息开始搜索），单位：毫秒
   /// - [count] 最大的查询数量，最大 100。
   /// - [callback] 搜索结果的回调接口
-  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果通过接口 callback 回调，非 0
+  /// 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
@@ -3011,9 +3986,11 @@ class RCIMIWEngine {
   /// - [channelId] Channel identifier for messages
   /// - [messageTypes] Set of message types
   /// - [keyword] Search keyword (required)
-  /// - [startTime] Search messages before this timestamp (0 means start from latest) in milliseconds
+  /// - [startTime] Search messages before this timestamp (0 means start from
+  /// latest) in milliseconds
   /// - [count] Max results (up to 100)
   /// - [callback] Callback for search results
+  /// failure (see error codes)
   /// ---
   Future<int> searchMessagesByMessageTypes(
     RCIMIWConversationType type,
@@ -3041,10 +4018,12 @@ class RCIMIWEngine {
   /// ---
   /// 根据关键字搜索会话。
   /// - [conversationTypes] 会话类型集合
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messageTypes] 搜索的消息类型
-  /// - [keyword]      搜索的关键字。
-  /// - [callback]     事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [keyword]  搜索的关键字。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback
+  /// 参数，仅触发 callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsSearched]
   /// ---
@@ -3052,10 +4031,20 @@ class RCIMIWEngine {
   /// ---
   /// Search conversations by keyword.
   /// - [conversationTypes] Collection of conversation types
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass
+  /// null for other conversation types.
   /// - [messageTypes] Message types to search for
-  /// - [keyword] Keyword to search for
-  /// - [callback] Event callback. SDK supports callback mode from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [keyword]  Keyword to search for
+  /// - [callback] Event callback. SDK supports callback mode from
+  /// version 5.3.1. Other callback methods for this
+  /// interface are deprecated starting from version 5.4.0
+  /// and are expected to be removed in version 6.x. If
+  /// the callback parameter is provided, only the
+  /// callback will be triggered.
+  /// Specific results need to be implemented via the interface callback.
+  /// Non-zero values indicate that the current interface call operation
+  /// failed and will not trigger the interface callback. Refer to the
+  /// error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchConversations(
@@ -3078,9 +4067,13 @@ class RCIMIWEngine {
   /// ---
   /// 屏蔽某个时间段的消息提醒
   /// - [startTime] 开始消息免打扰时间，格式为 HH:MM:SS
-  /// - [spanMinutes] 需要消息免打扰分钟数，0 < spanMinutes < 1440（ 比如，您设置的起始时间是 00：00， 结束时间为 01:00，则 spanMinutes 为 60 分钟。设置为 1439 代表全天免打扰 （23 60 + 59 = 1439 ））
-  /// - [level]  消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [spanMinutes] 需要消息免打扰分钟数，0 < spanMinutes < 1440（ 比如，您设置的起始时间是 00：00，
+  /// 结束时间为 01:00，则 spanMinutes 为 60 分钟。设置为 1439 代表全天免打扰 （23
+  /// 60 + 59 = 1439 ））
+  /// - [level] 消息通知级别
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursChanged]
   /// ---
@@ -3088,15 +4081,29 @@ class RCIMIWEngine {
   /// ---
   /// ### Mute Message Notifications for a Specific Time Period
   /// - [startTime]
-  /// Specifies the start time for muting message notifications, in the format `HH:MM:SS`.
+  /// Specifies the start time for muting message notifications,
+  /// in the format `HH:MM:SS`.
   /// - [spanMinutes]
-  /// The duration in minutes for muting message notifications, where `0 < spanMinutes < 1440`.
-  /// For example, if the start time is `00:00` and the end time is `01:00`, then `spanMinutes` would be `60`. Setting it to `1439` represents a full day of muting (`23 60 + 59 = 1439`).
+  /// The duration in minutes for muting message notifications,
+  /// where `0 < spanMinutes < 1440`.
+  /// For example, if the start time is `00:00` and the end time
+  /// is `01:00`, then `spanMinutes` would be `60`. Setting it
+  /// to `1439` represents a full day of muting (`23 60 + 59 =
+  /// 1439`).
   /// - [level]
   /// The notification level for messages.
   /// - [callback]
-  /// The event callback. Starting from SDK version 5.3.1, the callback method is supported. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
-  /// The status code for the current operation. `0` indicates a successful call, and the specific result requires implementing the callback interface. Non-zero values indicate that the current operation failed, and the callback will not be triggered. Refer to the error codes for detailed error information.
+  /// The event callback. Starting from SDK version 5.3.1, the
+  /// callback method is supported. Other callback methods for
+  /// this interface were deprecated in version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the `callback`
+  /// parameter is provided, only the callback method will be
+  /// triggered.
+  /// The status code for the current operation. `0` indicates a successful
+  /// call, and the specific result requires implementing the callback
+  /// interface. Non-zero values indicate that the current operation
+  /// failed, and the callback will not be triggered. Refer to the error
+  /// codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeNotificationQuietHours(
@@ -3111,14 +4118,24 @@ class RCIMIWEngine {
   /// [ZH]
   /// ---
   /// 删除已设置的全局时间段消息提醒屏蔽
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursRemoved]
   /// ---
   /// [EN]
   /// ---
   /// Remove the globally set time period message reminder mute
-  /// - [callback] Event callback. The SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-style callbacks
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are expected
+  /// to be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback will be triggered.
+  /// successful call, and the specific result needs to be implemented via
+  /// the interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and no interface callback will be triggered.
+  /// Refer to the error codes for detailed errors.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> removeNotificationQuietHours({IRCIMIWRemoveNotificationQuietHoursCallback? callback}) async {
@@ -3130,11 +4147,18 @@ class RCIMIWEngine {
   /// 加载已设置的时间段消息提醒屏蔽
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursLoaded]
+  /// {@link #getNotificationQuietHours(IRCIMIWGetNotificationQuietHoursCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load the set notification quiet hours
-  /// @deprecated Use {@link #getNotificationQuietHours(IRCIMIWGetNotificationQuietHoursCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// the specific result requires implementing the interface callback.
+  /// Non-zero indicates failure, and no callback will be triggered. Refer
+  /// to the error codes for detailed error information.
+  /// @deprecated Use
+  /// {@link #getNotificationQuietHours(IRCIMIWGetNotificationQuietHoursCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   @Deprecated('请使用 [getNotificationQuietHours] 代替')
@@ -3150,7 +4174,16 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// ### Get the Set Time Period for Message Reminder Blocking
-  /// - [callback] Event callback. The SDK has supported callback-based event handling since version 5.3.1. Starting from version 5.4.0, other callback methods for this interface have been deprecated and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-based event
+  /// handling since version 5.3.1. Starting from version 5.4.0,
+  /// other callback methods for this interface have been
+  /// deprecated and are expected to be removed in version 6.x. If
+  /// the `callback` parameter is provided, only the callback
+  /// method will be triggered.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. A non-zero value indicates that the current operation
+  /// failed, and the interface callback will not be triggered. Refer to
+  /// the error codes for detailed error information.
   /// @listener [onNotificationQuietHoursLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getNotificationQuietHours({IRCIMIWGetNotificationQuietHoursCallback? callback}) async {
@@ -3161,27 +4194,64 @@ class RCIMIWEngine {
   /// ---
   /// 设置会话的消息提醒状态
   /// 注：超级群调用该接口，channelId 为空时，相当于设置了 channelId 为空的频道的免打扰，不会屏蔽整个超级群会话下所有频道的免打扰
-  /// - [type] 会话类型。请注意以下限制：*超级群会话类型*：如在 2022.09.01 之前开通超级群业务，默认不支持为单个超级群会话*所有消息*设置免打扰级别（“所有消息”指所有频道中的消息和不属于任何频道的消息）。该接口仅设置指定超级群会话（`targetId`）中*不属于任何频道的消息*的免打扰状态级别。如需修改请提交工单。*聊天室会话类型*：不支持，因为聊天室消息默认不支持消息推送提醒。
+  /// - [type] 会话类型。请注意以下限制：*超级群会话类型*：如在 2022.09.01
+  /// 之前开通超级群业务，默认不支持为单个超级群会话*所有消息*设置免打扰级别（“所有消息”指所有频道中的消息和不属于任何频道的消息）。该接口仅设置指定超级群会话（`targetId`）中*不属于任何频道的消息*的免打扰状态级别。如需修改请提交工单。*聊天室会话类型*：不支持，因为聊天室消息默认不支持消息推送提醒。
   /// - [targetId] 会话 ID
-  /// - [channelId] 超级群的会话频道 ID。其他类型传 null 即可。如果传入频道 ID，则针对该指定频道设置消息免打扰级别。如果不指定频道 ID，则对所有超级群消息生效。*注意*：2022.09.01 之前开通超级群业务的客户，如果不指定频道 ID，则默认传 "" 空字符串，即仅针对指定超级群会话（`targetId`）中*不属于任何频道的消息*设置免打扰状态级别。如需修改请提交工单。
+  /// - [channelId] 超级群的会话频道 ID。其他类型传 null 即可。如果传入频道
+  /// ID，则针对该指定频道设置消息免打扰级别。如果不指定频道
+  /// ID，则对所有超级群消息生效。*注意*：2022.09.01 之前开通超级群业务的客户，如果不指定频道
+  /// ID，则默认传 ""
+  /// 空字符串，即仅针对指定超级群会话（`targetId`）中*不属于任何频道的消息*设置免打扰状态级别。如需修改请提交工单。
   /// - [level] 消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationNotificationLevelChanged]
   /// ---
   /// [EN]
   /// ---
   /// Set the message notification level for a conversation
-  /// Note: When calling this API for an ultra group, if `channelId` is empty, it sets the Do Not Disturb level for messages not belonging to any channel within the specified ultra group conversation. This does not affect the Do Not Disturb settings for all channels within the ultra group conversation.
-  /// - [type] The conversation type. Please note the following restrictions:
-  /// Ultra group conversation type: For ultra group services activated before 2022.09.01, setting the Do Not Disturb level for all messages in a single ultra group conversation (where "all messages" refers to messages across all channels and messages not belonging to any channel) is not supported by default. This API only sets the Do Not Disturb level for messages not belonging to any channel within the specified ultra group conversation (`targetId`). To modify this behavior, submit a ticket.
-  /// Chatroom conversation type: Not supported, as chatroom messages do not support push notifications by default.
+  /// Note: When calling this API for an ultra group, if `channelId` is
+  /// empty, it sets the Do Not Disturb level for messages not belonging
+  /// to any channel within the specified ultra group conversation. This
+  /// does not affect the Do Not Disturb settings for all channels within
+  /// the ultra group conversation.
+  /// - [type] The conversation type. Please note the following
+  /// restrictions:
+  /// Ultra group conversation type: For ultra group services
+  /// activated before 2022.09.01, setting the Do Not Disturb
+  /// level for all messages in a single ultra group conversation
+  /// (where "all messages" refers to messages across all channels
+  /// and messages not belonging to any channel) is not supported
+  /// by default. This API only sets the Do Not Disturb level for
+  /// messages not belonging to any channel within the specified
+  /// ultra group conversation (`targetId`). To modify this
+  /// behavior, submit a ticket.
+  /// Chatroom conversation type: Not supported, as chatroom
+  /// messages do not support push notifications by default.
   /// - [targetId] The conversation ID.
-  /// - [channelId] The channel ID for the ultra group conversation. Pass `null` for other types.
-  /// If a channel ID is provided, the Do Not Disturb level is set for the specified channel. If no channel ID is specified, it applies to all messages in the ultra group.
-  /// Note: For ultra group services activated before 2022.09.01, if no channel ID is specified, pass an empty string `""`, which sets the Do Not Disturb level only for messages not belonging to any channel within the specified ultra group conversation (`targetId`). To modify this behavior, submit a ticket.
+  /// - [channelId] The channel ID for the ultra group conversation. Pass `null`
+  /// for other types.
+  /// If a channel ID is provided, the Do Not Disturb level is set
+  /// for the specified channel. If no channel ID is specified, it
+  /// applies to all messages in the ultra group.
+  /// Note: For ultra group services activated before 2022.09.01,
+  /// if no channel ID is specified, pass an empty string `""`,
+  /// which sets the Do Not Disturb level only for messages not
+  /// belonging to any channel within the specified ultra group
+  /// conversation (`targetId`). To modify this behavior, submit a
+  /// ticket.
   /// - [level] The message notification level.
-  /// - [callback] The event callback. Starting from SDK version 5.3.1, callback is supported. Other callback methods for this API are deprecated as of version 5.4.0 and will be removed in version 6.x. If the `callback` parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. Starting from SDK version 5.3.1,
+  /// callback is supported. Other callback methods for this API
+  /// are deprecated as of version 5.4.0 and will be removed in
+  /// version 6.x. If the `callback` parameter is provided, only
+  /// the callback will be triggered.
+  /// successful call, and the specific result needs to be handled in the
+  /// callback. Non-zero values indicate a failed API call, and no callback
+  /// will be triggered. Refer to the error codes for detailed error
+  /// information.
   /// ---
   Future<int> changeConversationNotificationLevel(
     RCIMIWConversationType type,
@@ -3207,14 +4277,22 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationNotificationLevelLoaded]
+  /// {@link #getConversationNotificationLevel(RCIMIWConversationType, String, String, IRCIMIWGetConversationNotificationLevelCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load the notification level of a conversation
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// @deprecated Use {@link #getConversationNotificationLevel(RCIMIWConversationType, String, String, IRCIMIWGetConversationNotificationLevelCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] Channel ID, only supported for ultra groups. For other
+  /// conversation types, pass null.
+  /// the specific result needs to be handled via the callback. Non-zero
+  /// indicates failure, and the callback will not be triggered. Refer to
+  /// the error codes for details.
+  /// @deprecated Use
+  /// {@link #getConversationNotificationLevel(RCIMIWConversationType, String, String, IRCIMIWGetConversationNotificationLevelCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversationNotificationLevel] 代替')
   Future<int> loadConversationNotificationLevel(RCIMIWConversationType type, String targetId, String? channelId) async {
@@ -3224,20 +4302,52 @@ class RCIMIWEngine {
   /// [ZH]
   /// ---
   /// 获取会话的消息提醒状态
-  /// - [type] 会话类型。请注意以下限制：*超级群会话类型*：如在 2022.09.01 之前开通超级群业务，默认不支持为单个超级群会话*所有消息*设置免打扰级别（“所有消息”指所有频道中的消息和不属于任何频道的消息）。该接口仅设置指定超级群会话（`targetId`）中*不属于任何频道的消息*的免打扰状态级别。如需修改请提交工单。*聊天室会话类型*：不支持，因为聊天室消息默认不支持消息推送提醒。
+  /// - [type] 会话类型。请注意以下限制：*超级群会话类型*：如在 2022.09.01
+  /// 之前开通超级群业务，默认不支持为单个超级群会话*所有消息*设置免打扰级别（“所有消息”指所有频道中的消息和不属于任何频道的消息）。该接口仅设置指定超级群会话（`targetId`）中*不属于任何频道的消息*的免打扰状态级别。如需修改请提交工单。*聊天室会话类型*：不支持，因为聊天室消息默认不支持消息推送提醒。
   /// - [targetId] 会话 ID
-  /// - [channelId] 超级群的会话频道 ID。其他类型传 null 即可。如果传入频道 ID，则针对该指定频道设置消息免打扰级别。如果不指定频道 ID，则对所有超级群消息生效。*注意*：2022.09.01 之前开通超级群业务的客户，如果不指定频道 ID，则默认传 "" 空字符串，即仅针对指定超级群会话（`targetId`）中*不属于任何频道的消息*设置免打扰状态级别。如需修改请提交工单。
+  /// - [channelId] 超级群的会话频道 ID。其他类型传 null 即可。如果传入频道
+  /// ID，则针对该指定频道设置消息免打扰级别。如果不指定频道
+  /// ID，则对所有超级群消息生效。*注意*：2022.09.01 之前开通超级群业务的客户，如果不指定频道
+  /// ID，则默认传 ""
+  /// 空字符串，即仅针对指定超级群会话（`targetId`）中*不属于任何频道的消息*设置免打扰状态级别。如需修改请提交工单。
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// Get Conversation Notification Level
   /// - [type] Conversation type. Please note the following restrictions:
-  /// Ultra group conversation type: If the ultra group service was activated before 2022.09.01, it does not support setting the Do Not Disturb level for all messages in a single ultra group conversation by default ("all messages" refers to messages in all channels and messages not belonging to any channel). This API only sets the Do Not Disturb level for messages in the specified ultra group conversation (`targetId`) that do not belong to any channel. Submit a ticket if modification is required.Chatroom conversation type: Not supported, as chatroom messages do not support push notifications by default.
+  /// Ultra group conversation type: If the ultra group service
+  /// was activated before 2022.09.01, it does not support setting
+  /// the Do Not Disturb level for all messages in a single ultra
+  /// group conversation by default ("all messages" refers to
+  /// messages in all channels and messages not belonging to any
+  /// channel). This API only sets the Do Not Disturb level for
+  /// messages in the specified ultra group conversation
+  /// (`targetId`) that do not belong to any channel. Submit a
+  /// ticket if modification is required.Chatroom conversation
+  /// type: Not supported, as chatroom messages do not support
+  /// push notifications by default.
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID of the ultra group conversation. Pass `null` for other types.
-  /// If a channel ID is provided, the Do Not Disturb level will be set for messages in that specific channel. If no channel ID is specified, it will apply to all ultra group messages.Note: For customers who activated the ultra group service before 2022.09.01, if no channel ID is specified, pass an empty string `""` by default, which means the Do Not Disturb level will only be set for messages in the specified ultra group conversation (`targetId`) that do not belong to any channel. Submit a ticket if modification is required.
-  /// - [callback] Event callback. The SDK supports callback-style response starting from version 5.3.1. Other callback methods for this API are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID of the ultra group conversation. Pass `null` for
+  /// other types.
+  /// If a channel ID is provided, the Do Not Disturb level will
+  /// be set for messages in that specific channel. If no channel
+  /// ID is specified, it will apply to all ultra group
+  /// messages.Note: For customers who activated the ultra group
+  /// service before 2022.09.01, if no channel ID is specified,
+  /// pass an empty string `""` by default, which means the Do Not
+  /// Disturb level will only be set for messages in the specified
+  /// ultra group conversation (`targetId`) that do not belong to
+  /// any channel. Submit a ticket if modification is required.
+  /// - [callback] Event callback. The SDK supports callback-style response
+  /// starting from version 5.3.1. Other callback methods for this
+  /// API are deprecated as of version 5.4.0 and are expected to
+  /// be removed in version 6.x. If the `callback` parameter is
+  /// provided, only the callback will be triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the callback. Non-zero values indicate that the current API call
+  /// failed, and no callback will be triggered. Refer to the error codes
+  /// for detailed error information.
   /// @listener [onConversationNotificationLevelLoaded]
   Future<int> getConversationNotificationLevel(
     RCIMIWConversationType type,
@@ -3254,17 +4364,29 @@ class RCIMIWEngine {
   /// 注：如要移除消息提醒状态，设置level为RCIMIWPushNotificationLevelDefault
   /// - [type] 会话类型
   /// - [level] 消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTypeNotificationLevelChanged]
   /// ---
   /// [EN]
   /// ---
   /// Set the message notification level for a conversation type
-  /// Note: To remove the message notification level, set the level to `RCIMIWPushNotificationLevelDefault`.
+  /// Note: To remove the message notification level, set the level to
+  /// `RCIMIWPushNotificationLevelDefault`.
   /// - [type] The conversation type
   /// - [level] The message notification level
-  /// - [callback] The event callback. The SDK supports callback-based event handling starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the `callback` parameter is provided, only the callback method will be triggered.
+  /// - [callback] The event callback. The SDK supports callback-based event
+  /// handling starting from version 5.3.1. Other callback methods
+  /// for this interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the `callback`
+  /// parameter is provided, only the callback method will be
+  /// triggered.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. A non-zero value indicates that the operation failed, and
+  /// the interface callback will not be triggered. Refer to the error
+  /// codes for detailed error information.
   /// ---
   Future<int> changeConversationTypeNotificationLevel(
     RCIMIWConversationType type,
@@ -3279,12 +4401,16 @@ class RCIMIWEngine {
   /// 获取会话类型的消息提醒状态
   /// - [type] 会话类型
   /// - [返回值] [onConversationTypeNotificationLevelLoaded]
+  /// {@link #getConversationTypeNotificationLevel(RCIMIWConversationType, IRCIMIWGetConversationTypeNotificationLevelCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Get the message notification status for a conversation type.
   /// - [type] The conversation type.
-  /// @deprecated Use {@link #getConversationTypeNotificationLevel(RCIMIWConversationType, IRCIMIWGetConversationTypeNotificationLevelCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// @deprecated Use
+  /// {@link #getConversationTypeNotificationLevel(RCIMIWConversationType, IRCIMIWGetConversationTypeNotificationLevelCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversationTypeNotificationLevel] 代替')
   Future<int> loadConversationTypeNotificationLevel(RCIMIWConversationType type) async {
@@ -3295,14 +4421,24 @@ class RCIMIWEngine {
   /// ---
   /// 获取会话类型的消息提醒状态
   /// - [type] 会话类型
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
   /// Get the notification level for a specific conversation type.
   /// - [type] Specifies the conversation type.
-  /// - [callback] Event callback. The SDK has supported callback-based event handling since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK has supported callback-based event
+  /// handling since version 5.3.1. Other callback methods for this
+  /// interface were deprecated in version 5.4.0 and are expected
+  /// to be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback will be triggered.
+  /// call, and the specific result requires the implementation of the
+  /// interface callback. Non-zero indicates that the current interface
+  /// call failed, and no interface callback will be triggered. Refer to
+  /// the error codes for detailed errors.
   /// ---
   Future<int> getConversationTypeNotificationLevel(
     RCIMIWConversationType type, {
@@ -3317,17 +4453,31 @@ class RCIMIWEngine {
   /// 一般由管理员设置的接口，针对超级群的所有群成员生效，针对超级群下所有频道生效，优先级较低。如果群成员自己超级群的免打扰级别，那么以群成员自己设置的为准。
   /// - [targetId] 会话 ID
   /// - [level] 消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupDefaultNotificationLevelChanged]
   /// ---
   /// [EN]
   /// ---
   /// Set the default message status for ultra groups
-  /// This interface is typically used by administrators and applies to all members of the ultra group and all channels under the ultra group, with a lower priority. If a group member sets their own Do Not Disturb level for the ultra group, the member's setting takes precedence.
+  /// This interface is typically used by administrators and applies to
+  /// all members of the ultra group and all channels under the ultra
+  /// group, with a lower priority. If a group member sets their own Do
+  /// Not Disturb level for the ultra group, the member's setting takes
+  /// precedence.
   /// - [targetId] The conversation ID
   /// - [level] The message notification level
-  /// - [callback] The event callback. Starting from SDK version 5.3.1, callback method is supported. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in the 6.x version. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [callback] The event callback. Starting from SDK version 5.3.1, callback
+  /// method is supported. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are expected
+  /// to be removed in the 6.x version. If the callback parameter
+  /// is provided, only the callback method will be triggered.
+  /// call, and specific results need to be implemented via the interface
+  /// callback. Non-zero values indicate a failure in the current
+  /// operation, and no interface callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// ---
   Future<int> changeUltraGroupDefaultNotificationLevel(
     String targetId,
@@ -3343,12 +4493,20 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupDefaultNotificationLevelLoaded]
+  /// {@link #getUltraGroupDefaultNotificationLevel(String, IRCIMIWGetUltraGroupDefaultNotificationLevelCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Get the default message status of an ultra group
   /// - [targetId] The conversation ID
-  /// @deprecated Use {@link #getUltraGroupDefaultNotificationLevel(String, IRCIMIWGetUltraGroupDefaultNotificationLevelCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// successful call, and the specific result requires implementing the
+  /// interface callback. Non-zero values indicate that the current API
+  /// call failed, and no interface callback will be triggered. For
+  /// detailed errors, refer to the error codes.
+  /// @deprecated Use
+  /// {@link #getUltraGroupDefaultNotificationLevel(String, IRCIMIWGetUltraGroupDefaultNotificationLevelCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupDefaultNotificationLevel] 代替')
   Future<int> loadUltraGroupDefaultNotificationLevel(String targetId) async {
@@ -3365,7 +4523,15 @@ class RCIMIWEngine {
   /// [EN]
   /// Get the default message status of an ultra group
   /// - [targetId] The conversation ID
-  /// - [callback] The event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. The SDK supports callback-based responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are expected
+  /// to be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero values indicate that the current
+  /// operation failed, and the interface callback will not be triggered.
+  /// Refer to the error codes for detailed error information.
   /// @listener [onUltraGroupDefaultNotificationLevelLoaded]
   Future<int> getUltraGroupDefaultNotificationLevel(
     String targetId, {
@@ -3380,7 +4546,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [level] 消息通知级别
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelChanged]
   /// ---
@@ -3390,7 +4558,16 @@ class RCIMIWEngine {
   /// - [targetId] The conversation ID
   /// - [channelId] The channel ID, only supported for ultra groups
   /// - [level] The message notification level
-  /// - [callback] The event callback. The SDK has supported callback-based event handling since version 5.3.1. Other callback methods for this interface were deprecated in version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [callback] The event callback. The SDK has supported callback-based
+  /// event handling since version 5.3.1. Other callback methods
+  /// for this interface were deprecated in version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback method will be
+  /// triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero values indicate that the current
+  /// interface call failed, and the interface callback will not be
+  /// triggered. For detailed error information, refer to the error codes.
   /// ---
   Future<int> changeUltraGroupChannelDefaultNotificationLevel(
     String targetId,
@@ -3413,13 +4590,20 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelLoaded]
+  /// {@link #getUltraGroupChannelDefaultNotificationLevel(String, String, IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Get the default message status of an ultra group channel
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups.
-  /// @deprecated Use {@link #getUltraGroupChannelDefaultNotificationLevel(String, String, IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// specific result requires implementing the interface callback.
+  /// Non-zero indicates the current operation failed, and no callback will
+  /// be triggered. Refer to the error codes for detailed errors.
+  /// @deprecated Use
+  /// {@link #getUltraGroupChannelDefaultNotificationLevel(String, String, IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getUltraGroupChannelDefaultNotificationLevel] 代替')
   Future<int> loadUltraGroupChannelDefaultNotificationLevel(String targetId, String? channelId) async {
@@ -3438,7 +4622,16 @@ class RCIMIWEngine {
   /// Get the default message status of an ultra group channel
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups.
-  /// - [callback] Event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-style responses
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback method will be
+  /// triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero values indicate that the current
+  /// interface call failed, and no callback will be triggered. Refer to
+  /// the error codes for detailed error information.
   /// @listener [onUltraGroupChannelDefaultNotificationLevelLoaded]
   Future<int> getUltraGroupChannelDefaultNotificationLevel(
     String targetId,
@@ -3456,15 +4649,28 @@ class RCIMIWEngine {
   /// ---
   /// 设置是否显示远程推送内容详情，此功能需要从服务端开启用户设置功能。
   /// - [showContent] 是否显示远程推送内容
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPushContentShowStatusChanged]
   /// ---
   /// [EN]
   /// ---
-  /// Set whether to display the details of remote push notifications. This feature requires enabling user settings from the server side.
-  /// - [showContent] Indicates whether to display the content of remote push notifications.
-  /// - [callback] The event callback. SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// Set whether to display the details of remote push notifications.
+  /// This feature requires enabling user settings from the server side.
+  /// - [showContent] Indicates whether to display the content of remote push
+  /// notifications.
+  /// - [callback] The event callback. SDK supports callback-based responses
+  /// starting from version 5.3.1. Other callback methods for
+  /// this interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be
+  /// triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. Non-zero values indicate that the current
+  /// interface call operation failed, and the interface callback will not
+  /// be triggered. For detailed errors, refer to the error codes.
   /// ---
   Future<int> changePushContentShowStatus(
     bool showContent, {
@@ -3477,15 +4683,26 @@ class RCIMIWEngine {
   /// ---
   /// 设置推送语言
   /// - [language] 推送语言， 目前仅支持 en_us、zh_cn、ar_sa
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPushLanguageChanged]
   /// ---
   /// [EN]
   /// ---
   /// Set Push Language
-  /// - [language] The push language. Currently supports en_us, zh_cn, and ar_sa.
-  /// - [callback] The event callback. The SDK has supported callback-based notifications since version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [language] The push language. Currently supports en_us, zh_cn, and
+  /// ar_sa.
+  /// - [callback] The event callback. The SDK has supported callback-based
+  /// notifications since version 5.3.1. Other callback methods for
+  /// this interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero values indicate that the current
+  /// interface call failed, and no interface callback will be triggered.
+  /// Refer to the error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changePushLanguage(String language, {IRCIMIWChangePushLanguageCallback? callback}) async {
@@ -3498,17 +4715,28 @@ class RCIMIWEngine {
   /// 前提：移动端未在线，Web 、MAC/PC 终端在线，移动端是否接收远程推送。
   /// 此功能需要从服务端开启用户设置功能。
   /// - [receive] 是否接收
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onPushReceiveStatusChanged]
   /// ---
   /// [EN]
   /// ---
   /// Set whether to receive remote push notifications.
-  /// Prerequisite: When the mobile client is offline, and Web or MAC/PC clients are online, determine whether the mobile client receives remote push notifications.
+  /// Prerequisite: When the mobile client is offline, and Web or MAC/PC
+  /// clients are online, determine whether the mobile client receives
+  /// remote push notifications.
   /// This feature requires enabling user settings from the server side.
   /// - [receive] Indicates whether to receive push notifications.
-  /// - [callback] Event callback. The SDK supports callback mode starting from version 5.3.1. Other callback modes for this interface are deprecated as of version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback mode starting from
+  /// version 5.3.1. Other callback modes for this interface are
+  /// deprecated as of version 5.4.0 and will be removed in version
+  /// 6.x. If the callback parameter is provided, only the callback
+  /// will be triggered.
+  /// call, and specific results need to be handled via the callback.
+  /// Non-zero values indicate a failed operation, and no callback will be
+  /// triggered. Refer to the error codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changePushReceiveStatus(bool receive, {IRCIMIWChangePushReceiveStatusCallback? callback}) async {
@@ -3520,16 +4748,28 @@ class RCIMIWEngine {
   /// 给指定的群成员发送消息
   /// - [message] 要发送的消息
   /// - [userIds] 群成员集合
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
-  /// - [接口回调] [onGroupMessageToDesignatedUsersAttached], [onGroupMessageToDesignatedUsersSent]
+  /// - [接口回调] [onGroupMessageToDesignatedUsersAttached],
+  /// [onGroupMessageToDesignatedUsersSent]
   /// ---
   /// [EN]
   /// ---
   /// Send a message to specified group members
   /// - [message] The message to be sent
   /// - [userIds] The collection of group members
-  /// - [callback] The event callback. The SDK supports callback-based response starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in the 6.x release. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. The SDK supports callback-based response
+  /// starting from version 5.3.1. Other callback methods for this
+  /// interface are deprecated as of version 5.4.0 and are expected
+  /// to be removed in the 6.x release. If the callback parameter
+  /// is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be handled in the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no interface callback will be triggered. Refer to the error codes
+  /// for detailed error information.
+  /// [onGroupMessageToDesignatedUsersSent]
   /// ---
   Future<int> sendGroupMessageToDesignatedUsers(
     RCIMIWMessage message,
@@ -3547,14 +4787,22 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageCountLoaded]
+  /// {@link #getMessageCount(RCIMIWConversationType, String, String, IRCIMIWGetMessageCountCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Loads the total message count for the specified conversation.
   /// - [type] The type of the conversation.
   /// - [targetId] The ID of the conversation.
-  /// - [channelId] The channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @deprecated Use {@link #getMessageCount(RCIMIWConversationType, String, String, IRCIMIWGetMessageCountCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] The channel ID, only supported for ultra groups. Pass null
+  /// for other conversation types.
+  /// the detailed result requires implementing the interface callback.
+  /// Non-zero values indicate failure, and no callback will be triggered.
+  /// Refer to the error codes for detailed error information.
+  /// @deprecated Use
+  /// {@link #getMessageCount(RCIMIWConversationType, String, String, IRCIMIWGetMessageCountCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   @Deprecated('请使用 [getMessageCount] 代替')
@@ -3575,8 +4823,17 @@ class RCIMIWEngine {
   /// Get the total number of messages for a specified conversation.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// - [callback] Event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
+  /// other conversation types.
+  /// - [callback] Event callback. The SDK supports callback mode starting from
+  /// version 5.3.1. Other callback methods for this interface are
+  /// deprecated in version 5.4.0 and will be removed in version
+  /// 6.x. If the callback parameter is provided, only the
+  /// callback will be triggered.
+  /// specific result needs to be implemented in the interface callback.
+  /// Non-zero values indicate failure of the current operation, and no
+  /// interface callback will be triggered. Refer to the error codes for
+  /// detailed error information.
   /// @listener [onMessageCountLoaded]
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageCount(
@@ -3592,16 +4849,24 @@ class RCIMIWEngine {
   /// ---
   /// 根据会话类型,加载置顶会话列表
   /// - [conversationTypes] 会话类型集合
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onTopConversationsLoaded]
+  /// {@link #getTopConversations(List, String, IRCIMIWGetTopConversationsCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load the pinned conversation list based on the conversation type.
   /// - [conversationTypes] A collection of conversation types.
-  /// - [channelId]    The channel ID, only supported for ultra groups. Pass null for other conversation types.
-  /// @deprecated Use {@link #getTopConversations(List, String, IRCIMIWGetTopConversationsCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// - [channelId] The channel ID, only supported for ultra groups.
+  /// Pass null for other conversation types.
+  /// Specific results require implementing the interface callback.
+  /// Non-zero values indicate failure, and no callback will be triggered.
+  /// Refer to the error codes for detailed information.
+  /// @deprecated Use
+  /// {@link #getTopConversations(List, String, IRCIMIWGetTopConversationsCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getTopConversations] 代替')
   Future<int> loadTopConversations(List<RCIMIWConversationType> conversationTypes, String? channelId) async {
@@ -3612,15 +4877,25 @@ class RCIMIWEngine {
   /// ---
   /// 根据会话类型,获取置顶会话列表
   /// - [conversationTypes] 会话类型集合
-  /// - [channelId]    频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
-  /// - [callback]     事件回调。
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
+  /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// Retrieve the list of pinned conversations based on conversation type.
   /// - [conversationTypes] A collection of conversation types.
-  /// - [channelId]    The channel ID, only supported for ultra groups. For other conversation types, pass null.
-  /// - [callback]     The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [channelId] The channel ID, only supported for ultra groups. For
+  /// other conversation types, pass null.
+  /// - [callback] The event callback. SDK supports callback method
+  /// starting from version 5.3.1. Other callback methods
+  /// for this interface are deprecated as of version
+  /// 5.4.0 and are expected to be removed in version 6.x.
+  /// If the callback parameter is provided, only the
+  /// callback method will be triggered.
+  /// successful call, and specific results need to be implemented via the
+  /// interface callback. Non-zero values indicate that the current
+  /// interface call operation failed, and no interface callback will be
+  /// triggered. For detailed errors, refer to the error codes.
   /// @listener [onTopConversationsLoaded]
   Future<int> getTopConversations(
     List<RCIMIWConversationType> conversationTypes,
@@ -3636,7 +4911,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [timestamp] 已读时间
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupReadStatusSynced]
   /// ---
@@ -3646,7 +4923,16 @@ class RCIMIWEngine {
   /// - [targetId] The conversation ID.
   /// - [channelId] The channel ID, only supported for ultra groups.
   /// - [timestamp] The read time.
-  /// - [callback] The event callback. The SDK supports callback-style responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. The SDK supports callback-style
+  /// responses starting from version 5.3.1. Other callback
+  /// methods for this interface are deprecated as of version
+  /// 5.4.0 and are expected to be removed in version 6.x. If the
+  /// callback parameter is provided, only the callback will be
+  /// triggered.
+  /// call, and the specific result needs to be handled in the callback.
+  /// Non-zero values indicate a failure in the current operation, and no
+  /// callback will be triggered. Refer to the error codes for detailed
+  /// error information.
   /// ---
   /// [timestamp] 在 Flutter For Web 端无效
   Future<int> syncUltraGroupReadStatus(
@@ -3665,13 +4951,22 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoadedForAllChannel]
+  /// {@link #getConversationsForAllChannel(RCIMIWConversationType, String, IRCIMIWGetConversationsForAllChannelCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
-  /// Retrieve the conversation list of all channels under a specific conversation. Only supported for ultra groups.
+  /// Retrieve the conversation list of all channels under a specific
+  /// conversation. Only supported for ultra groups.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// @deprecated Use {@link #getConversationsForAllChannel(RCIMIWConversationType, String, IRCIMIWGetConversationsForAllChannelCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// was successful. The specific result needs to be implemented in the
+  /// interface callback. Non-zero indicates the current API call operation
+  /// failed, and no interface callback will be triggered. For detailed
+  /// errors, refer to the error codes.
+  /// @deprecated Use
+  /// {@link #getConversationsForAllChannel(RCIMIWConversationType, String, IRCIMIWGetConversationsForAllChannelCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getConversationsForAllChannel] 代替')
   Future<int> loadConversationsForAllChannel(RCIMIWConversationType type, String targetId) async {
@@ -3687,10 +4982,19 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
-  /// Retrieve the conversation list for all channels under a specific conversation. Only supported for ultra groups.
+  /// Retrieve the conversation list for all channels under a specific
+  /// conversation. Only supported for ultra groups.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
-  /// - [callback] Event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [callback] Event callback. SDK supports callback method starting from
+  /// version 5.3.1. Other callback methods for this interface are
+  /// deprecated as of version 5.4.0 and are expected to be removed
+  /// in version 6.x. If the callback parameter is provided, only
+  /// the callback method will be triggered.
+  /// and specific results need to be implemented in the interface
+  /// callback. Non-zero values indicate that the current interface call
+  /// failed, and no interface callback will be triggered. Refer to the
+  /// error codes for detailed error information.
   /// @listener [onConversationsLoadedForAllChannel]
   Future<int> getConversationsForAllChannel(
     RCIMIWConversationType type,
@@ -3705,16 +5009,28 @@ class RCIMIWEngine {
   /// 修改超级群消息
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
   /// - [message] 要修改的 message
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageModified]
   /// ---
   /// [EN]
   /// ---
   /// Modify Ultra Group Message
-  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
+  /// - [messageUId] The messageUid of the message, which can be obtained from
+  /// the message object. Only successfully sent messages will
+  /// have a value.
   /// - [message] The message to be modified.
-  /// - [callback] Event callback. SDK supports callback-style callbacks starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. SDK supports callback-style callbacks
+  /// starting from version 5.3.1. Other callback methods for
+  /// this interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be handled by the interface
+  /// callback. Non-zero values indicate that the current operation failed,
+  /// and no interface callback will be triggered. Refer to the error codes
+  /// for detailed error information.
   /// ---
   Future<int> modifyUltraGroupMessage(
     String messageUId,
@@ -3729,7 +5045,9 @@ class RCIMIWEngine {
   /// 撤回超级群消息
   /// - [message] 需要撤回的消息
   /// - [deleteRemote] 是否删除远端消息
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageRecalled]
   /// ---
@@ -3738,7 +5056,15 @@ class RCIMIWEngine {
   /// Recall Ultra Group Message
   /// - [message] The message to be recalled
   /// - [deleteRemote] Whether to delete the remote message
-  /// - [callback] Event callback. SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. SDK supports callback mode starting from
+  /// version 5.3.1. Other callback methods for this interface
+  /// are deprecated in version 5.4.0 and will be removed in
+  /// version 6.x. If the callback parameter is provided, only
+  /// the callback will be triggered.
+  /// successful, and specific results need to be implemented via the
+  /// interface callback. Non-zero indicates the current operation failed,
+  /// and no interface callback will be triggered. Refer to the error codes
+  /// for detailed errors.
   /// ---
   Future<int> recallUltraGroupMessage(
     RCIMIWMessage message,
@@ -3755,7 +5081,9 @@ class RCIMIWEngine {
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [timestamp] 时间戳
   /// - [policy] 清除策略
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessagesCleared]
   /// ---
@@ -3766,7 +5094,15 @@ class RCIMIWEngine {
   /// - [channelId] Channel ID, only supported for ultra groups.
   /// - [timestamp] Unix timestamp
   /// - [policy] Clear policy
-  /// - [callback] Event callback. SDK supports callback method from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback method will be triggered.
+  /// - [callback] Event callback. SDK supports callback method from version
+  /// 5.3.1. Other callback methods for this interface are
+  /// deprecated starting from version 5.4.0 and are expected to
+  /// be removed in version 6.x. If the callback parameter is
+  /// provided, only the callback method will be triggered.
+  /// and the specific result needs to be implemented through the interface
+  /// callback. Non-zero indicates a failure in the current operation, and
+  /// the interface callback will not be triggered. Refer to the error
+  /// codes for detailed error information.
   /// ---
   Future<int> clearUltraGroupMessages(
     String targetId,
@@ -3790,7 +5126,9 @@ class RCIMIWEngine {
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [typingStatus] 输入状态
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupTypingStatusSent]
   /// ---
@@ -3800,7 +5138,16 @@ class RCIMIWEngine {
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, supported only for ultra groups.
   /// - [typingStatus] Typing status
-  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and will be removed in the 6.x release. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] Event callback. The SDK supports callback-based responses
+  /// starting from version 5.3.1. Other callback methods for
+  /// this interface are deprecated as of version 5.4.0 and
+  /// will be removed in the 6.x release. If the callback
+  /// parameter is provided, only the callback will be
+  /// triggered.
+  /// the specific result needs to be handled in the interface callback.
+  /// Non-zero values indicate a failure in the current operation, and no
+  /// callback will be triggered. Refer to the error codes for detailed
+  /// error information.
   /// ---
   Future<int> sendUltraGroupTypingStatus(
     String targetId,
@@ -3821,16 +5168,27 @@ class RCIMIWEngine {
   /// 删除超级群所有频道指定时间之前的消息
   /// - [targetId] 会话 ID
   /// - [timestamp] 时间戳
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessagesClearedForAllChannel]
   /// ---
   /// [EN]
   /// ---
-  /// Delete messages in all channels of an ultra group before a specified timestamp.
+  /// Delete messages in all channels of an ultra group before a
+  /// specified timestamp.
   /// - [targetId] The conversation ID.
   /// - [timestamp] The timestamp.
-  /// - [callback] The event callback. The SDK supports callback mode starting from version 5.3.1. Other callback methods for this interface are deprecated in version 5.4.0 and will be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. The SDK supports callback mode starting
+  /// from version 5.3.1. Other callback methods for this
+  /// interface are deprecated in version 5.4.0 and will be
+  /// removed in version 6.x. If the callback parameter is
+  /// provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. A non-zero value indicates that the current
+  /// interface call failed, and no interface callback will be triggered.
+  /// For detailed errors, refer to the error codes.
   /// ---
   Future<int> clearUltraGroupMessagesForAllChannel(
     String targetId,
@@ -3846,12 +5204,20 @@ class RCIMIWEngine {
   /// - [messages] 获取的消息集合
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBatchRemoteUltraGroupMessagesLoaded]
+  /// {@link #getBatchRemoteUltraGroupMessages(List, IRCIMIWGetBatchRemoteUltraGroupMessagesCallback)}
+  /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Retrieve Batch Messages from Service
   /// - [messages] The collection of messages to be retrieved
-  /// @deprecated Use {@link #getBatchRemoteUltraGroupMessages(List, IRCIMIWGetBatchRemoteUltraGroupMessagesCallback)} instead. This interface is expected to be removed in version 6.x.
+  /// call, and the specific result requires the implementation of the
+  /// interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and the interface callback will not be
+  /// triggered. For detailed errors, refer to the error codes.
+  /// @deprecated Use
+  /// {@link #getBatchRemoteUltraGroupMessages(List, IRCIMIWGetBatchRemoteUltraGroupMessagesCallback)}
+  /// instead. This interface is expected to be removed in version 6.x.
   /// ---
   @Deprecated('请使用 [getBatchRemoteUltraGroupMessages] 代替')
   Future<int> loadBatchRemoteUltraGroupMessages(List<RCIMIWMessage> messages) async {
@@ -3868,7 +5234,15 @@ class RCIMIWEngine {
   /// [EN]
   /// Retrieve Batch Messages from Service
   /// - [messages] The collection of messages retrieved.
-  /// - [callback] The event callback. Starting from SDK version 5.3.1, callback is supported. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [callback] The event callback. Starting from SDK version 5.3.1, callback
+  /// is supported. Other callback methods for this interface are
+  /// deprecated as of version 5.4.0 and are expected to be removed
+  /// in version 6.x. If the callback parameter is provided, only
+  /// the callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero values indicate that the current
+  /// operation failed, and no interface callback will be triggered. For
+  /// detailed error information, refer to the error codes.
   /// @listener [onBatchRemoteUltraGroupMessagesLoaded]
   Future<int> getBatchRemoteUltraGroupMessages(
     List<RCIMIWMessage> messages, {
@@ -3881,17 +5255,34 @@ class RCIMIWEngine {
   /// ---
   /// 更新超级群消息扩展信息
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
-  /// - [expansion] 更新的消息扩展信息键值对，类型是 HashMap；Key 支持大小写英文字母、数字、部分特殊符号 + = - _ 的组合方式，不支持汉字。Value 可以输入空格。
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [expansion] 更新的消息扩展信息键值对，类型是 HashMap；Key 支持大小写英文字母、数字、部分特殊符号 + = - _
+  /// 的组合方式，不支持汉字。Value 可以输入空格。
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageExpansionUpdated]
   /// ---
   /// [EN]
   /// ---
   /// Update Ultra Group Message Extension Information
-  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// - [expansion] The key-value pairs for the updated message extension information, of type HashMap. Key supports a combination of uppercase and lowercase English letters, numbers, and special characters + = - _. Chinese characters are not supported. Value can include spaces.
-  /// - [callback] The event callback. SDK supports callback method starting from version 5.3.1. Other callback methods for this interface are deprecated starting from version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// - [messageUId] The messageUid of the message, which can be obtained from
+  /// the message object. Only successfully sent messages will
+  /// have a value.
+  /// - [expansion] The key-value pairs for the updated message extension
+  /// information, of type HashMap. Key supports a combination of
+  /// uppercase and lowercase English letters, numbers, and
+  /// special characters + = - _. Chinese characters are not
+  /// supported. Value can include spaces.
+  /// - [callback] The event callback. SDK supports callback method starting
+  /// from version 5.3.1. Other callback methods for this
+  /// interface are deprecated starting from version 5.4.0 and
+  /// are expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. Non-zero indicates a failure in the current
+  /// interface call operation, and the interface callback will not be
+  /// triggered. Refer to the error codes for detailed errors.
   /// ---
   Future<int> updateUltraGroupMessageExpansion(
     String messageUId,
@@ -3905,17 +5296,31 @@ class RCIMIWEngine {
   /// ---
   /// 删除超级群消息扩展信息中特定的键值对
   /// - [messageUId] 消息的 messageUid，可在消息对象中获取，且只有发送成功的消息才会有值
-  /// - [keys]  消息扩展信息中待删除的 key 的列表，类型是 ArrayList
-  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [keys] 消息扩展信息中待删除的 key 的列表，类型是 ArrayList
+  /// - [callback] 事件回调。SDK 从 5.3.1 版本开始支持 callback 方式回调。从 5.4.0
+  /// 版本废弃该接口的其他回调方式，预计将在 6.x 版本删除此其他回调方式。如果传入了 callback 参数，仅触发
+  /// callback 回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupMessageExpansionForKeysRemoved]
   /// ---
   /// [EN]
   /// ---
-  /// Delete specific key-value pairs from the message extension information of an ultra group.
-  /// - [messageUId] The messageUid of the message, which can be obtained from the message object. Only successfully sent messages will have a value.
-  /// - [keys]  The list of keys to be deleted from the message extension information, of type ArrayList.
-  /// - [callback] Event callback. The SDK supports callback-based responses starting from version 5.3.1. Other callback methods for this interface are deprecated as of version 5.4.0 and are expected to be removed in version 6.x. If the callback parameter is provided, only the callback will be triggered.
+  /// Delete specific key-value pairs from the message extension
+  /// information of an ultra group.
+  /// - [messageUId] The messageUid of the message, which can be obtained from
+  /// the message object. Only successfully sent messages will
+  /// have a value.
+  /// - [keys] The list of keys to be deleted from the message extension
+  /// information, of type ArrayList.
+  /// - [callback] Event callback. The SDK supports callback-based responses
+  /// starting from version 5.3.1. Other callback methods for
+  /// this interface are deprecated as of version 5.4.0 and are
+  /// expected to be removed in version 6.x. If the callback
+  /// parameter is provided, only the callback will be triggered.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and the interface callback will not be
+  /// triggered. For detailed errors, refer to the error codes.
   /// ---
   Future<int> removeUltraGroupMessageExpansionForKeys(
     String messageUId,
@@ -3935,6 +5340,10 @@ class RCIMIWEngine {
   /// ---
   /// Modify Log Level
   /// - [level] The log level
+  /// the specific result requires the implementation of the callback
+  /// interface. Non-zero indicates that the current operation failed, and
+  /// the callback interface will not be triggered. Refer to the error
+  /// codes for detailed error information.
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeLogLevel(RCIMIWLogLevel level) async {
@@ -3943,15 +5352,18 @@ class RCIMIWEngine {
 
   /// [ZH]
   /// ---
-  /// 获取本地时间与服务器时间的时间差。消息发送成功后，SDK 与服务器同步时间，消息所在数据库中存储的时间就是服务器时间。 System.currentTimeMillis() - getDeltaTime() 可以获取服务器当前时间。
+  /// 获取本地时间与服务器时间的时间差。消息发送成功后，SDK 与服务器同步时间，消息所在数据库中存储的时间就是服务器时间。
+  /// System.currentTimeMillis() - getDeltaTime() 可以获取服务器当前时间。
   /// - [返回值] 本地时间与服务器时间的差值
   /// ---
   /// [EN]
   /// ---
   /// Retrieves the time difference between local time and server time.
-  /// After a message is successfully sent, the SDK synchronizes time with the server,
+  /// After a message is successfully sent, the SDK synchronizes time with
+  /// the server,
   /// and the time stored in the message database is the server time.
-  /// System.currentTimeMillis() - getDeltaTime() can be used to obtain the current server time.
+  /// System.currentTimeMillis() - getDeltaTime() can be used to obtain the
+  /// current server time.
   /// ---
   Future<int> getDeltaTime() async {
     return RCIMWrapperPlatform.instance.getDeltaTime();
@@ -3972,9 +5384,15 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Create Tag Information
-  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
-  /// - [tagName] The name of the tag, with a maximum length of 15 characters. Tag names can be duplicated.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum
+  /// length of 10 characters.
+  /// - [tagName] The name of the tag, with a maximum length of 15 characters.
+  /// Tag names can be duplicated.
   /// - [callback] Event callback.
+  /// successful call, and the specific result needs to be implemented in
+  /// the interface callback. Non-zero values indicate that the current API
+  /// call operation failed, and the interface callback will not be
+  /// triggered. Refer to the error codes for detailed error information.
   /// ---
   Future<int> createTag(String tagId, String tagName, {IRCIMIWCreateTagCallback? callback}) async {
     return RCIMWrapperPlatform.instance.createTag(tagId, tagName, callback: callback);
@@ -3990,8 +5408,13 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove Tag
-  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum
+  /// length of 10 characters.
   /// - [callback] The event callback.
+  /// the specific result needs to be implemented in the interface
+  /// callback. Non-zero indicates that the current operation failed, and
+  /// the interface callback will not be triggered. For detailed errors,
+  /// refer to the error codes.
   /// ---
   Future<int> removeTag(String tagId, {IRCIMIWRemoveTagCallback? callback}) async {
     return RCIMWrapperPlatform.instance.removeTag(tagId, callback: callback);
@@ -4008,9 +5431,14 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Update Tag Information
-  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
-  /// - [newName] The new name of the tag, with a maximum length of 15 characters. Tag names can be duplicated.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum
+  /// length of 10 characters.
+  /// - [newName] The new name of the tag, with a maximum length of 15
+  /// characters. Tag names can be duplicated.
   /// - [callback] The event callback.
+  /// the specific result needs to be implemented in the callback. Non-zero
+  /// indicates failure, and the callback will not be triggered. Refer to
+  /// the error codes for detailed error information.
   /// ---
   Future<int> updateTagNameById(String tagId, String newName, {IRCIMIWUpdateTagNameByIdCallback? callback}) async {
     return RCIMWrapperPlatform.instance.updateTagNameById(tagId, newName, callback: callback);
@@ -4026,6 +5454,10 @@ class RCIMIWEngine {
   /// ---
   /// Retrieve the tag information created by the current user.
   /// - [callback] The event callback.
+  /// was successful. Specific results need to be implemented in the
+  /// interface callback. Non-zero values indicate the current API call
+  /// failed, and the interface callback will not be triggered. For
+  /// detailed error information, refer to the error codes.
   /// ---
   Future<int> getTags({IRCIMIWGetTagsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getTags(callback: callback);
@@ -4043,10 +5475,15 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Add a conversation to a specified tag
-  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum
+  /// length of 10 characters.
   /// - [type] The type of the conversation
   /// - [targetId] The ID of the conversation
   /// - [callback] The event callback.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero indicates that the current operation
+  /// failed, and the interface callback will not be triggered. For
+  /// detailed error information, refer to the error codes.
   /// ---
   Future<int> addConversationToTag(
     String tagId,
@@ -4069,10 +5506,14 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Remove a conversation from a tag
-  /// - [tagId] Unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// - [tagId] Unique identifier of the tag, string type, with a maximum
+  /// length of 10 characters.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
   /// - [callback] Event callback.
+  /// specific result needs to be implemented in the callback. Non-zero
+  /// indicates failure, and the callback will not be triggered. Refer to
+  /// the error codes for detailed error information.
   /// ---
   Future<int> removeConversationFromTag(
     String tagId,
@@ -4099,6 +5540,10 @@ class RCIMIWEngine {
   /// - [targetId] Indicates the conversation ID
   /// - [tagIds] Represents the collection of tags
   /// - [callback] Specifies the event callback.
+  /// success, and the specific result requires implementing the callback
+  /// interface. Non-zero values indicate failure of the current operation,
+  /// and the callback will not be triggered. Refer to the error codes for
+  /// detailed error information.
   /// ---
   Future<int> removeTagsFromConversation(
     RCIMIWConversationType type,
@@ -4123,6 +5568,10 @@ class RCIMIWEngine {
   /// - [type] Specifies the conversation type.
   /// - [targetId] Indicates the conversation ID.
   /// - [callback] Represents the event callback.
+  /// successful call, and the specific result needs to be handled in the
+  /// callback. Non-zero values indicate that the operation failed, and the
+  /// callback will not be triggered. Refer to the error codes for detailed
+  /// error information.
   /// ---
   Future<int> getTagsFromConversation(
     RCIMIWConversationType type,
@@ -4136,18 +5585,31 @@ class RCIMIWEngine {
   /// ---
   /// 以会话中最后一条消息时间戳为界，分页获取本地指定标签下会话列表
   /// - [tagId] 标签唯一标识，字符型，长度不超过 10 个字。
-  /// - [timestamp] 会话的时间戳。获取这个时间戳之前的会话列表。首次可传 0，后续可以使用返回的 RCConversation 对象的 operationTime 属性值，作为下一次查询的 startTime。
+  /// - [timestamp] 会话的时间戳。获取这个时间戳之前的会话列表。首次可传 0，后续可以使用返回的 RCConversation 对象的
+  /// operationTime 属性值，作为下一次查询的 startTime。
   /// - [count] 获取的数量。当实际取回的会话数量小于 count 值时，表明已取完数据。
   /// - [callback] 事件回调。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
-  /// Retrieve the local conversation list under a specified tag, paginated by the timestamp of the last message in the conversation.
-  /// - [tagId] The unique identifier of the tag, a string type with a maximum length of 10 characters.
-  /// - [timestamp] The timestamp of the conversation. Retrieves the conversation list before this timestamp. For the first query, pass 0. For subsequent queries, use the operationTime property value from the returned RCConversation object as the startTime for the next query.
-  /// - [count] The number of conversations to retrieve. If the number of conversations retrieved is less than the count value, it indicates that all data has been fetched.
+  /// Retrieve the local conversation list under a specified tag, paginated
+  /// by the timestamp of the last message in the conversation.
+  /// - [tagId] The unique identifier of the tag, a string type with a
+  /// maximum length of 10 characters.
+  /// - [timestamp] The timestamp of the conversation. Retrieves the
+  /// conversation list before this timestamp. For the first
+  /// query, pass 0. For subsequent queries, use the operationTime
+  /// property value from the returned RCConversation object as
+  /// the startTime for the next query.
+  /// - [count] The number of conversations to retrieve. If the number of
+  /// conversations retrieved is less than the count value, it
+  /// indicates that all data has been fetched.
   /// - [callback] The event callback.
+  /// call, and the specific result needs to be implemented in the
+  /// interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and the interface callback will not be
+  /// triggered. Refer to the error codes for detailed error information.
   /// ---
   Future<int> getConversationsFromTagByPage(
     String tagId,
@@ -4168,10 +5630,17 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// ---
-  /// Get the unread message count for all conversations with the specified tag.
-  /// - [tagId] The unique identifier of the tag. It is a string type and its length should not exceed 10 characters.
-  /// - [contain] Indicates whether to include conversations with Do Not Disturb enabled.
+  /// Get the unread message count for all conversations with the specified
+  /// tag.
+  /// - [tagId] The unique identifier of the tag. It is a string type and its
+  /// length should not exceed 10 characters.
+  /// - [contain] Indicates whether to include conversations with Do Not
+  /// Disturb enabled.
   /// - [callback] The event callback.
+  /// call was successful. The specific result needs to be implemented in
+  /// the interface callback. Non-zero values indicate that the current API
+  /// call operation failed, and the interface callback will not be
+  /// triggered. For detailed errors, refer to the error codes.
   /// ---
   Future<int> getUnreadCountByTag(String tagId, bool contain, {IRCIMIWGetUnreadCountCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getUnreadCountByTag(tagId, contain, callback: callback);
@@ -4189,12 +5658,18 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// ---
-  /// Set the specified conversation as top in all conversations with the specified tag. For example, pin the private chat with "Tom" to the top among all conversations tagged with "Training Class".
-  /// - [tagId] The unique identifier of the tag, character type, with a maximum length of 10 characters.
+  /// Set the specified conversation as top in all conversations with the
+  /// specified tag. For example, pin the private chat with "Tom" to the
+  /// top among all conversations tagged with "Training Class".
+  /// - [tagId] The unique identifier of the tag, character type, with a
+  /// maximum length of 10 characters.
   /// - [type] The type of conversation.
   /// - [targetId] The ID of the conversation.
   /// - [top] Whether to pin the conversation to the top.
   /// - [callback] The event callback.
+  /// call, and the specific result needs to be handled in the callback.
+  /// Non-zero indicates a failed operation, and the callback will not be
+  /// triggered. Refer to the error codes for detailed error information.
   /// ---
   Future<int> changeConversationTopStatusInTag(
     String tagId,
@@ -4223,11 +5698,17 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// ---
-  /// Checks whether the specified conversation is pinned among all conversations with the same tag. Returns the pinned status upon successful retrieval.
-  /// - [tagId] The unique identifier of the tag. String type, with a maximum length of 10 characters.
+  /// Checks whether the specified conversation is pinned among all
+  /// conversations with the same tag. Returns the pinned status upon
+  /// successful retrieval.
+  /// - [tagId] The unique identifier of the tag. String type, with a maximum
+  /// length of 10 characters.
   /// - [type] The type of the conversation.
   /// - [targetId] The ID of the conversation.
   /// - [callback] The event callback.
+  /// the detailed result needs to be handled in the callback. Non-zero
+  /// values indicate failure, and no callback will be triggered. Refer to
+  /// the error codes for detailed error information.
   /// ---
   Future<int> getConversationTopStatusInTag(
     String tagId,
@@ -4247,9 +5728,15 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// ---
-  /// Clear the unread message count for all conversations carrying the specified tag.
-  /// - [tagId] The unique identifier of the tag, string type, with a maximum length of 10 characters.
+  /// Clear the unread message count for all conversations carrying the
+  /// specified tag.
+  /// - [tagId] The unique identifier of the tag, string type, with a maximum
+  /// length of 10 characters.
   /// - [callback] The event callback.
+  /// call, and the specific result needs to be implemented through the
+  /// interface callback. Non-zero indicates that the current interface
+  /// call operation failed, and the interface callback will not be
+  /// triggered. For detailed errors, refer to the error codes.
   /// ---
   Future<int> clearMessagesUnreadStatusByTag(
     String tagId, {
@@ -4268,10 +5755,19 @@ class RCIMIWEngine {
   /// ---
   /// [EN]
   /// ---
-  /// Remove all conversations under the specified tag and unbind these conversations from the tag. After successful deletion, the conversations will no longer carry the specified tag. When these conversations receive new messages, new conversations will be created.
-  /// - [tagId] The unique identifier of the tag, character type, with a length not exceeding 10 characters.
+  /// Remove all conversations under the specified tag and unbind these
+  /// conversations from the tag. After successful deletion, the
+  /// conversations will no longer carry the specified tag. When these
+  /// conversations receive new messages, new conversations will be
+  /// created.
+  /// - [tagId] The unique identifier of the tag, character type, with a
+  /// length not exceeding 10 characters.
   /// - [deleteMessage] Specifies whether to delete the messages.
   /// - [callback] Event callback.
+  /// successful call, and the specific result needs to be implemented via
+  /// the interface callback. Non-zero indicates that the current API call
+  /// failed, and the interface callback will not be triggered. For
+  /// detailed errors, refer to the error codes.
   /// ---
   Future<int> clearConversationsByTag(
     String tagId,
@@ -4309,6 +5805,7 @@ class RCIMIWEngine {
   /// Update group info
   /// - [groupInfo] Group details (only modified parameters required)
   /// - [callback] Event callback
+  /// means failure—see error codes)
   /// ---
   Future<int> updateGroupInfo(RCIMIWGroupInfo groupInfo, {IRCIMIWGroupInfoUpdatedCallback? callback}) async {
     return RCIMWrapperPlatform.instance.updateGroupInfo(groupInfo, callback: callback);
@@ -4340,9 +5837,11 @@ class RCIMIWEngine {
   /// ---
   /// Remove members from group
   /// - [groupId] Group identifier
-  /// - [userIds] Array of member IDs (supports batch operations, max 100 per call)
+  /// - [userIds] Array of member IDs (supports batch operations, max 100 per
+  /// call)
   /// - [config] Removal config (optional, uses default when empty)
   /// - [callback] Event callback
+  /// means failure with no callback triggered, see error codes)
   /// ---
   Future<int> kickGroupMembers(
     String groupId,
@@ -4365,6 +5864,7 @@ class RCIMIWEngine {
   /// Join group actively
   /// - [groupId] Group ID
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> joinGroup(String groupId, {IRCIMIWJoinGroupCallback? callback}) async {
     return RCIMWrapperPlatform.instance.joinGroup(groupId, callback: callback);
@@ -4384,6 +5884,7 @@ class RCIMIWEngine {
   /// - [groupId] group ID
   /// - [config] Exit config (optional, defaults apply if null)
   /// - [callback] Event callback
+  /// callback, see error codes)
   /// ---
   Future<int> quitGroup(String groupId, RCIMIWQuitGroupConfig config, {IRCIMIWQuitGroupCallback? callback}) async {
     return RCIMWrapperPlatform.instance.quitGroup(groupId, config, callback: callback);
@@ -4401,6 +5902,7 @@ class RCIMIWEngine {
   /// Dismiss group
   /// - [groupId] Group ID
   /// - [callback] Event callback
+  /// means failure—see error codes)
   /// ---
   Future<int> dismissGroup(String groupId, {IRCIMIWDismissGroupCallback? callback}) async {
     return RCIMWrapperPlatform.instance.dismissGroup(groupId, callback: callback);
@@ -4424,6 +5926,7 @@ class RCIMIWEngine {
   /// - [quitGroup] Whether to leave group
   /// - [config] Transfer config (optional, defaults apply if null)
   /// - [callback] Event callback
+  /// means failure—see error codes)
   /// ---
   Future<int> transferGroupOwner(
     String groupId,
@@ -4449,6 +5952,7 @@ class RCIMIWEngine {
   /// - [groupId] Group ID
   /// - [userIds] User ID list (max 100 per request)
   /// - [callback] Event callback
+  /// means failure—see error codes)
   /// ---
   Future<int> getGroupMembers(String groupId, List<String> userIds, {IRCIMIWGetGroupMembersCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getGroupMembers(groupId, userIds, callback: callback);
@@ -4468,8 +5972,11 @@ class RCIMIWEngine {
   /// Get group members with pagination
   /// - [groupId] group ID
   /// - [role] member role
-  /// - [option] query options including page token (optional, returns first page if empty), page size (max 100), and ascending order (default desc)
+  /// - [option] query options including page token (optional, returns first
+  /// page if empty), page size (max 100), and ascending order
+  /// (default desc)
   /// - [callback] event callback
+  /// means failure—no callback triggered, see error codes)
   /// ---
   Future<int> getGroupMembersByRole(
     String groupId,
@@ -4492,8 +5999,11 @@ class RCIMIWEngine {
   /// ---
   /// Get joined group info by role
   /// - [role] Group member role
-  /// - [option] Query options including page token (optional, returns first page if empty), page size (max 100), and ascending order (default desc)
+  /// - [option] Query options including page token (optional, returns first
+  /// page if empty), page size (max 100), and ascending order
+  /// (default desc)
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> getJoinedGroupsByRole(
     RCIMIWGroupMemberRole role,
@@ -4515,6 +6025,7 @@ class RCIMIWEngine {
   /// Get joined group details
   /// - [groupIds] List of group IDs
   /// - [callback] Event callback
+  /// means failure—no callback triggered. See error codes for details)
   /// ---
   Future<int> getJoinedGroups(List<String> groupIds, {IRCIMIWGetJoinedGroupsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getJoinedGroups(groupIds, callback: callback);
@@ -4532,8 +6043,10 @@ class RCIMIWEngine {
   /// ---
   /// Set group remark name
   /// - [groupId] Group ID
-  /// - [remark] Group remark (max 64 chars). Pass empty string to remove remark
+  /// - [remark] Group remark (max 64 chars). Pass empty string to remove
+  /// remark
   /// - [callback] Event callback
+  /// codes for details
   /// ---
   Future<int> setGroupRemark(String groupId, String remark, {IRCIMIWSetGroupRemarkCallback? callback}) async {
     return RCIMWrapperPlatform.instance.setGroupRemark(groupId, remark, callback: callback);
@@ -4554,9 +6067,11 @@ class RCIMIWEngine {
   /// Set group member profile
   /// - [groupId] Group ID
   /// - [userId] Required user ID (supports current logged-in user ID)
-  /// - [nickname] Optional nickname (max 64 chars). Empty string removes nickname
+  /// - [nickname] Optional nickname (max 64 chars). Empty string removes
+  /// nickname
   /// - [extra] Optional additional info (max 128 chars)
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> setGroupMemberInfo(
     String groupId,
@@ -4580,8 +6095,11 @@ class RCIMIWEngine {
   /// ---
   /// Search joined groups by name
   /// - [groupName] Group name (required, max 64 chars)
-  /// - [option] Query options including page token (optional, first page by default), page size (max 200), and sort order (descending by default)
+  /// - [option] Query options including page token (optional, first page by
+  /// default), page size (max 200), and sort order (descending by
+  /// default)
   /// - [callback] Event callback
+  /// failure—see error codes)
   /// ---
   Future<int> searchJoinedGroups(
     String groupName,
@@ -4606,9 +6124,13 @@ class RCIMIWEngine {
   /// Search group members by nickname
   /// - [groupId] groupID
   /// - [name] Member nickname (required, max 64 chars)
-  /// - [option] Search options including page token (optional, first page by default), page size (max 200), and sort order (descending by default)
+  /// - [option] Search options including page token (optional, first page by
+  /// default), page size (max 200), and sort order (descending by
+  /// default)
   /// - [callback] Event callback
-  /// @note Searches nickname first, then username. Returns results if either field matches
+  /// means failure—see error codes)
+  /// @note Searches nickname first, then username. Returns results if either field
+  /// matches
   /// ---
   Future<int> searchGroupMembers(
     String groupId,
@@ -4623,16 +6145,20 @@ class RCIMIWEngine {
   /// ---
   /// 添加群管理员
   /// - [groupId] 群组 ID，必填项
-  /// - [userIds] 用户 ID 数组，必填项。用户 ID 必须为群成员，一次最多设置 10 个群成员为管理员，管理员上限为 10 个。群主不支持设置为管理员
+  /// - [userIds] 用户 ID 数组，必填项。用户 ID 必须为群成员，一次最多设置 10 个群成员为管理员，管理员上限为 10
+  /// 个。群主不支持设置为管理员
   /// - [callback] 事件回调
-  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口���用操作失败，不会触发接口回调，详细错误参考错误码
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0
+  /// 代表当前接口���用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
   /// ---
   /// Add group admin
   /// - [groupId] Required group ID
-  /// - [userIds] Required user ID array. Must be group members. Max 10 admins per group (owner excluded)
+  /// - [userIds] Required user ID array. Must be group members. Max 10 admins
+  /// per group (owner excluded)
   /// - [callback] Event callback
+  /// means failure (see error codes)
   /// ---
   Future<int> addGroupManagers(
     String groupId,
@@ -4656,6 +6182,7 @@ class RCIMIWEngine {
   /// - [groupId] Required group ID
   /// - [userIds] Required user ID array (max 10 admins per operation)
   /// - [callback] Event callback
+  /// means failure—see error codes)
   /// ---
   Future<int> removeGroupManagers(
     String groupId,
@@ -4674,8 +6201,11 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// @note
   /// *`callback` 的 `processCode` 参数说明*
-  /// - 当群组的 `joinPermission` 为需要群主或管理员审批时，`processCode` 返回 `RC_GROUP_JOIN_GROUP_NEED_MANAGER_ACCEPT` ( 25424 )，表示需要等待群主或管理员审批。
-  /// - 当群组的 `joinPermission` 为不用验证，同时 `inviteHandlePermission` 为需要被邀请人同意时，`processCode` 返回 `RC_GROUP_NEED_INVITEE_ACCEPT` ( 25427 )，表示需要被邀请人同意后才能进入group。
+  /// - 当群组的 `joinPermission` 为需要群主或管理员审批时，`processCode` 返回
+  /// `RC_GROUP_JOIN_GROUP_NEED_MANAGER_ACCEPT` ( 25424 )，表示需要等待群主或管理员审批。
+  /// - 当群组的 `joinPermission` 为不用验证，同时 `inviteHandlePermission`
+  /// 为需要被邀请人同意时，`processCode` 返回 `RC_GROUP_NEED_INVITEE_ACCEPT` ( 25427
+  /// )，表示需要被邀请人同意后才能进入group。
   /// ---
   /// [EN]
   /// ---
@@ -4683,10 +6213,15 @@ class RCIMIWEngine {
   /// - [groupId] Group ID
   /// - [userIds] User ID list (max 30 per request)
   /// - [callback] Event callback
+  /// non-zero means failure (no callback triggered). See error codes for
+  /// details
   /// @note
   /// *About `processCode` in callback*
-  /// - When group's `joinPermission` requires owner/admin approval, returns `RC_GROUP_JOIN_GROUP_NEED_MANAGER_ACCEPT` (25424) - pending approval
-  /// - When `joinPermission` is open but `inviteHandlePermission` requires invitee consent, returns `RC_GROUP_NEED_INVITEE_ACCEPT` (25427) - pending invitee confirmation
+  /// - When group's `joinPermission` requires owner/admin approval, returns
+  /// `RC_GROUP_JOIN_GROUP_NEED_MANAGER_ACCEPT` (25424) - pending approval
+  /// - When `joinPermission` is open but `inviteHandlePermission` requires
+  /// invitee consent, returns `RC_GROUP_NEED_INVITEE_ACCEPT` (25427) -
+  /// pending invitee confirmation
   /// ---
   Future<int> inviteUsersToGroup(
     String groupId,
@@ -4710,6 +6245,7 @@ class RCIMIWEngine {
   /// - [groupId] Group ID
   /// - [inviterId] Inviter's ID
   /// - [callback] Event callback
+  /// means failure—no callback triggered, see error codes)
   /// ---
   Future<int> acceptGroupInvite(String groupId, String inviterId, {IRCIMIWAcceptGroupInviteCallback? callback}) async {
     return RCIMWrapperPlatform.instance.acceptGroupInvite(groupId, inviterId, callback: callback);
@@ -4731,6 +6267,7 @@ class RCIMIWEngine {
   /// - [inviterId] Inviter's ID
   /// - [reason] Optional decline reason (max 128 chars)
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> refuseGroupInvite(
     String groupId,
@@ -4751,22 +6288,30 @@ class RCIMIWEngine {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// @note
   /// *`callback` 的 `processCode` 参数说明*
-  /// - 当群组的 `inviteHandlePermission` 为需要被邀请人同意时，若 `processCode` 返回 `RC_GROUP_NEED_INVITEE_ACCEPT` (25427)，表示需等待被邀请人同意方可加入群组。
-  /// - 当群组的 `inviteHandlePermission` 为无需被邀请人同意时，若 `processCode` 返回 `RC_SUCCESS` (0)，表示被邀请人已成功加入群组。
+  /// - 当群组的 `inviteHandlePermission` 为需要被邀请人同意时，若 `processCode` 返回
+  /// `RC_GROUP_NEED_INVITEE_ACCEPT` (25427)，表示需等待被邀请人同意方可加入群组。
+  /// - 当群组的 `inviteHandlePermission` 为无需被邀请人同意时，若 `processCode` 返回
+  /// `RC_SUCCESS` (0)，表示被邀请人已成功加入群组。
   /// 以上仅适用于邀请加入群组的情况，当用户主动申请加入群组时，`processCode` 始终为 `RC_SUCCESS` (0)。
   /// ---
   /// [EN]
   /// ---
   /// Approve user's request to join group
   /// - [groupId] Group ID
-  /// - [inviterId] Inviter's user ID (optional). Required for invited joins, empty for direct requests.
+  /// - [inviterId] Inviter's user ID (optional). Required for invited joins,
+  /// empty for direct requests.
   /// - [applicantId] Applicant's user ID
   /// - [callback] Event callback
+  /// non-zero means failure (no callback triggered). See error codes for
+  /// details.
   /// @note
   /// *About `callback`'s `processCode`:*
-  /// - When group's `inviteHandlePermission` requires invitee consent, `RC_GROUP_NEED_INVITEE_ACCEPT` (25427) means waiting for approval.
-  /// - When no consent needed, `RC_SUCCESS` (0) means invitee joined successfully.
-  /// Note: These only apply to invited joins. For direct requests, `processCode` always returns `RC_SUCCESS` (0).
+  /// - When group's `inviteHandlePermission` requires invitee consent,
+  /// `RC_GROUP_NEED_INVITEE_ACCEPT` (25427) means waiting for approval.
+  /// - When no consent needed, `RC_SUCCESS` (0) means invitee joined
+  /// successfully.
+  /// Note: These only apply to invited joins. For direct requests,
+  /// `processCode` always returns `RC_SUCCESS` (0).
   /// ---
   Future<int> acceptGroupApplication(
     String groupId,
@@ -4791,10 +6336,12 @@ class RCIMIWEngine {
   /// ---
   /// Reject user's group join request
   /// - [groupId] Group ID
-  /// - [inviterId] Inviter's user ID (optional). Required for invited joins, empty for self-requested joins
+  /// - [inviterId] Inviter's user ID (optional). Required for invited joins,
+  /// empty for self-requested joins
   /// - [applicantId] Applicant's ID
   /// - [reason] Rejection reason (max 128 chars)
   /// - [callback] Event callback
+  /// callback, see error codes)
   /// ---
   Future<int> refuseGroupApplication(
     String groupId,
@@ -4824,10 +6371,14 @@ class RCIMIWEngine {
   /// [EN]
   /// ---
   /// Get group applications by page
-  /// - [option] Query options including page token (optional, returns first page if empty), page size (max 200), and sort order (descending by default)
-  /// - [directions] Array of `RCGroupApplicationDirection` for application directions
+  /// - [option] Query options including page token (optional, returns first
+  /// page if empty), page size (max 200), and sort order
+  /// (descending by default)
+  /// - [directions] Array of `RCGroupApplicationDirection` for application
+  /// directions
   /// - [status] Array of `RCGroupApplicationStatus` for status types
   /// - [callback] Event callback. Total count isn't supported
+  /// failure (no callback triggered). See error codes for details
   /// ---
   Future<int> getGroupApplications(
     RCIMIWPagingQueryOption option,
@@ -4852,6 +6403,7 @@ class RCIMIWEngine {
   /// - [groupId] Group ID
   /// - [userIds] User IDs to follow (max 100 per request)
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details.
   /// ---
   Future<int> addGroupFollows(String groupId, List<String> userIds, {IRCIMIWAddGroupFollowsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.addGroupFollows(groupId, userIds, callback: callback);
@@ -4871,6 +6423,7 @@ class RCIMIWEngine {
   /// - [groupId] Group ID
   /// - [userIds] List of user IDs (max 100 per request)
   /// - [callback] Event callback
+  /// means failure (see error codes)
   /// ---
   Future<int> removeGroupFollows(
     String groupId,
@@ -4892,6 +6445,7 @@ class RCIMIWEngine {
   /// Get groupUsers I follow
   /// - [groupId] Group ID
   /// - [callback] Event callback
+  /// means failure—see error codes)
   /// ---
   Future<int> getGroupFollows(String groupId, {IRCIMIWGetGroupFollowsCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getGroupFollows(groupId, callback: callback);
@@ -4913,6 +6467,7 @@ class RCIMIWEngine {
   /// Batch translate messages
   /// - [params] Messages to translate
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> translateMessagesWithParams(
     RCIMIWTranslateMessagesParams params, {
@@ -4933,6 +6488,7 @@ class RCIMIWEngine {
   /// Batch translate content
   /// - [params] Content to translate
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> translateTextsWithParams(
     RCIMIWTranslateTextParams params, {
@@ -4955,6 +6511,7 @@ class RCIMIWEngine {
   /// SDK won't validate string format
   /// - [language] Target language
   /// - [callback] Parameter validation callback
+  /// callback. See error codes)
   /// ---
   Future<int> setTranslationLanguage(String language, {IRCIMIWTranslateResponseCallback? callback}) async {
     return RCIMWrapperPlatform.instance.setTranslationLanguage(language, callback: callback);
@@ -4970,6 +6527,7 @@ class RCIMIWEngine {
   /// ---
   /// Get target translation language
   /// - [callback] Event callback
+  /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> getTranslationLanguage({IRCIMIWTranslateGetLanguageCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getTranslationLanguage(callback: callback);
@@ -4987,6 +6545,7 @@ class RCIMIWEngine {
   /// Toggle auto-translation
   /// - [isEnable] Enable auto-translation
   /// - [callback] Parameter validation callback
+  /// means failure—see error codes)
   /// ---
   Future<int> setAutoTranslateEnable(bool isEnable, {IRCIMIWTranslateResponseCallback? callback}) async {
     return RCIMWrapperPlatform.instance.setAutoTranslateEnable(isEnable, callback: callback);
@@ -5002,6 +6561,7 @@ class RCIMIWEngine {
   /// ---
   /// Get auto-translation toggle status
   /// - [callback] Callback for parameter validation
+  /// means failure—no callback triggered. See error codes)
   /// ---
   Future<int> getAutoTranslateEnabled({IRCIMIWGetAutoTranslateEnabledCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getAutoTranslateEnabled(callback: callback);
@@ -5025,6 +6585,8 @@ class RCIMIWEngine {
   /// - [channelIds] List of channel IDs
   /// - [strategy] Translation strategy
   /// - [callback] Parameter validation callback result
+  /// details. Non-zero means failure—no callback triggered. See error
+  /// codes for details
   /// ---
   Future<int> batchSetConversationTranslateStrategy(
     List<RCIMIWConversationType> types,
@@ -5069,6 +6631,7 @@ class RCIMIWEngine {
   /// Set info access permissions
   /// - [visibility] Privacy settings
   /// - [callback] Event callback
+  /// means failure—no callback triggered)
   /// ---
   Future<int> updateMyUserProfileVisibility(
     RCIMIWUserProfileVisibility visibility, {
@@ -5087,6 +6650,7 @@ class RCIMIWEngine {
   /// ---
   /// Get self-info access
   /// - [callback] Event callback
+  /// means failure—no callback triggered)
   /// ---
   Future<int> getMyUserProfileVisibility({IRCIMIWGetMyUserProfileVisibilityCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getMyUserProfileVisibility(callback: callback);
@@ -5104,6 +6668,7 @@ class RCIMIWEngine {
   /// Update your profile info
   /// - [profile] User profile data
   /// - [callback] Event callback
+  /// means failure (no callback triggered)
   /// ---
   Future<int> updateMyUserProfile(RCIMIWUserProfile profile, {IRCIMIWUpdateMyUserProfileCallback? callback}) async {
     return RCIMWrapperPlatform.instance.updateMyUserProfile(profile, callback: callback);
@@ -5119,6 +6684,7 @@ class RCIMIWEngine {
   /// ---
   /// Get your profile info
   /// - [callback] Event callback
+  /// details. Non-zero means failure—no callback triggered
   /// ---
   Future<int> getMyUserProfile({IRCIMIWGetMyUserProfileCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getMyUserProfile(callback: callback);
@@ -5136,6 +6702,7 @@ class RCIMIWEngine {
   /// Get user info in batch
   /// - [userIds] List of user IDs
   /// - [callback] Event callback
+  /// means failed (no callback triggered)
   /// ---
   Future<int> getUserProfiles(List<String> userIds, {IRCIMIWGetUserProfilesCallback? callback}) async {
     return RCIMWrapperPlatform.instance.getUserProfiles(userIds, callback: callback);
@@ -5152,7 +6719,9 @@ class RCIMIWEngine {
   /// ---
   /// Search by user app ID
   /// - [uniqueId] User app ID
-  /// - [callback] Event callback, returns error code RC_USER_PROFILE_USER_NOT_EXIST (24366) if user not found
+  /// - [callback] Event callback, returns error code
+  /// RC_USER_PROFILE_USER_NOT_EXIST (24366) if user not found
+  /// results), non-zero means failure (no callback triggered)
   /// ---
   Future<int> searchUserProfileByUniqueId(
     String uniqueId, {
@@ -5173,6 +6742,7 @@ class RCIMIWEngine {
   /// Subscribe to personal info change events
   /// - [request] Subscription request params
   /// - [callback] Event callback
+  /// means failure (no callback triggered)
   /// ---
   Future<int> subscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
     return RCIMWrapperPlatform.instance.subscribeEvent(request, callback: callback);
@@ -5190,6 +6760,7 @@ class RCIMIWEngine {
   /// Unsubscribe from personal info change events
   /// - [request] Unsubscription request params
   /// - [callback] Event callback
+  /// means failure (no callback triggered)
   /// ---
   Future<int> unSubscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
     return RCIMWrapperPlatform.instance.unSubscribeEvent(request, callback: callback);
@@ -5207,6 +6778,7 @@ class RCIMIWEngine {
   /// Get subscribed personal info change events
   /// - [request] Query parameters
   /// - [callback] Event callback
+  /// means failure—no callback triggered)
   /// ---
   Future<int> querySubscribeEvent(
     RCIMIWSubscribeEventRequest request, {
@@ -5231,6 +6803,7 @@ class RCIMIWEngine {
   /// - [pageSize] Items per page
   /// - [startIndex] Start index
   /// - [callback] Event callback
+  /// means failure—no callback triggered)
   /// ---
   Future<int> querySubscribeEventByPage(
     RCIMIWSubscribeEventRequest request,
@@ -5239,6 +6812,26 @@ class RCIMIWEngine {
     IRCIMIWQuerySubscribeEventCallback? callback,
   }) async {
     return RCIMWrapperPlatform.instance.querySubscribeEventByPage(request, pageSize, startIndex, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 请求拉取流式消息
+  /// - [params] 请求参数
+  /// - [callback] 操作回调
+  /// - [返回值] 调用状态码，0 表示发起成功
+  /// ---
+  /// [EN]
+  /// ---
+  /// Request stream message content
+  /// - [params] Request params
+  /// - [callback] Operation callback
+  /// ---
+  Future<int> requestStreamMessageContent(
+    RCIMIWStreamMessageRequestParams params, {
+    IRCIMIWOperationCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.requestStreamMessageContent(params, callback: callback);
   }
 
   /// 请求将指定消息的语音转为文字
@@ -5402,7 +6995,7 @@ class RCIMIWEngine {
   /// ---
   /// 分页获取好友申请列表
   /// - [applicationTypes] 申请类型集合
-  /// - [status] 过滤的申请状态
+  /// - [status]  过滤的申请状态
   /// - [queryOption] 分页查询配置
   /// - [callback] 分页结果回调
   /// - [返回值] 当次接口操作的状态码。0 表示调用成功，其余值为失败
@@ -5411,7 +7004,7 @@ class RCIMIWEngine {
   /// ---
   /// Get friend applications with pagination
   /// - [applicationTypes] Application types
-  /// - [status] Filtered application statuses
+  /// - [status]  Filtered application statuses
   /// - [queryOption] Paging query option
   /// - [callback] Result callback
   /// ---
@@ -7594,6 +9187,46 @@ class RCIMIWEngine {
   /// ---
   @Deprecated('建议在调用接口时直接传入 callback 参数，此回调从 5.4.0 版本开始不推荐使用')
   Function(int? code, RCIMIWMessage? message)? onGroupMessageToDesignatedUsersSent;
+
+  /// [ZH]
+  /// ---
+  /// 流式消息请求初始化回调
+  /// - [messageUId] 流式消息的 messageUId
+  /// ---
+  /// [EN]
+  /// ---
+  /// Stream message request init callback
+  /// - [messageUId] Message UID of the stream message
+  /// ---
+  Function(String? messageUId)? onStreamMessageRequestInit;
+
+  /// [ZH]
+  /// ---
+  /// 流式消息增量数据回调
+  /// - [message] 当前增量对应的消息体
+  /// - [chunkInfo] 增量数据信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Stream message delta data callback
+  /// - [message] Message of the current chunk
+  /// - [chunkInfo] Delta chunk information
+  /// ---
+  Function(RCIMIWMessage? message, RCIMIWStreamMessageChunkInfo? chunkInfo)? onStreamMessageRequestData;
+
+  /// [ZH]
+  /// ---
+  /// 流式消息请求结束回调
+  /// - [messageUId] 流式消息的 messageUId
+  /// - [code]  状态码，0 表示成功
+  /// ---
+  /// [EN]
+  /// ---
+  /// Stream message request completion callback
+  /// - [messageUId] Message UID of the stream message
+  /// - [code]  Result code, 0 means success
+  /// ---
+  Function(String? messageUId, int? code)? onStreamMessageRequestComplete;
 
   /// [ZH]
   /// ---

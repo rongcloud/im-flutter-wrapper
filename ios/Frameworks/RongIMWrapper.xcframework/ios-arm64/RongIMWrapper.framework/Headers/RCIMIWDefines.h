@@ -203,14 +203,24 @@ typedef NS_ENUM(NSInteger, RCIMIWMessageType)  {
     RCIMIWMessageTypeNativeCustom = 14,
     
     /*!
+     流式消息
+     */
+    RCIMIWMessageTypeStream = 15,
+    
+    /*!
      原生自定义媒体消息
      */
-    RCIMIWMessageTypeNativeCustomMedia = 15,
+    RCIMIWMessageTypeNativeCustomMedia = 16,
     
     /*!
      群组通知消息
      */
-    RCIMIWMessageTypeGroupNotification = 16,
+    RCIMIWMessageTypeGroupNotification = 17,
+    
+    /*!
+     合并转发V2消息
+     */
+    RCIMIWMessageTypeCombineV2 = 18,
 };
 
 #pragma mark 自定义消息的类别
@@ -592,6 +602,8 @@ typedef NS_ENUM(NSUInteger, RCIMIWAreaCode) {
     RCIMIWAreaCodeSGB = 4,
     /// 沙特数据中心
     RCIMIWAreaCodeSA = 5,
+    /// 阿曼数据中心
+    RCIMIWAreaCodeOM = 6,
 };
 
 typedef NS_ENUM(NSUInteger, RCIMIWMessageAuditType) {

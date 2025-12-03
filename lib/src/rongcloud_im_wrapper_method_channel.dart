@@ -181,6 +181,35 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<RCIMIWCombineV2Message?> createCombineV2Message(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    RCIMIWConversationType conversationType,
+    List<String> summaryList,
+    List<String> nameList,
+    List<RCIMIWCombineMsgInfo> msgList,
+  ) async {
+    List msgListStr = [];
+    for (var element in msgList) {
+      msgListStr.add(element.toJson());
+    }
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "channelId": channelId,
+      "conversationType": conversationType.index,
+      "summaryList": summaryList,
+      "nameList": nameList,
+      "msgList": msgListStr,
+    };
+    log("[RC:Flutter] engine:createCombineV2Message arguments: " + arguments.toString());
+    Map<dynamic, dynamic> result = await _channel.invokeMethod('engine:createCombineV2Message', arguments);
+    return RCIMIWCombineV2Message.fromJson(Map<String, dynamic>.from(result));
+  }
+
+  @override
   Future<RCIMIWReferenceMessage?> createReferenceMessage(
     RCIMIWConversationType type,
     String targetId,
@@ -3218,6 +3247,19 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<int> requestStreamMessageContent(
+    RCIMIWStreamMessageRequestParams params, {
+    IRCIMIWOperationCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"params": params.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:requestStreamMessageContent arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:requestStreamMessageContent', arguments);
+    return result;
+  }
+
+  @override
   Future<int> requestSpeechToTextForMessage(String messageUId, {IRCIMIWOperationCallback? callback}) async {
     int rongcloudHandler = addCallback(callback);
 
@@ -4841,6 +4883,41 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         engine?.onGroupMessageToDesignatedUsersSent?.call(code, message);
         log("[RC:Flutter] engine:onGroupMessageToDesignatedUsersSent invoke finished");
+        break;
+
+      case 'engine:onStreamMessageRequestInit':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        String? messageUId = arguments['messageUId'];
+
+        engine?.onStreamMessageRequestInit?.call(messageUId);
+        log("[RC:Flutter] engine:onStreamMessageRequestInit invoke finished");
+        break;
+
+      case 'engine:onStreamMessageRequestData':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        RCIMIWMessage? message =
+            arguments['message'] != null
+                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+                : null;
+        RCIMIWStreamMessageChunkInfo? chunkInfo =
+            arguments['chunkInfo'] != null
+                ? RCIMIWStreamMessageChunkInfo.fromJson(Map<String, dynamic>.from(arguments['chunkInfo']))
+                : null;
+
+        engine?.onStreamMessageRequestData?.call(message, chunkInfo);
+        log("[RC:Flutter] engine:onStreamMessageRequestData invoke finished");
+        break;
+
+      case 'engine:onStreamMessageRequestComplete':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        String? messageUId = arguments['messageUId'];
+        int? code = arguments['code'];
+
+        engine?.onStreamMessageRequestComplete?.call(messageUId, code);
+        log("[RC:Flutter] engine:onStreamMessageRequestComplete invoke finished");
         break;
 
       case 'engine:onUltraGroupReadStatusSynced':

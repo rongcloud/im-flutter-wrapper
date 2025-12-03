@@ -78,6 +78,8 @@ static RCIMWrapperEngine *instance = nil;
     [self createSightMessage:call result:result];
   } else if ([@"engine:createVoiceMessage" isEqualToString:call.method]) {
     [self createVoiceMessage:call result:result];
+  } else if ([@"engine:createCombineV2Message" isEqualToString:call.method]) {
+    [self createCombineV2Message:call result:result];
   } else if ([@"engine:createReferenceMessage" isEqualToString:call.method]) {
     [self createReferenceMessage:call result:result];
   } else if ([@"engine:createGIFMessage" isEqualToString:call.method]) {
@@ -476,6 +478,8 @@ static RCIMWrapperEngine *instance = nil;
     [self querySubscribeEvent:call result:result];
   } else if ([@"engine:querySubscribeEventByPage" isEqualToString:call.method]) {
     [self querySubscribeEventByPage:call result:result];
+  } else if ([@"engine:requestStreamMessageContent" isEqualToString:call.method]) {
+    [self requestStreamMessageContent:call result:result];
   } else if ([@"engine:requestSpeechToTextForMessage" isEqualToString:call.method]) {
     [self requestSpeechToTextForMessage:call result:result];
   } else if ([@"engine:setMessageSpeechToTextVisible" isEqualToString:call.method]) {
@@ -689,6 +693,30 @@ static RCIMWrapperEngine *instance = nil;
     int duration = [(NSNumber *)arguments[@"duration"] intValue];
 
     res = [self.engine createVoiceMessage:type targetId:targetId channelId:channelId path:path duration:duration];
+  }
+  dispatch_to_main_queue(^{
+    result([RCIMIWPlatformConverter convertMessageToDict:res]);
+  });
+}
+
+- (void)createCombineV2Message:(FlutterMethodCall *)call result:(FlutterResult)result {
+  RCIMIWCombineV2Message *res = nil;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    RCIMIWConversationType conversationType = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"conversationType"] integerValue]];
+    NSArray<NSString *> *summaryList = arguments[@"summaryList"];
+    NSArray<NSString *> *nameList = arguments[@"nameList"];
+
+    NSMutableArray *msgList = [NSMutableArray array];
+    NSArray<NSDictionary *> *elementList = arguments[@"msgList"];
+    for (NSDictionary *element in elementList) {
+      [msgList addObject:[RCIMIWPlatformConverter convertCombineMsgInfoFromDict:element]];
+    }
+
+    res = [self.engine createCombineV2Message:type targetId:targetId channelId:channelId conversationType:conversationType summaryList:summaryList nameList:nameList msgList:msgList];
   }
   dispatch_to_main_queue(^{
     result([RCIMIWPlatformConverter convertMessageToDict:res]);
@@ -6900,6 +6928,44 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)requestStreamMessageContent:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWStreamMessageRequestParams *params = [RCIMIWPlatformConverter convertStreamMessageRequestParamsFromDict:arguments[@"params"]];
+    void (^success)() = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine requestStreamMessageContent:params success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
 - (void)requestSpeechToTextForMessage:(FlutterMethodCall *)call result:(FlutterResult)result {
   NSInteger code = -1;
   if (self.engine != nil) {
@@ -8968,6 +9034,41 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onGroupMessageToDesignatedUsersSent" arguments:arguments.copy];
+  });
+}
+
+- (void)onStreamMessageRequestInit:(NSString *)messageUId {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:messageUId forKey:@"messageUId"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onStreamMessageRequestInit" arguments:arguments.copy];
+  });
+}
+
+- (void)onStreamMessageRequestData:(RCIMIWMessage *)message chunkInfo:(RCIMIWStreamMessageChunkInfo *)chunkInfo {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];
+  [arguments setValue:[RCIMIWPlatformConverter convertStreamMessageChunkInfoToDict:chunkInfo] forKey:@"chunkInfo"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onStreamMessageRequestData" arguments:arguments.copy];
+  });
+}
+
+- (void)onStreamMessageRequestComplete:(NSString *)messageUId code:(NSInteger)code {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:messageUId forKey:@"messageUId"];
+  [arguments setValue:@(code) forKey:@"code"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onStreamMessageRequestComplete" arguments:arguments.copy];
   });
 }
 

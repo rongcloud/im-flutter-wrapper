@@ -209,6 +209,7 @@ import cn.rongcloud.im.wrapper.listener.IRCIMIWSendMediaMessageListener;
 import cn.rongcloud.im.wrapper.listener.RCIMIWDownloadMediaMessageListener;
 import cn.rongcloud.im.wrapper.listener.RCIMIWListener;
 import cn.rongcloud.im.wrapper.listener.RCIMIWSendMediaMessageListener;
+import cn.rongcloud.im.wrapper.messages.RCIMIWCombineV2Message;
 import cn.rongcloud.im.wrapper.messages.RCIMIWCustomMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWFileMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWGIFMessage;
@@ -221,9 +222,11 @@ import cn.rongcloud.im.wrapper.messages.RCIMIWNativeCustomMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWReceivedStatusInfo;
 import cn.rongcloud.im.wrapper.messages.RCIMIWReferenceMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWSightMessage;
+import cn.rongcloud.im.wrapper.messages.RCIMIWStreamMessageChunkInfo;
 import cn.rongcloud.im.wrapper.messages.RCIMIWTextMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWVoiceMessage;
 import cn.rongcloud.im.wrapper.options.RCIMIWEngineOptions;
+import cn.rongcloud.im.wrapper.params.RCIMIWStreamMessageRequestParams;
 import cn.rongcloud.im.wrapper.platform.RCIMIWPlatformConverter;
 import cn.rongcloud.im.wrapper.settings.RCIMIWAppSettings;
 import cn.rongcloud.im.wrapper.speechtotext.RCIMIWSpeechToTextInfo;
@@ -336,6 +339,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:createVoiceMessage":
         createVoiceMessage(call, result);
+        break;
+
+      case "engine:createCombineV2Message":
+        createCombineV2Message(call, result);
         break;
 
       case "engine:createReferenceMessage":
@@ -1134,6 +1141,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         querySubscribeEventByPage(call, result);
         break;
 
+      case "engine:requestStreamMessageContent":
+        requestStreamMessageContent(call, result);
+        break;
+
       case "engine:requestSpeechToTextForMessage":
         requestSpeechToTextForMessage(call, result);
         break;
@@ -1339,6 +1350,31 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       int duration = ((Number) call.argument("duration")).intValue();
 
       res = engine.createVoiceMessage(type, targetId, channelId, path, duration);
+    }
+    RCIMWrapperMainThreadPoster.success(result, RCIMIWPlatformConverter.convertMessage(res));
+  }
+
+  private void createCombineV2Message(@NonNull MethodCall call, @NonNull Result result) {
+    RCIMIWCombineV2Message res = null;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      RCIMIWConversationType conversationType =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("conversationType"));
+      List<String> summaryList = call.argument("summaryList");
+      List<String> nameList = call.argument("nameList");
+      List<HashMap<String, Object>> msgList = call.argument("msgList");
+
+      List msgList_str = new ArrayList();
+      for (HashMap<String, Object> element : msgList) {
+        msgList_str.add(RCIMIWPlatformConverter.convertCombineMsgInfo(element));
+      }
+
+      res =
+          engine.createCombineV2Message(
+              type, targetId, channelId, conversationType, summaryList, nameList, msgList_str);
     }
     RCIMWrapperMainThreadPoster.success(result, RCIMIWPlatformConverter.convertMessage(res));
   }
@@ -4695,6 +4731,23 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void requestStreamMessageContent(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWStreamMessageRequestParams params =
+          RCIMIWPlatformConverter.convertStreamMessageRequestParams(
+              (HashMap<String, Object>) call.argument("params"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.requestStreamMessageContent(params, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   private void requestSpeechToTextForMessage(@NonNull MethodCall call, @NonNull Result result) {
     int code = -1;
     if (engine != null) {
@@ -7112,6 +7165,54 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine:onGroupMessageToDesignatedUsersSent", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onStreamMessageRequestInit(String messageUId) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("messageUId", messageUId);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onStreamMessageRequestInit", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onStreamMessageRequestData(
+        RCIMIWMessage message, RCIMIWStreamMessageChunkInfo chunkInfo) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("message", RCIMIWPlatformConverter.convertMessage(message));
+      arguments.put("chunkInfo", RCIMIWPlatformConverter.convertStreamMessageChunkInfo(chunkInfo));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onStreamMessageRequestData", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onStreamMessageRequestComplete(String messageUId, int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("messageUId", messageUId);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onStreamMessageRequestComplete", arguments);
             }
           });
     }

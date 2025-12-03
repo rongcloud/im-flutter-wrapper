@@ -689,8 +689,10 @@
     @(RCIMIWMessageTypeLocation),
     @(RCIMIWMessageTypeUserCustom),
     @(RCIMIWMessageTypeNativeCustom),
+    @(RCIMIWMessageTypeStream),
     @(RCIMIWMessageTypeNativeCustomMedia),
     @(RCIMIWMessageTypeGroupNotification),
+    @(RCIMIWMessageTypeCombineV2),
   ];
   RCIMIWMessageType MessageType = [[MessageTypeArray objectAtIndex:integer] integerValue];
   return MessageType;
@@ -712,8 +714,10 @@
     @(RCIMIWMessageTypeLocation),
     @(RCIMIWMessageTypeUserCustom),
     @(RCIMIWMessageTypeNativeCustom),
+    @(RCIMIWMessageTypeStream),
     @(RCIMIWMessageTypeNativeCustomMedia),
     @(RCIMIWMessageTypeGroupNotification),
+    @(RCIMIWMessageTypeCombineV2),
   ];
   NSInteger index = [MessageTypeArray indexOfObject:@(MessageType)];
   return index;
@@ -964,6 +968,7 @@
     @(RCIMIWAreaCodeNA),
     @(RCIMIWAreaCodeSGB),
     @(RCIMIWAreaCodeSA),
+    @(RCIMIWAreaCodeOM),
   ];
   RCIMIWAreaCode AreaCode = [[AreaCodeArray objectAtIndex:integer] integerValue];
   return AreaCode;
@@ -975,6 +980,7 @@
     @(RCIMIWAreaCodeNA),
     @(RCIMIWAreaCodeSGB),
     @(RCIMIWAreaCodeSA),
+    @(RCIMIWAreaCodeOM),
   ];
   NSInteger index = [AreaCodeArray indexOfObject:@(AreaCode)];
   return index;

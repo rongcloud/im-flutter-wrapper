@@ -23,6 +23,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) BOOL original;
 
+/*!
+ 缩略图宽度
+ */
+@property (nonatomic, assign, readonly) NSInteger thumWidth;
+
+/*!
+ 缩略图高度
+ */
+@property (nonatomic, assign, readonly) NSInteger thumHeight;
+
 @end
 
 NS_ASSUME_NONNULL_END

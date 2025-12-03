@@ -112,6 +112,7 @@ const subList = {
     message.sendFileMessage,
     message.sendVoiceMessage,
     message.sendSightMessage,
+    message.sendCombineV2Message,
     message.sendReferenceMessage,
     message.sendGIFMessage,
     message.sendLocationMessage,
@@ -148,6 +149,7 @@ const subList = {
     message.searchMessagesByTimeRange,
     message.searchMessagesByUserId,
     message.searchMessagesByMessageTypes,
+    message.requestStreamMessageContent,
     message.sendGroupMessageToDesignatedUsers,
   ],
   "会话标签": [

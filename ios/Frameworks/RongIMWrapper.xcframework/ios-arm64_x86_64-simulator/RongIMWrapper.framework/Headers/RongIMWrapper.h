@@ -34,12 +34,15 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWCustomMessage.h>
 #import <RongIMWrapper/RCIMIWCommandMessage.h>
 #import <RongIMWrapper/RCIMIWReferenceMessage.h>
+#import <RongIMWrapper/RCIMIWReferenceInfo.h>
 #import <RongIMWrapper/RCIMIWCommandNotificationMessage.h>
 #import <RongIMWrapper/RCIMIWRecallNotificationMessage.h>
 #import <RongIMWrapper/RCIMIWLocationMessage.h>
 #import <RongIMWrapper/RCIMIWUnknownMessage.h>
 #import <RongIMWrapper/RCIMIWNativeCustomMessage.h>
 #import <RongIMWrapper/RCIMIWNativeCustomMediaMessage.h>
+#import <RongIMWrapper/RCIMIWStreamMessage.h>
+#import <RongIMWrapper/RCIMIWStreamMessageChunkInfo.h>
 #import <RongIMWrapper/RCIMIWGroupNotificationMessage.h>
 #import <RongIMWrapper/RCIMIWConversation.h>
 #import <RongIMWrapper/RCIMIWSearchConversationResult.h>
@@ -77,6 +80,7 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWTranslateTextParam.h>
 #import <RongIMWrapper/RCIMIWTranslateTextParams.h>
 #import <RongIMWrapper/RCIMIWTranslateConverter.h>
+#import <RongIMWrapper/RCIMIWStreamMessageRequestParams.h>
 
 #import <RongIMWrapper/RCIMIWSubscribeEvent.h>
 #import <RongIMWrapper/RCIMIWSubscribeInfoEvent.h>

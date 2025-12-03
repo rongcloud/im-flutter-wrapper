@@ -512,6 +512,92 @@ Future sendVoiceMessage(Map arg) async {
   }
 }
 
+Future sendCombineV2Message(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+  if (arg['summaryList'] == null ||
+      (arg['summaryList'] as String).trim().isEmpty) {
+    RCIWToast.showToast("summaryList 为空");
+    return;
+  }
+  if (arg['nameList'] == null || (arg['nameList'] as String).trim().isEmpty) {
+    RCIWToast.showToast("nameList 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+  RCIMIWConversationType type =
+      RCIMIWConversationType.values[int.parse(arg['type'])];
+  String targetId = arg['targetId'];
+  String channelId = arg['channelId'] ?? "";
+  List<String> summaryList = (arg['summaryList'] as String)
+      .split(',')
+      .map((e) => e.trim())
+      .where((e) => e.isNotEmpty)
+      .toList();
+  List<String> nameList = (arg['nameList'] as String)
+      .split(',')
+      .map((e) => e.trim())
+      .where((e) => e.isNotEmpty)
+      .toList();
+
+  if (summaryList.isEmpty || nameList.isEmpty) {
+    RCIWToast.showToast("summaryList 或 nameList 不能为空");
+    return;
+  }
+
+  List<RCIMIWCombineMsgInfo> msgList = [];
+  String? msgListJson = arg['msgList'];
+  if (msgListJson != null && msgListJson.trim().isNotEmpty) {
+    try {
+      var parsed = jsonDecode(msgListJson);
+      if (parsed is List) {
+        for (var item in parsed) {
+          if (item is Map) {
+            msgList.add(
+              RCIMIWCombineMsgInfo.create(
+                fromUserId: item['fromUserId']?.toString(),
+                targetId: item['targetId']?.toString(),
+                timestamp: item['timestamp'] is int
+                    ? item['timestamp']
+                    : int.tryParse(item['timestamp']?.toString() ?? ""),
+                objectName: item['objectName']?.toString(),
+                content: item['content'] is Map ? item['content'] as Map : null,
+              ),
+            );
+          }
+        }
+      }
+    } catch (e) {
+      RCIWToast.showToast("msgList 解析失败: $e");
+      return;
+    }
+  }
+
+  // type: 目标会话类型（消息要发送到的会话）
+  // combineType: 被转发消息的原始会话类型（用于标题展示）
+  RCIMIWConversationType combineType = arg['combineType'] != null
+      ? RCIMIWConversationType.values[int.parse(arg['combineType'])]
+      : type; // 如果没有提供，默认使用目标会话类型
+  RCIMIWCombineV2Message? msg = await IMEngineManager().engine
+      ?.createCombineV2Message(
+        type,
+        targetId,
+        channelId,
+        combineType,
+        summaryList,
+        nameList,
+        msgList,
+      );
+  _sendMessage(msg, useCallback);
+}
+
 Future sendReferenceMessage(Map arg) async {
   if (arg['type'] == null) {
     RCIWToast.showToast("type 为空");
@@ -1477,6 +1563,30 @@ Future sendGroupMessageToDesignatedUsers(Map arg) async {
   resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
   bus.emit("rong_im_listener", resultCode);
+}
+
+Future requestStreamMessageContent(Map arg) async {
+  if (arg['messageUId'] == null) {
+    RCIWToast.showToast("messageUId 为空");
+    return;
+  }
+
+  RCIMIWStreamMessageRequestParams params =
+      RCIMIWStreamMessageRequestParams.create(messageUId: arg['messageUId']);
+
+  IRCIMIWOperationCallback callback = IRCIMIWOperationCallback(
+    onSuccess: () {
+      RCIWToast.showToast("流式消息请求成功");
+    },
+    onError: (int? code) {
+      RCIWToast.showToast("流式消息请求失败，code: $code");
+    },
+  );
+
+  await IMEngineManager().engine?.requestStreamMessageContent(
+    params,
+    callback: callback,
+  );
 }
 
 Future modifyUltraGroupMessage(Map arg) async {
@@ -3487,8 +3597,8 @@ getFriendApplications(Map arg) async {
 
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
-  List<String> applicationTypesInput =
-      (arg["applicationTypes"] as String).split(",");
+  List<String> applicationTypesInput = (arg["applicationTypes"] as String)
+      .split(",");
   List<RCIMIWFriendApplicationType> applicationTypes = [];
   for (var element in applicationTypesInput) {
     String trimmed = element.trim();

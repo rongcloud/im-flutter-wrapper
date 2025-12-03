@@ -1866,17 +1866,41 @@ class RCIMIWImageMessage extends RCIMIWMediaMessage {
   /// ---
   bool? original;
 
+  /// [ZH]
+  /// ---
+  /// 缩略图宽度
+  /// ---
+  /// [EN]
+  /// ---
+  /// Thumbnail width
+  /// ---
+  int? thumWidth;
+
+  /// [ZH]
+  /// ---
+  /// 缩略图高度
+  /// ---
+  /// [EN]
+  /// ---
+  /// Thumbnail height
+  /// ---
+  int? thumHeight;
+
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = super.toJson();
     json['thumbnailBase64String'] = thumbnailBase64String;
     json['original'] = original;
+    json['thumWidth'] = thumWidth;
+    json['thumHeight'] = thumHeight;
     return json;
   }
 
   RCIMIWImageMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     thumbnailBase64String = json['thumbnailBase64String'];
     original = json['original'];
+    thumWidth = json['thumWidth'];
+    thumHeight = json['thumHeight'];
   }
 }
 
@@ -1924,6 +1948,111 @@ class RCIMIWFileMessage extends RCIMIWMediaMessage {
     name = json['name'];
     fileType = json['fileType'];
     size = json['size'];
+  }
+}
+
+class RCIMIWCombineMsgInfo {
+  /// [ZH]
+  /// ---
+  /// 消息发送者 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message sender ID
+  /// ---
+  String? fromUserId;
+
+  /// [ZH]
+  /// ---
+  /// 会话目标 ID
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation target ID
+  /// ---
+  String? targetId;
+
+  /// [ZH]
+  /// ---
+  /// 消息时间戳
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message timestamp
+  /// ---
+  int? timestamp;
+
+  /// [ZH]
+  /// ---
+  /// 消息类型标识符
+  /// 需要与官方文档中的各消息 objectName 对应，自定义消息填写自定义的标识符
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message type identifier
+  /// Align with the official objectName of each message; use your custom identifier for native custom messages
+  /// ---
+  String? objectName;
+
+  /// [ZH]
+  /// ---
+  /// 消息内容
+  /// 请将消息内容使用各消息体的 toJson（或等效方法）转换为 Map 后传入
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message content
+  /// Convert message content to Map via the message’s `toJson` (or equivalent) before setting
+  /// ---
+  Map? content;
+
+  RCIMIWCombineMsgInfo.create({this.fromUserId, this.targetId, this.timestamp, this.objectName, this.content});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['fromUserId'] = fromUserId;
+    json['targetId'] = targetId;
+    json['timestamp'] = timestamp;
+    json['objectName'] = objectName;
+    json['content'] = content;
+    return json;
+  }
+
+  RCIMIWCombineMsgInfo.fromJson(Map<String, dynamic> json) {
+    fromUserId = json['fromUserId'];
+    targetId = json['targetId'];
+    timestamp = json['timestamp'];
+    objectName = json['objectName'];
+    content = json['content'];
+  }
+}
+
+class RCIMIWReferenceInfo {
+  String? senderId;
+  String? messageUId;
+  String? objectName;
+  RCIMIWMessage? content;
+
+  RCIMIWReferenceInfo.create({this.senderId, this.messageUId, this.objectName, this.content});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['senderId'] = senderId;
+    json['messageUId'] = messageUId;
+    json['objectName'] = objectName;
+    json['content'] = content?.toJson();
+    return json;
+  }
+
+  RCIMIWReferenceInfo.fromJson(Map<String, dynamic> json) {
+    senderId = json['senderId'];
+    messageUId = json['messageUId'];
+    objectName = json['objectName'];
+    if (json['content'] != null) {
+      content = RCIMConverter.convertMessage(
+        (json['content'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
   }
 }
 
@@ -2164,6 +2293,95 @@ class RCIMIWCommandMessage extends RCIMIWMessage {
   }
 }
 
+class RCIMIWCombineV2Message extends RCIMIWMediaMessage {
+  /// [ZH]
+  /// ---
+  /// 合并消息的会话类型
+  /// ---
+  /// [EN]
+  /// ---
+  /// Combine message conversation type
+  /// ---
+  int? combineConversationType;
+
+  /// [ZH]
+  /// ---
+  /// 摘要列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// Summary list
+  /// ---
+  List<String>? summaryList;
+
+  /// [ZH]
+  /// ---
+  /// 名称列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// Name list
+  /// ---
+  List<String>? nameList;
+
+  /// [ZH]
+  /// ---
+  /// 消息数量
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message count
+  /// ---
+  int? msgNum;
+
+  /// [ZH]
+  /// ---
+  /// 消息列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message list
+  /// ---
+  List<RCIMIWCombineMsgInfo>? msgList;
+
+  /// [ZH]
+  /// ---
+  /// 消息文件键值（当消息内容超过阈值时使用）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message file key (used when message content exceeds threshold)
+  /// ---
+  String? jsonMsgKey;
+
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = super.toJson();
+    json['combineConversationType'] = combineConversationType;
+    json['summaryList'] = summaryList;
+    json['nameList'] = nameList;
+    json['msgNum'] = msgNum;
+    json['msgList'] = msgList?.map((item) => item.toJson()).toList();
+    json['jsonMsgKey'] = jsonMsgKey;
+    return json;
+  }
+
+  RCIMIWCombineV2Message.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    combineConversationType = json['combineConversationType'];
+    summaryList = json['summaryList']?.cast<String>();
+    nameList = json['nameList']?.cast<String>();
+    msgNum = json['msgNum'];
+    msgList =
+        json['msgList']
+            ?.map<RCIMIWCombineMsgInfo>(
+              (item) =>
+                  RCIMIWCombineMsgInfo.fromJson((item as Map).map((key, value) => MapEntry(key.toString(), value))),
+            )
+            .toList();
+    jsonMsgKey = json['jsonMsgKey'];
+  }
+}
+
 class RCIMIWVoiceMessage extends RCIMIWMediaMessage {
   /// [ZH]
   /// ---
@@ -2248,6 +2466,57 @@ class RCIMIWMentionedInfo {
     type = json['type'] == null ? null : RCIMIWMentionedType.values[json['type']];
     userIdList = json['userIdList']?.cast<String>();
     mentionedContent = json['mentionedContent'];
+  }
+}
+
+class RCIMIWStreamMessageChunkInfo {
+  String? content;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['content'] = content;
+    return json;
+  }
+
+  RCIMIWStreamMessageChunkInfo.fromJson(Map<String, dynamic> json) {
+    content = json['content'];
+  }
+}
+
+class RCIMIWStreamMessage extends RCIMIWMessage {
+  String? content;
+  String? type;
+  bool? complete;
+  bool? sync;
+  int? completeReason;
+  int? stopReason;
+  RCIMIWReferenceInfo? referMsg;
+
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = super.toJson();
+    json['content'] = content;
+    json['type'] = type;
+    json['complete'] = complete;
+    json['sync'] = sync;
+    json['completeReason'] = completeReason;
+    json['stopReason'] = stopReason;
+    json['referMsg'] = referMsg?.toJson();
+    return json;
+  }
+
+  RCIMIWStreamMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    content = json['content'];
+    type = json['type'];
+    complete = json['complete'];
+    sync = json['sync'];
+    completeReason = json['completeReason'];
+    stopReason = json['stopReason'];
+    if (json['referMsg'] != null) {
+      referMsg = RCIMIWReferenceInfo.fromJson(
+        (json['referMsg'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
   }
 }
 
@@ -3655,6 +3924,22 @@ class RCIMIWChatRoomMemberBlockEvent {
     operateTime = json['operateTime'];
     userIdList = json['userIdList']?.cast<String>();
     extra = json['extra'];
+  }
+}
+
+class RCIMIWStreamMessageRequestParams {
+  String? messageUId;
+
+  RCIMIWStreamMessageRequestParams.create({this.messageUId});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    return json;
+  }
+
+  RCIMIWStreamMessageRequestParams.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
   }
 }
 

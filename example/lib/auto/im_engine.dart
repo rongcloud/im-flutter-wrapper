@@ -2641,6 +2641,65 @@ engine?.onGroupMessageToDesignatedUsersSent = (int? code, RCIMIWMessage? message
 //callback_onGroupMessageToDesignatedUsersSent_call
 */
 
+    engine?.onStreamMessageRequestInit = (String? messageUId) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onStreamMessageRequestInit";
+      arg["timestamp"] = timeStr;
+      arg["messageUId"] = messageUId ?? "";
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onStreamMessageRequestInit_call
+engine?.onStreamMessageRequestInit = (String? messageUId) {
+    //...
+};
+//callback_onStreamMessageRequestInit_call
+*/
+
+    engine?.onStreamMessageRequestData = (RCIMIWMessage? message, RCIMIWStreamMessageChunkInfo? chunkInfo) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onStreamMessageRequestData";
+      arg["timestamp"] = timeStr;
+      arg["message"] = formatJson(message?.toJson());
+      arg["chunkInfo"] = formatJson(chunkInfo?.toJson());
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onStreamMessageRequestData_call
+engine?.onStreamMessageRequestData = (RCIMIWMessage? message, RCIMIWStreamMessageChunkInfo? chunkInfo) {
+    //...
+};
+//callback_onStreamMessageRequestData_call
+*/
+
+    engine?.onStreamMessageRequestComplete = (String? messageUId, int? code) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onStreamMessageRequestComplete";
+      arg["timestamp"] = timeStr;
+      arg["messageUId"] = messageUId ?? "";
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onStreamMessageRequestComplete_call
+engine?.onStreamMessageRequestComplete = (String? messageUId, int? code) {
+    //...
+};
+//callback_onStreamMessageRequestComplete_call
+*/
+
     engine?.onUltraGroupReadStatusSynced = (int? code, String? targetId, String? channelId, int? timestamp) {
       DateTime now = DateTime.now();
       String timeStr =

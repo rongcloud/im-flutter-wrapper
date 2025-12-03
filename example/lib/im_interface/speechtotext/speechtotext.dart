@@ -3,7 +3,7 @@ import '../../auto/engine_auto_funtion.dart' as engine_auto_fun;
 const requestSpeechToTextForMessage = {
   "title": "语音转文字请求",
   "params": [
-    {"key": "messageUId", "type": "String", "hint": "消息唯一ID", "lable": "消息Id"},
+    {"key": "messageUId", "type": "String", "hint": "消息唯一ID", "lable": "消息UId"},
   ],
   "action": engine_auto_fun.requestSpeechToTextForMessage,
 };

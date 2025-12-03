@@ -50,10 +50,14 @@ class RCIMConverter {
         return RCIMIWLocationMessage.fromJson(json);
       case RCIMIWMessageType.nativeCustom:
         return RCIMIWNativeCustomMessage.fromJson(json);
+      case RCIMIWMessageType.stream:
+        return RCIMIWStreamMessage.fromJson(json);
       case RCIMIWMessageType.nativeCustomMedia:
         return RCIMIWNativeCustomMediaMessage.fromJson(json);
       case RCIMIWMessageType.groupNotification:
         return RCIMIWGroupNotificationMessage.fromJson(json);
+      case RCIMIWMessageType.combineV2:
+        return RCIMIWCombineV2Message.fromJson(json);
     }
   }
 }

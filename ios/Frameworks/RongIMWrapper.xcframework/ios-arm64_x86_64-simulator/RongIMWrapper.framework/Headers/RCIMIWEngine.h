@@ -21,6 +21,9 @@
 #import <RongIMWrapper/RCIMIWNativeCustomMessage.h>
 #import <RongIMWrapper/RCIMIWNativeCustomMediaMessage.h>
 #import <RongIMWrapper/RCIMIWGroupNotificationMessage.h>
+#import <RongIMWrapper/RCIMIWCombineV2Message.h>
+#import <RongIMWrapper/RCIMIWCombineMsgInfo.h>
+#import <RongIMWrapper/RCIMIWStreamMessage.h>
 #import <RongIMWrapper/RCIMIWEngineDelegate.h>
 #import <RongIMWrapper/RCIMIWDefines.h>
 #import <RongIMWrapper/RCIMIWGroupInfo.h>
@@ -35,6 +38,7 @@
 #import <RongIMWrapper/RCIMIWChatRoomMemberBanEvent.h>
 #import <RongIMWrapper/RCIMIWTranslateMessagesParams.h>
 #import <RongIMWrapper/RCIMIWTranslateTextParams.h>
+#import <RongIMWrapper/RCIMIWStreamMessageRequestParams.h>
 #import <RongIMWrapper/RCIMIWSpeechToTextInfo.h>
 #import <RongIMWrapper/RCIMIWUserProfile.h>
 #import <RongIMWrapper/RCIMIWSubscribeEvent.h>
@@ -134,6 +138,22 @@ __deprecated_msg("Use [RCIMIWEngine connect:timeout:databaseOpened:connected:] i
                                  channelId:(nullable NSString *)channelId
                                       path:(NSString *)path
                                   duration:(int)duration;
+
+/// 构建合并转发消息
+/// @param type 目标会话类型，消息要发送到的会话类型
+/// @param targetId 目标会话 ID，消息要发送到的会话 ID
+/// @param channelId 频道 ID，仅支持超级群使用，其他会话类型传 nil 即可
+/// @param conversationType 被转发消息的原始会话类型，用于消息标题展示（如"A和B的聊天记录"或"群聊的聊天记录"）
+/// @param summaryList 转发的消息展示的缩略内容列表
+/// @param nameList 转发的全部消息的发送者名称列表
+/// @param msgList 转发的消息体内容列表
+- (RCIMIWCombineV2Message *)createCombineV2Message:(RCIMIWConversationType)type
+                                          targetId:(NSString *)targetId
+                                         channelId:(nullable NSString *)channelId
+                                  conversationType:(RCIMIWConversationType)conversationType
+                                       summaryList:(NSArray<NSString *> *)summaryList
+                                          nameList:(NSArray<NSString *> *)nameList
+                                           msgList:(nullable NSArray<RCIMIWCombineMsgInfo *> *)msgList;
 
 - (RCIMIWCustomMessage *)createCustomMessage:(RCIMIWConversationType)type
                                     targetId:(NSString *)targetId
@@ -2500,6 +2520,13 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
 /// - Returns: MD5字符串，计算失败返回nil
 /// - Since: 5.24.0
 - (nullable NSString *)calculateTextMD5:(NSString *)text;
+
+#pragma mark - 流式消息
+
+/// 请求流式消息
+- (NSInteger)requestStreamMessageContent:(RCIMIWStreamMessageRequestParams *)params
+                                success:(nullable void (^)(void))successBlock
+                                  error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 语音转文字
 

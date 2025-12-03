@@ -72,6 +72,14 @@ const createVoiceMessage = {
   "action": engine_fun.createVoiceMessage,
 };
 
+const createCombineV2Message = {
+  "title": "createCombineV2Message",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "conversationType", "type": "String", "hint": "", "lable": "请输入conversationType",},{"key": "summaryList", "type": "String", "hint": "", "lable": "请输入summaryList",},{"key": "nameList", "type": "String", "hint": "", "lable": "请输入nameList",},{"key": "msgList", "type": "String", "hint": "", "lable": "请输入msgList",},
+  ],
+  "action": engine_fun.createCombineV2Message,
+};
+
 const createReferenceMessage = {
   "title": "createReferenceMessage",
   "params": [

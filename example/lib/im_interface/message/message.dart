@@ -271,6 +271,55 @@ const sendVoiceMessage = {
   "action": engine_fun.sendVoiceMessage,
 };
 
+const sendCombineV2Message = {
+  "title": "发送合并转发消息",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": HintString.channelIdString,
+      "lable": LableString.editChannelIdString,
+    },
+    {
+      "key": "combineType",
+      "type": "number",
+      "hint": "被转发消息的原始会话类型（用于标题展示）",
+      "lable": "被转发消息的原始会话类型",
+    },
+    {
+      "key": "summaryList",
+      "type": "String",
+      "hint": "逗号分隔摘要，例如:摘要1,摘要2",
+      "lable": "summaryList",
+    },
+    {
+      "key": "nameList",
+      "type": "String",
+      "hint": "逗号分隔名称，例如:张三,李四",
+      "lable": "nameList",
+    },
+    {
+      "key": "msgList",
+      "type": "String",
+      "hint": "可选，JSON 数组，字段: fromUserId,targetId,timestamp,objectName,content",
+      "lable": "msgList(JSON)",
+    },
+  ],
+  "action": engine_fun.sendCombineV2Message,
+};
+
 const sendReferenceMessage = {
   "title": "发送引用消息",
   "params": [
@@ -1137,6 +1186,19 @@ const searchMessagesByMessageTypes = {
     {"key": "count", "type": "String", "hint": "", "lable": "请输入查询数量"},
   ],
   "action": engine_auto_fun.searchMessagesByMessageTypes,
+};
+
+const requestStreamMessageContent = {
+  "title": "拉取流式消息内容",
+  "params": [
+    {
+      "key": "messageUId",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入messageUId",
+    },
+  ],
+  "action": engine_fun.requestStreamMessageContent,
 };
 
 const sendGroupMessageToDesignatedUsers = {
