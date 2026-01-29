@@ -46,6 +46,12 @@ const getUnreadConversations = {
   "action": engine_fun.getUnreadConversations,
 };
 
+const getRemoteConversationList = {
+  "title": "拉取远端会话列表",
+  "params": [],
+  "action": engine_fun.getRemoteConversationList,
+};
+
 const loadConversation = {
   "title": "加载某个会话",
   "params": [
@@ -94,6 +100,31 @@ const removeConversation = {
     },
   ],
   "action": engine_fun.removeConversation,
+};
+
+const removeConversationWithDeleteRemote = {
+  "title": "移除会话（可删除远端）",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "deleteRemote",
+      "type": "number",
+      "hint": "0:不删除 1:删除",
+      "lable": "是否需要删除远端会话",
+    },
+  ],
+  "action": engine_fun.removeConversationWithDeleteRemote,
 };
 
 const removeConversations = {

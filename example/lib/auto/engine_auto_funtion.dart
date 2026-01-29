@@ -890,6 +890,146 @@ getUnreadConversations(Map arg) async {
 }
 
 /*
+//fun_getRemoteConversationList_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getRemoteConversationList(callback:callback);
+//fun_getRemoteConversationList_call
+*/
+
+getRemoteConversationList(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  IRCIMIWOperationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWOperationCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getRemoteConversationList-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getRemoteConversationList-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getRemoteConversationList(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getRemoteConversationList";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_removeConversationWithDeleteRemote_call
+IRCIMIWRemoveConversationCallback? callback = IRCIMIWRemoveConversationCallback(onConversationRemoved: (int? code) {
+    //...
+});
+
+int? ret = await engine?.removeConversationWithDeleteRemote(type, targetId, deleteRemote, callback:callback);
+//fun_removeConversationWithDeleteRemote_call
+*/
+
+removeConversationWithDeleteRemote(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['deleteRemote'] == null) {
+    RCIWToast.showToast("deleteRemote 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
+  String targetId = arg['targetId'];
+  int deleteRemoteInt = int.parse(arg['deleteRemote']);
+  bool deleteRemote = deleteRemoteInt == 0 ? false : true;
+  IRCIMIWRemoveConversationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRemoveConversationCallback(
+      onConversationRemoved: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "removeConversationWithDeleteRemote-onConversationRemoved";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.removeConversationWithDeleteRemote(
+    type,
+    targetId,
+    deleteRemote,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "removeConversationWithDeleteRemote";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
 //fun_removeConversation_call
 IRCIMIWRemoveConversationCallback? callback = IRCIMIWRemoveConversationCallback(onConversationRemoved: (int? code) {
     //...

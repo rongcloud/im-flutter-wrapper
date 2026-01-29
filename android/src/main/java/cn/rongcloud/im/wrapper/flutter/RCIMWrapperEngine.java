@@ -413,6 +413,14 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         getUnreadConversations(call, result);
         break;
 
+      case "engine:getRemoteConversationList":
+        getRemoteConversationList(call, result);
+        break;
+
+      case "engine:removeConversationWithDeleteRemote":
+        removeConversationWithDeleteRemote(call, result);
+        break;
+
       case "engine:removeConversation":
         removeConversation(call, result);
         break;
@@ -1683,6 +1691,39 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       }
 
       code = engine.getUnreadConversations(conversationTypes_str, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getRemoteConversationList(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.getRemoteConversationList(callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void removeConversationWithDeleteRemote(
+      @NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      Boolean deleteRemote = (Boolean) call.argument("deleteRemote");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWRemoveConversationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWRemoveConversationCallbackImpl(cb_handler);
+      }
+
+      code = engine.removeConversationWithDeleteRemote(type, targetId, deleteRemote, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }
@@ -5737,6 +5778,21 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     }
 
     @Override
+    public void onRemoteConversationListSynced(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onRemoteConversationListSynced", arguments);
+            }
+          });
+    }
+
+    @Override
     public void onUnreadCountCleared(
         int code, RCIMIWConversationType type, String targetId, String channelId, long timestamp) {
       final HashMap<String, Object> arguments = new HashMap<>();
@@ -8279,6 +8335,44 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWGetUnreadConversationsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWOperationCallbackImpl implements IRCIMIWOperationCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWOperationCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess() {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWOperationCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine_cb:IRCIMIWOperationCallback_onError", arguments);
             }
           });
     }
@@ -13070,44 +13164,6 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWQuerySubscribeEventCallback_onError", arguments);
-            }
-          });
-    }
-  }
-
-  class IRCIMIWOperationCallbackImpl implements IRCIMIWOperationCallback {
-    private int cb_handler = -1;
-
-    IRCIMIWOperationCallbackImpl(int cb_handler) {
-      this.cb_handler = cb_handler;
-    }
-
-    @Override
-    public void onSuccess() {
-      final HashMap<String, Object> arguments = new HashMap<>();
-
-      arguments.put("cb_handler", cb_handler);
-      RCIMWrapperMainThreadPoster.post(
-          new Runnable() {
-            @Override
-            public void run() {
-              channel.invokeMethod("engine_cb:IRCIMIWOperationCallback_onSuccess", arguments);
-            }
-          });
-    }
-
-    @Override
-    public void onError(int code) {
-      final HashMap<String, Object> arguments = new HashMap<>();
-
-      arguments.put("cb_handler", cb_handler);
-      arguments.put("code", code);
-
-      RCIMWrapperMainThreadPoster.post(
-          new Runnable() {
-            @Override
-            public void run() {
-              channel.invokeMethod("engine_cb:IRCIMIWOperationCallback_onError", arguments);
             }
           });
     }

@@ -1171,6 +1171,62 @@ class RCIMIWEngine {
 
   /// [ZH]
   /// ---
+  /// 从服务器拉取会话列表
+  /// - [callback] 操作回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调
+  /// - [接口回调] [onRemoteConversationListSynced]
+  /// ---
+  /// [EN]
+  /// ---
+  /// Fetch remote conversation list from server
+  /// - [callback] Operation callback
+  /// specific result needs to be handled in the callback. Non-zero
+  /// values indicate failure and no callback will be triggered.
+  /// ---
+  Future<int> getRemoteConversationList({IRCIMIWOperationCallback? callback}) async {
+    return RCIMWrapperPlatform.instance.getRemoteConversationList(callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 移除某个会话，可设置是否删除远端会话
+  /// - [type] 会话类型
+  /// - [targetId] 会话 ID
+  /// - [deleteRemote] 是否删除远端会话
+  /// - [callback] 移除会话事件回调。如果传入了 callback 参数，仅触发 callback 回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// - [接口回调] [onConversationRemoved]
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remove a conversation with optional remote delete
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [deleteRemote] Whether to delete remote conversation
+  /// - [callback] Callback triggered when the conversation is removed. If
+  /// callback is provided, only the callback will be
+  /// triggered.
+  /// and the specific result needs to be handled in the callback.
+  /// Non-zero values indicate that the current operation failed and no
+  /// callback will be triggered. Refer to the error codes for detailed
+  /// error information.
+  /// ---
+  Future<int> removeConversationWithDeleteRemote(
+    RCIMIWConversationType type,
+    String targetId,
+    bool deleteRemote, {
+    IRCIMIWRemoveConversationCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.removeConversationWithDeleteRemote(
+      type,
+      targetId,
+      deleteRemote,
+      callback: callback,
+    );
+  }
+
+  /// [ZH]
+  /// ---
   /// 移除某个会话
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
@@ -7725,6 +7781,18 @@ class RCIMIWEngine {
   /// ---
 
   Function()? onUltraGroupConversationsSynced;
+
+  /// [ZH]
+  /// ---
+  /// 远端会话列表同步完成的回调
+  /// - [code] 接口回调的状态码，0 代表成功，非 0 代表出现异常
+  /// ---
+  /// [EN]
+  /// ---
+  /// Callback when remote conversation list sync completes
+  /// - [code] Status code of the sync result. 0 indicates success, non-zero indicates failure.
+  /// ---
+  Function(int? code)? onRemoteConversationListSynced;
 
   /// [ZH]
   /// ---

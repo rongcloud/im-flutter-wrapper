@@ -900,6 +900,25 @@ engine?.onUltraGroupConversationsSynced = () {
 //callback_onUltraGroupConversationsSynced_call
 */
 
+    engine?.onRemoteConversationListSynced = (int? code) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onRemoteConversationListSynced";
+      arg["timestamp"] = timeStr;
+      arg["code"] = code.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onRemoteConversationListSynced_call
+engine?.onRemoteConversationListSynced = (int? code) {
+    //...
+};
+//callback_onRemoteConversationListSynced_call
+*/
+
     engine?.onUnreadCountCleared = (
       int? code,
       RCIMIWConversationType? type,

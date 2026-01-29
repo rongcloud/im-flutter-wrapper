@@ -4,16 +4,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <RongIMLibCore/RCStatusDefine.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, RCIMIWGroupReadReceiptVersion) {
-    RCIMIWGroupReadReceiptVersionUnknown = -1,
-    RCIMIWGroupReadReceiptVersion1 = 0,
-    RCIMIWGroupReadReceiptVersion2 = 1,
+    RCIMIWGroupReadReceiptVersionUnknown = 0,
+    RCIMIWGroupReadReceiptVersion1 = 1,
+    RCIMIWGroupReadReceiptVersion2 = 2,
     RCIMIWGroupReadReceiptVersion4 = 3,
     RCIMIWGroupReadReceiptVersion5 = 4,
 };
+
 
 @interface RCIMIWAppSettings : NSObject
 
@@ -24,5 +26,3 @@ typedef NS_ENUM(NSInteger, RCIMIWGroupReadReceiptVersion) {
 @end
 
 NS_ASSUME_NONNULL_END
-
-

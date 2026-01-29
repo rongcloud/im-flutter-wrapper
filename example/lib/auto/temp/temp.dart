@@ -192,6 +192,22 @@ const getUnreadConversations = {
   "action": engine_fun.getUnreadConversations,
 };
 
+const getRemoteConversationList = {
+  "title": "getRemoteConversationList",
+  "params": [
+    {"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getRemoteConversationList,
+};
+
+const removeConversationWithDeleteRemote = {
+  "title": "removeConversationWithDeleteRemote",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "deleteRemote", "type": "String", "hint": "", "lable": "请输入deleteRemote",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.removeConversationWithDeleteRemote,
+};
+
 const removeConversation = {
   "title": "removeConversation",
   "params": [

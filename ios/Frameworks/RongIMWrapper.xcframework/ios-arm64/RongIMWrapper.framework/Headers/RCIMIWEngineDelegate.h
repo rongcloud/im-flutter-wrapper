@@ -218,6 +218,8 @@ NS_ASSUME_NONNULL_BEGIN
                         count:(int)count
                 conversations:(nullable NSArray<RCIMIWConversation *> *)conversations;
 
+- (void)onRemoteConversationListSynced:(NSInteger)code;
+
 - (void)onConversationRemoved:(NSInteger)code
                          type:(RCIMIWConversationType)type
                      targetId:(NSString *)targetId

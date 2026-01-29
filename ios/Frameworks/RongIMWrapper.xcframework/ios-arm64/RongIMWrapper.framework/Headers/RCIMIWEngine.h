@@ -720,6 +720,12 @@ __deprecated_msg("Use [RCIMIWEngine getConversations:startTime:count:success:err
                       success:(nullable void (^)(NSArray<RCIMIWConversation *> *))successBlock
                         error:(nullable void (^)(NSInteger code))errorBlock;
 
+/*!
+ 从服务器拉取会话列表
+ */
+- (NSInteger)getRemoteConversationList:(nullable void (^)(void))successBlock
+                                 error:(nullable void (^)(NSInteger code))errorBlock;
+
 
 /*!
  分页获取会话列表
@@ -785,6 +791,11 @@ __deprecated_msg("Use [RCIMIWEngine removeConversation:targetId:channelId:conver
                        targetId:(NSString *)targetId
                       channelId:(nullable NSString *)channelId
             conversationRemoved:(nullable void (^)(NSInteger code))conversationRemovedBlock;
+
+- (NSInteger)removeConversationWithDeleteRemote:(RCIMIWConversationType)type
+                                      targetId:(NSString *)targetId
+                                  deleteRemote:(BOOL)deleteRemote
+                           conversationRemoved:(nullable void (^)(NSInteger code))conversationRemovedBlock;
 
 - (NSInteger)removeConversations:(NSArray<NSNumber *> *)conversationTypes
 __deprecated_msg("Use [RCIMIWEngine removeConversations:conversationsRemoved:] instead");

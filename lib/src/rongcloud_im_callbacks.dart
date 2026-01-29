@@ -293,6 +293,32 @@ class IRCIMIWGetUnreadConversationsCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWOperationCallback {
+  IRCIMIWOperationCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 操作成功回调
+  /// ---
+  /// [EN]
+  /// ---
+  /// Operation succeeded callback
+  /// ---
+  Function() onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 操作失败回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Operation failed callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
 class IRCIMIWRemoveConversationCallback {
   IRCIMIWRemoveConversationCallback({required this.onConversationRemoved});
 
@@ -2442,32 +2468,6 @@ class IRCIMIWQuerySubscribeEventCallback {
   IRCIMIWQuerySubscribeEventCallback({required this.onSuccess, required this.onError});
 
   Function(List<RCIMIWSubscribeInfoEvent>? events) onSuccess;
-  Function(int? code) onError;
-}
-
-class IRCIMIWOperationCallback {
-  IRCIMIWOperationCallback({required this.onSuccess, required this.onError});
-
-  /// [ZH]
-  /// ---
-  /// 操作成功回调
-  /// ---
-  /// [EN]
-  /// ---
-  /// Operation succeeded callback
-  /// ---
-  Function() onSuccess;
-
-  /// [ZH]
-  /// ---
-  /// 操作失败回调
-  /// - code 错误码
-  /// ---
-  /// [EN]
-  /// ---
-  /// Operation failed callback
-  /// - code Error code
-  /// ---
   Function(int? code) onError;
 }
 

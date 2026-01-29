@@ -509,6 +509,36 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
   }
 
   @override
+  Future<int> getRemoteConversationList({IRCIMIWOperationCallback? callback}) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getRemoteConversationList arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getRemoteConversationList', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> removeConversationWithDeleteRemote(
+    RCIMIWConversationType type,
+    String targetId,
+    bool deleteRemote, {
+    IRCIMIWRemoveConversationCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "deleteRemote": deleteRemote,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:removeConversationWithDeleteRemote arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:removeConversationWithDeleteRemote', arguments);
+    return result;
+  }
+
+  @override
   Future<int> removeConversation(
     RCIMIWConversationType type,
     String targetId,
@@ -3935,6 +3965,15 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         log("[RC:Flutter] engine:onUltraGroupConversationsSynced invoke finished");
         break;
 
+      case 'engine:onRemoteConversationListSynced':
+        Map<dynamic, dynamic> arguments = call.arguments;
+
+        int? code = arguments['code'];
+
+        engine?.onRemoteConversationListSynced?.call(code);
+        log("[RC:Flutter] engine:onRemoteConversationListSynced invoke finished");
+        break;
+
       case 'engine:onUnreadCountCleared':
         Map<dynamic, dynamic> arguments = call.arguments;
 
@@ -5811,6 +5850,27 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWGetUnreadConversationsCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWOperationCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+
+        IRCIMIWOperationCallback? callback = takeCallback(rongcloudHandler);
+        Function()? method = callback?.onSuccess;
+        method?.call();
+        log("[RC:Flutter] engine_cb:IRCIMIWOperationCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWOperationCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWOperationCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWOperationCallback_onError invoke finished");
         break;
 
       case 'engine_cb:IRCIMIWRemoveConversationCallback_onConversationRemoved':
@@ -8282,27 +8342,6 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWQuerySubscribeEventCallback_onError invoke finished");
-        break;
-
-      case 'engine_cb:IRCIMIWOperationCallback_onSuccess':
-        Map<dynamic, dynamic> arguments = call.arguments;
-        int rongcloudHandler = arguments['cb_handler'];
-
-        IRCIMIWOperationCallback? callback = takeCallback(rongcloudHandler);
-        Function()? method = callback?.onSuccess;
-        method?.call();
-        log("[RC:Flutter] engine_cb:IRCIMIWOperationCallback_onSuccess invoke finished");
-        break;
-
-      case 'engine_cb:IRCIMIWOperationCallback_onError':
-        Map<dynamic, dynamic> arguments = call.arguments;
-        int rongcloudHandler = arguments['cb_handler'];
-        int? code = arguments['code'];
-
-        IRCIMIWOperationCallback? callback = takeCallback(rongcloudHandler);
-        Function(int?)? method = callback?.onError;
-        method?.call(code);
-        log("[RC:Flutter] engine_cb:IRCIMIWOperationCallback_onError invoke finished");
         break;
 
       case 'engine_cb:IRCIMIWAddFriendCallback_onSuccess':

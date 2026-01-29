@@ -114,6 +114,10 @@ static RCIMWrapperEngine *instance = nil;
     [self getConversationsWithPriority:call result:result];
   } else if ([@"engine:getUnreadConversations" isEqualToString:call.method]) {
     [self getUnreadConversations:call result:result];
+  } else if ([@"engine:getRemoteConversationList" isEqualToString:call.method]) {
+    [self getRemoteConversationList:call result:result];
+  } else if ([@"engine:removeConversationWithDeleteRemote" isEqualToString:call.method]) {
+    [self removeConversationWithDeleteRemote:call result:result];
   } else if ([@"engine:removeConversation" isEqualToString:call.method]) {
     [self removeConversation:call result:result];
   } else if ([@"engine:removeConversations" isEqualToString:call.method]) {
@@ -1247,6 +1251,72 @@ static RCIMWrapperEngine *instance = nil;
       };
     }
     code = [self.engine getUnreadConversations:conversationTypes success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getRemoteConversationList:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    void (^successBlock)() = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      successBlock = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getRemoteConversationList:successBlock error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)removeConversationWithDeleteRemote:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    BOOL deleteRemote = [(NSNumber *)arguments[@"deleteRemote"] boolValue];
+    void (^conversationRemoved)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      conversationRemoved = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWRemoveConversationCallback_onConversationRemoved" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine removeConversationWithDeleteRemote:type targetId:targetId deleteRemote:deleteRemote conversationRemoved:conversationRemoved];
   }
   dispatch_to_main_queue(^{
     result(@(code));
@@ -8043,6 +8113,17 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onUltraGroupConversationsSynced" arguments:arguments.copy];
+  });
+}
+
+- (void)onRemoteConversationListSynced:(NSInteger)code {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@(code) forKey:@"code"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onRemoteConversationListSynced" arguments:arguments.copy];
   });
 }
 
