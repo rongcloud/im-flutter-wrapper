@@ -512,6 +512,16 @@ static RCIMWrapperEngine *instance = nil;
     [self setFriendAllowType:call result:result];
   } else if ([@"engine:getFriendAllowType" isEqualToString:call.method]) {
     [self getFriendAllowType:call result:result];
+  } else if ([@"engine:sendReadReceiptResponseV5" isEqualToString:call.method]) {
+    [self sendReadReceiptResponseV5:call result:result];
+  } else if ([@"engine:getMessageReadReceiptInfoV5" isEqualToString:call.method]) {
+    [self getMessageReadReceiptInfoV5:call result:result];
+  } else if ([@"engine:getMessageReadReceiptInfoV5ByIdentifiers" isEqualToString:call.method]) {
+    [self getMessageReadReceiptInfoV5ByIdentifiers:call result:result];
+  } else if ([@"engine:getMessagesReadReceiptUsersByPageV5" isEqualToString:call.method]) {
+    [self getMessagesReadReceiptUsersByPageV5:call result:result];
+  } else if ([@"engine:getMessagesReadReceiptByUsersV5" isEqualToString:call.method]) {
+    [self getMessagesReadReceiptByUsersV5:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -7602,6 +7612,230 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)sendReadReceiptResponseV5:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    NSArray<NSString *> *messageUIds = arguments[@"messageUIds"];
+    void (^success)() = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSendReadReceiptResponseV5Callback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSendReadReceiptResponseV5Callback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine sendReadReceiptResponseV5:type targetId:targetId channelId:channelId messageUIds:messageUIds success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getMessageReadReceiptInfoV5:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    NSArray<NSString *> *messageUIds = arguments[@"messageUIds"];
+    void (^success)(NSArray<RCIMIWReadReceiptInfoV5 *> *_Nullable infos) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWReadReceiptInfoV5 *> *infos) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWReadReceiptInfoV5 *element in infos) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertReadReceiptInfoV5ToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getMessageReadReceiptInfoV5:type targetId:targetId channelId:channelId messageUIds:messageUIds success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getMessageReadReceiptInfoV5ByIdentifiers:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+
+    NSMutableArray *identifiers = [NSMutableArray array];
+    NSArray<NSDictionary *> *elementList = arguments[@"identifiers"];
+    for (NSDictionary *element in elementList) {
+      [identifiers addObject:[RCIMIWPlatformConverter convertMessageIdentifierFromDict:element]];
+    }
+
+    void (^success)(NSArray<RCIMIWReadReceiptInfoV5 *> *_Nullable infos) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWReadReceiptInfoV5 *> *infos) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWReadReceiptInfoV5 *element in infos) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertReadReceiptInfoV5ToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getMessageReadReceiptInfoV5ByIdentifiers:identifiers success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getMessagesReadReceiptUsersByPageV5:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    NSString *messageUId = arguments[@"messageUId"];
+    RCIMIWReadReceiptUsersOption *option = [RCIMIWPlatformConverter convertReadReceiptUsersOptionFromDict:arguments[@"option"]];
+    void (^success)(RCIMIWReadReceiptUsersResult *_Nullable result) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(RCIMIWReadReceiptUsersResult *result) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertReadReceiptUsersResultToDict:result] forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getMessagesReadReceiptUsersByPageV5:type targetId:targetId channelId:channelId messageUId:messageUId option:option success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getMessagesReadReceiptByUsersV5:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    NSString *messageUId = arguments[@"messageUId"];
+    NSArray<NSString *> *userIds = arguments[@"userIds"];
+    void (^success)(RCIMIWReadReceiptUsersResult *_Nullable result) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(RCIMIWReadReceiptUsersResult *result) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertReadReceiptUsersResultToDict:result] forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessagesReadReceiptByUsersV5Callback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessagesReadReceiptByUsersV5Callback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getMessagesReadReceiptByUsersV5:type targetId:targetId channelId:channelId messageUId:messageUId userIds:userIds success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
 - (void)onMessageReceived:(RCIMIWMessage *)message left:(NSInteger)left offline:(BOOL)offline hasPackage:(BOOL)hasPackage {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];
@@ -9597,6 +9831,22 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onFriendApplicationStatusChanged" arguments:arguments.copy];
+  });
+}
+
+- (void)onMessageReadReceiptV5Received:(NSArray<RCIMIWReadReceiptResponseV5 *> *)responses {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+
+  NSMutableArray *responses_arr = [NSMutableArray array];
+  for (RCIMIWReadReceiptResponseV5 *element in responses) {
+    [responses_arr addObject:[RCIMIWPlatformConverter convertReadReceiptResponseV5ToDict:element]];
+  }
+  [arguments setValue:responses_arr.copy forKey:@"responses"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onMessageReadReceiptV5Received" arguments:arguments.copy];
   });
 }
 

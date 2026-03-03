@@ -65,6 +65,7 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWReadReceiptInfo.h>
 #import <RongIMWrapper/RCIMIWReceivedStatusInfo.h>
 #import <RongIMWrapper/RCIMIWReadReceiptInfoV4.h>
+#import <RongIMWrapper/RCIMIWMessageIdentifier.h>
 #import <RongIMWrapper/RCIMIWGroupMessageReaderV2.h>
 #import <RongIMWrapper/RCIMIWMessageAuditInfo.h>
 

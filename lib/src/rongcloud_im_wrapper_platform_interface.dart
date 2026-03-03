@@ -6716,6 +6716,152 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('getFriendAllowType() has not been implemented.');
   }
 
+  /// [ZH]
+  /// ---
+  /// 发送某个会话中的消息已读回执（V5）。
+  /// 消息 needReceipt 为 true 时，接收方调用本接口，通知消息发送方已读。
+  /// 仅支持单聊和群聊会话类型。
+  /// - [type] 会话类型，仅支持单群聊
+  /// - [targetId] 会话目标 ID
+  /// - [channelId] 频道 ID
+  /// - [messageUIds] 消息 UID 列表，最多 100 条
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Send read receipt response for messages in a conversation (V5).
+  /// When message needReceipt is true, the receiver calls this interface to notify the sender.
+  /// Only supports private and group conversation types.
+  /// - [type] Conversation type, only supports private and group
+  /// - [targetId] Target ID
+  /// - [channelId] Channel ID
+  /// - [messageUIds] Message UID list, max 100
+  /// - [callback] Result callback
+  /// ---
+  Future<int> sendReadReceiptResponseV5(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    List<String> messageUIds, {
+    IRCIMIWSendReadReceiptResponseV5Callback? callback,
+  }) async {
+    throw UnimplementedError('sendReadReceiptResponseV5() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 批量获取消息已读信息（V5）。
+  /// - [type] 会话类型
+  /// - [targetId] 会话目标 ID
+  /// - [channelId] 频道 ID
+  /// - [messageUIds] 消息 UID 列表，最多 100 条
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get message read receipt info in batch (V5).
+  /// - [type] Conversation type
+  /// - [targetId] Target ID
+  /// - [channelId] Channel ID
+  /// - [messageUIds] Message UID list, max 100
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getMessageReadReceiptInfoV5(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    List<String> messageUIds, {
+    IRCIMIWGetMessageReadReceiptInfoV5Callback? callback,
+  }) async {
+    throw UnimplementedError('getMessageReadReceiptInfoV5() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 批量获取消息已读信息（V5，按消息标识）。
+  /// - [identifiers] 消息标识列表，最多 100 条
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get message read receipt info in batch (V5, by message identifiers).
+  /// - [identifiers] Message identifier list, max 100
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getMessageReadReceiptInfoV5ByIdentifiers(
+    List<RCIMIWMessageIdentifier> identifiers, {
+    IRCIMIWGetMessageReadReceiptInfoV5Callback? callback,
+  }) async {
+    throw UnimplementedError('getMessageReadReceiptInfoV5ByIdentifiers() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 分页获取消息已读成员列表（V5）。
+  /// - [type] 会话类型
+  /// - [targetId] 会话目标 ID
+  /// - [channelId] 频道 ID
+  /// - [messageUId] 消息 UID
+  /// - [option] 查询条件
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get message read receipt users by page (V5).
+  /// - [type] Conversation type
+  /// - [targetId] Target ID
+  /// - [channelId] Channel ID
+  /// - [messageUId] Message UID
+  /// - [option] Query option
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getMessagesReadReceiptUsersByPageV5(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    String messageUId,
+    RCIMIWReadReceiptUsersOption option, {
+    IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback? callback,
+  }) async {
+    throw UnimplementedError('getMessagesReadReceiptUsersByPageV5() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 批量获取用户指定消息是否已读状态（V5）。
+  /// - [type] 会话类型
+  /// - [targetId] 会话目标 ID
+  /// - [channelId] 频道 ID
+  /// - [messageUId] 消息 UID
+  /// - [userIds] 用户 ID 列表，最多 100 个
+  /// - [callback] 结果回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get message read receipt by users (V5).
+  /// - [type] Conversation type
+  /// - [targetId] Target ID
+  /// - [channelId] Channel ID
+  /// - [messageUId] Message UID
+  /// - [userIds] User ID list, max 100
+  /// - [callback] Result callback
+  /// ---
+  Future<int> getMessagesReadReceiptByUsersV5(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    String messageUId,
+    List<String> userIds, {
+    IRCIMIWGetMessagesReadReceiptByUsersV5Callback? callback,
+  }) async {
+    throw UnimplementedError('getMessagesReadReceiptByUsersV5() has not been implemented.');
+  }
+
   // -------- web 专有的方法 --------
 
   /// 构建语音消息 (高清语音)，发送成功后会根据文件自动生成 duration

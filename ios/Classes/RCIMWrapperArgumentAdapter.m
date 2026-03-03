@@ -655,6 +655,23 @@
   return index;
 }
 
++ (RCIMIWReadReceiptStatus)convertReadReceiptStatusFromInteger:(NSInteger)integer {
+  NSArray *ReadReceiptStatusArray = @[
+    @(RCIMIWReadReceiptStatusRead),
+    @(RCIMIWReadReceiptStatusUnread),
+  ];
+  RCIMIWReadReceiptStatus ReadReceiptStatus = [[ReadReceiptStatusArray objectAtIndex:integer] integerValue];
+  return ReadReceiptStatus;
+}
++ (NSInteger)convertReadReceiptStatusToInteger:(RCIMIWReadReceiptStatus)ReadReceiptStatus {
+  NSArray *ReadReceiptStatusArray = @[
+    @(RCIMIWReadReceiptStatusRead),
+    @(RCIMIWReadReceiptStatusUnread),
+  ];
+  NSInteger index = [ReadReceiptStatusArray indexOfObject:@(ReadReceiptStatus)];
+  return index;
+}
+
 + (RCIMIWTranslateResultType)convertTranslateResultTypeFromInteger:(NSInteger)integer {
   NSArray *TranslateResultTypeArray = @[
     @(RCIMIWTranslateResultTypeMessage),
@@ -787,6 +804,23 @@
     @(RCIMIWChatRoomMemberBanTypeMuteGlobal),
   ];
   NSInteger index = [ChatRoomMemberBanTypeArray indexOfObject:@(ChatRoomMemberBanType)];
+  return index;
+}
+
++ (RCIMIWReadReceiptOrder)convertReadReceiptOrderFromInteger:(NSInteger)integer {
+  NSArray *ReadReceiptOrderArray = @[
+    @(RCIMIWReadReceiptOrderDescending),
+    @(RCIMIWReadReceiptOrderAscending),
+  ];
+  RCIMIWReadReceiptOrder ReadReceiptOrder = [[ReadReceiptOrderArray objectAtIndex:integer] integerValue];
+  return ReadReceiptOrder;
+}
++ (NSInteger)convertReadReceiptOrderToInteger:(RCIMIWReadReceiptOrder)ReadReceiptOrder {
+  NSArray *ReadReceiptOrderArray = @[
+    @(RCIMIWReadReceiptOrderDescending),
+    @(RCIMIWReadReceiptOrderAscending),
+  ];
+  NSInteger index = [ReadReceiptOrderArray indexOfObject:@(ReadReceiptOrder)];
   return index;
 }
 

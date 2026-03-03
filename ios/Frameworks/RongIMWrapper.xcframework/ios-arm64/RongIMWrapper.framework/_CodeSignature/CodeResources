@@ -62,15 +62,15 @@
 		</data>
 		<key>Headers/RCIMIWDefines.h</key>
 		<data>
-		UgiGu0Inc1Eja9YHyx2dvFFApOM=
+		8YbWfDu1Jo73f46MmKrltp6kg3A=
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		d4t+oADBd2or39+2Qu9pEiCLlW0=
+		YLZEEHrJzDXThkfPe5rTl7XBwXo=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
-		6/pEjMWV1MY26OfNATKXrVkdB+c=
+		YSKhT/AJuM8zlmh/J7jCpElhV5U=
 		</data>
 		<key>Headers/RCIMIWEngineOptions.h</key>
 		<data>
@@ -142,11 +142,15 @@
 		</data>
 		<key>Headers/RCIMIWMessage.h</key>
 		<data>
-		aDxi54tmkywCee+6F6U4BLZV9Lo=
+		QF1m8LZ6sncG7vPnE+9mu79iuuE=
 		</data>
 		<key>Headers/RCIMIWMessageAuditInfo.h</key>
 		<data>
 		3vBoyezAHkK07yr3Dc6P02rLOB8=
+		</data>
+		<key>Headers/RCIMIWMessageIdentifier.h</key>
+		<data>
+		ucEgsM3u32gkxQNYlbulAoO54qA=
 		</data>
 		<key>Headers/RCIMIWMessagePushOptions.h</key>
 		<data>
@@ -174,7 +178,7 @@
 		</data>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
 		<data>
-		mVS1QVI3JH/jaS54oOr+BU7XNkc=
+		1yWk4UcbD2XIjS3ofu/Rn8yMwgs=
 		</data>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
 		<data>
@@ -187,6 +191,26 @@
 		<key>Headers/RCIMIWReadReceiptInfoV4.h</key>
 		<data>
 		ZiR3WllmzpQDrJyS+dQl36HIg6s=
+		</data>
+		<key>Headers/RCIMIWReadReceiptInfoV5.h</key>
+		<data>
+		KTZTpPzK+YXtqGfLcNLuUxwpU5k=
+		</data>
+		<key>Headers/RCIMIWReadReceiptResponseV5.h</key>
+		<data>
+		Wb/M6Yh3uuLSE6tP+45pTCExEVI=
+		</data>
+		<key>Headers/RCIMIWReadReceiptUser.h</key>
+		<data>
+		t4BmL5JMVVep2cRlJqBbUXtWdmU=
+		</data>
+		<key>Headers/RCIMIWReadReceiptUsersOption.h</key>
+		<data>
+		ho8avHwRtGAKlW+IiTgL+qtMB/8=
+		</data>
+		<key>Headers/RCIMIWReadReceiptUsersResult.h</key>
+		<data>
+		lRY2dI4jDXjlPPlIG7X1H+1UGDM=
 		</data>
 		<key>Headers/RCIMIWRecallNotificationMessage.h</key>
 		<data>
@@ -334,7 +358,7 @@
 		</data>
 		<key>Headers/RongIMWrapper.h</key>
 		<data>
-		zUP4uM9zswXIB2QUXHG/yOlWJPM=
+		WoTeHAFy/XIXlBdyUwH3+BIQDrI=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -517,33 +541,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			UgiGu0Inc1Eja9YHyx2dvFFApOM=
+			8YbWfDu1Jo73f46MmKrltp6kg3A=
 			</data>
 			<key>hash2</key>
 			<data>
-			LLZftidFmgFj+ixTAmlXbCpkepaAvV/0HVsCXSN5Ukk=
+			xrU8vJO+yqdsrpAYDYgDhI1GJjoHso+wJdRsK4COmc0=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngine.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			d4t+oADBd2or39+2Qu9pEiCLlW0=
+			YLZEEHrJzDXThkfPe5rTl7XBwXo=
 			</data>
 			<key>hash2</key>
 			<data>
-			QJW+iYXY+hD/0Q4pO0Wt8KTVIYSKiPXk88SdUiYShMA=
+			RxqYUcCFOcnL6y1P6cwtt+pOflOMVi4clazxkGDQrEs=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			6/pEjMWV1MY26OfNATKXrVkdB+c=
+			YSKhT/AJuM8zlmh/J7jCpElhV5U=
 			</data>
 			<key>hash2</key>
 			<data>
-			NbCeVbDAGDCWwROkyoJdauuvIp81sDx3uRpQ3MV5j68=
+			J55VN7Qm9zq58H1pMOMI/Lo5/sFgX0BeDrWIH+HNs4k=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineOptions.h</key>
@@ -737,11 +761,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			aDxi54tmkywCee+6F6U4BLZV9Lo=
+			QF1m8LZ6sncG7vPnE+9mu79iuuE=
 			</data>
 			<key>hash2</key>
 			<data>
-			3dgUKPxBDDEZLvQMsxusSLsHN6rWGaRqqnd9VIVW0Qo=
+			tHq0Pcu001D64rg2sX0FcvKdW2VB2WAwyRJQDuRyOqQ=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWMessageAuditInfo.h</key>
@@ -753,6 +777,17 @@
 			<key>hash2</key>
 			<data>
 			EU/z0u1jEUmT0Oyg4+emNOS4mkrlnIz/f3cpJrGHCFg=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWMessageIdentifier.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ucEgsM3u32gkxQNYlbulAoO54qA=
+			</data>
+			<key>hash2</key>
+			<data>
+			g7uWOslCeDMcN9Hqsfve0ngUnVoKcucOK0P6ZKTHkj4=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWMessagePushOptions.h</key>
@@ -825,11 +860,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			mVS1QVI3JH/jaS54oOr+BU7XNkc=
+			1yWk4UcbD2XIjS3ofu/Rn8yMwgs=
 			</data>
 			<key>hash2</key>
 			<data>
-			HqckqM2cYiDUo9fE1DiGapvzcysZzpghz4n1ngVH8UI=
+			l9mmE/y/VUSc4hPRZv5DJcT+B4PBPkwgjilLfgKvke4=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
@@ -863,6 +898,61 @@
 			<key>hash2</key>
 			<data>
 			epFXpCFAGbRY9kDYIck8jb9S95GZc5QP6D1dXD8meuE=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWReadReceiptInfoV5.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			KTZTpPzK+YXtqGfLcNLuUxwpU5k=
+			</data>
+			<key>hash2</key>
+			<data>
+			cGMbcBo6nnkag92shJxpAW0CF7X6QgTDEqHorgz/yYk=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWReadReceiptResponseV5.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Wb/M6Yh3uuLSE6tP+45pTCExEVI=
+			</data>
+			<key>hash2</key>
+			<data>
+			40LdljaeoFuWeJfx+o+bBfRY3QwPLe0T059ej+hVRy4=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWReadReceiptUser.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			t4BmL5JMVVep2cRlJqBbUXtWdmU=
+			</data>
+			<key>hash2</key>
+			<data>
+			+51zW53NFCaOiiCUp0DlgwRNegWjlYQB7z+svOwm1wg=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWReadReceiptUsersOption.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ho8avHwRtGAKlW+IiTgL+qtMB/8=
+			</data>
+			<key>hash2</key>
+			<data>
+			w+PapxgWeuDAe2I7BpXrDiH0MD59qk/amoe3v8SVF+k=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWReadReceiptUsersResult.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			lRY2dI4jDXjlPPlIG7X1H+1UGDM=
+			</data>
+			<key>hash2</key>
+			<data>
+			ZX4bzJTxxAILr5+qIhxMcyHvpZSWhbm/OgREH0MtiXE=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWRecallNotificationMessage.h</key>
@@ -1265,11 +1355,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			zUP4uM9zswXIB2QUXHG/yOlWJPM=
+			WoTeHAFy/XIXlBdyUwH3+BIQDrI=
 			</data>
 			<key>hash2</key>
 			<data>
-			26HzI0caAohw9LExTSzmfN5rt/gY939FkCma+dPLAUM=
+			Mzmajn8B2oB0GKvrHzYdYaT+/INy2tWRxzy7DbZWmT4=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

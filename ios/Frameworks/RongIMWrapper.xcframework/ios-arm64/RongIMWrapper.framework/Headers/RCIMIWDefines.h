@@ -891,5 +891,22 @@ typedef NS_ENUM(NSInteger, RCIMIWFriendAllowType) {
     RCIMIWFriendAllowTypeNoOneAllowed = 3,
 };
 
+#pragma mark - 已读回执 V5
+
+/// 已读回执用户列表排序类型
+typedef NS_ENUM(NSInteger, RCIMIWReadReceiptOrder) {
+    /// 倒序
+    RCIMIWReadReceiptOrderDescending = 0,
+    /// 正序
+    RCIMIWReadReceiptOrderAscending = 1,
+};
+
+/// 已读回执状态过滤类型
+typedef NS_ENUM(NSInteger, RCIMIWReadReceiptStatus) {
+    /// 已读
+    RCIMIWReadReceiptStatusRead = 0,
+    /// 未读
+    RCIMIWReadReceiptStatusUnread = 1,
+};
 
 #endif /* RCIMIWDefines_h */

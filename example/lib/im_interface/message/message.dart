@@ -4,6 +4,13 @@ import 'package:rongcloud_im_wrapper_plugin_example/strings/lable_string.dart';
 import '../function/engine_function.dart' as engine_fun;
 import '../../auto/engine_auto_funtion.dart' as engine_auto_fun;
 
+const needReceiptParam = {
+  "key": "needReceipt",
+  "type": "number",
+  "hint": "0: 否 1: 是",
+  "lable": "是否需要已读回执",
+};
+
 const registerNativeCustomMessage = {
   "title": "注册普通消息",
   "params": [
@@ -63,6 +70,7 @@ const sendTextMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {"key": "text", "type": "String", "hint": "", "lable": "请输入发送文本"},
     {
       "key": "pushContent",
@@ -138,6 +146,7 @@ const sendImageMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {
       "key": "pushContent",
       "type": "String",
@@ -181,6 +190,7 @@ const sendFileMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {
       "key": "pushContent",
       "type": "String",
@@ -218,6 +228,7 @@ const sendSightMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {
       "key": "pushContent",
       "type": "String",
@@ -255,6 +266,7 @@ const sendVoiceMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {
       "key": "pushContent",
       "type": "String",
@@ -292,6 +304,7 @@ const sendCombineV2Message = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {
       "key": "combineType",
       "type": "number",
@@ -341,6 +354,7 @@ const sendReferenceMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {"key": "messageId", "type": "String", "hint": "", "lable": "请输入引用的消息 Id"},
     {"key": "text", "type": "String", "hint": "", "lable": "请输入引用文本"},
     {
@@ -380,6 +394,7 @@ const sendGIFMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {
       "key": "pushContent",
       "type": "String",
@@ -417,6 +432,7 @@ const sendLocationMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {
       "key": "pushContent",
       "type": "String",
@@ -457,6 +473,7 @@ const sendCommandMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {
       "key": "pushContent",
       "type": "String",
@@ -496,6 +513,7 @@ const sendUserCustomMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {"key": "content", "type": "String", "hint": "", "lable": "备注内容 "},
   ],
   "action": engine_fun.sendUserCustomMessage,
@@ -522,6 +540,7 @@ const sendCustomMessage = {
       "hint": HintString.channelIdString,
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {
       "key": "policy",
       "type": "String",
@@ -572,6 +591,7 @@ const sendNativeCustomMessage = {
     {"key": "type", "type": "String", "hint": "", "lable": "请输入type"},
     {"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId"},
     {"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId"},
+    needReceiptParam,
     {
       "key": "messageIdentifier",
       "type": "String",
@@ -595,6 +615,7 @@ const sendNativeCustomMediaMessage = {
     {"key": "type", "type": "String", "hint": "", "lable": "请输入type"},
     {"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId"},
     {"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId"},
+    needReceiptParam,
     {
       "key": "messageIdentifier",
       "type": "String",
@@ -1026,6 +1047,171 @@ const sendGroupReadReceiptResponse = {
   "action": engine_fun.sendGroupReadReceiptResponse,
 };
 
+const sendReadReceiptResponseV5 = {
+  "title": "发送消息已读回执（V5）",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editChannelIdString,
+    },
+    {
+      "key": "messageUIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: 1,2",
+      "lable": "请输入messageUIds",
+    },
+  ],
+  "action": engine_auto_fun.sendReadReceiptResponseV5,
+};
+
+const getMessageReadReceiptInfoV5 = {
+  "title": "批量获取消息已读信息（V5）",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editChannelIdString,
+    },
+    {
+      "key": "messageUIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: 1,2",
+      "lable": "请输入messageUIds",
+    },
+  ],
+  "action": engine_auto_fun.getMessageReadReceiptInfoV5,
+};
+
+const getMessageReadReceiptInfoV5ByIdentifiers = {
+  "title": "批量获取消息已读信息（V5，按消息标识）",
+  "params": [
+    {
+      "key": "conversationTypes",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: 1,1",
+      "lable": "请输入 conversationTypes",
+    },
+    {
+      "key": "targetIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: u1,u2",
+      "lable": "请输入 targetIds",
+    },
+    {
+      "key": "channelIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: ch1,ch2，可为空",
+      "lable": "请输入 channelIds",
+    },
+    {
+      "key": "messageUIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: m1,m2",
+      "lable": "请输入 messageUIds",
+    },
+  ],
+  "action": engine_fun.getMessageReadReceiptInfoV5ByIdentifiers,
+};
+
+const getMessagesReadReceiptUsersByPageV5 = {
+  "title": "分页获取消息已读成员列表（V5）",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editChannelIdString,
+    },
+    {"key": "messageUId", "type": "String", "hint": "", "lable": "请输入消息 UId"},
+    {"key": "pageToken", "type": "String", "hint": "", "lable": "请输入pageToken"},
+    {"key": "pageCount", "type": "String", "hint": "", "lable": "请输入pageCount"},
+    {
+      "key": "order",
+      "type": "String",
+      "hint": "0: 倒序 1: 正序",
+      "lable": "请输入order",
+    },
+    {
+      "key": "readStatus",
+      "type": "String",
+      "hint": "0: 已读 1: 未读",
+      "lable": "请输入readStatus",
+    },
+  ],
+  "action": engine_fun.getMessagesReadReceiptUsersByPageV5,
+};
+
+const getMessagesReadReceiptByUsersV5 = {
+  "title": "批量获取用户指定消息是否已读状态（V5）",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editChannelIdString,
+    },
+    {"key": "messageUId", "type": "String", "hint": "", "lable": "请输入消息 UId"},
+    {
+      "key": "userIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: 1,2",
+      "lable": "请输入用户 Id 列表",
+    },
+  ],
+  "action": engine_auto_fun.getMessagesReadReceiptByUsersV5,
+};
+
 const updateMessageExpansion = {
   "title": "更新消息扩展",
   "params": [
@@ -1216,6 +1402,7 @@ const sendGroupMessageToDesignatedUsers = {
       "hint": "",
       "lable": LableString.editChannelIdString,
     },
+    needReceiptParam,
     {"key": "userIds", "type": "String", "hint": "", "lable": "请输入需要接收的用户"},
   ],
   "action": engine_fun.sendGroupMessageToDesignatedUsers,

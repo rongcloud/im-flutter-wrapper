@@ -12713,3 +12713,314 @@ getFriendAllowType(Map arg) async {
   }
   bus.emit("rong_im_listener", resultCode);
 }
+
+/*
+//fun_sendReadReceiptResponseV5_call
+IRCIMIWSendReadReceiptResponseV5Callback? callback = IRCIMIWSendReadReceiptResponseV5Callback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.sendReadReceiptResponseV5(type, targetId, channelId, messageUIds, callback:callback);
+//fun_sendReadReceiptResponseV5_call
+*/
+
+sendReadReceiptResponseV5(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['messageUIds'] == null) {
+    RCIWToast.showToast("messageUIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  List<String> messageUIds = (arg["messageUIds"]).split(",");
+  IRCIMIWSendReadReceiptResponseV5Callback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSendReadReceiptResponseV5Callback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "sendReadReceiptResponseV5-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "sendReadReceiptResponseV5-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.sendReadReceiptResponseV5(
+    type,
+    targetId,
+    channelId,
+    messageUIds,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "sendReadReceiptResponseV5";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getMessageReadReceiptInfoV5_call
+IRCIMIWGetMessageReadReceiptInfoV5Callback? callback = IRCIMIWGetMessageReadReceiptInfoV5Callback(onSuccess: (List<RCIMIWReadReceiptInfoV5>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getMessageReadReceiptInfoV5(type, targetId, channelId, messageUIds, callback:callback);
+//fun_getMessageReadReceiptInfoV5_call
+*/
+
+getMessageReadReceiptInfoV5(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['messageUIds'] == null) {
+    RCIWToast.showToast("messageUIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  List<String> messageUIds = (arg["messageUIds"]).split(",");
+  IRCIMIWGetMessageReadReceiptInfoV5Callback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetMessageReadReceiptInfoV5Callback(
+      onSuccess: (List<RCIMIWReadReceiptInfoV5>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getMessageReadReceiptInfoV5-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getMessageReadReceiptInfoV5-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getMessageReadReceiptInfoV5(
+    type,
+    targetId,
+    channelId,
+    messageUIds,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getMessageReadReceiptInfoV5";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getMessageReadReceiptInfoV5ByIdentifiers_call
+IRCIMIWGetMessageReadReceiptInfoV5Callback? callback = IRCIMIWGetMessageReadReceiptInfoV5Callback(onSuccess: (List<RCIMIWReadReceiptInfoV5>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getMessageReadReceiptInfoV5ByIdentifiers(identifiers, callback:callback);
+//fun_getMessageReadReceiptInfoV5ByIdentifiers_call
+*/
+/*
+//fun_getMessagesReadReceiptUsersByPageV5_call
+IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback? callback = IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback(onSuccess: (RCIMIWReadReceiptUsersResult? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getMessagesReadReceiptUsersByPageV5(type, targetId, channelId, messageUId, option, callback:callback);
+//fun_getMessagesReadReceiptUsersByPageV5_call
+*/
+/*
+//fun_getMessagesReadReceiptByUsersV5_call
+IRCIMIWGetMessagesReadReceiptByUsersV5Callback? callback = IRCIMIWGetMessagesReadReceiptByUsersV5Callback(onSuccess: (RCIMIWReadReceiptUsersResult? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getMessagesReadReceiptByUsersV5(type, targetId, channelId, messageUId, userIds, callback:callback);
+//fun_getMessagesReadReceiptByUsersV5_call
+*/
+
+getMessagesReadReceiptByUsersV5(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+
+  if (arg['messageUId'] == null) {
+    RCIWToast.showToast("messageUId 为空");
+    return;
+  }
+
+  if (arg['userIds'] == null) {
+    RCIWToast.showToast("userIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null || typeValue < 0 || typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  String messageUId = arg['messageUId'];
+  List<String> userIds = (arg["userIds"]).split(",");
+  IRCIMIWGetMessagesReadReceiptByUsersV5Callback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetMessagesReadReceiptByUsersV5Callback(
+      onSuccess: (RCIMIWReadReceiptUsersResult? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getMessagesReadReceiptByUsersV5-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = formatJson(t?.toJson());
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getMessagesReadReceiptByUsersV5-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getMessagesReadReceiptByUsersV5(
+    type,
+    targetId,
+    channelId,
+    messageUId,
+    userIds,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getMessagesReadReceiptByUsersV5";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}

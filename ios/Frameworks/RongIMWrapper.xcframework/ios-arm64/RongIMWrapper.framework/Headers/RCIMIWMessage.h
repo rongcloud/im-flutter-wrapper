@@ -147,6 +147,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// 接收定向消息的用户数组
 @property (nonatomic, copy, nullable) NSArray<NSString *> *directedUserIds;
 
+/// 是否需要已读回执（已读回执 V5）
+@property (nonatomic, assign) BOOL needReceipt;
+
+/// 是否已发送已读回执（已读回执 V5）
+@property (nonatomic, assign) BOOL sentReceipt;
+
 //- (instancetype)init __attribute__((unavailable("请使用 RCIMIWEngine 中 createXXMessage 系列方法创建对应的 message ")));
 
 @end

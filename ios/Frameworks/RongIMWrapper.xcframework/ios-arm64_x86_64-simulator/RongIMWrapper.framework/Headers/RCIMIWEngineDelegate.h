@@ -32,6 +32,7 @@
 @class RCIMIWChatRoomMemberBlockEvent;
 @class RCIMIWChatRoomMemberBanEvent;
 @class RCIMIWStreamMessageChunkInfo;
+@class RCIMIWReadReceiptResponseV5;
 
 #ifndef RCIMIWEngineDelegate_h
 #define RCIMIWEngineDelegate_h
@@ -806,6 +807,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onSpeechToTextCompleted:(nullable RCIMIWSpeechToTextInfo *)info
                      messageUId:(NSString *)messageUId
                            code:(NSInteger)code;
+
+#pragma mark - 已读回执 V5 回调
+
+/// 已读回执 V5 响应接收回调
+/// @param responses 已读回执响应列表
+/// @since 5.20.0
+- (void)onMessageReadReceiptV5Received:(NSArray<RCIMIWReadReceiptResponseV5 *> *)responses;
 
 @end
 

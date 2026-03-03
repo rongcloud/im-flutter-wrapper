@@ -3474,6 +3474,115 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     return result;
   }
 
+  @override
+  Future<int> sendReadReceiptResponseV5(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    List<String> messageUIds, {
+    IRCIMIWSendReadReceiptResponseV5Callback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "channelId": channelId,
+      "messageUIds": messageUIds,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:sendReadReceiptResponseV5 arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:sendReadReceiptResponseV5', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getMessageReadReceiptInfoV5(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    List<String> messageUIds, {
+    IRCIMIWGetMessageReadReceiptInfoV5Callback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "channelId": channelId,
+      "messageUIds": messageUIds,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getMessageReadReceiptInfoV5 arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getMessageReadReceiptInfoV5', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getMessageReadReceiptInfoV5ByIdentifiers(
+    List<RCIMIWMessageIdentifier> identifiers, {
+    IRCIMIWGetMessageReadReceiptInfoV5Callback? callback,
+  }) async {
+    List identifiersStr = [];
+    for (var element in identifiers) {
+      identifiersStr.add(element.toJson());
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"identifiers": identifiersStr, "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:getMessageReadReceiptInfoV5ByIdentifiers arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getMessageReadReceiptInfoV5ByIdentifiers', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getMessagesReadReceiptUsersByPageV5(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    String messageUId,
+    RCIMIWReadReceiptUsersOption option, {
+    IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "channelId": channelId,
+      "messageUId": messageUId,
+      "option": option.toJson(),
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getMessagesReadReceiptUsersByPageV5 arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getMessagesReadReceiptUsersByPageV5', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> getMessagesReadReceiptByUsersV5(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    String messageUId,
+    List<String> userIds, {
+    IRCIMIWGetMessagesReadReceiptByUsersV5Callback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "type": type.index,
+      "targetId": targetId,
+      "channelId": channelId,
+      "messageUId": messageUId,
+      "userIds": userIds,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getMessagesReadReceiptByUsersV5 arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getMessagesReadReceiptByUsersV5', arguments);
+    return result;
+  }
+
   Future<dynamic> _handler(MethodCall call) async {
     log("[RC:Flutter] " + call.method + " arguments:" + call.arguments.toString());
     switch (call.method) {
@@ -5398,6 +5507,21 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
           extra,
         );
         log("[RC:Flutter] engine:onFriendApplicationStatusChanged invoke finished");
+        break;
+
+      case 'engine:onMessageReadReceiptV5Received':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWReadReceiptResponseV5> responsesStr = [];
+        arguments['responses'].forEach((element) {
+          responsesStr.add(
+            RCIMIWReadReceiptResponseV5.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
+        });
+
+        List<RCIMIWReadReceiptResponseV5>? responses = responsesStr;
+
+        engine?.onMessageReadReceiptV5Received?.call(responses);
+        log("[RC:Flutter] engine:onMessageReadReceiptV5Received invoke finished");
         break;
 
       case 'engine_cb:RCIMIWConnectCallback_onDatabaseOpened':
@@ -8545,6 +8669,106 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWGetFriendAllowTypeCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSendReadReceiptResponseV5Callback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+
+        IRCIMIWSendReadReceiptResponseV5Callback? callback = takeCallback(rongcloudHandler);
+        Function()? method = callback?.onSuccess;
+        method?.call();
+        log("[RC:Flutter] engine_cb:IRCIMIWSendReadReceiptResponseV5Callback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWSendReadReceiptResponseV5Callback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWSendReadReceiptResponseV5Callback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWSendReadReceiptResponseV5Callback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWReadReceiptInfoV5> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(
+            RCIMIWReadReceiptInfoV5.fromJson((element as Map).map((key, value) => MapEntry(key.toString(), value))),
+          );
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWReadReceiptInfoV5>? t = tStr;
+
+        IRCIMIWGetMessageReadReceiptInfoV5Callback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWReadReceiptInfoV5>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetMessageReadReceiptInfoV5Callback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWReadReceiptUsersResult? t =
+            arguments['t'] != null
+                ? RCIMIWReadReceiptUsersResult.fromJson(Map<String, dynamic>.from(arguments['t']))
+                : null;
+
+        IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWReadReceiptUsersResult?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMessagesReadReceiptByUsersV5Callback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        RCIMIWReadReceiptUsersResult? t =
+            arguments['t'] != null
+                ? RCIMIWReadReceiptUsersResult.fromJson(Map<String, dynamic>.from(arguments['t']))
+                : null;
+
+        IRCIMIWGetMessagesReadReceiptByUsersV5Callback? callback = takeCallback(rongcloudHandler);
+        Function(RCIMIWReadReceiptUsersResult?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMessagesReadReceiptByUsersV5Callback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetMessagesReadReceiptByUsersV5Callback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetMessagesReadReceiptByUsersV5Callback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetMessagesReadReceiptByUsersV5Callback_onError invoke finished");
         break;
     }
   }

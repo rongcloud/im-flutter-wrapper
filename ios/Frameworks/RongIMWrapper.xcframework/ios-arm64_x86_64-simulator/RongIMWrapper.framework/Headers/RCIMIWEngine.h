@@ -47,6 +47,10 @@
 #import <RongIMWrapper/RCIMIWFriendInfo.h>
 #import <RongIMWrapper/RCIMIWFriendRelationInfo.h>
 #import <RongIMWrapper/RCIMIWFriendApplicationInfo.h>
+#import <RongIMWrapper/RCIMIWMessageIdentifier.h>
+#import <RongIMWrapper/RCIMIWReadReceiptInfoV5.h>
+#import <RongIMWrapper/RCIMIWReadReceiptUsersOption.h>
+#import <RongIMWrapper/RCIMIWReadReceiptUsersResult.h>
 
 
 @class RCIMIWEngineOptions;
@@ -2641,6 +2645,86 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
                             startIndex:(NSInteger)startIndex
                               success:(void (^)(NSArray<RCIMIWSubscribeInfoEvent *> * _Nullable subscribeEvents))successBlock
                                 error:(void (^)(NSInteger code))errorBlock;
+
+#pragma mark - 已读回执 V5
+
+/*!
+ 发送已读回执响应（V5）
+ 
+ @param type 会话类型
+ @param targetId 会话目标 ID
+ @param channelId 频道 ID
+ @param messageUIds 消息 UID 列表
+ @param callback 回调，code 为 0 表示成功
+ */
+- (NSInteger)sendReadReceiptResponseV5:(RCIMIWConversationType)type
+                              targetId:(NSString *)targetId
+                             channelId:(NSString * _Nullable)channelId
+                           messageUIds:(NSArray<NSString *> *)messageUIds
+                               success:(void (^ _Nullable)(void))successBlock
+                                 error:(void (^ _Nullable)(NSInteger code))errorBlock;
+
+/*!
+ 批量获取消息已读回执信息（V5）
+ 
+ @param type 会话类型
+ @param targetId 会话目标 ID
+ @param channelId 频道 ID
+ @param messageUIds 消息 UID 列表，最多 100 条
+ @param callback 回调，code 为 0 表示成功
+ */
+- (NSInteger)getMessageReadReceiptInfoV5:(RCIMIWConversationType)type
+                                targetId:(NSString *)targetId
+                               channelId:(NSString * _Nullable)channelId
+                             messageUIds:(NSArray<NSString *> *)messageUIds
+                                 success:(void (^ _Nullable)(NSArray<RCIMIWReadReceiptInfoV5 *> * _Nullable infos))successBlock
+                                   error:(void (^ _Nullable)(NSInteger code))errorBlock;
+
+/*!
+ 批量获取消息已读回执信息（V5，按消息标识）
+ 
+ @param identifiers 消息标识数组，最多 100 条
+ @param callback 回调，code 为 0 表示成功
+ */
+- (NSInteger)getMessageReadReceiptInfoV5ByIdentifiers:(NSArray<RCIMIWMessageIdentifier *> *)identifiers
+                                              success:(void (^ _Nullable)(NSArray<RCIMIWReadReceiptInfoV5 *> * _Nullable infos))successBlock
+                                                error:(void (^ _Nullable)(NSInteger code))errorBlock;
+
+/*!
+ 分页获取消息已读用户列表（V5）
+ 
+ @param type 会话类型
+ @param targetId 会话目标 ID
+ @param channelId 频道 ID
+ @param messageUId 消息 UID
+ @param option 查询条件
+ @param callback 回调，code 为 0 表示成功
+ */
+- (NSInteger)getMessagesReadReceiptUsersByPageV5:(RCIMIWConversationType)type
+                                        targetId:(NSString *)targetId
+                                       channelId:(NSString * _Nullable)channelId
+                                      messageUId:(NSString *)messageUId
+                                          option:(RCIMIWReadReceiptUsersOption *)option
+                                         success:(void (^ _Nullable)(RCIMIWReadReceiptUsersResult * _Nullable result))successBlock
+                                           error:(void (^ _Nullable)(NSInteger code))errorBlock;
+
+/*!
+ 批量获取用户指定消息是否已读状态（V5）
+ 
+ @param type 会话类型
+ @param targetId 会话目标 ID
+ @param channelId 频道 ID
+ @param messageUId 消息 UID
+ @param userIds 用户 ID 列表，最多 100 个
+ @param callback 回调，code 为 0 表示成功
+ */
+- (NSInteger)getMessagesReadReceiptByUsersV5:(RCIMIWConversationType)type
+                                    targetId:(NSString *)targetId
+                                   channelId:(NSString * _Nullable)channelId
+                                  messageUId:(NSString *)messageUId
+                                     userIds:(NSArray<NSString *> *)userIds
+                                     success:(void (^ _Nullable)(RCIMIWReadReceiptUsersResult * _Nullable result))successBlock
+                                       error:(void (^ _Nullable)(NSInteger code))errorBlock;
 
 @end
 

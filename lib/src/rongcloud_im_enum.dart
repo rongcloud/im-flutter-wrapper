@@ -785,6 +785,28 @@ enum RCIMIWTranslateMode {
   intelligent,
 }
 
+enum RCIMIWReadReceiptStatus {
+  /// [ZH]
+  /// ---
+  /// 已读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Read
+  /// ---
+  read,
+
+  /// [ZH]
+  /// ---
+  /// 未读
+  /// ---
+  /// [EN]
+  /// ---
+  /// Unread
+  /// ---
+  unread,
+}
+
 enum RCIMIWTranslateResultType { message, customText }
 
 enum RCIMIWMessageType {
@@ -1067,6 +1089,28 @@ enum RCIMIWChatRoomMemberBanType {
 
   /// 用户聊天室全局禁言
   muteglobal,
+}
+
+enum RCIMIWReadReceiptOrder {
+  /// [ZH]
+  /// ---
+  /// 倒序
+  /// ---
+  /// [EN]
+  /// ---
+  /// Descending order
+  /// ---
+  descending,
+
+  /// [ZH]
+  /// ---
+  /// 正序
+  /// ---
+  /// [EN]
+  /// ---
+  /// Ascending order
+  /// ---
+  ascending,
 }
 
 enum RCIMIWChatRoomMemberOperateType {

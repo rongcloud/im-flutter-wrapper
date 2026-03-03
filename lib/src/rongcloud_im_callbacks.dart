@@ -2695,6 +2695,116 @@ class IRCIMIWGetFriendAllowTypeCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWSendReadReceiptResponseV5Callback {
+  IRCIMIWSendReadReceiptResponseV5Callback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 操作成功回调
+  /// ---
+  /// [EN]
+  /// ---
+  /// Operation succeeded callback
+  /// ---
+  Function() onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 操作失败回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Operation failed callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetMessageReadReceiptInfoV5Callback {
+  IRCIMIWGetMessageReadReceiptInfoV5Callback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回对象
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned object
+  /// ---
+  Function(List<RCIMIWReadReceiptInfoV5>? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback {
+  IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回对象
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned object
+  /// ---
+  Function(RCIMIWReadReceiptUsersResult? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetMessagesReadReceiptByUsersV5Callback {
+  IRCIMIWGetMessagesReadReceiptByUsersV5Callback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回对象
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned object
+  /// ---
+  Function(RCIMIWReadReceiptUsersResult? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
 class RCIMIWConnectCallback {
   RCIMIWConnectCallback({this.onDatabaseOpened, required this.onConnected});
 

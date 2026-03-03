@@ -74,8 +74,11 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetJoinedGroupsByRoleCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetJoinedGroupsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCountCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageReadReceiptInfoV5Callback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesAroundTimeCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesReadReceiptByUsersV5Callback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMyUserProfileCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMyUserProfileVisibilityCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetNotificationQuietHoursCallback;
@@ -140,6 +143,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWSendGroupReadReceiptRequestCallba
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendGroupReadReceiptResponseCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendPrivateReadReceiptMessageCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSendReadReceiptResponseV5Callback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSendUltraGroupTypingStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSetFriendInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupMemberInfoCallback;
@@ -228,6 +232,10 @@ import cn.rongcloud.im.wrapper.messages.RCIMIWVoiceMessage;
 import cn.rongcloud.im.wrapper.options.RCIMIWEngineOptions;
 import cn.rongcloud.im.wrapper.params.RCIMIWStreamMessageRequestParams;
 import cn.rongcloud.im.wrapper.platform.RCIMIWPlatformConverter;
+import cn.rongcloud.im.wrapper.readreceipt.RCIMIWReadReceiptInfoV5;
+import cn.rongcloud.im.wrapper.readreceipt.RCIMIWReadReceiptResponseV5;
+import cn.rongcloud.im.wrapper.readreceipt.RCIMIWReadReceiptUsersOption;
+import cn.rongcloud.im.wrapper.readreceipt.RCIMIWReadReceiptUsersResult;
 import cn.rongcloud.im.wrapper.settings.RCIMIWAppSettings;
 import cn.rongcloud.im.wrapper.speechtotext.RCIMIWSpeechToTextInfo;
 import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeEvent;
@@ -1207,6 +1215,26 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:getFriendAllowType":
         getFriendAllowType(call, result);
+        break;
+
+      case "engine:sendReadReceiptResponseV5":
+        sendReadReceiptResponseV5(call, result);
+        break;
+
+      case "engine:getMessageReadReceiptInfoV5":
+        getMessageReadReceiptInfoV5(call, result);
+        break;
+
+      case "engine:getMessageReadReceiptInfoV5ByIdentifiers":
+        getMessageReadReceiptInfoV5ByIdentifiers(call, result);
+        break;
+
+      case "engine:getMessagesReadReceiptUsersByPageV5":
+        getMessagesReadReceiptUsersByPageV5(call, result);
+        break;
+
+      case "engine:getMessagesReadReceiptByUsersV5":
+        getMessagesReadReceiptByUsersV5(call, result);
         break;
     }
   }
@@ -5026,6 +5054,112 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void sendReadReceiptResponseV5(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      List<String> messageUIds = call.argument("messageUIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSendReadReceiptResponseV5CallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSendReadReceiptResponseV5CallbackImpl(cb_handler);
+      }
+
+      code = engine.sendReadReceiptResponseV5(type, targetId, channelId, messageUIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getMessageReadReceiptInfoV5(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      List<String> messageUIds = call.argument("messageUIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMessageReadReceiptInfoV5CallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMessageReadReceiptInfoV5CallbackImpl(cb_handler);
+      }
+
+      code = engine.getMessageReadReceiptInfoV5(type, targetId, channelId, messageUIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getMessageReadReceiptInfoV5ByIdentifiers(
+      @NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<HashMap<String, Object>> identifiers = call.argument("identifiers");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMessageReadReceiptInfoV5CallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMessageReadReceiptInfoV5CallbackImpl(cb_handler);
+      }
+
+      List identifiers_str = new ArrayList();
+      for (HashMap<String, Object> element : identifiers) {
+        identifiers_str.add(RCIMIWPlatformConverter.convertMessageIdentifier(element));
+      }
+
+      code = engine.getMessageReadReceiptInfoV5ByIdentifiers(identifiers_str, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getMessagesReadReceiptUsersByPageV5(
+      @NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      String messageUId = (String) call.argument("messageUId");
+      RCIMIWReadReceiptUsersOption option =
+          RCIMIWPlatformConverter.convertReadReceiptUsersOption(
+              (HashMap<String, Object>) call.argument("option"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMessagesReadReceiptUsersByPageV5CallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMessagesReadReceiptUsersByPageV5CallbackImpl(cb_handler);
+      }
+
+      code =
+          engine.getMessagesReadReceiptUsersByPageV5(
+              type, targetId, channelId, messageUId, option, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getMessagesReadReceiptByUsersV5(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      String messageUId = (String) call.argument("messageUId");
+      List<String> userIds = call.argument("userIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMessagesReadReceiptByUsersV5CallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMessagesReadReceiptByUsersV5CallbackImpl(cb_handler);
+      }
+
+      code =
+          engine.getMessagesReadReceiptByUsersV5(
+              type, targetId, channelId, messageUId, userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   class RCIMIWListenerImpl extends RCIMIWListener {
 
     @Override
@@ -7914,6 +8048,29 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             @Override
             public void run() {
               channel.invokeMethod("engine:onFriendApplicationStatusChanged", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onMessageReadReceiptV5Received(List<RCIMIWReadReceiptResponseV5> responses) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List responses_str = new ArrayList();
+
+      if (responses != null) {
+        for (RCIMIWReadReceiptResponseV5 element : responses) {
+          responses_str.add(RCIMIWPlatformConverter.convertReadReceiptResponseV5(element));
+        }
+      }
+
+      arguments.put("responses", responses_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onMessageReadReceiptV5Received", arguments);
             }
           });
     }
@@ -13522,6 +13679,186 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWGetFriendAllowTypeCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSendReadReceiptResponseV5CallbackImpl
+      implements IRCIMIWSendReadReceiptResponseV5Callback {
+    private int cb_handler = -1;
+
+    IRCIMIWSendReadReceiptResponseV5CallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess() {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSendReadReceiptResponseV5Callback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSendReadReceiptResponseV5Callback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetMessageReadReceiptInfoV5CallbackImpl
+      implements IRCIMIWGetMessageReadReceiptInfoV5Callback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetMessageReadReceiptInfoV5CallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWReadReceiptInfoV5> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWReadReceiptInfoV5 element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertReadReceiptInfoV5(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessageReadReceiptInfoV5Callback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetMessagesReadReceiptUsersByPageV5CallbackImpl
+      implements IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetMessagesReadReceiptUsersByPageV5CallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWReadReceiptUsersResult t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertReadReceiptUsersResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback_onSuccess",
+                  arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback_onError",
+                  arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetMessagesReadReceiptByUsersV5CallbackImpl
+      implements IRCIMIWGetMessagesReadReceiptByUsersV5Callback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetMessagesReadReceiptByUsersV5CallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWReadReceiptUsersResult t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertReadReceiptUsersResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessagesReadReceiptByUsersV5Callback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessagesReadReceiptByUsersV5Callback_onError", arguments);
             }
           });
     }

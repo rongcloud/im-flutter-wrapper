@@ -27,6 +27,8 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWMessageType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWNativeCustomMessagePersistentFlag;
 import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationQuietHoursLevel;
+import cn.rongcloud.im.wrapper.constants.RCIMIWReadReceiptOrder;
+import cn.rongcloud.im.wrapper.constants.RCIMIWReadReceiptStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWReceivedStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWSentStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWSpeechToTextStatus;
@@ -195,6 +197,10 @@ public class RCIMWrapperArgumentAdapter {
     return RCIMIWTranslateMode.values()[type];
   }
 
+  static RCIMIWReadReceiptStatus toRCIMIWReadReceiptStatus(@NonNull Integer type) {
+    return RCIMIWReadReceiptStatus.values()[type];
+  }
+
   static RCIMIWTranslateResultType toRCIMIWTranslateResultType(@NonNull Integer type) {
     return RCIMIWTranslateResultType.values()[type];
   }
@@ -213,6 +219,10 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWChatRoomMemberBanType toRCIMIWChatRoomMemberBanType(@NonNull Integer type) {
     return RCIMIWChatRoomMemberBanType.values()[type];
+  }
+
+  static RCIMIWReadReceiptOrder toRCIMIWReadReceiptOrder(@NonNull Integer type) {
+    return RCIMIWReadReceiptOrder.values()[type];
   }
 
   static RCIMIWChatRoomMemberOperateType toRCIMIWChatRoomMemberOperateType(@NonNull Integer type) {

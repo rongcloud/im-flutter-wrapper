@@ -298,7 +298,7 @@ Future sendTextMessage(Map arg) async {
   }
 
   textMessage.userInfo = userInfo;
-  _sendMessage(textMessage, useCallback);
+  _sendMessage(textMessage, useCallback, arg: arg);
 }
 
 Future sendImageMessage(Map arg) async {
@@ -333,7 +333,7 @@ Future sendImageMessage(Map arg) async {
     RCIMIWImageMessage? message = await IMEngineManager().engine
         ?.createImageMessage(type, targetId, channelId, file?.path ?? '');
     message?.original = original;
-    _sendMessage(message, useCallback);
+    _sendMessage(message, useCallback, arg: arg);
   });
 }
 
@@ -359,21 +359,13 @@ Future sendFileMessage(Map arg) async {
       channelId,
       files[0].path,
     );
-    _sendMessage(msg, useCallback);
+    _sendMessage(msg, useCallback, arg: arg);
   }
 }
 
 connect(Map arg) async {
-  // 如果为 arg['token'] 1 , 使用 AccountInfo.token1
-  // 如果为 arg['token'] 2 , 使用 AccountInfo.token2
-  // 如果为 arg['token'] 3 , 使用 AccountInfo.token3
-  if (arg['token'] == "1") {
-    arg['token'] = AccountInfo.token1;
-  } else if (arg['token'] == "2") {
-    arg['token'] = AccountInfo.token2;
-  } else if (arg['token'] == "3") {
-    arg['token'] = AccountInfo.token3;
-  }
+
+  arg['token'] = AccountInfo.token;
 
   if (arg['token'] == null) {
     RCIWToast.showToast("token 为空");
@@ -453,7 +445,7 @@ Future sendSightMessage(Map arg) async {
   RCIWMediaUlits.showVideoPicker(context, (path) async {
     RCIMIWSightMessage? sightMsg = await IMEngineManager().engine
         ?.createSightMessage(type, targetId, channelId, "file://" + path, 10);
-    _sendMessage(sightMsg, useCallback);
+    _sendMessage(sightMsg, useCallback, arg: arg);
   });
 }
 
@@ -498,7 +490,7 @@ Future sendVoiceMessage(Map arg) async {
                         path,
                         duration!,
                       );
-                  _sendMessage(msg, useCallback);
+                  _sendMessage(msg, useCallback, arg: arg);
                 }
               });
               Navigator.of(context).pop();
@@ -595,7 +587,7 @@ Future sendCombineV2Message(Map arg) async {
         nameList,
         msgList,
       );
-  _sendMessage(msg, useCallback);
+  _sendMessage(msg, useCallback, arg: arg);
 }
 
 Future sendReferenceMessage(Map arg) async {
@@ -635,7 +627,7 @@ Future sendReferenceMessage(Map arg) async {
 
   RCIMIWReferenceMessage? referenceMsg = await IMEngineManager().engine
       ?.createReferenceMessage(type, targetId, channelId, message, text);
-  _sendMessage(referenceMsg, useCallback);
+  _sendMessage(referenceMsg, useCallback, arg: arg);
 }
 
 Future sendGIFMessage(Map arg) async {
@@ -662,7 +654,7 @@ Future sendGIFMessage(Map arg) async {
       channelId,
       files[0].path,
     );
-    _sendMessage(msg, useCallback);
+    _sendMessage(msg, useCallback, arg: arg);
   }
 }
 
@@ -693,7 +685,7 @@ Future sendCommandMessage(Map arg) async {
   String channelId = arg['channelId'] ?? "";
   int useCallback = int.parse(arg['use_cb'] ?? "1");
   RCIMDCommandMessage msg = RCIMDCommandMessage(type, targetId, name, data);
-  _sendMessage(msg, useCallback);
+  _sendMessage(msg, useCallback, arg: arg);
 }
 
 Future sendLocationMessage(Map arg) async {
@@ -741,7 +733,7 @@ Future sendLocationMessage(Map arg) async {
           poiName,
           file?.path ?? '',
         );
-    _sendMessage(message, useCallback);
+    _sendMessage(message, useCallback, arg: arg);
   });
 }
 
@@ -787,7 +779,7 @@ Future sendNativeCustomMessage(Map arg) async {
         fieldsMap,
       );
   msg?.searchableWords = searchWords.cast<String>();
-  _sendMessage(msg, useCallback);
+  _sendMessage(msg, useCallback, arg: arg);
 }
 
 sendNativeCustomMediaMessage(Map arg) async {
@@ -835,7 +827,7 @@ sendNativeCustomMediaMessage(Map arg) async {
           fieldsMap,
         );
     msg?.searchableWords = searchWords.cast<String>();
-    _sendMessage(msg, useCallback);
+    _sendMessage(msg, useCallback, arg: arg);
   }
 }
 
@@ -857,7 +849,7 @@ Future sendUserCustomMessage(Map arg) async {
   String content = arg['content'] ?? "来自跨平台的祝福~";
 
   RCIMDPokeMessage msg = RCIMDPokeMessage(type, targetId, content);
-  _sendMessage(msg, useCallback);
+  _sendMessage(msg, useCallback, arg: arg);
 }
 
 Future sendCustomMessage(Map arg) async {
@@ -893,13 +885,47 @@ Future sendCustomMessage(Map arg) async {
         messageIdentifier,
         fields,
       );
-  _sendMessage(msg, useCallback);
+  _sendMessage(msg, useCallback, arg: arg);
 }
 
-_sendMessage(RCIMIWMessage? message, int useCallback) async {
+bool? _parseNeedReceipt(Map arg) {
+  dynamic value = arg['needReceipt'];
+  if (value == null) {
+    return null;
+  }
+
+  if (value is bool) {
+    return value;
+  }
+
+  if (value is num) {
+    return value != 0;
+  }
+
+  String text = value.toString().trim().toLowerCase();
+  if (text.isEmpty) {
+    return null;
+  }
+  if (text == '1' || text == 'true' || text == 'yes' || text == 'y') {
+    return true;
+  }
+  if (text == '0' || text == 'false' || text == 'no' || text == 'n') {
+    return false;
+  }
+  return null;
+}
+
+_sendMessage(RCIMIWMessage? message, int useCallback, {Map? arg}) async {
   if (message == null) {
     RCIWToast.showToast("message 不合法");
     return;
+  }
+
+  if (arg != null) {
+    bool? needReceipt = _parseNeedReceipt(arg);
+    if (needReceipt != null) {
+      message.needReceipt = needReceipt;
+    }
   }
 
   if (message.conversationType == RCIMIWConversationType.chatroom ||
@@ -1505,6 +1531,250 @@ Future sendGroupReadReceiptResponse(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
+Future getMessagesReadReceiptUsersByPageV5(Map arg) async {
+  if (arg['type'] == null) {
+    RCIWToast.showToast("type 为空");
+    return;
+  }
+  if (arg['targetId'] == null) {
+    RCIWToast.showToast("targetId 为空");
+    return;
+  }
+  if (arg['messageUId'] == null) {
+    RCIWToast.showToast("messageUId 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  int? typeValue = int.tryParse(arg['type']);
+  if (typeValue == null ||
+      typeValue < 0 ||
+      typeValue >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  RCIMIWConversationType type = RCIMIWConversationType.values[typeValue];
+  String targetId = arg['targetId'];
+  String? channelId = arg['channelId'];
+  String messageUId = arg['messageUId'];
+
+  String? pageToken = arg['pageToken'];
+  int? pageCount;
+  if (arg['pageCount'] != null && arg['pageCount'].toString().isNotEmpty) {
+    pageCount = int.tryParse(arg['pageCount']);
+  }
+  RCIMIWReadReceiptOrder? order;
+  if (arg['order'] != null && arg['order'].toString().isNotEmpty) {
+    int? orderValue = int.tryParse(arg['order']);
+    if (orderValue == null ||
+        orderValue < 0 ||
+        orderValue >= RCIMIWReadReceiptOrder.values.length) {
+      RCIWToast.showToast("order 超出范围");
+      return;
+    }
+    order = RCIMIWReadReceiptOrder.values[orderValue];
+  }
+  RCIMIWReadReceiptStatus? readStatus;
+  if (arg['readStatus'] != null && arg['readStatus'].toString().isNotEmpty) {
+    int? readStatusValue = int.tryParse(arg['readStatus']);
+    if (readStatusValue == null ||
+        readStatusValue < 0 ||
+        readStatusValue >= RCIMIWReadReceiptStatus.values.length) {
+      RCIWToast.showToast("readStatus 超出范围");
+      return;
+    }
+    readStatus = RCIMIWReadReceiptStatus.values[readStatusValue];
+  }
+  RCIMIWReadReceiptUsersOption option = RCIMIWReadReceiptUsersOption.create(
+    pageToken: pageToken,
+    pageCount: pageCount,
+    order: order,
+    readStatus: readStatus,
+  );
+
+  IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback(
+      onSuccess: (RCIMIWReadReceiptUsersResult? t) {
+        Map<String, String> arg = {};
+        arg["listener"] = "getMessagesReadReceiptUsersByPageV5-onSuccess";
+        String timeStr = _generateTimeStamp();
+        arg["timestamp"] = timeStr;
+        arg["t"] = formatJson(t?.toJson());
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        Map<String, String> arg = {};
+        arg["listener"] = "getMessagesReadReceiptUsersByPageV5-onError";
+        String timeStr = _generateTimeStamp();
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine
+      ?.getMessagesReadReceiptUsersByPageV5(
+        type,
+        targetId,
+        channelId,
+        messageUId,
+        option,
+        callback: callback,
+      );
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getMessagesReadReceiptUsersByPageV5";
+  String timeStr = _generateTimeStamp();
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+Future getMessageReadReceiptInfoV5ByIdentifiers(Map arg) async {
+  String conversationTypesRaw = (arg['conversationTypes'] ?? "")
+      .toString()
+      .trim();
+  String targetIdsRaw = (arg['targetIds'] ?? "").toString().trim();
+  String messageUIdsRaw = (arg['messageUIds'] ?? "").toString().trim();
+  String channelIdsRaw = (arg['channelIds'] ?? "").toString();
+
+  if (conversationTypesRaw.isEmpty) {
+    RCIWToast.showToast("conversationTypes 为空");
+    return;
+  }
+  if (targetIdsRaw.isEmpty) {
+    RCIWToast.showToast("targetIds 为空");
+    return;
+  }
+  if (messageUIdsRaw.isEmpty) {
+    RCIWToast.showToast("messageUIds 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+  List<RCIMIWMessageIdentifier> identifiers = [];
+  List<String> conversationTypeValues = conversationTypesRaw
+      .split(",")
+      .map((item) => item.trim())
+      .toList();
+  List<String> targetIdValues = targetIdsRaw
+      .split(",")
+      .map((item) => item.trim())
+      .toList();
+  List<String> messageUIdValues = messageUIdsRaw
+      .split(",")
+      .map((item) => item.trim())
+      .toList();
+
+  List<String> channelIdValues;
+  if (channelIdsRaw.trim().isEmpty) {
+    channelIdValues = List<String>.filled(messageUIdValues.length, "");
+  } else {
+    channelIdValues = channelIdsRaw
+        .split(",")
+        .map((item) => item.trim())
+        .toList();
+  }
+
+  if (conversationTypeValues.length != targetIdValues.length ||
+      targetIdValues.length != messageUIdValues.length ||
+      channelIdValues.length != messageUIdValues.length) {
+    RCIWToast.showToast(
+      "conversationTypes、targetIds、channelIds、messageUIds 长度不一致",
+    );
+    return;
+  }
+
+  for (int i = 0; i < messageUIdValues.length; i++) {
+    int? conversationTypeIndex = int.tryParse(conversationTypeValues[i]);
+    if (conversationTypeIndex == null ||
+        conversationTypeIndex < 0 ||
+        conversationTypeIndex >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 第 ${i + 1} 项非法");
+      return;
+    }
+
+    if (targetIdValues[i].isEmpty || messageUIdValues[i].isEmpty) {
+      RCIWToast.showToast("targetIds 或 messageUIds 存在空值");
+      return;
+    }
+
+    identifiers.add(
+      RCIMIWMessageIdentifier.create(
+        conversationType: RCIMIWConversationType.values[conversationTypeIndex],
+        targetId: targetIdValues[i],
+        channelId: channelIdValues[i].isEmpty ? null : channelIdValues[i],
+        messageUId: messageUIdValues[i],
+      ),
+    );
+  }
+
+  if (identifiers.isEmpty) {
+    RCIWToast.showToast("identifiers 为空");
+    return;
+  }
+
+  IRCIMIWGetMessageReadReceiptInfoV5Callback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetMessageReadReceiptInfoV5Callback(
+      onSuccess: (List<RCIMIWReadReceiptInfoV5>? t) {
+        Map<String, String> result = {};
+        result["listener"] =
+            "getMessageReadReceiptInfoV5ByIdentifiers-onSuccess";
+        String timeStr = _generateTimeStamp();
+        result["timestamp"] = timeStr;
+
+        List<String> tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+        result["t"] = tJson.toString();
+        bus.emit("rong_im_listener", result);
+      },
+      onError: (int? code) {
+        Map<String, String> result = {};
+        result["listener"] = "getMessageReadReceiptInfoV5ByIdentifiers-onError";
+        String timeStr = _generateTimeStamp();
+        result["timestamp"] = timeStr;
+        result["code"] = code.toString();
+        bus.emit("rong_im_listener", result);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine
+      ?.getMessageReadReceiptInfoV5ByIdentifiers(
+        identifiers,
+        callback: callback,
+      );
+
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getMessageReadReceiptInfoV5ByIdentifiers";
+  String timeStr = _generateTimeStamp();
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+  resultCode['arg'] = arg.toString();
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
 Future sendGroupMessageToDesignatedUsers(Map arg) async {
   if (arg['targetId'] == null) {
     RCIWToast.showToast("targetId 为空");
@@ -1526,6 +1796,10 @@ Future sendGroupMessageToDesignatedUsers(Map arg) async {
         channelId,
         "这是一条群定向消息",
       );
+  bool? needReceipt = _parseNeedReceipt(arg);
+  if (needReceipt != null) {
+    textMessage?.needReceipt = needReceipt;
+  }
 
   List<String> userIds = (arg["userIds"]).split(",");
   RCIMIWSendGroupMessageToDesignatedUsersCallback? callback;

@@ -1648,4 +1648,28 @@ const getFriendAllowType = {
   "action": engine_fun.getFriendAllowType,
 };
 
+const sendReadReceiptResponseV5 = {
+  "title": "sendReadReceiptResponseV5",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "messageUIds", "type": "String", "hint": "", "lable": "请输入messageUIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.sendReadReceiptResponseV5,
+};
+
+const getMessageReadReceiptInfoV5 = {
+  "title": "getMessageReadReceiptInfoV5",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "messageUIds", "type": "String", "hint": "", "lable": "请输入messageUIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getMessageReadReceiptInfoV5,
+};
+
+const getMessagesReadReceiptByUsersV5 = {
+  "title": "getMessagesReadReceiptByUsersV5",
+  "params": [
+    {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "messageUId", "type": "String", "hint": "", "lable": "请输入messageUId",},{"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getMessagesReadReceiptByUsersV5,
+};
+
 */

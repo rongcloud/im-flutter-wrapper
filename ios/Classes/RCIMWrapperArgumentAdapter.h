@@ -141,6 +141,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertTranslateModeToInteger:(RCIMIWTranslateMode)TranslateMode;
 
 
++ (RCIMIWReadReceiptStatus)convertReadReceiptStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertReadReceiptStatusToInteger:(RCIMIWReadReceiptStatus)ReadReceiptStatus;
+
+
 + (RCIMIWTranslateResultType)convertTranslateResultTypeFromInteger:(NSInteger)integer;
 + (NSInteger)convertTranslateResultTypeToInteger:(RCIMIWTranslateResultType)TranslateResultType;
 
@@ -159,6 +163,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (RCIMIWChatRoomMemberBanType)convertChatRoomMemberBanTypeFromInteger:(NSInteger)integer;
 + (NSInteger)convertChatRoomMemberBanTypeToInteger:(RCIMIWChatRoomMemberBanType)ChatRoomMemberBanType;
+
+
++ (RCIMIWReadReceiptOrder)convertReadReceiptOrderFromInteger:(NSInteger)integer;
++ (NSInteger)convertReadReceiptOrderToInteger:(RCIMIWReadReceiptOrder)ReadReceiptOrder;
 
 
 + (RCIMIWChatRoomMemberOperateType)convertChatRoomMemberOperateTypeFromInteger:(NSInteger)integer;

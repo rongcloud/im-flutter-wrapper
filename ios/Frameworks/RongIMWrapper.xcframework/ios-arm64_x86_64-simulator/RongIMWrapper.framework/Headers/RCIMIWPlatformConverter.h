@@ -54,6 +54,12 @@
 @class RCIMIWStreamMessageRequestParams;
 @class RCIMIWCombineV2Message;
 @class RCIMIWCombineMsgInfo;
+@class RCIMIWReadReceiptUser;
+@class RCIMIWMessageIdentifier;
+@class RCIMIWReadReceiptInfoV5;
+@class RCIMIWReadReceiptResponseV5;
+@class RCIMIWReadReceiptUsersOption;
+@class RCIMIWReadReceiptUsersResult;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -212,6 +218,20 @@ NS_ASSUME_NONNULL_BEGIN
 + (RCIMIWCombineV2Message *)convertCombineV2MessageFromDict:(NSDictionary *)dic;
 + (NSDictionary *)convertCombineMsgInfoToDict:(RCIMIWCombineMsgInfo *)info;
 + (RCIMIWCombineMsgInfo *)convertCombineMsgInfoFromDict:(NSDictionary *)dic;
+
+// ReadReceipt V5
++ (NSDictionary *)convertReadReceiptUserToDict:(RCIMIWReadReceiptUser *)user;
++ (RCIMIWReadReceiptUser *)convertReadReceiptUserFromDict:(NSDictionary *)dict;
++ (NSDictionary *)convertMessageIdentifierToDict:(RCIMIWMessageIdentifier *)identifier;
++ (RCIMIWMessageIdentifier *)convertMessageIdentifierFromDict:(NSDictionary *)dict;
++ (NSDictionary *)convertReadReceiptInfoV5ToDict:(RCIMIWReadReceiptInfoV5 *)info;
++ (RCIMIWReadReceiptInfoV5 *)convertReadReceiptInfoV5FromDict:(NSDictionary *)dict;
++ (NSDictionary *)convertReadReceiptResponseV5ToDict:(RCIMIWReadReceiptResponseV5 *)response;
++ (RCIMIWReadReceiptResponseV5 *)convertReadReceiptResponseV5FromDict:(NSDictionary *)dict;
++ (NSDictionary *)convertReadReceiptUsersOptionToDict:(RCIMIWReadReceiptUsersOption *)option;
++ (RCIMIWReadReceiptUsersOption *)convertReadReceiptUsersOptionFromDict:(NSDictionary *)dict;
++ (NSDictionary *)convertReadReceiptUsersResultToDict:(RCIMIWReadReceiptUsersResult *)result;
++ (RCIMIWReadReceiptUsersResult *)convertReadReceiptUsersResultFromDict:(NSDictionary *)dict;
 
 @end
 

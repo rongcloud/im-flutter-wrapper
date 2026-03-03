@@ -1654,6 +1654,26 @@ class RCIMIWMessage {
   /// ---
   List<String>? directedUserIds;
 
+  /// [ZH]
+  /// ---
+  /// 是否需要已读回执，发送消息时设置为 true 表示支持已读 V5
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether the message needs read receipt, set to true when sending to support read receipt V5
+  /// ---
+  bool? needReceipt;
+
+  /// [ZH]
+  /// ---
+  /// 是否已发送过已读回执，SDK 内部赋值
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether the read receipt has been sent, assigned internally by SDK
+  /// ---
+  bool? sentReceipt;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     json['conversationType'] = conversationType?.index;
@@ -1681,6 +1701,8 @@ class RCIMIWMessage {
     json['canIncludeExpansion'] = canIncludeExpansion;
     json['auditInfo'] = auditInfo?.toJson();
     json['directedUserIds'] = directedUserIds;
+    json['needReceipt'] = needReceipt;
+    json['sentReceipt'] = sentReceipt;
     return json;
   }
 
@@ -1735,6 +1757,8 @@ class RCIMIWMessage {
       );
     }
     directedUserIds = json['directedUserIds']?.cast<String>();
+    needReceipt = json['needReceipt'];
+    sentReceipt = json['sentReceipt'];
   }
 }
 
@@ -4106,6 +4130,165 @@ class RCIMIWUserProfile {
     role = json['role'];
     level = json['level'];
     userExtProfile = json['userExtProfile'];
+  }
+}
+
+class RCIMIWReadReceiptUsersOption {
+  String? pageToken;
+  int? pageCount;
+  RCIMIWReadReceiptOrder? order;
+  RCIMIWReadReceiptStatus? readStatus;
+
+  RCIMIWReadReceiptUsersOption.create({this.pageToken, this.pageCount, this.order, this.readStatus});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['pageToken'] = pageToken;
+    json['pageCount'] = pageCount;
+    json['order'] = order?.index;
+    json['readStatus'] = readStatus?.index;
+    return json;
+  }
+
+  RCIMIWReadReceiptUsersOption.fromJson(Map<String, dynamic> json) {
+    pageToken = json['pageToken'];
+    pageCount = json['pageCount'];
+    order = json['order'] == null ? null : RCIMIWReadReceiptOrder.values[json['order']];
+    readStatus = json['readStatus'] == null ? null : RCIMIWReadReceiptStatus.values[json['readStatus']];
+  }
+}
+
+class RCIMIWReadReceiptResponseV5 {
+  RCIMIWConversationType? conversationType;
+  String? targetId;
+  String? channelId;
+  String? messageUId;
+  List<RCIMIWReadReceiptUser>? users;
+  int? readCount;
+  int? unreadCount;
+  int? totalCount;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['conversationType'] = conversationType?.index;
+    json['targetId'] = targetId;
+    json['channelId'] = channelId;
+    json['messageUId'] = messageUId;
+    json['users'] = users?.map((item) => item.toJson()).toList();
+    json['readCount'] = readCount;
+    json['unreadCount'] = unreadCount;
+    json['totalCount'] = totalCount;
+    return json;
+  }
+
+  RCIMIWReadReceiptResponseV5.fromJson(Map<String, dynamic> json) {
+    conversationType =
+        json['conversationType'] == null ? null : RCIMIWConversationType.values[json['conversationType']];
+    targetId = json['targetId'];
+    channelId = json['channelId'];
+    messageUId = json['messageUId'];
+    users =
+        json['users']
+            ?.map<RCIMIWReadReceiptUser>(
+              (item) =>
+                  RCIMIWReadReceiptUser.fromJson((item as Map).map((key, value) => MapEntry(key.toString(), value))),
+            )
+            .toList();
+    readCount = json['readCount'];
+    unreadCount = json['unreadCount'];
+    totalCount = json['totalCount'];
+  }
+}
+
+class RCIMIWReadReceiptUser {
+  String? userId;
+  int? timestamp;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['timestamp'] = timestamp;
+    return json;
+  }
+
+  RCIMIWReadReceiptUser.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    timestamp = json['timestamp'];
+  }
+}
+
+class RCIMIWReadReceiptUsersResult {
+  String? pageToken;
+  int? totalCount;
+  List<RCIMIWReadReceiptUser>? users;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['pageToken'] = pageToken;
+    json['totalCount'] = totalCount;
+    json['users'] = users?.map((item) => item.toJson()).toList();
+    return json;
+  }
+
+  RCIMIWReadReceiptUsersResult.fromJson(Map<String, dynamic> json) {
+    pageToken = json['pageToken'];
+    totalCount = json['totalCount'];
+    users =
+        json['users']
+            ?.map<RCIMIWReadReceiptUser>(
+              (item) =>
+                  RCIMIWReadReceiptUser.fromJson((item as Map).map((key, value) => MapEntry(key.toString(), value))),
+            )
+            .toList();
+  }
+}
+
+class RCIMIWMessageIdentifier {
+  RCIMIWConversationType? conversationType;
+  String? targetId;
+  String? channelId;
+  String? messageUId;
+
+  RCIMIWMessageIdentifier.create({this.conversationType, this.targetId, this.channelId, this.messageUId});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['conversationType'] = conversationType?.index;
+    json['targetId'] = targetId;
+    json['channelId'] = channelId;
+    json['messageUId'] = messageUId;
+    return json;
+  }
+
+  RCIMIWMessageIdentifier.fromJson(Map<String, dynamic> json) {
+    conversationType =
+        json['conversationType'] == null ? null : RCIMIWConversationType.values[json['conversationType']];
+    targetId = json['targetId'];
+    channelId = json['channelId'];
+    messageUId = json['messageUId'];
+  }
+}
+
+class RCIMIWReadReceiptInfoV5 {
+  String? messageUId;
+  int? readCount;
+  int? unreadCount;
+  int? totalCount;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    json['readCount'] = readCount;
+    json['unreadCount'] = unreadCount;
+    json['totalCount'] = totalCount;
+    return json;
+  }
+
+  RCIMIWReadReceiptInfoV5.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
+    readCount = json['readCount'];
+    unreadCount = json['unreadCount'];
+    totalCount = json['totalCount'];
   }
 }
 

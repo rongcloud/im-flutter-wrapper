@@ -3494,6 +3494,32 @@ engine?.onFriendApplicationStatusChanged = (String? userId, RCIMIWFriendApplicat
 };
 //callback_onFriendApplicationStatusChanged_call
 */
+
+    engine?.onMessageReadReceiptV5Received = (List<RCIMIWReadReceiptResponseV5>? responses) {
+      List responsesJson = [];
+      if (responses != null) {
+        for (var temp in responses) {
+          responsesJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onMessageReadReceiptV5Received";
+      arg["timestamp"] = timeStr;
+      arg["responses"] = responsesJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onMessageReadReceiptV5Received_call
+engine?.onMessageReadReceiptV5Received = (List<RCIMIWReadReceiptResponseV5>? responses) {
+    //...
+};
+//callback_onMessageReadReceiptV5Received_call
+*/
   }
 
   String formatJson(jsonObject) {
