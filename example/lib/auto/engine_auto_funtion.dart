@@ -3096,7 +3096,7 @@ loadMessages(Map arg) async {
 
 /*
 //fun_getMessages_call
-IRCIMIWGetMessagesCallback? callback = IRCIMIWGetMessagesCallback(onSuccess: (List<RCIMIWMessage>? t) {
+IRCIMIWGetMessagesCallback? callback = IRCIMIWGetMessagesCallback(onSuccess: (List<RCIMIWMessage>? t, int? syncTimestamp, bool? hasMoreMsg) {
     //...
 }, onError: (int? code) {
     //...
@@ -3163,7 +3163,7 @@ getMessages(Map arg) async {
   IRCIMIWGetMessagesCallback? callback;
   if (useCallback == 1) {
     callback = IRCIMIWGetMessagesCallback(
-      onSuccess: (List<RCIMIWMessage>? t) {
+      onSuccess: (List<RCIMIWMessage>? t, int? syncTimestamp, bool? hasMoreMsg) {
         List tJson = [];
         if (t != null) {
           for (var temp in t) {
@@ -3178,6 +3178,8 @@ getMessages(Map arg) async {
         arg["listener"] = "getMessages-onSuccess";
         arg["timestamp"] = timeStr;
         arg["t"] = tJson.toString();
+        arg["syncTimestamp"] = syncTimestamp.toString();
+        arg["hasMoreMsg"] = hasMoreMsg.toString();
 
         bus.emit("rong_im_listener", arg);
       },
@@ -3361,7 +3363,7 @@ getMessagesAroundTime(Map arg) async {
 
 /*
 //fun_getLocalMessagesByMessageTypes_call
-IRCIMIWGetMessagesCallback? callback = IRCIMIWGetMessagesCallback(onSuccess: (List<RCIMIWMessage>? t) {
+IRCIMIWGetLocalMessagesByMessageTypesCallback? callback = IRCIMIWGetLocalMessagesByMessageTypesCallback(onSuccess: (List<RCIMIWMessage>? t) {
     //...
 }, onError: (int? code) {
     //...
@@ -3429,9 +3431,9 @@ getLocalMessagesByMessageTypes(Map arg) async {
   }
   RCIMIWTimeOrder order = RCIMIWTimeOrder.values[orderValue];
   int count = int.parse(arg['count']);
-  IRCIMIWGetMessagesCallback? callback;
+  IRCIMIWGetLocalMessagesByMessageTypesCallback? callback;
   if (useCallback == 1) {
-    callback = IRCIMIWGetMessagesCallback(
+    callback = IRCIMIWGetLocalMessagesByMessageTypesCallback(
       onSuccess: (List<RCIMIWMessage>? t) {
         List tJson = [];
         if (t != null) {
@@ -6200,6 +6202,15 @@ changeNotificationQuietHours(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
+/*
+//fun_setNotificationQuietHoursWithSetting_call
+IRCIMIWSetNotificationQuietHoursWithSettingCallback? callback = IRCIMIWSetNotificationQuietHoursWithSettingCallback(onNotificationQuietHoursWithSettingSet: (int? code) {
+    //...
+});
+
+int? ret = await engine?.setNotificationQuietHoursWithSetting(setting, callback:callback);
+//fun_setNotificationQuietHoursWithSetting_call
+*/
 /*
 //fun_removeNotificationQuietHours_call
 IRCIMIWRemoveNotificationQuietHoursCallback? callback = IRCIMIWRemoveNotificationQuietHoursCallback(onNotificationQuietHoursRemoved: (int? code) {

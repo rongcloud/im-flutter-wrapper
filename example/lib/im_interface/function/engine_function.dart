@@ -364,8 +364,16 @@ Future sendFileMessage(Map arg) async {
 }
 
 connect(Map arg) async {
-
-  arg['token'] = AccountInfo.token;
+  // 如果为 arg['token'] 1 , 使用 AccountInfo.token1
+  // 如果为 arg['token'] 2 , 使用 AccountInfo.token2
+  // 如果为 arg['token'] 3 , 使用 AccountInfo.token3
+  if (arg['token'] == "1") {
+    arg['token'] = AccountInfo.token1;
+  } else if (arg['token'] == "2") {
+    arg['token'] = AccountInfo.token2;
+  } else if (arg['token'] == "3") {
+    arg['token'] = AccountInfo.token3;
+  }
 
   if (arg['token'] == null) {
     RCIWToast.showToast("token 为空");
@@ -4021,6 +4029,71 @@ searchFriendsInfo(Map arg) async {
       "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
   Map<String, String> resultCode = {};
   resultCode["listener"] = "searchFriendsInfo";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+Future setNotificationQuietHoursWithSetting(Map arg) async {
+  if (arg['startTime'] == null) {
+    RCIWToast.showToast("startTime 为空");
+    return;
+  }
+  if (arg['spanMinutes'] == null) {
+    RCIWToast.showToast("spanMinutes 为空");
+    return;
+  }
+  if (arg['level'] == null) {
+    RCIWToast.showToast("level 为空");
+    return;
+  }
+
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String startTime = arg['startTime'];
+  int spanMinutes = int.parse(arg['spanMinutes']);
+  RCIMIWPushNotificationQuietHoursLevel level =
+      RCIMIWPushNotificationQuietHoursLevel.values[int.parse(arg['level'])];
+  String? timeZone = arg['timeZone'];
+
+  RCIMIWNotificationQuietHoursSetting setting =
+      RCIMIWNotificationQuietHoursSetting.create(
+    startTime: startTime,
+    spanMinutes: spanMinutes,
+    level: level,
+    timeZone: timeZone,
+  );
+
+  IRCIMIWSetNotificationQuietHoursWithSettingCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWSetNotificationQuietHoursWithSettingCallback(
+      onNotificationQuietHoursWithSettingSet: (int? code) {
+        String timeStr = _generateTimeStamp();
+        Map<String, String> arg = {};
+        arg["listener"] = "setNotificationQuietHoursWithSetting-onNotificationQuietHoursWithSettingSet";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.setNotificationQuietHoursWithSetting(
+    setting,
+    callback: callback,
+  );
+  String timeStr = _generateTimeStamp();
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "setNotificationQuietHoursWithSetting";
   resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
 

@@ -72,6 +72,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupMembersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetGroupsInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetJoinedGroupsByRoleCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetJoinedGroupsCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetLocalMessagesByMessageTypesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCountCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageReadReceiptInfoV5Callback;
@@ -148,6 +149,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWSendUltraGroupTypingStatusCallbac
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSetFriendInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupMemberInfoCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSetGroupRemarkCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWSetNotificationQuietHoursWithSettingCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSubscribeEventCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncConversationReadStatusCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWSyncUltraGroupReadStatusCallback;
@@ -178,6 +180,7 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWLogLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageOperationPolicy;
 import cn.rongcloud.im.wrapper.constants.RCIMIWMessageType;
 import cn.rongcloud.im.wrapper.constants.RCIMIWNativeCustomMessagePersistentFlag;
+import cn.rongcloud.im.wrapper.constants.RCIMIWNotificationQuietHoursSetting;
 import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWPushNotificationQuietHoursLevel;
 import cn.rongcloud.im.wrapper.constants.RCIMIWReceivedStatus;
@@ -755,6 +758,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:changeNotificationQuietHours":
         changeNotificationQuietHours(call, result);
+        break;
+
+      case "engine:setNotificationQuietHoursWithSetting":
+        setNotificationQuietHoursWithSetting(call, result);
         break;
 
       case "engine:removeNotificationQuietHours":
@@ -2392,9 +2399,9 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       RCIMIWTimeOrder order = RCIMWrapperArgumentAdapter.toRCIMIWTimeOrder(call.argument("order"));
       int count = ((Number) call.argument("count")).intValue();
       int cb_handler = ((Number) call.argument("cb_handler")).intValue();
-      IRCIMIWGetMessagesCallbackImpl callback = null;
+      IRCIMIWGetLocalMessagesByMessageTypesCallbackImpl callback = null;
       if (cb_handler != -1) {
-        callback = new IRCIMIWGetMessagesCallbackImpl(cb_handler);
+        callback = new IRCIMIWGetLocalMessagesByMessageTypesCallbackImpl(cb_handler);
       }
 
       List messageTypes_str = new ArrayList();
@@ -3169,6 +3176,24 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       }
 
       code = engine.changeNotificationQuietHours(startTime, spanMinutes, level, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void setNotificationQuietHoursWithSetting(
+      @NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWNotificationQuietHoursSetting setting =
+          RCIMIWPlatformConverter.convertNotificationQuietHoursSetting(
+              (HashMap<String, Object>) call.argument("setting"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWSetNotificationQuietHoursWithSettingCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWSetNotificationQuietHoursWithSettingCallbackImpl(cb_handler);
+      }
+
+      code = engine.setNotificationQuietHoursWithSetting(setting, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }
@@ -6253,7 +6278,9 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         String channelId,
         long sentTime,
         RCIMIWTimeOrder order,
-        List<RCIMIWMessage> messages) {
+        List<RCIMIWMessage> messages,
+        long syncTimestamp,
+        boolean hasMoreMsg) {
       final HashMap<String, Object> arguments = new HashMap<>();
 
       List messages_str = new ArrayList();
@@ -6271,6 +6298,8 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       arguments.put("sentTime", sentTime);
       arguments.put("order", order.ordinal());
       arguments.put("messages", messages_str);
+      arguments.put("syncTimestamp", syncTimestamp);
+      arguments.put("hasMoreMsg", hasMoreMsg);
 
       RCIMWrapperMainThreadPoster.post(
           new Runnable() {
@@ -9242,7 +9271,7 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     }
 
     @Override
-    public void onSuccess(List<RCIMIWMessage> t) {
+    public void onSuccess(List<RCIMIWMessage> t, long syncTimestamp, boolean hasMoreMsg) {
       final HashMap<String, Object> arguments = new HashMap<>();
 
       List t_str = new ArrayList();
@@ -9255,6 +9284,8 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       arguments.put("cb_handler", cb_handler);
       arguments.put("t", t_str);
+      arguments.put("syncTimestamp", syncTimestamp);
+      arguments.put("hasMoreMsg", hasMoreMsg);
 
       RCIMWrapperMainThreadPoster.post(
           new Runnable() {
@@ -9367,6 +9398,57 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWGetMessagesAroundTimeCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetLocalMessagesByMessageTypesCallbackImpl
+      implements IRCIMIWGetLocalMessagesByMessageTypesCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetLocalMessagesByMessageTypesCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWMessage> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWMessage element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertMessage(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetLocalMessagesByMessageTypesCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetLocalMessagesByMessageTypesCallback_onError", arguments);
             }
           });
     }
@@ -10638,6 +10720,33 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWChangeNotificationQuietHoursCallback_onNotificationQuietHoursChanged",
+                  arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWSetNotificationQuietHoursWithSettingCallbackImpl
+      implements IRCIMIWSetNotificationQuietHoursWithSettingCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWSetNotificationQuietHoursWithSettingCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onNotificationQuietHoursWithSettingSet(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWSetNotificationQuietHoursWithSettingCallback_onNotificationQuietHoursWithSettingSet",
                   arguments);
             }
           });

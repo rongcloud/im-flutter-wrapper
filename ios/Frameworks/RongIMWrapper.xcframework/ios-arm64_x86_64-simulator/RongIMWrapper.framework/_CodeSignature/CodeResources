@@ -66,11 +66,11 @@
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		YLZEEHrJzDXThkfPe5rTl7XBwXo=
+		kTLJ0LTXHokomAIoI+pBjkguyfk=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
-		YSKhT/AJuM8zlmh/J7jCpElhV5U=
+		TGHHnNz+6i7+5zo4laoc9YD9woo=
 		</data>
 		<key>Headers/RCIMIWEngineOptions.h</key>
 		<data>
@@ -164,6 +164,10 @@
 		<data>
 		jl/KqekfUeoiPBsnZx9uSXwL604=
 		</data>
+		<key>Headers/RCIMIWNotificationQuietHoursSetting.h</key>
+		<data>
+		7cI5PuX3zo7J9F1mFVt9uU4knQA=
+		</data>
 		<key>Headers/RCIMIWPagingQueryOption.h</key>
 		<data>
 		Bp/q78+rstKBRExgv/ZNiMXdXjI=
@@ -178,7 +182,7 @@
 		</data>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
 		<data>
-		1yWk4UcbD2XIjS3ofu/Rn8yMwgs=
+		V4sLkw1maezejpBQkaRuOxY2JWQ=
 		</data>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
 		<data>
@@ -552,22 +556,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			YLZEEHrJzDXThkfPe5rTl7XBwXo=
+			kTLJ0LTXHokomAIoI+pBjkguyfk=
 			</data>
 			<key>hash2</key>
 			<data>
-			RxqYUcCFOcnL6y1P6cwtt+pOflOMVi4clazxkGDQrEs=
+			OZt3d2atz8ku9gKSYwbjPZmUqGiVGf4yswxuQ17DWro=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			YSKhT/AJuM8zlmh/J7jCpElhV5U=
+			TGHHnNz+6i7+5zo4laoc9YD9woo=
 			</data>
 			<key>hash2</key>
 			<data>
-			J55VN7Qm9zq58H1pMOMI/Lo5/sFgX0BeDrWIH+HNs4k=
+			aCy82ffv0LiDncbGda8jdcqF8V4BufUFL+vqIQhA+XE=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineOptions.h</key>
@@ -823,6 +827,17 @@
 			zJCZ22Musnlgmz168nQy/X2928Pf0VqeH3OBJJ0ALA8=
 			</data>
 		</dict>
+		<key>Headers/RCIMIWNotificationQuietHoursSetting.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			7cI5PuX3zo7J9F1mFVt9uU4knQA=
+			</data>
+			<key>hash2</key>
+			<data>
+			VQeuFXXHNE+cck3bEUyyDdubuNF8PBWGOGiMxBiC3XQ=
+			</data>
+		</dict>
 		<key>Headers/RCIMIWPagingQueryOption.h</key>
 		<dict>
 			<key>hash</key>
@@ -860,11 +875,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			1yWk4UcbD2XIjS3ofu/Rn8yMwgs=
+			V4sLkw1maezejpBQkaRuOxY2JWQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			l9mmE/y/VUSc4hPRZv5DJcT+B4PBPkwgjilLfgKvke4=
+			k7NIMkw2hbJBEpxklvkPsoHKBF2FeHn+PdazJaMuvnA=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>

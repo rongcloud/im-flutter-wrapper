@@ -51,6 +51,7 @@
 #import <RongIMWrapper/RCIMIWReadReceiptInfoV5.h>
 #import <RongIMWrapper/RCIMIWReadReceiptUsersOption.h>
 #import <RongIMWrapper/RCIMIWReadReceiptUsersResult.h>
+#import <RongIMWrapper/RCIMIWNotificationQuietHoursSetting.h>
 
 
 @class RCIMIWEngineOptions;
@@ -307,7 +308,7 @@ __deprecated_msg("Use [RCIMIWEngine getMessages:targetId:sentTime:order:count:su
                 sentTime:(long long)sentTime
                    order:(RCIMIWTimeOrder)order
                    count:(int)count
-                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *, long long syncTimestamp, BOOL hasMoreMsg))successBlock
                    error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)loadMessages:(RCIMIWConversationType)type
@@ -324,7 +325,7 @@ __deprecated_msg("Use [RCIMIWEngine getMessages:targetId:channelId:sentTime:orde
                 sentTime:(long long)sentTime
                    order:(RCIMIWTimeOrder)order
                    count:(int)count
-                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *, long long syncTimestamp, BOOL hasMoreMsg))successBlock
                    error:(nullable void (^)(NSInteger code))errorBlock;
 
 /*!
@@ -356,7 +357,7 @@ __deprecated_msg("Use [RCIMIWEngine getMessages:targetId:sentTime:order:policy:c
                    order:(RCIMIWTimeOrder)order
                   policy:(RCIMIWMessageOperationPolicy)policy
                    count:(int)count
-                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *, long long syncTimestamp, BOOL hasMoreMsg))successBlock
                    error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)loadMessages:(RCIMIWConversationType)type
@@ -375,7 +376,7 @@ __deprecated_msg("Use [RCIMIWEngine getMessages:targetId:channelId:sentTime:orde
                    order:(RCIMIWTimeOrder)order
                   policy:(RCIMIWMessageOperationPolicy)policy
                    count:(int)count
-                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *))successBlock
+                 success:(nullable void (^)(NSArray<RCIMIWMessage *> *, long long syncTimestamp, BOOL hasMoreMsg))successBlock
                    error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)loadUnreadMentionedMessages:(RCIMIWConversationType)type
@@ -1776,6 +1777,15 @@ __deprecated_msg("Use [RCIMIWEngine getNotificationQuietHours:error:] instead");
 
 - (NSInteger)getNotificationQuietHours:(nullable void (^)(NSString *startTime, int spanMinutes, RCIMIWPushNotificationQuietHoursLevel level))successBlock
                                  error:(nullable void (^)(NSInteger code))errorBlock;
+
+/*!
+ 使用 Setting 对象屏蔽某个时间段的消息提醒，支持设置时区
+
+ @param setting 免打扰配置对象，包含 startTime、spanMins、timezone、level
+ @param callback 操作结果回调，code 为 0 表示成功
+ */
+- (NSInteger)setNotificationQuietHoursWithSetting:(RCIMIWNotificationQuietHoursSetting *)setting
+                                         callback:(nullable void (^)(NSInteger code))callback;
 
 - (NSInteger)removeNotificationQuietHours
 __deprecated_msg("Use [RCIMIWEngine removeNotificationQuietHours:] instead");

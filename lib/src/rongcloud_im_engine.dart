@@ -2552,7 +2552,7 @@ class RCIMIWEngine {
     int sentTime,
     RCIMIWTimeOrder order,
     int count, {
-    IRCIMIWGetMessagesCallback? callback,
+    IRCIMIWGetLocalMessagesByMessageTypesCallback? callback,
   }) async {
     return RCIMWrapperPlatform.instance.getLocalMessagesByMessageTypes(
       type,
@@ -4169,6 +4169,28 @@ class RCIMIWEngine {
     IRCIMIWChangeNotificationQuietHoursCallback? callback,
   }) async {
     return RCIMWrapperPlatform.instance.changeNotificationQuietHours(startTime, spanMinutes, level, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
+  /// 使用 Setting 对象屏蔽某个时间段的消息提醒，支持设置时区
+  /// - [setting] 免打扰配置对象，包含 startTime、spanMinutes、timeZone、level
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Mute message notifications for a specific time period using a Setting object with timezone support
+  /// - [setting] The quiet hours setting object, containing startTime, spanMinutes, timeZone, and level
+  /// successful call, and the specific result needs to be implemented
+  /// through the interface callback. Non-zero indicates that the current
+  /// API call operation failed, and the interface callback will not be
+  /// triggered. For detailed errors, refer to the error codes.
+  /// ---
+  Future<int> setNotificationQuietHoursWithSetting(
+    RCIMIWNotificationQuietHoursSetting setting, {
+    IRCIMIWSetNotificationQuietHoursWithSettingCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.setNotificationQuietHoursWithSetting(setting, callback: callback);
   }
 
   /// [ZH]
@@ -8340,6 +8362,8 @@ class RCIMIWEngine {
     int? sentTime,
     RCIMIWTimeOrder? order,
     List<RCIMIWMessage>? messages,
+    int? syncTimestamp,
+    bool? hasMoreMsg,
   )?
   onMessagesLoaded;
 

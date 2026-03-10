@@ -60,6 +60,7 @@
 @class RCIMIWReadReceiptResponseV5;
 @class RCIMIWReadReceiptUsersOption;
 @class RCIMIWReadReceiptUsersResult;
+@class RCIMIWNotificationQuietHoursSetting;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -232,6 +233,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (RCIMIWReadReceiptUsersOption *)convertReadReceiptUsersOptionFromDict:(NSDictionary *)dict;
 + (NSDictionary *)convertReadReceiptUsersResultToDict:(RCIMIWReadReceiptUsersResult *)result;
 + (RCIMIWReadReceiptUsersResult *)convertReadReceiptUsersResultFromDict:(NSDictionary *)dict;
+
+// NotificationQuietHoursSetting
++ (NSDictionary *)convertNotificationQuietHoursSettingToDict:(RCIMIWNotificationQuietHoursSetting *)setting;
++ (RCIMIWNotificationQuietHoursSetting *)convertNotificationQuietHoursSettingFromDict:(NSDictionary *)dict;
 
 @end
 

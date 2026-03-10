@@ -1149,7 +1149,7 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     int sentTime,
     RCIMIWTimeOrder order,
     int count, {
-    IRCIMIWGetMessagesCallback? callback,
+    IRCIMIWGetLocalMessagesByMessageTypesCallback? callback,
   }) async {
     List messageTypesStr = [];
     for (var element in messageTypes) {
@@ -1888,6 +1888,19 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     };
     log("[RC:Flutter] engine:changeNotificationQuietHours arguments: " + arguments.toString());
     int result = await _channel.invokeMethod('engine:changeNotificationQuietHours', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> setNotificationQuietHoursWithSetting(
+    RCIMIWNotificationQuietHoursSetting setting, {
+    IRCIMIWSetNotificationQuietHoursWithSettingCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {"setting": setting.toJson(), "cb_handler": rongcloudHandler};
+    log("[RC:Flutter] engine:setNotificationQuietHoursWithSetting arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:setNotificationQuietHoursWithSetting', arguments);
     return result;
   }
 
@@ -4332,8 +4345,20 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         int? sentTime = arguments['sentTime'];
         RCIMIWTimeOrder? order = arguments['order'] == null ? null : RCIMIWTimeOrder.values[arguments['order']];
         List<RCIMIWMessage>? messages = messagesStr;
+        int? syncTimestamp = arguments['syncTimestamp'];
+        bool? hasMoreMsg = arguments['hasMoreMsg'];
 
-        engine?.onMessagesLoaded?.call(code, type, targetId, channelId, sentTime, order, messages);
+        engine?.onMessagesLoaded?.call(
+          code,
+          type,
+          targetId,
+          channelId,
+          sentTime,
+          order,
+          messages,
+          syncTimestamp,
+          hasMoreMsg,
+        );
         log("[RC:Flutter] engine:onMessagesLoaded invoke finished");
         break;
 
@@ -6356,10 +6381,12 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         int rongcloudHandler = arguments['cb_handler'];
         List<RCIMIWMessage>? t = tStr;
+        int? syncTimestamp = arguments['syncTimestamp'];
+        bool? hasMoreMsg = arguments['hasMoreMsg'];
 
         IRCIMIWGetMessagesCallback? callback = takeCallback(rongcloudHandler);
-        Function(List<RCIMIWMessage>?)? method = callback?.onSuccess;
-        method?.call(t);
+        Function(List<RCIMIWMessage>?, int?, bool?)? method = callback?.onSuccess;
+        method?.call(t, syncTimestamp, hasMoreMsg);
         log("[RC:Flutter] engine_cb:IRCIMIWGetMessagesCallback_onSuccess invoke finished");
         break;
 
@@ -6422,6 +6449,33 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Function(int?)? method = callback?.onError;
         method?.call(code);
         log("[RC:Flutter] engine_cb:IRCIMIWGetMessagesAroundTimeCallback_onError invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetLocalMessagesByMessageTypesCallback_onSuccess':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        List<RCIMIWMessage> tStr = [];
+        arguments['t'].forEach((element) {
+          tStr.add(RCIMConverter.convertMessage(Map<String, dynamic>.from(element)));
+        });
+
+        int rongcloudHandler = arguments['cb_handler'];
+        List<RCIMIWMessage>? t = tStr;
+
+        IRCIMIWGetLocalMessagesByMessageTypesCallback? callback = takeCallback(rongcloudHandler);
+        Function(List<RCIMIWMessage>?)? method = callback?.onSuccess;
+        method?.call(t);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetLocalMessagesByMessageTypesCallback_onSuccess invoke finished");
+        break;
+
+      case 'engine_cb:IRCIMIWGetLocalMessagesByMessageTypesCallback_onError':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWGetLocalMessagesByMessageTypesCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onError;
+        method?.call(code);
+        log("[RC:Flutter] engine_cb:IRCIMIWGetLocalMessagesByMessageTypesCallback_onError invoke finished");
         break;
 
       case 'engine_cb:IRCIMIWGetFirstUnreadMessageCallback_onSuccess':
@@ -7066,6 +7120,19 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         method?.call(code);
         log(
           "[RC:Flutter] engine_cb:IRCIMIWChangeNotificationQuietHoursCallback_onNotificationQuietHoursChanged invoke finished",
+        );
+        break;
+
+      case 'engine_cb:IRCIMIWSetNotificationQuietHoursWithSettingCallback_onNotificationQuietHoursWithSettingSet':
+        Map<dynamic, dynamic> arguments = call.arguments;
+        int rongcloudHandler = arguments['cb_handler'];
+        int? code = arguments['code'];
+
+        IRCIMIWSetNotificationQuietHoursWithSettingCallback? callback = takeCallback(rongcloudHandler);
+        Function(int?)? method = callback?.onNotificationQuietHoursWithSettingSet;
+        method?.call(code);
+        log(
+          "[RC:Flutter] engine_cb:IRCIMIWSetNotificationQuietHoursWithSettingCallback_onNotificationQuietHoursWithSettingSet invoke finished",
         );
         break;
 

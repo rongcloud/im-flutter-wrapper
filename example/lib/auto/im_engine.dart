@@ -1335,6 +1335,8 @@ engine?.onDownloadingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? mess
       int? sentTime,
       RCIMIWTimeOrder? order,
       List<RCIMIWMessage>? messages,
+      int? syncTimestamp,
+      bool? hasMoreMsg,
     ) {
       List messagesJson = [];
       if (messages != null) {
@@ -1356,12 +1358,14 @@ engine?.onDownloadingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? mess
       arg["sentTime"] = sentTime.toString();
       arg["order"] = order.toString();
       arg["messages"] = messagesJson.toString();
+      arg["syncTimestamp"] = syncTimestamp.toString();
+      arg["hasMoreMsg"] = hasMoreMsg.toString();
 
       bus.emit("rong_im_listener", arg);
     };
     /*
 //callback_onMessagesLoaded_call
-engine?.onMessagesLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? sentTime, RCIMIWTimeOrder? order, List<RCIMIWMessage>? messages) {
+engine?.onMessagesLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? sentTime, RCIMIWTimeOrder? order, List<RCIMIWMessage>? messages, int? syncTimestamp, bool? hasMoreMsg) {
     //...
 };
 //callback_onMessagesLoaded_call

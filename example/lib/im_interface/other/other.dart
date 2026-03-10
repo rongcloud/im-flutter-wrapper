@@ -1,4 +1,5 @@
 import '../../auto/engine_auto_funtion.dart' as engine_fun;
+import '../function/engine_function.dart' as engine_function;
 
 const addToBlacklist = {
   "title": "将某个用户加入黑名单",
@@ -68,6 +69,37 @@ const changeNotificationQuietHours = {
   ],
   "action": engine_fun.changeNotificationQuietHours,
 };
+const setNotificationQuietHoursWithSetting = {
+  "title": "使用 Setting 对象设置消息免打扰（支持时区）",
+  "params": [
+    {
+      "key": "startTime",
+      "type": "String",
+      "hint": "HH:MM:SS",
+      "lable": "请输入开始时间",
+    },
+    {
+      "key": "spanMinutes",
+      "type": "String",
+      "hint": "0 < spanMinutes < 1440",
+      "lable": "请输入需要消息免打扰分钟数",
+    },
+    {
+      "key": "timeZone",
+      "type": "String",
+      "hint": "Asia/Shanghai",
+      "lable": "请输入时区（可选）",
+    },
+    {
+      "key": "level",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入通知级别 \n 0:未设置（向上查询群或者APP级别设置）\n 1:群聊超级群仅@消息通知，单聊代表消息不通知 \n 2:消息通知被屏蔽，即不接收消息通知",
+    },
+  ],
+  "action": engine_function.setNotificationQuietHoursWithSetting,
+};
+
 const removeNotificationQuietHours = {
   "title": "删除已设置的全局时间段消息提醒屏蔽",
   "action": engine_fun.removeNotificationQuietHours,

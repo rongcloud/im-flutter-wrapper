@@ -120,7 +120,9 @@ NS_ASSUME_NONNULL_BEGIN
                channelId:(NSString *)channelId
                 sentTime:(long long)sentTime
                    order:(RCIMIWTimeOrder)order
-                messages:(nullable NSArray<RCIMIWMessage *> *)messages;
+                messages:(nullable NSArray<RCIMIWMessage *> *)messages
+           syncTimestamp:(long long)syncTimestamp
+             hasMoreMsg:(BOOL)hasMoreMsg;
 
 - (void)onUnreadMentionedMessagesLoaded:(NSInteger)code
                                    type:(RCIMIWConversationType)type

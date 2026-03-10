@@ -3811,6 +3811,31 @@ class RCIMIWGroupReadReceiptInfo {
   }
 }
 
+class RCIMIWNotificationQuietHoursSetting {
+  String? startTime;
+  int? spanMinutes;
+  RCIMIWPushNotificationQuietHoursLevel? level;
+  String? timeZone;
+
+  RCIMIWNotificationQuietHoursSetting.create({this.startTime, this.spanMinutes, this.level, this.timeZone});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['startTime'] = startTime;
+    json['spanMinutes'] = spanMinutes;
+    json['level'] = level?.index;
+    json['timeZone'] = timeZone;
+    return json;
+  }
+
+  RCIMIWNotificationQuietHoursSetting.fromJson(Map<String, dynamic> json) {
+    startTime = json['startTime'];
+    spanMinutes = json['spanMinutes'];
+    level = json['level'] == null ? null : RCIMIWPushNotificationQuietHoursLevel.values[json['level']];
+    timeZone = json['timeZone'];
+  }
+}
+
 class RCIMIWSpeechToTextInfo {
   RCIMIWSpeechToTextStatus? status;
   String? text;

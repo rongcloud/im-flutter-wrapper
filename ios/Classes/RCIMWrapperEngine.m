@@ -282,6 +282,8 @@ static RCIMWrapperEngine *instance = nil;
     [self searchConversations:call result:result];
   } else if ([@"engine:changeNotificationQuietHours" isEqualToString:call.method]) {
     [self changeNotificationQuietHours:call result:result];
+  } else if ([@"engine:setNotificationQuietHoursWithSetting" isEqualToString:call.method]) {
+    [self setNotificationQuietHoursWithSetting:call result:result];
   } else if ([@"engine:removeNotificationQuietHours" isEqualToString:call.method]) {
     [self removeNotificationQuietHours:call result:result];
   } else if ([@"engine:loadNotificationQuietHours" isEqualToString:call.method]) {
@@ -2249,11 +2251,11 @@ static RCIMWrapperEngine *instance = nil;
     RCIMIWTimeOrder order = [RCIMWrapperArgumentAdapter convertTimeOrderFromInteger:[(NSNumber *)arguments[@"order"] integerValue]];
     RCIMIWMessageOperationPolicy policy = [RCIMWrapperArgumentAdapter convertMessageOperationPolicyFromInteger:[(NSNumber *)arguments[@"policy"] integerValue]];
     int count = [(NSNumber *)arguments[@"count"] intValue];
-    void (^success)(NSArray<RCIMIWMessage *> *_Nullable t) = nil;
+    void (^success)(NSArray<RCIMIWMessage *> *_Nullable t, long long syncTimestamp, BOOL hasMoreMsg) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
-      success = ^(NSArray<RCIMIWMessage *> *t) {
+      success = ^(NSArray<RCIMIWMessage *> *t, long long syncTimestamp, BOOL hasMoreMsg) {
         NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
         [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
 
@@ -2262,6 +2264,9 @@ static RCIMWrapperEngine *instance = nil;
           [t_arr addObject:[RCIMIWPlatformConverter convertMessageToDict:element]];
         }
         [arguments setValue:t_arr.copy forKey:@"t"];
+
+        [arguments setValue:@(syncTimestamp) forKey:@"syncTimestamp"];
+        [arguments setValue:@(hasMoreMsg) forKey:@"hasMoreMsg"];
 
         __weak typeof(self.channel) weak = self.channel;
         dispatch_to_main_queue(^{
@@ -2443,7 +2448,7 @@ static RCIMWrapperEngine *instance = nil;
         __weak typeof(self.channel) weak = self.channel;
         dispatch_to_main_queue(^{
           typeof(weak) strong = weak;
-          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessagesCallback_onSuccess" arguments:arguments.copy];
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetLocalMessagesByMessageTypesCallback_onSuccess" arguments:arguments.copy];
         });
       };
       error = ^(NSInteger code) {
@@ -2454,7 +2459,7 @@ static RCIMWrapperEngine *instance = nil;
         __weak typeof(self.channel) weak = self.channel;
         dispatch_to_main_queue(^{
           typeof(weak) strong = weak;
-          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessagesCallback_onError" arguments:arguments.copy];
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetLocalMessagesByMessageTypesCallback_onError" arguments:arguments.copy];
         });
       };
     }
@@ -3855,6 +3860,33 @@ static RCIMWrapperEngine *instance = nil;
       };
     }
     code = [self.engine changeNotificationQuietHours:startTime spanMinutes:spanMinutes level:level notificationQuietHoursChanged:notificationQuietHoursChanged];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)setNotificationQuietHoursWithSetting:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWNotificationQuietHoursSetting *setting = [RCIMIWPlatformConverter convertNotificationQuietHoursSettingFromDict:arguments[@"setting"]];
+    void (^callback)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      callback = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWSetNotificationQuietHoursWithSettingCallback_onNotificationQuietHoursWithSettingSet" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine setNotificationQuietHoursWithSetting:setting callback:callback];
   }
   dispatch_to_main_queue(^{
     result(@(code));
@@ -8590,7 +8622,7 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
-- (void)onMessagesLoaded:(NSInteger)code type:(RCIMIWConversationType)type targetId:(NSString *)targetId channelId:(NSString *)channelId sentTime:(long long)sentTime order:(RCIMIWTimeOrder)order messages:(nullable NSArray<RCIMIWMessage *> *)messages {
+- (void)onMessagesLoaded:(NSInteger)code type:(RCIMIWConversationType)type targetId:(NSString *)targetId channelId:(NSString *)channelId sentTime:(long long)sentTime order:(RCIMIWTimeOrder)order messages:(nullable NSArray<RCIMIWMessage *> *)messages syncTimestamp:(long long)syncTimestamp hasMoreMsg:(BOOL)hasMoreMsg {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
   [arguments setValue:@([RCIMWrapperArgumentAdapter convertConversationTypeToInteger:type]) forKey:@"type"];
@@ -8604,6 +8636,9 @@ static RCIMWrapperEngine *instance = nil;
     [messages_arr addObject:[RCIMIWPlatformConverter convertMessageToDict:element]];
   }
   [arguments setValue:messages_arr.copy forKey:@"messages"];
+
+  [arguments setValue:@(syncTimestamp) forKey:@"syncTimestamp"];
+  [arguments setValue:@(hasMoreMsg) forKey:@"hasMoreMsg"];
 
   __weak typeof(self.channel) weak = self.channel;
   dispatch_to_main_queue(^{

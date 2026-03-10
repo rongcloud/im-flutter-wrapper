@@ -703,14 +703,18 @@ class IRCIMIWGetMessagesCallback {
   /// [ZH]
   /// ---
   /// 成功回调
-  /// - t 返回对象
+  /// - t 返回的消息列表
+  /// - syncTimestamp 下次拉取消息的时间戳锚点
+  /// - hasMoreMsg 是否还有更多消息可拉取
   /// ---
   /// [EN]
   /// ---
   /// Success callback
-  /// - t Returned object
+  /// - t Returned message list
+  /// - syncTimestamp Timestamp anchor for next message fetch
+  /// - hasMoreMsg Whether more messages are available
   /// ---
-  Function(List<RCIMIWMessage>? t) onSuccess;
+  Function(List<RCIMIWMessage>? t, int? syncTimestamp, bool? hasMoreMsg) onSuccess;
 
   /// [ZH]
   /// ---
@@ -765,6 +769,34 @@ class IRCIMIWGetMessagesAroundTimeCallback {
   /// ---
   /// Success callback
   /// - t Returned object
+  /// ---
+  Function(List<RCIMIWMessage>? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetLocalMessagesByMessageTypesCallback {
+  IRCIMIWGetLocalMessagesByMessageTypesCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回的消息列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned message list
   /// ---
   Function(List<RCIMIWMessage>? t) onSuccess;
 
@@ -1287,6 +1319,12 @@ class IRCIMIWChangeNotificationQuietHoursCallback {
   IRCIMIWChangeNotificationQuietHoursCallback({required this.onNotificationQuietHoursChanged});
 
   Function(int? code) onNotificationQuietHoursChanged;
+}
+
+class IRCIMIWSetNotificationQuietHoursWithSettingCallback {
+  IRCIMIWSetNotificationQuietHoursWithSettingCallback({required this.onNotificationQuietHoursWithSettingSet});
+
+  Function(int? code) onNotificationQuietHoursWithSettingSet;
 }
 
 class IRCIMIWRemoveNotificationQuietHoursCallback {
