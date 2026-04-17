@@ -1243,6 +1243,18 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       case "engine:getMessagesReadReceiptByUsersV5":
         getMessagesReadReceiptByUsersV5(call, result);
         break;
+
+      case "engine:getConversationsByIdentifiers":
+        getConversationsByIdentifiers(call, result);
+        break;
+
+      case "engine:removeConversationsByIdentifiers":
+        removeConversationsByIdentifiers(call, result);
+        break;
+
+      case "engine:recallMessageWithOption":
+        recallMessageWithOption(call, result);
+        break;
     }
   }
 
@@ -5181,6 +5193,74 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
       code =
           engine.getMessagesReadReceiptByUsersV5(
               type, targetId, channelId, messageUId, userIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getConversationsByIdentifiers(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<Number> conversationTypes = call.argument("conversationTypes");
+      List<String> targetIds = call.argument("targetIds");
+      List<String> channelIds = call.argument("channelIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetConversationsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetConversationsCallbackImpl(cb_handler);
+      }
+
+      List conversationTypes_str = new ArrayList();
+      for (Number element : conversationTypes) {
+        conversationTypes_str.add(
+            RCIMWrapperArgumentAdapter.toRCIMIWConversationType((Integer) element));
+      }
+
+      code =
+          engine.getConversationsByIdentifiers(
+              conversationTypes_str, targetIds, channelIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void removeConversationsByIdentifiers(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      List<Number> conversationTypes = call.argument("conversationTypes");
+      List<String> targetIds = call.argument("targetIds");
+      List<String> channelIds = call.argument("channelIds");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWCompletionCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWCompletionCallbackImpl(cb_handler);
+      }
+
+      List conversationTypes_str = new ArrayList();
+      for (Number element : conversationTypes) {
+        conversationTypes_str.add(
+            RCIMWrapperArgumentAdapter.toRCIMIWConversationType((Integer) element));
+      }
+
+      code =
+          engine.removeConversationsByIdentifiers(
+              conversationTypes_str, targetIds, channelIds, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void recallMessageWithOption(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWMessage message =
+          RCIMIWPlatformConverter.convertMessage(
+              (HashMap<String, Object>) call.argument("message"));
+      Boolean isDelete = (Boolean) call.argument("isDelete");
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWRecallMessageCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWRecallMessageCallbackImpl(cb_handler);
+      }
+
+      code = engine.recallMessageWithOption(message, isDelete, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }

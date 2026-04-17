@@ -68,12 +68,8 @@ engine?.onConnectionStatusChanged = (RCIMIWConnectionStatus? status) {
 //callback_onConnectionStatusChanged_call
 */
 
-    engine?.onConversationTopStatusSynced = (
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      bool? top,
-    ) {
+    engine
+        ?.onConversationTopStatusSynced = (RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
       DateTime now = DateTime.now();
       String timeStr =
           "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
@@ -95,25 +91,21 @@ engine?.onConversationTopStatusSynced = (RCIMIWConversationType? type, String? t
 //callback_onConversationTopStatusSynced_call
 */
 
-    engine?.onConversationNotificationLevelSynced = (
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationNotificationLevelSynced";
-      arg["timestamp"] = timeStr;
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["level"] = level.toString();
+    engine?.onConversationNotificationLevelSynced =
+        (RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationNotificationLevelSynced";
+          arg["timestamp"] = timeStr;
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["level"] = level.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationNotificationLevelSynced_call
 engine?.onConversationNotificationLevelSynced = (RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
@@ -122,25 +114,21 @@ engine?.onConversationNotificationLevelSynced = (RCIMIWConversationType? type, S
 //callback_onConversationNotificationLevelSynced_call
 */
 
-    engine?.onConversationTranslationStrategySynced = (
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWTranslateStrategy? strategy,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationTranslationStrategySynced";
-      arg["timestamp"] = timeStr;
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["strategy"] = strategy.toString();
+    engine?.onConversationTranslationStrategySynced =
+        (RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWTranslateStrategy? strategy) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationTranslationStrategySynced";
+          arg["timestamp"] = timeStr;
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["strategy"] = strategy.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationTranslationStrategySynced_call
 engine?.onConversationTranslationStrategySynced = (RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWTranslateStrategy? strategy) {
@@ -256,32 +244,33 @@ engine?.onChatRoomMemberChanged = (String? targetId, List<RCIMIWChatRoomMemberAc
 //callback_onChatRoomMemberChanged_call
 */
 
-    engine?.onTypingStatusChanged = (
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      List<RCIMIWTypingStatus>? userTypingStatus,
-    ) {
-      List userTypingStatusJson = [];
-      if (userTypingStatus != null) {
-        for (var temp in userTypingStatus) {
-          userTypingStatusJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onTypingStatusChanged =
+        (
+          RCIMIWConversationType? type,
+          String? targetId,
+          String? channelId,
+          List<RCIMIWTypingStatus>? userTypingStatus,
+        ) {
+          List userTypingStatusJson = [];
+          if (userTypingStatus != null) {
+            for (var temp in userTypingStatus) {
+              userTypingStatusJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onTypingStatusChanged";
-      arg["timestamp"] = timeStr;
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["userTypingStatus"] = userTypingStatusJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onTypingStatusChanged";
+          arg["timestamp"] = timeStr;
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["userTypingStatus"] = userTypingStatusJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onTypingStatusChanged_call
 engine?.onTypingStatusChanged = (RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWTypingStatus>? userTypingStatus) {
@@ -290,11 +279,8 @@ engine?.onTypingStatusChanged = (RCIMIWConversationType? type, String? targetId,
 //callback_onTypingStatusChanged_call
 */
 
-    engine?.onConversationReadStatusSyncMessageReceived = (
-      RCIMIWConversationType? type,
-      String? targetId,
-      int? timestamp,
-    ) {
+    engine
+        ?.onConversationReadStatusSyncMessageReceived = (RCIMIWConversationType? type, String? targetId, int? timestamp) {
       DateTime now = DateTime.now();
       String timeStr =
           "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
@@ -334,11 +320,8 @@ engine?.onChatRoomEntriesSynced = (String? roomId) {
 //callback_onChatRoomEntriesSynced_call
 */
 
-    engine?.onChatRoomEntriesChanged = (
-      RCIMIWChatRoomEntriesOperationType? operationType,
-      String? roomId,
-      Map? entries,
-    ) {
+    engine
+        ?.onChatRoomEntriesChanged = (RCIMIWChatRoomEntriesOperationType? operationType, String? roomId, Map? entries) {
       DateTime now = DateTime.now();
       String timeStr =
           "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
@@ -624,27 +607,28 @@ engine?.onDatabaseOpened = (int? code) {
 //callback_onDatabaseOpened_call
 */
 
-    engine?.onConversationLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWConversation? conversation,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["conversation"] = formatJson(conversation?.toJson());
+    engine?.onConversationLoaded =
+        (
+          int? code,
+          RCIMIWConversationType? type,
+          String? targetId,
+          String? channelId,
+          RCIMIWConversation? conversation,
+        ) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["conversation"] = formatJson(conversation?.toJson());
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationLoaded_call
 engine?.onConversationLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWConversation? conversation) {
@@ -653,36 +637,37 @@ engine?.onConversationLoaded = (int? code, RCIMIWConversationType? type, String?
 //callback_onConversationLoaded_call
 */
 
-    engine?.onConversationsLoaded = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      int? startTime,
-      int? count,
-      List<RCIMIWConversation>? conversations,
-    ) {
-      List conversationsJson = [];
-      if (conversations != null) {
-        for (var temp in conversations) {
-          conversationsJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onConversationsLoaded =
+        (
+          int? code,
+          List<RCIMIWConversationType>? conversationTypes,
+          String? channelId,
+          int? startTime,
+          int? count,
+          List<RCIMIWConversation>? conversations,
+        ) {
+          List conversationsJson = [];
+          if (conversations != null) {
+            for (var temp in conversations) {
+              conversationsJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationsLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["conversationTypes"] = conversationTypes.toString();
-      arg["channelId"] = channelId ?? "";
-      arg["startTime"] = startTime.toString();
-      arg["count"] = count.toString();
-      arg["conversations"] = conversationsJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationsLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["conversationTypes"] = conversationTypes.toString();
+          arg["channelId"] = channelId ?? "";
+          arg["startTime"] = startTime.toString();
+          arg["count"] = count.toString();
+          arg["conversations"] = conversationsJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationsLoaded_call
 engine?.onConversationsLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, int? startTime, int? count, List<RCIMIWConversation>? conversations) {
@@ -755,27 +740,22 @@ engine?.onTotalUnreadCountLoaded = (int? code, String? channelId, int? count) {
 //callback_onTotalUnreadCountLoaded_call
 */
 
-    engine?.onUnreadCountLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? count,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onUnreadCountLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["count"] = count.toString();
+    engine?.onUnreadCountLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onUnreadCountLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["count"] = count.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onUnreadCountLoaded_call
 engine?.onUnreadCountLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
@@ -784,27 +764,22 @@ engine?.onUnreadCountLoaded = (int? code, RCIMIWConversationType? type, String? 
 //callback_onUnreadCountLoaded_call
 */
 
-    engine?.onUnreadCountByConversationTypesLoaded = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      bool? contain,
-      int? count,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onUnreadCountByConversationTypesLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["conversationTypes"] = conversationTypes.toString();
-      arg["channelId"] = channelId ?? "";
-      arg["contain"] = contain.toString();
-      arg["count"] = count.toString();
+    engine?.onUnreadCountByConversationTypesLoaded =
+        (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, bool? contain, int? count) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onUnreadCountByConversationTypesLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["conversationTypes"] = conversationTypes.toString();
+          arg["channelId"] = channelId ?? "";
+          arg["contain"] = contain.toString();
+          arg["count"] = count.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onUnreadCountByConversationTypesLoaded_call
 engine?.onUnreadCountByConversationTypesLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, bool? contain, int? count) {
@@ -813,27 +788,22 @@ engine?.onUnreadCountByConversationTypesLoaded = (int? code, List<RCIMIWConversa
 //callback_onUnreadCountByConversationTypesLoaded_call
 */
 
-    engine?.onUnreadMentionedCountLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? count,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onUnreadMentionedCountLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["count"] = count.toString();
+    engine?.onUnreadMentionedCountLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onUnreadMentionedCountLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["count"] = count.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onUnreadMentionedCountLoaded_call
 engine?.onUnreadMentionedCountLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
@@ -919,27 +889,22 @@ engine?.onRemoteConversationListSynced = (int? code) {
 //callback_onRemoteConversationListSynced_call
 */
 
-    engine?.onUnreadCountCleared = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onUnreadCountCleared";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["timestamp"] = timestamp.toString();
+    engine?.onUnreadCountCleared =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onUnreadCountCleared";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["timestamp"] = timestamp.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onUnreadCountCleared_call
 engine?.onUnreadCountCleared = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
@@ -948,27 +913,22 @@ engine?.onUnreadCountCleared = (int? code, RCIMIWConversationType? type, String?
 //callback_onUnreadCountCleared_call
 */
 
-    engine?.onDraftMessageSaved = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      String? draft,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onDraftMessageSaved";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["draft"] = draft ?? "";
+    engine?.onDraftMessageSaved =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? draft) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onDraftMessageSaved";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["draft"] = draft ?? "";
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onDraftMessageSaved_call
 engine?.onDraftMessageSaved = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? draft) {
@@ -999,27 +959,22 @@ engine?.onDraftMessageCleared = (int? code, RCIMIWConversationType? type, String
 //callback_onDraftMessageCleared_call
 */
 
-    engine?.onDraftMessageLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      String? draft,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onDraftMessageLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["draft"] = draft ?? "";
+    engine?.onDraftMessageLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? draft) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onDraftMessageLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["draft"] = draft ?? "";
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onDraftMessageLoaded_call
 engine?.onDraftMessageLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? draft) {
@@ -1028,32 +983,33 @@ engine?.onDraftMessageLoaded = (int? code, RCIMIWConversationType? type, String?
 //callback_onDraftMessageLoaded_call
 */
 
-    engine?.onBlockedConversationsLoaded = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      List<RCIMIWConversation>? conversations,
-    ) {
-      List conversationsJson = [];
-      if (conversations != null) {
-        for (var temp in conversations) {
-          conversationsJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onBlockedConversationsLoaded =
+        (
+          int? code,
+          List<RCIMIWConversationType>? conversationTypes,
+          String? channelId,
+          List<RCIMIWConversation>? conversations,
+        ) {
+          List conversationsJson = [];
+          if (conversations != null) {
+            for (var temp in conversations) {
+              conversationsJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onBlockedConversationsLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["conversationTypes"] = conversationTypes.toString();
-      arg["channelId"] = channelId ?? "";
-      arg["conversations"] = conversationsJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onBlockedConversationsLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["conversationTypes"] = conversationTypes.toString();
+          arg["channelId"] = channelId ?? "";
+          arg["conversations"] = conversationsJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onBlockedConversationsLoaded_call
 engine?.onBlockedConversationsLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, List<RCIMIWConversation>? conversations) {
@@ -1062,27 +1018,22 @@ engine?.onBlockedConversationsLoaded = (int? code, List<RCIMIWConversationType>?
 //callback_onBlockedConversationsLoaded_call
 */
 
-    engine?.onConversationTopStatusChanged = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      bool? top,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationTopStatusChanged";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["top"] = top.toString();
+    engine?.onConversationTopStatusChanged =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationTopStatusChanged";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["top"] = top.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationTopStatusChanged_call
 engine?.onConversationTopStatusChanged = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
@@ -1091,27 +1042,22 @@ engine?.onConversationTopStatusChanged = (int? code, RCIMIWConversationType? typ
 //callback_onConversationTopStatusChanged_call
 */
 
-    engine?.onConversationTopStatusLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      bool? top,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationTopStatusLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["top"] = top.toString();
+    engine?.onConversationTopStatusLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationTopStatusLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["top"] = top.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationTopStatusLoaded_call
 engine?.onConversationTopStatusLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, bool? top) {
@@ -1120,27 +1066,22 @@ engine?.onConversationTopStatusLoaded = (int? code, RCIMIWConversationType? type
 //callback_onConversationTopStatusLoaded_call
 */
 
-    engine?.onConversationReadStatusSynced = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationReadStatusSynced";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["timestamp"] = timestamp.toString();
+    engine?.onConversationReadStatusSynced =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationReadStatusSynced";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["timestamp"] = timestamp.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationReadStatusSynced_call
 engine?.onConversationReadStatusSynced = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
@@ -1327,42 +1268,43 @@ engine?.onDownloadingMediaMessageCanceled = (int? code, RCIMIWMediaMessage? mess
 //callback_onDownloadingMediaMessageCanceled_call
 */
 
-    engine?.onMessagesLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? sentTime,
-      RCIMIWTimeOrder? order,
-      List<RCIMIWMessage>? messages,
-      int? syncTimestamp,
-      bool? hasMoreMsg,
-    ) {
-      List messagesJson = [];
-      if (messages != null) {
-        for (var temp in messages) {
-          messagesJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onMessagesLoaded =
+        (
+          int? code,
+          RCIMIWConversationType? type,
+          String? targetId,
+          String? channelId,
+          int? sentTime,
+          RCIMIWTimeOrder? order,
+          List<RCIMIWMessage>? messages,
+          int? syncTimestamp,
+          bool? hasMoreMsg,
+        ) {
+          List messagesJson = [];
+          if (messages != null) {
+            for (var temp in messages) {
+              messagesJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onMessagesLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["sentTime"] = sentTime.toString();
-      arg["order"] = order.toString();
-      arg["messages"] = messagesJson.toString();
-      arg["syncTimestamp"] = syncTimestamp.toString();
-      arg["hasMoreMsg"] = hasMoreMsg.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onMessagesLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["sentTime"] = sentTime.toString();
+          arg["order"] = order.toString();
+          arg["messages"] = messagesJson.toString();
+          arg["syncTimestamp"] = syncTimestamp.toString();
+          arg["hasMoreMsg"] = hasMoreMsg.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onMessagesLoaded_call
 engine?.onMessagesLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? sentTime, RCIMIWTimeOrder? order, List<RCIMIWMessage>? messages, int? syncTimestamp, bool? hasMoreMsg) {
@@ -1371,34 +1313,29 @@ engine?.onMessagesLoaded = (int? code, RCIMIWConversationType? type, String? tar
 //callback_onMessagesLoaded_call
 */
 
-    engine?.onUnreadMentionedMessagesLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      List<RCIMIWMessage>? messages,
-    ) {
-      List messagesJson = [];
-      if (messages != null) {
-        for (var temp in messages) {
-          messagesJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onUnreadMentionedMessagesLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
+          List messagesJson = [];
+          if (messages != null) {
+            for (var temp in messages) {
+              messagesJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onUnreadMentionedMessagesLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["messages"] = messagesJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onUnreadMentionedMessagesLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["messages"] = messagesJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onUnreadMentionedMessagesLoaded_call
 engine?.onUnreadMentionedMessagesLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
@@ -1407,27 +1344,22 @@ engine?.onUnreadMentionedMessagesLoaded = (int? code, RCIMIWConversationType? ty
 //callback_onUnreadMentionedMessagesLoaded_call
 */
 
-    engine?.onFirstUnreadMessageLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWMessage? message,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onFirstUnreadMessageLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["message"] = formatJson(message?.toJson());
+    engine?.onFirstUnreadMessageLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWMessage? message) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onFirstUnreadMessageLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["message"] = formatJson(message?.toJson());
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onFirstUnreadMessageLoaded_call
 engine?.onFirstUnreadMessageLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWMessage? message) {
@@ -1483,27 +1415,22 @@ engine?.onMessagesInserted = (int? code, List<RCIMIWMessage>? messages) {
 //callback_onMessagesInserted_call
 */
 
-    engine?.onMessagesCleared = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onMessagesCleared";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["timestamp"] = timestamp.toString();
+    engine?.onMessagesCleared =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onMessagesCleared";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["timestamp"] = timestamp.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onMessagesCleared_call
 engine?.onMessagesCleared = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? timestamp) {
@@ -1539,34 +1466,29 @@ engine?.onLocalMessagesDeleted = (int? code, List<RCIMIWMessage>? messages) {
 //callback_onLocalMessagesDeleted_call
 */
 
-    engine?.onMessagesDeleted = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      List<RCIMIWMessage>? messages,
-    ) {
-      List messagesJson = [];
-      if (messages != null) {
-        for (var temp in messages) {
-          messagesJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onMessagesDeleted =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
+          List messagesJson = [];
+          if (messages != null) {
+            for (var temp in messages) {
+              messagesJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onMessagesDeleted";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["messages"] = messagesJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onMessagesDeleted";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["messages"] = messagesJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onMessagesDeleted_call
 engine?.onMessagesDeleted = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
@@ -1995,40 +1917,41 @@ engine?.onBlacklistLoaded = (int? code, List<String>? userIds) {
 //callback_onBlacklistLoaded_call
 */
 
-    engine?.onMessagesSearched = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      String? keyword,
-      int? startTime,
-      int? count,
-      List<RCIMIWMessage>? messages,
-    ) {
-      List messagesJson = [];
-      if (messages != null) {
-        for (var temp in messages) {
-          messagesJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onMessagesSearched =
+        (
+          int? code,
+          RCIMIWConversationType? type,
+          String? targetId,
+          String? channelId,
+          String? keyword,
+          int? startTime,
+          int? count,
+          List<RCIMIWMessage>? messages,
+        ) {
+          List messagesJson = [];
+          if (messages != null) {
+            for (var temp in messages) {
+              messagesJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onMessagesSearched";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["keyword"] = keyword ?? "";
-      arg["startTime"] = startTime.toString();
-      arg["count"] = count.toString();
-      arg["messages"] = messagesJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onMessagesSearched";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["keyword"] = keyword ?? "";
+          arg["startTime"] = startTime.toString();
+          arg["count"] = count.toString();
+          arg["messages"] = messagesJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onMessagesSearched_call
 engine?.onMessagesSearched = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? keyword, int? startTime, int? count, List<RCIMIWMessage>? messages) {
@@ -2037,44 +1960,45 @@ engine?.onMessagesSearched = (int? code, RCIMIWConversationType? type, String? t
 //callback_onMessagesSearched_call
 */
 
-    engine?.onMessagesSearchedByTimeRange = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      String? keyword,
-      int? startTime,
-      int? endTime,
-      int? offset,
-      int? count,
-      List<RCIMIWMessage>? messages,
-    ) {
-      List messagesJson = [];
-      if (messages != null) {
-        for (var temp in messages) {
-          messagesJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onMessagesSearchedByTimeRange =
+        (
+          int? code,
+          RCIMIWConversationType? type,
+          String? targetId,
+          String? channelId,
+          String? keyword,
+          int? startTime,
+          int? endTime,
+          int? offset,
+          int? count,
+          List<RCIMIWMessage>? messages,
+        ) {
+          List messagesJson = [];
+          if (messages != null) {
+            for (var temp in messages) {
+              messagesJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onMessagesSearchedByTimeRange";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["keyword"] = keyword ?? "";
-      arg["startTime"] = startTime.toString();
-      arg["endTime"] = endTime.toString();
-      arg["offset"] = offset.toString();
-      arg["count"] = count.toString();
-      arg["messages"] = messagesJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onMessagesSearchedByTimeRange";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["keyword"] = keyword ?? "";
+          arg["startTime"] = startTime.toString();
+          arg["endTime"] = endTime.toString();
+          arg["offset"] = offset.toString();
+          arg["count"] = count.toString();
+          arg["messages"] = messagesJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onMessagesSearchedByTimeRange_call
 engine?.onMessagesSearchedByTimeRange = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, String? keyword, int? startTime, int? endTime, int? offset, int? count, List<RCIMIWMessage>? messages) {
@@ -2083,40 +2007,41 @@ engine?.onMessagesSearchedByTimeRange = (int? code, RCIMIWConversationType? type
 //callback_onMessagesSearchedByTimeRange_call
 */
 
-    engine?.onMessagesSearchedByUserId = (
-      int? code,
-      String? userId,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? startTime,
-      int? count,
-      List<RCIMIWMessage>? messages,
-    ) {
-      List messagesJson = [];
-      if (messages != null) {
-        for (var temp in messages) {
-          messagesJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onMessagesSearchedByUserId =
+        (
+          int? code,
+          String? userId,
+          RCIMIWConversationType? type,
+          String? targetId,
+          String? channelId,
+          int? startTime,
+          int? count,
+          List<RCIMIWMessage>? messages,
+        ) {
+          List messagesJson = [];
+          if (messages != null) {
+            for (var temp in messages) {
+              messagesJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onMessagesSearchedByUserId";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["userId"] = userId ?? "";
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["startTime"] = startTime.toString();
-      arg["count"] = count.toString();
-      arg["messages"] = messagesJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onMessagesSearchedByUserId";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["userId"] = userId ?? "";
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["startTime"] = startTime.toString();
+          arg["count"] = count.toString();
+          arg["messages"] = messagesJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onMessagesSearchedByUserId_call
 engine?.onMessagesSearchedByUserId = (int? code, String? userId, RCIMIWConversationType? type, String? targetId, String? channelId, int? startTime, int? count, List<RCIMIWMessage>? messages) {
@@ -2125,36 +2050,37 @@ engine?.onMessagesSearchedByUserId = (int? code, String? userId, RCIMIWConversat
 //callback_onMessagesSearchedByUserId_call
 */
 
-    engine?.onConversationsSearched = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      List<RCIMIWMessageType>? messageTypes,
-      String? keyword,
-      List<RCIMIWSearchConversationResult>? conversations,
-    ) {
-      List conversationsJson = [];
-      if (conversations != null) {
-        for (var temp in conversations) {
-          conversationsJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onConversationsSearched =
+        (
+          int? code,
+          List<RCIMIWConversationType>? conversationTypes,
+          String? channelId,
+          List<RCIMIWMessageType>? messageTypes,
+          String? keyword,
+          List<RCIMIWSearchConversationResult>? conversations,
+        ) {
+          List conversationsJson = [];
+          if (conversations != null) {
+            for (var temp in conversations) {
+              conversationsJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationsSearched";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["conversationTypes"] = conversationTypes.toString();
-      arg["channelId"] = channelId ?? "";
-      arg["messageTypes"] = messageTypes.toString();
-      arg["keyword"] = keyword ?? "";
-      arg["conversations"] = conversationsJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationsSearched";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["conversationTypes"] = conversationTypes.toString();
+          arg["channelId"] = channelId ?? "";
+          arg["messageTypes"] = messageTypes.toString();
+          arg["keyword"] = keyword ?? "";
+          arg["conversations"] = conversationsJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationsSearched_call
 engine?.onConversationsSearched = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, List<RCIMIWMessageType>? messageTypes, String? keyword, List<RCIMIWSearchConversationResult>? conversations) {
@@ -2183,32 +2109,28 @@ engine?.onGroupReadReceiptRequestSent = (int? code, RCIMIWMessage? message) {
 //callback_onGroupReadReceiptRequestSent_call
 */
 
-    engine?.onGroupReadReceiptResponseSent = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      List<RCIMIWMessage>? messages,
-    ) {
-      List messagesJson = [];
-      if (messages != null) {
-        for (var temp in messages) {
-          messagesJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onGroupReadReceiptResponseSent =
+        (int? code, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
+          List messagesJson = [];
+          if (messages != null) {
+            for (var temp in messages) {
+              messagesJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onGroupReadReceiptResponseSent";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["messages"] = messagesJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onGroupReadReceiptResponseSent";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["messages"] = messagesJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onGroupReadReceiptResponseSent_call
 engine?.onGroupReadReceiptResponseSent = (int? code, String? targetId, String? channelId, List<RCIMIWMessage>? messages) {
@@ -2217,25 +2139,21 @@ engine?.onGroupReadReceiptResponseSent = (int? code, String? targetId, String? c
 //callback_onGroupReadReceiptResponseSent_call
 */
 
-    engine?.onNotificationQuietHoursChanged = (
-      int? code,
-      String? startTime,
-      int? spanMinutes,
-      RCIMIWPushNotificationQuietHoursLevel? level,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onNotificationQuietHoursChanged";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["startTime"] = startTime ?? "";
-      arg["spanMinutes"] = spanMinutes.toString();
-      arg["level"] = level.toString();
+    engine?.onNotificationQuietHoursChanged =
+        (int? code, String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onNotificationQuietHoursChanged";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["startTime"] = startTime ?? "";
+          arg["spanMinutes"] = spanMinutes.toString();
+          arg["level"] = level.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onNotificationQuietHoursChanged_call
 engine?.onNotificationQuietHoursChanged = (int? code, String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
@@ -2263,25 +2181,21 @@ engine?.onNotificationQuietHoursRemoved = (int? code) {
 //callback_onNotificationQuietHoursRemoved_call
 */
 
-    engine?.onNotificationQuietHoursLoaded = (
-      int? code,
-      String? startTime,
-      int? spanMinutes,
-      RCIMIWPushNotificationQuietHoursLevel? level,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onNotificationQuietHoursLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["startTime"] = startTime ?? "";
-      arg["spanMinutes"] = spanMinutes.toString();
-      arg["level"] = level.toString();
+    engine?.onNotificationQuietHoursLoaded =
+        (int? code, String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onNotificationQuietHoursLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["startTime"] = startTime ?? "";
+          arg["spanMinutes"] = spanMinutes.toString();
+          arg["level"] = level.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onNotificationQuietHoursLoaded_call
 engine?.onNotificationQuietHoursLoaded = (int? code, String? startTime, int? spanMinutes, RCIMIWPushNotificationQuietHoursLevel? level) {
@@ -2290,27 +2204,28 @@ engine?.onNotificationQuietHoursLoaded = (int? code, String? startTime, int? spa
 //callback_onNotificationQuietHoursLoaded_call
 */
 
-    engine?.onConversationNotificationLevelChanged = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationNotificationLevelChanged";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["level"] = level.toString();
+    engine?.onConversationNotificationLevelChanged =
+        (
+          int? code,
+          RCIMIWConversationType? type,
+          String? targetId,
+          String? channelId,
+          RCIMIWPushNotificationLevel? level,
+        ) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationNotificationLevelChanged";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["level"] = level.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationNotificationLevelChanged_call
 engine?.onConversationNotificationLevelChanged = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
@@ -2319,27 +2234,28 @@ engine?.onConversationNotificationLevelChanged = (int? code, RCIMIWConversationT
 //callback_onConversationNotificationLevelChanged_call
 */
 
-    engine?.onConversationNotificationLevelLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationNotificationLevelLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["level"] = level.toString();
+    engine?.onConversationNotificationLevelLoaded =
+        (
+          int? code,
+          RCIMIWConversationType? type,
+          String? targetId,
+          String? channelId,
+          RCIMIWPushNotificationLevel? level,
+        ) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationNotificationLevelLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["level"] = level.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationNotificationLevelLoaded_call
 engine?.onConversationNotificationLevelLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
@@ -2348,23 +2264,20 @@ engine?.onConversationNotificationLevelLoaded = (int? code, RCIMIWConversationTy
 //callback_onConversationNotificationLevelLoaded_call
 */
 
-    engine?.onConversationTypeNotificationLevelChanged = (
-      int? code,
-      RCIMIWConversationType? type,
-      RCIMIWPushNotificationLevel? level,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationTypeNotificationLevelChanged";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["level"] = level.toString();
+    engine?.onConversationTypeNotificationLevelChanged =
+        (int? code, RCIMIWConversationType? type, RCIMIWPushNotificationLevel? level) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationTypeNotificationLevelChanged";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["level"] = level.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationTypeNotificationLevelChanged_call
 engine?.onConversationTypeNotificationLevelChanged = (int? code, RCIMIWConversationType? type, RCIMIWPushNotificationLevel? level) {
@@ -2373,23 +2286,20 @@ engine?.onConversationTypeNotificationLevelChanged = (int? code, RCIMIWConversat
 //callback_onConversationTypeNotificationLevelChanged_call
 */
 
-    engine?.onConversationTypeNotificationLevelLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      RCIMIWPushNotificationLevel? level,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationTypeNotificationLevelLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["level"] = level.toString();
+    engine?.onConversationTypeNotificationLevelLoaded =
+        (int? code, RCIMIWConversationType? type, RCIMIWPushNotificationLevel? level) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationTypeNotificationLevelLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["level"] = level.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationTypeNotificationLevelLoaded_call
 engine?.onConversationTypeNotificationLevelLoaded = (int? code, RCIMIWConversationType? type, RCIMIWPushNotificationLevel? level) {
@@ -2398,11 +2308,8 @@ engine?.onConversationTypeNotificationLevelLoaded = (int? code, RCIMIWConversati
 //callback_onConversationTypeNotificationLevelLoaded_call
 */
 
-    engine?.onUltraGroupDefaultNotificationLevelChanged = (
-      int? code,
-      String? targetId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine
+        ?.onUltraGroupDefaultNotificationLevelChanged = (int? code, String? targetId, RCIMIWPushNotificationLevel? level) {
       DateTime now = DateTime.now();
       String timeStr =
           "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
@@ -2423,11 +2330,8 @@ engine?.onUltraGroupDefaultNotificationLevelChanged = (int? code, String? target
 //callback_onUltraGroupDefaultNotificationLevelChanged_call
 */
 
-    engine?.onUltraGroupDefaultNotificationLevelLoaded = (
-      int? code,
-      String? targetId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
+    engine
+        ?.onUltraGroupDefaultNotificationLevelLoaded = (int? code, String? targetId, RCIMIWPushNotificationLevel? level) {
       DateTime now = DateTime.now();
       String timeStr =
           "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
@@ -2448,25 +2352,21 @@ engine?.onUltraGroupDefaultNotificationLevelLoaded = (int? code, String? targetI
 //callback_onUltraGroupDefaultNotificationLevelLoaded_call
 */
 
-    engine?.onUltraGroupChannelDefaultNotificationLevelChanged = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onUltraGroupChannelDefaultNotificationLevelChanged";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["level"] = level.toString();
+    engine?.onUltraGroupChannelDefaultNotificationLevelChanged =
+        (int? code, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onUltraGroupChannelDefaultNotificationLevelChanged";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["level"] = level.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onUltraGroupChannelDefaultNotificationLevelChanged_call
 engine?.onUltraGroupChannelDefaultNotificationLevelChanged = (int? code, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
@@ -2475,25 +2375,21 @@ engine?.onUltraGroupChannelDefaultNotificationLevelChanged = (int? code, String?
 //callback_onUltraGroupChannelDefaultNotificationLevelChanged_call
 */
 
-    engine?.onUltraGroupChannelDefaultNotificationLevelLoaded = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      RCIMIWPushNotificationLevel? level,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onUltraGroupChannelDefaultNotificationLevelLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["level"] = level.toString();
+    engine?.onUltraGroupChannelDefaultNotificationLevelLoaded =
+        (int? code, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onUltraGroupChannelDefaultNotificationLevelLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["level"] = level.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onUltraGroupChannelDefaultNotificationLevelLoaded_call
 engine?.onUltraGroupChannelDefaultNotificationLevelLoaded = (int? code, String? targetId, String? channelId, RCIMIWPushNotificationLevel? level) {
@@ -2562,27 +2458,22 @@ engine?.onPushReceiveStatusChanged = (int? code, bool? receive) {
 //callback_onPushReceiveStatusChanged_call
 */
 
-    engine?.onMessageCountLoaded = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      String? channelId,
-      int? count,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onMessageCountLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["count"] = count.toString();
+    engine?.onMessageCountLoaded =
+        (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onMessageCountLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["count"] = count.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onMessageCountLoaded_call
 engine?.onMessageCountLoaded = (int? code, RCIMIWConversationType? type, String? targetId, String? channelId, int? count) {
@@ -2591,32 +2482,33 @@ engine?.onMessageCountLoaded = (int? code, RCIMIWConversationType? type, String?
 //callback_onMessageCountLoaded_call
 */
 
-    engine?.onTopConversationsLoaded = (
-      int? code,
-      List<RCIMIWConversationType>? conversationTypes,
-      String? channelId,
-      List<RCIMIWConversation>? conversations,
-    ) {
-      List conversationsJson = [];
-      if (conversations != null) {
-        for (var temp in conversations) {
-          conversationsJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onTopConversationsLoaded =
+        (
+          int? code,
+          List<RCIMIWConversationType>? conversationTypes,
+          String? channelId,
+          List<RCIMIWConversation>? conversations,
+        ) {
+          List conversationsJson = [];
+          if (conversations != null) {
+            for (var temp in conversations) {
+              conversationsJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onTopConversationsLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["conversationTypes"] = conversationTypes.toString();
-      arg["channelId"] = channelId ?? "";
-      arg["conversations"] = conversationsJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onTopConversationsLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["conversationTypes"] = conversationTypes.toString();
+          arg["channelId"] = channelId ?? "";
+          arg["conversations"] = conversationsJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onTopConversationsLoaded_call
 engine?.onTopConversationsLoaded = (int? code, List<RCIMIWConversationType>? conversationTypes, String? channelId, List<RCIMIWConversation>? conversations) {
@@ -2745,32 +2637,28 @@ engine?.onUltraGroupReadStatusSynced = (int? code, String? targetId, String? cha
 //callback_onUltraGroupReadStatusSynced_call
 */
 
-    engine?.onConversationsLoadedForAllChannel = (
-      int? code,
-      RCIMIWConversationType? type,
-      String? targetId,
-      List<RCIMIWConversation>? conversations,
-    ) {
-      List conversationsJson = [];
-      if (conversations != null) {
-        for (var temp in conversations) {
-          conversationsJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onConversationsLoadedForAllChannel =
+        (int? code, RCIMIWConversationType? type, String? targetId, List<RCIMIWConversation>? conversations) {
+          List conversationsJson = [];
+          if (conversations != null) {
+            for (var temp in conversations) {
+              conversationsJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onConversationsLoadedForAllChannel";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["type"] = type.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["conversations"] = conversationsJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onConversationsLoadedForAllChannel";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["type"] = type.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["conversations"] = conversationsJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onConversationsLoadedForAllChannel_call
 engine?.onConversationsLoadedForAllChannel = (int? code, RCIMIWConversationType? type, String? targetId, List<RCIMIWConversation>? conversations) {
@@ -2862,27 +2750,22 @@ engine?.onUltraGroupMessageRecalled = (int? code, RCIMIWMessage? message, bool? 
 //callback_onUltraGroupMessageRecalled_call
 */
 
-    engine?.onUltraGroupMessagesCleared = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      int? timestamp,
-      RCIMIWMessageOperationPolicy? policy,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onUltraGroupMessagesCleared";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["timestamp"] = timestamp.toString();
-      arg["policy"] = policy.toString();
+    engine?.onUltraGroupMessagesCleared =
+        (int? code, String? targetId, String? channelId, int? timestamp, RCIMIWMessageOperationPolicy? policy) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onUltraGroupMessagesCleared";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["timestamp"] = timestamp.toString();
+          arg["policy"] = policy.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onUltraGroupMessagesCleared_call
 engine?.onUltraGroupMessagesCleared = (int? code, String? targetId, String? channelId, int? timestamp, RCIMIWMessageOperationPolicy? policy) {
@@ -2912,25 +2795,21 @@ engine?.onUltraGroupMessagesClearedForAllChannel = (int? code, String? targetId,
 //callback_onUltraGroupMessagesClearedForAllChannel_call
 */
 
-    engine?.onUltraGroupTypingStatusSent = (
-      int? code,
-      String? targetId,
-      String? channelId,
-      RCIMIWUltraGroupTypingStatus? typingStatus,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onUltraGroupTypingStatusSent";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["targetId"] = targetId ?? "";
-      arg["channelId"] = channelId ?? "";
-      arg["typingStatus"] = typingStatus.toString();
+    engine?.onUltraGroupTypingStatusSent =
+        (int? code, String? targetId, String? channelId, RCIMIWUltraGroupTypingStatus? typingStatus) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onUltraGroupTypingStatusSent";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["targetId"] = targetId ?? "";
+          arg["channelId"] = channelId ?? "";
+          arg["typingStatus"] = typingStatus.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onUltraGroupTypingStatusSent_call
 engine?.onUltraGroupTypingStatusSent = (int? code, String? targetId, String? channelId, RCIMIWUltraGroupTypingStatus? typingStatus) {
@@ -2939,37 +2818,34 @@ engine?.onUltraGroupTypingStatusSent = (int? code, String? targetId, String? cha
 //callback_onUltraGroupTypingStatusSent_call
 */
 
-    engine?.onBatchRemoteUltraGroupMessagesLoaded = (
-      int? code,
-      List<RCIMIWMessage>? matchedMessages,
-      List<RCIMIWMessage>? notMatchedMessages,
-    ) {
-      List matchedMessagesJson = [];
-      if (matchedMessages != null) {
-        for (var temp in matchedMessages) {
-          matchedMessagesJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onBatchRemoteUltraGroupMessagesLoaded =
+        (int? code, List<RCIMIWMessage>? matchedMessages, List<RCIMIWMessage>? notMatchedMessages) {
+          List matchedMessagesJson = [];
+          if (matchedMessages != null) {
+            for (var temp in matchedMessages) {
+              matchedMessagesJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      List notMatchedMessagesJson = [];
-      if (notMatchedMessages != null) {
-        for (var temp in notMatchedMessages) {
-          notMatchedMessagesJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+          List notMatchedMessagesJson = [];
+          if (notMatchedMessages != null) {
+            for (var temp in notMatchedMessages) {
+              notMatchedMessagesJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onBatchRemoteUltraGroupMessagesLoaded";
-      arg["timestamp"] = timeStr;
-      arg["code"] = code.toString();
-      arg["matchedMessages"] = matchedMessagesJson.toString();
-      arg["notMatchedMessages"] = notMatchedMessagesJson.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onBatchRemoteUltraGroupMessagesLoaded";
+          arg["timestamp"] = timeStr;
+          arg["code"] = code.toString();
+          arg["matchedMessages"] = matchedMessagesJson.toString();
+          arg["notMatchedMessages"] = notMatchedMessagesJson.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onBatchRemoteUltraGroupMessagesLoaded_call
 engine?.onBatchRemoteUltraGroupMessagesLoaded = (int? code, List<RCIMIWMessage>? matchedMessages, List<RCIMIWMessage>? notMatchedMessages) {
@@ -3020,36 +2896,37 @@ engine?.onUltraGroupMessageExpansionForKeysRemoved = (int? code, String? message
 //callback_onUltraGroupMessageExpansionForKeysRemoved_call
 */
 
-    engine?.onGroupOperation = (
-      String? groupId,
-      RCIMIWGroupMemberInfo? operatorInfo,
-      RCIMIWGroupInfo? groupInfo,
-      RCIMIWGroupOperation? operation,
-      List<RCIMIWGroupMemberInfo>? memberInfos,
-      int? operationTime,
-    ) {
-      List memberInfosJson = [];
-      if (memberInfos != null) {
-        for (var temp in memberInfos) {
-          memberInfosJson.add(formatJson(temp.toJson()) + "\n");
-        }
-      }
+    engine?.onGroupOperation =
+        (
+          String? groupId,
+          RCIMIWGroupMemberInfo? operatorInfo,
+          RCIMIWGroupInfo? groupInfo,
+          RCIMIWGroupOperation? operation,
+          List<RCIMIWGroupMemberInfo>? memberInfos,
+          int? operationTime,
+        ) {
+          List memberInfosJson = [];
+          if (memberInfos != null) {
+            for (var temp in memberInfos) {
+              memberInfosJson.add(formatJson(temp.toJson()) + "\n");
+            }
+          }
 
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onGroupOperation";
-      arg["timestamp"] = timeStr;
-      arg["groupId"] = groupId ?? "";
-      arg["operatorInfo"] = formatJson(operatorInfo?.toJson());
-      arg["groupInfo"] = formatJson(groupInfo?.toJson());
-      arg["operation"] = operation.toString();
-      arg["memberInfos"] = memberInfosJson.toString();
-      arg["operationTime"] = operationTime.toString();
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onGroupOperation";
+          arg["timestamp"] = timeStr;
+          arg["groupId"] = groupId ?? "";
+          arg["operatorInfo"] = formatJson(operatorInfo?.toJson());
+          arg["groupInfo"] = formatJson(groupInfo?.toJson());
+          arg["operation"] = operation.toString();
+          arg["memberInfos"] = memberInfosJson.toString();
+          arg["operationTime"] = operationTime.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onGroupOperation_call
 engine?.onGroupOperation = (String? groupId, RCIMIWGroupMemberInfo? operatorInfo, RCIMIWGroupInfo? groupInfo, RCIMIWGroupOperation? operation, List<RCIMIWGroupMemberInfo>? memberInfos, int? operationTime) {
@@ -3058,25 +2935,26 @@ engine?.onGroupOperation = (String? groupId, RCIMIWGroupMemberInfo? operatorInfo
 //callback_onGroupOperation_call
 */
 
-    engine?.onGroupInfoChanged = (
-      RCIMIWGroupMemberInfo? operatorInfo,
-      RCIMIWGroupInfo? fullGroupInfo,
-      RCIMIWGroupInfo? changedGroupInfo,
-      int? operationTime,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onGroupInfoChanged";
-      arg["timestamp"] = timeStr;
-      arg["operatorInfo"] = formatJson(operatorInfo?.toJson());
-      arg["fullGroupInfo"] = formatJson(fullGroupInfo?.toJson());
-      arg["changedGroupInfo"] = formatJson(changedGroupInfo?.toJson());
-      arg["operationTime"] = operationTime.toString();
+    engine?.onGroupInfoChanged =
+        (
+          RCIMIWGroupMemberInfo? operatorInfo,
+          RCIMIWGroupInfo? fullGroupInfo,
+          RCIMIWGroupInfo? changedGroupInfo,
+          int? operationTime,
+        ) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onGroupInfoChanged";
+          arg["timestamp"] = timeStr;
+          arg["operatorInfo"] = formatJson(operatorInfo?.toJson());
+          arg["fullGroupInfo"] = formatJson(fullGroupInfo?.toJson());
+          arg["changedGroupInfo"] = formatJson(changedGroupInfo?.toJson());
+          arg["operationTime"] = operationTime.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onGroupInfoChanged_call
 engine?.onGroupInfoChanged = (RCIMIWGroupMemberInfo? operatorInfo, RCIMIWGroupInfo? fullGroupInfo, RCIMIWGroupInfo? changedGroupInfo, int? operationTime) {
@@ -3085,25 +2963,21 @@ engine?.onGroupInfoChanged = (RCIMIWGroupMemberInfo? operatorInfo, RCIMIWGroupIn
 //callback_onGroupInfoChanged_call
 */
 
-    engine?.onGroupMemberInfoChanged = (
-      String? groupId,
-      RCIMIWGroupMemberInfo? operatorInfo,
-      RCIMIWGroupMemberInfo? memberInfo,
-      int? operationTime,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onGroupMemberInfoChanged";
-      arg["timestamp"] = timeStr;
-      arg["groupId"] = groupId ?? "";
-      arg["operatorInfo"] = formatJson(operatorInfo?.toJson());
-      arg["memberInfo"] = formatJson(memberInfo?.toJson());
-      arg["operationTime"] = operationTime.toString();
+    engine?.onGroupMemberInfoChanged =
+        (String? groupId, RCIMIWGroupMemberInfo? operatorInfo, RCIMIWGroupMemberInfo? memberInfo, int? operationTime) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onGroupMemberInfoChanged";
+          arg["timestamp"] = timeStr;
+          arg["groupId"] = groupId ?? "";
+          arg["operatorInfo"] = formatJson(operatorInfo?.toJson());
+          arg["memberInfo"] = formatJson(memberInfo?.toJson());
+          arg["operationTime"] = operationTime.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onGroupMemberInfoChanged_call
 engine?.onGroupMemberInfoChanged = (String? groupId, RCIMIWGroupMemberInfo? operatorInfo, RCIMIWGroupMemberInfo? memberInfo, int? operationTime) {
@@ -3131,25 +3005,21 @@ engine?.onGroupApplicationEvent = (RCIMIWGroupApplicationInfo? info) {
 //callback_onGroupApplicationEvent_call
 */
 
-    engine?.onGroupRemarkChangedSync = (
-      String? groupId,
-      RCIMIWGroupOperationType? operationType,
-      String? groupRemark,
-      int? operationTime,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onGroupRemarkChangedSync";
-      arg["timestamp"] = timeStr;
-      arg["groupId"] = groupId ?? "";
-      arg["operationType"] = operationType.toString();
-      arg["groupRemark"] = groupRemark ?? "";
-      arg["operationTime"] = operationTime.toString();
+    engine?.onGroupRemarkChangedSync =
+        (String? groupId, RCIMIWGroupOperationType? operationType, String? groupRemark, int? operationTime) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onGroupRemarkChangedSync";
+          arg["timestamp"] = timeStr;
+          arg["groupId"] = groupId ?? "";
+          arg["operationType"] = operationType.toString();
+          arg["groupRemark"] = groupRemark ?? "";
+          arg["operationTime"] = operationTime.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onGroupRemarkChangedSync_call
 engine?.onGroupRemarkChangedSync = (String? groupId, RCIMIWGroupOperationType? operationType, String? groupRemark, int? operationTime) {
@@ -3158,25 +3028,21 @@ engine?.onGroupRemarkChangedSync = (String? groupId, RCIMIWGroupOperationType? o
 //callback_onGroupRemarkChangedSync_call
 */
 
-    engine?.onGroupFollowsChangedSync = (
-      String? groupId,
-      RCIMIWGroupOperationType? operationType,
-      List<String>? userIds,
-      int? operationTime,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onGroupFollowsChangedSync";
-      arg["timestamp"] = timeStr;
-      arg["groupId"] = groupId ?? "";
-      arg["operationType"] = operationType.toString();
-      arg["userIds"] = userIds.toString();
-      arg["operationTime"] = operationTime.toString();
+    engine?.onGroupFollowsChangedSync =
+        (String? groupId, RCIMIWGroupOperationType? operationType, List<String>? userIds, int? operationTime) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onGroupFollowsChangedSync";
+          arg["timestamp"] = timeStr;
+          arg["groupId"] = groupId ?? "";
+          arg["operationType"] = operationType.toString();
+          arg["userIds"] = userIds.toString();
+          arg["operationTime"] = operationTime.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onGroupFollowsChangedSync_call
 engine?.onGroupFollowsChangedSync = (String? groupId, RCIMIWGroupOperationType? operationType, List<String>? userIds, int? operationTime) {
@@ -3377,27 +3243,22 @@ engine?.onSubscriptionChangedOnOtherDevices = (List<RCIMIWSubscribeEvent>? subsc
 //callback_onSubscriptionChangedOnOtherDevices_call
 */
 
-    engine?.onFriendAdded = (
-      RCIMIWFriendType? friendType,
-      String? userId,
-      String? name,
-      String? portraitUri,
-      int? operationTime,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onFriendAdded";
-      arg["timestamp"] = timeStr;
-      arg["friendType"] = friendType.toString();
-      arg["userId"] = userId ?? "";
-      arg["name"] = name ?? "";
-      arg["portraitUri"] = portraitUri ?? "";
-      arg["operationTime"] = operationTime.toString();
+    engine?.onFriendAdded =
+        (RCIMIWFriendType? friendType, String? userId, String? name, String? portraitUri, int? operationTime) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onFriendAdded";
+          arg["timestamp"] = timeStr;
+          arg["friendType"] = friendType.toString();
+          arg["userId"] = userId ?? "";
+          arg["name"] = name ?? "";
+          arg["portraitUri"] = portraitUri ?? "";
+          arg["operationTime"] = operationTime.toString();
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onFriendAdded_call
 engine?.onFriendAdded = (RCIMIWFriendType? friendType, String? userId, String? name, String? portraitUri, int? operationTime) {
@@ -3468,29 +3329,30 @@ engine?.onFriendInfoChangedSync = (String? userId, String? remark, Map? extProfi
 //callback_onFriendInfoChangedSync_call
 */
 
-    engine?.onFriendApplicationStatusChanged = (
-      String? userId,
-      RCIMIWFriendApplicationType? applicationType,
-      RCIMIWFriendApplicationStatus? status,
-      RCIMIWFriendType? friendType,
-      int? operationTime,
-      String? extra,
-    ) {
-      DateTime now = DateTime.now();
-      String timeStr =
-          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
-      Map<String, String> arg = {};
-      arg["listener"] = "onFriendApplicationStatusChanged";
-      arg["timestamp"] = timeStr;
-      arg["userId"] = userId ?? "";
-      arg["applicationType"] = applicationType.toString();
-      arg["status"] = status.toString();
-      arg["friendType"] = friendType.toString();
-      arg["operationTime"] = operationTime.toString();
-      arg["extra"] = extra ?? "";
+    engine?.onFriendApplicationStatusChanged =
+        (
+          String? userId,
+          RCIMIWFriendApplicationType? applicationType,
+          RCIMIWFriendApplicationStatus? status,
+          RCIMIWFriendType? friendType,
+          int? operationTime,
+          String? extra,
+        ) {
+          DateTime now = DateTime.now();
+          String timeStr =
+              "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+          Map<String, String> arg = {};
+          arg["listener"] = "onFriendApplicationStatusChanged";
+          arg["timestamp"] = timeStr;
+          arg["userId"] = userId ?? "";
+          arg["applicationType"] = applicationType.toString();
+          arg["status"] = status.toString();
+          arg["friendType"] = friendType.toString();
+          arg["operationTime"] = operationTime.toString();
+          arg["extra"] = extra ?? "";
 
-      bus.emit("rong_im_listener", arg);
-    };
+          bus.emit("rong_im_listener", arg);
+        };
     /*
 //callback_onFriendApplicationStatusChanged_call
 engine?.onFriendApplicationStatusChanged = (String? userId, RCIMIWFriendApplicationType? applicationType, RCIMIWFriendApplicationStatus? status, RCIMIWFriendType? friendType, int? operationTime, String? extra) {

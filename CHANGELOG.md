@@ -1,3 +1,9 @@
+# 5.32.6
+* 更新了 Android IMLib SDK 依赖为 5.36.4。
+* 更新了 iOS IMLib SDK 依赖为 5.36.4。
+* 增加了 批量通过id查询和删除会话接口。
+* 增加了 带删除功能的撤回接口。
+
 # 5.32.5
 * 更新了 Android IMLib SDK 依赖为 5.36.1。
 * 更新了 iOS IMLib SDK 依赖为 5.36.1。

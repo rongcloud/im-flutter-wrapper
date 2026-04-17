@@ -13035,3 +13035,33 @@ getMessagesReadReceiptByUsersV5(Map arg) async {
   }
   bus.emit("rong_im_listener", resultCode);
 }
+
+/*
+//fun_getConversationsByIdentifiers_call
+IRCIMIWGetConversationsCallback? callback = IRCIMIWGetConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getConversationsByIdentifiers(conversationTypesInt, targetIds, channelIds, callback:callback);
+//fun_getConversationsByIdentifiers_call
+*/
+/*
+//fun_removeConversationsByIdentifiers_call
+IRCIMIWCompletionCallback? callback = IRCIMIWCompletionCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.removeConversationsByIdentifiers(conversationTypesInt, targetIds, channelIds, callback:callback);
+//fun_removeConversationsByIdentifiers_call
+*/
+/*
+//fun_recallMessageWithOption_call
+IRCIMIWRecallMessageCallback? callback = IRCIMIWRecallMessageCallback(onMessageRecalled: (int? code, RCIMIWMessage? message) {
+    //...
+});
+
+int? ret = await engine?.recallMessageWithOption(message, isDelete, callback:callback);
+//fun_recallMessageWithOption_call
+*/

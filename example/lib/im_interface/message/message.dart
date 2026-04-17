@@ -984,6 +984,20 @@ const recallMessage = {
   "action": engine_fun.recallMessage,
 };
 
+const recallMessageWithOption = {
+  "title": "撤回消息（支持删除选项）",
+  "params": [
+    {"key": "messageId", "type": "String", "hint": "", "lable": "请输入撤回的消息 Id"},
+    {
+      "key": "isDelete",
+      "type": "number",
+      "hint": "0: 不删除 1: 删除",
+      "lable": "是否删除本地消息并移除远端消息记录",
+    },
+  ],
+  "action": engine_fun.recallMessageWithOption,
+};
+
 const sendPrivateReadReceiptMessage = {
   "title": "发送单聊的已读回执",
   "params": [

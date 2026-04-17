@@ -3596,16 +3596,81 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
     return result;
   }
 
+  @override
+  Future<int> getConversationsByIdentifiers(
+    List<RCIMIWConversationType> conversationTypes,
+    List<String> targetIds,
+    List<String> channelIds, {
+    IRCIMIWGetConversationsCallback? callback,
+  }) async {
+    List conversationTypesStr = [];
+    for (var element in conversationTypes) {
+      conversationTypesStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "conversationTypes": conversationTypesStr,
+      "targetIds": targetIds,
+      "channelIds": channelIds,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:getConversationsByIdentifiers arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:getConversationsByIdentifiers', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> removeConversationsByIdentifiers(
+    List<RCIMIWConversationType> conversationTypes,
+    List<String> targetIds,
+    List<String> channelIds, {
+    IRCIMIWCompletionCallback? callback,
+  }) async {
+    List conversationTypesStr = [];
+    for (var element in conversationTypes) {
+      conversationTypesStr.add(element.index);
+    }
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "conversationTypes": conversationTypesStr,
+      "targetIds": targetIds,
+      "channelIds": channelIds,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:removeConversationsByIdentifiers arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:removeConversationsByIdentifiers', arguments);
+    return result;
+  }
+
+  @override
+  Future<int> recallMessageWithOption(
+    RCIMIWMessage message,
+    bool isDelete, {
+    IRCIMIWRecallMessageCallback? callback,
+  }) async {
+    int rongcloudHandler = addCallback(callback);
+
+    Map<String, dynamic> arguments = {
+      "message": message.toJson(),
+      "isDelete": isDelete,
+      "cb_handler": rongcloudHandler,
+    };
+    log("[RC:Flutter] engine:recallMessageWithOption arguments: " + arguments.toString());
+    int result = await _channel.invokeMethod('engine:recallMessageWithOption', arguments);
+    return result;
+  }
+
   Future<dynamic> _handler(MethodCall call) async {
     log("[RC:Flutter] " + call.method + " arguments:" + call.arguments.toString());
     switch (call.method) {
       case 'engine:onMessageReceived':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
         int? left = arguments['left'];
         bool? offline = arguments['offline'];
         bool? hasPackage = arguments['hasPackage'];
@@ -3624,8 +3689,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onConnectionStatusChanged':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWConnectionStatus? status =
-            arguments['status'] == null ? null : RCIMIWConnectionStatus.values[arguments['status']];
+        RCIMIWConnectionStatus? status = arguments['status'] == null
+            ? null
+            : RCIMIWConnectionStatus.values[arguments['status']];
 
         engine?.onConnectionStatusChanged?.call(status);
         log("[RC:Flutter] engine:onConnectionStatusChanged invoke finished");
@@ -3634,8 +3700,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onConversationTopStatusSynced':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         bool? top = arguments['top'];
@@ -3647,12 +3714,14 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onConversationNotificationLevelSynced':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
-        RCIMIWPushNotificationLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+        RCIMIWPushNotificationLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['level']];
 
         engine?.onConversationNotificationLevelSynced?.call(type, targetId, channelId, level);
         log("[RC:Flutter] engine:onConversationNotificationLevelSynced invoke finished");
@@ -3661,12 +3730,14 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onConversationTranslationStrategySynced':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
-        RCIMIWTranslateStrategy? strategy =
-            arguments['strategy'] == null ? null : RCIMIWTranslateStrategy.values[arguments['strategy']];
+        RCIMIWTranslateStrategy? strategy = arguments['strategy'] == null
+            ? null
+            : RCIMIWTranslateStrategy.values[arguments['strategy']];
 
         engine?.onConversationTranslationStrategySynced?.call(type, targetId, channelId, strategy);
         log("[RC:Flutter] engine:onConversationTranslationStrategySynced invoke finished");
@@ -3675,10 +3746,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onRemoteMessageRecalled':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onRemoteMessageRecalled?.call(message);
         log("[RC:Flutter] engine:onRemoteMessageRecalled invoke finished");
@@ -3699,10 +3769,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         Map? expansion = arguments['expansion'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onRemoteMessageExpansionUpdated?.call(expansion, message);
         log("[RC:Flutter] engine:onRemoteMessageExpansionUpdated invoke finished");
@@ -3711,10 +3780,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onRemoteMessageExpansionForKeyRemoved':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
         List<String>? keys = arguments['keys'] != null ? List<String>.from(arguments['keys']) : null;
 
         engine?.onRemoteMessageExpansionForKeyRemoved?.call(message, keys);
@@ -3746,8 +3814,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
           );
         });
 
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         List<RCIMIWTypingStatus>? userTypingStatus = userTypingStatusStr;
@@ -3759,8 +3828,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onConversationReadStatusSyncMessageReceived':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         int? timestamp = arguments['timestamp'];
 
@@ -3780,10 +3850,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onChatRoomEntriesChanged':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWChatRoomEntriesOperationType? operationType =
-            arguments['operationType'] == null
-                ? null
-                : RCIMIWChatRoomEntriesOperationType.values[arguments['operationType']];
+        RCIMIWChatRoomEntriesOperationType? operationType = arguments['operationType'] == null
+            ? null
+            : RCIMIWChatRoomEntriesOperationType.values[arguments['operationType']];
         String? roomId = arguments['roomId'];
         Map? entries = arguments['entries'];
 
@@ -3861,10 +3930,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onSpeechToTextCompleted':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWSpeechToTextInfo? info =
-            arguments['info'] != null
-                ? RCIMIWSpeechToTextInfo.fromJson(Map<String, dynamic>.from(arguments['info']))
-                : null;
+        RCIMIWSpeechToTextInfo? info = arguments['info'] != null
+            ? RCIMIWSpeechToTextInfo.fromJson(Map<String, dynamic>.from(arguments['info']))
+            : null;
         String? messageUId = arguments['messageUId'];
         int? code = arguments['code'];
 
@@ -3875,10 +3943,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onMessageBlocked':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWBlockedMessageInfo? info =
-            arguments['info'] != null
-                ? RCIMIWBlockedMessageInfo.fromJson(Map<String, dynamic>.from(arguments['info']))
-                : null;
+        RCIMIWBlockedMessageInfo? info = arguments['info'] != null
+            ? RCIMIWBlockedMessageInfo.fromJson(Map<String, dynamic>.from(arguments['info']))
+            : null;
 
         engine?.onMessageBlocked?.call(info);
         log("[RC:Flutter] engine:onMessageBlocked invoke finished");
@@ -3888,8 +3955,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         String? targetId = arguments['targetId'];
-        RCIMIWChatRoomStatus? status =
-            arguments['status'] == null ? null : RCIMIWChatRoomStatus.values[arguments['status']];
+        RCIMIWChatRoomStatus? status = arguments['status'] == null
+            ? null
+            : RCIMIWChatRoomStatus.values[arguments['status']];
 
         engine?.onChatRoomStatusChanged?.call(targetId, status);
         log("[RC:Flutter] engine:onChatRoomStatusChanged invoke finished");
@@ -3939,14 +4007,14 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
-        RCIMIWConversation? conversation =
-            arguments['conversation'] != null
-                ? RCIMIWConversation.fromJson(Map<String, dynamic>.from(arguments['conversation']))
-                : null;
+        RCIMIWConversation? conversation = arguments['conversation'] != null
+            ? RCIMIWConversation.fromJson(Map<String, dynamic>.from(arguments['conversation']))
+            : null;
 
         engine?.onConversationLoaded?.call(code, type, targetId, channelId, conversation);
         log("[RC:Flutter] engine:onConversationLoaded invoke finished");
@@ -3980,8 +4048,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
 
@@ -4019,8 +4088,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         int? count = arguments['count'];
@@ -4050,8 +4120,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         int? count = arguments['count'];
@@ -4100,8 +4171,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         int? timestamp = arguments['timestamp'];
@@ -4114,8 +4186,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         String? draft = arguments['draft'];
@@ -4128,8 +4201,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
 
@@ -4141,8 +4215,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         String? draft = arguments['draft'];
@@ -4177,8 +4252,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         bool? top = arguments['top'];
@@ -4191,8 +4267,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         bool? top = arguments['top'];
@@ -4205,8 +4282,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         int? timestamp = arguments['timestamp'];
@@ -4218,10 +4296,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onMessageAttached':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onMessageAttached?.call(message);
         log("[RC:Flutter] engine:onMessageAttached invoke finished");
@@ -4231,10 +4308,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onMessageSent?.call(code, message);
         log("[RC:Flutter] engine:onMessageSent invoke finished");
@@ -4243,10 +4319,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onMediaMessageAttached':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         engine?.onMediaMessageAttached?.call(message);
         log("[RC:Flutter] engine:onMediaMessageAttached invoke finished");
@@ -4255,10 +4330,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onMediaMessageSending':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
         int? progress = arguments['progress'];
 
         engine?.onMediaMessageSending?.call(message, progress);
@@ -4269,10 +4343,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         engine?.onSendingMediaMessageCanceled?.call(code, message);
         log("[RC:Flutter] engine:onSendingMediaMessageCanceled invoke finished");
@@ -4282,10 +4355,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         engine?.onMediaMessageSent?.call(code, message);
         log("[RC:Flutter] engine:onMediaMessageSent invoke finished");
@@ -4294,10 +4366,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onMediaMessageDownloading':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
         int? progress = arguments['progress'];
 
         engine?.onMediaMessageDownloading?.call(message, progress);
@@ -4308,10 +4379,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         engine?.onMediaMessageDownloaded?.call(code, message);
         log("[RC:Flutter] engine:onMediaMessageDownloaded invoke finished");
@@ -4321,10 +4391,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         engine?.onDownloadingMediaMessageCanceled?.call(code, message);
         log("[RC:Flutter] engine:onDownloadingMediaMessageCanceled invoke finished");
@@ -4338,8 +4407,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         int? sentTime = arguments['sentTime'];
@@ -4370,8 +4440,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         List<RCIMIWMessage>? messages = messagesStr;
@@ -4384,14 +4455,14 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onFirstUnreadMessageLoaded?.call(code, type, targetId, channelId, message);
         log("[RC:Flutter] engine:onFirstUnreadMessageLoaded invoke finished");
@@ -4401,10 +4472,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onMessageInserted?.call(code, message);
         log("[RC:Flutter] engine:onMessageInserted invoke finished");
@@ -4428,8 +4498,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         int? timestamp = arguments['timestamp'];
@@ -4460,8 +4531,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         List<RCIMIWMessage>? messages = messagesStr;
@@ -4474,10 +4546,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onMessageRecalled?.call(code, message);
         log("[RC:Flutter] engine:onMessageRecalled invoke finished");
@@ -4674,8 +4745,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         int? code = arguments['code'];
         String? userId = arguments['userId'];
-        RCIMIWBlacklistStatus? status =
-            arguments['status'] == null ? null : RCIMIWBlacklistStatus.values[arguments['status']];
+        RCIMIWBlacklistStatus? status = arguments['status'] == null
+            ? null
+            : RCIMIWBlacklistStatus.values[arguments['status']];
 
         engine?.onBlacklistStatusLoaded?.call(code, userId, status);
         log("[RC:Flutter] engine:onBlacklistStatusLoaded invoke finished");
@@ -4699,8 +4771,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         String? keyword = arguments['keyword'];
@@ -4720,8 +4793,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         String? keyword = arguments['keyword'];
@@ -4755,8 +4829,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         int? code = arguments['code'];
         String? userId = arguments['userId'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         int? startTime = arguments['startTime'];
@@ -4801,10 +4876,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onGroupReadReceiptRequestSent?.call(code, message);
         log("[RC:Flutter] engine:onGroupReadReceiptRequestSent invoke finished");
@@ -4832,8 +4906,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         int? code = arguments['code'];
         String? startTime = arguments['startTime'];
         int? spanMinutes = arguments['spanMinutes'];
-        RCIMIWPushNotificationQuietHoursLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationQuietHoursLevel.values[arguments['level']];
+        RCIMIWPushNotificationQuietHoursLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationQuietHoursLevel.values[arguments['level']];
 
         engine?.onNotificationQuietHoursChanged?.call(code, startTime, spanMinutes, level);
         log("[RC:Flutter] engine:onNotificationQuietHoursChanged invoke finished");
@@ -4854,8 +4929,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         int? code = arguments['code'];
         String? startTime = arguments['startTime'];
         int? spanMinutes = arguments['spanMinutes'];
-        RCIMIWPushNotificationQuietHoursLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationQuietHoursLevel.values[arguments['level']];
+        RCIMIWPushNotificationQuietHoursLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationQuietHoursLevel.values[arguments['level']];
 
         engine?.onNotificationQuietHoursLoaded?.call(code, startTime, spanMinutes, level);
         log("[RC:Flutter] engine:onNotificationQuietHoursLoaded invoke finished");
@@ -4865,12 +4941,14 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
-        RCIMIWPushNotificationLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+        RCIMIWPushNotificationLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['level']];
 
         engine?.onConversationNotificationLevelChanged?.call(code, type, targetId, channelId, level);
         log("[RC:Flutter] engine:onConversationNotificationLevelChanged invoke finished");
@@ -4880,12 +4958,14 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
-        RCIMIWPushNotificationLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+        RCIMIWPushNotificationLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['level']];
 
         engine?.onConversationNotificationLevelLoaded?.call(code, type, targetId, channelId, level);
         log("[RC:Flutter] engine:onConversationNotificationLevelLoaded invoke finished");
@@ -4895,10 +4975,12 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
-        RCIMIWPushNotificationLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWPushNotificationLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['level']];
 
         engine?.onConversationTypeNotificationLevelChanged?.call(code, type, level);
         log("[RC:Flutter] engine:onConversationTypeNotificationLevelChanged invoke finished");
@@ -4908,10 +4990,12 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
-        RCIMIWPushNotificationLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWPushNotificationLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['level']];
 
         engine?.onConversationTypeNotificationLevelLoaded?.call(code, type, level);
         log("[RC:Flutter] engine:onConversationTypeNotificationLevelLoaded invoke finished");
@@ -4922,8 +5006,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         int? code = arguments['code'];
         String? targetId = arguments['targetId'];
-        RCIMIWPushNotificationLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+        RCIMIWPushNotificationLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['level']];
 
         engine?.onUltraGroupDefaultNotificationLevelChanged?.call(code, targetId, level);
         log("[RC:Flutter] engine:onUltraGroupDefaultNotificationLevelChanged invoke finished");
@@ -4934,8 +5019,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
 
         int? code = arguments['code'];
         String? targetId = arguments['targetId'];
-        RCIMIWPushNotificationLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+        RCIMIWPushNotificationLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['level']];
 
         engine?.onUltraGroupDefaultNotificationLevelLoaded?.call(code, targetId, level);
         log("[RC:Flutter] engine:onUltraGroupDefaultNotificationLevelLoaded invoke finished");
@@ -4947,8 +5033,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         int? code = arguments['code'];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
-        RCIMIWPushNotificationLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+        RCIMIWPushNotificationLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['level']];
 
         engine?.onUltraGroupChannelDefaultNotificationLevelChanged?.call(code, targetId, channelId, level);
         log("[RC:Flutter] engine:onUltraGroupChannelDefaultNotificationLevelChanged invoke finished");
@@ -4960,8 +5047,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         int? code = arguments['code'];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
-        RCIMIWPushNotificationLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['level']];
+        RCIMIWPushNotificationLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['level']];
 
         engine?.onUltraGroupChannelDefaultNotificationLevelLoaded?.call(code, targetId, channelId, level);
         log("[RC:Flutter] engine:onUltraGroupChannelDefaultNotificationLevelLoaded invoke finished");
@@ -5001,8 +5089,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         int? count = arguments['count'];
@@ -5036,10 +5125,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onGroupMessageToDesignatedUsersAttached':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onGroupMessageToDesignatedUsersAttached?.call(message);
         log("[RC:Flutter] engine:onGroupMessageToDesignatedUsersAttached invoke finished");
@@ -5049,10 +5137,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         engine?.onGroupMessageToDesignatedUsersSent?.call(code, message);
         log("[RC:Flutter] engine:onGroupMessageToDesignatedUsersSent invoke finished");
@@ -5070,14 +5157,12 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onStreamMessageRequestData':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
-        RCIMIWStreamMessageChunkInfo? chunkInfo =
-            arguments['chunkInfo'] != null
-                ? RCIMIWStreamMessageChunkInfo.fromJson(Map<String, dynamic>.from(arguments['chunkInfo']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
+        RCIMIWStreamMessageChunkInfo? chunkInfo = arguments['chunkInfo'] != null
+            ? RCIMIWStreamMessageChunkInfo.fromJson(Map<String, dynamic>.from(arguments['chunkInfo']))
+            : null;
 
         engine?.onStreamMessageRequestData?.call(message, chunkInfo);
         log("[RC:Flutter] engine:onStreamMessageRequestData invoke finished");
@@ -5115,8 +5200,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
 
         int? code = arguments['code'];
-        RCIMIWConversationType? type =
-            arguments['type'] == null ? null : RCIMIWConversationType.values[arguments['type']];
+        RCIMIWConversationType? type = arguments['type'] == null
+            ? null
+            : RCIMIWConversationType.values[arguments['type']];
         String? targetId = arguments['targetId'];
         List<RCIMIWConversation>? conversations = conversationsStr;
 
@@ -5160,10 +5246,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
         bool? deleteRemote = arguments['deleteRemote'];
 
         engine?.onUltraGroupMessageRecalled?.call(code, message, deleteRemote);
@@ -5177,8 +5262,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
         int? timestamp = arguments['timestamp'];
-        RCIMIWMessageOperationPolicy? policy =
-            arguments['policy'] == null ? null : RCIMIWMessageOperationPolicy.values[arguments['policy']];
+        RCIMIWMessageOperationPolicy? policy = arguments['policy'] == null
+            ? null
+            : RCIMIWMessageOperationPolicy.values[arguments['policy']];
 
         engine?.onUltraGroupMessagesCleared?.call(code, targetId, channelId, timestamp, policy);
         log("[RC:Flutter] engine:onUltraGroupMessagesCleared invoke finished");
@@ -5201,8 +5287,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         int? code = arguments['code'];
         String? targetId = arguments['targetId'];
         String? channelId = arguments['channelId'];
-        RCIMIWUltraGroupTypingStatus? typingStatus =
-            arguments['typingStatus'] == null ? null : RCIMIWUltraGroupTypingStatus.values[arguments['typingStatus']];
+        RCIMIWUltraGroupTypingStatus? typingStatus = arguments['typingStatus'] == null
+            ? null
+            : RCIMIWUltraGroupTypingStatus.values[arguments['typingStatus']];
 
         engine?.onUltraGroupTypingStatusSent?.call(code, targetId, channelId, typingStatus);
         log("[RC:Flutter] engine:onUltraGroupTypingStatusSent invoke finished");
@@ -5259,16 +5346,15 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         });
 
         String? groupId = arguments['groupId'];
-        RCIMIWGroupMemberInfo? operatorInfo =
-            arguments['operatorInfo'] != null
-                ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['operatorInfo']))
-                : null;
-        RCIMIWGroupInfo? groupInfo =
-            arguments['groupInfo'] != null
-                ? RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(arguments['groupInfo']))
-                : null;
-        RCIMIWGroupOperation? operation =
-            arguments['operation'] == null ? null : RCIMIWGroupOperation.values[arguments['operation']];
+        RCIMIWGroupMemberInfo? operatorInfo = arguments['operatorInfo'] != null
+            ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['operatorInfo']))
+            : null;
+        RCIMIWGroupInfo? groupInfo = arguments['groupInfo'] != null
+            ? RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(arguments['groupInfo']))
+            : null;
+        RCIMIWGroupOperation? operation = arguments['operation'] == null
+            ? null
+            : RCIMIWGroupOperation.values[arguments['operation']];
         List<RCIMIWGroupMemberInfo>? memberInfos = memberInfosStr;
         int? operationTime = arguments['operationTime'];
 
@@ -5279,18 +5365,15 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onGroupInfoChanged':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWGroupMemberInfo? operatorInfo =
-            arguments['operatorInfo'] != null
-                ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['operatorInfo']))
-                : null;
-        RCIMIWGroupInfo? fullGroupInfo =
-            arguments['fullGroupInfo'] != null
-                ? RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(arguments['fullGroupInfo']))
-                : null;
-        RCIMIWGroupInfo? changedGroupInfo =
-            arguments['changedGroupInfo'] != null
-                ? RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(arguments['changedGroupInfo']))
-                : null;
+        RCIMIWGroupMemberInfo? operatorInfo = arguments['operatorInfo'] != null
+            ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['operatorInfo']))
+            : null;
+        RCIMIWGroupInfo? fullGroupInfo = arguments['fullGroupInfo'] != null
+            ? RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(arguments['fullGroupInfo']))
+            : null;
+        RCIMIWGroupInfo? changedGroupInfo = arguments['changedGroupInfo'] != null
+            ? RCIMIWGroupInfo.fromJson(Map<String, dynamic>.from(arguments['changedGroupInfo']))
+            : null;
         int? operationTime = arguments['operationTime'];
 
         engine?.onGroupInfoChanged?.call(operatorInfo, fullGroupInfo, changedGroupInfo, operationTime);
@@ -5301,14 +5384,12 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         String? groupId = arguments['groupId'];
-        RCIMIWGroupMemberInfo? operatorInfo =
-            arguments['operatorInfo'] != null
-                ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['operatorInfo']))
-                : null;
-        RCIMIWGroupMemberInfo? memberInfo =
-            arguments['memberInfo'] != null
-                ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['memberInfo']))
-                : null;
+        RCIMIWGroupMemberInfo? operatorInfo = arguments['operatorInfo'] != null
+            ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['operatorInfo']))
+            : null;
+        RCIMIWGroupMemberInfo? memberInfo = arguments['memberInfo'] != null
+            ? RCIMIWGroupMemberInfo.fromJson(Map<String, dynamic>.from(arguments['memberInfo']))
+            : null;
         int? operationTime = arguments['operationTime'];
 
         engine?.onGroupMemberInfoChanged?.call(groupId, operatorInfo, memberInfo, operationTime);
@@ -5318,10 +5399,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onGroupApplicationEvent':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWGroupApplicationInfo? info =
-            arguments['info'] != null
-                ? RCIMIWGroupApplicationInfo.fromJson(Map<String, dynamic>.from(arguments['info']))
-                : null;
+        RCIMIWGroupApplicationInfo? info = arguments['info'] != null
+            ? RCIMIWGroupApplicationInfo.fromJson(Map<String, dynamic>.from(arguments['info']))
+            : null;
 
         engine?.onGroupApplicationEvent?.call(info);
         log("[RC:Flutter] engine:onGroupApplicationEvent invoke finished");
@@ -5331,8 +5411,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         String? groupId = arguments['groupId'];
-        RCIMIWGroupOperationType? operationType =
-            arguments['operationType'] == null ? null : RCIMIWGroupOperationType.values[arguments['operationType']];
+        RCIMIWGroupOperationType? operationType = arguments['operationType'] == null
+            ? null
+            : RCIMIWGroupOperationType.values[arguments['operationType']];
         String? groupRemark = arguments['groupRemark'];
         int? operationTime = arguments['operationTime'];
 
@@ -5344,8 +5425,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         String? groupId = arguments['groupId'];
-        RCIMIWGroupOperationType? operationType =
-            arguments['operationType'] == null ? null : RCIMIWGroupOperationType.values[arguments['operationType']];
+        RCIMIWGroupOperationType? operationType = arguments['operationType'] == null
+            ? null
+            : RCIMIWGroupOperationType.values[arguments['operationType']];
         List<String>? userIds = arguments['userIds'] != null ? List<String>.from(arguments['userIds']) : null;
         int? operationTime = arguments['operationTime'];
 
@@ -5356,10 +5438,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onChatRoomNotifyMultiLoginSync':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWChatRoomSyncEvent? event =
-            arguments['event'] != null
-                ? RCIMIWChatRoomSyncEvent.fromJson(Map<String, dynamic>.from(arguments['event']))
-                : null;
+        RCIMIWChatRoomSyncEvent? event = arguments['event'] != null
+            ? RCIMIWChatRoomSyncEvent.fromJson(Map<String, dynamic>.from(arguments['event']))
+            : null;
 
         engine?.onChatRoomNotifyMultiLoginSync?.call(event);
         log("[RC:Flutter] engine:onChatRoomNotifyMultiLoginSync invoke finished");
@@ -5368,10 +5449,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onChatRoomNotifyBlock':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWChatRoomMemberBlockEvent? event =
-            arguments['event'] != null
-                ? RCIMIWChatRoomMemberBlockEvent.fromJson(Map<String, dynamic>.from(arguments['event']))
-                : null;
+        RCIMIWChatRoomMemberBlockEvent? event = arguments['event'] != null
+            ? RCIMIWChatRoomMemberBlockEvent.fromJson(Map<String, dynamic>.from(arguments['event']))
+            : null;
 
         engine?.onChatRoomNotifyBlock?.call(event);
         log("[RC:Flutter] engine:onChatRoomNotifyBlock invoke finished");
@@ -5380,10 +5460,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onChatRoomNotifyBan':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWChatRoomMemberBanEvent? event =
-            arguments['event'] != null
-                ? RCIMIWChatRoomMemberBanEvent.fromJson(Map<String, dynamic>.from(arguments['event']))
-                : null;
+        RCIMIWChatRoomMemberBanEvent? event = arguments['event'] != null
+            ? RCIMIWChatRoomMemberBanEvent.fromJson(Map<String, dynamic>.from(arguments['event']))
+            : null;
 
         engine?.onChatRoomNotifyBan?.call(event);
         log("[RC:Flutter] engine:onChatRoomNotifyBan invoke finished");
@@ -5464,8 +5543,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onFriendAdded':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWFriendType? friendType =
-            arguments['friendType'] == null ? null : RCIMIWFriendType.values[arguments['friendType']];
+        RCIMIWFriendType? friendType = arguments['friendType'] == null
+            ? null
+            : RCIMIWFriendType.values[arguments['friendType']];
         String? userId = arguments['userId'];
         String? name = arguments['name'];
         String? portraitUri = arguments['portraitUri'];
@@ -5478,8 +5558,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine:onFriendDeleted':
         Map<dynamic, dynamic> arguments = call.arguments;
 
-        RCIMIWFriendType? friendType =
-            arguments['friendType'] == null ? null : RCIMIWFriendType.values[arguments['friendType']];
+        RCIMIWFriendType? friendType = arguments['friendType'] == null
+            ? null
+            : RCIMIWFriendType.values[arguments['friendType']];
         List<String>? userIds = arguments['userIds'] != null ? List<String>.from(arguments['userIds']) : null;
         int? operationTime = arguments['operationTime'];
 
@@ -5512,14 +5593,15 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
 
         String? userId = arguments['userId'];
-        RCIMIWFriendApplicationType? applicationType =
-            arguments['applicationType'] == null
-                ? null
-                : RCIMIWFriendApplicationType.values[arguments['applicationType']];
-        RCIMIWFriendApplicationStatus? status =
-            arguments['status'] == null ? null : RCIMIWFriendApplicationStatus.values[arguments['status']];
-        RCIMIWFriendType? friendType =
-            arguments['friendType'] == null ? null : RCIMIWFriendType.values[arguments['friendType']];
+        RCIMIWFriendApplicationType? applicationType = arguments['applicationType'] == null
+            ? null
+            : RCIMIWFriendApplicationType.values[arguments['applicationType']];
+        RCIMIWFriendApplicationStatus? status = arguments['status'] == null
+            ? null
+            : RCIMIWFriendApplicationStatus.values[arguments['status']];
+        RCIMIWFriendType? friendType = arguments['friendType'] == null
+            ? null
+            : RCIMIWFriendType.values[arguments['friendType']];
         int? operationTime = arguments['operationTime'];
         String? extra = arguments['extra'];
 
@@ -5575,10 +5657,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:RCIMIWSendMessageCallback_onMessageSaved':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         RCIMIWSendMessageCallback? callback = getCallback(rongcloudHandler);
         Function(RCIMIWMessage?)? method = callback?.onMessageSaved;
@@ -5590,10 +5671,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         RCIMIWSendMessageCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMessage?)? method = callback?.onMessageSent;
@@ -5604,10 +5684,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:RCIMIWSendMediaMessageListener_onMediaMessageSaved':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         RCIMIWSendMediaMessageListener? callback = getCallback(rongcloudHandler);
         Function(RCIMIWMediaMessage?)? method = callback?.onMediaMessageSaved;
@@ -5618,10 +5697,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:RCIMIWSendMediaMessageListener_onMediaMessageSending':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
         int? progress = arguments['progress'];
 
         RCIMIWSendMediaMessageListener? callback = getCallback(rongcloudHandler);
@@ -5633,10 +5711,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:RCIMIWSendMediaMessageListener_onSendingMediaMessageCanceled':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         RCIMIWSendMediaMessageListener? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWMediaMessage?)? method = callback?.onSendingMediaMessageCanceled;
@@ -5648,10 +5725,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         RCIMIWSendMediaMessageListener? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMediaMessage?)? method = callback?.onMediaMessageSent;
@@ -5662,10 +5738,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:RCIMIWDownloadMediaMessageListener_onMediaMessageDownloading':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
         int? progress = arguments['progress'];
 
         RCIMIWDownloadMediaMessageListener? callback = getCallback(rongcloudHandler);
@@ -5677,10 +5752,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:RCIMIWDownloadMediaMessageListener_onDownloadingMediaMessageCanceled':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         RCIMIWDownloadMediaMessageListener? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWMediaMessage?)? method = callback?.onDownloadingMediaMessageCanceled;
@@ -5694,10 +5768,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         RCIMIWDownloadMediaMessageListener? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMediaMessage?)? method = callback?.onMediaMessageDownloaded;
@@ -5708,10 +5781,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:RCIMIWSendGroupMessageToDesignatedUsersCallback_onMessageSaved':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         RCIMIWSendGroupMessageToDesignatedUsersCallback? callback = getCallback(rongcloudHandler);
         Function(RCIMIWMessage?)? method = callback?.onMessageSaved;
@@ -5723,10 +5795,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         RCIMIWSendGroupMessageToDesignatedUsersCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMessage?)? method = callback?.onMessageSent;
@@ -5760,10 +5831,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWSendMessageCallback_onMessageSaved':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         IRCIMIWSendMessageCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWMessage?)? method = callback?.onMessageSaved;
@@ -5775,10 +5845,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         IRCIMIWSendMessageCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMessage?)? method = callback?.onMessageSent;
@@ -5789,10 +5858,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWSendMediaMessageListener_onMediaMessageSaved':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         IRCIMIWSendMediaMessageListener? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWMediaMessage?)? method = callback?.onMediaMessageSaved;
@@ -5803,10 +5871,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWSendMediaMessageListener_onMediaMessageSending':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
         int? progress = arguments['progress'];
 
         IRCIMIWSendMediaMessageListener? callback = takeCallback(rongcloudHandler);
@@ -5818,10 +5885,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWSendMediaMessageListener_onSendingMediaMessageCanceled':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         IRCIMIWSendMediaMessageListener? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWMediaMessage?)? method = callback?.onSendingMediaMessageCanceled;
@@ -5833,10 +5899,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         IRCIMIWSendMediaMessageListener? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMediaMessage?)? method = callback?.onMediaMessageSent;
@@ -5848,10 +5913,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         IRCIMIWCancelSendingMediaMessageCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMediaMessage?)? method = callback?.onCancelSendingMediaMessageCalled;
@@ -5864,10 +5928,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWDownloadMediaMessageListener_onMediaMessageDownloading':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
         int? progress = arguments['progress'];
 
         IRCIMIWDownloadMediaMessageListener? callback = takeCallback(rongcloudHandler);
@@ -5879,10 +5942,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWDownloadMediaMessageListener_onDownloadingMediaMessageCanceled':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         IRCIMIWDownloadMediaMessageListener? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWMediaMessage?)? method = callback?.onDownloadingMediaMessageCanceled;
@@ -5896,10 +5958,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         IRCIMIWDownloadMediaMessageListener? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMediaMessage?)? method = callback?.onMediaMessageDownloaded;
@@ -5911,10 +5972,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMediaMessage? message =
-            arguments['message'] != null
-                ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
-                : null;
+        RCIMIWMediaMessage? message = arguments['message'] != null
+            ? (RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message'])) as RCIMIWMediaMessage?)
+            : null;
 
         IRCIMIWCancelDownloadingMediaMessageCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMediaMessage?)? method = callback?.onCancelDownloadingMediaMessageCalled;
@@ -5927,8 +5987,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetConversationCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWConversation? t =
-            arguments['t'] != null ? RCIMIWConversation.fromJson(Map<String, dynamic>.from(arguments['t'])) : null;
+        RCIMIWConversation? t = arguments['t'] != null
+            ? RCIMIWConversation.fromJson(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWGetConversationCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWConversation?)? method = callback?.onSuccess;
@@ -6404,8 +6465,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetMessageCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMessage? t =
-            arguments['t'] != null ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['t'])) : null;
+        RCIMIWMessage? t = arguments['t'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWGetMessageCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWMessage?)? method = callback?.onSuccess;
@@ -6481,8 +6543,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetFirstUnreadMessageCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMessage? t =
-            arguments['t'] != null ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['t'])) : null;
+        RCIMIWMessage? t = arguments['t'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWGetFirstUnreadMessageCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWMessage?)? method = callback?.onSuccess;
@@ -6532,10 +6595,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         IRCIMIWInsertMessageCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMessage?)? method = callback?.onMessageInserted;
@@ -6631,10 +6693,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         IRCIMIWRecallMessageCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMessage?)? method = callback?.onMessageRecalled;
@@ -6659,10 +6720,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         IRCIMIWSendGroupReadReceiptRequestCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMessage?)? method = callback?.onGroupReadReceiptRequestSent;
@@ -7154,8 +7214,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         int rongcloudHandler = arguments['cb_handler'];
         String? startTime = arguments['startTime'];
         int? spanMinutes = arguments['spanMinutes'];
-        RCIMIWPushNotificationQuietHoursLevel? level =
-            arguments['level'] == null ? null : RCIMIWPushNotificationQuietHoursLevel.values[arguments['level']];
+        RCIMIWPushNotificationQuietHoursLevel? level = arguments['level'] == null
+            ? null
+            : RCIMIWPushNotificationQuietHoursLevel.values[arguments['level']];
 
         IRCIMIWGetNotificationQuietHoursCallback? callback = takeCallback(rongcloudHandler);
         Function(String?, int?, RCIMIWPushNotificationQuietHoursLevel?)? method = callback?.onSuccess;
@@ -7190,8 +7251,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetConversationNotificationLevelCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPushNotificationLevel? t =
-            arguments['t'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['t']];
+        RCIMIWPushNotificationLevel? t = arguments['t'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['t']];
 
         IRCIMIWGetConversationNotificationLevelCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPushNotificationLevel?)? method = callback?.onSuccess;
@@ -7226,8 +7288,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetConversationTypeNotificationLevelCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPushNotificationLevel? t =
-            arguments['t'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['t']];
+        RCIMIWPushNotificationLevel? t = arguments['t'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['t']];
 
         IRCIMIWGetConversationTypeNotificationLevelCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPushNotificationLevel?)? method = callback?.onSuccess;
@@ -7262,8 +7325,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetUltraGroupDefaultNotificationLevelCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPushNotificationLevel? t =
-            arguments['t'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['t']];
+        RCIMIWPushNotificationLevel? t = arguments['t'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['t']];
 
         IRCIMIWGetUltraGroupDefaultNotificationLevelCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPushNotificationLevel?)? method = callback?.onSuccess;
@@ -7298,8 +7362,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPushNotificationLevel? t =
-            arguments['t'] == null ? null : RCIMIWPushNotificationLevel.values[arguments['t']];
+        RCIMIWPushNotificationLevel? t = arguments['t'] == null
+            ? null
+            : RCIMIWPushNotificationLevel.values[arguments['t']];
 
         IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPushNotificationLevel?)? method = callback?.onSuccess;
@@ -7360,10 +7425,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWSendGroupMessageToDesignatedUsersCallback_onMessageSaved':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         IRCIMIWSendGroupMessageToDesignatedUsersCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWMessage?)? method = callback?.onMessageSaved;
@@ -7375,10 +7439,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        RCIMIWMessage? message =
-            arguments['message'] != null
-                ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
-                : null;
+        RCIMIWMessage? message = arguments['message'] != null
+            ? RCIMConverter.convertMessage(Map<String, dynamic>.from(arguments['message']))
+            : null;
 
         IRCIMIWSendGroupMessageToDesignatedUsersCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, RCIMIWMessage?)? method = callback?.onMessageSent;
@@ -7963,10 +8026,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetGroupMembersByRoleCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t =
-            arguments['t'] != null
-                ? RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
-                : null;
+        RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t = arguments['t'] != null
+            ? RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWGetGroupMembersByRoleCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>?)? method = callback?.onSuccess;
@@ -7988,10 +8050,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetJoinedGroupsByRoleCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t =
-            arguments['t'] != null
-                ? RCIMIWPagingQueryResult<RCIMIWGroupInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
-                : null;
+        RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t = arguments['t'] != null
+            ? RCIMIWPagingQueryResult<RCIMIWGroupInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWGetJoinedGroupsByRoleCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPagingQueryResult<RCIMIWGroupInfo>?)? method = callback?.onSuccess;
@@ -8062,10 +8123,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWSearchJoinedGroupsCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t =
-            arguments['t'] != null
-                ? RCIMIWPagingQueryResult<RCIMIWGroupInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
-                : null;
+        RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t = arguments['t'] != null
+            ? RCIMIWPagingQueryResult<RCIMIWGroupInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWSearchJoinedGroupsCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPagingQueryResult<RCIMIWGroupInfo>?)? method = callback?.onSuccess;
@@ -8087,10 +8147,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWSearchGroupMembersCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t =
-            arguments['t'] != null
-                ? RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
-                : null;
+        RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t = arguments['t'] != null
+            ? RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWSearchGroupMembersCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>?)? method = callback?.onSuccess;
@@ -8211,12 +8270,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetGroupApplicationsCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>? t =
-            arguments['t'] != null
-                ? RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>.fromJson(
-                  Map<String, dynamic>.from(arguments['t']),
-                )
-                : null;
+        RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>? t = arguments['t'] != null
+            ? RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWGetGroupApplicationsCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPagingQueryResult<RCIMIWGroupApplicationInfo>?)? method = callback?.onSuccess;
@@ -8407,10 +8463,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetMyUserProfileCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWUserProfile? userProfile =
-            arguments['userProfile'] != null
-                ? RCIMIWUserProfile.fromJson(Map<String, dynamic>.from(arguments['userProfile']))
-                : null;
+        RCIMIWUserProfile? userProfile = arguments['userProfile'] != null
+            ? RCIMIWUserProfile.fromJson(Map<String, dynamic>.from(arguments['userProfile']))
+            : null;
 
         IRCIMIWGetMyUserProfileCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWUserProfile?)? method = callback?.onSuccess;
@@ -8461,10 +8516,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWSearchUserProfileByUniqueIdCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWUserProfile? userProfile =
-            arguments['userProfile'] != null
-                ? RCIMIWUserProfile.fromJson(Map<String, dynamic>.from(arguments['userProfile']))
-                : null;
+        RCIMIWUserProfile? userProfile = arguments['userProfile'] != null
+            ? RCIMIWUserProfile.fromJson(Map<String, dynamic>.from(arguments['userProfile']))
+            : null;
 
         IRCIMIWSearchUserProfileByUniqueIdCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWUserProfile?)? method = callback?.onSuccess;
@@ -8497,8 +8551,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
         int? code = arguments['code'];
-        List<String>? failedUserIds =
-            arguments['failedUserIds'] != null ? List<String>.from(arguments['failedUserIds']) : null;
+        List<String>? failedUserIds = arguments['failedUserIds'] != null
+            ? List<String>.from(arguments['failedUserIds'])
+            : null;
 
         IRCIMIWSubscribeEventCallback? callback = takeCallback(rongcloudHandler);
         Function(int?, List<String>?)? method = callback?.onError;
@@ -8638,12 +8693,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetFriendApplicationsCallback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>? t =
-            arguments['t'] != null
-                ? RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>.fromJson(
-                  Map<String, dynamic>.from(arguments['t']),
-                )
-                : null;
+        RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>? t = arguments['t'] != null
+            ? RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>.fromJson(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWGetFriendApplicationsCallback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWPagingQueryResult<RCIMIWFriendApplicationInfo>?)? method = callback?.onSuccess;
@@ -8791,10 +8843,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWReadReceiptUsersResult? t =
-            arguments['t'] != null
-                ? RCIMIWReadReceiptUsersResult.fromJson(Map<String, dynamic>.from(arguments['t']))
-                : null;
+        RCIMIWReadReceiptUsersResult? t = arguments['t'] != null
+            ? RCIMIWReadReceiptUsersResult.fromJson(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWGetMessagesReadReceiptUsersByPageV5Callback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWReadReceiptUsersResult?)? method = callback?.onSuccess;
@@ -8816,10 +8867,9 @@ class RCIMWrapperMethodChannel extends RCIMWrapperPlatform {
       case 'engine_cb:IRCIMIWGetMessagesReadReceiptByUsersV5Callback_onSuccess':
         Map<dynamic, dynamic> arguments = call.arguments;
         int rongcloudHandler = arguments['cb_handler'];
-        RCIMIWReadReceiptUsersResult? t =
-            arguments['t'] != null
-                ? RCIMIWReadReceiptUsersResult.fromJson(Map<String, dynamic>.from(arguments['t']))
-                : null;
+        RCIMIWReadReceiptUsersResult? t = arguments['t'] != null
+            ? RCIMIWReadReceiptUsersResult.fromJson(Map<String, dynamic>.from(arguments['t']))
+            : null;
 
         IRCIMIWGetMessagesReadReceiptByUsersV5Callback? callback = takeCallback(rongcloudHandler);
         Function(RCIMIWReadReceiptUsersResult?)? method = callback?.onSuccess;

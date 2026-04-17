@@ -6884,6 +6884,81 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('getMessagesReadReceiptByUsersV5() has not been implemented.');
   }
 
+  /// [ZH]
+  /// ---
+  /// 根据会话标识列表批量获取会话
+  /// - [conversationTypes] 会话类型列表
+  /// - [targetIds] 会话目标 ID 列表，与 conversationTypes 一一对应
+  /// - [channelIds] 频道 ID 列表，与 conversationTypes 一一对应，非超级群会话传 null
+  /// - [callback] 获取会话列表事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Batch get conversations by conversation identifiers
+  /// - [conversationTypes] Conversation type list
+  /// - [targetIds] Target ID list, corresponding to conversationTypes
+  /// - [channelIds] Channel ID list, corresponding to conversationTypes, pass null for non-ultra group
+  /// - [callback] Callback for getting conversations
+  /// ---
+  Future<int> getConversationsByIdentifiers(
+    List<RCIMIWConversationType> conversationTypes,
+    List<String> targetIds,
+    List<String> channelIds, {
+    IRCIMIWGetConversationsCallback? callback,
+  }) async {
+    throw UnimplementedError('getConversationsByIdentifiers() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 根据会话标识列表批量移除会话
+  /// - [conversationTypes] 会话类型列表
+  /// - [targetIds] 会话目标 ID 列表，与 conversationTypes 一一对应
+  /// - [channelIds] 频道 ID 列表，与 conversationTypes 一一对应，非超级群会话传 null
+  /// - [callback] 移除会话事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Batch remove conversations by conversation identifiers
+  /// - [conversationTypes] Conversation type list
+  /// - [targetIds] Target ID list, corresponding to conversationTypes
+  /// - [channelIds] Channel ID list, corresponding to conversationTypes, pass null for non-ultra group
+  /// - [callback] Callback for removing conversations
+  /// ---
+  Future<int> removeConversationsByIdentifiers(
+    List<RCIMIWConversationType> conversationTypes,
+    List<String> targetIds,
+    List<String> channelIds, {
+    IRCIMIWCompletionCallback? callback,
+  }) async {
+    throw UnimplementedError('removeConversationsByIdentifiers() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 撤回消息（支持 isDelete 选项）
+  /// - [message] 需要被撤回的消息
+  /// - [isDelete] 是否删除本地消息并移除远端消息记录
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Recall message with isDelete option
+  /// - [message] The message to be recalled
+  /// - [isDelete] Whether to delete local message and remove remote message records
+  /// - [callback] Event callback
+  /// ---
+  Future<int> recallMessageWithOption(
+    RCIMIWMessage message,
+    bool isDelete, {
+    IRCIMIWRecallMessageCallback? callback,
+  }) async {
+    throw UnimplementedError('recallMessageWithOption() has not been implemented.');
+  }
+
   // -------- web 专有的方法 --------
 
   /// 构建语音消息 (高清语音)，发送成功后会根据文件自动生成 duration

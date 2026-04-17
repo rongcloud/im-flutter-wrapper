@@ -7340,6 +7340,91 @@ class RCIMIWEngine {
 
   /// [ZH]
   /// ---
+  /// 根据会话标识列表批量获取会话
+  /// - [conversationTypes] 会话类型列表
+  /// - [targetIds] 会话目标 ID 列表，与 conversationTypes 一一对应
+  /// - [channelIds] 频道 ID 列表，与 conversationTypes 一一对应，非超级群会话传 null
+  /// - [callback] 获取会话列表事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Batch get conversations by conversation identifiers
+  /// - [conversationTypes] Conversation type list
+  /// - [targetIds] Target ID list, corresponding to conversationTypes
+  /// - [channelIds] Channel ID list, corresponding to conversationTypes, pass null for non-ultra group
+  /// - [callback] Callback for getting conversations
+  /// ---
+  Future<int> getConversationsByIdentifiers(
+    List<RCIMIWConversationType> conversationTypes,
+    List<String> targetIds,
+    List<String> channelIds, {
+    IRCIMIWGetConversationsCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.getConversationsByIdentifiers(
+      conversationTypes,
+      targetIds,
+      channelIds,
+      callback: callback,
+    );
+  }
+
+  /// [ZH]
+  /// ---
+  /// 根据会话标识列表批量移除会话
+  /// - [conversationTypes] 会话类型列表
+  /// - [targetIds] 会话目标 ID 列表，与 conversationTypes 一一对应
+  /// - [channelIds] 频道 ID 列表，与 conversationTypes 一一对应，非超级群会话传 null
+  /// - [callback] 移除会话事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Batch remove conversations by conversation identifiers
+  /// - [conversationTypes] Conversation type list
+  /// - [targetIds] Target ID list, corresponding to conversationTypes
+  /// - [channelIds] Channel ID list, corresponding to conversationTypes, pass null for non-ultra group
+  /// - [callback] Callback for removing conversations
+  /// ---
+  Future<int> removeConversationsByIdentifiers(
+    List<RCIMIWConversationType> conversationTypes,
+    List<String> targetIds,
+    List<String> channelIds, {
+    IRCIMIWCompletionCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.removeConversationsByIdentifiers(
+      conversationTypes,
+      targetIds,
+      channelIds,
+      callback: callback,
+    );
+  }
+
+  /// [ZH]
+  /// ---
+  /// 撤回消息（支持 isDelete 选项）
+  /// - [message] 需要被撤回的消息
+  /// - [isDelete] 是否删除本地消息并移除远端消息记录
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Recall message with isDelete option
+  /// - [message] The message to be recalled
+  /// - [isDelete] Whether to delete local message and remove remote message records
+  /// - [callback] Event callback
+  /// ---
+  Future<int> recallMessageWithOption(
+    RCIMIWMessage message,
+    bool isDelete, {
+    IRCIMIWRecallMessageCallback? callback,
+  }) async {
+    return RCIMWrapperPlatform.instance.recallMessageWithOption(message, isDelete, callback: callback);
+  }
+
+  /// [ZH]
+  /// ---
   /// 收到消息的监听
   /// - [message] 接收到的消息对象
   /// - [left]  当客户端连接成功后，服务端会将所有补偿消息以消息包的形式下发给客户端，最多每 200 条消息为一个消息包，即一个 Package, 客户端接受到消息包后，会逐条解析并通知应用。left 为当前消息包（Package）里还剩余的消息条数

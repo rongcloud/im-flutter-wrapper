@@ -1,5 +1,6 @@
 import 'package:rongcloud_im_wrapper_plugin_example/strings/hint_string.dart';
 import 'package:rongcloud_im_wrapper_plugin_example/strings/lable_string.dart';
+import '../function/engine_function.dart' as engine_hand;
 import '../../auto/engine_auto_funtion.dart' as engine_fun;
 
 const loadConversations = {
@@ -490,4 +491,54 @@ const loadConversationTypeNotificationLevel = {
     },
   ],
   "action": engine_fun.getConversationTypeNotificationLevel,
+};
+
+const getConversationsByIdentifiers = {
+  "title": "根据标识列表批量获取会话",
+  "params": [
+    {
+      "key": "conversationTypes",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: 1,1",
+      "lable": "请输入会话类型列表",
+    },
+    {
+      "key": "targetIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: u1,u2",
+      "lable": "请输入 targetId 列表",
+    },
+    {
+      "key": "channelIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割，非超级群可为空",
+      "lable": "请输入 channelId 列表",
+    },
+  ],
+  "action": engine_hand.getConversationsByIdentifiers,
+};
+
+const removeConversationsByIdentifiers = {
+  "title": "根据标识列表批量移除会话",
+  "params": [
+    {
+      "key": "conversationTypes",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: 1,1",
+      "lable": "请输入会话类型列表",
+    },
+    {
+      "key": "targetIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割  eg: u1,u2",
+      "lable": "请输入 targetId 列表",
+    },
+    {
+      "key": "channelIds",
+      "type": "String",
+      "hint": "多个以英文 , 分割，非超级群可为空",
+      "lable": "请输入 channelId 列表",
+    },
+  ],
+  "action": engine_hand.removeConversationsByIdentifiers,
 };

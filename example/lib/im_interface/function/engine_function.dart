@@ -1443,6 +1443,231 @@ Future recallMessage(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
+Future recallMessageWithOption(Map arg) async {
+  if (arg['messageId'] == null) {
+    RCIWToast.showToast("messageId 为空");
+    return;
+  }
+  if (arg['isDelete'] == null) {
+    RCIWToast.showToast("isDelete 为空");
+    return;
+  }
+  String messageId = arg['messageId'];
+  int isDeleteInt = int.parse(arg['isDelete']);
+  bool isDelete = isDeleteInt == 0 ? false : true;
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+  RCIMIWMessage? message = await _getMessageById(int.parse(messageId));
+  if (message == null) {
+    RCIWToast.showToast("未查询到引用的message");
+    return;
+  }
+  IRCIMIWRecallMessageCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRecallMessageCallback(
+      onMessageRecalled: (code, message) {
+        Map<String, String> arg = {};
+        arg["listener"] = "recallMessageWithOption-onMessageRecalled";
+        String timeStr = _generateTimeStamp();
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+        arg["message"] = formatJson(message?.toJson());
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+  int? code = await IMEngineManager().engine?.recallMessageWithOption(
+    message,
+    isDelete,
+    callback: callback,
+  );
+
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "recallMessageWithOption";
+  String timeStr = _generateTimeStamp();
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+  bus.emit("rong_im_listener", resultCode);
+}
+
+// channelIds 未填或为空时按 targetIds 条数补空串（非超级群无需填频道）。
+List<String> _channelIdsForIdentifierDemo(Map arg, int targetCount) {
+  final raw = arg['channelIds'];
+  if (raw == null) {
+    return List<String>.filled(targetCount, '');
+  }
+  final s = raw.toString().trim();
+  if (s.isEmpty) {
+    return List<String>.filled(targetCount, '');
+  }
+  final parts = s.split(',').map((e) => e.trim()).toList();
+  if (parts.length == targetCount) {
+    return parts;
+  }
+  if (parts.length < targetCount) {
+    return [...parts, ...List.filled(targetCount - parts.length, '')];
+  }
+  return parts.sublist(0, targetCount);
+}
+
+Future getConversationsByIdentifiers(Map arg) async {
+  if (arg['conversationTypes'] == null) {
+    RCIWToast.showToast("conversationTypes 为空");
+    return;
+  }
+  if (arg['targetIds'] == null) {
+    RCIWToast.showToast("targetIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List conversationTypes = (arg["conversationTypes"]).split(",");
+  List<RCIMIWConversationType> conversationTypesInt = [];
+  for (var element in conversationTypes) {
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
+  }
+  List<String> targetIds = (arg["targetIds"]).split(",");
+  if (conversationTypesInt.length != targetIds.length) {
+    RCIWToast.showToast("conversationTypes 与 targetIds 数量不一致");
+    return;
+  }
+  List<String> channelIds = _channelIdsForIdentifierDemo(arg, targetIds.length);
+
+  IRCIMIWGetConversationsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetConversationsCallback(
+      onSuccess: (List<RCIMIWConversation>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getConversationsByIdentifiers-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getConversationsByIdentifiers-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getConversationsByIdentifiers(
+    conversationTypesInt,
+    targetIds,
+    channelIds,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getConversationsByIdentifiers";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+Future removeConversationsByIdentifiers(Map arg) async {
+  if (arg['conversationTypes'] == null) {
+    RCIWToast.showToast("conversationTypes 为空");
+    return;
+  }
+  if (arg['targetIds'] == null) {
+    RCIWToast.showToast("targetIds 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  List conversationTypes = (arg["conversationTypes"]).split(",");
+  List<RCIMIWConversationType> conversationTypesInt = [];
+  for (var element in conversationTypes) {
+    int? elementValue = int.tryParse(element);
+    if (elementValue == null || elementValue < 0 || elementValue >= RCIMIWConversationType.values.length) {
+      RCIWToast.showToast("conversationTypes 超出范围");
+      return;
+    }
+    conversationTypesInt.add(RCIMIWConversationType.values[elementValue]);
+  }
+  List<String> targetIds = (arg["targetIds"]).split(",");
+  if (conversationTypesInt.length != targetIds.length) {
+    RCIWToast.showToast("conversationTypes 与 targetIds 数量不一致");
+    return;
+  }
+  List<String> channelIds = _channelIdsForIdentifierDemo(arg, targetIds.length);
+
+  IRCIMIWCompletionCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWCompletionCallback(
+      onCompleted: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "removeConversationsByIdentifiers-onCompleted";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.removeConversationsByIdentifiers(
+    conversationTypesInt,
+    targetIds,
+    channelIds,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "removeConversationsByIdentifiers";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
 Future sendGroupReadReceiptRequest(Map arg) async {
   if (arg['messageId'] == null) {
     RCIWToast.showToast("messageId 为空");

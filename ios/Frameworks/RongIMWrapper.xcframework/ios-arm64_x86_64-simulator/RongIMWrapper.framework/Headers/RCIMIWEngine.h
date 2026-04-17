@@ -2736,6 +2736,47 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
                                      success:(void (^ _Nullable)(RCIMIWReadReceiptUsersResult * _Nullable result))successBlock
                                        error:(void (^ _Nullable)(NSInteger code))errorBlock;
 
+#pragma mark - 按标识批量操作会话
+
+/*!
+ 根据会话标识列表批量获取会话
+
+ @param conversationTypes  会话类型列表
+ @param targetIds          会话目标 ID 列表，与 conversationTypes 一一对应
+ @param channelIds         频道 ID 列表，与 conversationTypes 一一对应，非超级群会话传 nil
+ @param successBlock       成功回调，返回会话列表
+ @param errorBlock         失败回调，返回错误码
+ */
+- (NSInteger)getConversationsByIdentifiers:(NSArray<NSNumber *> *)conversationTypes
+                                 targetIds:(NSArray<NSString *> *)targetIds
+                                channelIds:(NSArray<NSString *> *)channelIds
+                                   success:(nullable void (^)(NSArray<RCIMIWConversation *> *conversations))successBlock
+                                     error:(nullable void (^)(NSInteger code))errorBlock;
+
+/*!
+ 根据会话标识列表批量移除会话
+
+ @param conversationTypes  会话类型列表
+ @param targetIds          会话目标 ID 列表，与 conversationTypes 一一对应
+ @param channelIds         频道 ID 列表，与 conversationTypes 一一对应，非超级群会话传 nil
+ @param completionBlock    完成回调，返回状态码，0 表示成功
+ */
+- (NSInteger)removeConversationsByIdentifiers:(NSArray<NSNumber *> *)conversationTypes
+                                    targetIds:(NSArray<NSString *> *)targetIds
+                                   channelIds:(NSArray<NSString *> *)channelIds
+                                   completion:(nullable void (^)(NSInteger code))completionBlock;
+
+/*!
+ 撤回消息（支持 isDelete 选项）
+
+ @param message            需要撤回的消息
+ @param isDelete           是否删除本地消息并移除远端消息记录
+ @param messageRecalledBlock 撤回结果回调
+ */
+- (NSInteger)recallMessageWithOption:(RCIMIWMessage *)message
+                            isDelete:(BOOL)isDelete
+                     messageRecalled:(nullable void (^)(NSInteger code, RCIMIWMessage *message))messageRecalledBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END
