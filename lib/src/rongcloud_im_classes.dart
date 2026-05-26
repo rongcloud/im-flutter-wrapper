@@ -2330,7 +2330,7 @@ class RCIMIWCombineV2Message extends RCIMIWMediaMessage {
   /// ---
   /// Combine message conversation type
   /// ---
-  int? combineConversationType;
+  RCIMIWConversationType? combineConversationType;
 
   /// [ZH]
   /// ---
@@ -2385,7 +2385,7 @@ class RCIMIWCombineV2Message extends RCIMIWMediaMessage {
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = super.toJson();
-    json['combineConversationType'] = combineConversationType;
+    json['combineConversationType'] = combineConversationType?.index;
     json['summaryList'] = summaryList;
     json['nameList'] = nameList;
     json['msgNum'] = msgNum;
@@ -2395,7 +2395,9 @@ class RCIMIWCombineV2Message extends RCIMIWMediaMessage {
   }
 
   RCIMIWCombineV2Message.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    combineConversationType = json['combineConversationType'];
+    combineConversationType = json['combineConversationType'] == null
+        ? null
+        : RCIMIWConversationType.values[json['combineConversationType']];
     summaryList = json['summaryList']?.cast<String>();
     nameList = json['nameList']?.cast<String>();
     msgNum = json['msgNum'];
