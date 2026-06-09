@@ -23,6 +23,17 @@ String _generateTimeStamp() {
   return "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
 }
 
+String? _optionalInputString(Map arg, String key) {
+  return arg.containsKey(key) ? arg[key] as String? : null;
+}
+
+Map<String, dynamic>? _optionalJsonMap(Map arg, String key) {
+  if (!arg.containsKey(key)) {
+    return null;
+  }
+  return Map<String, dynamic>.from(jsonDecode(arg[key] as String));
+}
+
 Future initEngine(Map arg) async {
   if (IMEngineManager().engine == null) {
     arg['appkey'] = arg['appkey'] ?? AccountInfo.appKey;
@@ -2379,14 +2390,13 @@ Future createGroup(Map arg) async {
 
   String groupId = arg['groupId'];
   String groupName = arg['groupName'] ?? "";
-  String portraitUri = arg['portraitUri'] ?? "";
-  String introduction = arg['introduction'] ?? "";
-  String notice = arg['notice'] ?? "";
-  String extProfile = arg['extProfile'] ?? "{}";
-  // 将 JSON 字符串解析为 Map
-  Map<String, dynamic> extProfileMap = {};
+  String? portraitUri = _optionalInputString(arg, 'portraitUri');
+  String? introduction = _optionalInputString(arg, 'introduction');
+  String? notice = _optionalInputString(arg, 'notice');
+  // 将 JSON 字符串解析为 Map，未输入时保持 null，不作为群资料字段下发
+  Map<String, dynamic>? extProfileMap;
   try {
-    extProfileMap = jsonDecode(extProfile);
+    extProfileMap = _optionalJsonMap(arg, 'extProfile');
   } catch (e) {
     RCIWToast.showToast("extProfile 解析失败，请检查格式");
     return;
@@ -2500,15 +2510,14 @@ Future updateGroupInfo(Map arg) async {
   int useCallback = int.parse(arg['use_cb'] ?? "1");
 
   String groupId = arg['groupId'];
-  String groupName = arg['groupName'] ?? "";
-  String portraitUri = arg['portraitUri'] ?? "";
-  String introduction = arg['introduction'] ?? "";
-  String notice = arg['notice'] ?? "";
-  String extProfile = arg['extProfile'] ?? "{}";
-  // 将 JSON 字符串解析为 Map
-  Map<String, dynamic> extProfileMap = {};
+  String? groupName = _optionalInputString(arg, 'groupName');
+  String? portraitUri = _optionalInputString(arg, 'portraitUri');
+  String? introduction = _optionalInputString(arg, 'introduction');
+  String? notice = _optionalInputString(arg, 'notice');
+  // 将 JSON 字符串解析为 Map，未输入时保持 null，不作为群资料字段下发
+  Map<String, dynamic>? extProfileMap;
   try {
-    extProfileMap = jsonDecode(extProfile);
+    extProfileMap = _optionalJsonMap(arg, 'extProfile');
   } catch (e) {
     RCIWToast.showToast("extProfile 解析失败，请检查格式");
     return;
