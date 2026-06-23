@@ -1,5 +1,7 @@
 # 融云 Flutter IMLib
 
+融云 IM Flutter 插件，基于 iOS/Android 原生 IM SDK 封装，为 Flutter 应用提供跨平台音视频能力。
+
 融云 IMLib 是即时通讯核心 SDK，支持单聊、群聊、聊天室、系统通知、超级群等功能。通过集成 IM Wrapper Plugin，您可以在 Flutter 应用中快速实现完整的即时通讯功能。
 
 [融云 iOS IMLib 文档](https://docs.rongcloud.cn/ios-imlib)
