@@ -44,7 +44,10 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWStreamMessage.h>
 #import <RongIMWrapper/RCIMIWStreamMessageChunkInfo.h>
 #import <RongIMWrapper/RCIMIWGroupNotificationMessage.h>
+#import <RongIMWrapper/RCIMIWInformationNotificationMessage.h>
 #import <RongIMWrapper/RCIMIWConversation.h>
+#import <RongIMWrapper/RCIMIWConversationTypeFilter.h>
+#import <RongIMWrapper/RCIMIWConversationListOption.h>
 #import <RongIMWrapper/RCIMIWSearchConversationResult.h>
 
 #import <RongIMWrapper/RCIMIWGroupReadReceiptInfo.h>
@@ -68,6 +71,11 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWMessageIdentifier.h>
 #import <RongIMWrapper/RCIMIWGroupMessageReaderV2.h>
 #import <RongIMWrapper/RCIMIWMessageAuditInfo.h>
+#import <RongIMWrapper/RCIMIWMessageModifyInfo.h>
+#import <RongIMWrapper/RCIMIWModifyMessageParams.h>
+#import <RongIMWrapper/RCIMIWEditedMessageDraft.h>
+#import <RongIMWrapper/RCIMIWRefreshReferenceMessageParams.h>
+#import <RongIMWrapper/RCIMIWMessageResult.h>
 
 #import <RongIMWrapper/RCIMIWDefines.h>
 
@@ -95,6 +103,9 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWPagingQueryOption.h>
 #import <RongIMWrapper/RCIMIWPagingQueryResult.h>
 #import <RongIMWrapper/RCIMIWGroupMemberInfo.h>
+#import <RongIMWrapper/RCIMIWGetGroupMembersOption.h>
+#import <RongIMWrapper/RCIMIWRobotInfo.h>
+#import <RongIMWrapper/RCIMIWConversationsContainingRobotsOption.h>
 #import <RongIMWrapper/RCIMIWGroupApplicationInfo.h>
 #import <RongIMWrapper/RCIMIWFollowInfo.h>
 #import <RongIMWrapper/RCIMIWChatRoomSyncEvent.h>

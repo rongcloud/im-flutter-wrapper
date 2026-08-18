@@ -37,6 +37,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertFriendRelationTypeToInteger:(RCIMIWFriendRelationType)FriendRelationType;
 
 
++ (RCIMIWReferenceMessageStatus)convertReferenceMessageStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertReferenceMessageStatusToInteger:(RCIMIWReferenceMessageStatus)ReferenceMessageStatus;
+
+
++ (RCIMIWMessageModifyStatus)convertMessageModifyStatusFromInteger:(NSInteger)integer;
++ (NSInteger)convertMessageModifyStatusToInteger:(RCIMIWMessageModifyStatus)MessageModifyStatus;
+
+
 + (RCIMIWGroupInviteHandlePermission)convertGroupInviteHandlePermissionFromInteger:(NSInteger)integer;
 + (NSInteger)convertGroupInviteHandlePermissionToInteger:(RCIMIWGroupInviteHandlePermission)GroupInviteHandlePermission;
 
@@ -63,6 +71,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (RCIMIWGroupOperationPermission)convertGroupOperationPermissionFromInteger:(NSInteger)integer;
 + (NSInteger)convertGroupOperationPermissionToInteger:(RCIMIWGroupOperationPermission)GroupOperationPermission;
+
+
++ (RCIMIWFilterRobotType)convertFilterRobotTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertFilterRobotTypeToInteger:(RCIMIWFilterRobotType)FilterRobotType;
 
 
 + (RCIMIWGroupOperationType)convertGroupOperationTypeFromInteger:(NSInteger)integer;
@@ -203,6 +215,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (RCIMIWMentionedType)convertMentionedTypeFromInteger:(NSInteger)integer;
 + (NSInteger)convertMentionedTypeToInteger:(RCIMIWMentionedType)MentionedType;
+
+
++ (RCIMIWConversationUnreadCountFilter)convertConversationUnreadCountFilterFromInteger:(NSInteger)integer;
++ (NSInteger)convertConversationUnreadCountFilterToInteger:(RCIMIWConversationUnreadCountFilter)ConversationUnreadCountFilter;
 
 
 + (RCIMIWAreaCode)convertAreaCodeFromInteger:(NSInteger)integer;

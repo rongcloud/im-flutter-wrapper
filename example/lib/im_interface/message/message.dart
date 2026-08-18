@@ -998,6 +998,120 @@ const recallMessageWithOption = {
   "action": engine_fun.recallMessageWithOption,
 };
 
+const modifyMessageWithParams = {
+  "title": "修改消息内容",
+  "params": [
+    {
+      "key": "messageUId",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入需要修改的消息 UId",
+    },
+    {"key": "text", "type": "String", "hint": "", "lable": "请输入修改后的文本内容"},
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "已能通过 messageUId 查到原消息时可不填",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "已能通过 messageUId 查到原消息时可不填",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": HintString.channelIdString,
+      "lable": LableString.editChannelIdString,
+    },
+  ],
+  "action": engine_fun.modifyMessageWithParams,
+};
+
+const saveEditedMessageDraft = {
+  "title": "保存消息修改草稿",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": HintString.channelIdString,
+      "lable": LableString.editChannelIdString,
+    },
+    {
+      "key": "messageUId",
+      "type": "String",
+      "hint": "",
+      "lable": "请输入草稿关联的消息 UId",
+    },
+    {"key": "content", "type": "String", "hint": "", "lable": "请输入消息修改草稿内容"},
+  ],
+  "action": engine_fun.saveEditedMessageDraft,
+};
+
+const getEditedMessageDraft = {
+  "title": "获取消息修改草稿",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": HintString.channelIdString,
+      "lable": LableString.editChannelIdString,
+    },
+  ],
+  "action": engine_fun.getEditedMessageDraft,
+};
+
+const clearEditedMessageDraft = {
+  "title": "清除消息修改草稿",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": HintString.channelIdString,
+      "lable": LableString.editChannelIdString,
+    },
+  ],
+  "action": engine_fun.clearEditedMessageDraft,
+};
+
 const sendPrivateReadReceiptMessage = {
   "title": "发送单聊的已读回执",
   "params": [

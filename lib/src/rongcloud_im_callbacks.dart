@@ -181,6 +181,32 @@ class IRCIMIWCancelDownloadingMediaMessageCallback {
   Function(int? code, RCIMIWMediaMessage? message) onCancelDownloadingMediaMessageCalled;
 }
 
+class IRCIMIWOperationCallback {
+  IRCIMIWOperationCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 操作成功回调
+  /// ---
+  /// [EN]
+  /// ---
+  /// Operation succeeded callback
+  /// ---
+  Function() onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 操作失败回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Operation failed callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
 class IRCIMIWGetConversationCallback {
   IRCIMIWGetConversationCallback({required this.onSuccess, required this.onError});
 
@@ -288,32 +314,6 @@ class IRCIMIWGetUnreadConversationsCallback {
   /// [EN]
   /// ---
   /// Error callback
-  /// - code Error code
-  /// ---
-  Function(int? code) onError;
-}
-
-class IRCIMIWOperationCallback {
-  IRCIMIWOperationCallback({required this.onSuccess, required this.onError});
-
-  /// [ZH]
-  /// ---
-  /// 操作成功回调
-  /// ---
-  /// [EN]
-  /// ---
-  /// Operation succeeded callback
-  /// ---
-  Function() onSuccess;
-
-  /// [ZH]
-  /// ---
-  /// 操作失败回调
-  /// - code 错误码
-  /// ---
-  /// [EN]
-  /// ---
-  /// Operation failed callback
   /// - code Error code
   /// ---
   Function(int? code) onError;
@@ -2041,6 +2041,62 @@ class IRCIMIWGetGroupMembersByRoleCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWGetRobotsCallback {
+  IRCIMIWGetRobotsCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回对象
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned object
+  /// ---
+  Function(List<RCIMIWRobotInfo>? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetRobotInfoCallback {
+  IRCIMIWGetRobotInfoCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回对象
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned object
+  /// ---
+  Function(RCIMIWRobotInfo? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
 class IRCIMIWGetJoinedGroupsByRoleCallback {
   IRCIMIWGetJoinedGroupsByRoleCallback({required this.onSuccess, required this.onError});
 
@@ -2839,6 +2895,96 @@ class IRCIMIWGetMessagesReadReceiptByUsersV5Callback {
   /// ---
   /// Error callback
   /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWModifyMessageCallback {
+  IRCIMIWModifyMessageCallback({required this.onMessageModified});
+
+  /// [ZH]
+  /// ---
+  /// 消息修改完成回调。
+  /// @param code 接口回调的状态码，0 代表成功，非 0 代表出现异常
+  /// @param message 修改后的消息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Callback for message modification completion.
+  /// @param code Indicates the status code of the callback. 0 represents success, non-zero indicates an exception.
+  /// @param message Modified message.
+  /// ---
+  Function(int? code, RCIMIWMessage? message) onMessageModified;
+}
+
+class IRCIMIWRefreshReferenceMessageCallback {
+  IRCIMIWRefreshReferenceMessageCallback({
+    required this.onLocalMessageBlock,
+    required this.onRemoteMessageBlock,
+    required this.onError,
+  });
+
+  /// [ZH]
+  /// ---
+  /// 本地查询结果回调。
+  /// @param results 本地查询结果
+  /// ---
+  /// [EN]
+  /// ---
+  /// Local query result callback.
+  /// @param results Local query results.
+  /// ---
+  Function(List<RCIMIWMessageResult>? results) onLocalMessageBlock;
+
+  /// [ZH]
+  /// ---
+  /// 远端查询结果回调。
+  /// @param results 远端查询结果
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remote query result callback.
+  /// @param results Remote query results.
+  /// ---
+  Function(List<RCIMIWMessageResult>? results) onRemoteMessageBlock;
+
+  /// [ZH]
+  /// ---
+  /// 查询失败回调。
+  /// @param code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Query failure callback.
+  /// @param code Error code.
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetEditedMessageDraftCallback {
+  IRCIMIWGetEditedMessageDraftCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 获取消息编辑草稿成功回调。
+  /// @param draft 消息编辑草稿
+  /// ---
+  /// [EN]
+  /// ---
+  /// Callback for successfully getting an edited-message draft.
+  /// @param draft Edited-message draft.
+  /// ---
+  Function(RCIMIWEditedMessageDraft? draft) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 获取消息编辑草稿失败回调。
+  /// @param code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Callback for failing to get an edited-message draft.
+  /// @param code Error code.
   /// ---
   Function(int? code) onError;
 }

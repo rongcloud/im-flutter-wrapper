@@ -102,6 +102,8 @@ static RCIMWrapperEngine *instance = nil;
     [self downloadMediaMessage:call result:result];
   } else if ([@"engine:cancelDownloadingMediaMessage" isEqualToString:call.method]) {
     [self cancelDownloadingMediaMessage:call result:result];
+  } else if ([@"engine:pauseDownloadingMediaMessage" isEqualToString:call.method]) {
+    [self pauseDownloadingMediaMessage:call result:result];
   } else if ([@"engine:loadConversation" isEqualToString:call.method]) {
     [self loadConversation:call result:result];
   } else if ([@"engine:getConversation" isEqualToString:call.method]) {
@@ -112,6 +114,8 @@ static RCIMWrapperEngine *instance = nil;
     [self getConversations:call result:result];
   } else if ([@"engine:getConversationsWithPriority" isEqualToString:call.method]) {
     [self getConversationsWithPriority:call result:result];
+  } else if ([@"engine:getConversationListByFilters" isEqualToString:call.method]) {
+    [self getConversationListByFilters:call result:result];
   } else if ([@"engine:getUnreadConversations" isEqualToString:call.method]) {
     [self getUnreadConversations:call result:result];
   } else if ([@"engine:getRemoteConversationList" isEqualToString:call.method]) {
@@ -412,6 +416,14 @@ static RCIMWrapperEngine *instance = nil;
     [self getGroupMembers:call result:result];
   } else if ([@"engine:getGroupMembersByRole" isEqualToString:call.method]) {
     [self getGroupMembersByRole:call result:result];
+  } else if ([@"engine:getGroupMembersByRoleWithOption" isEqualToString:call.method]) {
+    [self getGroupMembersByRoleWithOption:call result:result];
+  } else if ([@"engine:getAllRobots" isEqualToString:call.method]) {
+    [self getAllRobots:call result:result];
+  } else if ([@"engine:getRobotById" isEqualToString:call.method]) {
+    [self getRobotById:call result:result];
+  } else if ([@"engine:getConversationsIncludingRobots" isEqualToString:call.method]) {
+    [self getConversationsIncludingRobots:call result:result];
   } else if ([@"engine:getJoinedGroupsByRole" isEqualToString:call.method]) {
     [self getJoinedGroupsByRole:call result:result];
   } else if ([@"engine:getJoinedGroups" isEqualToString:call.method]) {
@@ -530,6 +542,16 @@ static RCIMWrapperEngine *instance = nil;
     [self removeConversationsByIdentifiers:call result:result];
   } else if ([@"engine:recallMessageWithOption" isEqualToString:call.method]) {
     [self recallMessageWithOption:call result:result];
+  } else if ([@"engine:modifyMessageWithParams" isEqualToString:call.method]) {
+    [self modifyMessageWithParams:call result:result];
+  } else if ([@"engine:refreshReferenceMessageWithParams" isEqualToString:call.method]) {
+    [self refreshReferenceMessageWithParams:call result:result];
+  } else if ([@"engine:saveEditedMessageDraft" isEqualToString:call.method]) {
+    [self saveEditedMessageDraft:call result:result];
+  } else if ([@"engine:getEditedMessageDraft" isEqualToString:call.method]) {
+    [self getEditedMessageDraft:call result:result];
+  } else if ([@"engine:clearEditedMessageDraft" isEqualToString:call.method]) {
+    [self clearEditedMessageDraft:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -1064,6 +1086,44 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)pauseDownloadingMediaMessage:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWMediaMessage *message = [RCIMIWPlatformConverter convertMediaMessageFromDict:arguments[@"message"]];
+    void (^success)() = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine pauseDownloadingMediaMessage:message success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
 - (void)loadConversation:(FlutterMethodCall *)call result:(FlutterResult)result {
   NSInteger code = -1;
   if (self.engine != nil) {
@@ -1225,6 +1285,57 @@ static RCIMWrapperEngine *instance = nil;
       };
     }
     code = [self.engine getConversationsWithPriority:conversationTypes channelId:channelId startTime:startTime count:count topPriority:topPriority success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getConversationListByFilters:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+
+    NSMutableArray *filters = [NSMutableArray array];
+    NSArray<NSDictionary *> *elementList = arguments[@"filters"];
+    for (NSDictionary *element in elementList) {
+      [filters addObject:[RCIMIWPlatformConverter convertConversationTypeFilterFromDict:element]];
+    }
+
+    RCIMIWConversationListOption *option = [RCIMIWPlatformConverter convertConversationListOptionFromDict:arguments[@"option"]];
+    void (^success)(NSArray<RCIMIWConversation *> *_Nullable t) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWConversation *> *t) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWConversation *element in t) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertConversationToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetConversationsCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetConversationsCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getConversationListByFilters:filters option:option success:success error:error];
   }
   dispatch_to_main_queue(^{
     result(@(code));
@@ -5814,6 +5925,173 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)getGroupMembersByRoleWithOption:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *groupId = arguments[@"groupId"];
+    RCIMIWGroupMemberRole role = [RCIMWrapperArgumentAdapter convertGroupMemberRoleFromInteger:[(NSNumber *)arguments[@"role"] integerValue]];
+    RCIMIWGetGroupMembersOption *option = [RCIMIWPlatformConverter convertGetGroupMembersOptionFromDict:arguments[@"option"]];
+    void (^success)(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo *> *_Nullable result) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo *> *result) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertPagingQueryResultToDict:result] forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetGroupMembersByRoleCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetGroupMembersByRoleCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getGroupMembersByRoleWithOption:groupId role:role option:option success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getAllRobots:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    void (^successBlock)(NSArray<RCIMIWRobotInfo *> *_Nullable robots) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      successBlock = ^(NSArray<RCIMIWRobotInfo *> *robots) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWRobotInfo *element in robots) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertRobotInfoToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetRobotsCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetRobotsCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getAllRobots:successBlock error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getRobotById:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    NSString *robotId = arguments[@"robotId"];
+    void (^success)(RCIMIWRobotInfo *_Nullable robot) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(RCIMIWRobotInfo *robot) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertRobotInfoToDict:robot] forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetRobotInfoCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetRobotInfoCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getRobotById:robotId success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getConversationsIncludingRobots:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationsContainingRobotsOption *option = [RCIMIWPlatformConverter convertConversationsContainingRobotsOptionFromDict:arguments[@"option"]];
+    void (^success)(NSArray<RCIMIWConversation *> *_Nullable conversations) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWConversation *> *conversations) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWConversation *element in conversations) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertConversationToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetConversationsCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetConversationsCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getConversationsIncludingRobots:option success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
 - (void)getJoinedGroupsByRole:(FlutterMethodCall *)call result:(FlutterResult)result {
   NSInteger code = -1;
   if (self.engine != nil) {
@@ -7978,6 +8256,195 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)modifyMessageWithParams:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWModifyMessageParams *params = [RCIMIWPlatformConverter convertModifyMessageParamsFromDict:arguments[@"params"]];
+    void (^messageModified)(NSInteger code, RCIMIWMessage *_Nullable message) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      messageModified = ^(NSInteger code, RCIMIWMessage *message) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+        [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWModifyMessageCallback_onMessageModified" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine modifyMessageWithParams:params messageModified:messageModified];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)refreshReferenceMessageWithParams:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWRefreshReferenceMessageParams *params = [RCIMIWPlatformConverter convertRefreshReferenceMessageParamsFromDict:arguments[@"params"]];
+    void (^localMessageBlock)(NSArray<RCIMIWMessageResult *> *_Nullable results) = nil;
+    void (^remoteMessageBlock)(NSArray<RCIMIWMessageResult *> *_Nullable results) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      localMessageBlock = ^(NSArray<RCIMIWMessageResult *> *results) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *results_arr = [NSMutableArray array];
+        for (RCIMIWMessageResult *element in results) {
+          [results_arr addObject:[RCIMIWPlatformConverter convertMessageResultToDict:element]];
+        }
+        [arguments setValue:results_arr.copy forKey:@"results"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWRefreshReferenceMessageCallback_onLocalMessageBlock" arguments:arguments.copy];
+        });
+      };
+      remoteMessageBlock = ^(NSArray<RCIMIWMessageResult *> *results) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *results_arr = [NSMutableArray array];
+        for (RCIMIWMessageResult *element in results) {
+          [results_arr addObject:[RCIMIWPlatformConverter convertMessageResultToDict:element]];
+        }
+        [arguments setValue:results_arr.copy forKey:@"results"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWRefreshReferenceMessageCallback_onRemoteMessageBlock" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWRefreshReferenceMessageCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine refreshReferenceMessageWithParams:params localMessageBlock:localMessageBlock remoteMessageBlock:remoteMessageBlock error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)saveEditedMessageDraft:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    RCIMIWEditedMessageDraft *draft = [RCIMIWPlatformConverter convertEditedMessageDraftFromDict:arguments[@"draft"]];
+    void (^completion)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      completion = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWCompletionCallback_onCompleted" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine saveEditedMessageDraft:type targetId:targetId channelId:channelId draft:draft completion:completion];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getEditedMessageDraft:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    void (^success)(RCIMIWEditedMessageDraft *_Nullable draft) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(RCIMIWEditedMessageDraft *draft) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertEditedMessageDraftToDict:draft] forKey:@"draft"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetEditedMessageDraftCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetEditedMessageDraftCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getEditedMessageDraft:type targetId:targetId channelId:channelId success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)clearEditedMessageDraft:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"];
+    void (^completion)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      completion = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWCompletionCallback_onCompleted" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine clearEditedMessageDraft:type targetId:targetId channelId:channelId completion:completion];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
 - (void)onMessageReceived:(RCIMIWMessage *)message left:(NSInteger)left offline:(BOOL)offline hasPackage:(BOOL)hasPackage {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];
@@ -8205,6 +8672,32 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onRemoteUltraGroupMessageModified" arguments:arguments.copy];
+  });
+}
+
+- (void)onMessagesModified:(NSArray<RCIMIWMessage *> *)messages {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+
+  NSMutableArray *messages_arr = [NSMutableArray array];
+  for (RCIMIWMessage *element in messages) {
+    [messages_arr addObject:[RCIMIWPlatformConverter convertMessageToDict:element]];
+  }
+  [arguments setValue:messages_arr.copy forKey:@"messages"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onMessagesModified" arguments:arguments.copy];
+  });
+}
+
+- (void)onModifiedMessageSyncCompleted {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onModifiedMessageSyncCompleted" arguments:arguments.copy];
   });
 }
 
@@ -9603,6 +10096,18 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)onMessageModified:(NSInteger)code message:(nullable RCIMIWMessage *)message {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@(code) forKey:@"code"];
+  [arguments setValue:[RCIMIWPlatformConverter convertMessageToDict:message] forKey:@"message"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onMessageModified" arguments:arguments.copy];
+  });
+}
+
 - (void)onUltraGroupMessageRecalled:(NSInteger)code message:(RCIMIWMessage *)message deleteRemote:(BOOL)deleteRemote {
   NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
   [arguments setValue:@(code) forKey:@"code"];
@@ -9992,6 +10497,23 @@ static RCIMWrapperEngine *instance = nil;
   dispatch_to_main_queue(^{
     typeof(weak) strong = weak;
     [strong invokeMethod:@"engine:onMessageReadReceiptV5Received" arguments:arguments.copy];
+  });
+}
+
+- (void)onRobotSyncCompleted:(NSInteger)code robots:(NSArray<RCIMIWRobotInfo *> *)robots {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+  [arguments setValue:@(code) forKey:@"code"];
+
+  NSMutableArray *robots_arr = [NSMutableArray array];
+  for (RCIMIWRobotInfo *element in robots) {
+    [robots_arr addObject:[RCIMIWPlatformConverter convertRobotInfoToDict:element]];
+  }
+  [arguments setValue:robots_arr.copy forKey:@"robots"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onRobotSyncCompleted" arguments:arguments.copy];
   });
 }
 

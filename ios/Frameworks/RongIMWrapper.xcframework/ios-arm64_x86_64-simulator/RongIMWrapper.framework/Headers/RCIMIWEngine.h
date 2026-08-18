@@ -21,6 +21,7 @@
 #import <RongIMWrapper/RCIMIWNativeCustomMessage.h>
 #import <RongIMWrapper/RCIMIWNativeCustomMediaMessage.h>
 #import <RongIMWrapper/RCIMIWGroupNotificationMessage.h>
+#import <RongIMWrapper/RCIMIWInformationNotificationMessage.h>
 #import <RongIMWrapper/RCIMIWCombineV2Message.h>
 #import <RongIMWrapper/RCIMIWCombineMsgInfo.h>
 #import <RongIMWrapper/RCIMIWStreamMessage.h>
@@ -31,6 +32,9 @@
 #import <RongIMWrapper/RCIMIWPagingQueryOption.h>
 #import <RongIMWrapper/RCIMIWPagingQueryResult.h>
 #import <RongIMWrapper/RCIMIWGroupMemberInfo.h>
+#import <RongIMWrapper/RCIMIWGetGroupMembersOption.h>
+#import <RongIMWrapper/RCIMIWRobotInfo.h>
+#import <RongIMWrapper/RCIMIWConversationsContainingRobotsOption.h>
 #import <RongIMWrapper/RCIMIWGroupApplicationInfo.h>
 #import <RongIMWrapper/RCIMIWFollowInfo.h>
 #import <RongIMWrapper/RCIMIWChatRoomSyncEvent.h>
@@ -52,6 +56,12 @@
 #import <RongIMWrapper/RCIMIWReadReceiptUsersOption.h>
 #import <RongIMWrapper/RCIMIWReadReceiptUsersResult.h>
 #import <RongIMWrapper/RCIMIWNotificationQuietHoursSetting.h>
+#import <RongIMWrapper/RCIMIWModifyMessageParams.h>
+#import <RongIMWrapper/RCIMIWEditedMessageDraft.h>
+#import <RongIMWrapper/RCIMIWRefreshReferenceMessageParams.h>
+#import <RongIMWrapper/RCIMIWMessageResult.h>
+#import <RongIMWrapper/RCIMIWConversationTypeFilter.h>
+#import <RongIMWrapper/RCIMIWConversationListOption.h>
 
 
 @class RCIMIWEngineOptions;
@@ -116,6 +126,146 @@ __deprecated_msg("Use [RCIMIWEngine connect:timeout:databaseOpened:connected:] i
 /// - Parameter persistentFlag: 消息存储策略
 /// - Returns: 接口调用状态
 - (NSInteger)registerNativeCustomMediaMessage:(NSString *)messageIdentifier persistentFlag:(RCIMIWNativeCustomMessagePersistentFlag)persistent;
+
+/**
+ * [ZH]
+ * ---
+ * 修改消息。
+ *
+ * @param params 消息修改参数
+ * @param messageModifiedBlock 消息修改结果回调
+ * @return 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+ * ---
+ * [EN]
+ * ---
+ * Modify a message.
+ *
+ * @param params Message modification parameters.
+ * @param messageModifiedBlock Message modification result callback.
+ * @return Operation status code. 0 indicates success; other values mean failure.
+ * ---
+ */
+- (NSInteger)modifyMessageWithParams:(RCIMIWModifyMessageParams *)params
+                     messageModified:(nullable void (^)(NSInteger code, RCIMIWMessage *_Nullable message))messageModifiedBlock;
+
+/**
+ * [ZH]
+ * ---
+ * 批量刷新引用消息。
+ *
+ * 本地存在的消息先通过本地结果回调返回，本地未命中的消息会继续从远端查询并通过远端结果回调返回。
+ *
+ * @param params 刷新引用消息参数，消息唯一 ID 最多 20 个
+ * @param localMessageBlock 本地查询结果回调
+ * @param remoteMessageBlock 远端查询结果回调
+ * @param errorBlock 查询失败回调
+ * @return 当次接口操作的状态码。0 代表调用成功，非 0 代表失败且不会触发回调
+ * ---
+ * [EN]
+ * ---
+ * Refresh referenced messages in batches.
+ *
+ * Locally available messages are returned first through the local callback. Messages not found locally are queried
+ * from the server and returned through the remote callback.
+ *
+ * @param params Refresh parameters. At most 20 message unique IDs are allowed.
+ * @param localMessageBlock Local query result callback.
+ * @param remoteMessageBlock Remote query result callback.
+ * @param errorBlock Query failure callback.
+ * @return Operation status code. 0 indicates the call was accepted; non-zero means failure and no callback.
+ * ---
+ */
+- (NSInteger)refreshReferenceMessageWithParams:(RCIMIWRefreshReferenceMessageParams *)params
+                             localMessageBlock:(nullable void (^)(NSArray<RCIMIWMessageResult *> *results))localMessageBlock
+                            remoteMessageBlock:(nullable void (^)(NSArray<RCIMIWMessageResult *> *results))remoteMessageBlock
+                                         error:(nullable void (^)(NSInteger code))errorBlock;
+
+/**
+ * [ZH]
+ * ---
+ * 保存会话消息编辑草稿。
+ *
+ * @param type 会话类型
+ * @param targetId 会话 ID
+ * @param channelId 频道 ID，仅支持超级群使用，其他会话类型传 nil 即可
+ * @param draft 消息编辑草稿
+ * @param completionBlock 结果回调
+ * @return 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+ * ---
+ * [EN]
+ * ---
+ * Save the edited-message draft for a conversation.
+ *
+ * @param type Conversation type.
+ * @param targetId Conversation ID.
+ * @param channelId Channel ID. Only ultra group conversations use this value; pass nil for other conversation types.
+ * @param draft Edited-message draft.
+ * @param completionBlock Result callback.
+ * @return Operation status code. 0 indicates success; other values mean failure.
+ * ---
+ */
+- (NSInteger)saveEditedMessageDraft:(RCIMIWConversationType)type
+                            targetId:(NSString *)targetId
+                           channelId:(nullable NSString *)channelId
+                               draft:(nullable RCIMIWEditedMessageDraft *)draft
+                          completion:(nullable void (^)(NSInteger code))completionBlock;
+
+/**
+ * [ZH]
+ * ---
+ * 获取会话消息编辑草稿。
+ *
+ * @param type 会话类型
+ * @param targetId 会话 ID
+ * @param channelId 频道 ID，仅支持超级群使用，其他会话类型传 nil 即可
+ * @param successBlock 获取成功回调
+ * @param errorBlock 获取失败回调
+ * @return 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+ * ---
+ * [EN]
+ * ---
+ * Get the edited-message draft for a conversation.
+ *
+ * @param type Conversation type.
+ * @param targetId Conversation ID.
+ * @param channelId Channel ID. Only ultra group conversations use this value; pass nil for other conversation types.
+ * @param successBlock Success callback.
+ * @param errorBlock Error callback.
+ * @return Operation status code. 0 indicates success; other values mean failure.
+ * ---
+ */
+- (NSInteger)getEditedMessageDraft:(RCIMIWConversationType)type
+                           targetId:(NSString *)targetId
+                          channelId:(nullable NSString *)channelId
+                            success:(nullable void (^)(RCIMIWEditedMessageDraft *_Nullable draft))successBlock
+                              error:(nullable void (^)(NSInteger code))errorBlock;
+
+/**
+ * [ZH]
+ * ---
+ * 清理会话消息编辑草稿。
+ *
+ * @param type 会话类型
+ * @param targetId 会话 ID
+ * @param channelId 频道 ID，仅支持超级群使用，其他会话类型传 nil 即可
+ * @param completionBlock 结果回调
+ * @return 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+ * ---
+ * [EN]
+ * ---
+ * Clear the edited-message draft for a conversation.
+ *
+ * @param type Conversation type.
+ * @param targetId Conversation ID.
+ * @param channelId Channel ID. Only ultra group conversations use this value; pass nil for other conversation types.
+ * @param completionBlock Result callback.
+ * @return Operation status code. 0 indicates success; other values mean failure.
+ * ---
+ */
+- (NSInteger)clearEditedMessageDraft:(RCIMIWConversationType)type
+                             targetId:(NSString *)targetId
+                            channelId:(nullable NSString *)channelId
+                           completion:(nullable void (^)(NSInteger code))completionBlock;
 
 - (RCIMIWTextMessage *)createTextMessage:(RCIMIWConversationType)type
                                 targetId:(NSString *)targetId
@@ -283,6 +433,15 @@ __deprecated_msg("Use [RCIMIWEngine cancelDownloadingMediaMessage:cancelDownload
 
 - (NSInteger)cancelDownloadingMediaMessage:(RCIMIWMediaMessage *)message
        cancelDownloadingMediaMessageCalled:(nullable void (^)(NSInteger code, RCIMIWMediaMessage *message))cancelDownloadingMediaMessageCalledBlock;
+
+/// 暂停下载媒体消息。如需继续下载，重新调用下载接口即可。
+/// - Parameters:
+///   - message: 需要暂停下载的媒体消息实体
+///   - successBlock: 成功回调
+///   - errorBlock: 失败回调
+- (NSInteger)pauseDownloadingMediaMessage:(RCIMIWMediaMessage *)message
+                                  success:(nullable void (^)(void))successBlock
+                                    error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 获取历史消息
 
@@ -765,6 +924,41 @@ __deprecated_msg("Use [RCIMIWEngine getConversations:channelId:startTime:count:s
                               topPriority:(BOOL)topPriority
                                   success:(nullable void (^)(NSArray<RCIMIWConversation *> *))successBlock
                                     error:(nullable void (^)(NSInteger code))errorBlock;
+
+/**
+ * [ZH]
+ * ---
+ * 按会话类型、频道、分页、排序和未读数条件获取本地会话列表。
+ *
+ * filter 的 channelId 为 nil/null 表示不按频道过滤，空字符串表示默认频道。
+ * option 为 nil 时使用原生默认配置：count 为 20、startTime 为 0、topPriority 为 YES、
+ * unreadCountFilter 为 RCIMIWConversationUnreadCountFilterAll。
+ *
+ * @param filters 会话类型和频道过滤条件
+ * @param option 分页、排序和未读数筛选配置，传 nil 使用原生默认配置
+ * @param successBlock 成功回调
+ * @param errorBlock 失败回调
+ * @return 接口调用状态码，0 表示调用成功
+ * ---
+ * [EN]
+ * ---
+ * Gets local conversations using type, channel, pagination, sorting, and unread-count filters.
+ *
+ * A nil/null channel ID in a filter disables channel filtering, while an empty string selects the default channel.
+ * When option is nil, the native defaults are used: count is 20, startTime is 0, topPriority is YES, and
+ * unreadCountFilter is RCIMIWConversationUnreadCountFilterAll.
+ *
+ * @param filters Conversation type and channel filters.
+ * @param option Pagination, sorting, and unread-count options. Pass nil to use the native defaults.
+ * @param successBlock Success callback.
+ * @param errorBlock Error callback.
+ * @return Invocation status code. Zero indicates that the call was accepted.
+ * ---
+ */
+- (NSInteger)getConversationListByFilters:(NSArray<RCIMIWConversationTypeFilter *> *)filters
+                                    option:(nullable RCIMIWConversationListOption *)option
+                                   success:(nullable void (^)(NSArray<RCIMIWConversation *> *))successBlock
+                                     error:(nullable void (^)(NSInteger code))errorBlock;
 
 - (NSInteger)removeConversation:(RCIMIWConversationType)type
                        targetId:(NSString *)targetId
@@ -2313,6 +2507,40 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
                             option:(RCIMIWPagingQueryOption *)option
                            success:(void (^)(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo *> *result))successBlock
                              error:(void (^)(NSInteger code))errorBlock;
+
+/// 分页获取群成员信息，支持按机器人标识过滤
+/// - Parameter groupId: 群组ID
+/// - Parameter role: 群成员角色
+/// - Parameter option: 查询选项，包含 页面标识（非必填，不填返回第一页数据）、每页条数（最大不超过 100 条）、是否正序查询（默认按加入群组时间倒序）、按机器人标识过滤类型（默认获取所有成员）
+/// - Parameter successBlock: 成功回调
+/// - Parameter errorBlock: 失败回调
+- (NSInteger)getGroupMembersByRoleWithOption:(NSString *)groupId
+                                        role:(RCIMIWGroupMemberRole)role
+                                      option:(RCIMIWGetGroupMembersOption *)option
+                                     success:(void (^)(RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo *> *result))successBlock
+                                       error:(void (^)(NSInteger code))errorBlock;
+
+/// 获取应用下的所有机器人信息列表
+/// - Parameter successBlock: 成功回调
+/// - Parameter errorBlock: 失败回调
+- (NSInteger)getAllRobots:(void (^)(NSArray<RCIMIWRobotInfo *> *robots))successBlock
+                    error:(void (^)(NSInteger code))errorBlock;
+
+/// 获取单个机器人信息
+/// - Parameter robotId: 机器人 ID
+/// - Parameter successBlock: 成功回调
+/// - Parameter errorBlock: 失败回调
+- (NSInteger)getRobotById:(NSString *)robotId
+                  success:(void (^)(RCIMIWRobotInfo *robot))successBlock
+                    error:(void (^)(NSInteger code))errorBlock;
+
+/// 获取包含机器人的会话列表，当前仅支持单聊会话、系统会话
+/// - Parameter option: 获取机器人会话列表参数，包含 时间戳（默认 0，从最新会话开始获取）、会话类型列表、获取数量（[1, 100]）、是否置顶优先
+/// - Parameter successBlock: 成功回调
+/// - Parameter errorBlock: 失败回调
+- (NSInteger)getConversationsIncludingRobots:(RCIMIWConversationsContainingRobotsOption *)option
+                                     success:(void (^)(NSArray<RCIMIWConversation *> *conversations))successBlock
+                                       error:(void (^)(NSInteger code))errorBlock;
 
 /// 按角色获取已加入群组的资料
 /// - Parameter role: 群成员角色

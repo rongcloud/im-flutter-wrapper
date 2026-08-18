@@ -24,7 +24,7 @@
 dependencies:
   flutter:
     sdk: flutter
-  rongcloud_im_wrapper_plugin: 5.32.10
+  rongcloud_im_wrapper_plugin: 5.44.0
 ```
 
 ## 快速开始
@@ -116,7 +116,7 @@ Add the following dependencies to your project's `pubspec.yaml`:
 dependencies:
   flutter:
     sdk: flutter
-  rongcloud_im_wrapper_plugin: 5.32.10
+  rongcloud_im_wrapper_plugin: 5.44.0
 ```
 
 ## Quick Start

@@ -13,6 +13,7 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomSyncStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWChatRoomSyncStatusReason;
 import cn.rongcloud.im.wrapper.constants.RCIMIWConnectionStatus;
 import cn.rongcloud.im.wrapper.constants.RCIMIWConversationType;
+import cn.rongcloud.im.wrapper.constants.RCIMIWConversationUnreadCountFilter;
 import cn.rongcloud.im.wrapper.constants.RCIMIWCustomMessagePolicy;
 import cn.rongcloud.im.wrapper.constants.RCIMIWErrorCode;
 import cn.rongcloud.im.wrapper.constants.RCIMIWImportanceHW;
@@ -44,6 +45,7 @@ import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendApplicationStatus;
 import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendApplicationType;
 import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendRelationType;
 import cn.rongcloud.im.wrapper.friend.constants.RCIMIWFriendType;
+import cn.rongcloud.im.wrapper.group.constants.RCIMIWFilterRobotType;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationDirection;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationStatus;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupApplicationType;
@@ -55,6 +57,8 @@ import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperation;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationPermission;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationType;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupStatus;
+import cn.rongcloud.im.wrapper.messages.RCIMIWMessageModifyStatus;
+import cn.rongcloud.im.wrapper.messages.RCIMIWReferenceMessageStatus;
 import cn.rongcloud.im.wrapper.settings.RCIMIWGroupReadReceiptVersion;
 import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWPlatform;
 import cn.rongcloud.im.wrapper.subscribeevent.RCIMIWSubscribeOperationType;
@@ -66,7 +70,11 @@ public class RCIMWrapperArgumentAdapter {
   private RCIMWrapperArgumentAdapter() {}
 
   static RCIMIWGroupReadReceiptVersion toRCIMIWGroupReadReceiptVersion(@NonNull Integer type) {
-    return RCIMIWGroupReadReceiptVersion.values()[type];
+    RCIMIWGroupReadReceiptVersion[] values = RCIMIWGroupReadReceiptVersion.values();
+    if (type < 0 || type >= values.length) {
+      return RCIMIWGroupReadReceiptVersion.UNKNOWN;
+    }
+    return values[type];
   }
 
   static RCIMIWFriendType toRCIMIWFriendType(@NonNull Integer type) {
@@ -87,6 +95,14 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWFriendRelationType toRCIMIWFriendRelationType(@NonNull Integer type) {
     return RCIMIWFriendRelationType.values()[type];
+  }
+
+  static RCIMIWReferenceMessageStatus toRCIMIWReferenceMessageStatus(@NonNull Integer type) {
+    return RCIMIWReferenceMessageStatus.values()[type];
+  }
+
+  static RCIMIWMessageModifyStatus toRCIMIWMessageModifyStatus(@NonNull Integer type) {
+    return RCIMIWMessageModifyStatus.values()[type];
   }
 
   static RCIMIWGroupInviteHandlePermission toRCIMIWGroupInviteHandlePermission(
@@ -116,6 +132,10 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWGroupOperationPermission toRCIMIWGroupOperationPermission(@NonNull Integer type) {
     return RCIMIWGroupOperationPermission.values()[type];
+  }
+
+  static RCIMIWFilterRobotType toRCIMIWFilterRobotType(@NonNull Integer type) {
+    return RCIMIWFilterRobotType.values()[type];
   }
 
   static RCIMIWGroupOperationType toRCIMIWGroupOperationType(@NonNull Integer type) {
@@ -198,7 +218,11 @@ public class RCIMWrapperArgumentAdapter {
   }
 
   static RCIMIWReadReceiptStatus toRCIMIWReadReceiptStatus(@NonNull Integer type) {
-    return RCIMIWReadReceiptStatus.values()[type];
+    RCIMIWReadReceiptStatus[] values = RCIMIWReadReceiptStatus.values();
+    if (type < 0 || type >= values.length) {
+      return RCIMIWReadReceiptStatus.READ;
+    }
+    return values[type];
   }
 
   static RCIMIWTranslateResultType toRCIMIWTranslateResultType(@NonNull Integer type) {
@@ -222,7 +246,11 @@ public class RCIMWrapperArgumentAdapter {
   }
 
   static RCIMIWReadReceiptOrder toRCIMIWReadReceiptOrder(@NonNull Integer type) {
-    return RCIMIWReadReceiptOrder.values()[type];
+    RCIMIWReadReceiptOrder[] values = RCIMIWReadReceiptOrder.values();
+    if (type < 0 || type >= values.length) {
+      return RCIMIWReadReceiptOrder.DESCENDING;
+    }
+    return values[type];
   }
 
   static RCIMIWChatRoomMemberOperateType toRCIMIWChatRoomMemberOperateType(@NonNull Integer type) {
@@ -259,6 +287,11 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWMentionedType toRCIMIWMentionedType(@NonNull Integer type) {
     return RCIMIWMentionedType.values()[type];
+  }
+
+  static RCIMIWConversationUnreadCountFilter toRCIMIWConversationUnreadCountFilter(
+      @NonNull Integer type) {
+    return RCIMIWConversationUnreadCountFilter.values()[type];
   }
 
   static RCIMIWAreaCode toRCIMIWAreaCode(@NonNull Integer type) {

@@ -1,6 +1,0 @@
-framework module RongIMWrapper {
-  umbrella header "RongIMWrapper.h"
-
-  export *
-  module * { export * }
-}

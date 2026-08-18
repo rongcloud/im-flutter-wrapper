@@ -17,6 +17,7 @@
 #import <RongIMWrapper/RCIMIWReadReceiptInfo.h>
 #import <RongIMWrapper/RCIMIWReadReceiptInfoV4.h>
 #import <RongIMWrapper/RCIMIWMessageAuditInfo.h>
+#import <RongIMWrapper/RCIMIWMessageModifyInfo.h>
 
 @class RCIMIWUserInfo;
 @class RCIMIWGroupReadReceiptInfo;
@@ -143,6 +144,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 送审配置
 @property (nonatomic, strong) RCIMIWMessageAuditInfo *auditInfo;
+
+/**
+ * [ZH]
+ * ---
+ * 消息是否被修改。
+ * ---
+ * [EN]
+ * ---
+ * Whether the message has been modified.
+ * ---
+ */
+@property (nonatomic, assign) BOOL hasChanged;
+
+/**
+ * [ZH]
+ * ---
+ * 消息修改信息。
+ * ---
+ * [EN]
+ * ---
+ * Message modification information.
+ * ---
+ */
+@property (nonatomic, strong, nullable) RCIMIWMessageModifyInfo *modifyInfo;
 
 /// 接收定向消息的用户数组
 @property (nonatomic, copy, nullable) NSArray<NSString *> *directedUserIds;

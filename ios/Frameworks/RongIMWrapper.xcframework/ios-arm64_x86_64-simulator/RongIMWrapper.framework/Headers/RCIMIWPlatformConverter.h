@@ -18,6 +18,9 @@
 @class RCIMIWStreamMessage;
 @class RCIMIWReferenceInfo;
 @class RCIMIWStreamMessageChunkInfo;
+@class RCIMIWEditedMessageDraft;
+@class RCIMIWModifyMessageParams;
+@class RCIMIWMessageModifyInfo;
 @class RCIMIWMessagePushOptions;
 @class RCIMIWCompressOptions;
 @class RCIMIWEngineOptions;
@@ -25,6 +28,8 @@
 @class RCIMIWAndroidPushOptions;
 @class RCIMIWIOSPushOptions;
 @class RCIMIWConversation;
+@class RCIMIWConversationTypeFilter;
+@class RCIMIWConversationListOption;
 @class RCIMIWTagInfo;
 @class RCIMIWConversationTagInfo;
 @class RCIMIWReceivedStatusInfo;
@@ -34,6 +39,9 @@
 @class RCIMIWPagingQueryResult;
 @class RCIMIWFollowInfo;
 @class RCIMIWGroupMemberInfo;
+@class RCIMIWGetGroupMembersOption;
+@class RCIMIWRobotInfo;
+@class RCIMIWConversationsContainingRobotsOption;
 @class RCIMIWGroupApplicationInfo;
 @class RCIMIWChatRoomSyncEvent;
 @class RCIMIWChatRoomMemberBlockEvent;
@@ -61,6 +69,8 @@
 @class RCIMIWReadReceiptUsersOption;
 @class RCIMIWReadReceiptUsersResult;
 @class RCIMIWNotificationQuietHoursSetting;
+@class RCIMIWRefreshReferenceMessageParams;
+@class RCIMIWMessageResult;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -112,6 +122,26 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSDictionary *)convertStreamMessageRequestParamsToDict:(RCIMIWStreamMessageRequestParams *)params;
 + (RCIMIWStreamMessageRequestParams *)convertStreamMessageRequestParamsFromDict:(NSDictionary *)params;
 
+// EditedMessageDraft
++ (NSDictionary *)convertEditedMessageDraftToDict:(RCIMIWEditedMessageDraft *)draft;
++ (RCIMIWEditedMessageDraft *)convertEditedMessageDraftFromDict:(NSDictionary *)draft;
+
+// ModifyMessageParams
++ (NSDictionary *)convertModifyMessageParamsToDict:(RCIMIWModifyMessageParams *)params;
++ (RCIMIWModifyMessageParams *)convertModifyMessageParamsFromDict:(NSDictionary *)params;
+
+// MessageModifyInfo
++ (NSDictionary *)convertMessageModifyInfoToDict:(RCIMIWMessageModifyInfo *)info;
++ (RCIMIWMessageModifyInfo *)convertMessageModifyInfoFromDict:(NSDictionary *)info;
+
+// RefreshReferenceMessageParams
++ (NSDictionary *)convertRefreshReferenceMessageParamsToDict:(RCIMIWRefreshReferenceMessageParams *)params;
++ (RCIMIWRefreshReferenceMessageParams *)convertRefreshReferenceMessageParamsFromDict:(NSDictionary *)params;
+
+// MessageResult
++ (NSDictionary *)convertMessageResultToDict:(RCIMIWMessageResult *)result;
++ (RCIMIWMessageResult *)convertMessageResultFromDict:(NSDictionary *)result;
+
 
 // AndroidPushOptions
 //+ (NSDictionary *)convertAndroidPushOptionsToDict:(RCIMIWAndroidPushOptions *)androidPushOptions;
@@ -135,6 +165,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Conversation
 + (NSDictionary *)convertConversationToDict:(RCIMIWConversation *)conversation;
+
++ (NSDictionary *)convertConversationTypeFilterToDict:(RCIMIWConversationTypeFilter *)filter;
++ (RCIMIWConversationTypeFilter *)convertConversationTypeFilterFromDict:(NSDictionary *)dict;
+
++ (NSDictionary *)convertConversationListOptionToDict:(RCIMIWConversationListOption *)option;
++ (nullable RCIMIWConversationListOption *)convertConversationListOptionFromDict:(nullable NSDictionary *)dict;
 
 // SearchConversationResult
 + (NSDictionary *)convertSearchConversationResultToDict:(RCIMIWSearchConversationResult *)searchConversationResult;
@@ -160,6 +196,22 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSDictionary *)convertFollowInfoToDict:(RCIMIWFollowInfo *)followInfo;
 
 + (NSDictionary *)convertGroupMemberInfoToDict:(RCIMIWGroupMemberInfo *)groupMemberInfo;
+
++ (RCIMIWGroupMemberInfo *)convertGroupMemberInfoFromDict:(NSDictionary *)dict;
+
++ (RCIMIWPagingQueryResult *)convertPagingQueryResultFromDict:(NSDictionary *)dict;
+
++ (NSDictionary *)convertPagingQueryOptionToDict:(RCIMIWPagingQueryOption *)option;
+
++ (RCIMIWGetGroupMembersOption *)convertGetGroupMembersOptionFromDict:(NSDictionary *)dict;
+
++ (NSDictionary *)convertGetGroupMembersOptionToDict:(RCIMIWGetGroupMembersOption *)option;
+
++ (NSDictionary *)convertRobotInfoToDict:(RCIMIWRobotInfo *)robotInfo;
+
++ (RCIMIWConversationsContainingRobotsOption *)convertConversationsContainingRobotsOptionFromDict:(NSDictionary *)dict;
+
++ (NSDictionary *)convertConversationsContainingRobotsOptionToDict:(RCIMIWConversationsContainingRobotsOption *)option;
 
 + (NSDictionary *)convertGroupApplicationInfoToDict:(RCIMIWGroupApplicationInfo *)groupApplicationInfo;
 

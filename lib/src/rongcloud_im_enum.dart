@@ -175,6 +175,80 @@ enum RCIMIWFriendRelationType {
   inBothFriendList,
 }
 
+enum RCIMIWReferenceMessageStatus {
+  /// [ZH]
+  /// ---
+  /// 默认状态。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Default status.
+  /// ---
+  defaultValue,
+
+  /// [ZH]
+  /// ---
+  /// 被引用消息已修改。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The referenced message has been modified.
+  /// ---
+  modified,
+
+  /// [ZH]
+  /// ---
+  /// 被引用消息已撤回。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The referenced message has been recalled.
+  /// ---
+  recalled,
+
+  /// [ZH]
+  /// ---
+  /// 被引用消息已删除。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The referenced message has been deleted.
+  /// ---
+  deleted,
+}
+
+enum RCIMIWMessageModifyStatus {
+  /// [ZH]
+  /// ---
+  /// 消息修改成功。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message modification succeeded.
+  /// ---
+  success,
+
+  /// [ZH]
+  /// ---
+  /// 消息正在修改中。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message modification is in progress.
+  /// ---
+  updating,
+
+  /// [ZH]
+  /// ---
+  /// 消息修改失败。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message modification failed.
+  /// ---
+  failed,
+}
+
 enum RCIMIWGroupInviteHandlePermission {
   /// 不需要被邀请人同意（默认）。
   free,
@@ -282,6 +356,38 @@ enum RCIMIWGroupOperationPermission {
   everyone,
 }
 
+enum RCIMIWFilterRobotType {
+  /// [ZH]
+  /// ---
+  /// 获取所有成员
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get all members
+  /// ---
+  all,
+
+  /// [ZH]
+  /// ---
+  /// 不包含机器人的用户列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// Member list excluding robots
+  /// ---
+  excludeRobot,
+
+  /// [ZH]
+  /// ---
+  /// 只包含机器人的列表
+  /// ---
+  /// [EN]
+  /// ---
+  /// Member list containing only robots
+  /// ---
+  robotOnly,
+}
+
 enum RCIMIWGroupOperationType {
   /// 加入。
   add,
@@ -302,16 +408,44 @@ enum RCIMIWGroupMemberInfoEditPermission {
 }
 
 enum RCIMIWGroupMemberRole {
+  /// [ZH]
+  /// ---
   /// 未定义角色（使用此枚举代表查询全部类型群成员）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Undefined role (used to query all member types)
+  /// ---
   undef,
 
+  /// [ZH]
+  /// ---
   /// 普通群成员
+  /// ---
+  /// [EN]
+  /// ---
+  /// Normal group member
+  /// ---
   normal,
 
+  /// [ZH]
+  /// ---
   /// 管理员。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group manager
+  /// ---
   manager,
 
+  /// [ZH]
+  /// ---
   /// 群主。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Group owner
+  /// ---
   owner,
 }
 
@@ -999,6 +1133,16 @@ enum RCIMIWMessageType {
   /// Combine V2 Message
   /// ---
   combineV2,
+
+  /// [ZH]
+  /// ---
+  /// 信息通知消息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Information notification message
+  /// ---
+  informationNotification,
 }
 
 enum RCIMIWMessageBlockType {
@@ -1362,6 +1506,48 @@ enum RCIMIWMentionedType {
   /// @ Mentioned User
   /// ---
   part,
+}
+
+enum RCIMIWConversationUnreadCountFilter {
+  /// [ZH]
+  /// ---
+  /// 不按未读状态筛选。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Do not filter by unread status.
+  /// ---
+  all,
+
+  /// [ZH]
+  /// ---
+  /// 仅返回未读消息数大于 0 的会话。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Return only conversations whose unread count is greater than zero.
+  /// ---
+  unreadOnly,
+
+  /// [ZH]
+  /// ---
+  /// 仅返回存在未读 @ 消息的会话。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Return only conversations containing unread mention messages.
+  /// ---
+  mentionOnly,
+
+  /// [ZH]
+  /// ---
+  /// 仅返回未读消息数等于 0 的会话。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Return only conversations whose unread count is zero.
+  /// ---
+  noUnread,
 }
 
 enum RCIMIWAreaCode {

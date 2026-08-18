@@ -394,6 +394,50 @@ engine?.onRemoteUltraGroupMessageModified = (List<RCIMIWMessage>? messages) {
 //callback_onRemoteUltraGroupMessageModified_call
 */
 
+    engine?.onMessagesModified = (List<RCIMIWMessage>? messages) {
+      List messagesJson = [];
+      if (messages != null) {
+        for (var temp in messages) {
+          messagesJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onMessagesModified";
+      arg["timestamp"] = timeStr;
+      arg["messages"] = messagesJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onMessagesModified_call
+engine?.onMessagesModified = (List<RCIMIWMessage>? messages) {
+    //...
+};
+//callback_onMessagesModified_call
+*/
+
+    engine?.onModifiedMessageSyncCompleted = () {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onModifiedMessageSyncCompleted";
+      arg["timestamp"] = timeStr;
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onModifiedMessageSyncCompleted_call
+engine?.onModifiedMessageSyncCompleted = () {
+    //...
+};
+//callback_onModifiedMessageSyncCompleted_call
+*/
+
     engine?.onRemoteUltraGroupMessageRecalled = (List<RCIMIWMessage>? messages) {
       List messagesJson = [];
       if (messages != null) {
@@ -2729,6 +2773,26 @@ engine?.onUltraGroupMessageModified = (int? code, String? messageUId) {
 //callback_onUltraGroupMessageModified_call
 */
 
+    engine?.onMessageModified = (int? code, RCIMIWMessage? message) {
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onMessageModified";
+      arg["timestamp"] = timeStr;
+      arg["code"] = code.toString();
+      arg["message"] = formatJson(message?.toJson());
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onMessageModified_call
+engine?.onMessageModified = (int? code, RCIMIWMessage? message) {
+    //...
+};
+//callback_onMessageModified_call
+*/
+
     engine?.onUltraGroupMessageRecalled = (int? code, RCIMIWMessage? message, bool? deleteRemote) {
       DateTime now = DateTime.now();
       String timeStr =
@@ -3385,6 +3449,33 @@ engine?.onMessageReadReceiptV5Received = (List<RCIMIWReadReceiptResponseV5>? res
     //...
 };
 //callback_onMessageReadReceiptV5Received_call
+*/
+
+    engine?.onRobotSyncCompleted = (int? code, List<RCIMIWRobotInfo>? robots) {
+      List robotsJson = [];
+      if (robots != null) {
+        for (var temp in robots) {
+          robotsJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onRobotSyncCompleted";
+      arg["timestamp"] = timeStr;
+      arg["code"] = code.toString();
+      arg["robots"] = robotsJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onRobotSyncCompleted_call
+engine?.onRobotSyncCompleted = (int? code, List<RCIMIWRobotInfo>? robots) {
+    //...
+};
+//callback_onRobotSyncCompleted_call
 */
   }
 

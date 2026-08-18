@@ -48,6 +48,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Register Native Custom Message
   /// - [messageIdentifier] The unique identifier of the message
   /// - [persistentFlag] The storage strategy of the message
+  /// - [返回值] The status code of the current operation. 0 indicates success,
   /// non-zero indicates failure. Refer to the error codes for detailed
   /// error information.
   /// ---
@@ -70,6 +71,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Register Native Custom Media Message
   /// - [messageIdentifier] The unique identifier of the message.
   /// - [persistentFlag] The storage strategy of the message.
+  /// - [返回值] The status code of the current operation. `0` indicates success,
   /// while non-zero values indicate failure. Refer to the error codes for
   /// detailed error information.
   /// ---
@@ -122,11 +124,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// and are expected to be removed in version 6.x. If the
   /// callback parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. A non-zero value indicates that the current
   /// interface call operation failed, and no interface callback will be
   /// triggered. Refer to the error codes for detailed error information.
-  /// @listener The interface callback can listen to [onConnected].
+  /// - [接口回调] The interface callback can listen to [onConnected].
   /// ---
   Future<int> connect(String token, int timeout, {RCIMIWConnectCallback? callback}) async {
     throw UnimplementedError('connect() has not been implemented.');
@@ -151,6 +154,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// disconnection. true: continue receiving remote push
   /// notifications after disconnection; false: stop receiving
   /// remote push notifications after disconnection.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled through the
   /// interface callback. Non-zero indicates that the current operation
   /// failed, and the interface callback will not be triggered. Refer to
@@ -168,6 +172,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// [EN]
   /// ---
   /// Get current IM service connection status
+  /// - [返回值] Current connection status
   /// ---
   Future<RCIMIWConnectionStatus> getConnectionStatus() async {
     throw UnimplementedError('getConnectionStatus() has not been implemented.');
@@ -190,6 +195,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] Specifies the channel ID, which is only supported for ultra
   /// groups. For other conversation types, pass `null`.
   /// - [text] Specifies the text content.
+  /// - [返回值] Returns the text message object.
   /// ---
   Future<RCIMIWTextMessage?> createTextMessage(
     RCIMIWConversationType type,
@@ -217,6 +223,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
   /// other conversation types.
   /// - [path] Local path of the image message. Must be a valid path.
+  /// - [返回值] Image message object
   /// ---
   Future<RCIMIWImageMessage?> createImageMessage(
     RCIMIWConversationType type,
@@ -245,6 +252,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// groups. For other conversation types, pass null.
   /// - [path] Specifies the local path of the file message, which must be
   /// a valid path.
+  /// - [返回值] Returns the file message object.
   /// ---
   Future<RCIMIWFileMessage?> createFileMessage(
     RCIMIWConversationType type,
@@ -274,6 +282,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// other conversation types.
   /// - [path] Local path of the short video message. Must be a valid path.
   /// - [duration] Duration of the short video message
+  /// - [返回值] Video message object
   /// ---
   Future<RCIMIWSightMessage?> createSightMessage(
     RCIMIWConversationType type,
@@ -305,6 +314,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [path] Specifies the local path of the voice message. Must be a
   /// valid path.
   /// - [duration] Specifies the duration of the voice message.
+  /// - [返回值] Returns the voice message object.
   /// ---
   Future<RCIMIWVoiceMessage?> createVoiceMessage(
     RCIMIWConversationType type,
@@ -319,7 +329,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// [ZH]
   /// ---
   /// 构建合并转发消息
-  /// - [type] 目标会话类型，消息要发送到的会话类型
+  /// - [type]    目标会话类型，消息要发送到的会话类型
   /// - [targetId] 目标会话 ID，消息要发送到的会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [conversationType] 被转发消息的原始会话类型，用于消息标题展示（如"A和B的聊天记录"或"群聊的聊天记录"）
@@ -342,6 +352,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [summaryList] Summary list of forwarded messages
   /// - [nameList] Name list of all message senders
   /// - [msgList] List of forwarded message content
+  /// - [返回值] The combine forward message object
   /// ---
   Future<RCIMIWCombineV2Message?> createCombineV2Message(
     RCIMIWConversationType type,
@@ -358,7 +369,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// [ZH]
   /// ---
   /// 构建引用消息
-  /// - [type] 会话类型
+  /// - [type]    会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [referenceMessage] 引用的消息
@@ -374,6 +385,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// other conversation types, pass null.
   /// - [referenceMessage] The referenced message
   /// - [text]    The referenced text content
+  /// - [返回值] The reference message object
   /// ---
   Future<RCIMIWReferenceMessage?> createReferenceMessage(
     RCIMIWConversationType type,
@@ -402,6 +414,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
   /// other conversation types.
   /// - [path] Local path of the GIF message
+  /// - [返回值] GIF message object
   /// ---
   Future<RCIMIWGIFMessage?> createGIFMessage(
     RCIMIWConversationType type,
@@ -415,7 +428,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// [ZH]
   /// ---
   /// 构建自定义消息
-  /// - [type] 会话类型
+  /// - [type]     会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [policy]   消息的存储策略
@@ -433,6 +446,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [policy]   Message storage policy
   /// - [messageIdentifier] Message identifier, must be unique
   /// - [fields]   Key-value pairs of message content
+  /// - [返回值] Custom message entity
   /// ---
   Future<RCIMIWCustomMessage?> createCustomMessage(
     RCIMIWConversationType type,
@@ -468,6 +482,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [latitude] Latitude
   /// - [poiName] POI information
   /// - [thumbnailPath] Local path of the thumbnail, must be a valid path
+  /// - [返回值] Location message entity
   /// ---
   Future<RCIMIWLocationMessage?> createLocationMessage(
     RCIMIWConversationType type,
@@ -484,7 +499,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// [ZH]
   /// ---
   /// 构建原生自定义普通消息
-  /// - [type] 会话类型
+  /// - [type]     会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messageIdentifier] 消息的标识符，需唯一
@@ -500,6 +515,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// null for other conversation types.
   /// - [messageIdentifier] Unique identifier for the message
   /// - [fields]   Key-value pairs for the message content
+  /// - [返回值] Native custom regular message
   /// ---
   Future<RCIMIWNativeCustomMessage?> createNativeCustomMessage(
     RCIMIWConversationType type,
@@ -514,7 +530,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// [ZH]
   /// ---
   /// 构建原生自定义媒体消息
-  /// - [type] 会话类型
+  /// - [type]     会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [messageIdentifier] 消息的标识符，需唯一
@@ -532,6 +548,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [messageIdentifier] Unique identifier for the message
   /// - [path]     Local path of the media file, must be a valid path
   /// - [fields]   Key-value pairs for the message content
+  /// - [返回值] Native custom media message
   /// ---
   Future<RCIMIWNativeCustomMediaMessage?> createNativeCustomMediaMessage(
     RCIMIWConversationType type,
@@ -564,11 +581,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// version 5.4.0 and are expected to be removed in version 6.x.
   /// If the callback parameter is provided, only the callback will
   /// be triggered.
+  /// - [返回值] The status code of the current operation. A value of 0 indicates a
   /// successful call, and the specific result needs to be handled via the
   /// interface callback. A non-zero value indicates that the current
   /// operation failed, and no interface callback will be triggered. Refer
   /// to the error codes for detailed error information.
-  /// @listener The interface callback can listen to [onMessageAttached],
+  /// - [接口回调] The interface callback can listen to [onMessageAttached],
   /// [onMessageSent].
   /// ---
   Future<int> sendMessage(RCIMIWMessage message, {RCIMIWSendMessageCallback? callback}) async {
@@ -589,11 +607,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Send Media Message
   /// - [message] The media message object to be sent
   /// - [listener] Event listener for sending media messages
+  /// - [返回值] Status code of the current API operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented through the
   /// interface callback. Non-zero indicates that the current API call
   /// operation failed, and no interface callback will be triggered. Refer
   /// to the error codes for detailed errors.
-  /// @listener The interface callback can listen to [onMediaMessageSending],
+  /// - [接口回调] The interface callback can listen to [onMediaMessageSending],
   /// [onMediaMessageAttached], [onMediaMessageSent]
   /// ---
   Future<int> sendMediaMessage(RCIMIWMediaMessage message, {RCIMIWSendMediaMessageListener? listener}) async {
@@ -620,11 +639,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and are expected to be removed in version 6.x. If the
   /// callback parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates the call was
   /// successful, and the specific result requires implementing the
   /// interface callback. Non-zero indicates the current operation failed,
   /// and no interface callback will be triggered. Refer to the error codes
   /// for detailed error information.
-  /// @listener The interface callback can be monitored via
+  /// - [接口回调] The interface callback can be monitored via
   /// [onSendingMediaMessageCanceled]
   /// ---
   /// 此接口不支持 Flutter For Web 端
@@ -648,10 +668,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Download Media Message
   /// - [message] The media message entity to be downloaded
   /// - [listener] The event listener for media message download
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result needs to be obtained through the interface
   /// callback. Non-zero indicates that the current operation failed, and
   /// no callback will be triggered. Refer to the error codes for detailed
   /// error information.
+  /// - [接口回调] [onMediaMessageDownloaded], [onMediaMessageDownloading]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> downloadMediaMessage(RCIMIWMediaMessage message, {RCIMIWDownloadMediaMessageListener? listener}) async {
@@ -679,10 +701,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated as of version 5.4.0 and are expected to be removed
   /// in version 6.x. If the callback parameter is provided, only
   /// the callback will be triggered.
+  /// - [返回值] The status code for the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled by the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no callback will be triggered. Refer to the error codes for
   /// detailed error information.
+  /// - [接口回调] [onDownloadingMediaMessageCanceled]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> cancelDownloadingMediaMessage(
@@ -694,12 +718,35 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// [ZH]
   /// ---
+  /// 暂停下载媒体消息。如需继续下载，重新调用下载接口即可。
+  /// - [message] 需要暂停下载的媒体消息实体
+  /// - [callback] 操作结果回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，具体结果需要通过接口回调获取；非 0 代表当前接口调用失败，不会触发接口回调，详细错误参考错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Pause Media Message Download. Call the download method again to resume.
+  /// - [message] The media message whose download needs to be paused
+  /// - [callback] The operation result callback
+  /// - [返回值] The status code for the current operation. 0 indicates a successful
+  /// call, and the result is returned through the callback. Non-zero indicates
+  /// that the call failed, and no callback will be triggered. Refer to the error
+  /// codes for details.
+  /// ---
+  /// 此接口不支持 Flutter For Web 端
+  Future<int> pauseDownloadingMediaMessage(RCIMIWMediaMessage message, {IRCIMIWOperationCallback? callback}) async {
+    throw UnimplementedError('pauseDownloadingMediaMessage() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
   /// 加载某个会话
   /// - [type] 会话类型
   /// - [targetId] 会话 ID
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationLoaded]
+  /// @deprecated 用
   /// {@link #getConversation(RCIMIWConversationType, String, String, IRCIMIWGetConversationCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -710,10 +757,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups; pass null for
   /// other conversation types
+  /// - [返回值] Status code of the current API operation. 0 indicates success, and
   /// the specific result needs to be implemented via the callback
   /// interface. Non-zero values indicate that the current API operation
   /// failed, and the callback will not be triggered. Refer to the error
   /// codes for detailed error information.
+  /// - [接口回调] [onConversationLoaded]
   /// @deprecated Use
   /// {@link #getConversation(RCIMIWConversationType, String, String, IRCIMIWGetConversationCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -733,6 +782,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve a Conversation
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
@@ -744,11 +794,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and will be removed in version 6.x. If the callback
   /// parameter is provided, only the callback method will be
   /// triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call,
   /// and the specific result needs to be handled in the interface
   /// callback. Non-zero values indicate a failure in the current
   /// operation, and no callback will be triggered. Refer to the error
   /// codes for detailed error information.
-  /// @listener [onConversationLoaded]
+  /// - [接口回调] [onConversationLoaded]
+  /// ---
   Future<int> getConversation(
     RCIMIWConversationType type,
     String targetId,
@@ -767,6 +819,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [count]    查询的数量， 0 < count ≤ 50
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoaded]
+  /// @deprecated 用
   /// {@link #getConversations(List, String, long, int, IRCIMIWGetConversationsCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -780,10 +833,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// with timestamps earlier than this value. Pass 0 to
   /// query the latest data.
   /// - [count]    Number of conversations to query, 0 < count ≤ 50
+  /// - [返回值] Status code of the current operation. 0 indicates success, and the
   /// specific result requires implementing the callback interface.
   /// Non-zero values indicate that the current operation failed, and the
   /// callback will not be triggered. Refer to the error codes for detailed
   /// error information.
+  /// - [接口回调] [onConversationsLoaded]
   /// @deprecated Use
   /// {@link #getConversations(List, String, long, int, IRCIMIWGetConversationsCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -809,6 +864,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve Certain Conversations
   /// - [conversationTypes] Specifies the conversation types.
   /// - [channelId] Indicates the channel ID, which is only supported
@@ -826,11 +882,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// in version 5.4.0 and are expected to be removed in
   /// version 6.x. If the callback parameter is provided,
   /// only the callback method will be triggered.
+  /// - [返回值] Returns the status code for the current operation. A value of 0
   /// indicates a successful call, and specific results need to be handled
   /// through the interface callback. A non-zero value indicates that the
   /// current operation failed, and no interface callback will be
   /// triggered. Refer to the error codes for detailed error information.
-  /// @listener [onConversationsLoaded]
+  /// - [接口回调] [onConversationsLoaded]
+  /// ---
   Future<int> getConversations(
     List<RCIMIWConversationType> conversationTypes,
     String? channelId,
@@ -862,6 +920,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [count]    Number to query (0 < count ≤ 50)
   /// - [topPriority] Pin priority: true/false
   /// - [callback] Callback for conversation list
+  /// - [返回值] Operation status code (0 = success, triggers callback; non-zero =
   /// failure, no callback)
   /// ---
   Future<int> getConversationsWithPriority(
@@ -873,6 +932,30 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     IRCIMIWGetConversationsCallback? callback,
   }) async {
     throw UnimplementedError('getConversationsWithPriority() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 按会话类型、频道、分页、排序和未读数条件获取本地会话列表。
+  /// - [filters] 会话类型和频道过滤条件。channelId 为 null 表示不按频道过滤，空字符串表示默认频道。
+  /// - [option] 分页、排序和未读数筛选配置。传 null 时使用原生默认配置。
+  /// - [callback] 获取会话列表回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，具体结果通过 callback 返回。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets local conversations using type, channel, pagination, sorting, and unread-count filters.
+  /// - [filters] Conversation type and channel filters. A null channel ID disables channel filtering, while an empty string selects the default channel.
+  /// - [option] Pagination, sorting, and unread-count options. Pass null to use the native defaults.
+  /// - [callback] Callback for the conversation list.
+  /// - [返回值] Status code of the current operation. Zero means the call was accepted and the result is returned through the callback.
+  /// ---
+  Future<int> getConversationListByFilters(
+    List<RCIMIWConversationTypeFilter> filters,
+    RCIMIWConversationListOption? option, {
+    IRCIMIWGetConversationsCallback? callback,
+  }) async {
+    throw UnimplementedError('getConversationListByFilters() has not been implemented.');
   }
 
   /// [ZH]
@@ -890,6 +973,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// chat, group chat, and system conversation.
   /// - [callback] Callback function for retrieving the conversation
   /// list.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call,
   /// and the specific result needs to be obtained through the callback.
   /// Non-zero values indicate a failed operation, and the callback will
   /// not be triggered. Refer to the error codes for detailed error
@@ -913,8 +997,10 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Fetch remote conversation list from server
   /// - [callback] Operation callback
+  /// - [返回值] Status code of the current operation. 0 indicates success, and the
   /// specific result needs to be handled in the callback. Non-zero
   /// values indicate failure and no callback will be triggered.
+  /// - [接口回调] [onRemoteConversationListSynced]
   /// ---
   Future<int> getRemoteConversationList({IRCIMIWOperationCallback? callback}) async {
     throw UnimplementedError('getRemoteConversationList() has not been implemented.');
@@ -939,10 +1025,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [callback] Callback triggered when the conversation is removed. If
   /// callback is provided, only the callback will be
   /// triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call,
   /// and the specific result needs to be handled in the callback.
   /// Non-zero values indicate that the current operation failed and no
   /// callback will be triggered. Refer to the error codes for detailed
   /// error information.
+  /// - [接口回调] [onConversationRemoved]
   /// ---
   Future<int> removeConversationWithDeleteRemote(
     RCIMIWConversationType type,
@@ -978,10 +1066,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and are expected to be removed in version 6.x. If the
   /// callback parameter is provided, only the callback method
   /// will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call,
   /// and the specific result needs to be implemented in the interface
   /// callback. Non-zero values indicate that the current operation failed
   /// and the interface callback will not be triggered. Refer to the error
   /// codes for detailed error information.
+  /// - [接口回调] [onConversationRemoved]
   /// ---
   Future<int> removeConversation(
     RCIMIWConversationType type,
@@ -1015,10 +1105,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// starting from version 5.4.0 and will be removed in
   /// version 6.x. If the callback parameter is provided,
   /// only the callback method will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call,
   /// and the specific result needs to be handled in the interface
   /// callback. Non-zero values indicate a failure in the current
   /// operation, and no callback will be triggered. Refer to the error
   /// codes for detailed error information.
+  /// - [接口回调] [onConversationsRemoved]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> removeConversations(
@@ -1038,6 +1130,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountLoaded]
+  /// @deprecated 用
   /// {@link #getUnreadCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadCountCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1049,9 +1142,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups. For other
   /// conversation types, pass null.
+  /// - [返回值] Status code of the current operation. 0 indicates success, and the
   /// specific result requires implementing the callback interface.
   /// Non-zero indicates failure, and no callback will be triggered. Refer
   /// to the error codes for detailed errors.
+  /// - [接口回调] [onUnreadCountLoaded]
   /// @deprecated Use
   /// {@link #getUnreadCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadCountCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1072,6 +1167,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get the unread count of a conversation
   /// Note: Not supported for chatrooms!
   /// - [type] Conversation type
@@ -1084,11 +1180,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented via the
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no callback will be triggered. Refer to the error codes for
   /// detailed error information.
-  /// @listener [onUnreadCountLoaded]
+  /// - [接口回调] [onUnreadCountLoaded]
+  /// ---
   Future<int> getUnreadCount(
     RCIMIWConversationType type,
     String targetId,
@@ -1104,6 +1202,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onTotalUnreadCountLoaded]
+  /// @deprecated 用
   /// {@link #getTotalUnreadCount(String, IRCIMIWGetTotalUnreadCountCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1112,10 +1211,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Load All Unread Counts
   /// - [channelId] Indicates the channel ID. This parameter is only supported
   /// for ultra groups. For other conversation types, pass `null`.
+  /// - [返回值] Specifies the status code of the current API operation. A value of
   /// `0` indicates the call was successful, and the specific result
   /// requires implementing the interface callback. A non-zero value
   /// indicates the API call failed, and the interface callback will not be
   /// triggered. Refer to the error codes for detailed error information.
+  /// - [接口回调] [onTotalUnreadCountLoaded]
   /// @deprecated Use
   /// {@link #getTotalUnreadCount(String, IRCIMIWGetTotalUnreadCountCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1134,6 +1235,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get Total Unread Count
   /// - [channelId] Channel ID, supported only for ultra groups. For other
   /// conversation types, pass null.
@@ -1143,10 +1245,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// version 5.4.0 and are expected to be removed in the 6.x
   /// version. If the callback parameter is provided, only the
   /// callback will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call,
   /// and the specific result needs to be handled in the callback. Non-zero
   /// values indicate a failed operation, and no callback will be
   /// triggered. Refer to the error codes for detailed error information.
-  /// @listener [onTotalUnreadCountLoaded]
+  /// - [接口回调] [onTotalUnreadCountLoaded]
+  /// ---
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   Future<int> getTotalUnreadCount(String? channelId, {IRCIMIWGetTotalUnreadCountCallback? callback}) async {
     throw UnimplementedError('getTotalUnreadCount() has not been implemented.');
@@ -1161,6 +1265,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadMentionedCountLoaded]
+  /// @deprecated 用
   /// {@link #getUnreadMentionedCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedCountCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1172,9 +1277,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] Specifies the conversation ID.
   /// - [channelId] Specifies the channel ID, only supported for ultra groups.
   /// Pass null for other conversation types.
+  /// - [返回值] Indicates the status code of the current operation. 0 indicates
   /// success, and the specific result requires implementing the interface
   /// callback. Non-zero indicates failure, and no callback will be
   /// triggered. Refer to the error codes for detailed error information.
+  /// - [接口回调] [onUnreadMentionedCountLoaded]
   /// @deprecated Use
   /// {@link #getUnreadMentionedCount(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedCountCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1195,6 +1302,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get the count of unread @ messages in a conversation.
   /// Note: This feature is not supported in chatrooms!
   /// - [type] Specifies the conversation type.
@@ -1207,11 +1315,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated in version 5.4.0 and are expected to be removed
   /// in version 6.x. If the `callback` parameter is provided,
   /// only the callback method will be triggered.
+  /// - [返回值] The status code of the current operation. `0` indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// callback. A non-zero value indicates that the operation failed, and
   /// the callback will not be triggered. Refer to the error codes for
   /// detailed error information.
-  /// @listener [onUnreadMentionedCountLoaded]
+  /// - [接口回调] [onUnreadMentionedCountLoaded]
+  /// ---
   Future<int> getUnreadMentionedCount(
     RCIMIWConversationType type,
     String targetId,
@@ -1226,6 +1336,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 加载当前用户加入的所有超级群会话的未读消息数的总和。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupAllUnreadCountLoaded]
+  /// @deprecated 用
   /// {@link #getUltraGroupAllUnreadCount(IRCIMIWGetUltraGroupAllUnreadCountCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1233,10 +1344,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Load the total count of unread messages from all ultra group
   /// conversations the current user has joined.
+  /// - [返回值] The status code of the current API operation. 0 indicates the call
   /// was successful, and the specific result requires implementing the
   /// interface callback. Non-zero indicates the current API call failed,
   /// and no interface callback will be triggered. For detailed errors,
   /// refer to the error codes.
+  /// - [接口回调] [onUltraGroupAllUnreadCountLoaded]
   /// @deprecated Use
   /// {@link #getUltraGroupAllUnreadCount(IRCIMIWGetUltraGroupAllUnreadCountCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1253,6 +1366,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get the total count of unread messages from all ultra group
   /// conversations the current user has joined.
   /// - [callback] Event callback. The SDK supports callback-based responses
@@ -1260,11 +1374,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface were deprecated in version 5.4.0 and are expected
   /// to be removed in version 6.x. If a callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be obtained through
   /// the interface callback. Non-zero values indicate that the current
   /// interface call failed, and no callback will be triggered. Refer to
   /// the error codes for detailed error information.
-  /// @listener [onUltraGroupAllUnreadCountLoaded]
+  /// - [接口回调] [onUltraGroupAllUnreadCountLoaded]
+  /// ---
   Future<int> getUltraGroupAllUnreadCount({IRCIMIWGetUltraGroupAllUnreadCountCallback? callback}) async {
     throw UnimplementedError('getUltraGroupAllUnreadCount() has not been implemented.');
   }
@@ -1274,6 +1390,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 加载当前用户加入的所有超级群会话中的未读 @ 消息数的总和。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupAllUnreadMentionedCountLoaded]
+  /// @deprecated 用
   /// {@link #getUltraGroupAllUnreadMentionedCount(IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1281,10 +1398,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Load the total count of unread mentions in all ultra group
   /// conversations that the current user has joined.
+  /// - [返回值] The status code of the current API operation. 0 indicates a
   /// successful call, and the specific result needs to be handled by the
   /// interface callback. Non-zero values indicate that the current API
   /// call failed, and no callback will be triggered. For detailed error
   /// information, refer to the error codes.
+  /// - [接口回调] [onUltraGroupAllUnreadMentionedCountLoaded]
   /// @deprecated Use
   /// {@link #getUltraGroupAllUnreadMentionedCount(IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1301,6 +1420,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve the total count of unread @ mentions across all ultra group
   /// conversations the current user has joined.
   /// - [callback] Event callback. SDK supports callback-based events starting
@@ -1308,11 +1428,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// were deprecated in version 5.4.0 and are expected to be
   /// removed in version 6.x. If the callback parameter is
   /// provided, only the callback event will be triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and specific results need to be handled through the
   /// interface callback. Non-zero values indicate that the current
   /// interface call operation failed, and no interface callback will be
   /// triggered. Refer to the error codes for detailed error information.
-  /// @listener [onUltraGroupAllUnreadMentionedCountLoaded]
+  /// - [接口回调] [onUltraGroupAllUnreadMentionedCountLoaded]
+  /// ---
   Future<int> getUltraGroupAllUnreadMentionedCount({
     IRCIMIWGetUltraGroupAllUnreadMentionedCountCallback? callback,
   }) async {
@@ -1325,6 +1447,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupUnreadCountLoaded]
+  /// @deprecated 用
   /// {@link #getUltraGroupUnreadCount(String, IRCIMIWGetUltraGroupUnreadCountCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1332,10 +1455,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Get the unread message count for a specified conversation
   /// - [targetId] The conversation ID
+  /// - [返回值] The status code of the current API operation. 0 indicates a
   /// successful call, and the specific result needs to be handled by the
   /// interface callback. Non-zero indicates that the current API call
   /// failed, and no interface callback will be triggered. For detailed
   /// error information, refer to the error codes.
+  /// - [接口回调] [onUltraGroupUnreadCountLoaded]
   /// @deprecated Use
   /// {@link #getUltraGroupUnreadCount(String, IRCIMIWGetUltraGroupUnreadCountCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1353,6 +1478,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get the unread message count for a specified conversation
   /// - [targetId] Conversation ID
   /// - [callback] Event callback. The SDK supports callback-style responses
@@ -1360,11 +1486,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are expected
   /// to be removed in version 6.x. If the callback parameter is
   /// provided, only the callback method will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. A non-zero value indicates that the current
   /// operation failed, and no callback will be triggered. Refer to the
   /// error codes for detailed error information.
-  /// @listener [onUltraGroupUnreadCountLoaded]
+  /// - [接口回调] [onUltraGroupUnreadCountLoaded]
+  /// ---
   Future<int> getUltraGroupUnreadCount(String targetId, {IRCIMIWGetUltraGroupUnreadCountCallback? callback}) async {
     throw UnimplementedError('getUltraGroupUnreadCount() has not been implemented.');
   }
@@ -1375,6 +1503,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupUnreadMentionedCountLoaded]
+  /// @deprecated 用
   /// {@link #getUltraGroupUnreadMentionedCount(String, IRCIMIWGetUltraGroupUnreadMentionedCountCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1383,10 +1512,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Get the count of unread mentioned messages in an ultra group
   /// conversation.
   /// - [targetId] The conversation ID.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no callback will be triggered. Refer to the error codes for
   /// detailed error information.
+  /// - [接口回调] [onUltraGroupUnreadMentionedCountLoaded]
   /// @deprecated Use
   /// {@link #getUltraGroupUnreadMentionedCount(String, IRCIMIWGetUltraGroupUnreadMentionedCountCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1404,6 +1535,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve the count of mentioned messages in an ultra group
   /// conversation
   /// - [targetId] The conversation ID
@@ -1412,11 +1544,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are expected
   /// to be removed in version 6.x. If a callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and specific results need to be handled via the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no callback will be triggered. Refer to the error codes for
   /// detailed error information.
-  /// @listener [onUltraGroupUnreadMentionedCountLoaded]
+  /// - [接口回调] [onUltraGroupUnreadMentionedCountLoaded]
+  /// ---
   Future<int> getUltraGroupUnreadMentionedCount(
     String targetId, {
     IRCIMIWGetUltraGroupUnreadMentionedCountCallback? callback,
@@ -1433,6 +1567,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [contain]  是否包含免打扰消息的未读消息数。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadCountByConversationTypesLoaded]
+  /// @deprecated 用
   /// {@link #getUnreadCountByConversationTypes(List, String, boolean, IRCIMIWGetUnreadCountByConversationTypesCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1446,9 +1581,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// types, pass `null`.
   /// - [contain]  Indicates whether to include unread messages from
   /// muted conversations.
+  /// - [返回值] Returns the status code of the current operation. `0` indicates
   /// success, and the specific result requires implementing the callback
   /// interface. Non-zero values indicate failure, and no callback will be
   /// triggered. Refer to the error codes for detailed information.
+  /// - [接口回调] [onUnreadCountByConversationTypesLoaded]
   /// @deprecated Use
   /// {@link #getUnreadCountByConversationTypes(List, String, boolean, IRCIMIWGetUnreadCountByConversationTypesCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1474,6 +1611,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Load unread count based on conversation type
   /// Note: Chatrooms are not supported!
   /// - [conversationTypes] Specifies the collection of conversation types.
@@ -1489,11 +1627,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// in version 6.x. If the callback parameter is
   /// provided, only the callback method will be
   /// triggered.
+  /// - [返回值] Specifies the status code of the current operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. Non-zero indicates that the current operation
   /// failed, and the interface callback will not be triggered. Refer to
   /// the error codes for detailed error information.
-  /// @listener [onUnreadCountByConversationTypesLoaded]
+  /// - [接口回调] [onUnreadCountByConversationTypesLoaded]
+  /// ---
   /// 此接口在 Flutter For Web 端不支持设置 [channelId]
   Future<int> getUnreadCountByConversationTypes(
     List<RCIMIWConversationType> conversationTypes,
@@ -1519,6 +1659,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [conversationTypes] List of conversation types
   /// - [levels]   List of DND levels
   /// - [callback] Callback for unread message count
+  /// - [返回值] Status code: 0 means success (results via callback), non-zero means
   /// failure (no callback triggered). See error codes for details
   /// ---
   Future<int> getUnreadCountByLevels(
@@ -1558,9 +1699,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and will be
   /// removed in the 6.x version. If the callback parameter is
   /// provided, only the callback method will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled by the callback.
   /// Non-zero values indicate the operation failed, and no callback will
   /// be triggered. Refer to the error codes for details.
+  /// - [接口回调] [onUnreadCountCleared]
   /// ---
   Future<int> clearUnreadCount(
     RCIMIWConversationType type,
@@ -1598,10 +1741,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero values indicate that the current
   /// operation failed, and no interface callback will be triggered. For
   /// detailed error information, refer to the error codes.
+  /// - [接口回调] [onDraftMessageSaved]
   /// ---
   Future<int> saveDraftMessage(
     RCIMIWConversationType type,
@@ -1621,6 +1766,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onDraftMessageLoaded]
+  /// @deprecated 用
   /// {@link #getDraftMessage(RCIMIWConversationType, String, String, IRCIMIWGetDraftMessageCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1631,9 +1777,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] The ID of the conversation.
   /// - [channelId] The channel ID, only supported for ultra groups. Pass null
   /// for other conversation types.
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result requires implementing the callback interface.
   /// Non-zero indicates failure, and the callback will not be triggered.
   /// Refer to the error codes for detailed error information.
+  /// - [接口回调] [onDraftMessageLoaded]
   /// @deprecated Use
   /// {@link #getDraftMessage(RCIMIWConversationType, String, String, IRCIMIWGetDraftMessageCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1653,6 +1801,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve draft information from a conversation.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
@@ -1663,11 +1812,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// for this interface are deprecated as of version 5.4.0 and
   /// are expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. Non-zero values indicate a failed operation, and no
   /// callback will be triggered. Refer to the error codes for detailed
   /// error information.
-  /// @listener [onDraftMessageLoaded]
+  /// - [接口回调] [onDraftMessageLoaded]
+  /// ---
   Future<int> getDraftMessage(
     RCIMIWConversationType type,
     String targetId,
@@ -1701,10 +1852,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated starting from version 5.4.0 and are expected to
   /// be removed in version 6.x. If the callback parameter is
   /// provided, only the callback method will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates success. Specific
   /// results need to be implemented via the callback interface. Non-zero
   /// values indicate that the current operation failed and the callback
   /// will not be triggered. Refer to the error codes for detailed error
   /// information.
+  /// - [接口回调] [onDraftMessageCleared]
   /// ---
   Future<int> clearDraftMessage(
     RCIMIWConversationType type,
@@ -1722,6 +1875,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlockedConversationsLoaded]
+  /// @deprecated 用
   /// {@link #getBlockedConversations(List, String, IRCIMIWGetBlockedConversationsCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1731,10 +1885,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [conversationTypes] Collection of conversation types
   /// - [channelId] Channel ID, only supported for ultra groups. Pass
   /// `null` for other conversation types.
+  /// - [返回值] The status code of the current operation. `0` indicates a successful
   /// call, and the specific result requires implementing the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no callback will be triggered. Refer to the error codes for
   /// detailed information.
+  /// - [接口回调] [onBlockedConversationsLoaded]
   /// @deprecated Use
   /// {@link #getBlockedConversations(List, String, IRCIMIWGetBlockedConversationsCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1754,6 +1910,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve the list of conversations with Do Not Disturb enabled.
   /// - [conversationTypes] A collection of conversation types.
   /// - [channelId] The channel ID, only supported for ultra groups.
@@ -1764,11 +1921,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated since version 5.4.0 and are expected to
   /// be removed in version 6.x. If the callback parameter
   /// is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no callback will be triggered. Refer to the error codes for
   /// detailed error information.
-  /// @listener [onBlockedConversationsLoaded]
+  /// - [接口回调] [onBlockedConversationsLoaded]
+  /// ---
   /// 在 Flutter For Web 端，此接口返回的会话对象数据中只有 targetId,channelId,conversationType 是正确的，其他值均为默认值
   Future<int> getBlockedConversations(
     List<RCIMIWConversationType> conversationTypes,
@@ -1807,10 +1966,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// version 5.4.0 and are expected to be removed in version 6.x.
   /// If the callback parameter is provided, only the callback
   /// will be triggered.
+  /// - [返回值] Returns the status code of the current operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. Non-zero values indicate that the current
   /// operation failed, and no interface callback will be triggered. Refer
   /// to the error codes for detailed error information.
+  /// - [接口回调] [onConversationTopStatusChanged]
   /// ---
   /// 此接口在 Flutter For Web 端不支持超级群
   Future<int> changeConversationTopStatus(
@@ -1826,7 +1987,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// [ZH]
   /// ---
   /// 设置会话的置顶状态。若会话不存在，调用此方法 SDK 自动创建会话并置顶。
-  /// - [type] conversation type
+  /// - [type]       conversation type
   /// - [targetId]   conversation ID
   /// - [channelId]  频道 ID，仅支持ultra group使用，其他conversation type传 null
   /// 即可。
@@ -1851,7 +2012,9 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// callback methods deprecated in v5.4.0 and will be
   /// removed in v6.x. Callback param overrides all
   /// other callbacks.
+  /// - [返回值] Operation status code (0 = success, triggers callback; non-zero =
   /// failure, no callback)
+  /// - [接口回调] [onConversationTopStatusChanged]
   /// ---
   Future<int> changeConversationTopStatusWithUpdateTme(
     RCIMIWConversationType type,
@@ -1872,6 +2035,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationTopStatusLoaded]
+  /// @deprecated 用
   /// {@link #getConversationTopStatus(RCIMIWConversationType, String, String, IRCIMIWGetConversationTopStatusCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -1882,10 +2046,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups. Pass null for
   /// other conversation types.
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result requires implementing the interface callback.
   /// Non-zero indicates the current operation failed, and the interface
   /// callback will not be triggered. Refer to the error codes for detailed
   /// error information.
+  /// - [接口回调] [onConversationTopStatusLoaded]
   /// @deprecated Use
   /// {@link #getConversationTopStatus(RCIMIWConversationType, String, String, IRCIMIWGetConversationTopStatusCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -1906,6 +2072,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get the pinned status of a conversation
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
@@ -1916,11 +2083,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated starting from version 5.4.0 and are expected to
   /// be removed in version 6.x. If the callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] Status code of the current interface operation. 0 indicates a
   /// successful call, and specific results need to be implemented through
   /// the interface callback. Non-zero indicates that the current interface
   /// call operation failed, and the interface callback will not be
   /// triggered. Refer to the error codes for detailed errors.
-  /// @listener [onConversationTopStatusLoaded]
+  /// - [接口回调] [onConversationTopStatusLoaded]
+  /// ---
   /// 此接口在 Flutter For Web 端不支持超级群
   Future<int> getConversationTopStatus(
     RCIMIWConversationType type,
@@ -1957,10 +2126,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated as of version 5.4.0 and are expected to be
   /// removed in version 6.x. If the callback parameter is
   /// provided, only the callback method will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates successful
   /// invocation, and specific results need to be handled via the interface
   /// callback. Non-zero values indicate failure of the current operation,
   /// and no callback will be triggered. Refer to the error codes for
   /// detailed error information.
+  /// - [接口回调] [onConversationReadStatusSynced]
   /// ---
   Future<int> syncConversationReadStatus(
     RCIMIWConversationType type,
@@ -1990,6 +2161,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] Specifies the channel ID, which is only supported for
   /// ultra groups. For other conversation types, pass null.
   /// - [currentType] Specifies the current status
+  /// - [返回值] Returns the status code of the operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented through the
   /// callback interface. A non-zero value indicates that the call failed
   /// and will not trigger the callback. Refer to the error codes for
@@ -2017,6 +2189,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [count] 获取的消息数量，0 < count ≤ 20
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessagesLoaded]
+  /// @deprecated 用
   /// {@link #getMessages(RCIMIWConversationType, String, String, long, RCIMIWTimeOrder, RCIMIWMessageOperationPolicy, int, IRCIMIWGetMessagesCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -2036,9 +2209,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// both local and remote messages.
   /// - [count] Number of messages to retrieve. Must satisfy `0 < count ≤
   /// 20`.
+  /// - [返回值] Status code of the operation. `0` indicates success, and the detailed
   /// result requires implementing the callback interface. Non-zero values
   /// indicate failure, and no callback will be triggered. Refer to error
   /// codes for details.
+  /// - [接口回调] [onMessagesLoaded]
   /// @deprecated Use
   /// {@link #getMessages(RCIMIWConversationType, String, String, long, RCIMIWTimeOrder, RCIMIWMessageOperationPolicy, int, IRCIMIWGetMessagesCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -2071,6 +2246,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Load Historical Messages
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
@@ -2089,11 +2265,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated as of version 5.4.0 and will be removed in
   /// version 6.x. If the callback parameter is provided, only the
   /// callback will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates success. Specific
   /// results need to be implemented via the interface callback. Non-zero
   /// indicates the current operation failed, and no interface callback
   /// will be triggered. Refer to the error codes for detailed error
   /// information.
-  /// @listener [onMessagesLoaded]
+  /// - [接口回调] [onMessagesLoaded]
+  /// ---
   Future<int> getMessages(
     RCIMIWConversationType type,
     String targetId,
@@ -2128,6 +2306,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and are expected to be removed in version 6.x. If the
   /// callback parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. Non-zero indicates that the current interface
   /// call operation failed, and the interface callback will not be
@@ -2159,6 +2338,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and are expected to be removed in version 6.x. If the
   /// callback parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. Non-zero values indicate that the current
   /// interface call operation failed, and no interface callback will be
@@ -2193,6 +2373,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [beforeCount] Number of messages before the target
   /// - [afterCount] Number of messages after the target
   /// - [callback] Result callback
+  /// - [返回值] Status code: 0 means success (results via callback), non-zero means
   /// failure (check error codes)
   /// ---
   Future<int> getMessagesAroundTime(
@@ -2235,6 +2416,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// (ascending)
   /// - [count] Number of messages to fetch
   /// - [callback] Result callback
+  /// - [返回值] Status code (0 means success—results via callback, non-zero means
   /// failure—check error codes)
   /// ---
   Future<int> getLocalMessagesByMessageTypes(
@@ -2258,6 +2440,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onFirstUnreadMessageLoaded]
+  /// @deprecated 用
   /// {@link #getFirstUnreadMessage(RCIMIWConversationType, String, String, IRCIMIWGetFirstUnreadMessageCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -2268,9 +2451,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups. For other
   /// conversation types, pass null.
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result needs to be handled in the interface callback.
   /// Non-zero indicates failure, and no callback will be triggered. Refer
   /// to the error codes for detailed information.
+  /// - [接口回调] [onFirstUnreadMessageLoaded]
   /// @deprecated Use
   /// {@link #getFirstUnreadMessage(RCIMIWConversationType, String, String, IRCIMIWGetFirstUnreadMessageCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -2291,6 +2476,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve the first unread message.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
@@ -2301,10 +2487,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// this interface were deprecated in version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] Status code for the current operation. 0 indicates a successful call,
   /// and the specific result needs to be handled in the callback. Non-zero
   /// values indicate that the operation failed, and no callback will be
   /// triggered. Refer to the error codes for detailed error information.
-  /// @listener [onFirstUnreadMessageLoaded]
+  /// - [接口回调] [onFirstUnreadMessageLoaded]
+  /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getFirstUnreadMessage(
     RCIMIWConversationType type,
@@ -2323,6 +2511,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUnreadMentionedMessagesLoaded]
+  /// @deprecated 用
   /// {@link #getUnreadMentionedMessages(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedMessagesCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -2333,9 +2522,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups. Pass `null` for
   /// other conversation types.
+  /// - [返回值] Status code of the current operation. `0` indicates success, and the
   /// specific result requires implementing the interface callback.
   /// Non-zero values indicate failure, and no callback will be triggered.
   /// Refer to the error codes for details.
+  /// - [接口回调] [onUnreadMentionedMessagesLoaded]
   /// @deprecated Use
   /// {@link #getUnreadMentionedMessages(RCIMIWConversationType, String, String, IRCIMIWGetUnreadMentionedMessagesCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -2356,6 +2547,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Fetch unread @ messages in a conversation.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
@@ -2366,11 +2558,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] Status code for the current operation. 0 indicates a successful call,
   /// and specific results need to be handled in the interface callback.
   /// Non-zero values indicate that the current operation failed and will
   /// not trigger the interface callback. Refer to the error codes for
   /// detailed error information.
-  /// @listener [onUnreadMentionedMessagesLoaded]
+  /// - [接口回调] [onUnreadMentionedMessagesLoaded]
+  /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getUnreadMentionedMessages(
     RCIMIWConversationType type,
@@ -2400,10 +2594,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface have been deprecated since version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no interface callback will be triggered. Refer to the error codes
   /// for detailed error information.
+  /// - [接口回调] [onMessageInserted]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> insertMessage(RCIMIWMessage message, {IRCIMIWInsertMessageCallback? callback}) async {
@@ -2429,10 +2625,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// for this interface are deprecated as of version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled by implementing the
   /// interface callback. A non-zero value indicates that the current
   /// operation failed, and no interface callback will be triggered. Refer
   /// to the error codes for detailed error information.
+  /// - [接口回调] [onMessagesInserted]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> insertMessages(List<RCIMIWMessage> messages, {IRCIMIWInsertMessagesCallback? callback}) async {
@@ -2471,9 +2669,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated as of version 5.4.0 and will be removed in
   /// version 6.x. If the callback parameter is provided, only the
   /// callback will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call.
   /// Specific results need to be handled in the interface callback.
   /// Non-zero indicates the current operation failed and no callback will
   /// be triggered. Refer to the error code for details.
+  /// - [接口回调] [onMessagesCleared]
   /// ---
   Future<int> clearMessages(
     RCIMIWConversationType type,
@@ -2506,10 +2706,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// and are expected to be removed in the 6.x release. If the
   /// callback parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. A non-zero value indicates that the current operation
   /// failed, and no interface callback will be triggered. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onLocalMessagesDeleted]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> deleteLocalMessages(List<RCIMIWMessage> messages, {IRCIMIWDeleteLocalMessagesCallback? callback}) async {
@@ -2528,6 +2730,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Delete local messages in batch by messageId
   /// - [messageIds] Set of message IDs
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for details), non-zero
   /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> deleteLocalMessageByIds(List<int> messageIds, {IRCIMIWDeleteLocalMessageByIdsCallback? callback}) async {
@@ -2560,10 +2763,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated in version 5.4.0 and are expected to be removed
   /// in version 6.x. If the callback parameter is provided, only
   /// the callback will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates successful
   /// invocation. Specific results need to be implemented through the
   /// interface callback. Non-zero values indicate failure in the current
   /// operation, and no interface callback will be triggered. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onMessagesDeleted]
   /// ---
   Future<int> deleteMessages(
     RCIMIWConversationType type,
@@ -2594,10 +2799,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// this interface have been deprecated since version 5.4.0 and
   /// are expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. Non-zero values indicate that the current
   /// interface call operation failed, and no interface callback will be
   /// triggered. For detailed error information, refer to the error codes.
+  /// - [接口回调] [onMessageRecalled]
   /// ---
   Future<int> recallMessage(RCIMIWMessage message, {IRCIMIWRecallMessageCallback? callback}) async {
     throw UnimplementedError('recallMessage() has not been implemented.');
@@ -2628,10 +2835,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// expected to be removed in version 6.x. If the `callback`
   /// parameter is provided, only the callback method will be
   /// triggered.
+  /// - [返回值] The status code of the current operation. `0` indicates a successful
   /// call, and the specific result needs to be implemented via the
   /// interface callback. Non-zero values indicate that the current
   /// operation failed, and no interface callback will be triggered. Refer
   /// to the error codes for detailed error information.
+  /// - [接口回调] [onPrivateReadReceiptMessageSent]
   /// ---
   Future<int> sendPrivateReadReceiptMessage(
     String targetId,
@@ -2661,10 +2870,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// are deprecated as of version 5.4.0 and are expected to be
   /// removed in version 6.x. If the callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled through the
   /// interface callback. A non-zero value indicates that the current
   /// operation failed, and no interface callback will be triggered. Refer
   /// to the error codes for detailed error information.
+  /// - [接口回调] [onGroupReadReceiptRequestSent]
   /// ---
   Future<int> sendGroupReadReceiptRequest(
     RCIMIWMessage message, {
@@ -2698,10 +2909,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call,
   /// and the specific result requires implementing the interface callback.
   /// Non-zero values indicate that the current operation failed, and no
   /// callback will be triggered. Refer to the error codes for detailed
   /// error information.
+  /// - [接口回调] [onGroupReadReceiptResponseSent]
   /// ---
   Future<int> sendGroupReadReceiptResponse(
     String targetId,
@@ -2745,10 +2958,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// version 5.4.0 and are expected to be removed in version
   /// 6.x. If the callback parameter is provided, only the
   /// callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero indicates that the current operation
   /// failed, and no interface callback will be triggered. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onMessageExpansionUpdated]
   /// ---
   Future<int> updateMessageExpansion(
     String messageUId,
@@ -2782,10 +2997,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// this interface are deprecated as of version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented through the
   /// interface callback. Non-zero indicates that the current interface
   /// call failed and will not trigger the interface callback. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onMessageExpansionForKeysRemoved]
   /// ---
   Future<int> removeMessageExpansionForKeys(
     String messageUId,
@@ -2818,10 +3035,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// and are expected to be removed in version 6.x. If the
   /// callback parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero values indicate that the current
   /// operation failed, and no interface callback will be triggered. Refer
   /// to the error codes for detailed error information.
+  /// - [接口回调] [onMessageSentStatusChanged]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeMessageSentStatus(
@@ -2855,10 +3074,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// are expected to be removed in version 6.x. If the
   /// callback parameter is provided, only the callback will
   /// be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no interface callback will be triggered. Refer to the error codes
   /// for detailed error information.
+  /// - [接口回调] [onMessageReceiveStatusChanged]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeMessageReceiveStatus(
@@ -2889,8 +3110,10 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// callback methods deprecated in 5.4.0 and will be
   /// removed in 6.x. If callback is provided, only
   /// triggers callback response.
+  /// - [返回值] Operation status code. 0 means success (check callback for actual
   /// result). Non-zero means failure (no callback triggered). See error
   /// codes for details.
+  /// - [接口回调] [onMessageReceiveStatusChanged]
   /// ---
   Future<int> changeMessageReceiveStatusInfo(
     int messageId,
@@ -2914,6 +3137,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [messageId] Message ID from Message Object
   /// - [extra] Additional data
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for details), non-zero
   /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> updateMessageLocalExtra(
@@ -2954,10 +3178,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code for the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled by the interface
   /// callback. Non-zero values indicate a failure in the current
   /// operation, and no interface callback will be triggered. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onChatRoomJoined]
   /// ---
   Future<int> joinChatRoom(
     String targetId,
@@ -2987,10 +3213,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// this interface were deprecated in version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero indicates that the current interface
   /// call operation failed, and the interface callback will not be
   /// triggered. Refer to the error codes for detailed errors.
+  /// - [接口回调] [onChatRoomLeft]
   /// ---
   Future<int> leaveChatRoom(String targetId, {IRCIMIWLeaveChatRoomCallback? callback}) async {
     throw UnimplementedError('leaveChatRoom() has not been implemented.');
@@ -3006,6 +3234,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [count] 要获取的消息数量，0 < count ≤ 50。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomMessagesLoaded]
+  /// @deprecated 用
   /// {@link #getChatRoomMessages(String, long, RCIMIWTimeOrder, int, IRCIMIWGetChatRoomMessagesCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -3019,9 +3248,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [order] The order of fetching messages: 0 for descending, 1 for
   /// ascending
   /// - [count] The number of messages to fetch, where 0 < count ≤ 50
+  /// - [返回值] The status code of the current API operation. 0 indicates success,
   /// and the specific result needs to be handled in the callback. Non-zero
   /// indicates failure, and no callback will be triggered. Refer to the
   /// error codes for detailed errors.
+  /// - [接口回调] [onChatRoomMessagesLoaded]
   /// @deprecated Use
   /// {@link #getChatRoomMessages(String, long, RCIMIWTimeOrder, int, IRCIMIWGetChatRoomMessagesCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -3043,6 +3274,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve chatroom historical messages.
   /// Note: The chatroom message cloud storage feature must be enabled
   /// first.
@@ -3056,11 +3288,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and are expected to be removed in version 6.x. If the
   /// callback parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result requires implementing the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no interface callback will be triggered. Refer to the error codes
   /// for detailed error information.
-  /// @listener [onChatRoomMessagesLoaded]
+  /// - [接口回调] [onChatRoomMessagesLoaded]
+  /// ---
   Future<int> getChatRoomMessages(
     String targetId,
     int timestamp,
@@ -3106,10 +3340,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and are expected to be removed in version 6.x. If
   /// the callback parameter is provided, only the callback
   /// method will be triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. Non-zero indicates that the current interface
   /// call operation failed, and the interface callback will not be
   /// triggered. Refer to the error codes for detailed error information.
+  /// - [接口回调] [onChatRoomEntryAdded]
   /// ---
   Future<int> addChatRoomEntry(
     String targetId,
@@ -3149,10 +3385,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and are expected to be removed in version 6.x. If
   /// the callback parameter is provided, only the callback
   /// will be triggered.
+  /// - [返回值] The status code for the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented through the
   /// interface callback. A non-zero value indicates that the current
   /// interface call failed, and the interface callback will not be
   /// triggered. For detailed errors, refer to the error codes.
+  /// - [接口回调] [onChatRoomEntriesAdded]
   /// ---
   Future<int> addChatRoomEntries(
     String targetId,
@@ -3171,6 +3409,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [key] 聊天室属性键值
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomEntryLoaded]
+  /// @deprecated 用
   /// {@link #getChatRoomEntry(String, String, IRCIMIWGetChatRoomEntryCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -3179,10 +3418,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Load a single chatroom attribute.
   /// - [targetId] The conversation ID of the chatroom
   /// - [key] The key of the chatroom attribute
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result requires implementing the interface callback.
   /// Non-zero indicates that the current operation failed, and the
   /// interface callback will not be triggered. Refer to the error codes
   /// for detailed error information.
+  /// - [接口回调] [onChatRoomEntryLoaded]
   /// @deprecated Use
   /// {@link #getChatRoomEntry(String, String, IRCIMIWGetChatRoomEntryCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -3201,6 +3442,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve a single chatroom attribute.
   /// - [targetId] The conversation ID of the chatroom
   /// - [key] The key of the chatroom attribute
@@ -3209,11 +3451,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are expected
   /// to be removed in version 6.x. If the callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no interface callback will be triggered. Refer to the error codes
   /// for detailed error information.
-  /// @listener [onChatRoomEntryLoaded]
+  /// - [接口回调] [onChatRoomEntryLoaded]
+  /// ---
   Future<int> getChatRoomEntry(String targetId, String key, {IRCIMIWGetChatRoomEntryCallback? callback}) async {
     throw UnimplementedError('getChatRoomEntry() has not been implemented.');
   }
@@ -3224,6 +3468,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 聊天室会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onChatRoomAllEntriesLoaded]
+  /// @deprecated 用
   /// {@link #getChatRoomAllEntries(String, IRCIMIWGetChatRoomAllEntriesCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -3231,10 +3476,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Load all chatroom attributes.
   /// - [targetId] The conversation ID of the chatroom
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result requires implementing the interface callback.
   /// Non-zero indicates the current operation failed, and no callback will
   /// be triggered. Refer to the error codes for detailed error
   /// information.
+  /// - [接口回调] [onChatRoomAllEntriesLoaded]
   /// @deprecated Use
   /// {@link #getChatRoomAllEntries(String, IRCIMIWGetChatRoomAllEntriesCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -3252,6 +3499,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve all attributes of a chatroom.
   /// - [targetId] The conversation ID of the chatroom.
   /// - [callback] The event callback. Starting from SDK version 5.3.1, the
@@ -3259,11 +3507,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// callback methods for this interface are deprecated and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero values indicate that the current
   /// interface call failed, and no interface callback will be triggered.
   /// For detailed error information, refer to the error codes.
-  /// @listener [onChatRoomAllEntriesLoaded]
+  /// - [接口回调] [onChatRoomAllEntriesLoaded]
+  /// ---
   Future<int> getChatRoomAllEntries(String targetId, {IRCIMIWGetChatRoomAllEntriesCallback? callback}) async {
     throw UnimplementedError('getChatRoomAllEntries() has not been implemented.');
   }
@@ -3291,10 +3541,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// are deprecated as of version 5.4.0 and are expected to be
   /// removed in version 6.x. If the callback parameter is
   /// provided, only the callback method will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero indicates that the current operation
   /// failed, and no interface callback will be triggered. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onChatRoomEntryRemoved]
   /// ---
   Future<int> removeChatRoomEntry(
     String targetId,
@@ -3328,10 +3580,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated starting from version 5.4.0 and will be removed in
   /// version 6.x. If the callback parameter is provided, only the
   /// callback will be triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates
   /// successful invocation, and specific results need to be handled in the
   /// interface callback. Non-zero values indicate that the current
   /// interface invocation failed, and no callback will be triggered. Refer
   /// to the error codes for detailed error information.
+  /// - [接口回调] [onChatRoomEntriesRemoved]
   /// ---
   Future<int> removeChatRoomEntries(
     String targetId,
@@ -3366,10 +3620,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// this interface were deprecated in version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero indicates that the current interface
   /// call operation failed, and no interface callback will be triggered.
   /// Refer to the error codes for detailed error information.
+  /// - [接口回调] [onBlacklistAdded]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> addToBlacklist(String userId, {IRCIMIWAddToBlacklistCallback? callback}) async {
@@ -3395,10 +3651,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// for this interface have been deprecated as of version 5.4.0
   /// and are expected to be removed in version 6.x. If a callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented through the
   /// interface callback. Non-zero values indicate that the current
   /// operation failed, and no callback will be triggered. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onBlacklistRemoved]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> removeFromBlacklist(String userId, {IRCIMIWRemoveFromBlacklistCallback? callback}) async {
@@ -3411,6 +3669,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [userId] 用户 Id
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistStatusLoaded]
+  /// @deprecated 用
   /// {@link #getBlacklistStatus(String, IRCIMIWGetBlacklistStatusCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -3418,9 +3677,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Check if a user is in the blocklist.
   /// - [userId] The user ID
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result requires implementing the callback interface.
   /// Non-zero indicates that the current operation failed and will not
   /// trigger the callback. For detailed errors, refer to the error codes.
+  /// - [接口回调] [onBlacklistStatusLoaded]
   /// @deprecated Use
   /// {@link #getBlacklistStatus(String, IRCIMIWGetBlacklistStatusCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -3439,6 +3700,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Check if a user is in the blocklist.
   /// - [userId] User ID
   /// - [callback] Event callback. The SDK supports callback-style responses
@@ -3446,11 +3708,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are expected
   /// to be removed in version 6.x. If the callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call,
   /// and the specific result needs to be obtained through the interface
   /// callback. Non-zero values indicate a failure in the current
   /// operation, and no interface callback will be triggered. Refer to the
   /// error codes for detailed error information.
-  /// @listener [onBlacklistStatusLoaded]
+  /// - [接口回调] [onBlacklistStatusLoaded]
+  /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getBlacklistStatus(String userId, {IRCIMIWGetBlacklistStatusCallback? callback}) async {
     throw UnimplementedError('getBlacklistStatus() has not been implemented.');
@@ -3461,15 +3725,18 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 加载当前用户设置的黑名单列表。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBlacklistLoaded]
+  /// @deprecated 用 {@link #getBlacklist(IRCIMIWGetBlacklistCallback)} 代替， 预计将在 6.x
   /// 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Loads the blocklist of the current user.
+  /// - [返回值] The status code of the current API operation. 0 indicates a
   /// successful call, and the specific result requires implementing the
   /// interface callback. Non-zero values indicate that the current API
   /// call operation failed, and no interface callback will be triggered.
   /// For detailed error information, refer to the error codes.
+  /// - [接口回调] [onBlacklistLoaded]
   /// @deprecated Use {@link #getBlacklist(IRCIMIWGetBlacklistCallback)} instead.
   /// This interface is expected to be removed in version 6.x.
   /// ---
@@ -3486,17 +3753,20 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve the current user's blocklist.
   /// - [callback] Event callback. The SDK has supported callback-style
   /// responses since version 5.3.1. Other callback methods for
   /// this interface were deprecated in version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be handled in the
   /// interface callback. Non-zero values indicate that the current
   /// interface call failed, and no interface callback will be triggered.
   /// For detailed error information, refer to the error codes.
-  /// @listener [onBlacklistLoaded]
+  /// - [接口回调] [onBlacklistLoaded]
+  /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getBlacklist({IRCIMIWGetBlacklistCallback? callback}) async {
     throw UnimplementedError('getBlacklist() has not been implemented.');
@@ -3533,10 +3803,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// this interface were deprecated in version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and specific results need to be handled in the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no interface callback will be triggered. Refer to the error codes
   /// for detailed error information.
+  /// - [接口回调] [onMessagesSearched]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchMessages(
@@ -3586,10 +3858,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// for this interface are deprecated as of version 5.4.0 and
   /// will be removed in version 6.x. If the callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] Status code for the current operation. 0 indicates a successful call,
   /// and specific results need to be handled in the callback. Non-zero
   /// values indicate a failure in the current operation, and no callback
   /// will be triggered. Refer to the error codes for detailed error
   /// information.
+  /// - [接口回调] [onMessagesSearchedByTimeRange]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchMessagesByTimeRange(
@@ -3638,10 +3912,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated as of version 5.4.0 and are expected to be
   /// removed in version 6.x. If the `callback` parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] Status code of the current operation. `0` indicates a successful
   /// call, and specific results need to be implemented in the interface
   /// callback. Non-zero values indicate a failure in the current
   /// operation, and no interface callback will be triggered. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onMessagesSearchedByUserId]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchMessagesByUserId(
@@ -3682,6 +3958,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// latest) in milliseconds
   /// - [count] Max results (up to 100)
   /// - [callback] Callback for search results
+  /// - [返回值] Status code: 0 for success (results via callback), non-zero for
   /// failure (see error codes)
   /// ---
   Future<int> searchMessagesByMessageTypes(
@@ -3724,10 +4001,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// and are expected to be removed in version 6.x. If
   /// the callback parameter is provided, only the
   /// callback will be triggered.
+  /// - [返回值] Status code for the current operation. 0 indicates a successful call.
   /// Specific results need to be implemented via the interface callback.
   /// Non-zero values indicate that the current interface call operation
   /// failed and will not trigger the interface callback. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onConversationsSearched]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> searchConversations(
@@ -3776,11 +4055,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// expected to be removed in version 6.x. If the `callback`
   /// parameter is provided, only the callback method will be
   /// triggered.
+  /// - [返回值]
   /// The status code for the current operation. `0` indicates a successful
   /// call, and the specific result requires implementing the callback
   /// interface. Non-zero values indicate that the current operation
   /// failed, and the callback will not be triggered. Refer to the error
   /// codes for detailed error information.
+  /// - [接口回调] [onNotificationQuietHoursChanged]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changeNotificationQuietHours(
@@ -3802,6 +4083,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Mute message notifications for a specific time period using a Setting object with timezone support
   /// - [setting] The quiet hours setting object, containing startTime, spanMinutes, timeZone, and level
+  /// - [返回值] The status code of the current API operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented
   /// through the interface callback. Non-zero indicates that the current
   /// API call operation failed, and the interface callback will not be
@@ -3831,10 +4113,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are expected
   /// to be removed in version 6.x. If the callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented via
   /// the interface callback. Non-zero indicates that the current interface
   /// call operation failed, and no interface callback will be triggered.
   /// Refer to the error codes for detailed errors.
+  /// - [接口回调] [onNotificationQuietHoursRemoved]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> removeNotificationQuietHours({IRCIMIWRemoveNotificationQuietHoursCallback? callback}) async {
@@ -3846,15 +4130,18 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 加载已设置的时间段消息提醒屏蔽
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onNotificationQuietHoursLoaded]
+  /// @deprecated 用
   /// {@link #getNotificationQuietHours(IRCIMIWGetNotificationQuietHoursCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
   /// [EN]
   /// ---
   /// Load the set notification quiet hours
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result requires implementing the interface callback.
   /// Non-zero indicates failure, and no callback will be triggered. Refer
   /// to the error codes for detailed error information.
+  /// - [接口回调] [onNotificationQuietHoursLoaded]
   /// @deprecated Use
   /// {@link #getNotificationQuietHours(IRCIMIWGetNotificationQuietHoursCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -3872,6 +4159,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// ### Get the Set Time Period for Message Reminder Blocking
   /// - [callback] Event callback. The SDK has supported callback-based event
   /// handling since version 5.3.1. Starting from version 5.4.0,
@@ -3879,11 +4167,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated and are expected to be removed in version 6.x. If
   /// the `callback` parameter is provided, only the callback
   /// method will be triggered.
+  /// - [返回值] The status code for the current operation. `0` indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. A non-zero value indicates that the current operation
   /// failed, and the interface callback will not be triggered. Refer to
   /// the error codes for detailed error information.
-  /// @listener [onNotificationQuietHoursLoaded]
+  /// - [接口回调] [onNotificationQuietHoursLoaded]
+  /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getNotificationQuietHours({IRCIMIWGetNotificationQuietHoursCallback? callback}) async {
     throw UnimplementedError('getNotificationQuietHours() has not been implemented.');
@@ -3947,10 +4237,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// are deprecated as of version 5.4.0 and will be removed in
   /// version 6.x. If the `callback` parameter is provided, only
   /// the callback will be triggered.
+  /// - [返回值] The status code for the current API operation. `0` indicates a
   /// successful call, and the specific result needs to be handled in the
   /// callback. Non-zero values indicate a failed API call, and no callback
   /// will be triggered. Refer to the error codes for detailed error
   /// information.
+  /// - [接口回调] [onConversationNotificationLevelChanged]
   /// ---
   Future<int> changeConversationNotificationLevel(
     RCIMIWConversationType type,
@@ -3970,6 +4262,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationNotificationLevelLoaded]
+  /// @deprecated 用
   /// {@link #getConversationNotificationLevel(RCIMIWConversationType, String, String, IRCIMIWGetConversationNotificationLevelCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -3980,9 +4273,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups. For other
   /// conversation types, pass null.
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result needs to be handled via the callback. Non-zero
   /// indicates failure, and the callback will not be triggered. Refer to
   /// the error codes for details.
+  /// - [接口回调] [onConversationNotificationLevelLoaded]
   /// @deprecated Use
   /// {@link #getConversationNotificationLevel(RCIMIWConversationType, String, String, IRCIMIWGetConversationNotificationLevelCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -4007,6 +4302,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get Conversation Notification Level
   /// - [type] Conversation type. Please note the following restrictions:
   /// Ultra group conversation type: If the ultra group service
@@ -4037,11 +4333,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// API are deprecated as of version 5.4.0 and are expected to
   /// be removed in version 6.x. If the `callback` parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current API operation. `0` indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the callback. Non-zero values indicate that the current API call
   /// failed, and no callback will be triggered. Refer to the error codes
   /// for detailed error information.
-  /// @listener [onConversationNotificationLevelLoaded]
+  /// - [接口回调] [onConversationNotificationLevelLoaded]
+  /// ---
   Future<int> getConversationNotificationLevel(
     RCIMIWConversationType type,
     String targetId,
@@ -4076,10 +4374,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// expected to be removed in version 6.x. If the `callback`
   /// parameter is provided, only the callback method will be
   /// triggered.
+  /// - [返回值] The status code of the current operation. `0` indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. A non-zero value indicates that the operation failed, and
   /// the interface callback will not be triggered. Refer to the error
   /// codes for detailed error information.
+  /// - [接口回调] [onConversationTypeNotificationLevelChanged]
   /// ---
   Future<int> changeConversationTypeNotificationLevel(
     RCIMIWConversationType type,
@@ -4094,6 +4394,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 获取会话类型的消息提醒状态
   /// - [type] 会话类型
   /// - [返回值] [onConversationTypeNotificationLevelLoaded]
+  /// @deprecated 用
   /// {@link #getConversationTypeNotificationLevel(RCIMIWConversationType, IRCIMIWGetConversationTypeNotificationLevelCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -4101,6 +4402,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Get the message notification status for a conversation type.
   /// - [type] The conversation type.
+  /// - [返回值] [onConversationTypeNotificationLevelLoaded]
   /// @deprecated Use
   /// {@link #getConversationTypeNotificationLevel(RCIMIWConversationType, IRCIMIWGetConversationTypeNotificationLevelCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -4128,6 +4430,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface were deprecated in version 5.4.0 and are expected
   /// to be removed in version 6.x. If the callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result requires the implementation of the
   /// interface callback. Non-zero indicates that the current interface
   /// call failed, and no interface callback will be triggered. Refer to
@@ -4167,10 +4470,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are expected
   /// to be removed in the 6.x version. If the callback parameter
   /// is provided, only the callback method will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and specific results need to be implemented via the interface
   /// callback. Non-zero values indicate a failure in the current
   /// operation, and no interface callback will be triggered. Refer to the
   /// error codes for detailed error information.
+  /// - [接口回调] [onUltraGroupDefaultNotificationLevelChanged]
   /// ---
   Future<int> changeUltraGroupDefaultNotificationLevel(
     String targetId,
@@ -4186,6 +4491,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupDefaultNotificationLevelLoaded]
+  /// @deprecated 用
   /// {@link #getUltraGroupDefaultNotificationLevel(String, IRCIMIWGetUltraGroupDefaultNotificationLevelCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -4193,10 +4499,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Get the default message status of an ultra group
   /// - [targetId] The conversation ID
+  /// - [返回值] The status code of the current API operation. 0 indicates a
   /// successful call, and the specific result requires implementing the
   /// interface callback. Non-zero values indicate that the current API
   /// call failed, and no interface callback will be triggered. For
   /// detailed errors, refer to the error codes.
+  /// - [接口回调] [onUltraGroupDefaultNotificationLevelLoaded]
   /// @deprecated Use
   /// {@link #getUltraGroupDefaultNotificationLevel(String, IRCIMIWGetUltraGroupDefaultNotificationLevelCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -4214,6 +4522,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get the default message status of an ultra group
   /// - [targetId] The conversation ID
   /// - [callback] The event callback. The SDK supports callback-based responses
@@ -4221,11 +4530,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are expected
   /// to be removed in version 6.x. If the callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero values indicate that the current
   /// operation failed, and the interface callback will not be triggered.
   /// Refer to the error codes for detailed error information.
-  /// @listener [onUltraGroupDefaultNotificationLevelLoaded]
+  /// - [接口回调] [onUltraGroupDefaultNotificationLevelLoaded]
+  /// ---
   Future<int> getUltraGroupDefaultNotificationLevel(
     String targetId, {
     IRCIMIWGetUltraGroupDefaultNotificationLevelCallback? callback,
@@ -4257,10 +4568,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback method will be
   /// triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero values indicate that the current
   /// interface call failed, and the interface callback will not be
   /// triggered. For detailed error information, refer to the error codes.
+  /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelChanged]
   /// ---
   Future<int> changeUltraGroupChannelDefaultNotificationLevel(
     String targetId,
@@ -4278,6 +4591,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelLoaded]
+  /// @deprecated 用
   /// {@link #getUltraGroupChannelDefaultNotificationLevel(String, String, IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -4286,9 +4600,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Get the default message status of an ultra group channel
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups.
+  /// - [返回值] Status code of the current operation. 0 indicates success, and the
   /// specific result requires implementing the interface callback.
   /// Non-zero indicates the current operation failed, and no callback will
   /// be triggered. Refer to the error codes for detailed errors.
+  /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelLoaded]
   /// @deprecated Use
   /// {@link #getUltraGroupChannelDefaultNotificationLevel(String, String, IRCIMIWGetUltraGroupChannelDefaultNotificationLevelCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -4307,6 +4623,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get the default message status of an ultra group channel
   /// - [targetId] Conversation ID
   /// - [channelId] Channel ID, only supported for ultra groups.
@@ -4316,11 +4633,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback method will be
   /// triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero values indicate that the current
   /// interface call failed, and no callback will be triggered. Refer to
   /// the error codes for detailed error information.
-  /// @listener [onUltraGroupChannelDefaultNotificationLevelLoaded]
+  /// - [接口回调] [onUltraGroupChannelDefaultNotificationLevelLoaded]
+  /// ---
   Future<int> getUltraGroupChannelDefaultNotificationLevel(
     String targetId,
     String? channelId, {
@@ -4351,10 +4670,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. Non-zero values indicate that the current
   /// interface call operation failed, and the interface callback will not
   /// be triggered. For detailed errors, refer to the error codes.
+  /// - [接口回调] [onPushContentShowStatusChanged]
   /// ---
   Future<int> changePushContentShowStatus(
     bool showContent, {
@@ -4383,10 +4704,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// this interface are deprecated as of version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code for the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero values indicate that the current
   /// interface call failed, and no interface callback will be triggered.
   /// Refer to the error codes for detailed error information.
+  /// - [接口回调] [onPushLanguageChanged]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changePushLanguage(String language, {IRCIMIWChangePushLanguageCallback? callback}) async {
@@ -4418,9 +4741,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated as of version 5.4.0 and will be removed in version
   /// 6.x. If the callback parameter is provided, only the callback
   /// will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and specific results need to be handled via the callback.
   /// Non-zero values indicate a failed operation, and no callback will be
   /// triggered. Refer to the error codes for detailed error information.
+  /// - [接口回调] [onPushReceiveStatusChanged]
   /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> changePushReceiveStatus(bool receive, {IRCIMIWChangePushReceiveStatusCallback? callback}) async {
@@ -4449,10 +4774,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated as of version 5.4.0 and are expected
   /// to be removed in the 6.x release. If the callback parameter
   /// is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no interface callback will be triggered. Refer to the error codes
   /// for detailed error information.
+  /// - [接口回调] [onGroupMessageToDesignatedUsersAttached],
   /// [onGroupMessageToDesignatedUsersSent]
   /// ---
   Future<int> sendGroupMessageToDesignatedUsers(
@@ -4471,6 +4798,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onMessageCountLoaded]
+  /// @deprecated 用
   /// {@link #getMessageCount(RCIMIWConversationType, String, String, IRCIMIWGetMessageCountCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -4481,9 +4809,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] The ID of the conversation.
   /// - [channelId] The channel ID, only supported for ultra groups. Pass null
   /// for other conversation types.
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the detailed result requires implementing the interface callback.
   /// Non-zero values indicate failure, and no callback will be triggered.
   /// Refer to the error codes for detailed error information.
+  /// - [接口回调] [onMessageCountLoaded]
   /// @deprecated Use
   /// {@link #getMessageCount(RCIMIWConversationType, String, String, IRCIMIWGetMessageCountCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -4504,6 +4834,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Get the total number of messages for a specified conversation.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
@@ -4514,11 +4845,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated in version 5.4.0 and will be removed in version
   /// 6.x. If the callback parameter is provided, only the
   /// callback will be triggered.
+  /// - [返回值] Status code for the current operation. 0 indicates success, and the
   /// specific result needs to be implemented in the interface callback.
   /// Non-zero values indicate failure of the current operation, and no
   /// interface callback will be triggered. Refer to the error codes for
   /// detailed error information.
-  /// @listener [onMessageCountLoaded]
+  /// - [接口回调] [onMessageCountLoaded]
+  /// ---
   /// 此接口不支持 Flutter For Web 端
   Future<int> getMessageCount(
     RCIMIWConversationType type,
@@ -4536,6 +4869,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onTopConversationsLoaded]
+  /// @deprecated 用
   /// {@link #getTopConversations(List, String, IRCIMIWGetTopConversationsCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -4545,9 +4879,11 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [conversationTypes] A collection of conversation types.
   /// - [channelId] The channel ID, only supported for ultra groups.
   /// Pass null for other conversation types.
+  /// - [返回值] The status code of the current operation. 0 indicates success.
   /// Specific results require implementing the interface callback.
   /// Non-zero values indicate failure, and no callback will be triggered.
   /// Refer to the error codes for detailed information.
+  /// - [接口回调] [onTopConversationsLoaded]
   /// @deprecated Use
   /// {@link #getTopConversations(List, String, IRCIMIWGetTopConversationsCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -4566,6 +4902,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve the list of pinned conversations based on conversation type.
   /// - [conversationTypes] A collection of conversation types.
   /// - [channelId] The channel ID, only supported for ultra groups. For
@@ -4576,11 +4913,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and are expected to be removed in version 6.x.
   /// If the callback parameter is provided, only the
   /// callback method will be triggered.
+  /// - [返回值] The status code of the current interface operation. 0 indicates a
   /// successful call, and specific results need to be implemented via the
   /// interface callback. Non-zero values indicate that the current
   /// interface call operation failed, and no interface callback will be
   /// triggered. For detailed errors, refer to the error codes.
-  /// @listener [onTopConversationsLoaded]
+  /// - [接口回调] [onTopConversationsLoaded]
+  /// ---
   Future<int> getTopConversations(
     List<RCIMIWConversationType> conversationTypes,
     String? channelId, {
@@ -4613,10 +4952,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// 5.4.0 and are expected to be removed in version 6.x. If the
   /// callback parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the callback.
   /// Non-zero values indicate a failure in the current operation, and no
   /// callback will be triggered. Refer to the error codes for detailed
   /// error information.
+  /// - [接口回调] [onUltraGroupReadStatusSynced]
   /// ---
   /// [timestamp] 在 Flutter For Web 端无效
   Future<int> syncUltraGroupReadStatus(
@@ -4635,6 +4976,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] 会话 ID
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onConversationsLoadedForAllChannel]
+  /// @deprecated 用
   /// {@link #getConversationsForAllChannel(RCIMIWConversationType, String, IRCIMIWGetConversationsForAllChannelCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -4644,10 +4986,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// conversation. Only supported for ultra groups.
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
+  /// - [返回值] The status code of the current API operation. 0 indicates the call
   /// was successful. The specific result needs to be implemented in the
   /// interface callback. Non-zero indicates the current API call operation
   /// failed, and no interface callback will be triggered. For detailed
   /// errors, refer to the error codes.
+  /// - [接口回调] [onConversationsLoadedForAllChannel]
   /// @deprecated Use
   /// {@link #getConversationsForAllChannel(RCIMIWConversationType, String, IRCIMIWGetConversationsForAllChannelCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -4666,6 +5010,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve the conversation list for all channels under a specific
   /// conversation. Only supported for ultra groups.
   /// - [type] Conversation type
@@ -4675,11 +5020,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated as of version 5.4.0 and are expected to be removed
   /// in version 6.x. If the callback parameter is provided, only
   /// the callback method will be triggered.
+  /// - [返回值] Status code for the current operation. 0 indicates a successful call,
   /// and specific results need to be implemented in the interface
   /// callback. Non-zero values indicate that the current interface call
   /// failed, and no interface callback will be triggered. Refer to the
   /// error codes for detailed error information.
-  /// @listener [onConversationsLoadedForAllChannel]
+  /// - [接口回调] [onConversationsLoadedForAllChannel]
+  /// ---
   Future<int> getConversationsForAllChannel(
     RCIMIWConversationType type,
     String targetId, {
@@ -4711,10 +5058,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// this interface are deprecated as of version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled by the interface
   /// callback. Non-zero values indicate that the current operation failed,
   /// and no interface callback will be triggered. Refer to the error codes
   /// for detailed error information.
+  /// - [接口回调] [onUltraGroupMessageModified]
   /// ---
   Future<int> modifyUltraGroupMessage(
     String messageUId,
@@ -4745,10 +5094,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// are deprecated in version 5.4.0 and will be removed in
   /// version 6.x. If the callback parameter is provided, only
   /// the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates the call was
   /// successful, and specific results need to be implemented via the
   /// interface callback. Non-zero indicates the current operation failed,
   /// and no interface callback will be triggered. Refer to the error codes
   /// for detailed errors.
+  /// - [接口回调] [onUltraGroupMessageRecalled]
   /// ---
   Future<int> recallUltraGroupMessage(
     RCIMIWMessage message,
@@ -4783,10 +5134,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated starting from version 5.4.0 and are expected to
   /// be removed in version 6.x. If the callback parameter is
   /// provided, only the callback method will be triggered.
+  /// - [返回值] Status code of the current operation. 0 indicates a successful call,
   /// and the specific result needs to be implemented through the interface
   /// callback. Non-zero indicates a failure in the current operation, and
   /// the interface callback will not be triggered. Refer to the error
   /// codes for detailed error information.
+  /// - [接口回调] [onUltraGroupMessagesCleared]
   /// ---
   Future<int> clearUltraGroupMessages(
     String targetId,
@@ -4822,10 +5175,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// will be removed in the 6.x release. If the callback
   /// parameter is provided, only the callback will be
   /// triggered.
+  /// - [返回值] The status code for the current operation. 0 indicates success, and
   /// the specific result needs to be handled in the interface callback.
   /// Non-zero values indicate a failure in the current operation, and no
   /// callback will be triggered. Refer to the error codes for detailed
   /// error information.
+  /// - [接口回调] [onUltraGroupTypingStatusSent]
   /// ---
   Future<int> sendUltraGroupTypingStatus(
     String targetId,
@@ -4858,10 +5213,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated in version 5.4.0 and will be
   /// removed in version 6.x. If the callback parameter is
   /// provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. A non-zero value indicates that the current
   /// interface call failed, and no interface callback will be triggered.
   /// For detailed errors, refer to the error codes.
+  /// - [接口回调] [onUltraGroupMessagesClearedForAllChannel]
   /// ---
   Future<int> clearUltraGroupMessagesForAllChannel(
     String targetId,
@@ -4877,6 +5234,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [messages] 获取的消息集合
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// - [接口回调] [onBatchRemoteUltraGroupMessagesLoaded]
+  /// @deprecated 用
   /// {@link #getBatchRemoteUltraGroupMessages(List, IRCIMIWGetBatchRemoteUltraGroupMessagesCallback)}
   /// 代替， 预计将在 6.x 版本删除此接口。
   /// ---
@@ -4884,10 +5242,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Retrieve Batch Messages from Service
   /// - [messages] The collection of messages to be retrieved
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result requires the implementation of the
   /// interface callback. Non-zero indicates that the current interface
   /// call operation failed, and the interface callback will not be
   /// triggered. For detailed errors, refer to the error codes.
+  /// - [接口回调] [onBatchRemoteUltraGroupMessagesLoaded]
   /// @deprecated Use
   /// {@link #getBatchRemoteUltraGroupMessages(List, IRCIMIWGetBatchRemoteUltraGroupMessagesCallback)}
   /// instead. This interface is expected to be removed in version 6.x.
@@ -4905,6 +5265,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
   /// ---
   /// [EN]
+  /// ---
   /// Retrieve Batch Messages from Service
   /// - [messages] The collection of messages retrieved.
   /// - [callback] The event callback. Starting from SDK version 5.3.1, callback
@@ -4912,11 +5273,13 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// deprecated as of version 5.4.0 and are expected to be removed
   /// in version 6.x. If the callback parameter is provided, only
   /// the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero values indicate that the current
   /// operation failed, and no interface callback will be triggered. For
   /// detailed error information, refer to the error codes.
-  /// @listener [onBatchRemoteUltraGroupMessagesLoaded]
+  /// - [接口回调] [onBatchRemoteUltraGroupMessagesLoaded]
+  /// ---
   Future<int> getBatchRemoteUltraGroupMessages(
     List<RCIMIWMessage> messages, {
     IRCIMIWGetBatchRemoteUltraGroupMessagesCallback? callback,
@@ -4952,10 +5315,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// interface are deprecated starting from version 5.4.0 and
   /// are expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code for the current interface operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. Non-zero indicates a failure in the current
   /// interface call operation, and the interface callback will not be
   /// triggered. Refer to the error codes for detailed errors.
+  /// - [接口回调] [onUltraGroupMessageExpansionUpdated]
   /// ---
   Future<int> updateUltraGroupMessageExpansion(
     String messageUId,
@@ -4990,10 +5355,12 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// this interface are deprecated as of version 5.4.0 and are
   /// expected to be removed in version 6.x. If the callback
   /// parameter is provided, only the callback will be triggered.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero indicates that the current interface
   /// call operation failed, and the interface callback will not be
   /// triggered. For detailed errors, refer to the error codes.
+  /// - [接口回调] [onUltraGroupMessageExpansionForKeysRemoved]
   /// ---
   Future<int> removeUltraGroupMessageExpansionForKeys(
     String messageUId,
@@ -5013,6 +5380,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Modify Log Level
   /// - [level] The log level
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result requires the implementation of the callback
   /// interface. Non-zero indicates that the current operation failed, and
   /// the callback interface will not be triggered. Refer to the error
@@ -5037,11 +5405,14 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// and the time stored in the message database is the server time.
   /// System.currentTimeMillis() - getDeltaTime() can be used to obtain the
   /// current server time.
+  /// - [返回值] The time difference between local time and server time.
   /// ---
   Future<int> getDeltaTime() async {
     throw UnimplementedError('getDeltaTime() has not been implemented.');
   }
 
+  /// 获取 AppKey 对应的配置。
+  /// Get app settings for current AppKey.
   Future<RCIMIWAppSettings?> getAppSettings() async {
     throw UnimplementedError('getAppSettings() has not been implemented.');
   }
@@ -5062,6 +5433,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [tagName] The name of the tag, with a maximum length of 15 characters.
   /// Tag names can be duplicated.
   /// - [callback] Event callback.
+  /// - [返回值] The status code of the current API operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented in
   /// the interface callback. Non-zero values indicate that the current API
   /// call operation failed, and the interface callback will not be
@@ -5084,6 +5456,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [tagId] The unique identifier of the tag, string type, with a maximum
   /// length of 10 characters.
   /// - [callback] The event callback.
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result needs to be implemented in the interface
   /// callback. Non-zero indicates that the current operation failed, and
   /// the interface callback will not be triggered. For detailed errors,
@@ -5109,6 +5482,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [newName] The new name of the tag, with a maximum length of 15
   /// characters. Tag names can be duplicated.
   /// - [callback] The event callback.
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the specific result needs to be implemented in the callback. Non-zero
   /// indicates failure, and the callback will not be triggered. Refer to
   /// the error codes for detailed error information.
@@ -5127,6 +5501,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Retrieve the tag information created by the current user.
   /// - [callback] The event callback.
+  /// - [返回值] The status code of the current API operation. 0 indicates the call
   /// was successful. Specific results need to be implemented in the
   /// interface callback. Non-zero values indicate the current API call
   /// failed, and the interface callback will not be triggered. For
@@ -5153,6 +5528,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] The type of the conversation
   /// - [targetId] The ID of the conversation
   /// - [callback] The event callback.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero indicates that the current operation
   /// failed, and the interface callback will not be triggered. For
@@ -5184,6 +5560,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] Conversation type
   /// - [targetId] Conversation ID
   /// - [callback] Event callback.
+  /// - [返回值] Status code of the current operation. 0 indicates success, and the
   /// specific result needs to be implemented in the callback. Non-zero
   /// indicates failure, and the callback will not be triggered. Refer to
   /// the error codes for detailed error information.
@@ -5213,6 +5590,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] Indicates the conversation ID
   /// - [tagIds] Represents the collection of tags
   /// - [callback] Specifies the event callback.
+  /// - [返回值] Returns the status code of the current operation. 0 indicates
   /// success, and the specific result requires implementing the callback
   /// interface. Non-zero values indicate failure of the current operation,
   /// and the callback will not be triggered. Refer to the error codes for
@@ -5241,6 +5619,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] Specifies the conversation type.
   /// - [targetId] Indicates the conversation ID.
   /// - [callback] Represents the event callback.
+  /// - [返回值] Returns the status code of the current operation. `0` indicates a
   /// successful call, and the specific result needs to be handled in the
   /// callback. Non-zero values indicate that the operation failed, and the
   /// callback will not be triggered. Refer to the error codes for detailed
@@ -5279,6 +5658,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// conversations retrieved is less than the count value, it
   /// indicates that all data has been fetched.
   /// - [callback] The event callback.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented in the
   /// interface callback. Non-zero indicates that the current interface
   /// call operation failed, and the interface callback will not be
@@ -5310,6 +5690,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [contain] Indicates whether to include conversations with Do Not
   /// Disturb enabled.
   /// - [callback] The event callback.
+  /// - [返回值] The status code of the current API operation. 0 indicates that the
   /// call was successful. The specific result needs to be implemented in
   /// the interface callback. Non-zero values indicate that the current API
   /// call operation failed, and the interface callback will not be
@@ -5340,6 +5721,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetId] The ID of the conversation.
   /// - [top] Whether to pin the conversation to the top.
   /// - [callback] The event callback.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be handled in the callback.
   /// Non-zero indicates a failed operation, and the callback will not be
   /// triggered. Refer to the error codes for detailed error information.
@@ -5373,6 +5755,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [type] The type of the conversation.
   /// - [targetId] The ID of the conversation.
   /// - [callback] The event callback.
+  /// - [返回值] The status code of the current operation. 0 indicates success, and
   /// the detailed result needs to be handled in the callback. Non-zero
   /// values indicate failure, and no callback will be triggered. Refer to
   /// the error codes for detailed error information.
@@ -5400,6 +5783,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [tagId] The unique identifier of the tag, string type, with a maximum
   /// length of 10 characters.
   /// - [callback] The event callback.
+  /// - [返回值] The status code of the current operation. 0 indicates a successful
   /// call, and the specific result needs to be implemented through the
   /// interface callback. Non-zero indicates that the current interface
   /// call operation failed, and the interface callback will not be
@@ -5431,6 +5815,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// length not exceeding 10 characters.
   /// - [deleteMessage] Specifies whether to delete the messages.
   /// - [callback] Event callback.
+  /// - [返回值] The status code of the current API operation. 0 indicates a
   /// successful call, and the specific result needs to be implemented via
   /// the interface callback. Non-zero indicates that the current API call
   /// failed, and the interface callback will not be triggered. For
@@ -5444,14 +5829,72 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     throw UnimplementedError('clearConversationsByTag() has not been implemented.');
   }
 
+  /// [ZH]
+  /// ---
+  /// 设置包名和版本号，埋点使用
+  /// - [moduleName] 包名
+  /// - [version] 版本号
+  /// ---
+  /// [EN]
+  /// ---
+  /// Set package name and version for analytics
+  /// - [moduleName] Package name
+  /// - [version] Version number
+  /// ---
   Future<int> setModuleName(String moduleName, String version) async {
     throw UnimplementedError('setModuleName() has not been implemented.');
   }
 
+  /// [ZH]
+  /// ---
+  /// 上报运行日志
+  /// - [method] 方法名
+  /// - [callMethod] 即将调用方法名
+  /// - [codeValue] 错误号，没有错误填0
+  /// - [message] 上报消息内容
+  /// ---
+  /// [EN]
+  /// ---
+  /// Report runtime logs
+  /// - [method] Current method name
+  /// - [callMethod] Method about to be called
+  /// - [codeValue] Error code (0 for success)
+  /// - [message] Log content
+  /// ---
   Future<int> writeLog(String method, String callMethod, int codeValue, String message) async {
     throw UnimplementedError('writeLog() has not been implemented.');
   }
 
+  /// [ZH]
+  /// ---
+  /// 创建群组
+  /// - [groupInfo] 群信息。
+  /// - [inviteeUserIds] 加入群组的用户 ID 数组，一次最多允许 30 个用户加入。（非必填）
+  /// - [callback] 操作完成后，结果通过此回调返回。<br>
+  /// callback的onSuccess参数说明：<br>
+  /// - 当被邀请加入群组权限 inviteHandlePermission
+  /// 为被邀请人需要同意才能进群时，IRongCoreEnum.CoreErrorCode 返回
+  /// RC_GROUP_NEED_INVITEE_ACCEPT ( 25427 )。<br>
+  /// - 当被邀请加入群组权限为不需被邀请人同意时，返回 SUCCESS ( 0
+  /// )，被邀请人会直接加入群中。<br>
+  /// callback的onError参数说明：<br>
+  /// - 如果errorData不为空，代表GroupInfo具体出错的key<br>
+  /// ---
+  /// [EN]
+  /// ---
+  /// Create a group
+  /// - [groupInfo] Group details
+  /// - [inviteeUserIDs] Array of user IDs to join (optional, max 30 users)
+  /// - [callback] Returns operation result<br>
+  /// onSuccess params:<br>
+  /// - When inviteHandlePermission requires approval,
+  /// returns RC_GROUP_NEED_INVITEE_ACCEPT (25427)<br>
+  /// - When no approval needed, returns SUCCESS (0) and
+  /// users join directly<br>
+  /// onError params:<br>
+  /// - Non-empty errorData indicates invalid GroupInfo
+  /// keys<br>
+  /// ---
   Future<int> createGroup(
     RCIMIWGroupInfo groupInfo,
     List<String> inviteeUserIds, {
@@ -5472,6 +5915,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Update group info
   /// - [groupInfo] Group details (only modified parameters required)
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for results, non-zero
   /// means failure—see error codes)
   /// ---
   Future<int> updateGroupInfo(RCIMIWGroupInfo groupInfo, {IRCIMIWGroupInfoUpdatedCallback? callback}) async {
@@ -5486,6 +5930,9 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// [EN]
   /// ---
+  /// - [groupIds]
+  /// - [callback]
+  /// - [返回值]
   /// ---
   Future<int> getGroupsInfo(List<String> groupIds, {IRCIMIWGetGroupsInfoCallback? callback}) async {
     throw UnimplementedError('getGroupsInfo() has not been implemented.');
@@ -5508,6 +5955,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// call)
   /// - [config] Removal config (optional, uses default when empty)
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for results, non-zero
   /// means failure with no callback triggered, see error codes)
   /// ---
   Future<int> kickGroupMembers(
@@ -5531,6 +5979,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Join group actively
   /// - [groupId] Group ID
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for details), non-zero
   /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> joinGroup(String groupId, {IRCIMIWJoinGroupCallback? callback}) async {
@@ -5551,6 +6000,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [groupId] group ID
   /// - [config] Exit config (optional, defaults apply if null)
   /// - [callback] Event callback
+  /// - [返回值] Status code (0=success, triggers callback; non-zero=failure, no
   /// callback, see error codes)
   /// ---
   Future<int> quitGroup(String groupId, RCIMIWQuitGroupConfig config, {IRCIMIWQuitGroupCallback? callback}) async {
@@ -5569,6 +6019,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Dismiss group
   /// - [groupId] Group ID
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for results, non-zero
   /// means failure—see error codes)
   /// ---
   Future<int> dismissGroup(String groupId, {IRCIMIWDismissGroupCallback? callback}) async {
@@ -5593,6 +6044,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [quitGroup] Whether to leave group
   /// - [config] Transfer config (optional, defaults apply if null)
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for result, non-zero
   /// means failure—see error codes)
   /// ---
   Future<int> transferGroupOwner(
@@ -5619,6 +6071,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [groupId] Group ID
   /// - [userIds] User ID list (max 100 per request)
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for results, non-zero
   /// means failure—see error codes)
   /// ---
   Future<int> getGroupMembers(String groupId, List<String> userIds, {IRCIMIWGetGroupMembersCallback? callback}) async {
@@ -5643,6 +6096,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// page if empty), page size (max 100), and ascending order
   /// (default desc)
   /// - [callback] event callback
+  /// - [返回值] status code (0 means success—check callback for results, non-zero
   /// means failure—no callback triggered, see error codes)
   /// ---
   Future<int> getGroupMembersByRole(
@@ -5652,6 +6106,88 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     IRCIMIWGetGroupMembersByRoleCallback? callback,
   }) async {
     throw UnimplementedError('getGroupMembersByRole() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 分页获取群成员信息，支持按机器人标识过滤
+  /// - [groupId] 群组 ID
+  /// - [role] 群成员角色
+  /// - [option] 查询选项，包含 页面标识（非必填，不填返回第一页数据）、每页条数（最大不超过 100 条）、是否正序查询（默认倒序）、按机器人标识过滤类型（默认获取所有成员）
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get group members with pagination, supports filtering by robot flag
+  /// - [groupId] group ID
+  /// - [role] member role
+  /// - [option] query options including page token (optional, returns first page if empty), page size (max 100), ascending order (default desc) and robot filter type (default all members)
+  /// - [callback] event callback
+  /// - [返回值] status code (0 means success—check callback for results, non-zero means failure—no callback triggered, see error codes)
+  /// ---
+  Future<int> getGroupMembersByRoleWithOption(
+    String groupId,
+    RCIMIWGroupMemberRole role,
+    RCIMIWGetGroupMembersOption option, {
+    IRCIMIWGetGroupMembersByRoleCallback? callback,
+  }) async {
+    throw UnimplementedError('getGroupMembersByRoleWithOption() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 获取应用下的所有机器人信息列表
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get all robots of the application
+  /// - [callback] event callback
+  /// - [返回值] status code (0 means success—check callback for results, non-zero means failure—no callback triggered, see error codes)
+  /// ---
+  Future<int> getAllRobots({IRCIMIWGetRobotsCallback? callback}) async {
+    throw UnimplementedError('getAllRobots() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 获取单个机器人信息
+  /// - [robotId] 机器人 ID
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get a single robot info
+  /// - [robotId] robot ID
+  /// - [callback] event callback
+  /// - [返回值] status code (0 means success—check callback for results, non-zero means failure—no callback triggered, see error codes)
+  /// ---
+  Future<int> getRobotById(String robotId, {IRCIMIWGetRobotInfoCallback? callback}) async {
+    throw UnimplementedError('getRobotById() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 获取包含机器人的会话列表，当前仅支持单聊会话、系统会话
+  /// - [option] 获取机器人会话列表参数，包含 时间戳（默认 0，从最新会话开始获取）、会话类型列表、获取数量（[1, 100]）、是否置顶优先
+  /// - [callback] 事件回调。
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功 具体结果需要实现接口回调，非 0 代表当前接口调用操作失败，不会触发接口回调，详细错误参考错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get conversations containing robots. Currently only private and system conversations are supported
+  /// - [option] query options including timestamp (default 0, fetch from the latest), conversation type list, count ([1, 100]) and whether pinned conversations come first
+  /// - [callback] event callback
+  /// - [返回值] status code (0 means success—check callback for results, non-zero means failure—no callback triggered, see error codes)
+  /// ---
+  Future<int> getConversationsIncludingRobots(
+    RCIMIWConversationsContainingRobotsOption option, {
+    IRCIMIWGetConversationsCallback? callback,
+  }) async {
+    throw UnimplementedError('getConversationsIncludingRobots() has not been implemented.');
   }
 
   /// [ZH]
@@ -5670,6 +6206,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// page if empty), page size (max 100), and ascending order
   /// (default desc)
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for results), non-zero
   /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> getJoinedGroupsByRole(
@@ -5692,6 +6229,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Get joined group details
   /// - [groupIds] List of group IDs
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for results. Non-zero
   /// means failure—no callback triggered. See error codes for details)
   /// ---
   Future<int> getJoinedGroups(List<String> groupIds, {IRCIMIWGetJoinedGroupsCallback? callback}) async {
@@ -5713,6 +6251,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [remark] Group remark (max 64 chars). Pass empty string to remove
   /// remark
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success). Non-zero indicates failure—check error
   /// codes for details
   /// ---
   Future<int> setGroupRemark(String groupId, String remark, {IRCIMIWSetGroupRemarkCallback? callback}) async {
@@ -5738,6 +6277,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// nickname
   /// - [extra] Optional additional info (max 128 chars)
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for result). Non-zero
   /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> setGroupMemberInfo(
@@ -5766,6 +6306,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// default), page size (max 200), and sort order (descending by
   /// default)
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 for success—check callback for results, non-zero for
   /// failure—see error codes)
   /// ---
   Future<int> searchJoinedGroups(
@@ -5795,6 +6336,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// default), page size (max 200), and sort order (descending by
   /// default)
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for results, non-zero
   /// means failure—see error codes)
   /// @note Searches nickname first, then username. Returns results if either field
   /// matches
@@ -5825,6 +6367,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [userIds] Required user ID array. Must be group members. Max 10 admins
   /// per group (owner excluded)
   /// - [callback] Event callback
+  /// - [返回值] Status code. 0 means success (check callback for details). Non-zero
   /// means failure (see error codes)
   /// ---
   Future<int> addGroupManagers(
@@ -5849,6 +6392,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [groupId] Required group ID
   /// - [userIds] Required user ID array (max 10 admins per operation)
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for details. Non-zero
   /// means failure—see error codes)
   /// ---
   Future<int> removeGroupManagers(
@@ -5880,6 +6424,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [groupId] Group ID
   /// - [userIds] User ID list (max 30 per request)
   /// - [callback] Event callback
+  /// - [返回值] Operation status code. 0 means success (check callback for results),
   /// non-zero means failure (no callback triggered). See error codes for
   /// details
   /// @note
@@ -5912,6 +6457,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [groupId] Group ID
   /// - [inviterId] Inviter's ID
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for results, non-zero
   /// means failure—no callback triggered, see error codes)
   /// ---
   Future<int> acceptGroupInvite(String groupId, String inviterId, {IRCIMIWAcceptGroupInviteCallback? callback}) async {
@@ -5934,6 +6480,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [inviterId] Inviter's ID
   /// - [reason] Optional decline reason (max 128 chars)
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for result), non-zero
   /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> refuseGroupInvite(
@@ -5969,6 +6516,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// empty for direct requests.
   /// - [applicantId] Applicant's user ID
   /// - [callback] Event callback
+  /// - [返回值] Operation status code. 0 means success (check callback for result),
   /// non-zero means failure (no callback triggered). See error codes for
   /// details.
   /// @note
@@ -6008,6 +6556,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [applicantId] Applicant's ID
   /// - [reason] Rejection reason (max 128 chars)
   /// - [callback] Event callback
+  /// - [返回值] Status code (0=success, triggers callback; non-zero=failure, no
   /// callback, see error codes)
   /// ---
   Future<int> refuseGroupApplication(
@@ -6039,6 +6588,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// directions
   /// - [status] Array of `RCGroupApplicationStatus` for status types
   /// - [callback] Event callback. Total count isn't supported
+  /// - [返回值] Status code: 0 for success (check callback for results), non-zero for
   /// failure (no callback triggered). See error codes for details
   /// ---
   Future<int> getGroupApplications(
@@ -6064,6 +6614,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [groupId] Group ID
   /// - [userIds] User IDs to follow (max 100 per request)
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for results), non-zero
   /// means failure (no callback triggered). See error codes for details.
   /// ---
   Future<int> addGroupFollows(String groupId, List<String> userIds, {IRCIMIWAddGroupFollowsCallback? callback}) async {
@@ -6084,6 +6635,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [groupId] Group ID
   /// - [userIds] List of user IDs (max 100 per request)
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for details), non-zero
   /// means failure (see error codes)
   /// ---
   Future<int> removeGroupFollows(
@@ -6106,12 +6658,25 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Get groupUsers I follow
   /// - [groupId] Group ID
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for details. Non-zero
   /// means failure—see error codes)
   /// ---
   Future<int> getGroupFollows(String groupId, {IRCIMIWGetGroupFollowsCallback? callback}) async {
     throw UnimplementedError('getGroupFollows() has not been implemented.');
   }
 
+  /// [ZH]
+  /// ---
+  /// 设置是否检查聊天室重复消息的方法。
+  /// 可以通过实现此方法来控制聊天室中是否需要对重复消息进行检查，以防止相同消息的重复显示或处理。
+  /// - [enableCheck] 默认是true; true表示开启检查聊天室中重复消息的功能，false表示关闭检查聊天室中重复消息的功能。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Control chatroom duplicate message check
+  /// - [enableCheck] Defaults to true. Set true to enable duplicate message
+  /// check, false to disable it
+  /// ---
   Future<int> setCheckChatRoomDuplicateMessage(bool enableCheck) async {
     throw UnimplementedError('setCheckChatRoomDuplicateMessage() has not been implemented.');
   }
@@ -6128,6 +6693,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Batch translate messages
   /// - [params] Messages to translate
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for results), non-zero
   /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> translateMessagesWithParams(
@@ -6149,6 +6715,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Batch translate content
   /// - [params] Content to translate
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for results), non-zero
   /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> translateTextsWithParams(
@@ -6172,6 +6739,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// SDK won't validate string format
   /// - [language] Target language
   /// - [callback] Parameter validation callback
+  /// - [返回值] Status code (0=success, triggers callback; non-zero=failure, no
   /// callback. See error codes)
   /// ---
   Future<int> setTranslationLanguage(String language, {IRCIMIWTranslateResponseCallback? callback}) async {
@@ -6188,6 +6756,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Get target translation language
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for results), non-zero
   /// means failure (no callback triggered). See error codes for details
   /// ---
   Future<int> getTranslationLanguage({IRCIMIWTranslateGetLanguageCallback? callback}) async {
@@ -6206,6 +6775,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Toggle auto-translation
   /// - [isEnable] Enable auto-translation
   /// - [callback] Parameter validation callback
+  /// - [返回值] Status code (0 means success—check callback for details, non-zero
   /// means failure—see error codes)
   /// ---
   Future<int> setAutoTranslateEnable(bool isEnable, {IRCIMIWTranslateResponseCallback? callback}) async {
@@ -6222,6 +6792,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Get auto-translation toggle status
   /// - [callback] Callback for parameter validation
+  /// - [返回值] Status code (0 means success—check callback for details, non-zero
   /// means failure—no callback triggered. See error codes)
   /// ---
   Future<int> getAutoTranslateEnabled({IRCIMIWGetAutoTranslateEnabledCallback? callback}) async {
@@ -6246,6 +6817,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelIds] List of channel IDs
   /// - [strategy] Translation strategy
   /// - [callback] Parameter validation callback result
+  /// - [返回值] Status code of current operation. 0 means success—check callback for
   /// details. Non-zero means failure—no callback triggered. See error
   /// codes for details
   /// ---
@@ -6269,6 +6841,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Calculate MD5 hash of text
   /// - [text] Input text for hashing
+  /// - [返回值] MD5 string, or null if failed
   /// ---
   Future<String> calculateTextMD5(String text) async {
     throw UnimplementedError('calculateTextMD5() has not been implemented.');
@@ -6286,6 +6859,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Set info access permissions
   /// - [visibility] Privacy settings
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for details, non-zero
   /// means failure—no callback triggered)
   /// ---
   Future<int> updateMyUserProfileVisibility(
@@ -6305,6 +6879,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Get self-info access
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for details, non-zero
   /// means failure—no callback triggered)
   /// ---
   Future<int> getMyUserProfileVisibility({IRCIMIWGetMyUserProfileVisibilityCallback? callback}) async {
@@ -6323,6 +6898,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Update your profile info
   /// - [profile] User profile data
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for details), non-zero
   /// means failure (no callback triggered)
   /// ---
   Future<int> updateMyUserProfile(RCIMIWUserProfile profile, {IRCIMIWUpdateMyUserProfileCallback? callback}) async {
@@ -6339,6 +6915,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Get your profile info
   /// - [callback] Event callback
+  /// - [返回值] Status code of current operation. 0 means success—check callback for
   /// details. Non-zero means failure—no callback triggered
   /// ---
   Future<int> getMyUserProfile({IRCIMIWGetMyUserProfileCallback? callback}) async {
@@ -6357,6 +6934,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Get user info in batch
   /// - [userIds] List of user IDs
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for results), non-zero
   /// means failed (no callback triggered)
   /// ---
   Future<int> getUserProfiles(List<String> userIds, {IRCIMIWGetUserProfilesCallback? callback}) async {
@@ -6376,6 +6954,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [uniqueId] User app ID
   /// - [callback] Event callback, returns error code
   /// RC_USER_PROFILE_USER_NOT_EXIST (24366) if user not found
+  /// - [返回值] Status code of current operation. 0 means success (check callback for
   /// results), non-zero means failure (no callback triggered)
   /// ---
   Future<int> searchUserProfileByUniqueId(
@@ -6397,6 +6976,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Subscribe to personal info change events
   /// - [request] Subscription request params
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for details), non-zero
   /// means failure (no callback triggered)
   /// ---
   Future<int> subscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
@@ -6415,6 +6995,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Unsubscribe from personal info change events
   /// - [request] Unsubscription request params
   /// - [callback] Event callback
+  /// - [返回值] Status code: 0 means success (check callback for details), non-zero
   /// means failure (no callback triggered)
   /// ---
   Future<int> unSubscribeEvent(RCIMIWSubscribeEventRequest request, {IRCIMIWSubscribeEventCallback? callback}) async {
@@ -6433,6 +7014,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Get subscribed personal info change events
   /// - [request] Query parameters
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for details, non-zero
   /// means failure—no callback triggered)
   /// ---
   Future<int> querySubscribeEvent(
@@ -6458,6 +7040,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [pageSize] Items per page
   /// - [startIndex] Start index
   /// - [callback] Event callback
+  /// - [返回值] Status code (0 means success—check callback for details, non-zero
   /// means failure—no callback triggered)
   /// ---
   Future<int> querySubscribeEventByPage(
@@ -6481,6 +7064,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Request stream message content
   /// - [params] Request params
   /// - [callback] Operation callback
+  /// - [返回值] Status code, 0 indicates success
   /// ---
   Future<int> requestStreamMessageContent(
     RCIMIWStreamMessageRequestParams params, {
@@ -6522,6 +7106,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [friendType] Friend relation direction
   /// - [extra] Extra information (up to 128 characters)
   /// - [callback] Operation callback returning process code
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> addFriend(
     String userId,
@@ -6546,6 +7131,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [userIds] User IDs to delete
   /// - [friendType] Friend relation direction
   /// - [callback] Operation callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> deleteFriends(
     List<String> userIds,
@@ -6567,6 +7153,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Accept friend application
   /// - [userId] Applicant user ID
   /// - [callback] Operation callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> acceptFriendApplication(String userId, {IRCIMIWOperationCallback? callback}) async {
     throw UnimplementedError('acceptFriendApplication() has not been implemented.');
@@ -6584,6 +7171,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Refuse friend application
   /// - [userId] Applicant user ID
   /// - [callback] Operation callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> refuseFriendApplication(String userId, {IRCIMIWOperationCallback? callback}) async {
     throw UnimplementedError('refuseFriendApplication() has not been implemented.');
@@ -6601,6 +7189,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Set friend info
   /// - [friendInfo] Friend info entity
   /// - [callback] Operation callback returning failed keys
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> setFriendInfo(RCIMIWFriendInfo friendInfo, {IRCIMIWSetFriendInfoCallback? callback}) async {
     throw UnimplementedError('setFriendInfo() has not been implemented.');
@@ -6620,6 +7209,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [userIds] User ID list
   /// - [friendType] Friend relation direction
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> checkFriendsRelation(
     List<String> userIds,
@@ -6641,6 +7231,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Get friends
   /// - [friendType] Friend relation direction
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> getFriends(RCIMIWFriendType friendType, {IRCIMIWGetFriendsCallback? callback}) async {
     throw UnimplementedError('getFriends() has not been implemented.');
@@ -6662,6 +7253,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [status]  Filtered application statuses
   /// - [queryOption] Paging query option
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> getFriendApplications(
     List<RCIMIWFriendApplicationType> applicationTypes,
@@ -6684,6 +7276,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Get friend info by user IDs
   /// - [userIds] User ID list
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> getFriendsInfo(List<String> userIds, {IRCIMIWGetFriendsInfoCallback? callback}) async {
     throw UnimplementedError('getFriendsInfo() has not been implemented.');
@@ -6701,6 +7294,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Search friend info
   /// - [keyword] Search keyword
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> searchFriendsInfo(String keyword, {IRCIMIWSearchFriendsInfoCallback? callback}) async {
     throw UnimplementedError('searchFriendsInfo() has not been implemented.');
@@ -6718,6 +7312,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Set friend allow type
   /// - [allowType] Friend allow type
   /// - [callback] Operation callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> setFriendAllowType(RCIMIWFriendAllowType allowType, {IRCIMIWOperationCallback? callback}) async {
     throw UnimplementedError('setFriendAllowType() has not been implemented.');
@@ -6733,6 +7328,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// ---
   /// Get friend allow type
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> getFriendAllowType({IRCIMIWGetFriendAllowTypeCallback? callback}) async {
     throw UnimplementedError('getFriendAllowType() has not been implemented.');
@@ -6760,6 +7356,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] Channel ID
   /// - [messageUIds] Message UID list, max 100
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> sendReadReceiptResponseV5(
     RCIMIWConversationType type,
@@ -6789,6 +7386,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [channelId] Channel ID
   /// - [messageUIds] Message UID list, max 100
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> getMessageReadReceiptInfoV5(
     RCIMIWConversationType type,
@@ -6812,6 +7410,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// Get message read receipt info in batch (V5, by message identifiers).
   /// - [identifiers] Message identifier list, max 100
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> getMessageReadReceiptInfoV5ByIdentifiers(
     List<RCIMIWMessageIdentifier> identifiers, {
@@ -6840,6 +7439,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [messageUId] Message UID
   /// - [option] Query option
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> getMessagesReadReceiptUsersByPageV5(
     RCIMIWConversationType type,
@@ -6872,6 +7472,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [messageUId] Message UID
   /// - [userIds] User ID list, max 100
   /// - [callback] Result callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> getMessagesReadReceiptByUsersV5(
     RCIMIWConversationType type,
@@ -6900,6 +7501,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetIds] Target ID list, corresponding to conversationTypes
   /// - [channelIds] Channel ID list, corresponding to conversationTypes, pass null for non-ultra group
   /// - [callback] Callback for getting conversations
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> getConversationsByIdentifiers(
     List<RCIMIWConversationType> conversationTypes,
@@ -6926,6 +7528,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [targetIds] Target ID list, corresponding to conversationTypes
   /// - [channelIds] Channel ID list, corresponding to conversationTypes, pass null for non-ultra group
   /// - [callback] Callback for removing conversations
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> removeConversationsByIdentifiers(
     List<RCIMIWConversationType> conversationTypes,
@@ -6950,6 +7553,7 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
   /// - [message] The message to be recalled
   /// - [isDelete] Whether to delete local message and remove remote message records
   /// - [callback] Event callback
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
   /// ---
   Future<int> recallMessageWithOption(
     RCIMIWMessage message,
@@ -6957,6 +7561,135 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     IRCIMIWRecallMessageCallback? callback,
   }) async {
     throw UnimplementedError('recallMessageWithOption() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 修改消息。
+  /// - [params] 消息修改参数
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Modify a message.
+  /// - [params] Message modification parameters.
+  /// - [callback] Event callback.
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure.
+  /// ---
+  Future<int> modifyMessageWithParams(
+    RCIMIWModifyMessageParams params, {
+    IRCIMIWModifyMessageCallback? callback,
+  }) async {
+    throw UnimplementedError('modifyMessageWithParams() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 批量刷新引用消息。
+  /// 本地存在的消息先通过本地结果回调返回，本地未命中的消息会继续从远端查询并通过远端结果回调返回。
+  /// - [params] 刷新引用消息参数，消息唯一 ID 最多 20 个
+  /// - [callback] 本地、远端及错误结果回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败且不会触发回调
+  /// ---
+  /// [EN]
+  /// ---
+  /// Refresh referenced messages in batches.
+  /// Locally available messages are returned first through the local callback. Messages not found locally are
+  /// queried from the server and returned through the remote callback.
+  /// - [params] Refresh parameters. At most 20 message unique IDs are allowed.
+  /// - [callback] Local, remote, and error callbacks.
+  /// - [返回值] Operation status code. 0 indicates the call was accepted; non-zero means failure and no callback.
+  /// ---
+  Future<int> refreshReferenceMessageWithParams(
+    RCIMIWRefreshReferenceMessageParams params, {
+    IRCIMIWRefreshReferenceMessageCallback? callback,
+  }) async {
+    throw UnimplementedError('refreshReferenceMessageWithParams() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 保存会话消息编辑草稿。
+  /// - [type] 会话类型
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
+  /// - [draft] 消息编辑草稿
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Save the edited-message draft for a conversation.
+  /// - [type] Conversation type.
+  /// - [targetId] Conversation ID.
+  /// - [channelId] Channel ID. Only ultra group conversations use this value; pass null for other conversation types.
+  /// - [draft] Edited-message draft.
+  /// - [callback] Event callback.
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure.
+  /// ---
+  Future<int> saveEditedMessageDraft(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    RCIMIWEditedMessageDraft draft, {
+    IRCIMIWCompletionCallback? callback,
+  }) async {
+    throw UnimplementedError('saveEditedMessageDraft() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 获取会话消息编辑草稿。
+  /// - [type] 会话类型
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get the edited-message draft for a conversation.
+  /// - [type] Conversation type.
+  /// - [targetId] Conversation ID.
+  /// - [channelId] Channel ID. Only ultra group conversations use this value; pass null for other conversation types.
+  /// - [callback] Event callback.
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure.
+  /// ---
+  Future<int> getEditedMessageDraft(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId, {
+    IRCIMIWGetEditedMessageDraftCallback? callback,
+  }) async {
+    throw UnimplementedError('getEditedMessageDraft() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 清理会话消息编辑草稿。
+  /// - [type] 会话类型
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可
+  /// - [callback] 事件回调
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// ---
+  /// [EN]
+  /// ---
+  /// Clear the edited-message draft for a conversation.
+  /// - [type] Conversation type.
+  /// - [targetId] Conversation ID.
+  /// - [channelId] Channel ID. Only ultra group conversations use this value; pass null for other conversation types.
+  /// - [callback] Event callback.
+  /// - [返回值] Operation status code. 0 indicates success; other values mean failure.
+  /// ---
+  Future<int> clearEditedMessageDraft(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId, {
+    IRCIMIWCompletionCallback? callback,
+  }) async {
+    throw UnimplementedError('clearEditedMessageDraft() has not been implemented.');
   }
 
   // -------- web 专有的方法 --------

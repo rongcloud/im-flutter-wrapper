@@ -11,8 +11,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RCIMIWUnknownMessage : RCIMIWMessage
 
-@property (nonatomic, copy, readonly) NSString *rawData;
-@property (nonatomic, copy, readonly) NSString *objectName;
+/// 原始消息体数据，使用 UTF-8 解码。
+/// Raw message payload decoded with UTF-8.
+@property (nonatomic, copy, readonly, nullable) NSString *rawData;
+
+/// 原始消息类型标识。
+/// Original message type identifier.
+@property (nonatomic, copy, readonly, nullable) NSString *objectName;
 
 @end
 

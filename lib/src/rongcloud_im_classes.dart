@@ -1,6 +1,16 @@
 import 'package:rongcloud_im_wrapper_plugin/src/rongcloud_im_converter.dart';
 import 'package:rongcloud_im_wrapper_plugin/src/rongcloud_im_enum.dart';
 
+T? _enumFromIndex<T>(List<T> values, dynamic index, {T? fallback}) {
+  if (index == null) {
+    return null;
+  }
+  if (index is! int || index < 0 || index >= values.length) {
+    return fallback;
+  }
+  return values[index];
+}
+
 abstract class RCIMIWUserCustomMessage extends RCIMIWMessage {
   String? objectName;
 
@@ -33,8 +43,34 @@ abstract class RCIMIWUserCustomMessage extends RCIMIWMessage {
 }
 
 class RCIMIWAppSettings {
+  /// [ZH]
+  /// ---
+  /// 是否开启语音转文字功能。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether the speech-to-text feature is enabled.
+  /// ---
   bool? speechToTextEnable;
+
+  /// [ZH]
+  /// ---
+  /// 消息可修改的时间范围，单位分钟。默认为 0，表示使用服务端默认配置。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The time range in minutes during which a message can be modified. Defaults to 0, which means the server default configuration is used.
+  /// ---
   int? messageModifiableMinutes;
+
+  /// [ZH]
+  /// ---
+  /// 群已读回执版本。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The group read receipt version.
+  /// ---
   RCIMIWGroupReadReceiptVersion? readReceiptVersion;
 
   Map<String, dynamic> toJson() {
@@ -48,9 +84,11 @@ class RCIMIWAppSettings {
   RCIMIWAppSettings.fromJson(Map<String, dynamic> json) {
     speechToTextEnable = json['speechToTextEnable'];
     messageModifiableMinutes = json['messageModifiableMinutes'];
-    readReceiptVersion = json['readReceiptVersion'] == null
-        ? null
-        : RCIMIWGroupReadReceiptVersion.values[json['readReceiptVersion']];
+    readReceiptVersion = _enumFromIndex(
+      RCIMIWGroupReadReceiptVersion.values,
+      json['readReceiptVersion'],
+      fallback: RCIMIWGroupReadReceiptVersion.unknown,
+    );
   }
 }
 
@@ -276,14 +314,14 @@ class RCIMIWAndroidPushOptions {
     channelIdHW = json['channelIdHW'];
     categoryHW = json['categoryHW'];
     channelIdOPPO = json['channelIdOPPO'];
-    pushTypeVIVO = json['pushTypeVIVO'] == null ? null : RCIMIWVIVOPushType.values[json['pushTypeVIVO']];
+    pushTypeVIVO = _enumFromIndex(RCIMIWVIVOPushType.values, json['pushTypeVIVO']);
     collapseKeyFCM = json['collapseKeyFCM'];
     imageUrlFCM = json['imageUrlFCM'];
-    importanceHW = json['importanceHW'] == null ? null : RCIMIWImportanceHW.values[json['importanceHW']];
+    importanceHW = _enumFromIndex(RCIMIWImportanceHW.values, json['importanceHW']);
     imageUrlHW = json['imageUrlHW'];
     channelIdFCM = json['channelIdFCM'];
     categoryVivo = json['categoryVivo'];
-    importanceHonor = json['importanceHonor'] == null ? null : RCIMIWImportanceHonor.values[json['importanceHonor']];
+    importanceHonor = _enumFromIndex(RCIMIWImportanceHonor.values, json['importanceHonor']);
     imageUrlHonor = json['imageUrlHonor'];
   }
 }
@@ -807,6 +845,16 @@ class RCIMIWEngineOptions {
 
   /// [ZH]
   /// ---
+  /// 是否开启崩溃监控。iOS 会透传给原生 SDK；Android 原生 SDK 不支持该配置，传入值会被忽略。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether crash monitoring is enabled. The value is passed to the native SDK on iOS and ignored on Android because the native Android SDK has no equivalent option.
+  /// ---
+  bool? crashMonitorEnable;
+
+  /// [ZH]
+  /// ---
   /// 压缩项配置
   /// ---
   /// [EN]
@@ -837,6 +885,7 @@ class RCIMIWEngineOptions {
     this.areaCode,
     this.environment,
     this.kickReconnectDevice,
+    this.crashMonitorEnable,
     this.compressOptions,
     this.logLevel,
     this.pushOptions,
@@ -854,6 +903,7 @@ class RCIMIWEngineOptions {
     json['areaCode'] = areaCode?.index;
     json['environment'] = environment;
     json['kickReconnectDevice'] = kickReconnectDevice;
+    json['crashMonitorEnable'] = crashMonitorEnable;
     json['compressOptions'] = compressOptions?.toJson();
     json['logLevel'] = logLevel?.index;
     json['pushOptions'] = pushOptions?.toJson();
@@ -868,15 +918,16 @@ class RCIMIWEngineOptions {
     statisticServer = json['statisticServer'];
     logServer = json['logServer'];
     cloudControlServer = json['cloudControlServer'];
-    areaCode = json['areaCode'] == null ? null : RCIMIWAreaCode.values[json['areaCode']];
+    areaCode = _enumFromIndex(RCIMIWAreaCode.values, json['areaCode']);
     environment = json['environment'];
     kickReconnectDevice = json['kickReconnectDevice'];
+    crashMonitorEnable = json['crashMonitorEnable'];
     if (json['compressOptions'] != null) {
       compressOptions = RCIMIWCompressOptions.fromJson(
         (json['compressOptions'] as Map).map((key, value) => MapEntry(key.toString(), value)),
       );
     }
-    logLevel = json['logLevel'] == null ? null : RCIMIWLogLevel.values[json['logLevel']];
+    logLevel = _enumFromIndex(RCIMIWLogLevel.values, json['logLevel']);
     if (json['pushOptions'] != null) {
       pushOptions = RCIMIWPushOptions.fromJson(
         (json['pushOptions'] as Map).map((key, value) => MapEntry(key.toString(), value)),
@@ -996,13 +1047,9 @@ class RCIMIWFriendApplicationInfo {
     userId = json['userId'];
     name = json['name'];
     portrait = json['portrait'];
-    applicationType = json['applicationType'] == null
-        ? null
-        : RCIMIWFriendApplicationType.values[json['applicationType']];
-    applicationStatus = json['applicationStatus'] == null
-        ? null
-        : RCIMIWFriendApplicationStatus.values[json['applicationStatus']];
-    friendType = json['friendType'] == null ? null : RCIMIWFriendType.values[json['friendType']];
+    applicationType = _enumFromIndex(RCIMIWFriendApplicationType.values, json['applicationType']);
+    applicationStatus = _enumFromIndex(RCIMIWFriendApplicationStatus.values, json['applicationStatus']);
+    friendType = _enumFromIndex(RCIMIWFriendType.values, json['friendType']);
     operationTime = json['operationTime'];
     remark = json['remark'];
   }
@@ -1108,7 +1155,7 @@ class RCIMIWFriendInfo {
     remark = json['remark'];
     extFields = json['extFields'];
     addTime = json['addTime'];
-    friendType = json['friendType'] == null ? null : RCIMIWFriendType.values[json['friendType']];
+    friendType = _enumFromIndex(RCIMIWFriendType.values, json['friendType']);
   }
 }
 
@@ -1144,7 +1191,7 @@ class RCIMIWFriendRelationInfo {
 
   RCIMIWFriendRelationInfo.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
-    relation = json['relation'] == null ? null : RCIMIWFriendRelationType.values[json['relation']];
+    relation = _enumFromIndex(RCIMIWFriendRelationType.values, json['relation']);
   }
 }
 
@@ -1190,7 +1237,7 @@ class RCIMIWMessageAuditInfo {
   }
 
   RCIMIWMessageAuditInfo.fromJson(Map<String, dynamic> json) {
-    auditType = json['auditType'] == null ? null : RCIMIWMessageAuditType.values[json['auditType']];
+    auditType = _enumFromIndex(RCIMIWMessageAuditType.values, json['auditType']);
     project = json['project'];
     strategy = json['strategy'];
   }
@@ -1199,11 +1246,11 @@ class RCIMIWMessageAuditInfo {
 class RCIMIWUnknownMessage extends RCIMIWMessage {
   /// [ZH]
   /// ---
-  /// 消息数据
+  /// 原始消息体数据，使用 UTF-8 解码。
   /// ---
   /// [EN]
   /// ---
-  /// Message Data
+  /// Raw message payload decoded with UTF-8.
   /// ---
   String? rawData;
 
@@ -1345,7 +1392,7 @@ class RCIMIWCustomMessage extends RCIMIWMessage {
 
   RCIMIWCustomMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     identifier = json['identifier'];
-    policy = json['policy'] == null ? null : RCIMIWCustomMessagePolicy.values[json['policy']];
+    policy = _enumFromIndex(RCIMIWCustomMessagePolicy.values, json['policy']);
     fields = json['fields'];
   }
 }
@@ -1397,6 +1444,29 @@ class RCIMIWNativeCustomMessage extends RCIMIWMessage {
     fields = json['fields'];
     searchableWords = json['searchableWords']?.cast<String>();
     messageIdentifier = json['messageIdentifier'];
+  }
+}
+
+class RCIMIWInformationNotificationMessage extends RCIMIWMessage {
+  /// [ZH]
+  /// ---
+  /// 小灰条通知内容。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Information notification content.
+  /// ---
+  String? message;
+
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = super.toJson();
+    json['message'] = message;
+    return json;
+  }
+
+  RCIMIWInformationNotificationMessage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    message = json['message'];
   }
 }
 
@@ -1649,6 +1719,26 @@ class RCIMIWMessage {
 
   /// [ZH]
   /// ---
+  /// 消息是否被修改。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether the message has been modified.
+  /// ---
+  bool? hasChanged;
+
+  /// [ZH]
+  /// ---
+  /// 消息修改信息。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message modification information.
+  /// ---
+  RCIMIWMessageModifyInfo? modifyInfo;
+
+  /// [ZH]
+  /// ---
   /// 定向用户列表，单聊会话类型返回空
   /// ---
   /// [EN]
@@ -1703,6 +1793,8 @@ class RCIMIWMessage {
     json['expansion'] = expansion;
     json['canIncludeExpansion'] = canIncludeExpansion;
     json['auditInfo'] = auditInfo?.toJson();
+    json['hasChanged'] = hasChanged;
+    json['modifyInfo'] = modifyInfo?.toJson();
     json['directedUserIds'] = directedUserIds;
     json['needReceipt'] = needReceipt;
     json['sentReceipt'] = sentReceipt;
@@ -1710,10 +1802,12 @@ class RCIMIWMessage {
   }
 
   RCIMIWMessage.fromJson(Map<String, dynamic> json) {
-    conversationType = json['conversationType'] == null
-        ? null
-        : RCIMIWConversationType.values[json['conversationType']];
-    messageType = json['messageType'] == null ? null : RCIMIWMessageType.values[json['messageType']];
+    conversationType = _enumFromIndex(
+      RCIMIWConversationType.values,
+      json['conversationType'],
+      fallback: RCIMIWConversationType.invalid,
+    );
+    messageType = _enumFromIndex(RCIMIWMessageType.values, json['messageType'], fallback: RCIMIWMessageType.unknown);
     targetId = json['targetId'];
     channelId = json['channelId'];
     messageId = json['messageId'];
@@ -1727,15 +1821,15 @@ class RCIMIWMessage {
     receivedTime = json['receivedTime'];
     sentTime = json['sentTime'];
     destructDuration = json['destructDuration'];
-    receivedStatus = json['receivedStatus'] == null ? null : RCIMIWReceivedStatus.values[json['receivedStatus']];
+    receivedStatus = _enumFromIndex(RCIMIWReceivedStatus.values, json['receivedStatus']);
     if (json['receivedStatusInfo'] != null) {
       receivedStatusInfo = RCIMIWReceivedStatusInfo.fromJson(
         (json['receivedStatusInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
       );
     }
-    sentStatus = json['sentStatus'] == null ? null : RCIMIWSentStatus.values[json['sentStatus']];
+    sentStatus = _enumFromIndex(RCIMIWSentStatus.values, json['sentStatus']);
     senderUserId = json['senderUserId'];
-    direction = json['direction'] == null ? null : RCIMIWMessageDirection.values[json['direction']];
+    direction = _enumFromIndex(RCIMIWMessageDirection.values, json['direction']);
     if (json['userInfo'] != null) {
       userInfo = RCIMIWUserInfo.fromJson(
         (json['userInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
@@ -1758,6 +1852,12 @@ class RCIMIWMessage {
     if (json['auditInfo'] != null) {
       auditInfo = RCIMIWMessageAuditInfo.fromJson(
         (json['auditInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
+    hasChanged = json['hasChanged'];
+    if (json['modifyInfo'] != null) {
+      modifyInfo = RCIMIWMessageModifyInfo.fromJson(
+        (json['modifyInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
       );
     }
     directedUserIds = json['directedUserIds']?.cast<String>();
@@ -1870,6 +1970,58 @@ class RCIMIWReceivedStatusInfo {
     listened = json['listened'];
     downloaded = json['downloaded'];
     retrieved = json['retrieved'];
+  }
+}
+
+class RCIMIWMessageModifyInfo {
+  /// [ZH]
+  /// ---
+  /// 消息修改时间戳。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message modification timestamp.
+  /// ---
+  int? timestamp;
+
+  /// [ZH]
+  /// ---
+  /// 修改后的消息内容。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Modified message content.
+  /// ---
+  RCIMIWMessage? content;
+
+  /// [ZH]
+  /// ---
+  /// 消息修改状态。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message modification status.
+  /// ---
+  RCIMIWMessageModifyStatus? status;
+
+  RCIMIWMessageModifyInfo.create({this.timestamp, this.content, this.status});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['timestamp'] = timestamp;
+    json['content'] = content?.toJson();
+    json['status'] = status?.index;
+    return json;
+  }
+
+  RCIMIWMessageModifyInfo.fromJson(Map<String, dynamic> json) {
+    timestamp = json['timestamp'];
+    if (json['content'] != null) {
+      content = RCIMConverter.convertMessage(
+        (json['content'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
+    status = _enumFromIndex(RCIMIWMessageModifyStatus.values, json['status']);
   }
 }
 
@@ -2055,6 +2207,58 @@ class RCIMIWCombineMsgInfo {
   }
 }
 
+class RCIMIWMessageResult {
+  /// [ZH]
+  /// ---
+  /// 消息唯一 ID。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Message unique ID.
+  /// ---
+  String? messageUId;
+
+  /// [ZH]
+  /// ---
+  /// 查询到的消息；未查询到时为空。
+  /// ---
+  /// [EN]
+  /// ---
+  /// The queried message, or null when no message is found.
+  /// ---
+  RCIMIWMessage? message;
+
+  /// [ZH]
+  /// ---
+  /// 查询结果错误码。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error code of the query result.
+  /// ---
+  int? code;
+
+  RCIMIWMessageResult.create({this.messageUId, this.message, this.code});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    json['message'] = message?.toJson();
+    json['code'] = code;
+    return json;
+  }
+
+  RCIMIWMessageResult.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
+    if (json['message'] != null) {
+      message = RCIMConverter.convertMessage(
+        (json['message'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
+    code = json['code'];
+  }
+}
+
 class RCIMIWReferenceInfo {
   String? senderId;
   String? messageUId;
@@ -2168,6 +2372,71 @@ class RCIMIWRecallNotificationMessage extends RCIMIWMessage {
         (json['originalMessage'] as Map).map((key, value) => MapEntry(key.toString(), value)),
       );
     }
+  }
+}
+
+class RCIMIWRefreshReferenceMessageParams {
+  /// [ZH]
+  /// ---
+  /// 会话类型。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation type.
+  /// ---
+  RCIMIWConversationType? conversationType;
+
+  /// [ZH]
+  /// ---
+  /// 会话 ID。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation ID.
+  /// ---
+  String? targetId;
+
+  /// [ZH]
+  /// ---
+  /// 频道 ID，仅超级群会话使用。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Channel ID, used only for ultra group conversations.
+  /// ---
+  String? channelId;
+
+  /// [ZH]
+  /// ---
+  /// 引用消息自身的唯一 ID 列表，最多 20 个，不是被引用消息的唯一 ID。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Unique ID list of the reference messages themselves, with at most 20 items; these are not the
+  /// unique IDs of the referenced messages.
+  /// ---
+  List<String>? messageUIds;
+
+  RCIMIWRefreshReferenceMessageParams.create({this.conversationType, this.targetId, this.channelId, this.messageUIds});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['conversationType'] = conversationType?.index;
+    json['targetId'] = targetId;
+    json['channelId'] = channelId;
+    json['messageUIds'] = messageUIds;
+    return json;
+  }
+
+  RCIMIWRefreshReferenceMessageParams.fromJson(Map<String, dynamic> json) {
+    conversationType = _enumFromIndex(
+      RCIMIWConversationType.values,
+      json['conversationType'],
+      fallback: RCIMIWConversationType.invalid,
+    );
+    targetId = json['targetId'];
+    channelId = json['channelId'];
+    messageUIds = json['messageUIds']?.cast<String>();
   }
 }
 
@@ -2395,9 +2664,11 @@ class RCIMIWCombineV2Message extends RCIMIWMediaMessage {
   }
 
   RCIMIWCombineV2Message.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    combineConversationType = json['combineConversationType'] == null
-        ? null
-        : RCIMIWConversationType.values[json['combineConversationType']];
+    combineConversationType = _enumFromIndex(
+      RCIMIWConversationType.values,
+      json['combineConversationType'],
+      fallback: RCIMIWConversationType.invalid,
+    );
     summaryList = json['summaryList']?.cast<String>();
     nameList = json['nameList']?.cast<String>();
     msgNum = json['msgNum'];
@@ -2407,6 +2678,42 @@ class RCIMIWCombineV2Message extends RCIMIWMediaMessage {
         )
         .toList();
     jsonMsgKey = json['jsonMsgKey'];
+  }
+}
+
+class RCIMIWEditedMessageDraft {
+  /// [ZH]
+  /// ---
+  /// 被编辑消息的 messageUId。
+  /// ---
+  /// [EN]
+  /// ---
+  /// messageUId of the edited message.
+  /// ---
+  String? messageUId;
+
+  /// [ZH]
+  /// ---
+  /// 消息编辑草稿内容。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Edited-message draft content.
+  /// ---
+  String? content;
+
+  RCIMIWEditedMessageDraft.create({this.messageUId, this.content});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    json['content'] = content;
+    return json;
+  }
+
+  RCIMIWEditedMessageDraft.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
+    content = json['content'];
   }
 }
 
@@ -2491,7 +2798,7 @@ class RCIMIWMentionedInfo {
   }
 
   RCIMIWMentionedInfo.fromJson(Map<String, dynamic> json) {
-    type = json['type'] == null ? null : RCIMIWMentionedType.values[json['type']];
+    type = _enumFromIndex(RCIMIWMentionedType.values, json['type']);
     userIdList = json['userIdList']?.cast<String>();
     mentionedContent = json['mentionedContent'];
   }
@@ -2642,6 +2949,46 @@ class RCIMIWSightMessage extends RCIMIWMediaMessage {
   }
 }
 
+class RCIMIWModifyMessageParams {
+  /// [ZH]
+  /// ---
+  /// 被修改消息的 messageUId。
+  /// ---
+  /// [EN]
+  /// ---
+  /// messageUId of the message to modify.
+  /// ---
+  String? messageUId;
+
+  /// [ZH]
+  /// ---
+  /// 修改后的消息内容。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Modified message content.
+  /// ---
+  RCIMIWMessage? message;
+
+  RCIMIWModifyMessageParams.create({this.messageUId, this.message});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    json['message'] = message?.toJson();
+    return json;
+  }
+
+  RCIMIWModifyMessageParams.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
+    if (json['message'] != null) {
+      message = RCIMConverter.convertMessage(
+        (json['message'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
+  }
+}
+
 class RCIMIWLocationMessage extends RCIMIWMessage {
   /// [ZH]
   /// ---
@@ -2749,11 +3096,22 @@ class RCIMIWReferenceMessage extends RCIMIWMessage {
   /// ---
   RCIMIWMessage? referenceMessage;
 
+  /// [ZH]
+  /// ---
+  /// 被引用消息的状态。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Status of the referenced message.
+  /// ---
+  RCIMIWReferenceMessageStatus? referMsgStatus;
+
   @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = super.toJson();
     json['text'] = text;
     json['referenceMessage'] = referenceMessage?.toJson();
+    json['referMsgStatus'] = referMsgStatus?.index;
     return json;
   }
 
@@ -2764,6 +3122,7 @@ class RCIMIWReferenceMessage extends RCIMIWMessage {
         (json['referenceMessage'] as Map).map((key, value) => MapEntry(key.toString(), value)),
       );
     }
+    referMsgStatus = _enumFromIndex(RCIMIWReferenceMessageStatus.values, json['referMsgStatus']);
   }
 }
 
@@ -2812,7 +3171,7 @@ class RCIMIWTranslateTextParams {
   }
 
   RCIMIWTranslateTextParams.fromJson(Map<String, dynamic> json) {
-    mode = json['mode'] == null ? null : RCIMIWTranslateMode.values[json['mode']];
+    mode = _enumFromIndex(RCIMIWTranslateMode.values, json['mode']);
     list = json['list']
         ?.map<RCIMIWTranslateTextParam>(
           (item) =>
@@ -2847,7 +3206,7 @@ class RCIMIWTranslateMessagesParams {
 
   RCIMIWTranslateMessagesParams.fromJson(Map<String, dynamic> json) {
     force = json['force'];
-    mode = json['mode'] == null ? null : RCIMIWTranslateMode.values[json['mode']];
+    mode = _enumFromIndex(RCIMIWTranslateMode.values, json['mode']);
     list = json['list']
         ?.map<RCIMIWTranslateMessageParam>(
           (item) =>
@@ -2883,7 +3242,7 @@ class RCIMIWTranslateInfo {
   RCIMIWTranslateInfo.fromJson(Map<String, dynamic> json) {
     translatedText = json['translatedText'];
     targetLanguage = json['targetLanguage'];
-    status = json['status'] == null ? null : RCIMIWTranslateStatus.values[json['status']];
+    status = _enumFromIndex(RCIMIWTranslateStatus.values, json['status']);
   }
 }
 
@@ -2951,7 +3310,7 @@ class RCIMIWTranslateItem {
       );
     }
     errorCode = json['errorCode'];
-    resultType = json['resultType'] == null ? null : RCIMIWTranslateResultType.values[json['resultType']];
+    resultType = _enumFromIndex(RCIMIWTranslateResultType.values, json['resultType']);
   }
 }
 
@@ -3295,30 +3654,23 @@ class RCIMIWGroupInfo {
     introduction = json['introduction'];
     notice = json['notice'];
     extProfile = json['extProfile'];
-    joinPermission = json['joinPermission'] == null ? null : RCIMIWGroupJoinPermission.values[json['joinPermission']];
-    removeMemberPermission = json['removeMemberPermission'] == null
-        ? null
-        : RCIMIWGroupOperationPermission.values[json['removeMemberPermission']];
-    invitePermission = json['invitePermission'] == null
-        ? null
-        : RCIMIWGroupOperationPermission.values[json['invitePermission']];
-    inviteHandlePermission = json['inviteHandlePermission'] == null
-        ? null
-        : RCIMIWGroupInviteHandlePermission.values[json['inviteHandlePermission']];
-    groupInfoEditPermission = json['groupInfoEditPermission'] == null
-        ? null
-        : RCIMIWGroupOperationPermission.values[json['groupInfoEditPermission']];
-    memberInfoEditPermission = json['memberInfoEditPermission'] == null
-        ? null
-        : RCIMIWGroupMemberInfoEditPermission.values[json['memberInfoEditPermission']];
+    joinPermission = _enumFromIndex(RCIMIWGroupJoinPermission.values, json['joinPermission']);
+    removeMemberPermission = _enumFromIndex(RCIMIWGroupOperationPermission.values, json['removeMemberPermission']);
+    invitePermission = _enumFromIndex(RCIMIWGroupOperationPermission.values, json['invitePermission']);
+    inviteHandlePermission = _enumFromIndex(RCIMIWGroupInviteHandlePermission.values, json['inviteHandlePermission']);
+    groupInfoEditPermission = _enumFromIndex(RCIMIWGroupOperationPermission.values, json['groupInfoEditPermission']);
+    memberInfoEditPermission = _enumFromIndex(
+      RCIMIWGroupMemberInfoEditPermission.values,
+      json['memberInfoEditPermission'],
+    );
     creatorId = json['creatorId'];
     ownerId = json['ownerId'];
     remark = json['remark'];
     createTime = json['createTime'];
     membersCount = json['membersCount'];
     joinedTime = json['joinedTime'];
-    role = json['role'] == null ? null : RCIMIWGroupMemberRole.values[json['role']];
-    groupStatus = json['groupStatus'] == null ? null : RCIMIWGroupStatus.values[json['groupStatus']];
+    role = _enumFromIndex(RCIMIWGroupMemberRole.values, json['role']);
+    groupStatus = _enumFromIndex(RCIMIWGroupStatus.values, json['groupStatus']);
     groupStatusUpdateTime = json['groupStatusUpdateTime'];
   }
 }
@@ -3394,6 +3746,16 @@ class RCIMIWGroupMemberInfo {
   /// ---
   RCIMIWGroupMemberRole? role;
 
+  /// [ZH]
+  /// ---
+  /// 是否为机器人。true：机器人；false：普通用户。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether the member is a robot. true: robot; false: normal user
+  /// ---
+  bool? isRobot;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     json['userId'] = userId;
@@ -3403,6 +3765,7 @@ class RCIMIWGroupMemberInfo {
     json['extra'] = extra;
     json['joinedTime'] = joinedTime;
     json['role'] = role?.index;
+    json['isRobot'] = isRobot;
     return json;
   }
 
@@ -3413,7 +3776,8 @@ class RCIMIWGroupMemberInfo {
     nickname = json['nickname'];
     extra = json['extra'];
     joinedTime = json['joinedTime'];
-    role = json['role'] == null ? null : RCIMIWGroupMemberRole.values[json['role']];
+    role = _enumFromIndex(RCIMIWGroupMemberRole.values, json['role']);
+    isRobot = json['isRobot'];
   }
 }
 
@@ -3515,8 +3879,35 @@ class RCIMIWQuitGroupConfig {
 
 class RCIMIWGroupApplicationInfo {
   String? groupId;
+
+  /// [ZH]
+  /// ---
+  /// 申请入群的用户信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// User info of the member applying to join the group
+  /// ---
   RCIMIWGroupMemberInfo? joinMemberInfo;
+
+  /// [ZH]
+  /// ---
+  /// 邀请人信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Inviter info
+  /// ---
   RCIMIWGroupMemberInfo? inviterInfo;
+
+  /// [ZH]
+  /// ---
+  /// 操作人信息
+  /// ---
+  /// [EN]
+  /// ---
+  /// Operator info
+  /// ---
   RCIMIWGroupMemberInfo? operatorInfo;
   RCIMIWGroupApplicationStatus? status;
   RCIMIWGroupApplicationDirection? direction;
@@ -3555,11 +3946,36 @@ class RCIMIWGroupApplicationInfo {
         (json['operatorInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
       );
     }
-    status = json['status'] == null ? null : RCIMIWGroupApplicationStatus.values[json['status']];
-    direction = json['direction'] == null ? null : RCIMIWGroupApplicationDirection.values[json['direction']];
-    type = json['type'] == null ? null : RCIMIWGroupApplicationType.values[json['type']];
+    status = _enumFromIndex(RCIMIWGroupApplicationStatus.values, json['status']);
+    direction = _enumFromIndex(RCIMIWGroupApplicationDirection.values, json['direction']);
+    type = _enumFromIndex(RCIMIWGroupApplicationType.values, json['type']);
     operationTime = json['operationTime'];
     reason = json['reason'];
+  }
+}
+
+class RCIMIWGetGroupMembersOption extends RCIMIWPagingQueryOption {
+  /// [ZH]
+  /// ---
+  /// 按机器人标识过滤的类型，默认为 ALL（获取所有成员）
+  /// ---
+  /// [EN]
+  /// ---
+  /// Filter type by robot flag. Defaults to ALL (get all members)
+  /// ---
+  RCIMIWFilterRobotType? filterRobotType;
+
+  RCIMIWGetGroupMembersOption.create({this.filterRobotType}) : super.create();
+
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = super.toJson();
+    json['filterRobotType'] = filterRobotType?.index;
+    return json;
+  }
+
+  RCIMIWGetGroupMembersOption.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    filterRobotType = _enumFromIndex(RCIMIWFilterRobotType.values, json['filterRobotType']);
   }
 }
 
@@ -3625,12 +4041,14 @@ class RCIMIWBlockedMessageInfo {
   }
 
   RCIMIWBlockedMessageInfo.fromJson(Map<String, dynamic> json) {
-    conversationType = json['conversationType'] == null
-        ? null
-        : RCIMIWConversationType.values[json['conversationType']];
+    conversationType = _enumFromIndex(
+      RCIMIWConversationType.values,
+      json['conversationType'],
+      fallback: RCIMIWConversationType.invalid,
+    );
     targetId = json['targetId'];
     blockedMsgUId = json['blockedMsgUId'];
-    blockType = json['blockType'] == null ? null : RCIMIWMessageBlockType.values[json['blockType']];
+    blockType = _enumFromIndex(RCIMIWMessageBlockType.values, json['blockType']);
     extra = json['extra'];
   }
 }
@@ -3758,7 +4176,7 @@ class RCIMIWUltraGroupTypingStatusInfo {
     channelId = json['channelId'];
     userId = json['userId'];
     userNums = json['userNums'];
-    status = json['status'] == null ? null : RCIMIWUltraGroupTypingStatus.values[json['status']];
+    status = _enumFromIndex(RCIMIWUltraGroupTypingStatus.values, json['status']);
     timestamp = json['timestamp'];
   }
 }
@@ -3829,7 +4247,7 @@ class RCIMIWNotificationQuietHoursSetting {
   RCIMIWNotificationQuietHoursSetting.fromJson(Map<String, dynamic> json) {
     startTime = json['startTime'];
     spanMinutes = json['spanMinutes'];
-    level = json['level'] == null ? null : RCIMIWPushNotificationQuietHoursLevel.values[json['level']];
+    level = _enumFromIndex(RCIMIWPushNotificationQuietHoursLevel.values, json['level']);
     timeZone = json['timeZone'];
   }
 }
@@ -3850,9 +4268,170 @@ class RCIMIWSpeechToTextInfo {
   }
 
   RCIMIWSpeechToTextInfo.fromJson(Map<String, dynamic> json) {
-    status = json['status'] == null ? null : RCIMIWSpeechToTextStatus.values[json['status']];
+    status = _enumFromIndex(RCIMIWSpeechToTextStatus.values, json['status']);
     text = json['text'];
     visible = json['visible'];
+  }
+}
+
+class RCIMIWConversationsContainingRobotsOption {
+  /// [ZH]
+  /// ---
+  /// 时间戳，单位毫秒，默认值为 0，表示从最新的会话开始获取。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Timestamp in milliseconds. Defaults to 0, meaning fetching from the latest conversation
+  /// ---
+  int? timestamp;
+
+  /// [ZH]
+  /// ---
+  /// 会话类型列表，目前仅支持单聊会话、系统会话。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Conversation type list. Currently only private and system conversations are supported
+  /// ---
+  List<RCIMIWConversationType>? conversationTypes;
+
+  /// [ZH]
+  /// ---
+  /// 获取数量，有效范围 [1, 100]
+  /// ---
+  /// [EN]
+  /// ---
+  /// Count to fetch, valid range [1, 100]
+  /// ---
+  int? count;
+
+  /// [ZH]
+  /// ---
+  /// 是否置顶优先，默认值为 false
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether pinned conversations come first. Defaults to false
+  /// ---
+  bool? topPriority;
+
+  RCIMIWConversationsContainingRobotsOption.create({
+    this.timestamp,
+    this.conversationTypes,
+    this.count,
+    this.topPriority,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['timestamp'] = timestamp;
+    json['conversationTypes'] = conversationTypes?.map((item) => item.index).toList();
+    json['count'] = count;
+    json['topPriority'] = topPriority;
+    return json;
+  }
+
+  RCIMIWConversationsContainingRobotsOption.fromJson(Map<String, dynamic> json) {
+    timestamp = json['timestamp'];
+    conversationTypes = json['conversationTypes']
+        ?.map<RCIMIWConversationType>((item) => RCIMIWConversationType.values[item])
+        .toList();
+    count = json['count'];
+    topPriority = json['topPriority'];
+  }
+}
+
+class RCIMIWRobotInfo {
+  /// [ZH]
+  /// ---
+  /// 机器人 Id。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Robot ID
+  /// ---
+  String? robotId;
+
+  /// [ZH]
+  /// ---
+  /// 机器人名称。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Robot name
+  /// ---
+  String? name;
+
+  /// [ZH]
+  /// ---
+  /// 机器人头像。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Robot portrait URI
+  /// ---
+  String? portraitUri;
+
+  /// [ZH]
+  /// ---
+  /// 机器人类型。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Robot type
+  /// ---
+  String? robotType;
+
+  /// [ZH]
+  /// ---
+  /// 机器人拓展数据。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Robot extension metadata
+  /// ---
+  Map? metadata;
+
+  /// [ZH]
+  /// ---
+  /// 创建时间。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Create time
+  /// ---
+  int? createTime;
+
+  /// [ZH]
+  /// ---
+  /// 最后一次更新时间。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Last update time
+  /// ---
+  int? updateTime;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['robotId'] = robotId;
+    json['name'] = name;
+    json['portraitUri'] = portraitUri;
+    json['robotType'] = robotType;
+    json['metadata'] = metadata;
+    json['createTime'] = createTime;
+    json['updateTime'] = updateTime;
+    return json;
+  }
+
+  RCIMIWRobotInfo.fromJson(Map<String, dynamic> json) {
+    robotId = json['robotId'];
+    name = json['name'];
+    portraitUri = json['portraitUri'];
+    robotType = json['robotType'];
+    metadata = json['metadata'];
+    createTime = json['createTime'];
+    updateTime = json['updateTime'];
   }
 }
 
@@ -3877,7 +4456,7 @@ class RCIMIWChatRoomMemberBanEvent {
 
   RCIMIWChatRoomMemberBanEvent.fromJson(Map<String, dynamic> json) {
     chatroomId = json['chatroomId'];
-    banType = json['banType'] == null ? null : RCIMIWChatRoomMemberBanType.values[json['banType']];
+    banType = _enumFromIndex(RCIMIWChatRoomMemberBanType.values, json['banType']);
     durationTime = json['durationTime'];
     operateTime = json['operateTime'];
     userIdList = json['userIdList']?.cast<String>();
@@ -3904,8 +4483,8 @@ class RCIMIWChatRoomSyncEvent {
 
   RCIMIWChatRoomSyncEvent.fromJson(Map<String, dynamic> json) {
     chatroomId = json['chatroomId'];
-    status = json['status'] == null ? null : RCIMIWChatRoomSyncStatus.values[json['status']];
-    reason = json['reason'] == null ? null : RCIMIWChatRoomSyncStatusReason.values[json['reason']];
+    status = _enumFromIndex(RCIMIWChatRoomSyncStatus.values, json['status']);
+    reason = _enumFromIndex(RCIMIWChatRoomSyncStatusReason.values, json['reason']);
     time = json['time'];
     extra = json['extra'];
   }
@@ -3941,7 +4520,7 @@ class RCIMIWChatRoomMemberAction {
 
   RCIMIWChatRoomMemberAction.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
-    actionType = json['actionType'] == null ? null : RCIMIWChatRoomMemberActionType.values[json['actionType']];
+    actionType = _enumFromIndex(RCIMIWChatRoomMemberActionType.values, json['actionType']);
   }
 }
 
@@ -3966,7 +4545,7 @@ class RCIMIWChatRoomMemberBlockEvent {
 
   RCIMIWChatRoomMemberBlockEvent.fromJson(Map<String, dynamic> json) {
     chatroomId = json['chatroomId'];
-    operateType = json['operateType'] == null ? null : RCIMIWChatRoomMemberOperateType.values[json['operateType']];
+    operateType = _enumFromIndex(RCIMIWChatRoomMemberOperateType.values, json['operateType']);
     durationTime = json['durationTime'];
     operateTime = json['operateTime'];
     userIdList = json['userIdList']?.cast<String>();
@@ -4009,8 +4588,8 @@ class RCIMIWSubscribeEvent {
 
   RCIMIWSubscribeEvent.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
-    subscribeType = json['subscribeType'] == null ? null : RCIMIWSubscribeType.values[json['subscribeType']];
-    operationType = json['operationType'] == null ? null : RCIMIWSubscribeOperationType.values[json['operationType']];
+    subscribeType = _enumFromIndex(RCIMIWSubscribeType.values, json['subscribeType']);
+    operationType = _enumFromIndex(RCIMIWSubscribeOperationType.values, json['operationType']);
     subscribeTime = json['subscribeTime'];
     expiry = json['expiry'];
   }
@@ -4037,7 +4616,7 @@ class RCIMIWSubscribeInfoEvent {
 
   RCIMIWSubscribeInfoEvent.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
-    subscribeType = json['subscribeType'] == null ? null : RCIMIWSubscribeType.values[json['subscribeType']];
+    subscribeType = _enumFromIndex(RCIMIWSubscribeType.values, json['subscribeType']);
     subscribeTime = json['subscribeTime'];
     expiry = json['expiry'];
     details = json['details']
@@ -4070,7 +4649,7 @@ class RCIMIWSubscribeEventDetail {
   RCIMIWSubscribeEventDetail.fromJson(Map<String, dynamic> json) {
     eventValue = json['eventValue'];
     changeTime = json['changeTime'];
-    platform = json['platform'] == null ? null : RCIMIWPlatform.values[json['platform']];
+    platform = _enumFromIndex(RCIMIWPlatform.values, json['platform']);
   }
 }
 
@@ -4090,7 +4669,7 @@ class RCIMIWSubscribeEventRequest {
   }
 
   RCIMIWSubscribeEventRequest.fromJson(Map<String, dynamic> json) {
-    subscribeType = json['subscribeType'] == null ? null : RCIMIWSubscribeType.values[json['subscribeType']];
+    subscribeType = _enumFromIndex(RCIMIWSubscribeType.values, json['subscribeType']);
     expiry = json['expiry'];
     userIds = json['userIds']?.cast<String>();
   }
@@ -4146,7 +4725,7 @@ class RCIMIWUserProfile {
     uniqueId = json['uniqueId'];
     email = json['email'];
     birthday = json['birthday'];
-    gender = json['gender'] == null ? null : RCIMIWUserGender.values[json['gender']];
+    gender = _enumFromIndex(RCIMIWUserGender.values, json['gender']);
     location = json['location'];
     role = json['role'];
     level = json['level'];
@@ -4174,8 +4753,12 @@ class RCIMIWReadReceiptUsersOption {
   RCIMIWReadReceiptUsersOption.fromJson(Map<String, dynamic> json) {
     pageToken = json['pageToken'];
     pageCount = json['pageCount'];
-    order = json['order'] == null ? null : RCIMIWReadReceiptOrder.values[json['order']];
-    readStatus = json['readStatus'] == null ? null : RCIMIWReadReceiptStatus.values[json['readStatus']];
+    order = _enumFromIndex(RCIMIWReadReceiptOrder.values, json['order'], fallback: RCIMIWReadReceiptOrder.descending);
+    readStatus = _enumFromIndex(
+      RCIMIWReadReceiptStatus.values,
+      json['readStatus'],
+      fallback: RCIMIWReadReceiptStatus.read,
+    );
   }
 }
 
@@ -4203,9 +4786,11 @@ class RCIMIWReadReceiptResponseV5 {
   }
 
   RCIMIWReadReceiptResponseV5.fromJson(Map<String, dynamic> json) {
-    conversationType = json['conversationType'] == null
-        ? null
-        : RCIMIWConversationType.values[json['conversationType']];
+    conversationType = _enumFromIndex(
+      RCIMIWConversationType.values,
+      json['conversationType'],
+      fallback: RCIMIWConversationType.invalid,
+    );
     targetId = json['targetId'];
     channelId = json['channelId'];
     messageUId = json['messageUId'];
@@ -4223,17 +4808,20 @@ class RCIMIWReadReceiptResponseV5 {
 class RCIMIWReadReceiptUser {
   String? userId;
   int? timestamp;
+  bool? isMentioned;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     json['userId'] = userId;
     json['timestamp'] = timestamp;
+    json['isMentioned'] = isMentioned;
     return json;
   }
 
   RCIMIWReadReceiptUser.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     timestamp = json['timestamp'];
+    isMentioned = json['isMentioned'];
   }
 }
 
@@ -4279,9 +4867,11 @@ class RCIMIWMessageIdentifier {
   }
 
   RCIMIWMessageIdentifier.fromJson(Map<String, dynamic> json) {
-    conversationType = json['conversationType'] == null
-        ? null
-        : RCIMIWConversationType.values[json['conversationType']];
+    conversationType = _enumFromIndex(
+      RCIMIWConversationType.values,
+      json['conversationType'],
+      fallback: RCIMIWConversationType.invalid,
+    );
     targetId = json['targetId'];
     channelId = json['channelId'];
     messageUId = json['messageUId'];
@@ -4382,6 +4972,102 @@ class RCIMIWSearchConversationResult {
       );
     }
     count = json['count'];
+  }
+}
+
+class RCIMIWConversationTypeFilter {
+  /// [ZH]
+  /// ---
+  /// 获取会话类型。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the conversation type.
+  /// ---
+  RCIMIWConversationType? type;
+
+  /// [ZH]
+  /// ---
+  /// 获取频道 ID。传 null 表示不按频道过滤，传空字符串表示默认频道。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the channel ID. Null disables channel filtering, while an empty string selects the default channel.
+  /// ---
+  String? channelId;
+
+  RCIMIWConversationTypeFilter.create({this.type, this.channelId});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['type'] = type?.index;
+    json['channelId'] = channelId;
+    return json;
+  }
+
+  RCIMIWConversationTypeFilter.fromJson(Map<String, dynamic> json) {
+    type = _enumFromIndex(RCIMIWConversationType.values, json['type'], fallback: RCIMIWConversationType.invalid);
+    channelId = json['channelId'];
+  }
+}
+
+class RCIMIWConversationListOption {
+  /// [ZH]
+  /// ---
+  /// 获取会话数量，默认值为 20。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the number of conversations to retrieve. The default is 20.
+  /// ---
+  int? count;
+
+  /// [ZH]
+  /// ---
+  /// 获取起始时间戳，单位毫秒。0 表示从最新会话开始。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the start timestamp in milliseconds. Zero starts from the latest conversation.
+  /// ---
+  int? startTime;
+
+  /// [ZH]
+  /// ---
+  /// 获取是否置顶会话优先，默认值为 true。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets whether pinned conversations take priority. The default is true.
+  /// ---
+  bool? topPriority;
+
+  /// [ZH]
+  /// ---
+  /// 获取未读数筛选条件，默认返回全部会话。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the unread-count filter. The default returns all conversations.
+  /// ---
+  RCIMIWConversationUnreadCountFilter? unreadCountFilter;
+
+  RCIMIWConversationListOption.create({this.count, this.startTime, this.topPriority, this.unreadCountFilter});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['count'] = count;
+    json['startTime'] = startTime;
+    json['topPriority'] = topPriority;
+    json['unreadCountFilter'] = unreadCountFilter?.index;
+    return json;
+  }
+
+  RCIMIWConversationListOption.fromJson(Map<String, dynamic> json) {
+    count = json['count'];
+    startTime = json['startTime'];
+    topPriority = json['topPriority'];
+    unreadCountFilter = _enumFromIndex(RCIMIWConversationUnreadCountFilter.values, json['unreadCountFilter']);
   }
 }
 
@@ -4528,6 +5214,16 @@ class RCIMIWConversation {
 
   /// [ZH]
   /// ---
+  /// 会话中保存的消息编辑草稿。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Edited-message draft saved in the conversation.
+  /// ---
+  RCIMIWEditedMessageDraft? editedMessageDraft;
+
+  /// [ZH]
+  /// ---
   /// 获取最后一条消息
   /// ---
   /// [EN]
@@ -4585,6 +5281,7 @@ class RCIMIWConversation {
     this.mentionedMeCount,
     this.top,
     this.draft,
+    this.editedMessageDraft,
     this.lastMessage,
     this.notificationLevel,
     this.firstUnreadMsgSendTime,
@@ -4602,6 +5299,7 @@ class RCIMIWConversation {
     json['mentionedMeCount'] = mentionedMeCount;
     json['top'] = top;
     json['draft'] = draft;
+    json['editedMessageDraft'] = editedMessageDraft?.toJson();
     json['lastMessage'] = lastMessage?.toJson();
     json['notificationLevel'] = notificationLevel?.index;
     json['firstUnreadMsgSendTime'] = firstUnreadMsgSendTime;
@@ -4611,9 +5309,11 @@ class RCIMIWConversation {
   }
 
   RCIMIWConversation.fromJson(Map<String, dynamic> json) {
-    conversationType = json['conversationType'] == null
-        ? null
-        : RCIMIWConversationType.values[json['conversationType']];
+    conversationType = _enumFromIndex(
+      RCIMIWConversationType.values,
+      json['conversationType'],
+      fallback: RCIMIWConversationType.invalid,
+    );
     targetId = json['targetId'];
     channelId = json['channelId'];
     unreadCount = json['unreadCount'];
@@ -4621,19 +5321,20 @@ class RCIMIWConversation {
     mentionedMeCount = json['mentionedMeCount'];
     top = json['top'];
     draft = json['draft'];
+    if (json['editedMessageDraft'] != null) {
+      editedMessageDraft = RCIMIWEditedMessageDraft.fromJson(
+        (json['editedMessageDraft'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
     if (json['lastMessage'] != null) {
       lastMessage = RCIMConverter.convertMessage(
         (json['lastMessage'] as Map).map((key, value) => MapEntry(key.toString(), value)),
       );
     }
-    notificationLevel = json['notificationLevel'] == null
-        ? null
-        : RCIMIWPushNotificationLevel.values[json['notificationLevel']];
+    notificationLevel = _enumFromIndex(RCIMIWPushNotificationLevel.values, json['notificationLevel']);
     firstUnreadMsgSendTime = json['firstUnreadMsgSendTime'];
     operationTime = json['operationTime'];
-    translateStrategy = json['translateStrategy'] == null
-        ? null
-        : RCIMIWTranslateStrategy.values[json['translateStrategy']];
+    translateStrategy = _enumFromIndex(RCIMIWTranslateStrategy.values, json['translateStrategy']);
   }
 }
 

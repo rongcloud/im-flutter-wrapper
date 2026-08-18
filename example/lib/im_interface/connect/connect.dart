@@ -26,6 +26,12 @@ const initEngine = {
       "lable": "是否踢出其他重连设备",
     },
     {
+      "key": "crashMonitorEnable",
+      "type": "number",
+      "hint": "非必填 0:不开启 1:开启",
+      "lable": "是否开启崩溃监控",
+    },
+    {
       "key": "enablePush",
       "type": "number",
       "hint": "非必填 0:不开启 1:开启",

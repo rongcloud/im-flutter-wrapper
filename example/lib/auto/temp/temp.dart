@@ -144,6 +144,14 @@ const sendMediaMessage = {
   "action": engine_fun.sendMediaMessage,
 };
 
+const pauseDownloadingMediaMessage = {
+  "title": "pauseDownloadingMediaMessage",
+  "params": [
+    {"key": "message", "type": "String", "hint": "", "lable": "请输入message",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.pauseDownloadingMediaMessage,
+};
+
 const loadConversation = {
   "title": "loadConversation",
   "params": [
@@ -1248,6 +1256,38 @@ const getGroupMembersByRole = {
   "action": engine_fun.getGroupMembersByRole,
 };
 
+const getGroupMembersByRoleWithOption = {
+  "title": "getGroupMembersByRoleWithOption",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId",},{"key": "role", "type": "String", "hint": "", "lable": "请输入role",},{"key": "option", "type": "String", "hint": "", "lable": "请输入option",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getGroupMembersByRoleWithOption,
+};
+
+const getAllRobots = {
+  "title": "getAllRobots",
+  "params": [
+    {"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getAllRobots,
+};
+
+const getRobotById = {
+  "title": "getRobotById",
+  "params": [
+    {"key": "robotId", "type": "String", "hint": "", "lable": "请输入robotId",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getRobotById,
+};
+
+const getConversationsIncludingRobots = {
+  "title": "getConversationsIncludingRobots",
+  "params": [
+    {"key": "option", "type": "String", "hint": "", "lable": "请输入option",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.getConversationsIncludingRobots,
+};
+
 const getJoinedGroupsByRole = {
   "title": "getJoinedGroupsByRole",
   "params": [
@@ -1670,6 +1710,14 @@ const getMessagesReadReceiptByUsersV5 = {
     {"key": "type", "type": "String", "hint": "", "lable": "请输入type",},{"key": "targetId", "type": "String", "hint": "", "lable": "请输入targetId",},{"key": "channelId", "type": "String", "hint": "", "lable": "请输入channelId",},{"key": "messageUId", "type": "String", "hint": "", "lable": "请输入messageUId",},{"key": "userIds", "type": "String", "hint": "", "lable": "请输入userIds",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
   ],
   "action": engine_fun.getMessagesReadReceiptByUsersV5,
+};
+
+const refreshReferenceMessageWithParams = {
+  "title": "refreshReferenceMessageWithParams",
+  "params": [
+    {"key": "params", "type": "String", "hint": "", "lable": "请输入params",},{"key": "callback", "type": "String", "hint": "", "lable": "请输入callback",},
+  ],
+  "action": engine_fun.refreshReferenceMessageWithParams,
 };
 
 */

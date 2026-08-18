@@ -123,6 +123,26 @@ typedef NS_ENUM(NSInteger, RCIMIWConversationType) {
 
 };
 
+/// [ZH] 会话列表未读数筛选条件。
+/// [EN] Unread-count filter for conversation lists.
+typedef NS_ENUM(NSInteger, RCIMIWConversationUnreadCountFilter) {
+    /// [ZH] 不按未读状态筛选。
+    /// [EN] Do not filter by unread status.
+    RCIMIWConversationUnreadCountFilterAll = 0,
+
+    /// [ZH] 仅返回未读消息数大于 0 的会话。
+    /// [EN] Return only conversations whose unread count is greater than zero.
+    RCIMIWConversationUnreadCountFilterUnreadOnly = 1,
+
+    /// [ZH] 仅返回存在未读 @ 消息的会话。
+    /// [EN] Return only conversations containing unread mention messages.
+    RCIMIWConversationUnreadCountFilterMentionOnly = 2,
+
+    /// [ZH] 仅返回未读消息数等于 0 的会话。
+    /// [EN] Return only conversations whose unread count is zero.
+    RCIMIWConversationUnreadCountFilterNoUnread = 3,
+};
+
 #pragma mark 消息类型
 
 typedef NS_ENUM(NSInteger, RCIMIWMessageType)  {
@@ -221,6 +241,11 @@ typedef NS_ENUM(NSInteger, RCIMIWMessageType)  {
      合并转发V2消息
      */
     RCIMIWMessageTypeCombineV2 = 18,
+
+    /*!
+     信息通知消息
+     */
+    RCIMIWMessageTypeInformationNotification = 19,
 };
 
 #pragma mark 自定义消息的类别
@@ -665,6 +690,16 @@ typedef NS_ENUM(NSInteger, RCIMIWGroupMemberRole) {
     RCIMIWGroupMemberRoleManager = 2,
     /// 群主
     RCIMIWGroupMemberRoleOwner = 3,
+};
+
+/// 获取群成员时按机器人标识过滤的类型
+typedef NS_ENUM(NSInteger, RCIMIWFilterRobotType) {
+    /// 获取所有成员
+    RCIMIWFilterRobotTypeAll = 0,
+    /// 不包含机器人的用户列表
+    RCIMIWFilterRobotTypeExcludeRobot = 1,
+    /// 只包含机器人的列表
+    RCIMIWFilterRobotTypeRobotOnly = 2,
 };
 
 /// 操作类型枚举

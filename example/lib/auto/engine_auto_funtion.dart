@@ -412,6 +412,73 @@ int? ret = await engine?.cancelDownloadingMediaMessage(message, callback:callbac
 //fun_cancelDownloadingMediaMessage_call
 */
 /*
+//fun_pauseDownloadingMediaMessage_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.pauseDownloadingMediaMessage(message, callback:callback);
+//fun_pauseDownloadingMediaMessage_call
+*/
+
+pauseDownloadingMediaMessage(Map arg) async {
+  if (arg['message'] == null) {
+    RCIWToast.showToast("message 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWMediaMessage message = arg['message'];
+  IRCIMIWOperationCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWOperationCallback(
+      onSuccess: () {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "pauseDownloadingMediaMessage-onSuccess";
+        arg["timestamp"] = timeStr;
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "pauseDownloadingMediaMessage-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.pauseDownloadingMediaMessage(message, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "pauseDownloadingMediaMessage";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
 //fun_loadConversation_call
 int? ret = await engine?.loadConversation(type, targetId, channelId);
 //fun_loadConversation_call
@@ -805,6 +872,17 @@ getConversationsWithPriority(Map arg) async {
   bus.emit("rong_im_listener", resultCode);
 }
 
+/*
+//fun_getConversationListByFilters_call
+IRCIMIWGetConversationsCallback? callback = IRCIMIWGetConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getConversationListByFilters(filters, option, callback:callback);
+//fun_getConversationListByFilters_call
+*/
 /*
 //fun_getUnreadConversations_call
 IRCIMIWGetUnreadConversationsCallback? callback = IRCIMIWGetUnreadConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
@@ -9727,6 +9805,309 @@ int? ret = await engine?.getGroupMembersByRole(groupId, role, option, callback:c
 //fun_getGroupMembersByRole_call
 */
 /*
+//fun_getGroupMembersByRoleWithOption_call
+IRCIMIWGetGroupMembersByRoleCallback? callback = IRCIMIWGetGroupMembersByRoleCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getGroupMembersByRoleWithOption(groupId, role, option, callback:callback);
+//fun_getGroupMembersByRoleWithOption_call
+*/
+
+getGroupMembersByRoleWithOption(Map arg) async {
+  if (arg['groupId'] == null) {
+    RCIWToast.showToast("groupId 为空");
+    return;
+  }
+
+  if (arg['role'] == null) {
+    RCIWToast.showToast("role 为空");
+    return;
+  }
+
+  if (arg['option'] == null) {
+    RCIWToast.showToast("option 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String groupId = arg['groupId'];
+  int? roleValue = int.tryParse(arg['role']);
+  if (roleValue == null || roleValue < 0 || roleValue >= RCIMIWGroupMemberRole.values.length) {
+    RCIWToast.showToast("role 超出范围");
+    return;
+  }
+  RCIMIWGroupMemberRole role = RCIMIWGroupMemberRole.values[roleValue];
+  RCIMIWGetGroupMembersOption option = arg['option'];
+  IRCIMIWGetGroupMembersByRoleCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetGroupMembersByRoleCallback(
+      onSuccess: (RCIMIWPagingQueryResult<RCIMIWGroupMemberInfo>? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getGroupMembersByRoleWithOption-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = formatJson(t?.toJson());
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getGroupMembersByRoleWithOption-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getGroupMembersByRoleWithOption(
+    groupId,
+    role,
+    option,
+    callback: callback,
+  );
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getGroupMembersByRoleWithOption";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getAllRobots_call
+IRCIMIWGetRobotsCallback? callback = IRCIMIWGetRobotsCallback(onSuccess: (List<RCIMIWRobotInfo>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getAllRobots(callback:callback);
+//fun_getAllRobots_call
+*/
+
+getAllRobots(Map arg) async {
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  IRCIMIWGetRobotsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetRobotsCallback(
+      onSuccess: (List<RCIMIWRobotInfo>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getAllRobots-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getAllRobots-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getAllRobots(callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getAllRobots";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getRobotById_call
+IRCIMIWGetRobotInfoCallback? callback = IRCIMIWGetRobotInfoCallback(onSuccess: (RCIMIWRobotInfo? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getRobotById(robotId, callback:callback);
+//fun_getRobotById_call
+*/
+
+getRobotById(Map arg) async {
+  if (arg['robotId'] == null) {
+    RCIWToast.showToast("robotId 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  String robotId = arg['robotId'];
+  IRCIMIWGetRobotInfoCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetRobotInfoCallback(
+      onSuccess: (RCIMIWRobotInfo? t) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getRobotById-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = formatJson(t?.toJson());
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getRobotById-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getRobotById(robotId, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getRobotById";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_getConversationsIncludingRobots_call
+IRCIMIWGetConversationsCallback? callback = IRCIMIWGetConversationsCallback(onSuccess: (List<RCIMIWConversation>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getConversationsIncludingRobots(option, callback:callback);
+//fun_getConversationsIncludingRobots_call
+*/
+
+getConversationsIncludingRobots(Map arg) async {
+  if (arg['option'] == null) {
+    RCIWToast.showToast("option 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWConversationsContainingRobotsOption option = arg['option'];
+  IRCIMIWGetConversationsCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWGetConversationsCallback(
+      onSuccess: (List<RCIMIWConversation>? t) {
+        List tJson = [];
+        if (t != null) {
+          for (var temp in t) {
+            tJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getConversationsIncludingRobots-onSuccess";
+        arg["timestamp"] = timeStr;
+        arg["t"] = tJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "getConversationsIncludingRobots-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.getConversationsIncludingRobots(option, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "getConversationsIncludingRobots";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
 //fun_getJoinedGroupsByRole_call
 IRCIMIWGetJoinedGroupsByRoleCallback? callback = IRCIMIWGetJoinedGroupsByRoleCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWGroupInfo>? t) {
     //...
@@ -13064,4 +13445,137 @@ IRCIMIWRecallMessageCallback? callback = IRCIMIWRecallMessageCallback(onMessageR
 
 int? ret = await engine?.recallMessageWithOption(message, isDelete, callback:callback);
 //fun_recallMessageWithOption_call
+*/
+/*
+//fun_modifyMessageWithParams_call
+IRCIMIWModifyMessageCallback? callback = IRCIMIWModifyMessageCallback(onMessageModified: (int? code, RCIMIWMessage? message) {
+    //...
+});
+
+int? ret = await engine?.modifyMessageWithParams(params, callback:callback);
+//fun_modifyMessageWithParams_call
+*/
+/*
+//fun_refreshReferenceMessageWithParams_call
+IRCIMIWRefreshReferenceMessageCallback? callback = IRCIMIWRefreshReferenceMessageCallback(onLocalMessageBlock: (List<RCIMIWMessageResult>? results) {
+    //...
+}, onRemoteMessageBlock: (List<RCIMIWMessageResult>? results) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.refreshReferenceMessageWithParams(params, callback:callback);
+//fun_refreshReferenceMessageWithParams_call
+*/
+
+refreshReferenceMessageWithParams(Map arg) async {
+  if (arg['params'] == null) {
+    RCIWToast.showToast("params 为空");
+    return;
+  }
+  int useCallback = int.parse(arg['use_cb'] ?? "1");
+
+  RCIMIWRefreshReferenceMessageParams params = arg['params'];
+  IRCIMIWRefreshReferenceMessageCallback? callback;
+  if (useCallback == 1) {
+    callback = IRCIMIWRefreshReferenceMessageCallback(
+      onLocalMessageBlock: (List<RCIMIWMessageResult>? results) {
+        List resultsJson = [];
+        if (results != null) {
+          for (var temp in results) {
+            resultsJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "refreshReferenceMessageWithParams-onLocalMessageBlock";
+        arg["timestamp"] = timeStr;
+        arg["results"] = resultsJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onRemoteMessageBlock: (List<RCIMIWMessageResult>? results) {
+        List resultsJson = [];
+        if (results != null) {
+          for (var temp in results) {
+            resultsJson.add(formatJson(temp.toJson()) + "\n");
+          }
+        }
+
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "refreshReferenceMessageWithParams-onRemoteMessageBlock";
+        arg["timestamp"] = timeStr;
+        arg["results"] = resultsJson.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+      onError: (int? code) {
+        DateTime now = DateTime.now();
+        String timeStr =
+            "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+        Map<String, String> arg = {};
+        arg["listener"] = "refreshReferenceMessageWithParams-onError";
+        arg["timestamp"] = timeStr;
+        arg["code"] = code.toString();
+
+        bus.emit("rong_im_listener", arg);
+      },
+    );
+  }
+
+  int? code = await IMEngineManager().engine?.refreshReferenceMessageWithParams(params, callback: callback);
+  DateTime now = DateTime.now();
+  String timeStr =
+      "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+  Map<String, String> resultCode = {};
+  resultCode["listener"] = "refreshReferenceMessageWithParams";
+  resultCode["timestamp"] = timeStr;
+  resultCode["code"] = (code ?? -1).toString();
+
+  if (arg['context'] != null) {
+    arg.remove('context');
+  }
+  resultCode['arg'] = arg.toString();
+
+  if (IMEngineManager().engine == null) {
+    resultCode["errorMsg"] = "引擎未初始化";
+  }
+  bus.emit("rong_im_listener", resultCode);
+}
+
+/*
+//fun_saveEditedMessageDraft_call
+IRCIMIWCompletionCallback? callback = IRCIMIWCompletionCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.saveEditedMessageDraft(type, targetId, channelId, draft, callback:callback);
+//fun_saveEditedMessageDraft_call
+*/
+/*
+//fun_getEditedMessageDraft_call
+IRCIMIWGetEditedMessageDraftCallback? callback = IRCIMIWGetEditedMessageDraftCallback(onSuccess: (RCIMIWEditedMessageDraft? draft) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getEditedMessageDraft(type, targetId, channelId, callback:callback);
+//fun_getEditedMessageDraft_call
+*/
+/*
+//fun_clearEditedMessageDraft_call
+IRCIMIWCompletionCallback? callback = IRCIMIWCompletionCallback(onCompleted: (int? code) {
+    //...
+});
+
+int? ret = await engine?.clearEditedMessageDraft(type, targetId, channelId, callback:callback);
+//fun_clearEditedMessageDraft_call
 */

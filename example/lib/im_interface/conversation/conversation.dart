@@ -493,6 +493,49 @@ const loadConversationTypeNotificationLevel = {
   "action": engine_fun.getConversationTypeNotificationLevel,
 };
 
+const getConversationListByFilters = {
+  "title": "按条件分页获取会话列表",
+  "params": [
+    {
+      "key": "conversationTypes",
+      "type": "String",
+      "hint": "会话类型下标以英文逗号分隔，例如 1,2,4",
+      "lable": "请输入会话类型列表",
+    },
+    {
+      "key": "channelIds",
+      "type": "String",
+      "hint": "留空表示不按频道过滤；输入 @default 表示默认频道，其余按 ID 传入",
+      "lable": "请输入频道 ID 列表",
+    },
+    {
+      "key": "count",
+      "type": "number",
+      "hint": "默认 20",
+      "lable": "请输入查询数量",
+    },
+    {
+      "key": "startTime",
+      "type": "number",
+      "hint": "默认 0，从最新会话开始",
+      "lable": "请输入开始时间",
+    },
+    {
+      "key": "topPriority",
+      "type": "number",
+      "hint": "0 不优先置顶，1 优先置顶，默认 1",
+      "lable": "请输入置顶优先级",
+    },
+    {
+      "key": "unreadCountFilter",
+      "type": "number",
+      "hint": "0 全部，1 仅未读，2 仅未读 @，3 仅无未读",
+      "lable": "请输入未读筛选",
+    },
+  ],
+  "action": engine_hand.getConversationListByFilters,
+};
+
 const getConversationsByIdentifiers = {
   "title": "根据标识列表批量获取会话",
   "params": [

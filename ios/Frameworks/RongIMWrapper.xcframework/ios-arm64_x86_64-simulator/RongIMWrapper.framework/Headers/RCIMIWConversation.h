@@ -7,6 +7,7 @@
 #import <RongIMWrapper/RCIMIWTranslateStrategy.h>
 
 @class RCIMIWMessage;
+@class RCIMIWEditedMessageDraft;
 
 @interface RCIMIWConversation : NSObject
 
@@ -55,6 +56,18 @@
  会话中存在的草稿
  */
 @property (nonatomic, copy, readonly) NSString *draft;
+
+/**
+ * [ZH]
+ * ---
+ * 会话中保存的消息编辑草稿。
+ * ---
+ * [EN]
+ * ---
+ * Edited-message draft saved in the conversation.
+ * ---
+ */
+@property (nonatomic, strong, readonly, nullable) RCIMIWEditedMessageDraft *editedMessageDraft;
 
 /*!
  会话中最后一条消息的内容

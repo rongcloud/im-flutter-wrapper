@@ -455,3 +455,26 @@ const getGroupFollows = {
   ],
   "action": engine_auto_fun.getGroupFollows,
 };
+
+const getGroupMembersByRoleWithOption = {
+  "title": "分页获取群成员信息（支持机器人过滤）",
+  "params": [
+    {"key": "groupId", "type": "String", "hint": "", "lable": "请输入groupId"},
+    {"key": "role", "type": "String", "hint": "", "lable": "请输入role"},
+    {"key": "pageToken", "type": "String", "hint": "", "lable": "请输入pageToken"},
+    {"key": "count", "type": "number", "hint": "", "lable": "请输入count"},
+    {
+      "key": "order",
+      "type": "number",
+      "hint": "0为倒序 1为正序,默认不填为倒序",
+      "lable": "请输入order",
+    },
+    {
+      "key": "filterRobotType",
+      "type": "number",
+      "hint": "0为所有成员 1为不包含机器人 2为只包含机器人",
+      "lable": "请输入filterRobotType",
+    },
+  ],
+  "action": engine_fun.getGroupMembersByRoleWithOption,
+};

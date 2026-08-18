@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RCIMIWEngineOptions : NSObject
 
+- (instancetype)init;
+
 /*!
  导航服务器地址
  */
@@ -54,6 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
  是否踢出重连设备
  */
 @property (nonatomic, assign) BOOL kickReconnectDevice;
+
+/// 是否开启崩溃监控，默认开启。
+/// Whether crash monitoring is enabled. Enabled by default.
+@property (nonatomic, assign) BOOL crashMonitorEnable;
 
 @property (nonatomic, strong) RCIMIWCompressOptions *compressOptions;
 

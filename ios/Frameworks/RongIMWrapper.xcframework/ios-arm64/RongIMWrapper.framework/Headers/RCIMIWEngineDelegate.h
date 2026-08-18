@@ -32,6 +32,7 @@
 @class RCIMIWChatRoomMemberBlockEvent;
 @class RCIMIWChatRoomMemberBanEvent;
 @class RCIMIWStreamMessageChunkInfo;
+@class RCIMIWRobotInfo;
 @class RCIMIWReadReceiptResponseV5;
 
 #ifndef RCIMIWEngineDelegate_h
@@ -587,6 +588,52 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onUltraGroupMessageModified:(NSInteger)code messageUId:(NSString *)messageUId;
 
+/**
+ * [ZH]
+ * ---
+ * [modifyMessageWithParams] 的接口监听。
+ *
+ * @param code 接口回调的状态码，0 代表成功，非 0 代表出现异常
+ * @param message 修改后的消息
+ * ---
+ * [EN]
+ * ---
+ * [modifyMessageWithParams] event listener.
+ *
+ * @param code Indicates the status code of the callback. 0 represents success, non-zero indicates an exception.
+ * @param message Modified message.
+ * ---
+ */
+- (void)onMessageModified:(NSInteger)code message:(nullable RCIMIWMessage *)message;
+
+/**
+ * [ZH]
+ * ---
+ * 消息被修改。
+ *
+ * @param messages 被修改的消息集合
+ * ---
+ * [EN]
+ * ---
+ * Messages modified.
+ *
+ * @param messages Modified messages.
+ * ---
+ */
+- (void)onMessagesModified:(NSArray<RCIMIWMessage *> *)messages;
+
+/**
+ * [ZH]
+ * ---
+ * 离线消息修改记录同步完成。
+ * ---
+ * [EN]
+ * ---
+ * Offline modified-message sync completed.
+ * ---
+ */
+- (void)onModifiedMessageSyncCompleted;
+
 - (void)onUltraGroupMessageRecalled:(NSInteger)code message:(RCIMIWMessage *)message deleteRemote:(BOOL)deleteRemote;
 
 - (void)onUltraGroupMessagesCleared:(NSInteger)code
@@ -738,6 +785,14 @@ NS_ASSUME_NONNULL_BEGIN
                    operationTime:(long long)operationTime;
 
 - (void)onGroupApplicationEvent:(RCIMIWGroupApplicationInfo *)info;
+
+#pragma mark Robot Event
+
+/// 机器人同步完成回调
+/// - Parameter code: 错误码
+/// - Parameter robots: 连接后同步到的增量机器人列表
+- (void)onRobotSyncCompleted:(NSInteger)code
+                      robots:(NSArray<RCIMIWRobotInfo *> *)robots;
 
 - (void)onGroupRemarkChangedSync:(NSString *)groupId
                    operationType:(RCIMIWGroupOperationType)operationType
