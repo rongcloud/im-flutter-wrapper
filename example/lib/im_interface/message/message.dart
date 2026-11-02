@@ -985,7 +985,7 @@ const recallMessage = {
 };
 
 const recallMessageWithOption = {
-  "title": "撤回消息（支持删除选项）",
+  "title": "撤回消息（支持删除和通知选项）",
   "params": [
     {"key": "messageId", "type": "String", "hint": "", "lable": "请输入撤回的消息 Id"},
     {
@@ -993,6 +993,12 @@ const recallMessageWithOption = {
       "type": "number",
       "hint": "0: 不删除 1: 删除",
       "lable": "是否删除本地消息并移除远端消息记录",
+    },
+    {
+      "key": "disableNotification",
+      "type": "number",
+      "hint": "0: 保留通知（默认） 1: 禁用推送和本地通知",
+      "lable": "是否关闭撤回消息通知",
     },
   ],
   "action": engine_fun.recallMessageWithOption,
@@ -1204,6 +1210,155 @@ const sendReadReceiptResponseV5 = {
     },
   ],
   "action": engine_auto_fun.sendReadReceiptResponseV5,
+};
+
+const addMessageReaction = {
+  "title": "添加消息回应",
+  "params": [
+    {
+      "key": "messageUId",
+      "type": "String",
+      "hint": "消息唯一 ID",
+      "lable": "请输入 messageUId",
+    },
+    {
+      "key": "reactionId",
+      "type": "String",
+      "hint": "例如 👍",
+      "lable": "请输入 reactionId",
+    },
+    {
+      "key": "pushContent",
+      "type": "String",
+      "hint": "可为空",
+      "lable": LableString.pushContent,
+    },
+    {
+      "key": "pushData",
+      "type": "String",
+      "hint": "可为空",
+      "lable": LableString.pushData,
+    },
+  ],
+  "action": engine_fun.addMessageReaction,
+};
+
+const removeMessageReaction = {
+  "title": "移除消息回应",
+  "params": [
+    {
+      "key": "messageUId",
+      "type": "String",
+      "hint": "消息唯一 ID",
+      "lable": "请输入 messageUId",
+    },
+    {
+      "key": "reactionId",
+      "type": "String",
+      "hint": "例如 👍",
+      "lable": "请输入 reactionId",
+    },
+    {
+      "key": "pushContent",
+      "type": "String",
+      "hint": "可为空",
+      "lable": LableString.pushContent,
+    },
+    {
+      "key": "pushData",
+      "type": "String",
+      "hint": "可为空",
+      "lable": LableString.pushData,
+    },
+  ],
+  "action": engine_fun.removeMessageReaction,
+};
+
+const batchGetMessageReactionSummaries = {
+  "title": "批量获取消息回应摘要",
+  "params": [
+    {
+      "key": "type",
+      "type": "number",
+      "hint": "会话类型枚举值",
+      "lable": LableString.conversationType,
+    },
+    {
+      "key": "targetId",
+      "type": "String",
+      "hint": "会话目标 ID",
+      "lable": LableString.editTargetIdString,
+    },
+    {
+      "key": "channelId",
+      "type": "String",
+      "hint": "可为空",
+      "lable": LableString.editChannelIdString,
+    },
+    {
+      "key": "messageUIds",
+      "type": "String",
+      "hint": "多个以英文逗号分隔",
+      "lable": "请输入 messageUIds",
+    },
+  ],
+  "action": engine_fun.batchGetMessageReactionSummaries,
+};
+
+const getMessageReactions = {
+  "title": "分页获取消息回应",
+  "params": [
+    {
+      "key": "messageUId",
+      "type": "String",
+      "hint": "消息唯一 ID",
+      "lable": "请输入 messageUId",
+    },
+    {
+      "key": "count",
+      "type": "number",
+      "hint": "每页数量，可为空",
+      "lable": "请输入 count",
+    },
+    {
+      "key": "pageToken",
+      "type": "String",
+      "hint": "下一页标记，可为空",
+      "lable": "请输入 pageToken",
+    },
+  ],
+  "action": engine_fun.getMessageReactions,
+};
+
+const getMessageReactionUsers = {
+  "title": "分页获取消息回应用户",
+  "params": [
+    {
+      "key": "messageUId",
+      "type": "String",
+      "hint": "消息唯一 ID",
+      "lable": "请输入 messageUId",
+    },
+    {
+      "key": "reactionId",
+      "type": "String",
+      "hint": "例如 👍",
+      "lable": "请输入 reactionId",
+    },
+    {
+      "key": "count",
+      "type": "number",
+      "hint": "每页数量，可为空",
+      "lable": "请输入 count",
+    },
+    {
+      "key": "pageToken",
+      "type": "String",
+      "hint": "下一页标记，可为空",
+      "lable": "请输入 pageToken",
+    },
+  ],
+  "action": engine_fun.getMessageReactionUsers,
 };
 
 const getMessageReadReceiptInfoV5 = {

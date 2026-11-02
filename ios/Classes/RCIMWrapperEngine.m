@@ -330,6 +330,8 @@ static RCIMWrapperEngine *instance = nil;
     [self loadMessageCount:call result:result];
   } else if ([@"engine:getMessageCount" isEqualToString:call.method]) {
     [self getMessageCount:call result:result];
+  } else if ([@"engine:getMessageCountDetail" isEqualToString:call.method]) {
+    [self getMessageCountDetail:call result:result];
   } else if ([@"engine:loadTopConversations" isEqualToString:call.method]) {
     [self loadTopConversations:call result:result];
   } else if ([@"engine:getTopConversations" isEqualToString:call.method]) {
@@ -552,6 +554,16 @@ static RCIMWrapperEngine *instance = nil;
     [self getEditedMessageDraft:call result:result];
   } else if ([@"engine:clearEditedMessageDraft" isEqualToString:call.method]) {
     [self clearEditedMessageDraft:call result:result];
+  } else if ([@"engine:addMessageReaction" isEqualToString:call.method]) {
+    [self addMessageReaction:call result:result];
+  } else if ([@"engine:removeMessageReaction" isEqualToString:call.method]) {
+    [self removeMessageReaction:call result:result];
+  } else if ([@"engine:batchGetMessageReactionSummaries" isEqualToString:call.method]) {
+    [self batchGetMessageReactionSummaries:call result:result];
+  } else if ([@"engine:getMessageReactions" isEqualToString:call.method]) {
+    [self getMessageReactions:call result:result];
+  } else if ([@"engine:getMessageReactionUsers" isEqualToString:call.method]) {
+    [self getMessageReactionUsers:call result:result];
   } else {
     result(FlutterMethodNotImplemented);
   }
@@ -667,7 +679,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *text = arguments[@"text"];
 
     res = [self.engine createTextMessage:type targetId:targetId channelId:channelId text:text];
@@ -683,7 +695,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *path = arguments[@"path"];
 
     res = [self.engine createImageMessage:type targetId:targetId channelId:channelId path:path];
@@ -699,7 +711,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *path = arguments[@"path"];
 
     res = [self.engine createFileMessage:type targetId:targetId channelId:channelId path:path];
@@ -715,7 +727,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *path = arguments[@"path"];
     int duration = [(NSNumber *)arguments[@"duration"] intValue];
 
@@ -732,7 +744,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *path = arguments[@"path"];
     int duration = [(NSNumber *)arguments[@"duration"] intValue];
 
@@ -749,7 +761,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     RCIMIWConversationType conversationType = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"conversationType"] integerValue]];
     NSArray<NSString *> *summaryList = arguments[@"summaryList"];
     NSArray<NSString *> *nameList = arguments[@"nameList"];
@@ -773,7 +785,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     RCIMIWMessage *referenceMessage = [RCIMIWPlatformConverter convertMessageFromDict:arguments[@"referenceMessage"]];
     NSString *text = arguments[@"text"];
 
@@ -790,7 +802,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *path = arguments[@"path"];
 
     res = [self.engine createGIFMessage:type targetId:targetId channelId:channelId path:path];
@@ -806,7 +818,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     RCIMIWCustomMessagePolicy policy = [RCIMWrapperArgumentAdapter convertCustomMessagePolicyFromInteger:[(NSNumber *)arguments[@"policy"] integerValue]];
     NSString *messageIdentifier = arguments[@"messageIdentifier"];
     NSDictionary<NSString *, NSString *> *fields = arguments[@"fields"];
@@ -824,7 +836,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     double longitude = [(NSNumber *)arguments[@"longitude"] doubleValue];
     double latitude = [(NSNumber *)arguments[@"latitude"] doubleValue];
     NSString *poiName = arguments[@"poiName"];
@@ -843,7 +855,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *messageIdentifier = arguments[@"messageIdentifier"];
     NSDictionary<NSString *, id> *fields = arguments[@"fields"];
 
@@ -860,7 +872,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *messageIdentifier = arguments[@"messageIdentifier"];
     NSString *path = arguments[@"path"];
     NSDictionary<NSString *, id> *fields = arguments[@"fields"];
@@ -1130,7 +1142,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadConversation:type targetId:targetId channelId:channelId];
   }
@@ -1145,7 +1157,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(RCIMIWConversation *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -1185,7 +1197,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
 
@@ -1201,7 +1213,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
     void (^success)(NSArray<RCIMIWConversation *> *_Nullable t) = nil;
@@ -1248,7 +1260,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
     BOOL topPriority = [(NSNumber *)arguments[@"topPriority"] boolValue];
@@ -1458,7 +1470,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^conversationRemoved)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -1486,7 +1498,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^conversationsRemoved)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -1515,7 +1527,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadUnreadCount:type targetId:targetId channelId:channelId];
   }
@@ -1530,7 +1542,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(NSInteger count) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -1569,7 +1581,7 @@ static RCIMWrapperEngine *instance = nil;
   NSInteger code = -1;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadTotalUnreadCount:channelId];
   }
@@ -1582,7 +1594,7 @@ static RCIMWrapperEngine *instance = nil;
   NSInteger code = -1;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(NSInteger count) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -1623,7 +1635,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadUnreadMentionedCount:type targetId:targetId channelId:channelId];
   }
@@ -1638,7 +1650,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(NSInteger count) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -1880,7 +1892,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     BOOL contain = [(NSNumber *)arguments[@"contain"] boolValue];
 
     code = [self.engine loadUnreadCountByConversationTypes:conversationTypes channelId:channelId contain:contain];
@@ -1895,7 +1907,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     BOOL contain = [(NSNumber *)arguments[@"contain"] boolValue];
     void (^success)(NSInteger count) = nil;
     void (^error)(NSInteger code) = nil;
@@ -1977,7 +1989,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long timestamp = [(NSNumber *)arguments[@"timestamp"] longLongValue];
     void (^unreadCountCleared)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -2007,7 +2019,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *draft = arguments[@"draft"];
     void (^draftMessageSaved)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -2037,7 +2049,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadDraftMessage:type targetId:targetId channelId:channelId];
   }
@@ -2052,7 +2064,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(NSString *_Nullable draft) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -2093,7 +2105,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^draftMessageCleared)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -2121,7 +2133,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadBlockedConversations:conversationTypes channelId:channelId];
   }
@@ -2135,7 +2147,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(NSArray<RCIMIWConversation *> *_Nullable conversations) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -2181,7 +2193,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     BOOL top = [(NSNumber *)arguments[@"top"] boolValue];
     void (^conversationTopStatusChanged)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -2211,7 +2223,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     BOOL top = [(NSNumber *)arguments[@"top"] boolValue];
     BOOL updateOperationTime = [(NSNumber *)arguments[@"updateOperationTime"] boolValue];
     void (^conversationTopStatusChanged)(NSInteger code) = nil;
@@ -2242,7 +2254,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadConversationTopStatus:type targetId:targetId channelId:channelId];
   }
@@ -2257,7 +2269,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(BOOL top) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -2298,7 +2310,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long timestamp = [(NSNumber *)arguments[@"timestamp"] longLongValue];
     void (^conversationReadStatusSynced)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -2328,7 +2340,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *currentType = arguments[@"currentType"];
 
     code = [self.engine sendTypingStatus:type targetId:targetId channelId:channelId currentType:currentType];
@@ -2344,7 +2356,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long sentTime = [(NSNumber *)arguments[@"sentTime"] longLongValue];
     RCIMIWTimeOrder order = [RCIMWrapperArgumentAdapter convertTimeOrderFromInteger:[(NSNumber *)arguments[@"order"] integerValue]];
     RCIMIWMessageOperationPolicy policy = [RCIMWrapperArgumentAdapter convertMessageOperationPolicyFromInteger:[(NSNumber *)arguments[@"policy"] integerValue]];
@@ -2363,7 +2375,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long sentTime = [(NSNumber *)arguments[@"sentTime"] longLongValue];
     RCIMIWTimeOrder order = [RCIMWrapperArgumentAdapter convertTimeOrderFromInteger:[(NSNumber *)arguments[@"order"] integerValue]];
     RCIMIWMessageOperationPolicy policy = [RCIMWrapperArgumentAdapter convertMessageOperationPolicyFromInteger:[(NSNumber *)arguments[@"policy"] integerValue]];
@@ -2494,7 +2506,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long sentTime = [(NSNumber *)arguments[@"sentTime"] longLongValue];
     int beforeCount = [(NSNumber *)arguments[@"beforeCount"] intValue];
     int afterCount = [(NSNumber *)arguments[@"afterCount"] intValue];
@@ -2543,7 +2555,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSArray<NSNumber *> *messageTypes = arguments[@"messageTypes"];
     long long sentTime = [(NSNumber *)arguments[@"sentTime"] longLongValue];
     RCIMIWTimeOrder order = [RCIMWrapperArgumentAdapter convertTimeOrderFromInteger:[(NSNumber *)arguments[@"order"] integerValue]];
@@ -2593,7 +2605,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadFirstUnreadMessage:type targetId:targetId channelId:channelId];
   }
@@ -2608,7 +2620,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(RCIMIWMessage *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -2649,7 +2661,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadUnreadMentionedMessages:type targetId:targetId channelId:channelId];
   }
@@ -2664,7 +2676,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(NSArray<RCIMIWMessage *> *_Nullable t) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -2777,7 +2789,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long timestamp = [(NSNumber *)arguments[@"timestamp"] longLongValue];
     RCIMIWMessageOperationPolicy policy = [RCIMWrapperArgumentAdapter convertMessageOperationPolicyFromInteger:[(NSNumber *)arguments[@"policy"] integerValue]];
     void (^messagesCleared)(NSInteger code) = nil;
@@ -2874,7 +2886,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     NSMutableArray *messages = [NSMutableArray array];
     NSArray<NSDictionary *> *elementList = arguments[@"messages"];
@@ -2943,7 +2955,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long timestamp = [(NSNumber *)arguments[@"timestamp"] longLongValue];
     void (^privateReadReceiptMessageSent)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -3000,7 +3012,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     NSMutableArray *messages = [NSMutableArray array];
     NSArray<NSDictionary *> *elementList = arguments[@"messages"];
@@ -3714,7 +3726,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *keyword = arguments[@"keyword"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
@@ -3763,7 +3775,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *keyword = arguments[@"keyword"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     long long endTime = [(NSNumber *)arguments[@"endTime"] longLongValue];
@@ -3815,7 +3827,7 @@ static RCIMWrapperEngine *instance = nil;
     NSString *userId = arguments[@"userId"];
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
     int count = [(NSNumber *)arguments[@"count"] intValue];
     void (^success)(NSArray<RCIMIWMessage *> *_Nullable messages) = nil;
@@ -3863,7 +3875,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSArray<NSNumber *> *messageTypes = arguments[@"messageTypes"];
     NSString *keyword = arguments[@"keyword"];
     long long startTime = [(NSNumber *)arguments[@"startTime"] longLongValue];
@@ -3912,7 +3924,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSArray<NSNumber *> *messageTypes = arguments[@"messageTypes"];
     NSString *keyword = arguments[@"keyword"];
     void (^success)(NSArray<RCIMIWSearchConversationResult *> *_Nullable results) = nil;
@@ -4093,7 +4105,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     RCIMIWPushNotificationLevel level = [RCIMWrapperArgumentAdapter convertPushNotificationLevelFromInteger:[(NSNumber *)arguments[@"level"] integerValue]];
     void (^conversationNotificationLevelChanged)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -4123,7 +4135,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadConversationNotificationLevel:type targetId:targetId channelId:channelId];
   }
@@ -4138,7 +4150,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(RCIMIWPushNotificationLevel level) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -4338,7 +4350,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     RCIMIWPushNotificationLevel level = [RCIMWrapperArgumentAdapter convertPushNotificationLevelFromInteger:[(NSNumber *)arguments[@"level"] integerValue]];
     void (^ultraGroupChannelDefaultNotificationLevelChanged)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -4367,7 +4379,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadUltraGroupChannelDefaultNotificationLevel:targetId channelId:channelId];
   }
@@ -4381,7 +4393,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(RCIMIWPushNotificationLevel level) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -4544,7 +4556,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadMessageCount:type targetId:targetId channelId:channelId];
   }
@@ -4559,7 +4571,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(NSInteger count) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -4594,12 +4606,59 @@ static RCIMWrapperEngine *instance = nil;
   });
 }
 
+- (void)getMessageCountDetail:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
+    NSString *targetId = arguments[@"targetId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
+    RCIMIWMessageCountDetailOptions *options = [RCIMIWPlatformConverter convertMessageCountDetailOptionsFromDict:arguments[@"options"]];
+    void (^success)(NSArray<RCIMIWMessageCountDetail *> *_Nullable details) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSArray<RCIMIWMessageCountDetail *> *details) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableArray *t_arr = [NSMutableArray array];
+        for (RCIMIWMessageCountDetail *element in details) {
+          [t_arr addObject:[RCIMIWPlatformConverter convertMessageCountDetailToDict:element]];
+        }
+        [arguments setValue:t_arr.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageCountDetailCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageCountDetailCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getMessageCountDetail:type targetId:targetId channelId:channelId options:options success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
 - (void)loadTopConversations:(FlutterMethodCall *)call result:(FlutterResult)result {
   NSInteger code = -1;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
 
     code = [self.engine loadTopConversations:conversationTypes channelId:channelId];
   }
@@ -4613,7 +4672,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSArray<NSNumber *> *conversationTypes = arguments[@"conversationTypes"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(NSArray<RCIMIWConversation *> *_Nullable conversations) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -4658,7 +4717,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long timestamp = [(NSNumber *)arguments[@"timestamp"] longLongValue];
     void (^ultraGroupReadStatusSynced)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -4802,7 +4861,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     long long timestamp = [(NSNumber *)arguments[@"timestamp"] longLongValue];
     RCIMIWMessageOperationPolicy policy = [RCIMWrapperArgumentAdapter convertMessageOperationPolicyFromInteger:[(NSNumber *)arguments[@"policy"] integerValue]];
     void (^ultraGroupMessagesCleared)(NSInteger code) = nil;
@@ -4832,7 +4891,7 @@ static RCIMWrapperEngine *instance = nil;
   if (self.engine != nil) {
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     RCIMIWUltraGroupTypingStatus typingStatus = [RCIMWrapperArgumentAdapter convertUltraGroupTypingStatusFromInteger:[(NSNumber *)arguments[@"typingStatus"] integerValue]];
     void (^ultraGroupTypingStatusSent)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -7934,7 +7993,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSArray<NSString *> *messageUIds = arguments[@"messageUIds"];
     void (^success)() = nil;
     void (^error)(NSInteger code) = nil;
@@ -7975,7 +8034,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSArray<NSString *> *messageUIds = arguments[@"messageUIds"];
     void (^success)(NSArray<RCIMIWReadReceiptInfoV5 *> *_Nullable infos) = nil;
     void (^error)(NSInteger code) = nil;
@@ -8072,7 +8131,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *messageUId = arguments[@"messageUId"];
     RCIMIWReadReceiptUsersOption *option = [RCIMIWPlatformConverter convertReadReceiptUsersOptionFromDict:arguments[@"option"]];
     void (^success)(RCIMIWReadReceiptUsersResult *_Nullable result) = nil;
@@ -8115,7 +8174,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     NSString *messageUId = arguments[@"messageUId"];
     NSArray<NSString *> *userIds = arguments[@"userIds"];
     void (^success)(RCIMIWReadReceiptUsersResult *_Nullable result) = nil;
@@ -8233,6 +8292,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWMessage *message = [RCIMIWPlatformConverter convertMessageFromDict:arguments[@"message"]];
     BOOL isDelete = [(NSNumber *)arguments[@"isDelete"] boolValue];
+    BOOL disableNotification = [(NSNumber *)arguments[@"disableNotification"] boolValue];
     void (^messageRecalled)(NSInteger code, RCIMIWMessage *_Nullable message) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -8249,7 +8309,7 @@ static RCIMWrapperEngine *instance = nil;
         });
       };
     }
-    code = [self.engine recallMessageWithOption:message isDelete:isDelete messageRecalled:messageRecalled];
+    code = [self.engine recallMessageWithOption:message isDelete:isDelete disableNotification:disableNotification messageRecalled:messageRecalled];
   }
   dispatch_to_main_queue(^{
     result(@(code));
@@ -8351,7 +8411,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     RCIMIWEditedMessageDraft *draft = [RCIMIWPlatformConverter convertEditedMessageDraftFromDict:arguments[@"draft"]];
     void (^completion)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -8381,7 +8441,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^success)(RCIMIWEditedMessageDraft *_Nullable draft) = nil;
     void (^error)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
@@ -8422,7 +8482,7 @@ static RCIMWrapperEngine *instance = nil;
     NSDictionary *arguments = (NSDictionary *)call.arguments;
     RCIMIWConversationType type = [RCIMWrapperArgumentAdapter convertConversationTypeFromInteger:[(NSNumber *)arguments[@"type"] integerValue]];
     NSString *targetId = arguments[@"targetId"];
-    NSString *channelId = arguments[@"channelId"];
+    NSString *channelId = arguments[@"channelId"] == [NSNull null] ? nil : arguments[@"channelId"];
     void (^completion)(NSInteger code) = nil;
     int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
     if (cb_handler != -1) {
@@ -8442,6 +8502,226 @@ static RCIMWrapperEngine *instance = nil;
   }
   dispatch_to_main_queue(^{
     result(@(code));
+  });
+}
+
+- (void)addMessageReaction:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWUpdateMessageReactionParam *param = [RCIMIWPlatformConverter convertUpdateMessageReactionParamFromDict:arguments[@"param"]];
+    void (^success)() = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine addMessageReaction:param success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)removeMessageReaction:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWUpdateMessageReactionParam *param = [RCIMIWPlatformConverter convertUpdateMessageReactionParamFromDict:arguments[@"param"]];
+    void (^success)() = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^() {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWOperationCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine removeMessageReaction:param success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)batchGetMessageReactionSummaries:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWMessageReactionSummaryQueryParam *param = [RCIMIWPlatformConverter convertMessageReactionSummaryQueryParamFromDict:arguments[@"param"]];
+    void (^success)(NSDictionary *_Nullable reactionsMap) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(NSDictionary *reactionsMap) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+
+        NSMutableDictionary *tMap = [NSMutableDictionary dictionary];
+        if (reactionsMap != nil) {
+          [reactionsMap enumerateKeysAndObjectsUsingBlock:^(id key, NSArray *values, BOOL *stop) {
+            NSMutableArray *items = [NSMutableArray array];
+            for (RCIMIWMessageReaction *element in values) {
+              [items addObject:[RCIMIWPlatformConverter convertMessageReactionToDict:element]];
+            }
+            tMap[key] = items;
+          }];
+        }
+        [arguments setValue:reactionsMap == nil ? nil : tMap.copy forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWBatchGetMessageReactionSummariesCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWBatchGetMessageReactionSummariesCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine batchGetMessageReactionSummaries:param success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getMessageReactions:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWGetMessageReactionsParam *param = [RCIMIWPlatformConverter convertGetMessageReactionsParamFromDict:arguments[@"param"]];
+    void (^success)(RCIMIWPagingQueryResult<RCIMIWMessageReaction *> *_Nullable result) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(RCIMIWPagingQueryResult<RCIMIWMessageReaction *> *result) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertPagingQueryResultToDict:result] forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageReactionsCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageReactionsCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getMessageReactions:param success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)getMessageReactionUsers:(FlutterMethodCall *)call result:(FlutterResult)result {
+  NSInteger code = -1;
+  if (self.engine != nil) {
+    NSDictionary *arguments = (NSDictionary *)call.arguments;
+    RCIMIWGetMessageReactionUsersParam *param = [RCIMIWPlatformConverter convertGetMessageReactionUsersParamFromDict:arguments[@"param"]];
+    void (^success)(RCIMIWPagingQueryResult<RCIMIWMessageReactionUser *> *_Nullable result) = nil;
+    void (^error)(NSInteger code) = nil;
+    int cb_handler = [(NSNumber *)arguments[@"cb_handler"] intValue];
+    if (cb_handler != -1) {
+      success = ^(RCIMIWPagingQueryResult<RCIMIWMessageReactionUser *> *result) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:[RCIMIWPlatformConverter convertPagingQueryResultToDict:result] forKey:@"t"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageReactionUsersCallback_onSuccess" arguments:arguments.copy];
+        });
+      };
+      error = ^(NSInteger code) {
+        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+        [arguments setValue:@(cb_handler) forKey:@"cb_handler"];
+        [arguments setValue:@(code) forKey:@"code"];
+
+        __weak typeof(self.channel) weak = self.channel;
+        dispatch_to_main_queue(^{
+          typeof(weak) strong = weak;
+          [strong invokeMethod:@"engine_cb:IRCIMIWGetMessageReactionUsersCallback_onError" arguments:arguments.copy];
+        });
+      };
+    }
+    code = [self.engine getMessageReactionUsers:param success:success error:error];
+  }
+  dispatch_to_main_queue(^{
+    result(@(code));
+  });
+}
+
+- (void)onMessageReactionChanged:(NSArray<RCIMIWMessageReactionEvent *> *)events {
+  NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
+
+  NSMutableArray *events_arr = [NSMutableArray array];
+  for (RCIMIWMessageReactionEvent *element in events) {
+    [events_arr addObject:[RCIMIWPlatformConverter convertMessageReactionEventToDict:element]];
+  }
+  [arguments setValue:events_arr.copy forKey:@"events"];
+
+  __weak typeof(self.channel) weak = self.channel;
+  dispatch_to_main_queue(^{
+    typeof(weak) strong = weak;
+    [strong invokeMethod:@"engine:onMessageReactionChanged" arguments:arguments.copy];
   });
 }
 

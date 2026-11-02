@@ -2079,3 +2079,14 @@ enum RCIMIWUserGender {
   /// ---
   female,
 }
+
+enum RCIMIWMessageReactionOperationType {
+  /// [ZH] 添加回应。 [EN] Reaction added.
+  added,
+
+  /// [ZH] 移除回应。 [EN] Reaction removed.
+  removed,
+
+  /// [ZH] 清除回应。 [EN] Reaction cleared.
+  cleared,
+}

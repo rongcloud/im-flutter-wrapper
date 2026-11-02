@@ -3,6 +3,29 @@ import 'package:rongcloud_im_wrapper_plugin_example/strings/lable_string.dart';
 import '../function/engine_function.dart' as engine_hand;
 import '../../auto/engine_auto_funtion.dart' as engine_fun;
 
+const getMessageCountDetail = {
+  "title": "查询本地逐日消息数",
+  "params": [
+    {"key": "type", "type": "number", "hint": "", "lable": LableString.conversationType},
+    {"key": "targetId", "type": "String", "hint": "", "lable": LableString.editTargetIdString},
+    {"key": "channelId", "type": "String", "hint": HintString.channelIdString, "lable": LableString.editChannelIdString},
+    {"key": "startTime", "type": "number", "hint": "包含起点，最多 180 个自然日", "lable": "开始时间（Unix 毫秒）"},
+    {"key": "endTime", "type": "number", "hint": "不包含终点，可以查询部分自然日", "lable": "结束时间（Unix 毫秒）"},
+  ],
+  "action": engine_hand.getMessageCountDetail,
+};
+
+const getMessagesFromCalendarDate = {
+  "title": "从指定日期首条查看本地消息",
+  "params": [
+    {"key": "type", "type": "number", "hint": "", "lable": LableString.conversationType},
+    {"key": "targetId", "type": "String", "hint": "", "lable": LableString.editTargetIdString},
+    {"key": "channelId", "type": "String", "hint": HintString.channelIdString, "lable": LableString.editChannelIdString},
+    {"key": "dateMs", "type": "number", "hint": "使用逐日消息数返回的 dateMs", "lable": "所选日期起点（Unix 毫秒）"},
+  ],
+  "action": engine_hand.getMessagesFromCalendarDate,
+};
+
 const loadConversations = {
   "title": "加载某些会话",
   "params": [

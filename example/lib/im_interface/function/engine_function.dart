@@ -27,6 +27,120 @@ String? _optionalInputString(Map arg, String key) {
   return arg.containsKey(key) ? arg[key] as String? : null;
 }
 
+int? _optionalPageCount(Map arg, String key) {
+  final value = arg[key];
+  if (value == null || value.toString().trim().isEmpty) return null;
+  final count = int.tryParse(value.toString());
+  if (count == null || count <= 0) {
+    RCIWToast.showToast("$key 必须是大于 0 的整数");
+    return -1;
+  }
+  return count;
+}
+
+Future getMessageCountDetail(Map arg) async {
+  final type = int.tryParse('${arg['type']}');
+  final targetId = (arg['targetId'] ?? '').toString();
+  final start = int.tryParse('${arg['startTime']}');
+  final end = int.tryParse('${arg['endTime']}');
+  if (type == null ||
+      type < 0 ||
+      type >= RCIMIWConversationType.values.length ||
+      targetId.isEmpty ||
+      start == null ||
+      start < 0 ||
+      end == null ||
+      end <= start) {
+    RCIWToast.showToast('请输入有效的会话和起止毫秒时间');
+    return;
+  }
+  final code = await IMEngineManager().engine?.getMessageCountDetail(
+    RCIMIWConversationType.values[type],
+    targetId,
+    _optionalInputString(arg, 'channelId'),
+    RCIMIWMessageCountDetailOptions.create(startTime: start, endTime: end),
+    callback: IRCIMIWGetMessageCountDetailCallback(
+      onSuccess: (days) => bus.emit('rong_im_listener', {
+        'listener': 'getMessageCountDetail-onSuccess',
+        'timestamp': _generateTimeStamp(),
+        't': formatJson(days?.map((day) => day.toJson()).toList()),
+      }),
+      onError: (code) => bus.emit('rong_im_listener', {
+        'listener': 'getMessageCountDetail-onError',
+        'code': '$code',
+        'timestamp': _generateTimeStamp(),
+      }),
+    ),
+  );
+  bus.emit('rong_im_listener', {
+    'listener': 'getMessageCountDetail',
+    'code': '${code ?? -1}',
+    'timestamp': _generateTimeStamp(),
+  });
+}
+
+Future getMessagesFromCalendarDate(Map arg) async {
+  final type = int.tryParse('${arg['type']}');
+  final targetId = (arg['targetId'] ?? '').toString();
+  final dateMs = int.tryParse('${arg['dateMs']}');
+  if (type == null ||
+      type < 0 ||
+      type >= RCIMIWConversationType.values.length ||
+      targetId.isEmpty ||
+      dateMs == null ||
+      dateMs <= 0) {
+    RCIWToast.showToast('请输入有效的会话和正数日期起点');
+    return;
+  }
+  // dateMs 是协议按本机时区返回的自然日零点。用本地 DateTime 计算下一天，
+  // 可以正确处理夏令时切换，避免把下一自然日的消息混入结果。
+  final localDate = DateTime.fromMillisecondsSinceEpoch(dateMs);
+  final nextDateMs = DateTime(
+    localDate.year,
+    localDate.month,
+    localDate.day + 1,
+  ).millisecondsSinceEpoch;
+  final code = await IMEngineManager().engine?.getMessages(
+    RCIMIWConversationType.values[type],
+    targetId,
+    _optionalInputString(arg, 'channelId'),
+    dateMs - 1,
+    RCIMIWTimeOrder.after,
+    RCIMIWMessageOperationPolicy.local,
+    20,
+    callback: IRCIMIWGetMessagesCallback(
+      onSuccess: (messages, _, __) {
+        final ordered = List<RCIMIWMessage>.of(messages ?? [])
+          .where((message) {
+            final sentTime = message.sentTime;
+            return sentTime != null &&
+                sentTime >= dateMs &&
+                sentTime < nextDateMs;
+          })
+          .toList()
+        ..sort((a, b) => (a.sentTime ?? 0).compareTo(b.sentTime ?? 0));
+        bus.emit('rong_im_listener', {
+          'listener': 'getMessagesFromCalendarDate-onSuccess',
+          'timestamp': _generateTimeStamp(),
+          'messages': formatJson(
+            ordered.map((message) => message.toJson()).toList(),
+          ),
+        });
+      },
+      onError: (code) => bus.emit('rong_im_listener', {
+        'listener': 'getMessagesFromCalendarDate-onError',
+        'code': '$code',
+        'timestamp': _generateTimeStamp(),
+      }),
+    ),
+  );
+  bus.emit('rong_im_listener', {
+    'listener': 'getMessagesFromCalendarDate',
+    'code': '${code ?? -1}',
+    'timestamp': _generateTimeStamp(),
+  });
+}
+
 Map<String, dynamic>? _optionalJsonMap(Map arg, String key) {
   if (!arg.containsKey(key)) {
     return null;
@@ -1472,6 +1586,10 @@ Future recallMessageWithOption(Map arg) async {
   String messageId = arg['messageId'];
   int isDeleteInt = int.parse(arg['isDelete']);
   bool isDelete = isDeleteInt == 0 ? false : true;
+  final notificationInput = arg['disableNotification']?.toString().trim();
+  final disableNotification = notificationInput != null &&
+      notificationInput.isNotEmpty &&
+      notificationInput != '0';
   int useCallback = int.parse(arg['use_cb'] ?? "1");
   RCIMIWMessage? message = await _getMessageById(int.parse(messageId));
   if (message == null) {
@@ -1496,6 +1614,7 @@ Future recallMessageWithOption(Map arg) async {
   int? code = await IMEngineManager().engine?.recallMessageWithOption(
     message,
     isDelete,
+    disableNotification: disableNotification,
     callback: callback,
   );
 
@@ -1886,6 +2005,166 @@ Future sendGroupReadReceiptResponse(Map arg) async {
   resultCode["timestamp"] = timeStr;
   resultCode["code"] = (code ?? -1).toString();
   bus.emit("rong_im_listener", resultCode);
+}
+
+RCIMIWMessagePushOptions? _messageReactionPushOptions(Map arg) {
+  final pushContent = arg['pushContent']?.toString();
+  final pushData = arg['pushData']?.toString();
+  if (pushContent == null && pushData == null) return null;
+  return RCIMIWMessagePushOptions.create(
+    pushContent: pushContent,
+    pushData: pushData,
+  );
+}
+
+Future _updateMessageReaction(Map arg, {required bool remove}) async {
+  if ((arg['messageUId'] ?? '').toString().isEmpty ||
+      (arg['reactionId'] ?? '').toString().isEmpty) {
+    RCIWToast.showToast("messageUId 和 reactionId 不能为空");
+    return;
+  }
+  final param = RCIMIWUpdateMessageReactionParam.create(
+    messageUId: arg['messageUId'].toString(),
+    reactionId: arg['reactionId'].toString(),
+    pushOptions: _messageReactionPushOptions(arg),
+  );
+  final method = remove ? 'removeMessageReaction' : 'addMessageReaction';
+  final callback = IRCIMIWOperationCallback(
+    onSuccess: () => bus.emit("rong_im_listener", {
+      "listener": "$method-onSuccess",
+      "timestamp": _generateTimeStamp(),
+      "code": "0",
+    }),
+    onError: (code) => bus.emit("rong_im_listener", {
+      "listener": "$method-onError",
+      "timestamp": _generateTimeStamp(),
+      "code": code.toString(),
+    }),
+  );
+  final code = remove
+      ? await IMEngineManager().engine?.removeMessageReaction(param, callback: callback)
+      : await IMEngineManager().engine?.addMessageReaction(param, callback: callback);
+  bus.emit("rong_im_listener", {
+    "listener": method,
+    "timestamp": _generateTimeStamp(),
+    "code": (code ?? -1).toString(),
+    "arg": arg.toString(),
+  });
+}
+
+Future addMessageReaction(Map arg) => _updateMessageReaction(arg, remove: false);
+
+Future removeMessageReaction(Map arg) => _updateMessageReaction(arg, remove: true);
+
+Future batchGetMessageReactionSummaries(Map arg) async {
+  final messageUIds = (arg['messageUIds'] ?? '')
+      .toString()
+      .split(',')
+      .map((value) => value.trim())
+      .where((value) => value.isNotEmpty)
+      .toList();
+  if (messageUIds.isEmpty || (arg['targetId'] ?? '').toString().isEmpty) {
+    RCIWToast.showToast("targetId 和 messageUIds 不能为空");
+    return;
+  }
+  final type = int.tryParse((arg['type'] ?? '1').toString());
+  if (type == null || type < 0 || type >= RCIMIWConversationType.values.length) {
+    RCIWToast.showToast("type 超出范围");
+    return;
+  }
+  final param = RCIMIWMessageReactionSummaryQueryParam.create(
+    conversationType: RCIMIWConversationType.values[type],
+    targetId: arg['targetId'].toString(),
+    channelId: _optionalInputString(arg, 'channelId'),
+    messageUIds: messageUIds,
+  );
+  final callback = IRCIMIWBatchGetMessageReactionSummariesCallback(
+    onSuccess: (value) => bus.emit("rong_im_listener", {
+      "listener": "batchGetMessageReactionSummaries-onSuccess",
+      "timestamp": _generateTimeStamp(),
+      "t": formatJson(value),
+    }),
+    onError: (code) => bus.emit("rong_im_listener", {
+      "listener": "batchGetMessageReactionSummaries-onError",
+      "timestamp": _generateTimeStamp(),
+      "code": code.toString(),
+    }),
+  );
+  final code = await IMEngineManager().engine?.batchGetMessageReactionSummaries(
+    param,
+    callback: callback,
+  );
+  bus.emit("rong_im_listener", {
+    "listener": "batchGetMessageReactionSummaries",
+    "timestamp": _generateTimeStamp(),
+    "code": (code ?? -1).toString(),
+  });
+}
+
+Future getMessageReactions(Map arg) async {
+  if ((arg['messageUId'] ?? '').toString().isEmpty) {
+    RCIWToast.showToast("messageUId 不能为空");
+    return;
+  }
+  final count = _optionalPageCount(arg, 'count');
+  if (count == -1) return;
+  final param = RCIMIWGetMessageReactionsParam.create(
+    messageUId: arg['messageUId'].toString(),
+    count: count,
+    pageToken: _optionalInputString(arg, 'pageToken'),
+  );
+  final callback = IRCIMIWGetMessageReactionsCallback(
+    onSuccess: (value) => bus.emit("rong_im_listener", {
+      "listener": "getMessageReactions-onSuccess",
+      "timestamp": _generateTimeStamp(),
+      "t": formatJson(value?.toJson()),
+    }),
+    onError: (code) => bus.emit("rong_im_listener", {
+      "listener": "getMessageReactions-onError",
+      "timestamp": _generateTimeStamp(),
+      "code": code.toString(),
+    }),
+  );
+  final code = await IMEngineManager().engine?.getMessageReactions(param, callback: callback);
+  bus.emit("rong_im_listener", {
+    "listener": "getMessageReactions",
+    "timestamp": _generateTimeStamp(),
+    "code": (code ?? -1).toString(),
+  });
+}
+
+Future getMessageReactionUsers(Map arg) async {
+  if ((arg['messageUId'] ?? '').toString().isEmpty ||
+      (arg['reactionId'] ?? '').toString().isEmpty) {
+    RCIWToast.showToast("messageUId 和 reactionId 不能为空");
+    return;
+  }
+  final count = _optionalPageCount(arg, 'count');
+  if (count == -1) return;
+  final param = RCIMIWGetMessageReactionUsersParam.create(
+    messageUId: arg['messageUId'].toString(),
+    reactionId: arg['reactionId'].toString(),
+    count: count,
+    pageToken: _optionalInputString(arg, 'pageToken'),
+  );
+  final callback = IRCIMIWGetMessageReactionUsersCallback(
+    onSuccess: (value) => bus.emit("rong_im_listener", {
+      "listener": "getMessageReactionUsers-onSuccess",
+      "timestamp": _generateTimeStamp(),
+      "t": formatJson(value?.toJson()),
+    }),
+    onError: (code) => bus.emit("rong_im_listener", {
+      "listener": "getMessageReactionUsers-onError",
+      "timestamp": _generateTimeStamp(),
+      "code": code.toString(),
+    }),
+  );
+  final code = await IMEngineManager().engine?.getMessageReactionUsers(param, callback: callback);
+  bus.emit("rong_im_listener", {
+    "listener": "getMessageReactionUsers",
+    "timestamp": _generateTimeStamp(),
+    "code": (code ?? -1).toString(),
+  });
 }
 
 Future getMessagesReadReceiptUsersByPageV5(Map arg) async {

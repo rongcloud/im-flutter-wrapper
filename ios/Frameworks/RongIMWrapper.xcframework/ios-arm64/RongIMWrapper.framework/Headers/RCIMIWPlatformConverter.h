@@ -30,6 +30,8 @@
 @class RCIMIWConversation;
 @class RCIMIWConversationTypeFilter;
 @class RCIMIWConversationListOption;
+@class RCIMIWMessageCountDetail;
+@class RCIMIWMessageCountDetailOptions;
 @class RCIMIWTagInfo;
 @class RCIMIWConversationTagInfo;
 @class RCIMIWReceivedStatusInfo;
@@ -71,10 +73,33 @@
 @class RCIMIWNotificationQuietHoursSetting;
 @class RCIMIWRefreshReferenceMessageParams;
 @class RCIMIWMessageResult;
+@class RCIMIWMessageReaction;
+@class RCIMIWMessageReactionUser;
+@class RCIMIWMessageReactionEvent;
+@class RCIMIWUpdateMessageReactionParam;
+@class RCIMIWGetMessageReactionsParam;
+@class RCIMIWGetMessageReactionUsersParam;
+@class RCIMIWMessageReactionSummaryQueryParam;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RCIMIWPlatformConverter : NSObject
+
+// MessageReaction
++ (NSDictionary *)convertMessageReactionToDict:(RCIMIWMessageReaction *)value;
++ (RCIMIWMessageReaction *)convertMessageReactionFromDict:(NSDictionary *)value;
++ (NSDictionary *)convertMessageReactionUserToDict:(RCIMIWMessageReactionUser *)value;
++ (RCIMIWMessageReactionUser *)convertMessageReactionUserFromDict:(NSDictionary *)value;
++ (NSDictionary *)convertMessageReactionEventToDict:(RCIMIWMessageReactionEvent *)value;
++ (RCIMIWMessageReactionEvent *)convertMessageReactionEventFromDict:(NSDictionary *)value;
++ (NSDictionary *)convertUpdateMessageReactionParamToDict:(RCIMIWUpdateMessageReactionParam *)value;
++ (RCIMIWUpdateMessageReactionParam *)convertUpdateMessageReactionParamFromDict:(NSDictionary *)value;
++ (NSDictionary *)convertGetMessageReactionsParamToDict:(RCIMIWGetMessageReactionsParam *)value;
++ (RCIMIWGetMessageReactionsParam *)convertGetMessageReactionsParamFromDict:(NSDictionary *)value;
++ (NSDictionary *)convertGetMessageReactionUsersParamToDict:(RCIMIWGetMessageReactionUsersParam *)value;
++ (RCIMIWGetMessageReactionUsersParam *)convertGetMessageReactionUsersParamFromDict:(NSDictionary *)value;
++ (NSDictionary *)convertMessageReactionSummaryQueryParamToDict:(RCIMIWMessageReactionSummaryQueryParam *)value;
++ (RCIMIWMessageReactionSummaryQueryParam *)convertMessageReactionSummaryQueryParamFromDict:(NSDictionary *)value;
 
 
 // ChatRoomMemberAction
@@ -171,6 +196,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary *)convertConversationListOptionToDict:(RCIMIWConversationListOption *)option;
 + (nullable RCIMIWConversationListOption *)convertConversationListOptionFromDict:(nullable NSDictionary *)dict;
+
++ (NSDictionary *)convertMessageCountDetailToDict:(RCIMIWMessageCountDetail *)value;
++ (RCIMIWMessageCountDetail *)convertMessageCountDetailFromDict:(NSDictionary *)value;
++ (NSDictionary *)convertMessageCountDetailOptionsToDict:(RCIMIWMessageCountDetailOptions *)value;
++ (nullable RCIMIWMessageCountDetailOptions *)convertMessageCountDetailOptionsFromDict:(nullable NSDictionary *)value;
 
 // SearchConversationResult
 + (NSDictionary *)convertSearchConversationResultToDict:(RCIMIWSearchConversationResult *)searchConversationResult;

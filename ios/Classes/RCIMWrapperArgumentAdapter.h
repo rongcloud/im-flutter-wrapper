@@ -265,6 +265,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)convertUserGenderToInteger:(RCIMIWUserGender)UserGender;
 
 
++ (RCIMIWMessageReactionOperationType)convertMessageReactionOperationTypeFromInteger:(NSInteger)integer;
++ (NSInteger)convertMessageReactionOperationTypeToInteger:(RCIMIWMessageReactionOperationType)MessageReactionOperationType;
+
+
 
 @end
 

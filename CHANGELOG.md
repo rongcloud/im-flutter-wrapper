@@ -1,3 +1,7 @@
+# 5.44.1
+* 新增按日历查询本地消息接口
+* recallMessageWithOption 新增可选参数 disableNotification
+
 # 5.44.0
 * 更新了 Android IMLib SDK 依赖为 5.44.0。
 * 更新了 iOS IMLib SDK 依赖为 5.44.0。

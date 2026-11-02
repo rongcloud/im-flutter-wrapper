@@ -9,6 +9,32 @@ class IMEngineManager {
   factory IMEngineManager() => _instance;
 
   setEngineListener() {
+    engine?.onMessageReactionChanged = (List<RCIMIWMessageReactionEvent>? events) {
+      List eventsJson = [];
+      if (events != null) {
+        for (var temp in events) {
+          eventsJson.add(formatJson(temp.toJson()) + "\n");
+        }
+      }
+
+      DateTime now = DateTime.now();
+      String timeStr =
+          "${now.hour.toString().padLeft(2, '0')}时${now.minute.toString().padLeft(2, '0')}分${now.second.toString().padLeft(2, '0')}秒";
+      Map<String, String> arg = {};
+      arg["listener"] = "onMessageReactionChanged";
+      arg["timestamp"] = timeStr;
+      arg["events"] = eventsJson.toString();
+
+      bus.emit("rong_im_listener", arg);
+    };
+    /*
+//callback_onMessageReactionChanged_call
+engine?.onMessageReactionChanged = (List<RCIMIWMessageReactionEvent>? events) {
+    //...
+};
+//callback_onMessageReactionChanged_call
+*/
+
     engine?.onMessageReceived = (RCIMIWMessage? message, int? left, bool? offline, bool? hasPackage) {
       DateTime now = DateTime.now();
       String timeStr =

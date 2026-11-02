@@ -1391,4 +1391,24 @@
   return index;
 }
 
++ (RCIMIWMessageReactionOperationType)convertMessageReactionOperationTypeFromInteger:(NSInteger)integer {
+  NSArray *MessageReactionOperationTypeArray = @[
+    @(RCIMIWMessageReactionOperationTypeAdded),
+    @(RCIMIWMessageReactionOperationTypeRemoved),
+    @(RCIMIWMessageReactionOperationTypeCleared),
+  ];
+
+  RCIMIWMessageReactionOperationType MessageReactionOperationType = [[MessageReactionOperationTypeArray objectAtIndex:integer] integerValue];
+  return MessageReactionOperationType;
+}
++ (NSInteger)convertMessageReactionOperationTypeToInteger:(RCIMIWMessageReactionOperationType)MessageReactionOperationType {
+  NSArray *MessageReactionOperationTypeArray = @[
+    @(RCIMIWMessageReactionOperationTypeAdded),
+    @(RCIMIWMessageReactionOperationTypeRemoved),
+    @(RCIMIWMessageReactionOperationTypeCleared),
+  ];
+  NSInteger index = [MessageReactionOperationTypeArray indexOfObject:@(MessageReactionOperationType)];
+  return index;
+}
+
 @end

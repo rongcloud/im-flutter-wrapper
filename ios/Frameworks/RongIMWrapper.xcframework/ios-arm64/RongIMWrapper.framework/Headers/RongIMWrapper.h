@@ -20,6 +20,10 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 
 #import <RongIMWrapper/RCIMIWEngineOptions.h>
 #import <RongIMWrapper/RCIMIWMessagePushOptions.h>
+#import <RongIMWrapper/RCIMIWMessageReaction.h>
+#import <RongIMWrapper/RCIMIWMessageReactionUser.h>
+#import <RongIMWrapper/RCIMIWMessageReactionEvent.h>
+#import <RongIMWrapper/RCIMIWMessageReactionParams.h>
 #import <RongIMWrapper/RCIMIWAppSettings.h>
 #import <RongIMWrapper/RCIMIWCompressOptions.h>
 
@@ -49,6 +53,8 @@ FOUNDATION_EXPORT const unsigned char RongIMWrapperVersionString[];
 #import <RongIMWrapper/RCIMIWConversationTypeFilter.h>
 #import <RongIMWrapper/RCIMIWConversationListOption.h>
 #import <RongIMWrapper/RCIMIWSearchConversationResult.h>
+#import <RongIMWrapper/RCIMIWMessageCountDetail.h>
+#import <RongIMWrapper/RCIMIWMessageCountDetailOptions.h>
 
 #import <RongIMWrapper/RCIMIWGroupReadReceiptInfo.h>
 #import <RongIMWrapper/RCIMIWBlockedMessageInfo.h>

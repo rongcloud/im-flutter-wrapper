@@ -57,6 +57,7 @@ import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperation;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationPermission;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupOperationType;
 import cn.rongcloud.im.wrapper.group.constants.RCIMIWGroupStatus;
+import cn.rongcloud.im.wrapper.messagereaction.RCIMIWMessageReactionOperationType;
 import cn.rongcloud.im.wrapper.messages.RCIMIWMessageModifyStatus;
 import cn.rongcloud.im.wrapper.messages.RCIMIWReferenceMessageStatus;
 import cn.rongcloud.im.wrapper.settings.RCIMIWGroupReadReceiptVersion;
@@ -337,5 +338,10 @@ public class RCIMWrapperArgumentAdapter {
 
   static RCIMIWUserGender toRCIMIWUserGender(@NonNull Integer type) {
     return RCIMIWUserGender.values()[type];
+  }
+
+  static RCIMIWMessageReactionOperationType toRCIMIWMessageReactionOperationType(
+      @NonNull Integer type) {
+    return RCIMIWMessageReactionOperationType.values()[type];
   }
 }

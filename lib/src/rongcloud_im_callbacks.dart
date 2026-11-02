@@ -1554,6 +1554,34 @@ class IRCIMIWGetMessageCountCallback {
   Function(int? code) onError;
 }
 
+class IRCIMIWGetMessageCountDetailCallback {
+  IRCIMIWGetMessageCountDetailCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回对象
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned object
+  /// ---
+  Function(List<RCIMIWMessageCountDetail>? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
 class IRCIMIWGetTopConversationsCallback {
   IRCIMIWGetTopConversationsCallback({required this.onSuccess, required this.onError});
 
@@ -2985,6 +3013,90 @@ class IRCIMIWGetEditedMessageDraftCallback {
   /// ---
   /// Callback for failing to get an edited-message draft.
   /// @param code Error code.
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWBatchGetMessageReactionSummariesCallback {
+  IRCIMIWBatchGetMessageReactionSummariesCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回对象
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned object
+  /// ---
+  Function(Map<String, List<RCIMIWMessageReaction>>? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetMessageReactionsCallback {
+  IRCIMIWGetMessageReactionsCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回对象
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned object
+  /// ---
+  Function(RCIMIWPagingQueryResult<RCIMIWMessageReaction>? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
+  /// ---
+  Function(int? code) onError;
+}
+
+class IRCIMIWGetMessageReactionUsersCallback {
+  IRCIMIWGetMessageReactionUsersCallback({required this.onSuccess, required this.onError});
+
+  /// [ZH]
+  /// ---
+  /// 成功回调
+  /// - t 返回对象
+  /// ---
+  /// [EN]
+  /// ---
+  /// Success callback
+  /// - t Returned object
+  /// ---
+  Function(RCIMIWPagingQueryResult<RCIMIWMessageReactionUser>? t) onSuccess;
+
+  /// [ZH]
+  /// ---
+  /// 错误回调
+  /// - code 错误码
+  /// ---
+  /// [EN]
+  /// ---
+  /// Error callback
+  /// - code Error code
   /// ---
   Function(int? code) onError;
 }

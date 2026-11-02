@@ -57,21 +57,6 @@ android {
 
     }
 
-    signingConfigs {
-        release {
-            storeFile file("../FlutterWrapperDemo.jks")
-            storePassword '123456'
-            keyAlias 'key'
-            keyPassword '123456'
-        }
-
-        debug {
-            storeFile file("../FlutterWrapperDemo.jks")
-            storePassword '123456'
-            keyAlias 'key'
-            keyPassword '123456'
-        }
-    }
 
 
     buildTypes {

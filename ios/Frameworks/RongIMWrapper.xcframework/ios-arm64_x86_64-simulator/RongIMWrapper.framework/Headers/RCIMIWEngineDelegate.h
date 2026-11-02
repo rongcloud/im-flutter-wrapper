@@ -34,6 +34,7 @@
 @class RCIMIWStreamMessageChunkInfo;
 @class RCIMIWRobotInfo;
 @class RCIMIWReadReceiptResponseV5;
+@class RCIMIWMessageReactionEvent;
 
 #ifndef RCIMIWEngineDelegate_h
 #define RCIMIWEngineDelegate_h
@@ -45,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 #pragma mark - 事件监听
+
+- (void)onMessageReactionChanged:(NSArray<RCIMIWMessageReactionEvent *> *)events;
 
 /*!
  连接状态监听

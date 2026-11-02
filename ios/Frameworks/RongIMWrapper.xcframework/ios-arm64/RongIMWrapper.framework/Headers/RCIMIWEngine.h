@@ -31,6 +31,9 @@
 #import <RongIMWrapper/RCIMIWQuitGroupConfig.h>
 #import <RongIMWrapper/RCIMIWPagingQueryOption.h>
 #import <RongIMWrapper/RCIMIWPagingQueryResult.h>
+#import <RongIMWrapper/RCIMIWMessageReaction.h>
+#import <RongIMWrapper/RCIMIWMessageReactionEvent.h>
+#import <RongIMWrapper/RCIMIWMessageReactionParams.h>
 #import <RongIMWrapper/RCIMIWGroupMemberInfo.h>
 #import <RongIMWrapper/RCIMIWGetGroupMembersOption.h>
 #import <RongIMWrapper/RCIMIWRobotInfo.h>
@@ -62,6 +65,8 @@
 #import <RongIMWrapper/RCIMIWMessageResult.h>
 #import <RongIMWrapper/RCIMIWConversationTypeFilter.h>
 #import <RongIMWrapper/RCIMIWConversationListOption.h>
+#import <RongIMWrapper/RCIMIWMessageCountDetail.h>
+#import <RongIMWrapper/RCIMIWMessageCountDetailOptions.h>
 
 
 @class RCIMIWEngineOptions;
@@ -1052,6 +1057,15 @@ __deprecated_msg("Use [RCIMIWEngine getMessageCount:targetId:channelId:success:e
                    channelId:(nullable NSString *)channelId
                      success:(nullable void (^)(NSInteger count))successBlock
                        error:(nullable void (^)(NSInteger code))errorBlock;
+
+/// [ZH] 查询指定会话时间范围内每天的本地消息数量。时间范围左闭右开，最多支持 180 个本机自然日，首尾日只统计相交部分。仅返回有消息的日期，无消息时成功返回空列表。频道按原值精确匹配。
+/// [EN] Queries local daily message counts in a half-open time range of up to 180 local calendar days; partial days count only the intersecting range. Only populated dates are returned; no matching messages returns an empty list successfully. The channel is matched exactly.
+- (NSInteger)getMessageCountDetail:(RCIMIWConversationType)type
+                          targetId:(NSString *)targetId
+                         channelId:(nullable NSString *)channelId
+                           options:(RCIMIWMessageCountDetailOptions *)options
+                           success:(nullable void (^)(NSArray<RCIMIWMessageCountDetail *> *details))successBlock
+                             error:(nullable void (^)(NSInteger code))errorBlock;
 
 #pragma mark - 会话未读数
 
@@ -2994,16 +3008,76 @@ __deprecated_msg("Use [RCIMIWEngine getUltraGroupUnreadMentionedCount:success:er
                                    channelIds:(NSArray<NSString *> *)channelIds
                                    completion:(nullable void (^)(NSInteger code))completionBlock;
 
-/*!
- 撤回消息（支持 isDelete 选项）
-
- @param message            需要撤回的消息
- @param isDelete           是否删除本地消息并移除远端消息记录
- @param messageRecalledBlock 撤回结果回调
+/**
+ * [ZH]
+ * ---
+ * 撤回消息，使用默认通知行为。
+ *
+ * @param message 需要撤回的消息
+ * @param isDelete 是否删除本地消息并移除远端消息记录
+ * @param messageRecalledBlock 撤回结果回调
+ * @return 接口调用状态码，非 0 表示调用失败且不会触发回调
+ * ---
+ * [EN]
+ * ---
+ * Recalls a message using the default notification behavior.
+ *
+ * @param message Message to recall.
+ * @param isDelete Whether to delete the local message and remove its remote history.
+ * @param messageRecalledBlock Recall result callback.
+ * @return Invocation status code. A nonzero value indicates failure without a callback.
+ * ---
  */
 - (NSInteger)recallMessageWithOption:(RCIMIWMessage *)message
                             isDelete:(BOOL)isDelete
                      messageRecalled:(nullable void (^)(NSInteger code, RCIMIWMessage *message))messageRecalledBlock;
+
+/**
+ * [ZH]
+ * ---
+ * 撤回消息，并配置消息删除和通知行为。
+ *
+ * @param message 需要撤回的消息
+ * @param isDelete 是否删除本地消息并移除远端消息记录
+ * @param disableNotification 是否关闭此次撤回的远程推送和本地通知，NO 使用默认通知行为
+ * @param messageRecalledBlock 撤回结果回调
+ * @return 接口调用状态码，非 0 表示调用失败且不会触发回调
+ * ---
+ * [EN]
+ * ---
+ * Recalls a message with configurable deletion and notification behavior.
+ *
+ * @param message Message to recall.
+ * @param isDelete Whether to delete the local message and remove its remote history.
+ * @param disableNotification Whether to disable remote push and local notifications for this recall. NO uses the default notification behavior.
+ * @param messageRecalledBlock Recall result callback.
+ * @return Invocation status code. A nonzero value indicates failure without a callback.
+ * ---
+ */
+- (NSInteger)recallMessageWithOption:(RCIMIWMessage *)message
+                            isDelete:(BOOL)isDelete
+                 disableNotification:(BOOL)disableNotification
+                     messageRecalled:(nullable void (^)(NSInteger code, RCIMIWMessage *message))messageRecalledBlock;
+
+- (NSInteger)addMessageReaction:(RCIMIWUpdateMessageReactionParam *)param
+                         success:(nullable void (^)(void))successBlock
+                           error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)removeMessageReaction:(RCIMIWUpdateMessageReactionParam *)param
+                            success:(nullable void (^)(void))successBlock
+                              error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)batchGetMessageReactionSummaries:(RCIMIWMessageReactionSummaryQueryParam *)param
+                                       success:(nullable void (^)(NSDictionary *reactionsMap))successBlock
+                                         error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)getMessageReactions:(RCIMIWGetMessageReactionsParam *)param
+                          success:(nullable void (^)(RCIMIWPagingQueryResult<RCIMIWMessageReaction *> *result))successBlock
+                            error:(nullable void (^)(NSInteger code))errorBlock;
+
+- (NSInteger)getMessageReactionUsers:(RCIMIWGetMessageReactionUsersParam *)param
+                             success:(nullable void (^)(RCIMIWPagingQueryResult<RCIMIWMessageReactionUser *> *result))successBlock
+                               error:(nullable void (^)(NSInteger code))errorBlock;
 
 @end
 

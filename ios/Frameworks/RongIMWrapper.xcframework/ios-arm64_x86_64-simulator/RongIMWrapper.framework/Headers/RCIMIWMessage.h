@@ -160,6 +160,18 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * [ZH]
  * ---
+ * 消息是否存在回应。
+ * ---
+ * [EN]
+ * ---
+ * Whether the message has reactions.
+ * ---
+ */
+@property (nonatomic, assign) BOOL hasReactions;
+
+/**
+ * [ZH]
+ * ---
  * 消息修改信息。
  * ---
  * [EN]

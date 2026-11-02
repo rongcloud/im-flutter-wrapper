@@ -513,6 +513,42 @@ class RCIMIWMessagePushOptions {
   }
 }
 
+class RCIMIWMessageCountDetailOptions {
+  /// [ZH]
+  /// ---
+  /// 获取包含的开始时间，Unix 毫秒，支持任意毫秒时间戳。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the inclusive start time in Unix milliseconds.
+  /// ---
+  int? startTime;
+
+  /// [ZH]
+  /// ---
+  /// 获取不包含的结束时间，Unix 毫秒，支持任意毫秒时间戳。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the exclusive end time in Unix milliseconds.
+  /// ---
+  int? endTime;
+
+  RCIMIWMessageCountDetailOptions.create({this.startTime, this.endTime});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['startTime'] = startTime;
+    json['endTime'] = endTime;
+    return json;
+  }
+
+  RCIMIWMessageCountDetailOptions.fromJson(Map<String, dynamic> json) {
+    startTime = json['startTime'];
+    endTime = json['endTime'];
+  }
+}
+
 class RCIMIWIOSPushOptions {
   /// [ZH]
   /// ---
@@ -1729,6 +1765,16 @@ class RCIMIWMessage {
 
   /// [ZH]
   /// ---
+  /// 消息是否存在回应
+  /// ---
+  /// [EN]
+  /// ---
+  /// Whether the message has reactions
+  /// ---
+  bool? hasReactions;
+
+  /// [ZH]
+  /// ---
   /// 消息修改信息。
   /// ---
   /// [EN]
@@ -1794,6 +1840,7 @@ class RCIMIWMessage {
     json['canIncludeExpansion'] = canIncludeExpansion;
     json['auditInfo'] = auditInfo?.toJson();
     json['hasChanged'] = hasChanged;
+    json['hasReactions'] = hasReactions;
     json['modifyInfo'] = modifyInfo?.toJson();
     json['directedUserIds'] = directedUserIds;
     json['needReceipt'] = needReceipt;
@@ -1855,6 +1902,7 @@ class RCIMIWMessage {
       );
     }
     hasChanged = json['hasChanged'];
+    hasReactions = json['hasReactions'];
     if (json['modifyInfo'] != null) {
       modifyInfo = RCIMIWMessageModifyInfo.fromJson(
         (json['modifyInfo'] as Map).map((key, value) => MapEntry(key.toString(), value)),
@@ -3344,6 +3392,10 @@ class RCIMIWPagingQueryResult<T> {
           return RCIMIWGroupApplicationInfo.fromJson(map) as T;
         } else if (T == RCIMIWFriendApplicationInfo) {
           return RCIMIWFriendApplicationInfo.fromJson(map) as T;
+        } else if (T == RCIMIWMessageReaction) {
+          return RCIMIWMessageReaction.fromJson(map) as T;
+        } else if (T == RCIMIWMessageReactionUser) {
+          return RCIMIWMessageReactionUser.fromJson(map) as T;
         } else {
           throw UnsupportedError('Unsupported type: $T');
         }
@@ -4901,6 +4953,283 @@ class RCIMIWReadReceiptInfoV5 {
   }
 }
 
+class RCIMIWMessageReactionEvent {
+  /// [ZH] 会话类型。 [EN] Conversation type.
+  RCIMIWConversationType? conversationType;
+
+  /// [ZH] 会话 ID。 [EN] Conversation target ID.
+  String? targetId;
+
+  /// [ZH] 频道 ID。 [EN] Channel ID.
+  String? channelId;
+
+  /// [ZH] 消息唯一 ID。 [EN] Message unique ID.
+  String? messageUId;
+
+  /// [ZH] 回应 ID。 [EN] Reaction ID.
+  String? reactionId;
+
+  /// [ZH] 回应操作类型。 [EN] Reaction operation type.
+  RCIMIWMessageReactionOperationType? operationType;
+
+  /// [ZH] 回应用户列表。 [EN] Reaction user list.
+  List<RCIMIWMessageReactionUser>? users;
+
+  /// [ZH] 回应总数。 [EN] Total reaction count.
+  int? totalCount;
+
+  RCIMIWMessageReactionEvent.create({
+    this.conversationType,
+    this.targetId,
+    this.channelId,
+    this.messageUId,
+    this.reactionId,
+    this.operationType,
+    this.users,
+    this.totalCount,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['conversationType'] = conversationType?.index;
+    json['targetId'] = targetId;
+    json['channelId'] = channelId;
+    json['messageUId'] = messageUId;
+    json['reactionId'] = reactionId;
+    json['operationType'] = operationType?.index;
+    json['users'] = users?.map((item) => item.toJson()).toList();
+    json['totalCount'] = totalCount;
+    return json;
+  }
+
+  RCIMIWMessageReactionEvent.fromJson(Map<String, dynamic> json) {
+    conversationType = _enumFromIndex(
+      RCIMIWConversationType.values,
+      json['conversationType'],
+      fallback: RCIMIWConversationType.invalid,
+    );
+    targetId = json['targetId'];
+    channelId = json['channelId'];
+    messageUId = json['messageUId'];
+    reactionId = json['reactionId'];
+    operationType = _enumFromIndex(RCIMIWMessageReactionOperationType.values, json['operationType']);
+    users = json['users']
+        ?.map<RCIMIWMessageReactionUser>(
+          (item) =>
+              RCIMIWMessageReactionUser.fromJson((item as Map).map((key, value) => MapEntry(key.toString(), value))),
+        )
+        .toList();
+    totalCount = json['totalCount'];
+  }
+}
+
+class RCIMIWMessageReaction {
+  /// [ZH] 消息唯一 ID。 [EN] Message unique ID.
+  String? messageUId;
+
+  /// [ZH] 回应 ID。 [EN] Reaction ID.
+  String? reactionId;
+
+  /// [ZH] 当前用户是否已回应。 [EN] Whether the current user has reacted.
+  bool? hasCurrentUserReacted;
+
+  /// [ZH] 回应用户列表。 [EN] Reaction user list.
+  List<RCIMIWMessageReactionUser>? users;
+
+  /// [ZH] 回应总数。 [EN] Total reaction count.
+  int? totalCount;
+
+  /// [ZH] 回应时间。 [EN] Reaction timestamp.
+  int? reactionTime;
+
+  RCIMIWMessageReaction.create({
+    this.messageUId,
+    this.reactionId,
+    this.hasCurrentUserReacted,
+    this.users,
+    this.totalCount,
+    this.reactionTime,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    json['reactionId'] = reactionId;
+    json['hasCurrentUserReacted'] = hasCurrentUserReacted;
+    json['users'] = users?.map((item) => item.toJson()).toList();
+    json['totalCount'] = totalCount;
+    json['reactionTime'] = reactionTime;
+    return json;
+  }
+
+  RCIMIWMessageReaction.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
+    reactionId = json['reactionId'];
+    hasCurrentUserReacted = json['hasCurrentUserReacted'];
+    users = json['users']
+        ?.map<RCIMIWMessageReactionUser>(
+          (item) =>
+              RCIMIWMessageReactionUser.fromJson((item as Map).map((key, value) => MapEntry(key.toString(), value))),
+        )
+        .toList();
+    totalCount = json['totalCount'];
+    reactionTime = json['reactionTime'];
+  }
+}
+
+class RCIMIWUpdateMessageReactionParam {
+  /// [ZH] 消息唯一 ID。 [EN] Message unique ID.
+  String? messageUId;
+
+  /// [ZH] 回应 ID。 [EN] Reaction ID.
+  String? reactionId;
+
+  /// [ZH] 推送配置。 [EN] Push options.
+  RCIMIWMessagePushOptions? pushOptions;
+
+  RCIMIWUpdateMessageReactionParam.create({this.messageUId, this.reactionId, this.pushOptions});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    json['reactionId'] = reactionId;
+    json['pushOptions'] = pushOptions?.toJson();
+    return json;
+  }
+
+  RCIMIWUpdateMessageReactionParam.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
+    reactionId = json['reactionId'];
+    if (json['pushOptions'] != null) {
+      pushOptions = RCIMIWMessagePushOptions.fromJson(
+        (json['pushOptions'] as Map).map((key, value) => MapEntry(key.toString(), value)),
+      );
+    }
+  }
+}
+
+class RCIMIWMessageReactionUser {
+  /// [ZH] 用户 ID。 [EN] User ID.
+  String? userId;
+
+  /// [ZH] 回应时间。 [EN] Reaction timestamp.
+  int? reactionTime;
+
+  RCIMIWMessageReactionUser.create({this.userId, this.reactionTime});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['userId'] = userId;
+    json['reactionTime'] = reactionTime;
+    return json;
+  }
+
+  RCIMIWMessageReactionUser.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    reactionTime = json['reactionTime'];
+  }
+}
+
+class RCIMIWMessageReactionSummaryQueryParam {
+  /// [ZH] 会话类型。 [EN] Conversation type.
+  RCIMIWConversationType? conversationType;
+
+  /// [ZH] 会话 ID。 [EN] Conversation target ID.
+  String? targetId;
+
+  /// [ZH] 频道 ID。 [EN] Channel ID.
+  String? channelId;
+
+  /// [ZH] 消息唯一 ID 列表。 [EN] Message unique ID list.
+  List<String>? messageUIds;
+
+  RCIMIWMessageReactionSummaryQueryParam.create({
+    this.conversationType,
+    this.targetId,
+    this.channelId,
+    this.messageUIds,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['conversationType'] = conversationType?.index;
+    json['targetId'] = targetId;
+    json['channelId'] = channelId;
+    json['messageUIds'] = messageUIds;
+    return json;
+  }
+
+  RCIMIWMessageReactionSummaryQueryParam.fromJson(Map<String, dynamic> json) {
+    conversationType = _enumFromIndex(
+      RCIMIWConversationType.values,
+      json['conversationType'],
+      fallback: RCIMIWConversationType.invalid,
+    );
+    targetId = json['targetId'];
+    channelId = json['channelId'];
+    messageUIds = json['messageUIds']?.cast<String>();
+  }
+}
+
+class RCIMIWGetMessageReactionUsersParam {
+  /// [ZH] 消息唯一 ID。 [EN] Message unique ID.
+  String? messageUId;
+
+  /// [ZH] 回应 ID。 [EN] Reaction ID.
+  String? reactionId;
+
+  /// [ZH] 每页数量。 [EN] Page size.
+  int? count;
+
+  /// [ZH] 分页标记。 [EN] Page token.
+  String? pageToken;
+
+  RCIMIWGetMessageReactionUsersParam.create({this.messageUId, this.reactionId, this.count, this.pageToken});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    json['reactionId'] = reactionId;
+    json['count'] = count;
+    json['pageToken'] = pageToken;
+    return json;
+  }
+
+  RCIMIWGetMessageReactionUsersParam.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
+    reactionId = json['reactionId'];
+    count = json['count'];
+    pageToken = json['pageToken'];
+  }
+}
+
+class RCIMIWGetMessageReactionsParam {
+  /// [ZH] 消息唯一 ID。 [EN] Message unique ID.
+  String? messageUId;
+
+  /// [ZH] 每页数量。 [EN] Page size.
+  int? count;
+
+  /// [ZH] 分页标记。 [EN] Page token.
+  String? pageToken;
+
+  RCIMIWGetMessageReactionsParam.create({this.messageUId, this.count, this.pageToken});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['messageUId'] = messageUId;
+    json['count'] = count;
+    json['pageToken'] = pageToken;
+    return json;
+  }
+
+  RCIMIWGetMessageReactionsParam.fromJson(Map<String, dynamic> json) {
+    messageUId = json['messageUId'];
+    count = json['count'];
+    pageToken = json['pageToken'];
+  }
+}
+
 class RCIMIWConversationTagInfo {
   /// [ZH]
   /// ---
@@ -5335,6 +5664,40 @@ class RCIMIWConversation {
     firstUnreadMsgSendTime = json['firstUnreadMsgSendTime'];
     operationTime = json['operationTime'];
     translateStrategy = _enumFromIndex(RCIMIWTranslateStrategy.values, json['translateStrategy']);
+  }
+}
+
+class RCIMIWMessageCountDetail {
+  /// [ZH]
+  /// ---
+  /// 获取该自然日在协议查询时设备时区的零点 Unix 毫秒时间戳。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the local start of this date in Unix milliseconds using the device time zone at protocol query time.
+  /// ---
+  int? dateMs;
+
+  /// [ZH]
+  /// ---
+  /// 获取该日期内的本地消息数量。
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the number of local messages for this date.
+  /// ---
+  int? messageCount;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['dateMs'] = dateMs;
+    json['messageCount'] = messageCount;
+    return json;
+  }
+
+  RCIMIWMessageCountDetail.fromJson(Map<String, dynamic> json) {
+    dateMs = json['dateMs'];
+    messageCount = json['messageCount'];
   }
 }
 

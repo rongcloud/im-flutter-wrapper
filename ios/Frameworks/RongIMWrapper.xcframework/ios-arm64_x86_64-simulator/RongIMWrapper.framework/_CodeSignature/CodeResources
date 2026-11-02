@@ -82,11 +82,11 @@
 		</data>
 		<key>Headers/RCIMIWEngine.h</key>
 		<data>
-		hHBtTmU5gytgbQneEO8KcfWZnJA=
+		/T99vN65gzj+Fe55EHS/Jgra0oU=
 		</data>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<data>
-		2xrgs0rN20Cn1DWnLOiL8BlaG3A=
+		jMJgNJ56rgBFTRoetctEA2RHUUM=
 		</data>
 		<key>Headers/RCIMIWEngineOptions.h</key>
 		<data>
@@ -166,11 +166,19 @@
 		</data>
 		<key>Headers/RCIMIWMessage.h</key>
 		<data>
-		YII5/TfG4I7bpLRB+wlBl+2CVAs=
+		n13kz3Fq/GtsfAVFWDZP8d55iwY=
 		</data>
 		<key>Headers/RCIMIWMessageAuditInfo.h</key>
 		<data>
 		3vBoyezAHkK07yr3Dc6P02rLOB8=
+		</data>
+		<key>Headers/RCIMIWMessageCountDetail.h</key>
+		<data>
+		d2oNTCIFbXYaFhLLRv2UwxXC/l8=
+		</data>
+		<key>Headers/RCIMIWMessageCountDetailOptions.h</key>
+		<data>
+		hNwm2lLt372mKz7Kxu04EwCivb8=
 		</data>
 		<key>Headers/RCIMIWMessageIdentifier.h</key>
 		<data>
@@ -183,6 +191,22 @@
 		<key>Headers/RCIMIWMessagePushOptions.h</key>
 		<data>
 		NPMpegIKixCvr0uYvMVMnsmbL6s=
+		</data>
+		<key>Headers/RCIMIWMessageReaction.h</key>
+		<data>
+		/VSz+c34J58piGE4SXc/fkgn1Ko=
+		</data>
+		<key>Headers/RCIMIWMessageReactionEvent.h</key>
+		<data>
+		p3thTEsmE+XPlhDoTckzmjDWma4=
+		</data>
+		<key>Headers/RCIMIWMessageReactionParams.h</key>
+		<data>
+		OhbutwmJ+CM/OHEENVmXiuMjg/I=
+		</data>
+		<key>Headers/RCIMIWMessageReactionUser.h</key>
+		<data>
+		iMrT3eyLInmkrX7i3uh6A6Bvm0o=
 		</data>
 		<key>Headers/RCIMIWMessageResult.h</key>
 		<data>
@@ -218,7 +242,7 @@
 		</data>
 		<key>Headers/RCIMIWPlatformConverter.h</key>
 		<data>
-		3tu1CWnWM45P6+PbSlLAdBBvxnE=
+		CWevbfPU6jUSLOaQxCfFT7ie9Fg=
 		</data>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
 		<data>
@@ -406,7 +430,7 @@
 		</data>
 		<key>Headers/RongIMWrapper.h</key>
 		<data>
-		udj0VmzKZEBsIGWdpz4Cx8IApp4=
+		rWWrUNCGZRCpW/0mELw2dX68SvA=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -644,22 +668,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			hHBtTmU5gytgbQneEO8KcfWZnJA=
+			/T99vN65gzj+Fe55EHS/Jgra0oU=
 			</data>
 			<key>hash2</key>
 			<data>
-			WmANzoniMHN1Rg69mOWC08qXJkBLJ9dJ2yZzfurvZy4=
+			iHaaiCH5SBspnCk/cJOg33t3c0gEbwTJ8Hg7GoPFf4M=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2xrgs0rN20Cn1DWnLOiL8BlaG3A=
+			jMJgNJ56rgBFTRoetctEA2RHUUM=
 			</data>
 			<key>hash2</key>
 			<data>
-			JkxKJ6tdhYmdZo1f+XKwT1+bfod68MjgfElR3Ex1S4k=
+			bjjmckY7ZpiYD9xuSRCfwZavkvYEklamc4aVYdxLc4k=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWEngineOptions.h</key>
@@ -875,11 +899,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			YII5/TfG4I7bpLRB+wlBl+2CVAs=
+			n13kz3Fq/GtsfAVFWDZP8d55iwY=
 			</data>
 			<key>hash2</key>
 			<data>
-			YZYAHXh0avpb/fJJ1GwISiuU2E+HRihqJNDBiq3RcSQ=
+			rjm+ovVMhIe/9w9JH1V/U7+ZUaoMF4+9lD/gP47FLB0=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWMessageAuditInfo.h</key>
@@ -891,6 +915,28 @@
 			<key>hash2</key>
 			<data>
 			EU/z0u1jEUmT0Oyg4+emNOS4mkrlnIz/f3cpJrGHCFg=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWMessageCountDetail.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			d2oNTCIFbXYaFhLLRv2UwxXC/l8=
+			</data>
+			<key>hash2</key>
+			<data>
+			ei1MuGrpD1xngP4f69sAhmL/Z7eWkGZkPUtJm83aqW8=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWMessageCountDetailOptions.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			hNwm2lLt372mKz7Kxu04EwCivb8=
+			</data>
+			<key>hash2</key>
+			<data>
+			dGaIIgkA7CnQNRwIPuxV8ehIFkQoq0t63CFP/kkNbbA=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWMessageIdentifier.h</key>
@@ -924,6 +970,50 @@
 			<key>hash2</key>
 			<data>
 			TR55cnKw/RtUlLsasBR2eEqM2rN/IXP9cq4RCkp+KZI=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWMessageReaction.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			/VSz+c34J58piGE4SXc/fkgn1Ko=
+			</data>
+			<key>hash2</key>
+			<data>
+			xT5YB8HA0q/3vMdQFPfKCXFjSxutmMoXFtv+BMeYENA=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWMessageReactionEvent.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			p3thTEsmE+XPlhDoTckzmjDWma4=
+			</data>
+			<key>hash2</key>
+			<data>
+			Z5uBhSETGEY8j2A7cSI2HNsaBgvi+51JCqj/uZT6nzc=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWMessageReactionParams.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			OhbutwmJ+CM/OHEENVmXiuMjg/I=
+			</data>
+			<key>hash2</key>
+			<data>
+			AXyY6QY8sIeD2LT87w6+TSk93U57f1WesFuoD6LsXGs=
+			</data>
+		</dict>
+		<key>Headers/RCIMIWMessageReactionUser.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			iMrT3eyLInmkrX7i3uh6A6Bvm0o=
+			</data>
+			<key>hash2</key>
+			<data>
+			/xqKPRwlvYIXSeO8ZLTyotwUp6dgOgdp/FyjVaWtzF4=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWMessageResult.h</key>
@@ -1018,11 +1108,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			3tu1CWnWM45P6+PbSlLAdBBvxnE=
+			CWevbfPU6jUSLOaQxCfFT7ie9Fg=
 			</data>
 			<key>hash2</key>
 			<data>
-			GttI55yM5Tn86Trz08UpYbco591+vtzasaEQ8osywmo=
+			mEXc5W4Oqt0Xk8DRyCY2z3dbDf7T1If9fyKrzkI0utE=
 			</data>
 		</dict>
 		<key>Headers/RCIMIWQuitGroupConfig.h</key>
@@ -1535,11 +1625,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			udj0VmzKZEBsIGWdpz4Cx8IApp4=
+			rWWrUNCGZRCpW/0mELw2dX68SvA=
 			</data>
 			<key>hash2</key>
 			<data>
-			yTbTxI79m9v/rTaK0PmPYFFzh/Y5eBWf9DDyHWPatJs=
+			1kz3zUDOyG+BmdfOQoWGuuCoa+XIOwyEL/eoqh6+vTM=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

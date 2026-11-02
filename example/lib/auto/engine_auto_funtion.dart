@@ -7478,6 +7478,17 @@ getMessageCount(Map arg) async {
 }
 
 /*
+//fun_getMessageCountDetail_call
+IRCIMIWGetMessageCountDetailCallback? callback = IRCIMIWGetMessageCountDetailCallback(onSuccess: (List<RCIMIWMessageCountDetail>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getMessageCountDetail(type, targetId, channelId, options, callback:callback);
+//fun_getMessageCountDetail_call
+*/
+/*
 //fun_loadTopConversations_call
 int? ret = await engine?.loadTopConversations(conversationTypesInt, channelId);
 //fun_loadTopConversations_call
@@ -13443,7 +13454,7 @@ IRCIMIWRecallMessageCallback? callback = IRCIMIWRecallMessageCallback(onMessageR
     //...
 });
 
-int? ret = await engine?.recallMessageWithOption(message, isDelete, callback:callback);
+int? ret = await engine?.recallMessageWithOption(message, isDelete, disableNotification:disableNotification, callback:callback);
 //fun_recallMessageWithOption_call
 */
 /*
@@ -13578,4 +13589,59 @@ IRCIMIWCompletionCallback? callback = IRCIMIWCompletionCallback(onCompleted: (in
 
 int? ret = await engine?.clearEditedMessageDraft(type, targetId, channelId, callback:callback);
 //fun_clearEditedMessageDraft_call
+*/
+/*
+//fun_addMessageReaction_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.addMessageReaction(param, callback:callback);
+//fun_addMessageReaction_call
+*/
+/*
+//fun_removeMessageReaction_call
+IRCIMIWOperationCallback? callback = IRCIMIWOperationCallback(onSuccess: () {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.removeMessageReaction(param, callback:callback);
+//fun_removeMessageReaction_call
+*/
+/*
+//fun_batchGetMessageReactionSummaries_call
+IRCIMIWBatchGetMessageReactionSummariesCallback? callback = IRCIMIWBatchGetMessageReactionSummariesCallback(onSuccess: (Map<String, List<RCIMIWMessageReaction>>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.batchGetMessageReactionSummaries(param, callback:callback);
+//fun_batchGetMessageReactionSummaries_call
+*/
+/*
+//fun_getMessageReactions_call
+IRCIMIWGetMessageReactionsCallback? callback = IRCIMIWGetMessageReactionsCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWMessageReaction>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getMessageReactions(param, callback:callback);
+//fun_getMessageReactions_call
+*/
+/*
+//fun_getMessageReactionUsers_call
+IRCIMIWGetMessageReactionUsersCallback? callback = IRCIMIWGetMessageReactionUsersCallback(onSuccess: (RCIMIWPagingQueryResult<RCIMIWMessageReactionUser>? t) {
+    //...
+}, onError: (int? code) {
+    //...
+});
+
+int? ret = await engine?.getMessageReactionUsers(param, callback:callback);
+//fun_getMessageReactionUsers_call
 */

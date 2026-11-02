@@ -13,6 +13,7 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWAddFriendCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddGroupFollowsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddGroupManagersCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWAddToBlacklistCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWBatchGetMessageReactionSummariesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWCancelDownloadingMediaMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWCancelSendingMediaMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWChangeConversationNotificationLevelCallback;
@@ -76,6 +77,9 @@ import cn.rongcloud.im.wrapper.callback.IRCIMIWGetJoinedGroupsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetLocalMessagesByMessageTypesCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCountCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageCountDetailCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageReactionUsersCallback;
+import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageReactionsCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessageReadReceiptInfoV5Callback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesAroundTimeCallback;
 import cn.rongcloud.im.wrapper.callback.IRCIMIWGetMessagesCallback;
@@ -198,6 +202,7 @@ import cn.rongcloud.im.wrapper.constants.RCIMIWUltraGroupTypingStatusInfo;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWConversation;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWConversationListOption;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWConversationTagInfo;
+import cn.rongcloud.im.wrapper.conversation.RCIMIWMessageCountDetail;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWSearchConversationResult;
 import cn.rongcloud.im.wrapper.conversation.RCIMIWTagInfo;
 import cn.rongcloud.im.wrapper.friend.RCIMIWFriendApplicationInfo;
@@ -223,6 +228,13 @@ import cn.rongcloud.im.wrapper.listener.IRCIMIWSendMediaMessageListener;
 import cn.rongcloud.im.wrapper.listener.RCIMIWDownloadMediaMessageListener;
 import cn.rongcloud.im.wrapper.listener.RCIMIWListener;
 import cn.rongcloud.im.wrapper.listener.RCIMIWSendMediaMessageListener;
+import cn.rongcloud.im.wrapper.messagereaction.RCIMIWGetMessageReactionUsersParam;
+import cn.rongcloud.im.wrapper.messagereaction.RCIMIWGetMessageReactionsParam;
+import cn.rongcloud.im.wrapper.messagereaction.RCIMIWMessageReaction;
+import cn.rongcloud.im.wrapper.messagereaction.RCIMIWMessageReactionEvent;
+import cn.rongcloud.im.wrapper.messagereaction.RCIMIWMessageReactionSummaryQueryParam;
+import cn.rongcloud.im.wrapper.messagereaction.RCIMIWMessageReactionUser;
+import cn.rongcloud.im.wrapper.messagereaction.RCIMIWUpdateMessageReactionParam;
 import cn.rongcloud.im.wrapper.messages.RCIMIWCombineV2Message;
 import cn.rongcloud.im.wrapper.messages.RCIMIWCustomMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWEditedMessageDraft;
@@ -244,6 +256,7 @@ import cn.rongcloud.im.wrapper.messages.RCIMIWStreamMessageChunkInfo;
 import cn.rongcloud.im.wrapper.messages.RCIMIWTextMessage;
 import cn.rongcloud.im.wrapper.messages.RCIMIWVoiceMessage;
 import cn.rongcloud.im.wrapper.options.RCIMIWEngineOptions;
+import cn.rongcloud.im.wrapper.options.RCIMIWMessageCountDetailOptions;
 import cn.rongcloud.im.wrapper.params.RCIMIWStreamMessageRequestParams;
 import cn.rongcloud.im.wrapper.platform.RCIMIWPlatformConverter;
 import cn.rongcloud.im.wrapper.readreceipt.RCIMIWReadReceiptInfoV5;
@@ -869,6 +882,10 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
         getMessageCount(call, result);
         break;
 
+      case "engine:getMessageCountDetail":
+        getMessageCountDetail(call, result);
+        break;
+
       case "engine:loadTopConversations":
         loadTopConversations(call, result);
         break;
@@ -1311,6 +1328,26 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
 
       case "engine:clearEditedMessageDraft":
         clearEditedMessageDraft(call, result);
+        break;
+
+      case "engine:addMessageReaction":
+        addMessageReaction(call, result);
+        break;
+
+      case "engine:removeMessageReaction":
+        removeMessageReaction(call, result);
+        break;
+
+      case "engine:batchGetMessageReactionSummaries":
+        batchGetMessageReactionSummaries(call, result);
+        break;
+
+      case "engine:getMessageReactions":
+        getMessageReactions(call, result);
+        break;
+
+      case "engine:getMessageReactionUsers":
+        getMessageReactionUsers(call, result);
         break;
     }
   }
@@ -3634,6 +3671,27 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void getMessageCountDetail(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWConversationType type =
+          RCIMWrapperArgumentAdapter.toRCIMIWConversationType(call.argument("type"));
+      String targetId = (String) call.argument("targetId");
+      String channelId = (String) call.argument("channelId");
+      RCIMIWMessageCountDetailOptions options =
+          RCIMIWPlatformConverter.convertMessageCountDetailOptions(
+              (HashMap<String, Object>) call.argument("options"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMessageCountDetailCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMessageCountDetailCallbackImpl(cb_handler);
+      }
+
+      code = engine.getMessageCountDetail(type, targetId, channelId, options, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   private void loadTopConversations(@NonNull MethodCall call, @NonNull Result result) {
     int code = -1;
     if (engine != null) {
@@ -5417,13 +5475,14 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
           RCIMIWPlatformConverter.convertMessage(
               (HashMap<String, Object>) call.argument("message"));
       Boolean isDelete = (Boolean) call.argument("isDelete");
+      Boolean disableNotification = (Boolean) call.argument("disableNotification");
       int cb_handler = ((Number) call.argument("cb_handler")).intValue();
       IRCIMIWRecallMessageCallbackImpl callback = null;
       if (cb_handler != -1) {
         callback = new IRCIMIWRecallMessageCallbackImpl(cb_handler);
       }
 
-      code = engine.recallMessageWithOption(message, isDelete, callback);
+      code = engine.recallMessageWithOption(message, isDelete, disableNotification, callback);
     }
     RCIMWrapperMainThreadPoster.success(result, code);
   }
@@ -5519,7 +5578,115 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     RCIMWrapperMainThreadPoster.success(result, code);
   }
 
+  private void addMessageReaction(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWUpdateMessageReactionParam param =
+          RCIMIWPlatformConverter.convertUpdateMessageReactionParam(
+              (HashMap<String, Object>) call.argument("param"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.addMessageReaction(param, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void removeMessageReaction(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWUpdateMessageReactionParam param =
+          RCIMIWPlatformConverter.convertUpdateMessageReactionParam(
+              (HashMap<String, Object>) call.argument("param"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWOperationCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWOperationCallbackImpl(cb_handler);
+      }
+
+      code = engine.removeMessageReaction(param, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void batchGetMessageReactionSummaries(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWMessageReactionSummaryQueryParam param =
+          RCIMIWPlatformConverter.convertMessageReactionSummaryQueryParam(
+              (HashMap<String, Object>) call.argument("param"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWBatchGetMessageReactionSummariesCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWBatchGetMessageReactionSummariesCallbackImpl(cb_handler);
+      }
+
+      code = engine.batchGetMessageReactionSummaries(param, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getMessageReactions(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWGetMessageReactionsParam param =
+          RCIMIWPlatformConverter.convertGetMessageReactionsParam(
+              (HashMap<String, Object>) call.argument("param"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMessageReactionsCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMessageReactionsCallbackImpl(cb_handler);
+      }
+
+      code = engine.getMessageReactions(param, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
+  private void getMessageReactionUsers(@NonNull MethodCall call, @NonNull Result result) {
+    int code = -1;
+    if (engine != null) {
+      RCIMIWGetMessageReactionUsersParam param =
+          RCIMIWPlatformConverter.convertGetMessageReactionUsersParam(
+              (HashMap<String, Object>) call.argument("param"));
+      int cb_handler = ((Number) call.argument("cb_handler")).intValue();
+      IRCIMIWGetMessageReactionUsersCallbackImpl callback = null;
+      if (cb_handler != -1) {
+        callback = new IRCIMIWGetMessageReactionUsersCallbackImpl(cb_handler);
+      }
+
+      code = engine.getMessageReactionUsers(param, callback);
+    }
+    RCIMWrapperMainThreadPoster.success(result, code);
+  }
+
   class RCIMIWListenerImpl extends RCIMIWListener {
+
+    @Override
+    public void onMessageReactionChanged(List<RCIMIWMessageReactionEvent> events) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List events_str = new ArrayList();
+
+      if (events != null) {
+        for (RCIMIWMessageReactionEvent element : events) {
+          events_str.add(RCIMIWPlatformConverter.convertMessageReactionEvent(element));
+        }
+      }
+
+      arguments.put("events", events_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod("engine:onMessageReactionChanged", arguments);
+            }
+          });
+    }
 
     @Override
     public void onMessageReceived(
@@ -11687,6 +11854,56 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
     }
   }
 
+  class IRCIMIWGetMessageCountDetailCallbackImpl implements IRCIMIWGetMessageCountDetailCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetMessageCountDetailCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(List<RCIMIWMessageCountDetail> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      List t_str = new ArrayList();
+
+      if (t != null) {
+        for (RCIMIWMessageCountDetail element : t) {
+          t_str.add(RCIMIWPlatformConverter.convertMessageCountDetail(element));
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessageCountDetailCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessageCountDetailCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
   class IRCIMIWGetTopConversationsCallbackImpl implements IRCIMIWGetTopConversationsCallback {
     private int cb_handler = -1;
 
@@ -14612,6 +14829,147 @@ public final class RCIMWrapperEngine implements MethodCallHandler {
             public void run() {
               channel.invokeMethod(
                   "engine_cb:IRCIMIWGetEditedMessageDraftCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWBatchGetMessageReactionSummariesCallbackImpl
+      implements IRCIMIWBatchGetMessageReactionSummariesCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWBatchGetMessageReactionSummariesCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(Map<String, List<RCIMIWMessageReaction>> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      Map<String, List<Map<String, Object>>> t_str = new HashMap<>();
+      if (t != null) {
+        for (Map.Entry<String, List<RCIMIWMessageReaction>> entry : t.entrySet()) {
+          List<Map<String, Object>> values = new ArrayList<>();
+          if (entry.getValue() != null) {
+            for (RCIMIWMessageReaction element : entry.getValue()) {
+              values.add(RCIMIWPlatformConverter.convertMessageReaction(element));
+            }
+          }
+          t_str.put(entry.getKey(), values);
+        }
+      }
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", t_str);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWBatchGetMessageReactionSummariesCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWBatchGetMessageReactionSummariesCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetMessageReactionsCallbackImpl implements IRCIMIWGetMessageReactionsCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetMessageReactionsCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWPagingQueryResult<RCIMIWMessageReaction> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertPagingQueryResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessageReactionsCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessageReactionsCallback_onError", arguments);
+            }
+          });
+    }
+  }
+
+  class IRCIMIWGetMessageReactionUsersCallbackImpl
+      implements IRCIMIWGetMessageReactionUsersCallback {
+    private int cb_handler = -1;
+
+    IRCIMIWGetMessageReactionUsersCallbackImpl(int cb_handler) {
+      this.cb_handler = cb_handler;
+    }
+
+    @Override
+    public void onSuccess(RCIMIWPagingQueryResult<RCIMIWMessageReactionUser> t) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("t", RCIMIWPlatformConverter.convertPagingQueryResult(t));
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessageReactionUsersCallback_onSuccess", arguments);
+            }
+          });
+    }
+
+    @Override
+    public void onError(int code) {
+      final HashMap<String, Object> arguments = new HashMap<>();
+
+      arguments.put("cb_handler", cb_handler);
+      arguments.put("code", code);
+
+      RCIMWrapperMainThreadPoster.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              channel.invokeMethod(
+                  "engine_cb:IRCIMIWGetMessageReactionUsersCallback_onError", arguments);
             }
           });
     }

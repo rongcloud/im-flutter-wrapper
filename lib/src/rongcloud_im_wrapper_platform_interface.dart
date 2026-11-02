@@ -4864,6 +4864,36 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// [ZH]
   /// ---
+  /// 获取指定会话日期范围内每天的本地消息数量。时间范围左闭右开，最多支持 180 个自然日；仅返回有消息的日期，无消息时成功返回空列表。
+  /// - [type] 会话类型
+  /// - [targetId] 会话 ID
+  /// - [channelId] 频道 ID，按原值精确匹配；null 作为空字符串处理
+  /// - [options] 查询时间范围，Unix 毫秒，左闭右开；首尾日期只统计与范围相交部分
+  /// - [callback] 查询结果回调，成功时返回按日期从新到旧排列的统计列表
+  /// - [返回值] 当次接口调用的状态码。非 0 表示调用失败且不会触发 callback
+  /// ---
+  /// [EN]
+  /// ---
+  /// Gets the local message count for each populated date in the specified conversation range. The time range is half-open, up to 180 local calendar days; no matching messages returns an empty list successfully.
+  /// - [type] Conversation type
+  /// - [targetId] Conversation ID
+  /// - [channelId] Channel ID matched exactly; null is treated as an empty string
+  /// - [options] Half-open range in Unix milliseconds; only the intersecting part of each date is counted
+  /// - [callback] Query callback with results ordered from newest date to oldest
+  /// - [返回值] Status of this invocation. A non-zero value means it failed and the callback will not run
+  /// ---
+  Future<int> getMessageCountDetail(
+    RCIMIWConversationType type,
+    String targetId,
+    String? channelId,
+    RCIMIWMessageCountDetailOptions options, {
+    IRCIMIWGetMessageCountDetailCallback? callback,
+  }) async {
+    throw UnimplementedError('getMessageCountDetail() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
   /// 根据会话类型,加载置顶会话列表
   /// - [conversationTypes] 会话类型集合
   /// - [channelId] 频道 ID，仅支持超级群使用，其他会话类型传 null 即可。
@@ -7541,23 +7571,26 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
 
   /// [ZH]
   /// ---
-  /// 撤回消息（支持 isDelete 选项）
+  /// 撤回消息，可配置是否删除消息和是否关闭撤回通知的推送及本地通知。
   /// - [message] 需要被撤回的消息
   /// - [isDelete] 是否删除本地消息并移除远端消息记录
+  /// - [disableNotification] 是否关闭撤回通知的推送及本地通知，true 表示关闭，false 表示允许，默认值为 false
   /// - [callback] 事件回调
-  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败
+  /// - [返回值] 当次接口操作的状态码。0 代表调用成功，非 0 代表失败且不会触发回调
   /// ---
   /// [EN]
   /// ---
-  /// Recall message with isDelete option
+  /// Recalls a message with options to delete the message and disable push and local notifications for the recall.
   /// - [message] The message to be recalled
   /// - [isDelete] Whether to delete local message and remove remote message records
+  /// - [disableNotification] Whether to disable push and local notifications for the recall. True disables notifications; false allows them. The default is false.
   /// - [callback] Event callback
-  /// - [返回值] Operation status code. 0 indicates success; other values mean failure
+  /// - [返回值] Operation status code. Zero means the call was accepted; a nonzero value means failure without invoking the callback.
   /// ---
   Future<int> recallMessageWithOption(
     RCIMIWMessage message,
     bool isDelete, {
+    bool disableNotification = false,
     IRCIMIWRecallMessageCallback? callback,
   }) async {
     throw UnimplementedError('recallMessageWithOption() has not been implemented.');
@@ -7690,6 +7723,108 @@ abstract class RCIMWrapperPlatform extends PlatformInterface {
     IRCIMIWCompletionCallback? callback,
   }) async {
     throw UnimplementedError('clearEditedMessageDraft() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 添加消息回应
+  /// - [param] 回应参数
+  /// - [callback] 结果回调
+  /// - [返回值] 调用状态码，0 表示成功提交
+  /// ---
+  /// [EN]
+  /// ---
+  /// Add a message reaction
+  /// - [param] Reaction parameters
+  /// - [callback] Result callback
+  /// - [返回值] Call status code. 0 means submitted successfully
+  /// ---
+  Future<int> addMessageReaction(RCIMIWUpdateMessageReactionParam param, {IRCIMIWOperationCallback? callback}) async {
+    throw UnimplementedError('addMessageReaction() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 移除消息回应
+  /// - [param] 回应参数
+  /// - [callback] 结果回调
+  /// - [返回值] 调用状态码，0 表示成功提交
+  /// ---
+  /// [EN]
+  /// ---
+  /// Remove a message reaction
+  /// - [param] Reaction parameters
+  /// - [callback] Result callback
+  /// - [返回值] Call status code. 0 means submitted successfully
+  /// ---
+  Future<int> removeMessageReaction(
+    RCIMIWUpdateMessageReactionParam param, {
+    IRCIMIWOperationCallback? callback,
+  }) async {
+    throw UnimplementedError('removeMessageReaction() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 批量获取消息回应摘要
+  /// - [param] 查询参数
+  /// - [callback] 结果回调
+  /// - [返回值] 调用状态码，0 表示成功提交
+  /// ---
+  /// [EN]
+  /// ---
+  /// Batch get message reaction summaries
+  /// - [param] Query parameters
+  /// - [callback] Result callback
+  /// - [返回值] Call status code. 0 means submitted successfully
+  /// ---
+  Future<int> batchGetMessageReactionSummaries(
+    RCIMIWMessageReactionSummaryQueryParam param, {
+    IRCIMIWBatchGetMessageReactionSummariesCallback? callback,
+  }) async {
+    throw UnimplementedError('batchGetMessageReactionSummaries() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 分页获取消息回应
+  /// - [param] 查询参数
+  /// - [callback] 结果回调
+  /// - [返回值] 调用状态码，0 表示成功提交
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get message reactions by page
+  /// - [param] Query parameters
+  /// - [callback] Result callback
+  /// - [返回值] Call status code. 0 means submitted successfully
+  /// ---
+  Future<int> getMessageReactions(
+    RCIMIWGetMessageReactionsParam param, {
+    IRCIMIWGetMessageReactionsCallback? callback,
+  }) async {
+    throw UnimplementedError('getMessageReactions() has not been implemented.');
+  }
+
+  /// [ZH]
+  /// ---
+  /// 分页获取消息回应用户
+  /// - [param] 查询参数
+  /// - [callback] 结果回调
+  /// - [返回值] 调用状态码，0 表示成功提交
+  /// ---
+  /// [EN]
+  /// ---
+  /// Get message reaction users by page
+  /// - [param] Query parameters
+  /// - [callback] Result callback
+  /// - [返回值] Call status code. 0 means submitted successfully
+  /// ---
+  Future<int> getMessageReactionUsers(
+    RCIMIWGetMessageReactionUsersParam param, {
+    IRCIMIWGetMessageReactionUsersCallback? callback,
+  }) async {
+    throw UnimplementedError('getMessageReactionUsers() has not been implemented.');
   }
 
   // -------- web 专有的方法 --------
